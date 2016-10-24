@@ -20,6 +20,9 @@ android {
 }
 
 dependencies {
+    compile(name: 'ihs/libAppFramework/libAppFramework', ext: 'jar')
+    compile(name: 'ihs/libNativeAds/libNativeAdsBase', ext: 'aar')
+    compile(name: 'ihs/libNativeAds/libNativeAdsPool', ext: 'aar')
     compile fileTree(dir: 'libs', include: ['*.jar'])
     androidTestCompile('com.android.support.test.espresso:espresso-core:2.2.2', {
         exclude group: 'com.android.support', module: 'support-annotations'

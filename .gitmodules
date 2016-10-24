@@ -1,0 +1,6 @@
+[submodule "libs/ihs/libAppFramework"]
+	path = libs/ihs/libAppFramework
+	url = http://git.ihandysoft.com/bingroup/bin_appframework_android.git
+[submodule "libs/ihs/libNativeAds"]
+	path = libs/ihs/libNativeAds
+	url = http://git.ihandysoft.com/bingroup/bin_nativeads_android.git

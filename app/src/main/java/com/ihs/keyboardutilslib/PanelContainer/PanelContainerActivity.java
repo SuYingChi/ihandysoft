@@ -1,4 +1,4 @@
-package com.ihs.keyboardutilslib.PanelContainer;
+package com.ihs.keyboardutilslib.panelcontainer;
 
 import android.app.Activity;
 import android.os.Bundle;
