@@ -12,7 +12,7 @@
         <com.ihs.nativeads.base.api.HSNativeAdPrimaryView
             android:id="@+id/ad_cover_img"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="300dp"
             android:scaleType="fitXY" />
 
         <FrameLayout

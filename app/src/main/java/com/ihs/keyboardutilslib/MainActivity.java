@@ -9,6 +9,8 @@ import com.ihs.keyboardutilslib.panelcontainer.PanelContainerActivity;
 
 public class MainActivity extends AppCompatActivity {
 
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -17,5 +19,9 @@ public class MainActivity extends AppCompatActivity {
 
     public void startPanelContainer(View view) {
         startActivity(new Intent(this, PanelContainerActivity.class));
+    }
+
+    public void startAds(View view){
+        startActivity(new Intent(this, com.ihs.keyboardutilslib.adactivities.MainActivity.class));
     }
 }

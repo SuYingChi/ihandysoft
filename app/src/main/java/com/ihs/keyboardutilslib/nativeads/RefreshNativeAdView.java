@@ -85,10 +85,33 @@ public class RefreshNativeAdView extends FrameLayout {
         tryLoadNativeAd();
     }
 
+    public RefreshNativeAdView(Context context, String poolName, int layoutId, int fetchNativeAdInterval, NativeAdListener nativeAdListener) {
+        this(context, poolName, layoutId, 1, fetchNativeAdInterval, nativeAdListener);
+    }
+
+    public RefreshNativeAdView(Context context, String poolName, int layoutId, float primaryHWRatio, int fetchNativeAdInterval, NativeAdListener nativeAdListener) {
+        this(context, null, 0, poolName, layoutId, primaryHWRatio, fetchNativeAdInterval, nativeAdListener);
+    }
+
+    public RefreshNativeAdView(Context context, AttributeSet attrs, int defStyleAttr, String poolName, int layoutId, float primaryHWRatio, int fetchNativeAdInterval, NativeAdListener nativeAdListener) {
+        super(context, attrs, defStyleAttr);
+        this.poolName = poolName;
+        this.primaryWidth = -1;
+        this.primaryHWRatio = primaryHWRatio;
+        this.hasNativeAdObserver = false;
+        this.fetchNativeAdInterval = fetchNativeAdInterval;
+        View view = View.inflate(HSApplication.getContext(), layoutId, null);
+        this.nativeAdContainerView = HSNativeAdFactory.getInstance().createNativeAdContainerView(view.getContext(), view);
+        initNativeAdContainerView(view);
+        this.nativeAdListener = nativeAdListener;
+
+        addView(nativeAdContainerView);
+        tryLoadNativeAd();
+    }
+
     @Override
     protected void onWindowVisibilityChanged(int visibility) {
         super.onWindowVisibilityChanged(visibility);
-        HSLog.e(this.toString() + ":" + poolName + ":" + visibility);
         if (visibility == GONE || visibility == INVISIBLE) {
             if (hasNativeAdObserver) {
                 HSGlobalNotificationCenter.removeObserver(nativeAdObserver);
@@ -190,10 +213,6 @@ public class RefreshNativeAdView extends FrameLayout {
             HSGlobalNotificationCenter.addObserver(poolName, nativeAdObserver);
             hasNativeAdObserver = true;
         }
-
-        if (!isStopped) {
-            handler.postDelayed(frequentRunnable, fetchNativeAdInterval);
-        }
     }
 
     /**
@@ -202,6 +221,7 @@ public class RefreshNativeAdView extends FrameLayout {
      * @return
      */
     private void loadAdDataFrequently() {
+        HSLog.e("NativePoolName ======= " + toString());
         // 如果没有到达下一次取广告的间隔，即便有新广告，也不从新取
         if (System.currentTimeMillis() - NativeAdManager.getInstance().getCurrentNativeAdFetchTime(poolName) >= fetchNativeAdInterval) {
             HSNativeAd ad = NativeAdManager.getInstance().getNativeAd(poolName);
@@ -228,7 +248,7 @@ public class RefreshNativeAdView extends FrameLayout {
             if (hsNativeAd == null) {
                 return;
             }
-            HSLog.e("HSNativeAd => " + poolName);
+            HSLog.e("HSNativeAd => " + poolName + " " + toString());
             hsNativeAd.registerView(nativeAdContainerView.getContext(), nativeAdContainerView);
             // 添加事件
             if (nativeAdListener != null) {

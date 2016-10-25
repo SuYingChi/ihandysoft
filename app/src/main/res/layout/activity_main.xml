@@ -17,4 +17,10 @@
         android:layout_height="wrap_content"
         android:onClick="startPanelContainer"
         android:text="PanelContainer" />
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:onClick="startAds"
+        android:text="Native Ad Demo" />
 </LinearLayout>
