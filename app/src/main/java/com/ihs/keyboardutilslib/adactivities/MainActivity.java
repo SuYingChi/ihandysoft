@@ -1,18 +1,28 @@
 package com.ihs.keyboardutilslib.adactivities;
 
+import android.app.AlertDialog;
+import android.app.Dialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.os.Bundle;
 import android.os.Handler;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.BaseAdapter;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.SimpleAdapter;
+import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import com.ihs.app.framework.HSApplication;
 import com.ihs.app.framework.activity.HSActivity;
+import com.ihs.commons.config.HSConfig;
 import com.ihs.commons.notificationcenter.HSGlobalNotificationCenter;
 import com.ihs.commons.notificationcenter.INotificationObserver;
 import com.ihs.commons.utils.HSBundle;
@@ -26,6 +36,7 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.Map;
 
 /**
  * Created by ihandysoft on 16/10/24.
@@ -34,8 +45,8 @@ import java.util.List;
 public class MainActivity extends HSActivity implements INotificationObserver {
 
     private LinearLayout adContainer;
-    private EditText adFetchInterval;
-    private EditText adPoolName;
+    private Button btnPoolStates;
+    private Spinner adPoolName;
 
     private TextView adFirmName;
     private TextView adPoolCount;
@@ -46,8 +57,10 @@ public class MainActivity extends HSActivity implements INotificationObserver {
 
     private List<String> adTimes = new ArrayList<>();
 
+    private List<String> data_list = new ArrayList<>();
+    private ArrayAdapter<String> arr_adapter;
 
-    private int adInterval;
+
     private String poolName;
 
     private RefreshNativeAdView refreshNativeAdView;
@@ -57,14 +70,51 @@ public class MainActivity extends HSActivity implements INotificationObserver {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.ad_main_activity);
         adContainer = (LinearLayout) findViewById(R.id.ad_container);
-        adFetchInterval = (EditText) findViewById(R.id.et_ad_fetch_interval);
-        adPoolName = (EditText) findViewById(R.id.et_poolname);
+        btnPoolStates = (Button) findViewById(R.id.btn_pool_state);
+        adPoolName = (Spinner) findViewById(R.id.spinner_poolname);
         adFirmName = (TextView) findViewById(R.id.tv_firm_name);
         adPoolCount = (TextView) findViewById(R.id.tv_pool_ad_count);
         adPoolCountUsed = (TextView) findViewById(R.id.tv_pool_ad_count_used);
         adShowTimes = (ListView) findViewById(R.id.lv_pool_ad_showTime);
         timeAdapter = new TimeAdapter(this, adTimes);
         adShowTimes.setAdapter(timeAdapter);
+
+
+
+        for(String key : NativeAdManager.getInstance().getAllPoolState()){
+            data_list.add(key.substring(0, key.indexOf("-")));
+        }
+
+
+        //适配器
+        arr_adapter= new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, data_list);
+        //设置样式
+        arr_adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        //加载适配器
+        adPoolName.setAdapter(arr_adapter);
+        adPoolName.setSelection(0);
+
+
+        btnPoolStates.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
+                builder.setTitle("广告池状态");
+                //    设置一个下拉的列表选择项
+                builder.setItems(NativeAdManager.getInstance().getAllPoolState(), new DialogInterface.OnClickListener()
+                {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which)
+                    {
+
+                    }
+                });
+                Dialog dialog = builder.create();
+                dialog.setCanceledOnTouchOutside(true);
+                dialog.show();
+            }
+        });
     }
 
     private void addObserver() {
@@ -83,22 +133,20 @@ public class MainActivity extends HSActivity implements INotificationObserver {
 
     public void startFetchNativeAd(View view){
         adContainer.removeAllViews();
-        adInterval = Integer.valueOf(adFetchInterval.getText().toString());
-        poolName = adPoolName.getText().toString();
+        poolName = data_list.get(adPoolName.getSelectedItemPosition()).trim();
         adTimes.clear();
         timeAdapter.notifyDataSetChanged();
         addObserver();
-        refreshNativeAdView = new RefreshNativeAdView(this, poolName, R.layout.ad_style_1, adInterval, new RefreshNativeAdView.NativeAdListener() {
+        refreshNativeAdView = new RefreshNativeAdView(this, poolName, R.layout.ad_style_1, getAdFrequency(), new RefreshNativeAdView.NativeAdListener() {
             @Override
             public void onNativeAdShowed(final HSNativeAd hsNativeAd) {
-                HSLog.e("dddsdfasdfasdfasdfasdfasdfasdfasdfasdfasdfasdfasdfasdfadfasdfasdfasdfasdfasdfasdfasdfasdfasdfasdfasddf");
                 new Handler().post(new Runnable() {
                     @Override
                     public void run() {
                         adFirmName.setText(hsNativeAd.getVendor().name());
                         SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
                         adTimes.add(simpleDateFormat.format(new Date()) + (isNew ? ": new" : ": old"));
-                        adShowTimes.setAdapter(new TimeAdapter(MainActivity.this, adTimes));
+                        timeAdapter.notifyDataSetChanged();
                     }
                 });
             }
@@ -109,6 +157,10 @@ public class MainActivity extends HSActivity implements INotificationObserver {
             }
         });
         adContainer.addView(refreshNativeAdView);
+    }
+
+    public int getAdFrequency(){
+        return HSConfig.optInteger(0,"Application", "NativeAds", "fetchAdInterval");
     }
 
     @Override

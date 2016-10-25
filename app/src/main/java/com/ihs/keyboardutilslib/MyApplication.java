@@ -6,6 +6,7 @@ import com.ihs.app.alerts.HSAlertMgr;
 import com.ihs.app.framework.HSApplication;
 import com.ihs.app.framework.HSNotificationConstant;
 import com.ihs.commons.diversesession.HSDiverseSession;
+import com.ihs.commons.notificationcenter.HSGlobalNotificationCenter;
 import com.ihs.commons.notificationcenter.INotificationObserver;
 import com.ihs.commons.utils.HSBundle;
 import com.ihs.keyboardutilslib.nativeads.NativeAdManager;
@@ -47,6 +48,13 @@ public class MyApplication extends HSApplication {
         return context;
     }
 
+
+    @Override
+    public void onCreate() {
+        super.onCreate();
+        HSGlobalNotificationCenter.addObserver(HSNotificationConstant.HS_SESSION_START, sessionEventObserver);
+        HSGlobalNotificationCenter.addObserver(HSNotificationConstant.HS_SESSION_END, sessionEventObserver);
+    }
 
     private void onSessionStart() {
         NativeAdManager.init();

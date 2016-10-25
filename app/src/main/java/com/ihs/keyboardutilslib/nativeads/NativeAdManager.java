@@ -16,6 +16,8 @@ import com.ihs.nativeads.base.api.PreCacheOption;
 import com.ihs.nativeads.pool.api.HSNativeAdPool;
 import com.ihs.nativeads.pool.api.INativeAdPoolListener;
 
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 
@@ -29,7 +31,18 @@ public class NativeAdManager {
     private ArrayMap<String, HSNativeAdPool> nativeAdsPools;
     private ArrayMap<String, HSNativeAd> currentNativeAds;
     private ArrayMap<String, Long> currentNativeAdFetchTimes;
+
+    @Deprecated
     private ArrayMap<String, Integer> hasShowedNativeAdCount;
+    @Deprecated
+    public String[] getAllPoolState(){
+        ArrayList<String> state = new ArrayList<String>();
+        for (Map.Entry<String, HSNativeAdPool> entry : nativeAdsPools.entrySet()) {
+            state.add(entry.getKey() + " - " + (hasShowedNativeAdCount.get(entry.getKey()) == null ? 0 : hasShowedNativeAdCount.get(entry.getKey())) + " - " + entry.getValue().getAvailableNativeAdCount());
+        }
+        String[] result = new String[state.size()];
+        return state.toArray(result);
+    }
 
     private NativeAdManager() {
         initSupportNativeAdPools();

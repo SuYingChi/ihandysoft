@@ -23,19 +23,11 @@
                     android:layout_height="wrap_content"
                     android:orientation="horizontal">
 
-                    <TextView
-
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:text="FetchInterval:" />
-
-                    <EditText
-                        android:id="@+id/et_ad_fetch_interval"
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:text="30000" />
+                   <Button
+                       android:id="@+id/btn_pool_state"
+                       android:layout_width="match_parent"
+                       android:layout_height="50dp"
+                       android:text="查看池子状态"/>
                 </LinearLayout>
 
                 <LinearLayout
@@ -50,12 +42,11 @@
                         android:layout_weight="1"
                         android:text="PoolName:" />
 
-                    <EditText
-                        android:id="@+id/et_poolname"
+                    <Spinner
+                        android:id="@+id/spinner_poolname"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:text="CardAd" />
+                        android:layout_weight="1" />
                 </LinearLayout>
 
                 <Button
