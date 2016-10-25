@@ -2,6 +2,7 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    android:background="@color/colorAccent"
     android:orientation="vertical">
 
     <TextView
@@ -9,6 +10,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:gravity="center"
-        android:text="Panel Page" />
+        android:text="Test Panel"
+        android:textColor="@android:color/white" />
 
 </LinearLayout>

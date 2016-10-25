@@ -1,5 +1,7 @@
 package com.ihs.keyboardutilslib;
 
+import android.content.Context;
+
 import com.ihs.app.alerts.HSAlertMgr;
 import com.ihs.app.framework.HSApplication;
 import com.ihs.app.framework.HSNotificationConstant;
@@ -8,11 +10,13 @@ import com.ihs.commons.notificationcenter.INotificationObserver;
 import com.ihs.commons.utils.HSBundle;
 import com.ihs.keyboardutilslib.nativeads.NativeAdManager;
 
+
 /**
  * Created by ihandysoft on 16/10/24.
  */
 
 public class MyApplication extends HSApplication {
+    private static Context context;
 
     private INotificationObserver sessionEventObserver = new INotificationObserver() {
 
@@ -32,6 +36,16 @@ public class MyApplication extends HSApplication {
             }
         }
     };
+        @Override
+    public void onCreate() {
+        //获取Context
+        context = getApplicationContext();
+    }
+
+    //返回
+    public static Context getContextObject() {
+        return context;
+    }
 
 
     private void onSessionStart() {
