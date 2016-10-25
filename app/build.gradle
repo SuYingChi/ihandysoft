@@ -36,4 +36,6 @@ dependencies {
 
     compile 'com.facebook.android:audience-network-sdk:4.7.0'
     compile 'com.facebook.android:facebook-android-sdk:4.8.0'
+
+    debugCompile 'com.squareup.leakcanary:leakcanary-android:1.5'
 }

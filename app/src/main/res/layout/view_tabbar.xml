@@ -2,11 +2,34 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical">
+    android:orientation="horizontal">
 
     <Button
         android:id="@+id/btn_showpanel"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="onClick" />
+
+    <Button
+        android:id="@+id/btn_show2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:onClick="onClick2"
+        android:text="onClick2" />
+
+    <Button
+        android:id="@+id/btn_show3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:onClick="onClick3"
+
+        android:text="onClick3" />
+
+    <Button
+        android:id="@+id/btn_show4"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:onClick="onClick4"
+
+        android:text="onClick4" />
 </LinearLayout>

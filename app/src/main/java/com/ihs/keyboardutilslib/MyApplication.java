@@ -1,7 +1,5 @@
 package com.ihs.keyboardutilslib;
 
-import android.content.Context;
-
 import com.ihs.app.alerts.HSAlertMgr;
 import com.ihs.app.framework.HSApplication;
 import com.ihs.app.framework.HSNotificationConstant;
@@ -11,6 +9,7 @@ import com.ihs.commons.notificationcenter.INotificationObserver;
 import com.ihs.commons.utils.HSBundle;
 import com.ihs.commons.utils.HSLog;
 import com.ihs.keyboardutilslib.nativeads.NativeAdManager;
+import com.squareup.leakcanary.LeakCanary;
 
 
 /**
@@ -18,7 +17,18 @@ import com.ihs.keyboardutilslib.nativeads.NativeAdManager;
  */
 
 public class MyApplication extends HSApplication {
-    private static Context context;
+
+    @Override public void onCreate() {
+        super.onCreate();
+        if (LeakCanary.isInAnalyzerProcess(this)) {
+            // This process is dedicated to LeakCanary for heap analysis.
+            // You should not init your app in this process.
+            return;
+        }
+        LeakCanary.install(this);
+        HSGlobalNotificationCenter.addObserver(HSNotificationConstant.HS_SESSION_START, sessionEventObserver);
+        HSGlobalNotificationCenter.addObserver(HSNotificationConstant.HS_SESSION_END, sessionEventObserver);
+    }
 
     private INotificationObserver sessionEventObserver = new INotificationObserver() {
 
@@ -39,20 +49,6 @@ public class MyApplication extends HSApplication {
         }
     };
 
-    //返回
-    public static Context getContextObject() {
-        return context;
-    }
-
-
-    @Override
-    public void onCreate() {
-        super.onCreate();
-        //获取Context
-        context = getApplicationContext();
-        HSGlobalNotificationCenter.addObserver(HSNotificationConstant.HS_SESSION_START, sessionEventObserver);
-        HSGlobalNotificationCenter.addObserver(HSNotificationConstant.HS_SESSION_END, sessionEventObserver);
-    }
 
     private void onSessionStart() {
         HSLog.e("onSessionStart");
