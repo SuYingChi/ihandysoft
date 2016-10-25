@@ -49,13 +49,27 @@
                         android:layout_weight="1" />
                 </LinearLayout>
 
-                <Button
-                    android:id="@+id/btn_start"
-                    android:layout_width="wrap_content"
+                <LinearLayout
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_gravity="center_horizontal"
-                    android:onClick="startFetchNativeAd"
-                    android:text="start" />
+                    android:orientation="horizontal">
+                    <Button
+                        android:id="@+id/btn_start"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_horizontal"
+                        android:onClick="startFetchNativeAd"
+                        android:text="start" />
+                    <Button
+                        android:id="@+id/btn_next"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_horizontal"
+                        android:onClick="goSecondActivity"
+                        android:text="SecondActivity" />
+                </LinearLayout>
+
+
 
             </LinearLayout>
 

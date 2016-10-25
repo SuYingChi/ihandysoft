@@ -9,6 +9,7 @@ import com.ihs.commons.diversesession.HSDiverseSession;
 import com.ihs.commons.notificationcenter.HSGlobalNotificationCenter;
 import com.ihs.commons.notificationcenter.INotificationObserver;
 import com.ihs.commons.utils.HSBundle;
+import com.ihs.commons.utils.HSLog;
 import com.ihs.keyboardutilslib.nativeads.NativeAdManager;
 
 
@@ -54,6 +55,7 @@ public class MyApplication extends HSApplication {
     }
 
     private void onSessionStart() {
+        HSLog.e("onSessionStart");
         NativeAdManager.init();
     }
 }

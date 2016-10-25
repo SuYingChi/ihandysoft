@@ -189,6 +189,7 @@ public class RefreshNativeAdView extends FrameLayout {
 
     private void pauseLoadAdDataFrequentlyFromNativeAdPool() {
         isStopped = true;
+        NativeAdManager.getInstance().resetCurrentNativeAdFetchTime(poolName);
         handler.removeCallbacks(frequentRunnable);
     }
 
@@ -248,6 +249,7 @@ public class RefreshNativeAdView extends FrameLayout {
             if (hsNativeAd == null) {
                 return;
             }
+
             HSLog.e("HSNativeAd => " + poolName + " " + toString());
             hsNativeAd.registerView(nativeAdContainerView.getContext(), nativeAdContainerView);
             // 添加事件
