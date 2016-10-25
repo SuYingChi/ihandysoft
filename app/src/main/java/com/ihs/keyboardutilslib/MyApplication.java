@@ -37,11 +37,6 @@ public class MyApplication extends HSApplication {
             }
         }
     };
-        @Override
-    public void onCreate() {
-        //获取Context
-        context = getApplicationContext();
-    }
 
     //返回
     public static Context getContextObject() {
@@ -52,6 +47,8 @@ public class MyApplication extends HSApplication {
     @Override
     public void onCreate() {
         super.onCreate();
+        //获取Context
+        context = getApplicationContext();
         HSGlobalNotificationCenter.addObserver(HSNotificationConstant.HS_SESSION_START, sessionEventObserver);
         HSGlobalNotificationCenter.addObserver(HSNotificationConstant.HS_SESSION_END, sessionEventObserver);
     }
