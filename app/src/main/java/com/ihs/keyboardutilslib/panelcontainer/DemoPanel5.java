@@ -4,6 +4,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 
 import com.ihs.keyboardutilslib.R;
+import com.ihs.keyboardutilslib.panelcontainer.lib.BasePanel;
+import com.ihs.keyboardutilslib.panelcontainer.lib.IPanelSwitcher;
 
 /**
  * Created by Arthur on 16/10/24.

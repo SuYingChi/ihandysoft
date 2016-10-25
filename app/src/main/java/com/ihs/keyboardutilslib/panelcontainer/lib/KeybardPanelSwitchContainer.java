@@ -1,4 +1,4 @@
-package com.ihs.keyboardutilslib.panelcontainer;
+package com.ihs.keyboardutilslib.panelcontainer.lib;
 
 import android.content.Context;
 import android.util.AttributeSet;
@@ -7,6 +7,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.RelativeLayout;
 
+import com.ihs.app.framework.HSApplication;
 import com.ihs.commons.utils.HSLog;
 import com.ihs.keyboardutilslib.R;
 
@@ -22,23 +23,10 @@ public class KeybardPanelSwitchContainer extends RelativeLayout implements IPane
     public static final int TABBAR_TOP = RelativeLayout.BELOW;
     public static final int TABBAR_BOTTOM = RelativeLayout.ABOVE;
 
-    private int barPosition = TABBAR_TOP;
+    private int barPosition = TABBAR_BOTTOM;
     private View tabBar = null;
     private PanelBean currentPanel = null;
     private Map<Class, PanelBean> panelMap = new HashMap<>();
-
-    public KeybardPanelSwitchContainer(Context context, View tabBar) {
-        super(context);
-        if (tabBar.getId() == View.NO_ID) {
-            tabBar.setId(R.id.tab_bar_id);
-        }
-        LayoutParams layoutParams = new LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
-        layoutParams.addRule(ALIGN_PARENT_TOP);
-        addView(tabBar, layoutParams);
-
-        this.tabBar = tabBar;
-//        addView(tabBar);
-    }
 
     private KeybardPanelSwitchContainer(Context context) {
         super(context);
@@ -52,11 +40,25 @@ public class KeybardPanelSwitchContainer extends RelativeLayout implements IPane
         super(context, attrs, defStyleAttr);
     }
 
-    public void setTabBar(View tabBar) {
-        if (tabBar == null) {
-            return;
+    public KeybardPanelSwitchContainer(View tabBar, int barPosition) {
+        super(HSApplication.getContext());
+        if (tabBar.getId() == View.NO_ID) {
+            tabBar.setId(R.id.tab_bar_id);
         }
-        addView(tabBar);
+        this.barPosition = barPosition;
+
+        LayoutParams layoutParams = new LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+        switch (barPosition) {
+            case TABBAR_TOP:
+                layoutParams.addRule(ALIGN_PARENT_TOP, TRUE);
+                break;
+            case TABBAR_BOTTOM:
+                layoutParams.addRule(ALIGN_PARENT_BOTTOM, TRUE);
+                break;
+        }
+
+        addView(tabBar, layoutParams);
+
         this.tabBar = tabBar;
     }
 
@@ -105,13 +107,40 @@ public class KeybardPanelSwitchContainer extends RelativeLayout implements IPane
         View view = panel.onCreatePanelView();
         LayoutParams layoutParams = new LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
         layoutParams.addRule(barPosition, tabBar.getId());
-//        layoutParams.addRule();
         addView(view, layoutParams);
     }
 
     public void setTabBarPosition(int position) {
+        if (tabBar == null) {
+            HSLog.e("tabBar didnt set yet");
+            return;
+        }
         barPosition = position;
-        removeView(tabBar);
+        LayoutParams layoutParams;
+        int tabBarAlign = 0;
+        switch (barPosition) {
+            case TABBAR_TOP:
+                tabBarAlign = ALIGN_PARENT_TOP;
+                break;
+            case TABBAR_BOTTOM:
+                tabBarAlign = ALIGN_PARENT_BOTTOM;
+                break;
+        }
+        if (tabBar.getParent() != null) {
+            layoutParams = (LayoutParams) tabBar.getLayoutParams();
+            layoutParams.addRule(ALIGN_PARENT_BOTTOM, 0);
+            layoutParams.addRule(ALIGN_PARENT_TOP, 0);
+            layoutParams.addRule(tabBarAlign, TRUE);
+            tabBar.setLayoutParams(layoutParams);
+            if (currentPanel != null && currentPanel.getPanel().getPanelView() != null) {
+                LayoutParams panelParams = (LayoutParams) currentPanel.getPanel().getPanelView().getLayoutParams();
+                panelParams.addRule(BELOW, 0);
+                panelParams.addRule(ABOVE, 0);
+                panelParams.addRule(barPosition, tabBar.getId());
+                currentPanel.getPanel().getPanelView().setLayoutParams(panelParams);
+            }
+            invalidate();
+        }
     }
 
 
@@ -125,6 +154,18 @@ public class KeybardPanelSwitchContainer extends RelativeLayout implements IPane
             }
         } else {
             tabBar.setVisibility(VISIBLE);
+        }
+    }
+
+    public void addMoreContainer(View container) {
+        if (container.getParent() != null) {
+            HSLog.e("child has parent");
+            return;
+        }
+
+        ViewGroup panelView = (ViewGroup) currentPanel.getPanel().getPanelView();
+        if (currentPanel != null && panelView != null) {
+            panelView.addView(container, new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
         }
     }
 

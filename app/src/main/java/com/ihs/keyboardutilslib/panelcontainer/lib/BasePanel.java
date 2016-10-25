@@ -1,4 +1,4 @@
-package com.ihs.keyboardutilslib.panelcontainer;
+package com.ihs.keyboardutilslib.panelcontainer.lib;
 
 import android.content.Context;
 import android.view.View;
@@ -10,7 +10,7 @@ import com.ihs.app.framework.HSApplication;
  */
 
 public class BasePanel {
-    Context context = HSApplication.getContext();
+    protected Context context = HSApplication.getContext();
     protected View rootView = null;
 
     protected IPanelSwitcher iPanelSwitcher;

@@ -8,7 +8,7 @@
         android:id="@+id/btn_showpanel"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="onClick" />
+        android:text="Bar Pos" />
 
     <Button
         android:id="@+id/btn_show2"
@@ -23,7 +23,7 @@
         android:layout_height="wrap_content"
         android:onClick="onClick3"
 
-        android:text="onClick3" />
+        android:text="add container" />
 
     <Button
         android:id="@+id/btn_show4"
