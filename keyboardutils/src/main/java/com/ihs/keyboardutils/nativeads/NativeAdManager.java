@@ -1,15 +1,17 @@
-package com.ihs.keyboardutilslib.nativeads;
+package com.ihs.keyboardutils.nativeads;
 
 import android.content.Context;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.support.v4.util.ArrayMap;
+import android.support.v4.util.DebugUtils;
 
 import com.ihs.app.framework.HSApplication;
 import com.ihs.commons.config.HSConfig;
 import com.ihs.commons.notificationcenter.HSGlobalNotificationCenter;
 import com.ihs.commons.utils.HSBundle;
 import com.ihs.commons.utils.HSLog;
+import com.ihs.keyboardutils.BuildConfig;
 import com.ihs.nativeads.base.api.AdVendorOption;
 import com.ihs.nativeads.base.api.HSNativeAd;
 import com.ihs.nativeads.base.api.PreCacheOption;
@@ -34,10 +36,8 @@ public class NativeAdManager {
     private ArrayMap<String, HSNativeAd> currentNativeAds;
     private ArrayMap<String, Long> currentNativeAdFetchTimes;
 
-    @Deprecated
     private ArrayMap<String, Integer> hasShowedNativeAdCount;
-    @Deprecated
-    public String[] getAllPoolState(){
+    private String[] getAllPoolState(){
         ArrayList<String> state = new ArrayList<String>();
         for (Map.Entry<String, HSNativeAdPool> entry : nativeAdsPools.entrySet()) {
             state.add(entry.getKey() + " - " + (hasShowedNativeAdCount.get(entry.getKey()) == null ? 0 : hasShowedNativeAdCount.get(entry.getKey())) + " - " + entry.getValue().getAvailableNativeAdCount());
@@ -95,7 +95,9 @@ public class NativeAdManager {
             public void onAvailableAdCountChanged(int i) {
                 HSLog.e("NativeAdPool - " + poolName + " : ================== onAvailableAdCountChanged - count : " + i);
                 HSBundle hsBundle = new HSBundle();
-                hsBundle.putInt("PoolCount", i);
+                if(HSLog.isDebugging()) {
+                    hsBundle.putInt("PoolCount", i);
+                }
                 HSGlobalNotificationCenter.sendNotification(poolName, hsBundle);
             }
         });
@@ -118,16 +120,16 @@ public class NativeAdManager {
                 long now = System.currentTimeMillis();
                 currentNativeAdFetchTimes.put(poolName, now);
 
-
-                int hasShowedCount =  hasShowedNativeAdCount.get(poolName) == null ? 0 : hasShowedNativeAdCount.get(poolName);
-                hasShowedNativeAdCount.put(poolName, ++hasShowedCount);
-                HSBundle hsBundle = new HSBundle();
-                hsBundle.putInt("HasShowedCount", hasShowedCount);
-                hsBundle.putString("FirmName", nativeAd.getVendor().name());
-                SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
-                hsBundle.putString("ShowNativeAdTime", simpleDateFormat.format(new Date(now)) + ":new");
-                HSGlobalNotificationCenter.sendNotification(poolName + "-new", hsBundle);
-
+                if(HSLog.isDebugging()) {
+                    int hasShowedCount = hasShowedNativeAdCount.get(poolName) == null ? 0 : hasShowedNativeAdCount.get(poolName);
+                    hasShowedNativeAdCount.put(poolName, ++hasShowedCount);
+                    HSBundle hsBundle = new HSBundle();
+                    hsBundle.putInt("HasShowedCount", hasShowedCount);
+                    hsBundle.putString("FirmName", nativeAd.getVendor().name());
+                    SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
+                    hsBundle.putString("ShowNativeAdTime", simpleDateFormat.format(new Date(now)) + ":new");
+                    HSGlobalNotificationCenter.sendNotification(poolName + "-new", hsBundle);
+                }
                 return nativeAd;
             }
             return getCurrentNativeAd(poolName);
@@ -138,13 +140,15 @@ public class NativeAdManager {
     HSNativeAd getCurrentNativeAd(String poolName) {
         HSNativeAd oldNativeAd = currentNativeAds.get(poolName);
         if (oldNativeAd != null) {
-            int hasShowedCount =  hasShowedNativeAdCount.get(poolName) == null ? 0 : hasShowedNativeAdCount.get(poolName);
-            HSBundle hsBundle = new HSBundle();
-            hsBundle.putInt("HasShowedCount", hasShowedCount);
-            hsBundle.putString("FirmName", oldNativeAd.getVendor().name());
-            SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
-            hsBundle.putString("ShowNativeAdTime", simpleDateFormat.format(new Date(System.currentTimeMillis())) + ":old");
-            HSGlobalNotificationCenter.sendNotification(poolName + "-old", hsBundle);
+            if(HSLog.isDebugging()) {
+                int hasShowedCount = hasShowedNativeAdCount.get(poolName) == null ? 0 : hasShowedNativeAdCount.get(poolName);
+                HSBundle hsBundle = new HSBundle();
+                hsBundle.putInt("HasShowedCount", hasShowedCount);
+                hsBundle.putString("FirmName", oldNativeAd.getVendor().name());
+                SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
+                hsBundle.putString("ShowNativeAdTime", simpleDateFormat.format(new Date(System.currentTimeMillis())) + ":old");
+                HSGlobalNotificationCenter.sendNotification(poolName + "-old", hsBundle);
+            }
             HSLog.e("NativePoolName - " + poolName + ": =================== provide a old NativeAd");
             return oldNativeAd;
         }

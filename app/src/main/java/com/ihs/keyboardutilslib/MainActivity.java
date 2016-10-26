@@ -6,7 +6,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 
 import com.ihs.app.framework.activity.HSActivity;
-import com.ihs.keyboardutilslib.nativeads.NativeAdManager;
+import com.ihs.keyboardutils.nativeads.NativeAdManager;
 import com.ihs.keyboardutilslib.panelcontainer.PanelContainerActivity;
 
 public class MainActivity extends HSActivity {

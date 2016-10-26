@@ -1,4 +1,4 @@
-package com.ihs.keyboardutilslib.nativeads;
+package com.ihs.keyboardutils.nativeads;
 
 import android.content.Context;
 import android.os.Handler;
@@ -15,7 +15,7 @@ import com.ihs.commons.notificationcenter.HSGlobalNotificationCenter;
 import com.ihs.commons.notificationcenter.INotificationObserver;
 import com.ihs.commons.utils.HSBundle;
 import com.ihs.commons.utils.HSLog;
-import com.ihs.keyboardutilslib.R;
+import com.ihs.keyboardutils.R;
 import com.ihs.nativeads.base.api.HSNativeAd;
 import com.ihs.nativeads.base.api.HSNativeAdContainerView;
 import com.ihs.nativeads.base.api.HSNativeAdFactory;
@@ -28,7 +28,7 @@ import com.ihs.nativeads.base.api.INativeAdListener;
  * 负责广告View的生成、广告数据的展示、广告的响应事件(click)、广告的flurry事件
  */
 
-public class RefreshNativeAdView extends FrameLayout {
+public class RefreshableNativeAdView extends FrameLayout {
 
     private INotificationObserver nativeAdObserver = new INotificationObserver() {
 
@@ -62,15 +62,15 @@ public class RefreshNativeAdView extends FrameLayout {
 
     private Handler handler = new Handler();
 
-    public RefreshNativeAdView(Context context, String poolName, int layoutId, int fetchNativeAdInterval) {
+    public RefreshableNativeAdView(Context context, String poolName, int layoutId, int fetchNativeAdInterval) {
         this(context, poolName, layoutId, 1, fetchNativeAdInterval);
     }
 
-    public RefreshNativeAdView(Context context, String poolName, int layoutId, float primaryHWRatio, int fetchNativeAdInterval) {
+    public RefreshableNativeAdView(Context context, String poolName, int layoutId, float primaryHWRatio, int fetchNativeAdInterval) {
         this(context, null, 0, poolName, layoutId, primaryHWRatio, fetchNativeAdInterval);
     }
 
-    public RefreshNativeAdView(Context context, AttributeSet attrs, int defStyleAttr, String poolName, int layoutId, float primaryHWRatio, int fetchNativeAdInterval) {
+    public RefreshableNativeAdView(Context context, AttributeSet attrs, int defStyleAttr, String poolName, int layoutId, float primaryHWRatio, int fetchNativeAdInterval) {
         super(context, attrs, defStyleAttr);
         this.poolName = poolName;
         this.primaryWidth = -1;
@@ -85,15 +85,15 @@ public class RefreshNativeAdView extends FrameLayout {
         tryLoadNativeAd();
     }
 
-    public RefreshNativeAdView(Context context, String poolName, int layoutId, int fetchNativeAdInterval, NativeAdListener nativeAdListener) {
+    public RefreshableNativeAdView(Context context, String poolName, int layoutId, int fetchNativeAdInterval, NativeAdListener nativeAdListener) {
         this(context, poolName, layoutId, 1, fetchNativeAdInterval, nativeAdListener);
     }
 
-    public RefreshNativeAdView(Context context, String poolName, int layoutId, float primaryHWRatio, int fetchNativeAdInterval, NativeAdListener nativeAdListener) {
+    public RefreshableNativeAdView(Context context, String poolName, int layoutId, float primaryHWRatio, int fetchNativeAdInterval, NativeAdListener nativeAdListener) {
         this(context, null, 0, poolName, layoutId, primaryHWRatio, fetchNativeAdInterval, nativeAdListener);
     }
 
-    public RefreshNativeAdView(Context context, AttributeSet attrs, int defStyleAttr, String poolName, int layoutId, float primaryHWRatio, int fetchNativeAdInterval, NativeAdListener nativeAdListener) {
+    public RefreshableNativeAdView(Context context, AttributeSet attrs, int defStyleAttr, String poolName, int layoutId, float primaryHWRatio, int fetchNativeAdInterval, NativeAdListener nativeAdListener) {
         super(context, attrs, defStyleAttr);
         this.poolName = poolName;
         this.primaryWidth = -1;

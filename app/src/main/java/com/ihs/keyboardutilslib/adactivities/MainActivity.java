@@ -22,9 +22,11 @@ import com.ihs.commons.notificationcenter.HSGlobalNotificationCenter;
 import com.ihs.commons.notificationcenter.INotificationObserver;
 import com.ihs.commons.utils.HSBundle;
 import com.ihs.keyboardutilslib.R;
-import com.ihs.keyboardutilslib.nativeads.NativeAdManager;
-import com.ihs.keyboardutilslib.nativeads.RefreshNativeAdView;
+import com.ihs.keyboardutils.nativeads.NativeAdManager;
+import com.ihs.keyboardutils.nativeads.RefreshableNativeAdView;
 
+import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -53,7 +55,24 @@ public class MainActivity extends HSActivity implements INotificationObserver {
 
     private String poolName;
 
-    private RefreshNativeAdView refreshNativeAdView;
+    private RefreshableNativeAdView refreshNativeAdView;
+
+    private String[] getAllPoolState() {
+        NativeAdManager nativeAdManager = NativeAdManager.getInstance();
+        try {
+            Method method = nativeAdManager.getClass().getDeclaredMethod("getAllPoolState", new Class<?>[]{});
+            method.setAccessible(true);
+            return (String[]) method.invoke(nativeAdManager, new Object[]{});
+        } catch (NoSuchMethodException e) {
+            e.printStackTrace();
+        } catch (InvocationTargetException e) {
+            e.printStackTrace();
+        } catch (IllegalAccessException e) {
+            e.printStackTrace();
+        }
+
+        return new String[0];
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -71,7 +90,7 @@ public class MainActivity extends HSActivity implements INotificationObserver {
 
 
 
-        for(String key : NativeAdManager.getInstance().getAllPoolState()){
+        for(String key : getAllPoolState()){
             data_list.add(key.substring(0, key.indexOf("-")));
         }
 
@@ -92,7 +111,7 @@ public class MainActivity extends HSActivity implements INotificationObserver {
                 AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
                 builder.setTitle("广告池状态");
                 //    设置一个下拉的列表选择项
-                builder.setItems(NativeAdManager.getInstance().getAllPoolState(), new DialogInterface.OnClickListener()
+                builder.setItems(getAllPoolState(), new DialogInterface.OnClickListener()
                 {
                     @Override
                     public void onClick(DialogInterface dialog, int which)
@@ -135,7 +154,7 @@ public class MainActivity extends HSActivity implements INotificationObserver {
         adContainer.removeAllViews();
         poolName = data_list.get(adPoolName.getSelectedItemPosition()).trim();
 
-        for(String key : NativeAdManager.getInstance().getAllPoolState()){
+        for(String key : getAllPoolState()){
             if(key.startsWith(poolName)){
                 adPoolCount.setText(key.split(" - ")[2]);
                 adPoolCountUsed.setText(key.split(" - ")[1]);
@@ -144,7 +163,7 @@ public class MainActivity extends HSActivity implements INotificationObserver {
         addObserver();
         adTimes.clear();
         timeAdapter.notifyDataSetChanged();
-        refreshNativeAdView = new RefreshNativeAdView(this, poolName, R.layout.ad_style_1, getAdFrequency());
+        refreshNativeAdView = new RefreshableNativeAdView(this, poolName, R.layout.ad_style_1, getAdFrequency());
         adContainer.addView(refreshNativeAdView);
     }
 
