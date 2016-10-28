@@ -26,7 +26,7 @@ public class DemoPanel5 extends BasePanel {
             @Override
             public void onClick(View v) {
                 hidePanel = !hidePanel;
-                iPanelSwitcher.setTabBarVisibility(hidePanel, true);
+                iPanelSwitcher.setTabBarVisibility(hidePanel, false);
             }
         });
         return rootView;

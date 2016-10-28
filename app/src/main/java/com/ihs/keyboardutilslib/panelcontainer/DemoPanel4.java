@@ -12,18 +12,21 @@ import com.ihs.keyboardutils.panelcontainer.IPanelSwitcher;
  */
 
 public class DemoPanel4 extends BasePanel {
+    private boolean hidePanel;
+
     public DemoPanel4(IPanelSwitcher iPanelSwitcher) {
         super(iPanelSwitcher);
     }
 
     @Override
     public View onCreatePanelView() {
-         rootView = LayoutInflater.from(context).inflate(R.layout.panel_container, null);
+        rootView = LayoutInflater.from(context).inflate(R.layout.panel_container4, null);
 
         rootView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                iPanelSwitcher.setTabBarVisibility(true, true);
+                hidePanel = !hidePanel;
+                iPanelSwitcher.setTabBarVisibility(hidePanel, false);
             }
         });
         return rootView;

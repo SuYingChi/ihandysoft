@@ -1,16 +1,14 @@
 package com.ihs.keyboardutilslib.panelcontainer;
 
 import android.app.Activity;
-import android.graphics.Color;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.TextView;
 
-import com.ihs.keyboardutilslib.R;
 import com.ihs.keyboardutils.panelcontainer.KeybardPanelSwitchContainer;
+import com.ihs.keyboardutilslib.R;
 
 /**
  * Created by Arthur on 16/10/21.
@@ -44,18 +42,20 @@ public class PanelContainerActivity extends Activity {
         super.onCreate(savedInstanceState);
         rootView = (ViewGroup) ViewGroup.inflate(this, R.layout.activity_panel_container, null);
         setContentView(rootView);
-        final View bar = View.inflate(getApplicationContext(), R.layout.view_tabbar, null);
+        final View outerBar = View.inflate(getApplicationContext(), R.layout.view_tabbar, null);
+        initouter(outerBar);
 
-        TextView textView = new TextView(getApplicationContext());
-        textView.setText("testing panel");
-        textView.setBackgroundColor(Color.GREEN);
-        contain = new KeybardPanelSwitchContainer(textView, KeybardPanelSwitchContainer.TABBAR_BOTTOM);
+
+        final View innerBar = View.inflate(getApplicationContext(), R.layout.view_tabbar, null);
+        contain = new KeybardPanelSwitchContainer(innerBar, KeybardPanelSwitchContainer.TABBAR_BOTTOM);
         contain.showPanel(DemoPanel5.class);
+    }
 
-        panelContainer = new KeybardPanelSwitchContainer(bar, KeybardPanelSwitchContainer.TABBAR_TOP);
+    private void initouter(View outerBar) {
+        panelContainer = new KeybardPanelSwitchContainer(outerBar, KeybardPanelSwitchContainer.TABBAR_TOP);
         rootView.addView(panelContainer);
         panelContainer.showPanel(DemoPanel.class);
-        bar.findViewById(R.id.btn_showpanel).setOnClickListener(new View.OnClickListener() {
+        outerBar.findViewById(R.id.btn_showpanel).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 barTop = !barTop;
@@ -66,32 +66,32 @@ public class PanelContainerActivity extends Activity {
                 }
             }
         });
-        bar.findViewById(R.id.btn_show2).setOnClickListener(new View.OnClickListener() {
+        outerBar.findViewById(R.id.btn_show2).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 addPanel = !addPanel;
 
-                if(addPanel){
+                if (addPanel) {
                     panelContainer.addMoreContainer(contain);
-                }else{
+                } else {
                     panelContainer.removeContainer(contain);
                 }
 
             }
         });
-        bar.findViewById(R.id.btn_show3).setOnClickListener(new View.OnClickListener() {
+        outerBar.findViewById(R.id.btn_show3).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 switchPanel = !switchPanel;
                 if (switchPanel) {
-                    panelContainer.showPanel(DemoPanel5.class);
+                    panelContainer.showPanel(DemoPanel4.class);
                 } else {
                     panelContainer.showPanel(DemoPanel.class);
-
                 }
+                addPanel = false;
             }
         });
-        bar.findViewById(R.id.btn_show4).setOnClickListener(new View.OnClickListener() {
+        outerBar.findViewById(R.id.btn_show4).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 handler.sendEmptyMessageDelayed(0, 1);

@@ -42,6 +42,11 @@ public class KeybardPanelSwitchContainer extends RelativeLayout implements IPane
 
     public KeybardPanelSwitchContainer(View tabBar, int barPosition) {
         super(HSApplication.getContext());
+        if (tabBar.getParent() != null) {
+            HSLog.e("tabBar already used in another container");
+            return;
+        }
+
         if (tabBar.getId() == View.NO_ID) {
             tabBar.setId(R.id.tab_bar_id);
         }
@@ -159,8 +164,7 @@ public class KeybardPanelSwitchContainer extends RelativeLayout implements IPane
 
     public void addMoreContainer(View container) {
         if (container.getParent() != null) {
-            HSLog.e("child has parent");
-            return;
+            ((ViewGroup) container.getParent()).removeView(container);
         }
 
         ViewGroup panelView = (ViewGroup) currentPanel.getPanel().getPanelView();
@@ -172,7 +176,6 @@ public class KeybardPanelSwitchContainer extends RelativeLayout implements IPane
 
     public void removeContainer(View container) {
         if (container == null || container.getParent() == null) {
-            HSLog.e("child not in parent");
             return;
         }
 
