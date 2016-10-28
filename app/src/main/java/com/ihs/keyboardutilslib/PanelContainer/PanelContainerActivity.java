@@ -10,7 +10,7 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.ihs.keyboardutilslib.R;
-import com.ihs.keyboardutilslib.panelcontainer.lib.KeybardPanelSwitchContainer;
+import com.ihs.keyboardutils.panelcontainer.KeybardPanelSwitchContainer;
 
 /**
  * Created by Arthur on 16/10/21.
@@ -35,73 +35,68 @@ public class PanelContainerActivity extends Activity {
     };
 
     private boolean barTop;
+    private boolean switchPanel;
+    private boolean addPanel;
+    KeybardPanelSwitchContainer contain;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         rootView = (ViewGroup) ViewGroup.inflate(this, R.layout.activity_panel_container, null);
         setContentView(rootView);
-        findViewById(R.id.text_panel).setOnClickListener(new View.OnClickListener() {
+        final View bar = View.inflate(getApplicationContext(), R.layout.view_tabbar, null);
+
+        TextView textView = new TextView(getApplicationContext());
+        textView.setText("testing panel");
+        textView.setBackgroundColor(Color.GREEN);
+        contain = new KeybardPanelSwitchContainer(textView, KeybardPanelSwitchContainer.TABBAR_BOTTOM);
+        contain.showPanel(DemoPanel5.class);
+
+        panelContainer = new KeybardPanelSwitchContainer(bar, KeybardPanelSwitchContainer.TABBAR_TOP);
+        rootView.addView(panelContainer);
+        panelContainer.showPanel(DemoPanel.class);
+        bar.findViewById(R.id.btn_showpanel).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                final View bar = View.inflate(getApplicationContext(), R.layout.view_tabbar, null);
-
-                panelContainer = new KeybardPanelSwitchContainer(bar, KeybardPanelSwitchContainer.TABBAR_TOP);
-                rootView.addView(panelContainer);
-                panelContainer.showPanel(DemoPanel.class);
-                bar.findViewById(R.id.btn_showpanel).setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        barTop = !barTop;
-                        if (barTop) {
-                            panelContainer.setTabBarPosition(KeybardPanelSwitchContainer.TABBAR_BOTTOM);
-                        } else {
-                            panelContainer.setTabBarPosition(KeybardPanelSwitchContainer.TABBAR_TOP);
-                        }
-                    }
-                });
-                bar.findViewById(R.id.btn_show2).setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        TextView textView = new TextView(getApplicationContext());
-                        textView.setText("testing panel");
-                        textView.setBackgroundColor(Color.GREEN);
-                        KeybardPanelSwitchContainer contain = new KeybardPanelSwitchContainer(textView, KeybardPanelSwitchContainer.TABBAR_BOTTOM);
-                        contain.showPanel(DemoPanel5.class);
-                        panelContainer.addMoreContainer(contain);
-                    }
-                });
-                bar.findViewById(R.id.btn_show3).setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-
-
-//                        panelContainer.showPanel(DemoPanel4.class);
-                    }
-                });
-                bar.findViewById(R.id.btn_show4).setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        handler.sendEmptyMessageDelayed(0, 1000);
-//                        rootView.removeView(panelContainer);
-//                        panelContainer = null;
-//                        System.gc();
-                    }
-                });
-//                panelContainer.setTabBar(bar);
-//                panelContainer.showPanel(DemoPanel.class);
+                barTop = !barTop;
+                if (barTop) {
+                    panelContainer.setTabBarPosition(KeybardPanelSwitchContainer.TABBAR_BOTTOM);
+                } else {
+                    panelContainer.setTabBarPosition(KeybardPanelSwitchContainer.TABBAR_TOP);
+                }
             }
         });
+        bar.findViewById(R.id.btn_show2).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                addPanel = !addPanel;
 
+                if(addPanel){
+                    panelContainer.addMoreContainer(contain);
+                }else{
+                    panelContainer.removeContainer(contain);
+                }
 
-//        View tabbar = View.inflate(getApplicationContext(), R.layout.view_tabbar, null);
-//        tabbar.findViewById(R.id.btn_showpanel).setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//
-//            }
-//        });
+            }
+        });
+        bar.findViewById(R.id.btn_show3).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                switchPanel = !switchPanel;
+                if (switchPanel) {
+                    panelContainer.showPanel(DemoPanel5.class);
+                } else {
+                    panelContainer.showPanel(DemoPanel.class);
 
+                }
+            }
+        });
+        bar.findViewById(R.id.btn_show4).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                handler.sendEmptyMessageDelayed(0, 1);
+            }
+        });
     }
 
     @Override
