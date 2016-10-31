@@ -18,10 +18,10 @@
 
 
         <Button
-            android:id="@+id/btn_show2"
+            android:id="@+id/btn_show3"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="添加Container" />
+            android:text="切换panel" />
 
 
     </LinearLayout>
@@ -33,10 +33,10 @@
         android:orientation="horizontal">
 
         <Button
-            android:id="@+id/btn_show3"
+            android:id="@+id/btn_show2"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="切换panel" />
+            android:text="添加Container"/>
 
         <Button
             android:id="@+id/btn_show4"

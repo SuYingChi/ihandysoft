@@ -1,15 +1,24 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    android:layout_height="300dp"
     android:background="@drawable/test"
     android:orientation="vertical">
 
     <TextView
-        android:id="@+id/text_panel"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:gravity="center_horizontal"
+        android:text="Inner Panel"
+        android:textColor="@android:color/black"
+        android:textSize="24sp" />
+
+    <TextView
+        android:id="@+id/text_panel"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
         android:gravity="center"
-        android:text="Test Panel"
-        android:textColor="@android:color/white" />
+        android:text="Click to hide or show panel"
+        android:textColor="@android:color/black"
+        android:textSize="24sp" />
 </LinearLayout>

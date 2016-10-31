@@ -10,6 +10,9 @@ import android.view.ViewGroup;
 import com.ihs.keyboardutils.panelcontainer.KeybardPanelSwitchContainer;
 import com.ihs.keyboardutilslib.R;
 
+import static android.R.color.black;
+import static com.ihs.keyboardutilslib.R.id.btn_show4;
+
 /**
  * Created by Arthur on 16/10/21.
  */
@@ -35,23 +38,58 @@ public class PanelContainerActivity extends Activity {
     private boolean barTop;
     private boolean switchPanel;
     private boolean addPanel;
+    private boolean barTop2;
+
     KeybardPanelSwitchContainer contain;
+    private boolean switchPanel2;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         rootView = (ViewGroup) ViewGroup.inflate(this, R.layout.activity_panel_container, null);
         setContentView(rootView);
-        final View outerBar = View.inflate(getApplicationContext(), R.layout.view_tabbar, null);
-        initouter(outerBar);
 
+        final View outerBar = View.inflate(getApplicationContext(), R.layout.view_tabbar, null);
+        initOuter(outerBar);
 
         final View innerBar = View.inflate(getApplicationContext(), R.layout.view_tabbar, null);
-        contain = new KeybardPanelSwitchContainer(innerBar, KeybardPanelSwitchContainer.TABBAR_BOTTOM);
-        contain.showPanel(DemoPanel5.class);
+        initInnerPanle(innerBar);
     }
 
-    private void initouter(View outerBar) {
+    private void initInnerPanle(View innerBar) {
+        innerBar.setBackgroundColor(getResources().getColor(black));
+        contain = new KeybardPanelSwitchContainer(innerBar, KeybardPanelSwitchContainer.TABBAR_BOTTOM);
+        contain.showPanel(DemoPanel5.class);
+        innerBar.findViewById(R.id.btn_show4).setVisibility(View.GONE);
+        innerBar.findViewById(R.id.btn_show2).setVisibility(View.GONE);
+        innerBar.findViewById(R.id.btn_showpanel).setOnClickListener(new View.OnClickListener() {
+
+            @Override
+            public void onClick(View v) {
+                if (barTop2) {
+                    contain.setTabBarPosition(KeybardPanelSwitchContainer.TABBAR_BOTTOM);
+                } else {
+                    contain.setTabBarPosition(KeybardPanelSwitchContainer.TABBAR_TOP);
+                }
+                barTop2 = !barTop2;
+            }
+        });
+
+
+        innerBar.findViewById(R.id.btn_show3).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                switchPanel2 = !switchPanel2;
+                if (switchPanel2) {
+                    contain.showPanel(DemoPanel2.class);
+                } else {
+                    contain.showPanel(DemoPanel5.class);
+                }
+            }
+        });
+    }
+
+    private void initOuter(View outerBar) {
         panelContainer = new KeybardPanelSwitchContainer(outerBar, KeybardPanelSwitchContainer.TABBAR_TOP);
         rootView.addView(panelContainer);
         panelContainer.showPanel(DemoPanel.class);
@@ -91,7 +129,7 @@ public class PanelContainerActivity extends Activity {
                 addPanel = false;
             }
         });
-        outerBar.findViewById(R.id.btn_show4).setOnClickListener(new View.OnClickListener() {
+        outerBar.findViewById(btn_show4).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 handler.sendEmptyMessageDelayed(0, 1);

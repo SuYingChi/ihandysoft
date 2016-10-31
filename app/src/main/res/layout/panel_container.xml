@@ -7,13 +7,22 @@
 
 
     <TextView
-        android:id="@+id/text_panel"
+        android:textSize="24sp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_centerVertical="true"
+        android:gravity="center_horizontal"
+        android:text="Outer Panel" />
+
+    <TextView
+        android:id="@+id/text_panel"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
         android:gravity="center"
         android:text="Click panel to hide or show tab Bar"
         android:textColor="@android:color/black"
-        android:textSize="24sp" />
+        android:textSize="24sp"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true" />
 
 </RelativeLayout>
