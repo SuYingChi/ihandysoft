@@ -9,10 +9,10 @@ import android.widget.RelativeLayout;
 
 import com.ihs.app.framework.HSApplication;
 import com.ihs.commons.utils.HSLog;
-import com.ihs.keyboardutils.R;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.concurrent.atomic.AtomicInteger;
 
 /**
  * Created by Arthur on 16/10/21.
@@ -20,8 +20,10 @@ import java.util.Map;
 
 public class KeybardPanelSwitchContainer extends RelativeLayout implements IPanelSwitcher {
 
-    public static final int TABBAR_TOP = RelativeLayout.BELOW;
-    public static final int TABBAR_BOTTOM = RelativeLayout.ABOVE;
+    public static final int TABBAR_TOP = RelativeLayout.ABOVE;
+    public static final int TABBAR_BOTTOM = RelativeLayout.BELOW;
+
+    private static final AtomicInteger sNextGeneratedId = new AtomicInteger(1);
 
     private int barPosition = TABBAR_BOTTOM;
     private View tabBar = null;
@@ -46,25 +48,12 @@ public class KeybardPanelSwitchContainer extends RelativeLayout implements IPane
             HSLog.e("tabBar already used in another container");
             return;
         }
-
         if (tabBar.getId() == View.NO_ID) {
-            tabBar.setId(R.id.tab_bar_id);
+            tabBar.setId(generateViewId());
         }
         this.barPosition = barPosition;
-
-        LayoutParams layoutParams = new LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
-        switch (barPosition) {
-            case TABBAR_TOP:
-                layoutParams.addRule(ALIGN_PARENT_TOP, TRUE);
-                break;
-            case TABBAR_BOTTOM:
-                layoutParams.addRule(ALIGN_PARENT_BOTTOM, TRUE);
-                break;
-        }
-
-        addView(tabBar, layoutParams);
-
         this.tabBar = tabBar;
+        addView(tabBar);
     }
 
     public void showPanel(Class panelClass) {
@@ -110,42 +99,52 @@ public class KeybardPanelSwitchContainer extends RelativeLayout implements IPane
         currentPanel = panelBean;
 
         View view = panel.onCreatePanelView();
-        LayoutParams layoutParams = new LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
-        layoutParams.addRule(barPosition, tabBar.getId());
-        addView(view, layoutParams);
+        if (view.getId() == View.NO_ID) {
+            view.setId(generateViewId());
+        }
+
+        LayoutParams panelLayoutParams = new LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+        LayoutParams tabBarLayoutParams = (LayoutParams) tabBar.getLayoutParams();
+
+        adjustViewPosition(panelLayoutParams, tabBarLayoutParams);
+
+        addView(view, panelLayoutParams);
     }
 
+
     public void setTabBarPosition(int position) {
-        if (tabBar == null) {
-            HSLog.e("tabBar didnt set yet");
+        if (tabBar == null || currentPanel == null) {
+            HSLog.e("tabBar or panel didnt set yet");
             return;
         }
-        barPosition = position;
-        LayoutParams layoutParams;
-        int tabBarAlign = 0;
-        switch (barPosition) {
-            case TABBAR_TOP:
-                tabBarAlign = ALIGN_PARENT_TOP;
-                break;
-            case TABBAR_BOTTOM:
-                tabBarAlign = ALIGN_PARENT_BOTTOM;
-                break;
-        }
-        if (tabBar.getParent() != null) {
-            layoutParams = (LayoutParams) tabBar.getLayoutParams();
-            layoutParams.addRule(ALIGN_PARENT_BOTTOM, 0);
-            layoutParams.addRule(ALIGN_PARENT_TOP, 0);
-            layoutParams.addRule(tabBarAlign, TRUE);
-            tabBar.setLayoutParams(layoutParams);
-            if (currentPanel != null && currentPanel.getPanel().getPanelView() != null) {
-                LayoutParams panelParams = (LayoutParams) currentPanel.getPanel().getPanelView().getLayoutParams();
-                panelParams.addRule(BELOW, 0);
-                panelParams.addRule(ABOVE, 0);
-                panelParams.addRule(barPosition, tabBar.getId());
-                currentPanel.getPanel().getPanelView().setLayoutParams(panelParams);
-            }
-            invalidate();
-        }
+        adjustViewPosition((LayoutParams) currentPanel.getPanel().getPanelView().getLayoutParams(), (LayoutParams) tabBar.getLayoutParams());
+
+//        barPosition = position;
+//        LayoutParams layoutParams;
+//        int tabBarAlign = 0;
+//        switch (barPosition) {
+//            case TABBAR_TOP:
+//                tabBarAlign = ALIGN_PARENT_TOP;
+//                break;
+//            case TABBAR_BOTTOM:
+//                tabBarAlign = ALIGN_PARENT_BOTTOM;
+//                break;
+//        }
+//        if (tabBar.getParent() != null) {
+//            layoutParams = (LayoutParams) tabBar.getLayoutParams();
+//            layoutParams.addRule(ALIGN_PARENT_BOTTOM, 0);
+//            layoutParams.addRule(ALIGN_PARENT_TOP, 0);
+//            layoutParams.addRule(tabBarAlign, TRUE);
+//            tabBar.setLayoutParams(layoutParams);
+//            if (currentPanel != null && currentPanel.getPanel().getPanelView() != null) {
+//                LayoutParams panelParams = (LayoutParams) currentPanel.getPanel().getPanelView().getLayoutParams();
+//                panelParams.addRule(BELOW, 0);
+//                panelParams.addRule(ABOVE, 0);
+//                panelParams.addRule(barPosition, tabBar.getId());
+//                currentPanel.getPanel().getPanelView().setLayoutParams(panelParams);
+//            }
+//            invalidate();
+//        }
     }
 
 
@@ -182,6 +181,38 @@ public class KeybardPanelSwitchContainer extends RelativeLayout implements IPane
         ViewGroup panelView = (ViewGroup) currentPanel.getPanel().getPanelView();
         if (currentPanel != null && panelView != null) {
             panelView.removeView(container);
+        }
+    }
+
+
+    private void adjustViewPosition(LayoutParams panelLayoutParams, LayoutParams tabBarLayoutParams) {
+        switch (barPosition) {
+            case TABBAR_TOP:
+                panelLayoutParams.addRule(ABOVE, 0);
+                tabBarLayoutParams.addRule(ALIGN_PARENT_BOTTOM, 0);
+
+                tabBarLayoutParams.addRule(ABOVE, currentPanel.getPanel().getPanelView().getId());
+                panelLayoutParams.addRule(ALIGN_PARENT_BOTTOM, TRUE);
+                break;
+            case TABBAR_BOTTOM:
+                tabBarLayoutParams.addRule(ABOVE, 0);
+                panelLayoutParams.addRule(ALIGN_PARENT_BOTTOM, 0);
+
+                panelLayoutParams.addRule(ABOVE, tabBar.getId());
+                tabBarLayoutParams.addRule(ALIGN_PARENT_BOTTOM, TRUE);
+                break;
+        }
+    }
+
+    public static int generateViewId() {
+        for (; ; ) {
+            final int result = sNextGeneratedId.get();
+            // aapt-generated IDs have the high byte nonzero; clamp to the range under that.
+            int newValue = result + 1;
+            if (newValue > 0x00FFFFFF) newValue = 1; // Roll over to 1, not 0.
+            if (sNextGeneratedId.compareAndSet(result, newValue)) {
+                return result;
+            }
         }
     }
 }
