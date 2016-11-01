@@ -53,7 +53,8 @@ public class KeybardPanelSwitchContainer extends RelativeLayout implements IPane
         }
         this.barPosition = barPosition;
         this.tabBar = tabBar;
-        addView(tabBar);
+        LayoutParams layoutParams = new LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+        addView(tabBar, layoutParams);
     }
 
     public void showPanel(Class panelClass) {
@@ -105,9 +106,7 @@ public class KeybardPanelSwitchContainer extends RelativeLayout implements IPane
 
         LayoutParams panelLayoutParams = new LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
         LayoutParams tabBarLayoutParams = (LayoutParams) tabBar.getLayoutParams();
-
         adjustViewPosition(panelLayoutParams, tabBarLayoutParams);
-
         addView(view, panelLayoutParams);
     }
 
@@ -117,9 +116,9 @@ public class KeybardPanelSwitchContainer extends RelativeLayout implements IPane
             HSLog.e("tabBar or panel didnt set yet");
             return;
         }
+        barPosition = position;
         adjustViewPosition((LayoutParams) currentPanel.getPanel().getPanelView().getLayoutParams(), (LayoutParams) tabBar.getLayoutParams());
 
-//        barPosition = position;
 //        LayoutParams layoutParams;
 //        int tabBarAlign = 0;
 //        switch (barPosition) {
@@ -202,6 +201,7 @@ public class KeybardPanelSwitchContainer extends RelativeLayout implements IPane
                 tabBarLayoutParams.addRule(ALIGN_PARENT_BOTTOM, TRUE);
                 break;
         }
+        requestLayout();
     }
 
     public static int generateViewId() {
