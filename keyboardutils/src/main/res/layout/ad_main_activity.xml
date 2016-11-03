@@ -52,20 +52,20 @@
                 android:orientation="horizontal">
 
                 <Button
-                    android:id="@+id/btn_start"
+                    android:id="@+id/btn_show_ad"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_horizontal"
-                    android:onClick="startFetchNativeAd"
-                    android:text="start" />
+                    android:onClick="showAd"
+                    android:text="ShowAd" />
 
                 <Button
-                    android:id="@+id/btn_next"
+                    android:id="@+id/btn_hide_ad"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_horizontal"
-                    android:onClick="goSecondActivity"
-                    android:text="SecondActivity" />
+                    android:onClick="hideAd"
+                    android:text="HideAd" />
             </LinearLayout>
 
 
@@ -75,63 +75,18 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal">
+            android:orientation="vertical">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="当前广告池状态:" />
 
             <TextView
-
-                android:layout_width="0dp"
+                android:id="@+id/tv_pool_info"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="厂商:" />
-
-            <TextView
-                android:id="@+id/tv_firm_name"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center_horizontal"
-                android:layout_weight="1" />
+                />
         </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal">
-
-            <TextView
-
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="池子的广告数:" />
-
-            <TextView
-                android:id="@+id/tv_pool_ad_count"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center_horizontal"
-                android:layout_weight="1" />
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal">
-
-            <TextView
-
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="已经使用的广告数:" />
-
-            <TextView
-                android:id="@+id/tv_pool_ad_count_used"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center_horizontal"
-                android:layout_weight="1" />
-        </LinearLayout>
-
 
         <TextView
 

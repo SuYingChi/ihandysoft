@@ -52,6 +52,6 @@ public class MyApplication extends HSApplication {
 
     private void onSessionStart() {
         HSLog.e("onSessionStart");
-        NativeAdManager.init();
+        NativeAdManager.getInstance();
     }
 }

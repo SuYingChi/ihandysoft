@@ -28,7 +28,7 @@ public class MainActivity extends HSActivity {
 
     @Override
     protected void onDestroy() {
-        NativeAdManager.getInstance().releaseAllNativeAdPools();
+        NativeAdManager.getInstance().clearPools();
         super.onDestroy();
     }
 }

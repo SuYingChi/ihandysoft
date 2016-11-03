@@ -4,7 +4,6 @@ import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.Context;
 import android.content.DialogInterface;
-import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.view.ViewGroup;
@@ -23,29 +22,28 @@ import com.ihs.commons.notificationcenter.INotificationObserver;
 import com.ihs.commons.utils.HSBundle;
 import com.ihs.keyboardutilslib.R;
 import com.ihs.keyboardutils.nativeads.NativeAdManager;
-import com.ihs.keyboardutils.nativeads.RefreshableNativeAdView;
+import com.ihs.keyboardutils.nativeads.NativeAdView;
 
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 /**
  * Created by ihandysoft on 16/10/24.
  */
 
-public class MainActivity extends HSActivity implements INotificationObserver {
+public class MainActivity extends HSActivity {
 
     private LinearLayout adContainer;
     private Button btnPoolStates;
     private Spinner adPoolName;
 
-    private TextView adFirmName;
-    private TextView adPoolCount;
-    private TextView adPoolCountUsed;
+    private TextView adPoolInfo;
     private ListView adShowTimes;
     private TimeAdapter timeAdapter;
-    private boolean isNew = false;
 
     private List<String> adTimes = new ArrayList<>();
 
@@ -55,14 +53,14 @@ public class MainActivity extends HSActivity implements INotificationObserver {
 
     private String poolName;
 
-    private RefreshableNativeAdView refreshNativeAdView;
+    private NativeAdView refreshNativeAdView;
 
-    private String[] getAllPoolState() {
+    private ArrayList<NativeAdManager.NativeAdProxy> getAllPoolState() {
         NativeAdManager nativeAdManager = NativeAdManager.getInstance();
         try {
-            Method method = nativeAdManager.getClass().getDeclaredMethod("getAllPoolState", new Class<?>[]{});
+            Method method = nativeAdManager.getClass().getDeclaredMethod("getAllPoolState");
             method.setAccessible(true);
-            return (String[]) method.invoke(nativeAdManager, new Object[]{});
+            return (ArrayList<NativeAdManager.NativeAdProxy>) method.invoke(nativeAdManager);
         } catch (NoSuchMethodException e) {
             e.printStackTrace();
         } catch (InvocationTargetException e) {
@@ -71,7 +69,7 @@ public class MainActivity extends HSActivity implements INotificationObserver {
             e.printStackTrace();
         }
 
-        return new String[0];
+        return new ArrayList<>();
     }
 
     @Override
@@ -81,22 +79,22 @@ public class MainActivity extends HSActivity implements INotificationObserver {
         adContainer = (LinearLayout) findViewById(R.id.ad_container);
         btnPoolStates = (Button) findViewById(R.id.btn_pool_state);
         adPoolName = (Spinner) findViewById(R.id.spinner_poolname);
-        adFirmName = (TextView) findViewById(R.id.tv_firm_name);
-        adPoolCount = (TextView) findViewById(R.id.tv_pool_ad_count);
-        adPoolCountUsed = (TextView) findViewById(R.id.tv_pool_ad_count_used);
+        adPoolInfo = (TextView) findViewById(R.id.tv_pool_info);
         adShowTimes = (ListView) findViewById(R.id.lv_pool_ad_showTime);
         timeAdapter = new TimeAdapter(this, adTimes);
         adShowTimes.setAdapter(timeAdapter);
 
+        refreshNativeAdView = new NativeAdView(MainActivity.this);
+        refreshNativeAdView.setTag("Refresh");
 
-
-        for(String key : getAllPoolState()){
-            data_list.add(key.substring(0, key.indexOf("-")));
+        for (NativeAdManager.NativeAdProxy nativeAdProxy : getAllPoolState()) {
+            String nativeAdPoolState = nativeAdProxy.toString();
+            data_list.add(nativeAdPoolState.substring(0, nativeAdPoolState.indexOf("(")));
         }
 
 
         //适配器
-        arr_adapter= new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, data_list);
+        arr_adapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, data_list);
         //设置样式
         arr_adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         //加载适配器
@@ -111,11 +109,15 @@ public class MainActivity extends HSActivity implements INotificationObserver {
                 AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
                 builder.setTitle("广告池状态");
                 //    设置一个下拉的列表选择项
-                builder.setItems(getAllPoolState(), new DialogInterface.OnClickListener()
-                {
+                ArrayList<String> poolStates = new ArrayList<String>();
+                for (NativeAdManager.NativeAdProxy nativeAdProxy : getAllPoolState()) {
+                    poolStates.add(nativeAdProxy.toString());
+                }
+                String[] arrPoolStates = new String[poolStates.size()];
+                arrPoolStates = poolStates.toArray(arrPoolStates);
+                builder.setItems(arrPoolStates, new DialogInterface.OnClickListener() {
                     @Override
-                    public void onClick(DialogInterface dialog, int which)
-                    {
+                    public void onClick(DialogInterface dialog, int which) {
 
                     }
                 });
@@ -126,73 +128,102 @@ public class MainActivity extends HSActivity implements INotificationObserver {
         });
     }
 
-    private void addObserver() {
-        HSGlobalNotificationCenter.removeObserver(this);
-        HSGlobalNotificationCenter.addObserver(poolName, this);
-        HSGlobalNotificationCenter.addObserver(poolName + "-new", this);
-        HSGlobalNotificationCenter.addObserver(poolName + "-old", this);
-
+    public void hideAd(View view) {
+        new AlertDialog.Builder(this).setTitle("Test").show();
+        //startActivity(new Intent(this, SecondActivity.class));
     }
 
-    public void goSecondActivity(View view){
-        startActivity(new Intent(this, SecondActivity.class));
-    }
-
-    @Override
-    protected void onResume() {
-        super.onResume();
-        addObserver();
-    }
-
-    @Override
-    protected void onPause() {
-        HSGlobalNotificationCenter.removeObserver(this);
-        super.onPause();
-    }
-
-    public void startFetchNativeAd(View view){
-        adContainer.removeAllViews();
+    public void showAd(View view) {
         poolName = data_list.get(adPoolName.getSelectedItemPosition()).trim();
 
-        for(String key : getAllPoolState()){
-            if(key.startsWith(poolName)){
-                adPoolCount.setText(key.split(" - ")[2]);
-                adPoolCountUsed.setText(key.split(" - ")[1]);
+        for (NativeAdManager.NativeAdProxy nativeAdProxy : getAllPoolState()) {
+            if (nativeAdProxy.toString().startsWith(poolName)) {
+                adPoolInfo.setText(nativeAdProxy.toString());
+                break;
             }
         }
-        addObserver();
         adTimes.clear();
         timeAdapter.notifyDataSetChanged();
-        refreshNativeAdView = new RefreshableNativeAdView(this, poolName, R.layout.ad_style_1, getAdFrequency());
-        adContainer.addView(refreshNativeAdView);
+        if (NativeAdManager.getInstance().existNativeAd(poolName)) {
+            refreshNativeAdView.setConfigParams(poolName, R.layout.ad_style_1, getAdFrequency(), new NativeAdView.NativeAdListener() {
+                @Override
+                public void onNativeAdShowed() {
+                    for (NativeAdManager.NativeAdProxy nativeAdProxy : getAllPoolState()) {
+                        if (nativeAdProxy.toString().startsWith(poolName)) {
+                            adPoolInfo.setText(nativeAdProxy.toString());
+                            SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
+                            adTimes.add(0, simpleDateFormat.format(new Date()));
+                            timeAdapter.notifyDataSetChanged();
+                            break;
+                        }
+                    }
+                }
+
+                @Override
+                public void onNativeAdClicked() {
+
+                }
+            });
+            if(adContainer.findViewWithTag("Refresh") == null) {
+                adContainer.addView(refreshNativeAdView);
+            }
+
+        } else {
+            addObserver();
+        }
     }
 
-    public int getAdFrequency(){
-        return HSConfig.optInteger(0,"Application", "NativeAds", "fetchAdInterval");
+    INotificationObserver iNotificationObserver = new INotificationObserver() {
+        @Override
+        public void onReceive(String s, HSBundle hsBundle) {
+            if (poolName.equals(s)) {
+                HSGlobalNotificationCenter.removeObserver(iNotificationObserver);
+                refreshNativeAdView.setConfigParams(poolName, R.layout.ad_style_1, getAdFrequency(), new NativeAdView.NativeAdListener() {
+                    @Override
+                    public void onNativeAdShowed() {
+                        for (NativeAdManager.NativeAdProxy nativeAdProxy : getAllPoolState()) {
+                            if (nativeAdProxy.toString().startsWith(poolName)) {
+                                adPoolInfo.setText(nativeAdProxy.toString());
+                                SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
+                                adTimes.add(0, simpleDateFormat.format(new Date()));
+                                timeAdapter.notifyDataSetChanged();
+                                break;
+                            }
+                        }
+                    }
+
+                    @Override
+                    public void onNativeAdClicked() {
+
+                    }
+                });
+                if(adContainer.findViewWithTag("Refresh") == null) {
+                    adContainer.addView(refreshNativeAdView);
+                }
+            }
+        }
+    };
+
+    private void addObserver() {
+        HSGlobalNotificationCenter.addObserver(poolName, iNotificationObserver);
     }
-
-
 
     @Override
-    public void onReceive(String s, HSBundle hsBundle) {
-        if(s.equals(poolName)){
-            adPoolCount.setText("" + hsBundle.getInt("PoolCount"));
-        }
-        else if(s.startsWith(poolName + "-")) {
-            adPoolCountUsed.setText("" + hsBundle.getInt("HasShowedCount"));
-            adFirmName.setText(hsBundle.getString("FirmName"));
-            adTimes.add(0, hsBundle.getString("ShowNativeAdTime"));
-            timeAdapter.notifyDataSetChanged();
-        }
+    protected void onStop() {
+        HSGlobalNotificationCenter.removeObserver(iNotificationObserver);
+        super.onStop();
     }
 
+    public int getAdFrequency() {
+        return HSConfig.optInteger(0, "Application", "NativeAds", "FetchAdInterval");
+    }
 
     static class TimeAdapter extends BaseAdapter {
 
         private Context context;
         private final List<String> times;
 
-        public TimeAdapter(Context context, List<String> times){
+        public TimeAdapter(Context context, List<String> times) {
             this.times = times;
             this.context = context;
         }
@@ -215,13 +246,12 @@ public class MainActivity extends HSActivity implements INotificationObserver {
         @Override
         public View getView(int position, View convertView, ViewGroup parent) {
             ViewHolder holder;
-            if(convertView == null){
+            if (convertView == null) {
                 convertView = new TextView(context);
                 holder = new ViewHolder();
                 holder.time = (TextView) convertView;
                 convertView.setTag(holder);
-            }
-            else {
+            } else {
                 holder = (ViewHolder) convertView.getTag();
             }
             holder.time.setText(times.get(position));

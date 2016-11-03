@@ -23,7 +23,7 @@
 
 
         <activity android:name=".adactivities.MainActivity"/>
-        <activity android:name=".adactivities.SecondActivity"/>
+
         <meta-data
             android:name="com.facebook.sdk.ApplicationId"
             android:value="@string/fb_app_id" />
