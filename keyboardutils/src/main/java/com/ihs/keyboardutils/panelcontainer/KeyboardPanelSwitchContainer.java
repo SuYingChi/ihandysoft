@@ -73,7 +73,7 @@ public class KeyboardPanelSwitchContainer extends RelativeLayout implements IPan
             } else {
                 if (currentPanel.isAutoRelease()) {
                     panelView.removeView(currentPanel.getPanel().getPanelView());
-                    panelMap.remove(currentPanel.getClass());
+                    panelMap.remove(currentPanel.getPanel().getClass());
                     currentPanel = null;
                     System.gc();
                     HSLog.e("cause GC");
