@@ -23,4 +23,10 @@
         android:layout_height="wrap_content"
         android:onClick="startAds"
         android:text="Native Ad Demo" />
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:onClick="startGifDemoAct"
+        android:text="startGifDemoAct" />
 </LinearLayout>

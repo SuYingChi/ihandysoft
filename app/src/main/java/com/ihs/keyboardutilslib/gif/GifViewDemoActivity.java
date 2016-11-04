@@ -1,12 +1,14 @@
 package com.ihs.keyboardutilslib.gif;
 
-import android.graphics.drawable.Drawable;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 
 import com.ihs.app.framework.HSApplication;
 import com.ihs.app.framework.activity.HSActivity;
@@ -15,17 +17,43 @@ import com.ihs.keyboardutilslib.R;
 
 import java.util.Random;
 
-import pl.droidsonroids.gif.GifDrawable;
-
 /**
  * Created by jixiang on 16/11/3.
  */
 
 public class GifViewDemoActivity extends HSActivity {
     private HSGifImageView hsGifImageView;
+    private HSGifImageView hsGifImageView2;
     private RecyclerView recyclerView;
     private int column = 2;
     private int count = 20;
+
+    private final static int WHAT_LOOP = 1;
+    private int loopNum = 0;
+    private Handler handler = new Handler(){
+        @Override
+        public void handleMessage(Message msg) {
+            switch (msg.what){
+                case WHAT_LOOP:
+                    if(loopNum < 1000) {
+                        switch (loopNum % 3) {
+                            case 0:
+                                hsGifImageView.setImageResource(R.raw.halloween);
+                                break;
+                            case 1:
+                                hsGifImageView.setImageResource(R.raw.shutup);
+                                break;
+                            case 2:
+                                hsGifImageView.setImageDrawable(null);
+                                break;
+                        }
+                        loopNum++;
+                        sendEmptyMessageDelayed(WHAT_LOOP,300);
+                    }
+                    break;
+            }
+        }
+    };
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -37,29 +65,38 @@ public class GifViewDemoActivity extends HSActivity {
 
     private void initView() {
         hsGifImageView = (HSGifImageView) findViewById(R.id.gif_image_view);
+        hsGifImageView2 = (HSGifImageView) findViewById(R.id.gif_image_view2);
         recyclerView = (RecyclerView) findViewById(R.id.recycler_view);
 
     }
 
-    public void showOneGif(View view) {
+    public void showLeftGif(View view) {
         hsGifImageView.setImageResource(R.raw.fml);
 
     }
-    public void recycleOneGif(View view) {
-        Drawable drawable = hsGifImageView.getDrawable();
-        if (drawable != null) {
-            if (drawable instanceof GifDrawable) {
-                ((GifDrawable) drawable).recycle();
-            }
-            hsGifImageView.setImageDrawable(null);
-        }
+
+    public void releaseLeft(View view) {
+        hsGifImageView.setImageDrawable(null);
     }
 
-    public void showAndRecycleOneGif(View view) {
-        for(int i = 0;i<1000;i++) {
-            showOneGif(null);
-            recycleOneGif(null);
-        }
+    public void showRightGif(View view) {
+        hsGifImageView2.setImageResource(R.raw.fml);
+    }
+
+
+    public void stopLeftGif(View view) {
+        hsGifImageView.stop();
+
+    }
+    public void startLeftGif(View view) {
+        hsGifImageView.start();
+
+    }
+
+    public void loopShowGif(View view) {
+        loopNum = 0;
+        handler.removeCallbacksAndMessages(null);
+        handler.sendEmptyMessage(WHAT_LOOP);
     }
 
     public void showGifList(View view) {
@@ -77,6 +114,13 @@ public class GifViewDemoActivity extends HSActivity {
         recyclerView.setAdapter(gifAdapter);
         gifAdapter.notifyDataSetChanged();
     }
+    public void changeGifListRadio(View view) {
+        GifAdapter gifAdapter = new GifAdapter(count,column);
+        gifAdapter.setRatio(1.0f);
+        recyclerView.setLayoutManager(new GridLayoutManager(HSApplication.getContext(),column));
+        recyclerView.setAdapter(gifAdapter);
+        gifAdapter.notifyDataSetChanged();
+    }
 
     public class GifAdapter extends RecyclerView.Adapter<GifViewHolder> {
         private int[] resIds = new int[]{R.raw.fml, R.raw.halloween, R.raw.raw, R.raw.raw_2, R.raw.raw_3,
@@ -84,6 +128,7 @@ public class GifViewDemoActivity extends HSActivity {
         private int winWidth;
         private int count;
         private int column;
+        private float ratio = 0.7f;
 
         public GifAdapter(int count,int column) {
             winWidth = HSApplication.getContext().getResources().getDisplayMetrics().widthPixels;
@@ -91,14 +136,24 @@ public class GifViewDemoActivity extends HSActivity {
             this.column = column;
         }
 
+        public void setRatio(float ratio){
+            this.ratio = ratio;
+        }
+
         @Override
         public GifViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
             View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.gif_view_item, parent, false);
             ViewGroup.MarginLayoutParams layoutParams = (ViewGroup.MarginLayoutParams) view.getLayoutParams();
             layoutParams.width = winWidth / column;
-            layoutParams.height = (int) (layoutParams.width * 0.7);
+            layoutParams.height = (int) (layoutParams.width * ratio);
             layoutParams.setMargins(5, 5, 5, 5);
             GifViewHolder gifViewHolder = new GifViewHolder(view);
+
+            if(ratio == 1.0){
+                gifViewHolder.setScaleType(ImageView.ScaleType.CENTER_CROP);
+            }else {
+                gifViewHolder.setScaleType(ImageView.ScaleType.FIT_CENTER);
+            }
             return gifViewHolder;
         }
 
@@ -120,6 +175,10 @@ public class GifViewDemoActivity extends HSActivity {
         public GifViewHolder(View itemView) {
             super(itemView);
             hsGifImageView = (HSGifImageView) itemView.findViewById(R.id.gif_item);
+        }
+
+        public void setScaleType(ImageView.ScaleType scaleType){
+            hsGifImageView.setScaleType(scaleType);
         }
     }
 }

@@ -13,15 +13,32 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:onClick="showOneGif"
-            android:text="showOneGif" />
+            android:onClick="showLeftGif"
+            android:text="showLeftGif" />
+
 
         <Button
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:onClick="recycleOneGif"
-            android:text="recycleOneGif" />
+            android:onClick="showRightGif"
+            android:text="showRightGif" />
+
+
+        <Button
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:onClick="stopLeftGif"
+            android:text="stopLeft" />
+
+
+        <Button
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:onClick="startLeftGif"
+            android:text="startLeft" />
 
     </LinearLayout>
 
@@ -34,22 +51,29 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:onClick="showAndRecycleOneGif"
-            android:text="showAndRecycleOneGif" />
+            android:onClick="loopShowGif"
+            android:text="loopShow" />
 
         <Button
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:onClick="showGifList"
-            android:text="showGifList" />
+            android:text="showList" />
 
         <Button
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:onClick="randomShowGifList"
-            android:text="randomShowGifList" />
+            android:text="randomShowList" />
+
+        <Button
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:onClick="changeGifListRadio"
+            android:text="changeRadio" />
 
     </LinearLayout>
 
@@ -59,10 +83,23 @@
         android:layout_height="match_parent"
         android:orientation="vertical">
 
-        <com.ihs.keyboardutils.view.HSGifImageView
-            android:id="@+id/gif_image_view"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <com.ihs.keyboardutils.view.HSGifImageView
+                android:id="@+id/gif_image_view"
+                android:layout_width="100dp"
+                android:layout_height="80dp" />
+
+            <com.ihs.keyboardutils.view.HSGifImageView
+                android:id="@+id/gif_image_view2"
+                android:scaleType="centerCrop"
+                android:layout_width="80dp"
+                android:layout_height="80dp" />
+
+        </LinearLayout>
 
         <android.support.v7.widget.RecyclerView
             android:id="@+id/recycler_view"

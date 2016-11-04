@@ -2,11 +2,11 @@ package com.ihs.keyboardutilslib;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 
 import com.ihs.app.framework.activity.HSActivity;
 import com.ihs.keyboardutils.nativeads.NativeAdManager;
+import com.ihs.keyboardutilslib.gif.GifViewDemoActivity;
 import com.ihs.keyboardutilslib.panelcontainer.PanelContainerActivity;
 
 public class MainActivity extends HSActivity {
@@ -23,6 +23,11 @@ public class MainActivity extends HSActivity {
 
     public void startAds(View view){
         startActivity(new Intent(this, com.ihs.keyboardutilslib.adactivities.MainActivity.class));
+    }
+
+
+    public void startGifDemoAct(View view){
+        startActivity(new Intent(this, GifViewDemoActivity.class));
     }
 
 
