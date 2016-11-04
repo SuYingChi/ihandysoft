@@ -1,4 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <item name="tab_bar_id" type="id" />
+    <item name="container_bar_id" type="id" />
+    <item name="container_panel_id" type="id" />
 </resources>
