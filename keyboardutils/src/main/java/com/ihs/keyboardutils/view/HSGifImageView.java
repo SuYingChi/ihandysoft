@@ -50,6 +50,10 @@ public class HSGifImageView extends FrameLayout {
         mGifImageView.setScaleType(scaleType);
     }
 
+    public ImageView.ScaleType getScaleType() {
+        return mGifImageView.getScaleType();
+    }
+
     public void setImageDrawable(Drawable drawable){
         mGifImageView.setImageDrawable(drawable);
     }
