@@ -26,7 +26,7 @@ public class GifViewDemoActivity extends HSActivity {
     private HSGifImageView hsGifImageView2;
     private RecyclerView recyclerView;
     private int column = 2;
-    private int count = 20;
+    private int count = 200;
 
     private final static int WHAT_LOOP = 1;
     private int loopNum = 0;
@@ -44,7 +44,7 @@ public class GifViewDemoActivity extends HSActivity {
                                 hsGifImageView.setImageResource(R.raw.shutup);
                                 break;
                             case 2:
-                                hsGifImageView.setImageDrawable(null);
+                                hsGifImageView.clear();
                                 break;
                         }
                         loopNum++;
@@ -76,7 +76,7 @@ public class GifViewDemoActivity extends HSActivity {
     }
 
     public void releaseLeft(View view) {
-        hsGifImageView.setImageDrawable(null);
+        hsGifImageView.clear();
     }
 
     public void showRightGif(View view) {
