@@ -21,10 +21,10 @@
             </intent-filter>
         </activity>
 
-        <activity android:name=".gif.GifViewDemoActivity"/>
+        <activity android:name=".gif.GifViewDemoActivity" />
 
 
-        <activity android:name=".adactivities.MainActivity"/>
+        <activity android:name=".adactivities.MainActivity" />
 
         <meta-data
             android:name="com.facebook.sdk.ApplicationId"
@@ -38,6 +38,8 @@
 
         <activity android:name=".panelcontainer.PanelContainerActivity" />
 
+
+        <activity android:name=".panelcontainer.CommonTabActivity" />
     </application>
 
 </manifest>

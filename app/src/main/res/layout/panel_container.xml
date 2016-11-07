@@ -11,14 +11,14 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:gravity="center_horizontal"
-        android:text="Outer Panel" />
+        android:text="首页 Panel" />
 
     <TextView
         android:id="@+id/text_panel"
         android:layout_width="match_parent"
         android:layout_height="400dp"
         android:gravity="center"
-        android:text="Click panel to hide or show tab Bar"
+        android:text="点击隐藏bar并扩展panel"
         android:textColor="@android:color/black"
         android:textSize="24sp"
         android:layout_alignParentTop="true"

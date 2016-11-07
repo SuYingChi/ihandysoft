@@ -21,4 +21,9 @@
         android:text="Click to hide or show panel"
         android:textColor="@android:color/black"
         android:textSize="24sp" />
+
+    <Button
+        android:id="@+id/btn_demo5_back"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
 </LinearLayout>

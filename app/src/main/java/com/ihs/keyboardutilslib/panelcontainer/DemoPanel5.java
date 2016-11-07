@@ -28,6 +28,13 @@ public class DemoPanel5 extends BasePanel {
                 containerListener.setBarVisibility(hidePanel, false);
             }
         });
+
+        rootView.findViewById(R.id.btn_demo5_back).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+            }
+        });
         return rootView;
     }
 }

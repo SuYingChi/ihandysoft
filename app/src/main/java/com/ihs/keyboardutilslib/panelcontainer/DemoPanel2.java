@@ -29,6 +29,13 @@ public class DemoPanel2 extends BasePanel {
             }
         });
 
+        rootView.findViewById(R.id.btn_demo2_jmp).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                showChildPanel(DemoPanel5.class);
+            }
+        });
+
         setAutoRelease(true);
         return rootView;
     }

@@ -58,7 +58,7 @@ public class PanelContainerActivity extends Activity {
 
     private void initInnerPanle(View innerBar) {
         innerBar.setBackgroundColor(getResources().getColor(black));
-        contain = new KeyboardPanelSwitchContainer(KeyboardPanelSwitchContainer.BAR_BOTTOM);
+        contain = new KeyboardPanelSwitchContainer();
         contain.setBarView(innerBar);
         contain.showPanel(DemoPanel5.class);
         innerBar.findViewById(R.id.btn_show4).setVisibility(View.GONE);
@@ -91,7 +91,7 @@ public class PanelContainerActivity extends Activity {
     }
 
     private void initOuter(View outerBar) {
-        panelContainer = new KeyboardPanelSwitchContainer(KeyboardPanelSwitchContainer.BAR_TOP);
+        panelContainer = new KeyboardPanelSwitchContainer();
         panelContainer.setBarView(outerBar);
         rootView.addView(panelContainer);
         panelContainer.showPanel(DemoPanel.class);

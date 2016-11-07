@@ -7,7 +7,7 @@ import android.view.View;
 import com.ihs.app.framework.activity.HSActivity;
 import com.ihs.keyboardutils.nativeads.NativeAdManager;
 import com.ihs.keyboardutilslib.gif.GifViewDemoActivity;
-import com.ihs.keyboardutilslib.panelcontainer.PanelContainerActivity;
+import com.ihs.keyboardutilslib.panelcontainer.CommonTabActivity;
 
 public class MainActivity extends HSActivity {
 
@@ -18,7 +18,7 @@ public class MainActivity extends HSActivity {
     }
 
     public void startPanelContainer(View view) {
-        startActivity(new Intent(this, PanelContainerActivity.class));
+        startActivity(new Intent(this, CommonTabActivity.class));
     }
 
     public void startAds(View view){

@@ -25,17 +25,21 @@ public class KeyboardPanelSwitchContainer extends RelativeLayout implements Base
     public static final int BAR_TOP = RelativeLayout.ABOVE;
     public static final int BAR_BOTTOM = RelativeLayout.BELOW;
 
-    private int barPosition = BAR_BOTTOM;
+    public interface OnPanelChangedListener {
+
+        void onPanelChanged(Class panelClass);
+    }
+
+    private int barPosition = BAR_TOP;
+    private OnPanelChangedListener onPanelChangedListener;
     private FrameLayout barView = null;
     private FrameLayout panelView = null;
     private PanelBean currentPanel = null;
     private Map<Class, PanelBean> panelMap = new HashMap<>();
     private ArrayList panelStack = new ArrayList();
 
-    public KeyboardPanelSwitchContainer(int barPosition) {
+    public KeyboardPanelSwitchContainer() {
         super(HSApplication.getContext());
-        this.barPosition = barPosition;
-
         barView = new FrameLayout(getContext());
         barView.setId(R.id.container_bar_id);
 
@@ -121,6 +125,10 @@ public class KeyboardPanelSwitchContainer extends RelativeLayout implements Base
             layoutParams = new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
         }
         panelView.addView(view, layoutParams);
+
+        if (onPanelChangedListener != null) {
+            onPanelChangedListener.onPanelChanged(panelClass);
+        }
     }
 
 
@@ -138,7 +146,6 @@ public class KeyboardPanelSwitchContainer extends RelativeLayout implements Base
         if (layoutParams == null) {
             layoutParams = new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
         }
-
         barView.addView(view, layoutParams);
     }
 
@@ -167,21 +174,25 @@ public class KeyboardPanelSwitchContainer extends RelativeLayout implements Base
         if (barParams == null || panelParams == null) {
             needAddView = true;
             barParams = new LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
-            panelParams = new LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+            panelParams = new LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT);
         }
 
         switch (barPosition) {
             case BAR_TOP:
+                panelParams.addRule(ALIGN_PARENT_TOP, 0);
                 panelParams.addRule(ABOVE, 0);
                 barParams.addRule(ALIGN_PARENT_BOTTOM, 0);
 
-                barParams.addRule(ABOVE, panelView.getId());
+                barParams.addRule(ALIGN_PARENT_TOP, TRUE);
+                panelParams.addRule(BELOW, barView.getId());
                 panelParams.addRule(ALIGN_PARENT_BOTTOM, TRUE);
                 break;
             case BAR_BOTTOM:
-                barParams.addRule(ABOVE, 0);
+                barParams.addRule(ALIGN_PARENT_TOP, 0);
+                panelParams.addRule(BELOW, 0);
                 panelParams.addRule(ALIGN_PARENT_BOTTOM, 0);
 
+                panelParams.addRule(ALIGN_PARENT_TOP, TRUE);
                 panelParams.addRule(ABOVE, barView.getId());
                 barParams.addRule(ALIGN_PARENT_BOTTOM, TRUE);
                 break;
@@ -217,5 +228,19 @@ public class KeyboardPanelSwitchContainer extends RelativeLayout implements Base
     @Override
     public void showChildPanel(Class panelClass) {
         showPanelAndKeepSelf(panelClass);
+    }
+
+
+    protected int dp2px(float dp) {
+        final float scale = HSApplication.getContext().getResources().getDisplayMetrics().density;
+        return (int) (dp * scale + 0.5f);
+    }
+
+    public void setOnPanelChangedListener(OnPanelChangedListener onPanelChangedListener) {
+        if (onPanelChangedListener != null) {
+            this.onPanelChangedListener = onPanelChangedListener;
+        } else {
+            throw new IllegalArgumentException("OnPanelChangedListener can not be null");
+        }
     }
 }
