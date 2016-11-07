@@ -38,7 +38,7 @@ public class HSGifImageView extends FrameLayout {
         addView(mGifImageView,new LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
     }
 
-    public void setImageResource(Uri uri){
+    public void setImageURI(Uri uri){
         mGifImageView.setImageURI(uri);
     }
 
@@ -50,8 +50,8 @@ public class HSGifImageView extends FrameLayout {
         mGifImageView.setScaleType(scaleType);
     }
 
-    public void setImageDrawable(Drawable drawable){
-        mGifImageView.setImageDrawable(drawable);
+    public ImageView.ScaleType getScaleType() {
+        return mGifImageView.getScaleType();
     }
 
     public void stop(){
@@ -66,6 +66,17 @@ public class HSGifImageView extends FrameLayout {
         if(gifDrawable!=null){
             gifDrawable.start();
         }
+    }
+
+    /**
+     * recycle gif drawable and set image drawable null
+     */
+    public void clear(){
+        GifDrawable gifDrawable = getGifDrawable();
+        if(gifDrawable!=null){
+            gifDrawable.recycle();
+        }
+        mGifImageView.setImageDrawable(null);
     }
 
     private GifDrawable getGifDrawable(){
