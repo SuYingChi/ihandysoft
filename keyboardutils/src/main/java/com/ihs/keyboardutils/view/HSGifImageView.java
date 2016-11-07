@@ -38,7 +38,7 @@ public class HSGifImageView extends FrameLayout {
         addView(mGifImageView,new LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
     }
 
-    public void setImageResource(Uri uri){
+    public void setImageURI(Uri uri){
         mGifImageView.setImageURI(uri);
     }
 
@@ -67,6 +67,12 @@ public class HSGifImageView extends FrameLayout {
             gifDrawable.start();
         }
     }
+    private void release(){
+        GifDrawable gifDrawable = getGifDrawable();
+        if(gifDrawable!=null){
+            gifDrawable.start();
+        }
+    }
 
     private GifDrawable getGifDrawable(){
         Drawable drawable = mGifImageView.getDrawable();
@@ -78,4 +84,41 @@ public class HSGifImageView extends FrameLayout {
         return null;
     }
 
+
+    private void onAttach() {
+
+    }
+
+    /**
+     * handle view detach from window behaviour,inspiration from fresco
+     */
+    private void onDetach(){
+        release();
+        setImageDrawable(null);
+    }
+
+    @Override
+    protected void onAttachedToWindow() {
+        super.onAttachedToWindow();
+        onAttach();
+    }
+
+
+    @Override
+    protected void onDetachedFromWindow() {
+        super.onDetachedFromWindow();
+        onDetach();
+    }
+
+    @Override
+    public void onStartTemporaryDetach() {
+        super.onStartTemporaryDetach();
+        onDetach();
+    }
+
+    @Override
+    public void onFinishTemporaryDetach() {
+        super.onFinishTemporaryDetach();
+        onAttach();
+    }
 }
