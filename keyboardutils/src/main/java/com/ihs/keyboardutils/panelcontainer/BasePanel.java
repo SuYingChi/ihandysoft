@@ -10,13 +10,24 @@ import com.ihs.app.framework.HSApplication;
  */
 
 public class BasePanel {
+    public interface OnStateChangedListener {
+        void setBarVisibility(boolean hide, boolean expandPanel);
+
+        void setBarPosition(int position);
+
+        void showChildPanel(Class panelClass);
+    }
+
     protected Context context = HSApplication.getContext();
     protected View rootView = null;
+    protected OnStateChangedListener containerListener;
 
-    protected IPanelSwitcher iPanelSwitcher;
+    private KeyboardPanelSwitchContainer childContainer;
 
-    public BasePanel(IPanelSwitcher iPanelSwitcher) {
-        this.iPanelSwitcher = iPanelSwitcher;
+    private boolean autoRelease = true;
+
+    public BasePanel(OnStateChangedListener containerListener) {
+        this.containerListener = containerListener;
     }
 
     public View onCreatePanelView() {
@@ -26,4 +37,18 @@ public class BasePanel {
     public View getPanelView() {
         return rootView;
     }
+
+
+    public void showChildPanel(Class panelClass) {
+        containerListener.showChildPanel(panelClass);
+    }
+
+    public boolean isAutoRelease() {
+        return autoRelease;
+    }
+
+    public void setAutoRelease(boolean autoRelease) {
+        this.autoRelease = autoRelease;
+    }
+
 }

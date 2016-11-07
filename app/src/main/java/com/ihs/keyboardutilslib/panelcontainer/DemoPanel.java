@@ -3,17 +3,16 @@ package com.ihs.keyboardutilslib.panelcontainer;
 import android.view.LayoutInflater;
 import android.view.View;
 
-import com.ihs.keyboardutilslib.R;
 import com.ihs.keyboardutils.panelcontainer.BasePanel;
-import com.ihs.keyboardutils.panelcontainer.IPanelSwitcher;
+import com.ihs.keyboardutilslib.R;
 
 /**
  * Created by Arthur on 16/10/24.
  */
 
 public class DemoPanel extends BasePanel {
-    public DemoPanel(IPanelSwitcher iPanelSwitcher) {
-        super(iPanelSwitcher);
+    public DemoPanel(OnStateChangedListener barListener) {
+        super(barListener);
     }
 
     private boolean hidePanel = false;
@@ -26,7 +25,7 @@ public class DemoPanel extends BasePanel {
             @Override
             public void onClick(View v) {
                 hidePanel = !hidePanel;
-                iPanelSwitcher.setTabBarVisibility(hidePanel, true);
+                containerListener.setBarVisibility(hidePanel, true);
             }
         });
         return rootView;

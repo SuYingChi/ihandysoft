@@ -12,6 +12,7 @@ import com.ihs.app.framework.HSApplication;
 import com.ihs.commons.utils.HSLog;
 import com.ihs.keyboardutils.R;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -19,7 +20,7 @@ import java.util.Map;
  * Created by Arthur on 16/10/21.
  */
 
-public class KeyboardPanelSwitchContainer extends RelativeLayout implements IPanelSwitcher {
+public class KeyboardPanelSwitchContainer extends RelativeLayout implements BasePanel.OnStateChangedListener {
 
     public static final int BAR_TOP = RelativeLayout.ABOVE;
     public static final int BAR_BOTTOM = RelativeLayout.BELOW;
@@ -29,6 +30,7 @@ public class KeyboardPanelSwitchContainer extends RelativeLayout implements IPan
     private FrameLayout panelView = null;
     private PanelBean currentPanel = null;
     private Map<Class, PanelBean> panelMap = new HashMap<>();
+    private ArrayList panelStack = new ArrayList();
 
     public KeyboardPanelSwitchContainer(int barPosition) {
         super(HSApplication.getContext());
@@ -61,6 +63,20 @@ public class KeyboardPanelSwitchContainer extends RelativeLayout implements IPan
     }
 
     public void showPanel(Class panelClass, boolean autoRelease) {
+
+        addNewPanel(panelClass, autoRelease, false);
+    }
+
+
+    public void showPanelAndKeepSelf(Class panelClass) {
+        showPanelAndKeepSelf(panelClass, true);
+    }
+
+    public void showPanelAndKeepSelf(Class panelClass, boolean autoRelease) {
+        addNewPanel(panelClass, autoRelease, true);
+    }
+
+    private void addNewPanel(Class panelClass, boolean autoRelease, boolean keepCurrent) {
         if (!BasePanel.class.isAssignableFrom(panelClass)) {
             Log.e("panelCOntainer", "wrong type");
             return;
@@ -71,7 +87,7 @@ public class KeyboardPanelSwitchContainer extends RelativeLayout implements IPan
                 Log.e("panel", "panel Showed");
                 return;
             } else {
-                if (currentPanel.isAutoRelease()) {
+                if (!keepCurrent && currentPanel.isAutoRelease()) {
                     panelView.removeView(currentPanel.getPanel().getPanelView());
                     panelMap.remove(currentPanel.getPanel().getClass());
                     currentPanel = null;
@@ -86,7 +102,7 @@ public class KeyboardPanelSwitchContainer extends RelativeLayout implements IPan
             panel = panelMap.get(panelClass).getPanel();
         } else {
             try {
-                panel = (BasePanel) panelClass.getConstructor(IPanelSwitcher.class).newInstance(this);
+                panel = (BasePanel) panelClass.getConstructor(BasePanel.OnStateChangedListener.class).newInstance(this);
             } catch (Exception e) {
                 e.printStackTrace();
                 return;
@@ -126,19 +142,6 @@ public class KeyboardPanelSwitchContainer extends RelativeLayout implements IPan
         barView.addView(view, layoutParams);
     }
 
-
-    @Override
-    public void setTabBarVisibility(boolean hide, boolean expandPanel) {
-        if (hide) {
-            if (expandPanel) {
-                barView.setVisibility(GONE);
-            } else {
-                barView.setVisibility(INVISIBLE);
-            }
-        } else {
-            barView.setVisibility(VISIBLE);
-        }
-    }
 
     public void addMoreContainer(View container) {
         if (container.getParent() != null) {
@@ -192,5 +195,27 @@ public class KeyboardPanelSwitchContainer extends RelativeLayout implements IPan
         }
     }
 
+    @Override
+    public void setBarVisibility(boolean hide, boolean expandPanel) {
+        if (hide) {
+            if (expandPanel) {
+                barView.setVisibility(GONE);
+            } else {
+                barView.setVisibility(INVISIBLE);
+            }
+        } else {
+            barView.setVisibility(VISIBLE);
+        }
+    }
 
+    @Override
+    public void setBarPosition(int position) {
+        barPosition = position;
+        adjustViewPosition();
+    }
+
+    @Override
+    public void showChildPanel(Class panelClass) {
+        showPanelAndKeepSelf(panelClass);
+    }
 }
