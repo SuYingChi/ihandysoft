@@ -108,6 +108,7 @@ public class MainActivity extends HSActivity {
 
                 AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
                 builder.setTitle("广告池状态");
+
                 //    设置一个下拉的列表选择项
                 ArrayList<String> poolStates = new ArrayList<String>();
                 for (NativeAdManager.NativeAdProxy nativeAdProxy : getAllPoolState()) {
@@ -145,73 +146,55 @@ public class MainActivity extends HSActivity {
         adTimes.clear();
         timeAdapter.notifyDataSetChanged();
         if (NativeAdManager.getInstance().existNativeAd(poolName)) {
-            refreshNativeAdView.setConfigParams(poolName, R.layout.ad_style_1, getAdFrequency(), new NativeAdView.NativeAdListener() {
-                @Override
-                public void onNativeAdShowed() {
-                    for (NativeAdManager.NativeAdProxy nativeAdProxy : getAllPoolState()) {
-                        if (nativeAdProxy.toString().startsWith(poolName)) {
-                            adPoolInfo.setText(nativeAdProxy.toString());
-                            SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
-                            adTimes.add(0, simpleDateFormat.format(new Date()));
-                            timeAdapter.notifyDataSetChanged();
-                            break;
-                        }
-                    }
-                }
-
-                @Override
-                public void onNativeAdClicked() {
-
-                }
-            });
+            refreshNativeAdView.setConfigParams(poolName, R.layout.ad_style_1, getAdFrequency());
             if(adContainer.findViewWithTag("Refresh") == null) {
                 adContainer.addView(refreshNativeAdView);
             }
-
         } else {
-            addObserver();
+            HSGlobalNotificationCenter.addObserver(NativeAdManager.NOTIFICATION_NEW_AD, iNotificationObserver);
         }
     }
 
     INotificationObserver iNotificationObserver = new INotificationObserver() {
         @Override
         public void onReceive(String s, HSBundle hsBundle) {
-            if (poolName.equals(s)) {
-                HSGlobalNotificationCenter.removeObserver(iNotificationObserver);
-                refreshNativeAdView.setConfigParams(poolName, R.layout.ad_style_1, getAdFrequency(), new NativeAdView.NativeAdListener() {
-                    @Override
-                    public void onNativeAdShowed() {
-                        for (NativeAdManager.NativeAdProxy nativeAdProxy : getAllPoolState()) {
-                            if (nativeAdProxy.toString().startsWith(poolName)) {
-                                adPoolInfo.setText(nativeAdProxy.toString());
-                                SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
-                                adTimes.add(0, simpleDateFormat.format(new Date()));
-                                timeAdapter.notifyDataSetChanged();
-                                break;
-                            }
-                        }
+            if (NativeAdManager.NOTIFICATION_NEW_AD.equals(s)) {
+                if (poolName.equals(hsBundle.getString(NativeAdManager.NATIVE_AD_POOL_NAME))) {
+                    HSGlobalNotificationCenter.removeObserver(NativeAdManager.NOTIFICATION_NEW_AD, iNotificationObserver);
+                    refreshNativeAdView.setConfigParams(poolName, R.layout.ad_style_1, getAdFrequency());
+                    if (adContainer.findViewWithTag("Refresh") == null) {
+                        adContainer.addView(refreshNativeAdView);
                     }
-
-                    @Override
-                    public void onNativeAdClicked() {
-
-                    }
-                });
-                if(adContainer.findViewWithTag("Refresh") == null) {
-                    adContainer.addView(refreshNativeAdView);
                 }
+            }
+            else if(NativeAdView.NOTIFICATION_NATIVE_AD_SHOWED.equals(s)){
+                for (NativeAdManager.NativeAdProxy nativeAdProxy : getAllPoolState()) {
+                    if (nativeAdProxy.toString().startsWith(poolName)) {
+                        adPoolInfo.setText(nativeAdProxy.toString());
+                        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
+                        adTimes.add(0, simpleDateFormat.format(new Date()) + " : " + (hsBundle.getBoolean("Flag") ? "old" : "new"));
+                        timeAdapter.notifyDataSetChanged();
+                        break;
+                    }
+                }
+            }
+            else if(NativeAdView.NOTIFICATION_NATIVE_AD_CLIKED.equals(s)) {
+
             }
         }
     };
 
-    private void addObserver() {
-        HSGlobalNotificationCenter.addObserver(poolName, iNotificationObserver);
+    @Override
+    protected void onPause() {
+        HSGlobalNotificationCenter.removeObserver(iNotificationObserver);
+        super.onPause();
     }
 
     @Override
-    protected void onStop() {
-        HSGlobalNotificationCenter.removeObserver(iNotificationObserver);
-        super.onStop();
+    protected void onResume() {
+        super.onResume();
+        HSGlobalNotificationCenter.addObserver(NativeAdView.NOTIFICATION_NATIVE_AD_SHOWED, iNotificationObserver);
+        HSGlobalNotificationCenter.addObserver(NativeAdView.NOTIFICATION_NATIVE_AD_CLIKED, iNotificationObserver);
     }
 
     public int getAdFrequency() {
