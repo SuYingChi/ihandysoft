@@ -32,7 +32,7 @@ public class DemoPanel5 extends BasePanel {
         rootView.findViewById(R.id.btn_demo5_back).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                containerListener.backToParentPanel();
             }
         });
         return rootView;

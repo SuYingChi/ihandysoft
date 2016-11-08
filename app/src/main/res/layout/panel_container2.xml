@@ -22,7 +22,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:gravity="center_horizontal"
-        android:text="消息 Panel"
+        android:text="动图 Panel"
         android:textColor="@android:color/black"
         android:textSize="24sp" />
 
@@ -31,8 +31,6 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
-        android:text="跳转到更多并不释放自己"
-        android:onClick="jumpToChild"
-        />
+        android:text="跳转到设置并保留自己" />
 
 </RelativeLayout>

@@ -14,15 +14,15 @@
         android:layout_alignParentStart="true"
         android:layout_centerVertical="true"
         android:gravity="center"
-        android:text="Click panel to hide or show tab Bar"
+        android:text="点击添加自定义大小的keyboard"
         android:textColor="@android:color/black"
         android:textSize="24sp" />
 
     <TextView
-        android:textSize="24sp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:gravity="center_horizontal"
-        android:text="Outer Panel" />
+        android:text="字体 Panel"
+        android:textSize="24sp" />
 
 </RelativeLayout>

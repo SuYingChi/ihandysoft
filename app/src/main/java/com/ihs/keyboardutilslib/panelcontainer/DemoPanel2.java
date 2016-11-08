@@ -35,8 +35,6 @@ public class DemoPanel2 extends BasePanel {
                 showChildPanel(DemoPanel5.class);
             }
         });
-
-        setAutoRelease(true);
         return rootView;
     }
 }

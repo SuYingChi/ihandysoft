@@ -2,6 +2,7 @@ package com.ihs.keyboardutils.panelcontainer;
 
 import android.content.Context;
 import android.view.View;
+import android.view.ViewGroup;
 
 import com.ihs.app.framework.HSApplication;
 
@@ -16,6 +17,10 @@ public class BasePanel {
         void setBarPosition(int position);
 
         void showChildPanel(Class panelClass);
+
+        void backToParentPanel();
+
+        View getKeyboardView();
     }
 
     protected Context context = HSApplication.getContext();
@@ -24,7 +29,8 @@ public class BasePanel {
 
     private KeyboardPanelSwitchContainer childContainer;
 
-    private boolean autoRelease = true;
+
+    private boolean isKeyboardPanel = false;
 
     public BasePanel(OnStateChangedListener containerListener) {
         this.containerListener = containerListener;
@@ -34,8 +40,12 @@ public class BasePanel {
         return null;
     }
 
-    public View getPanelView() {
-        return rootView;
+    public ViewGroup getPanelView() {
+        return (ViewGroup) rootView;
+    }
+
+    public void setPanelView(View rootView) {
+        this.rootView = rootView;
     }
 
 
@@ -43,12 +53,20 @@ public class BasePanel {
         containerListener.showChildPanel(panelClass);
     }
 
-    public boolean isAutoRelease() {
-        return autoRelease;
+
+    public boolean isKeyboardPanel() {
+        return isKeyboardPanel;
     }
 
-    public void setAutoRelease(boolean autoRelease) {
-        this.autoRelease = autoRelease;
+    public void setIsKeyboardPanel(boolean keyboardPanel) {
+        isKeyboardPanel = keyboardPanel;
     }
 
+    public void setBarVisibility(boolean hide, boolean expandPanel) {
+        containerListener.setBarVisibility(hide, expandPanel);
+    }
+
+    public View getKeyboardView() {
+        return containerListener.getKeyboardView();
+    }
 }

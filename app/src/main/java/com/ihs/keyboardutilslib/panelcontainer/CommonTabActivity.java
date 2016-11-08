@@ -7,8 +7,10 @@ import android.os.Handler;
 import android.os.Message;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.FrameLayout;
 
+import com.ihs.keyboardutils.panelcontainer.BasePanel;
 import com.ihs.keyboardutils.panelcontainer.KeyboardPanelSwitchContainer;
 import com.ihs.keyboardutilslib.R;
 import com.ihs.keyboardutilslib.panelcontainer.SwitchTab.CommonTabLayout;
@@ -22,7 +24,7 @@ import java.util.ArrayList;
 public class CommonTabActivity extends Activity {
     private Context mContext = this;
 
-    private String[] mTitles = {"首页", "消息", "联系人", "更多"};
+    private String[] mTitles = {"键盘", "动图", "字体", "设置"};
     private int[] mIconUnselectIds = {
             R.mipmap.tab_home_unselect, R.mipmap.tab_speech_unselect,
             R.mipmap.tab_contact_unselect, R.mipmap.tab_more_unselect};
@@ -38,14 +40,19 @@ public class CommonTabActivity extends Activity {
 
     private ArrayList<Class> panelList = new ArrayList<>();
 
-    private Handler handler =  new Handler(){
+    private Handler handler = new Handler() {
         @Override
         public void handleMessage(Message msg) {
             super.handleMessage(msg);
-
-
+            msg.what++;
+            if (msg.what < 1000) {
+                int i = msg.what % 4;
+                panelContainer.showPanel(panelList.get(i));
+                sendEmptyMessageDelayed(msg.what, 50);
+            }
         }
     };
+    private boolean showKeyboad;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -83,7 +90,6 @@ public class CommonTabActivity extends Activity {
             @Override
             public void onPanelChanged(Class panelClass) {
                 mTabLayout_1.setCurrentTab(panelList.indexOf(panelClass));
-//                mTabLayout_1.
             }
         });
 
@@ -98,10 +104,41 @@ public class CommonTabActivity extends Activity {
 
             }
         });
+        mTabLayout_1.setCurrentTab(0);
+        panelContainer.showPanel(panelList.get(0));
 
 
-        mTabLayout_1.setCurrentTab(1);
-//        panelContainer.showPanel(panelList.get(1));
+        final Button btn_keyboard = (Button) findViewById(R.id.btn_show_keyboard);
+        btn_keyboard.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                showKeyboad = !showKeyboad;
+                if (showKeyboad) {
+                    BasePanel currentPanel = panelContainer.getCurrentPanel();
+                    currentPanel.setBarVisibility(true, true);
+                    currentPanel.getPanelView().addView(panelContainer.getKeyboardView());
+                    btn_keyboard.setText("移除键盘view");
+                } else {
+                    BasePanel currentPanel = panelContainer.getCurrentPanel();
+                    currentPanel.setBarVisibility(false, false);
+                    currentPanel.getPanelView().removeView(panelContainer.getKeyboardView());
+                    btn_keyboard.setText("在当前Panel展示键盘");
+                }
+
+            }
+        });
+
+        findViewById(R.id.btn_loop).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                handler.sendEmptyMessage(0);
+            }
+        });
     }
 
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        handler.removeCallbacksAndMessages(null);
+    }
 }

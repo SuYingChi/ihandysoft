@@ -2,6 +2,7 @@ package com.ihs.keyboardutilslib.panelcontainer;
 
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 
 import com.ihs.keyboardutils.panelcontainer.BasePanel;
 import com.ihs.keyboardutilslib.R;
@@ -25,7 +26,12 @@ public class DemoPanel4 extends BasePanel {
             @Override
             public void onClick(View v) {
                 hidePanel = !hidePanel;
-                containerListener.setBarVisibility(hidePanel, false);
+                if (hidePanel) {
+                    ViewGroup.LayoutParams layoutParams = new ViewGroup.LayoutParams(300, 300);
+                    ((ViewGroup) rootView).addView(getKeyboardView(), layoutParams);
+                } else {
+                    ((ViewGroup) rootView).removeView(getKeyboardView());
+                }
             }
         });
         return rootView;
