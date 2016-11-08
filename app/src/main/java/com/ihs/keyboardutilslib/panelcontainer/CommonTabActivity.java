@@ -112,6 +112,10 @@ public class CommonTabActivity extends Activity {
         btn_keyboard.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                if (panelContainer.getCurrentPanel().isKeyboardPanel()) {
+                    return;
+                }
+
                 showKeyboad = !showKeyboad;
                 if (showKeyboad) {
                     BasePanel currentPanel = panelContainer.getCurrentPanel();
