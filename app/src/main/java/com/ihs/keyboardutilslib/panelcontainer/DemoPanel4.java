@@ -20,7 +20,7 @@ public class DemoPanel4 extends BasePanel {
 
     @Override
     public View onCreatePanelView() {
-        rootView = LayoutInflater.from(context).inflate(R.layout.panel_container4, null);
+        rootView = (ViewGroup) LayoutInflater.from(context).inflate(R.layout.panel_container4, null);
 
         rootView.setOnClickListener(new View.OnClickListener() {
             @Override

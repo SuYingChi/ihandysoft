@@ -2,6 +2,7 @@ package com.ihs.keyboardutilslib.panelcontainer;
 
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 
 import com.ihs.keyboardutils.panelcontainer.BasePanel;
 import com.ihs.keyboardutilslib.R;
@@ -20,7 +21,7 @@ public class DemoPanel extends BasePanel {
 
     @Override
     public View onCreatePanelView() {
-        rootView = LayoutInflater.from(context).inflate(R.layout.panel_container, null);
+        rootView = (ViewGroup) LayoutInflater.from(context).inflate(R.layout.panel_container, null);
 
         rootView.setOnClickListener(new View.OnClickListener() {
             @Override

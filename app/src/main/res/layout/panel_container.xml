@@ -2,7 +2,7 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/transparentBlue"
+    android:background="@color/colorBlue"
     android:orientation="vertical">
 
 
@@ -16,11 +16,11 @@
     <TextView
         android:id="@+id/text_panel"
         android:layout_width="match_parent"
-        android:layout_height="400dp"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
-        android:layout_alignParentTop="true"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:ellipsize="end"
         android:gravity="center"
+        android:maxLines="1"
         android:text="点击隐藏bar并扩展panel"
         android:textColor="@android:color/black"
         android:textSize="24sp" />

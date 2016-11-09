@@ -24,7 +24,7 @@ public class BasePanel {
     }
 
     protected Context context = HSApplication.getContext();
-    protected View rootView = null;
+    protected ViewGroup rootView = null;
     protected OnStateChangedListener containerListener;
 
     private KeyboardPanelSwitchContainer childContainer;
@@ -45,7 +45,7 @@ public class BasePanel {
     }
 
     public void setPanelView(View rootView) {
-        this.rootView = rootView;
+        this.rootView = (ViewGroup) rootView;
     }
 
 

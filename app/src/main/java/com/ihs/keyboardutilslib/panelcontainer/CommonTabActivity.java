@@ -10,6 +10,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.FrameLayout;
 
+import com.ihs.commons.utils.HSLog;
 import com.ihs.keyboardutils.panelcontainer.BasePanel;
 import com.ihs.keyboardutils.panelcontainer.KeyboardPanelSwitchContainer;
 import com.ihs.keyboardutilslib.R;
@@ -97,6 +98,7 @@ public class CommonTabActivity extends Activity {
             @Override
             public void onTabSelect(int position) {
                 panelContainer.showPanel(panelList.get(position));
+                HSLog.e(Runtime.getRuntime().freeMemory() + "");
             }
 
             @Override
@@ -138,6 +140,9 @@ public class CommonTabActivity extends Activity {
                 handler.sendEmptyMessage(0);
             }
         });
+
+
+
     }
 
     @Override

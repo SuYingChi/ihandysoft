@@ -2,8 +2,10 @@ package com.ihs.keyboardutilslib.panelcontainer;
 
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 
 import com.ihs.keyboardutils.panelcontainer.BasePanel;
+import com.ihs.keyboardutils.panelcontainer.KeyboardPanelSwitchContainer;
 import com.ihs.keyboardutilslib.R;
 
 /**
@@ -19,13 +21,18 @@ public class DemoPanel5 extends BasePanel {
 
     @Override
     public View onCreatePanelView() {
-        rootView = LayoutInflater.from(context).inflate(R.layout.panel_container5, null);
+        rootView = (ViewGroup) LayoutInflater.from(context).inflate(R.layout.panel_container5, null);
 
         rootView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                hidePanel = !hidePanel;
-                containerListener.setBarVisibility(hidePanel, false);
+//                hidePanel = !hidePanel;
+//                containerListener.setBarVisibility(hidePanel, false);
+                KeyboardPanelSwitchContainer container = new KeyboardPanelSwitchContainer();
+                container.showPanel(DemoPanel5.class);
+                ViewGroup.MarginLayoutParams layoutParams = new ViewGroup.MarginLayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT);
+                container.setLayoutParams(layoutParams);
+                getPanelView().addView(container);
             }
         });
 
@@ -35,6 +42,7 @@ public class DemoPanel5 extends BasePanel {
                 containerListener.backToParentPanel();
             }
         });
+        rootView.setPadding(30, 30, 30, 30);
         return rootView;
     }
 }
