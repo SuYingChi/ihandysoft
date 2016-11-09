@@ -8,7 +8,6 @@ import com.ihs.commons.utils.HSBundle;
 import com.ihs.commons.utils.HSLog;
 import com.ihs.nativeads.base.api.AdVendorOption;
 import com.ihs.nativeads.base.api.HSNativeAd;
-import com.ihs.nativeads.base.api.INativeAdListener;
 import com.ihs.nativeads.base.api.PreCacheOption;
 import com.ihs.nativeads.pool.api.HSNativeAdPool;
 import com.ihs.nativeads.pool.api.INativeAdPoolListener;

@@ -313,6 +313,7 @@ public class NativeAdView extends FrameLayout {
             boolean flag = currentNativeAdHashCode == hsNativeAd.hashCode();
             HSBundle hsBundle = new HSBundle();
             hsBundle.putBoolean("Flag", flag);
+            hsBundle.putString(NativeAdManager.NATIVE_AD_POOL_NAME, poolName);
             HSGlobalNotificationCenter.sendNotification(NOTIFICATION_NATIVE_AD_SHOWED, hsBundle);
             if (flag) {
                 return;
@@ -334,7 +335,9 @@ public class NativeAdView extends FrameLayout {
                 @Override
                 public void onNativeAdClicked(HSNativeAd hsNativeAd) {
                     isCurrentNativeAdClicked = true;
-                    HSGlobalNotificationCenter.sendNotification(NOTIFICATION_NATIVE_AD_CLIKED);
+                    HSBundle hsBundle = new HSBundle();
+                    hsBundle.putString(NativeAdManager.NATIVE_AD_POOL_NAME, poolName);
+                    HSGlobalNotificationCenter.sendNotification(NOTIFICATION_NATIVE_AD_CLIKED, hsBundle);
                 }
 
                 @Override
