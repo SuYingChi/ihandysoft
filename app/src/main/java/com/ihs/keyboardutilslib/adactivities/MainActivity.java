@@ -20,6 +20,7 @@ import com.ihs.commons.config.HSConfig;
 import com.ihs.commons.notificationcenter.HSGlobalNotificationCenter;
 import com.ihs.commons.notificationcenter.INotificationObserver;
 import com.ihs.commons.utils.HSBundle;
+import com.ihs.keyboardutils.nativeads.NativeAdConfig;
 import com.ihs.keyboardutilslib.R;
 import com.ihs.keyboardutils.nativeads.NativeAdManager;
 import com.ihs.keyboardutils.nativeads.NativeAdView;
@@ -48,6 +49,7 @@ public class MainActivity extends HSActivity {
     private List<String> adTimes = new ArrayList<>();
 
     private List<String> data_list = new ArrayList<>();
+
     private ArrayAdapter<String> arr_adapter;
 
 
@@ -146,7 +148,7 @@ public class MainActivity extends HSActivity {
         adTimes.clear();
         timeAdapter.notifyDataSetChanged();
         if (NativeAdManager.getInstance().existNativeAd(poolName)) {
-            refreshNativeAdView.setConfigParams(poolName, R.layout.ad_style_1, getAdFrequency());
+            refreshNativeAdView.setConfigParams(poolName, R.layout.ad_style_1_demo, NativeAdConfig.getNativeAdFrequency());
             if(adContainer.findViewWithTag("Refresh") == null) {
                 adContainer.addView(refreshNativeAdView);
             }
@@ -161,7 +163,7 @@ public class MainActivity extends HSActivity {
             if (NativeAdManager.NOTIFICATION_NEW_AD.equals(s)) {
                 if (poolName.equals(hsBundle.getString(NativeAdManager.NATIVE_AD_POOL_NAME))) {
                     HSGlobalNotificationCenter.removeObserver(NativeAdManager.NOTIFICATION_NEW_AD, iNotificationObserver);
-                    refreshNativeAdView.setConfigParams(poolName, R.layout.ad_style_1, getAdFrequency());
+                    refreshNativeAdView.setConfigParams(poolName, R.layout.ad_style_1_demo, NativeAdConfig.getNativeAdFrequency());
                     if (adContainer.findViewWithTag("Refresh") == null) {
                         adContainer.addView(refreshNativeAdView);
                     }
@@ -197,8 +199,10 @@ public class MainActivity extends HSActivity {
         HSGlobalNotificationCenter.addObserver(NativeAdView.NOTIFICATION_NATIVE_AD_CLIKED, iNotificationObserver);
     }
 
-    public int getAdFrequency() {
-        return HSConfig.optInteger(0, "Application", "NativeAds", "FetchAdInterval");
+    @Override
+    protected void onDestroy() {
+        refreshNativeAdView.release();
+        super.onDestroy();
     }
 
     static class TimeAdapter extends BaseAdapter {
