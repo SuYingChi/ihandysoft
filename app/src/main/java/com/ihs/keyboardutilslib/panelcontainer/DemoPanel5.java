@@ -29,10 +29,11 @@ public class DemoPanel5 extends BasePanel {
 //                hidePanel = !hidePanel;
 //                containerListener.setBarVisibility(hidePanel, false);
                 KeyboardPanelSwitchContainer container = new KeyboardPanelSwitchContainer();
+                container.setKeyboardClass(DemoPanel.class);
                 container.showPanel(DemoPanel5.class);
                 ViewGroup.MarginLayoutParams layoutParams = new ViewGroup.MarginLayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT);
                 container.setLayoutParams(layoutParams);
-                getPanelView().addView(container);
+                ((ViewGroup) rootView).addView(container);
             }
         });
 

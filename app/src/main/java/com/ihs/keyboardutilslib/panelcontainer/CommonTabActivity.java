@@ -82,7 +82,7 @@ public class CommonTabActivity extends Activity {
         mTabLayout_8.setCurrentTab(2);
 
         panelContainer = new KeyboardPanelSwitchContainer();
-
+        panelContainer.setKeyboardClass(DemoPanel.class);
         ((ViewGroup) mTabLayout_1.getParent()).removeView(mTabLayout_1);
         panelContainer.setBarView(mTabLayout_1);
         changVG.addView(panelContainer);
@@ -114,7 +114,7 @@ public class CommonTabActivity extends Activity {
         btn_keyboard.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (panelContainer.getCurrentPanel().isKeyboardPanel()) {
+                if (panelContainer.getCurrentPanel().getClass() == DemoPanel.class) {
                     return;
                 }
 
@@ -122,12 +122,12 @@ public class CommonTabActivity extends Activity {
                 if (showKeyboad) {
                     BasePanel currentPanel = panelContainer.getCurrentPanel();
                     currentPanel.setBarVisibility(true, true);
-                    currentPanel.getPanelView().addView(panelContainer.getKeyboardView());
+                    panelContainer.getPanelViewGroup().addView(panelContainer.getKeyboardView());
                     btn_keyboard.setText("移除键盘view");
                 } else {
                     BasePanel currentPanel = panelContainer.getCurrentPanel();
                     currentPanel.setBarVisibility(false, false);
-                    currentPanel.getPanelView().removeView(panelContainer.getKeyboardView());
+                    panelContainer.getPanelViewGroup().removeView(panelContainer.getKeyboardView());
                     btn_keyboard.setText("在当前Panel展示键盘");
                 }
 
@@ -140,7 +140,6 @@ public class CommonTabActivity extends Activity {
                 handler.sendEmptyMessage(0);
             }
         });
-
 
 
     }

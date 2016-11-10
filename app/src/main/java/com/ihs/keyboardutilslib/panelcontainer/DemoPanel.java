@@ -14,7 +14,6 @@ import com.ihs.keyboardutilslib.R;
 public class DemoPanel extends BasePanel {
     public DemoPanel(OnStateChangedListener barListener) {
         super(barListener);
-        setIsKeyboardPanel(true);
     }
 
     private boolean hidePanel = false;
@@ -31,7 +30,6 @@ public class DemoPanel extends BasePanel {
             }
         });
 
-        setIsKeyboardPanel(true);
         return rootView;
     }
 }
