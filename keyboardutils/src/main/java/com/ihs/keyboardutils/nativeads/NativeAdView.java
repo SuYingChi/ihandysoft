@@ -78,7 +78,7 @@ public class NativeAdView extends FrameLayout {
     }
 
     public void setConfigParams(String poolName, int layoutId) {
-        setConfigParams(poolName, layoutId, -1);
+        setConfigParams(poolName, layoutId, 0);
     }
 
     public void setConfigParams(String poolName, int layoutId, int fetchNativeAdInterval) {
@@ -291,7 +291,6 @@ public class NativeAdView extends FrameLayout {
             if (!isPaused) {
                 addObserver();
                 handler.removeCallbacks(frequentRunnable);
-                handler.postDelayed(frequentRunnable, nativeAdTimer.getRefreshInterval());
             }
         } else if (!isPaused) {
             handler.postDelayed(frequentRunnable, nativeAdTimer.nextFetchNativeAdInterval());
