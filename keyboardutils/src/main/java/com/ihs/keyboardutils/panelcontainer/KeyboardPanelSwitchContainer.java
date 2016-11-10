@@ -2,7 +2,6 @@ package com.ihs.keyboardutils.panelcontainer;
 
 import android.content.Context;
 import android.util.AttributeSet;
-import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.FrameLayout;
@@ -31,22 +30,23 @@ public class KeyboardPanelSwitchContainer extends RelativeLayout implements Base
 
     private int barPosition = BAR_TOP;
     private OnPanelChangedListener onPanelChangedListener;
-    private FrameLayout barView = null;
-    private FrameLayout panelView = null;
+    private FrameLayout barViewGroup = null;
+    private FrameLayout panelViewGroup = null;
     private BasePanel currentPanel = null;
     private Map<Class, BasePanel> panelMap = new HashMap<>();
     private LinkedList<Class> panelStack = new LinkedList<>();
 
     private BasePanel keyboardPanel;
+    private Class keyboardClass;
 
 
     public KeyboardPanelSwitchContainer() {
         super(HSApplication.getContext());
-        barView = new FrameLayout(getContext());
-        barView.setId(R.id.container_bar_id);
+        barViewGroup = new FrameLayout(getContext());
+        barViewGroup.setId(R.id.container_bar_id);
 
-        panelView = new FrameLayout(getContext());
-        panelView.setId(R.id.container_panel_id);
+        panelViewGroup = new FrameLayout(getContext());
+        panelViewGroup.setId(R.id.container_panel_id);
 
         adjustViewPosition();
     }
@@ -85,18 +85,23 @@ public class KeyboardPanelSwitchContainer extends RelativeLayout implements Base
 
     private void addNewPanel(Class panelClass, boolean keepCurrent) {
         if (!BasePanel.class.isAssignableFrom(panelClass)) {
-            Log.e("panelCOntainer", "wrong type");
+            HSLog.e("panelCOntainer", "wrong type");
+            return;
+        }
+
+        if (keyboardClass == null) {
+            HSLog.e("keyboard class didnt set yet");
             return;
         }
 
         if (currentPanel != null) {
             if (panelClass == currentPanel.getClass()) {
-                Log.e("panel", "panel Showed");
+                HSLog.e("panel", "panel Showed");
                 return;
             } else {
-                panelView.removeView(currentPanel.getPanelView());
+                panelViewGroup.removeView(currentPanel.getPanelView());
 
-                if (!keepCurrent && !currentPanel.isKeyboardPanel()) {
+                if (!keepCurrent && keyboardClass != panelClass) {
                     panelMap.remove(currentPanel.getClass());
                     currentPanel = null;
                     System.gc();
@@ -121,7 +126,7 @@ public class KeyboardPanelSwitchContainer extends RelativeLayout implements Base
 
 
         currentPanel = panel;
-        if (panel.isKeyboardPanel()) {
+        if (keyboardClass == panelClass) {
             keyboardPanel = panel;
         }
 
@@ -129,11 +134,11 @@ public class KeyboardPanelSwitchContainer extends RelativeLayout implements Base
 
         ViewGroup.LayoutParams layoutParams = new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
 
-        if (view.getParent() != null && view.getParent() != panelView) {
-            ViewUtils.removeViewFromParent(view);
+        if (view.getParent() != null && view.getParent() != panelViewGroup) {
+            removeViewFromParent(view);
         }
 
-        panelView.addView(view, layoutParams);
+        panelViewGroup.addView(view, layoutParams);
 
         if (onPanelChangedListener != null) {
             onPanelChangedListener.onPanelChanged(panelClass);
@@ -153,7 +158,7 @@ public class KeyboardPanelSwitchContainer extends RelativeLayout implements Base
         if (layoutParams == null) {
             layoutParams = new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
         }
-        barView.addView(view, layoutParams);
+        barViewGroup.addView(view, layoutParams);
     }
 
     public void addMoreContainer(View container) {
@@ -171,8 +176,8 @@ public class KeyboardPanelSwitchContainer extends RelativeLayout implements Base
     }
 
     private void adjustViewPosition() {
-        LayoutParams barParams = (LayoutParams) barView.getLayoutParams();
-        LayoutParams panelParams = (LayoutParams) panelView.getLayoutParams();
+        LayoutParams barParams = (LayoutParams) barViewGroup.getLayoutParams();
+        LayoutParams panelParams = (LayoutParams) panelViewGroup.getLayoutParams();
         boolean needAddView = false;
 
         if (barParams == null || panelParams == null) {
@@ -188,7 +193,7 @@ public class KeyboardPanelSwitchContainer extends RelativeLayout implements Base
                 barParams.addRule(ALIGN_PARENT_BOTTOM, 0);
 
                 barParams.addRule(ALIGN_PARENT_TOP, TRUE);
-                panelParams.addRule(BELOW, barView.getId());
+                panelParams.addRule(BELOW, barViewGroup.getId());
                 panelParams.addRule(ALIGN_PARENT_BOTTOM, TRUE);
                 break;
             case BAR_BOTTOM:
@@ -197,14 +202,14 @@ public class KeyboardPanelSwitchContainer extends RelativeLayout implements Base
                 panelParams.addRule(ALIGN_PARENT_BOTTOM, 0);
 
                 panelParams.addRule(ALIGN_PARENT_TOP, TRUE);
-                panelParams.addRule(ABOVE, barView.getId());
+                panelParams.addRule(ABOVE, barViewGroup.getId());
                 barParams.addRule(ALIGN_PARENT_BOTTOM, TRUE);
                 break;
         }
 
         if (needAddView) {
-            addView(barView, barParams);
-            addView(panelView, panelParams);
+            addView(barViewGroup, barParams);
+            addView(panelViewGroup, panelParams);
         } else {
             requestLayout();
         }
@@ -214,12 +219,12 @@ public class KeyboardPanelSwitchContainer extends RelativeLayout implements Base
     public void setBarVisibility(boolean hide, boolean expandPanel) {
         if (hide) {
             if (expandPanel) {
-                barView.setVisibility(GONE);
+                barViewGroup.setVisibility(GONE);
             } else {
-                barView.setVisibility(INVISIBLE);
+                barViewGroup.setVisibility(INVISIBLE);
             }
         } else {
-            barView.setVisibility(VISIBLE);
+            barViewGroup.setVisibility(VISIBLE);
         }
     }
 
@@ -253,12 +258,8 @@ public class KeyboardPanelSwitchContainer extends RelativeLayout implements Base
         }
     }
 
-    public void setKeyboardView(View keyboardView) {
-        if (keyboardPanel == null) {
-            HSLog.e("keyboard panel not loaded yet");
-            return;
-        }
-        keyboardPanel.setPanelView(keyboardView);
+    public void setKeyboardClass(Class keyboardClass) {
+        this.keyboardClass = keyboardClass;
     }
 
     @Override
@@ -269,13 +270,25 @@ public class KeyboardPanelSwitchContainer extends RelativeLayout implements Base
         }
         View keyboardView = keyboardPanel.getPanelView();
         if (keyboardView != null) {
-            ViewUtils.removeViewFromParent(keyboardView);
+            removeViewFromParent(keyboardView);
         }
         return keyboardView;
     }
 
+    public ViewGroup getPanelViewGroup() {
+        return panelViewGroup;
+    }
+
+
     public BasePanel getCurrentPanel() {
         return currentPanel;
+    }
+
+
+    private void removeViewFromParent(View view) {
+        if (view.getParent() != null) {
+            ((ViewGroup) view.getParent()).removeView(view);
+        }
     }
 
 }
