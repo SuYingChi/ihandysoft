@@ -54,6 +54,7 @@ public class CommonTabActivity extends Activity {
         }
     };
     private boolean showKeyboad;
+    private boolean hideKeyPanel;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -82,7 +83,17 @@ public class CommonTabActivity extends Activity {
         mTabLayout_8.setCurrentTab(2);
 
         panelContainer = new KeyboardPanelSwitchContainer();
-        panelContainer.setKeyboardClass(DemoPanel.class);
+
+        View keyboard = (ViewGroup) View.inflate(getApplicationContext(), R.layout.panel_container, null);
+        keyboard.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                hideKeyPanel = !hideKeyPanel;
+                panelContainer.setBarVisibility(hideKeyPanel, true);
+            }
+        });
+        panelContainer.setKeyboardPanel(DemoPanel.class, keyboard);
+
         ((ViewGroup) mTabLayout_1.getParent()).removeView(mTabLayout_1);
         panelContainer.setBarView(mTabLayout_1);
         changVG.addView(panelContainer);
