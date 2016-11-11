@@ -70,6 +70,7 @@ public class KeyboardPanelSwitchContainer extends RelativeLayout implements Base
      * @param panelClass
      */
     public void showPanel(Class panelClass) {
+        panelStack.clear();
         addNewPanel(panelClass, false);
     }
 
