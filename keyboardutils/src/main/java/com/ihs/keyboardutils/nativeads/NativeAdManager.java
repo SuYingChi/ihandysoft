@@ -100,7 +100,7 @@ public class NativeAdManager {
         private void createNativeAdPool() {
             AdVendorOption vendorOption = new AdVendorOption(new PreCacheOption(true, true));
             vendorOption.setMediaType(AdVendorOption.MediaType.IMAGE);
-            hsNativeAdPool = new HSNativeAdPool(poolName, poolName, HSNativeAdPool.AdStrategy.APP_POOL, vendorOption);
+            hsNativeAdPool = new HSNativeAdPool(poolName, poolName, HSNativeAdPool.AdStrategy.SESSION_POOL, vendorOption);
             hsNativeAdPool.addListener(new INativeAdPoolListener() {
 
                 @Override

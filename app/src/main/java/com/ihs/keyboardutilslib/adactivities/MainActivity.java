@@ -16,14 +16,12 @@ import android.widget.Spinner;
 import android.widget.TextView;
 
 import com.ihs.app.framework.activity.HSActivity;
-import com.ihs.commons.config.HSConfig;
 import com.ihs.commons.notificationcenter.HSGlobalNotificationCenter;
 import com.ihs.commons.notificationcenter.INotificationObserver;
 import com.ihs.commons.utils.HSBundle;
-import com.ihs.keyboardutils.nativeads.NativeAdConfig;
-import com.ihs.keyboardutilslib.R;
 import com.ihs.keyboardutils.nativeads.NativeAdManager;
 import com.ihs.keyboardutils.nativeads.NativeAdView;
+import com.ihs.keyboardutilslib.R;
 
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
@@ -148,7 +146,7 @@ public class MainActivity extends HSActivity {
         adTimes.clear();
         timeAdapter.notifyDataSetChanged();
         if (NativeAdManager.getInstance().existNativeAd(poolName)) {
-            refreshNativeAdView.setConfigParams(poolName, R.layout.ad_style_1_demo, NativeAdConfig.getNativeAdFrequency());
+            refreshNativeAdView.setConfigParams(poolName, R.layout.ad_style_1_demo);
             if(adContainer.findViewWithTag("Refresh") == null) {
                 adContainer.addView(refreshNativeAdView);
             }
@@ -163,7 +161,7 @@ public class MainActivity extends HSActivity {
             if (NativeAdManager.NOTIFICATION_NEW_AD.equals(s)) {
                 if (poolName.equals(hsBundle.getString(NativeAdManager.NATIVE_AD_POOL_NAME))) {
                     HSGlobalNotificationCenter.removeObserver(NativeAdManager.NOTIFICATION_NEW_AD, iNotificationObserver);
-                    refreshNativeAdView.setConfigParams(poolName, R.layout.ad_style_1_demo, NativeAdConfig.getNativeAdFrequency());
+                    refreshNativeAdView.setConfigParams(poolName, R.layout.ad_style_1_demo);
                     if (adContainer.findViewWithTag("Refresh") == null) {
                         adContainer.addView(refreshNativeAdView);
                     }
