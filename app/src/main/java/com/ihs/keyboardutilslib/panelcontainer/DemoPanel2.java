@@ -19,7 +19,7 @@ public class DemoPanel2 extends BasePanel {
     }
 
     @Override
-    public View onCreatePanelView() {
+    protected View onCreatePanelView() {
         rootView = (ViewGroup) LayoutInflater.from(context).inflate(R.layout.panel_container2, null);
 
         rootView.setOnClickListener(new View.OnClickListener() {
@@ -33,7 +33,7 @@ public class DemoPanel2 extends BasePanel {
         rootView.findViewById(R.id.btn_demo2_jmp).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                showChildPanel(DemoPanel5.class);
+                showChildPanel(PullDownPanel.class);
             }
         });
         return rootView;

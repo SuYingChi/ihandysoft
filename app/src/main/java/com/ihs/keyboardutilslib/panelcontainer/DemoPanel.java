@@ -19,7 +19,7 @@ public class DemoPanel extends BasePanel {
     private boolean hidePanel = false;
 
     @Override
-    public View onCreatePanelView() {
+    protected View onCreatePanelView() {
         rootView = (ViewGroup) LayoutInflater.from(context).inflate(R.layout.panel_container, null);
 
         rootView.setOnClickListener(new View.OnClickListener() {

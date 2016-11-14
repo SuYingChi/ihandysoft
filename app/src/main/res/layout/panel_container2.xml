@@ -31,6 +31,6 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
-        android:text="跳转到设置并保留自己" />
+        android:text="展示子panel" />
 
 </RelativeLayout>

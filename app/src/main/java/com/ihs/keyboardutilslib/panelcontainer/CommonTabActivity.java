@@ -101,7 +101,9 @@ public class CommonTabActivity extends Activity {
         panelContainer.setOnPanelChangedListener(new KeyboardPanelSwitchContainer.OnPanelChangedListener() {
             @Override
             public void onPanelChanged(Class panelClass) {
-                mTabLayout_1.setCurrentTab(panelList.indexOf(panelClass));
+                if (panelList.indexOf(panelClass) != -1) {
+                    mTabLayout_1.setCurrentTab(panelList.indexOf(panelClass));
+                }
             }
         });
 

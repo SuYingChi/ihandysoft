@@ -20,7 +20,7 @@ public class DemoPanel5 extends BasePanel {
     }
 
     @Override
-    public View onCreatePanelView() {
+    protected View onCreatePanelView() {
         rootView = (ViewGroup) LayoutInflater.from(context).inflate(R.layout.panel_container5, null);
 
         rootView.setOnClickListener(new View.OnClickListener() {
@@ -39,7 +39,7 @@ public class DemoPanel5 extends BasePanel {
         rootView.findViewById(R.id.btn_demo5_back).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                containerListener.backToParentPanel();
+                containerListener.backToParentPanel(false);
             }
         });
         rootView.setPadding(30, 30, 30, 30);
