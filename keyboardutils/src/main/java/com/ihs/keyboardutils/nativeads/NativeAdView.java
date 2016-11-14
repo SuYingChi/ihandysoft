@@ -151,7 +151,9 @@ public class NativeAdView extends FrameLayout {
 
     public void release() {
         HSLog.e("release - " + poolName);
-        NativeAdManager.getInstance().getNativeAdProxy(poolName).release();
+        if(NativeAdManager.getInstance().getNativeAdProxy(poolName) != null) {
+            NativeAdManager.getInstance().getNativeAdProxy(poolName).release();
+        }
     }
 
     private void initNativeAdContainerView(int layoutId) {
