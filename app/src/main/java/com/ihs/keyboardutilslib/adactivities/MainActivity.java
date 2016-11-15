@@ -146,14 +146,14 @@ public class MainActivity extends HSActivity {
         }
         adTimes.clear();
         timeAdapter.notifyDataSetChanged();
-        if (NativeAdManager.getInstance().existNativeAd(poolName)) {
-            refreshNativeAdView.setConfigParams(poolName, R.layout.ad_style_1_demo, NativeAdConfig.getNativeAdFrequency());
+//        if (NativeAdManager.getInstance().existNativeAd(poolName)) {
+            refreshNativeAdView.setConfigParams(poolName, R.layout.ad_style_1_demo, NativeAdConfig.getNativeAdFrequency(), R.layout.ad_loading);
             if(adContainer.findViewWithTag("Refresh") == null) {
                 adContainer.addView(refreshNativeAdView);
             }
-        } else {
-            HSGlobalNotificationCenter.addObserver(NativeAdManager.NOTIFICATION_NEW_AD, iNotificationObserver);
-        }
+//        } else {
+//            HSGlobalNotificationCenter.addObserver(NativeAdManager.NOTIFICATION_NEW_AD, iNotificationObserver);
+//        }
     }
 
     INotificationObserver iNotificationObserver = new INotificationObserver() {
@@ -162,7 +162,7 @@ public class MainActivity extends HSActivity {
             if (NativeAdManager.NOTIFICATION_NEW_AD.equals(s)) {
                 if (poolName.equals(hsBundle.getString(NativeAdManager.NATIVE_AD_POOL_NAME))) {
                     HSGlobalNotificationCenter.removeObserver(NativeAdManager.NOTIFICATION_NEW_AD, iNotificationObserver);
-                    refreshNativeAdView.setConfigParams(poolName, R.layout.ad_style_1_demo, NativeAdConfig.getNativeAdFrequency());
+                    refreshNativeAdView.setConfigParams(poolName, R.layout.ad_style_1_demo, NativeAdConfig.getNativeAdFrequency(), R.layout.ad_loading);
                     if (adContainer.findViewWithTag("Refresh") == null) {
                         adContainer.addView(refreshNativeAdView);
                     }
@@ -187,15 +187,15 @@ public class MainActivity extends HSActivity {
 
     @Override
     protected void onPause() {
-        HSGlobalNotificationCenter.removeObserver(iNotificationObserver);
+        //HSGlobalNotificationCenter.removeObserver(iNotificationObserver);
         super.onPause();
     }
 
     @Override
     protected void onResume() {
         super.onResume();
-        HSGlobalNotificationCenter.addObserver(NativeAdView.NOTIFICATION_NATIVE_AD_SHOWED, iNotificationObserver);
-        HSGlobalNotificationCenter.addObserver(NativeAdView.NOTIFICATION_NATIVE_AD_CLIKED, iNotificationObserver);
+//        HSGlobalNotificationCenter.addObserver(NativeAdView.NOTIFICATION_NATIVE_AD_SHOWED, iNotificationObserver);
+//        HSGlobalNotificationCenter.addObserver(NativeAdView.NOTIFICATION_NATIVE_AD_CLIKED, iNotificationObserver);
     }
 
     @Override

@@ -7,6 +7,7 @@ import android.graphics.Rect;
 import android.os.Handler;
 import android.text.TextUtils;
 import android.util.AttributeSet;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.ViewTreeObserver;
@@ -54,6 +55,7 @@ public class NativeAdView extends FrameLayout {
     private float primaryHWRatio;
     private NativeAdTimer nativeAdTimer;
 
+    private View loadingView;
     private HSNativeAdContainerView nativeAdContainerView;
     private ViewTreeObserver.OnScrollChangedListener onScrollChangedListener;
 
@@ -82,10 +84,14 @@ public class NativeAdView extends FrameLayout {
     }
 
     public void setConfigParams(String poolName, int layoutId, int fetchNativeAdInterval) {
-        setConfigParams(poolName, layoutId, 0, fetchNativeAdInterval);
+        setConfigParams(poolName, layoutId, 0, fetchNativeAdInterval, 0);
     }
 
-    public void setConfigParams(String poolName, int layoutId, float primaryHWRatio, int fetchNativeAdInterval) {
+    public void setConfigParams(String poolName, int layoutId, int fetchNativeAdInterval, int loadingLayoutId) {
+        setConfigParams(poolName, layoutId, 0, fetchNativeAdInterval, loadingLayoutId);
+    }
+
+    public void setConfigParams(String poolName, int layoutId, float primaryHWRatio, int fetchNativeAdInterval, int loadingLayoutId) {
         if (poolName.equals(this.poolName)) {
             return;
         }
@@ -105,6 +111,10 @@ public class NativeAdView extends FrameLayout {
             };
             nativeAdContainerView.getViewTreeObserver().addOnScrollChangedListener(onScrollChangedListener);
             addView(nativeAdContainerView);
+            if(loadingLayoutId != 0) {
+                loadingView = LayoutInflater.from(getContext()).inflate(loadingLayoutId, null);
+                addView(loadingView);
+            }
         } else {
             resumeRefreshing();
         }
@@ -211,6 +221,10 @@ public class NativeAdView extends FrameLayout {
                 return;
             }
             nativeAdContainerView.getAdIconView().setVisibility(View.GONE);
+        }
+
+        if(loadingView != null && loadingView.getVisibility() != GONE){
+            loadingView.setVisibility(GONE);
         }
     }
 
@@ -319,9 +333,9 @@ public class NativeAdView extends FrameLayout {
     private void bindDataToView(HSNativeAd hsNativeAd) {
         if (nativeAdContainerView != null) {
             if (hsNativeAd == null) {
-                nativeAdContainerView.setVisibility(INVISIBLE);
                 return;
             }
+
             boolean flag = currentNativeAdHashCode == hsNativeAd.hashCode();
             HSBundle hsBundle = new HSBundle();
             hsBundle.putBoolean("Flag", flag);

@@ -124,10 +124,9 @@
                 <LinearLayout
                     android:id="@+id/ad_container"
                     android:layout_width="match_parent"
-                    android:layout_height="400dp"
-                    android:orientation="vertical">
+                    android:layout_height="50dp"
+                    android:orientation="vertical"/>
 
-                </LinearLayout>
             </LinearLayout>
         </ScrollView>
     </LinearLayout>
