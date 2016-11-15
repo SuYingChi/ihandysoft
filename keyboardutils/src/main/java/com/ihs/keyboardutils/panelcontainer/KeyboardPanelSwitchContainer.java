@@ -83,7 +83,8 @@ public class KeyboardPanelSwitchContainer extends RelativeLayout implements Base
 
         BasePanel panel;
         try {
-            panel = (BasePanel) panelClass.getConstructor(BasePanel.OnStateChangedListener.class).newInstance(this);
+            panel = (BasePanel) panelClass.getConstructor().newInstance();
+            panel.setContainerListener(this);
         } catch (Exception e) {
             e.printStackTrace();
             return;
@@ -138,7 +139,8 @@ public class KeyboardPanelSwitchContainer extends RelativeLayout implements Base
             panel = panelMap.get(panelClass);
         } else {
             try {
-                panel = (BasePanel) panelClass.getConstructor(BasePanel.OnStateChangedListener.class).newInstance(this);
+                panel = (BasePanel) panelClass.getConstructor().newInstance();
+                panel.setContainerListener(this);
             } catch (Exception e) {
                 e.printStackTrace();
                 return;
@@ -150,7 +152,7 @@ public class KeyboardPanelSwitchContainer extends RelativeLayout implements Base
         //todo 这里可以分开，如果要保留状态就不要重新create
         View view = panel.getPanelView();
         if (view == null) {
-            view = panel.getPanelView();
+            view = panel.onCreatePanelView();
         }
 
         ViewGroup.LayoutParams layoutParams = new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
@@ -225,7 +227,7 @@ public class KeyboardPanelSwitchContainer extends RelativeLayout implements Base
 
     private void dismissCurrentPanel(final boolean keepCurrent, final int showingType, @Nullable final Class panelClass) {
         if (currentPanel != null) {
-            Animator dismissAnimtor = currentPanel.getDismissAnimtor();
+            Animator dismissAnimtor = currentPanel.getDismissAnimator();
             if (dismissAnimtor != null) {
                 dismissAnimtor.addListener(new Animator.AnimatorListener() {
                     @Override

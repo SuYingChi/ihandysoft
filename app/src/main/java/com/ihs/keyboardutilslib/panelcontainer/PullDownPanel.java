@@ -12,8 +12,8 @@ import com.ihs.keyboardutilslib.R;
  */
 
 public class PullDownPanel extends BasePanel {
-    public PullDownPanel(OnStateChangedListener containerListener) {
-        super(containerListener);
+    public PullDownPanel() {
+        super();
     }
 
     @Override
@@ -43,7 +43,7 @@ public class PullDownPanel extends BasePanel {
     }
 
     @Override
-    public Animator getDismissAnimtor() {
+    public Animator getDismissAnimator() {
         ObjectAnimator animator = ObjectAnimator.ofFloat(rootView, "rotationX", 0, 360);
         animator.setDuration(2000);
         return animator;

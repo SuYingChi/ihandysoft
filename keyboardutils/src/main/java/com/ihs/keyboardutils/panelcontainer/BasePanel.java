@@ -29,11 +29,7 @@ public abstract class BasePanel {
     protected View rootView = null;
     protected OnStateChangedListener containerListener;
 
-    private KeyboardPanelSwitchContainer childContainer;
-
-    public BasePanel(OnStateChangedListener containerListener) {
-        this.containerListener = containerListener;
-        rootView = onCreatePanelView();
+    public BasePanel() {
     }
 
     protected abstract View onCreatePanelView();
@@ -62,8 +58,11 @@ public abstract class BasePanel {
         return null;
     }
 
-    public Animator getDismissAnimtor() {
+    public Animator getDismissAnimator() {
         return null;
     }
 
+    public void setContainerListener(OnStateChangedListener onStateChangedListener) {
+        this.containerListener = onStateChangedListener;
+    }
 }

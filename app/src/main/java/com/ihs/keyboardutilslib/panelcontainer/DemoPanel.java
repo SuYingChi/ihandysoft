@@ -12,8 +12,8 @@ import com.ihs.keyboardutilslib.R;
  */
 
 public class DemoPanel extends BasePanel {
-    public DemoPanel(OnStateChangedListener barListener) {
-        super(barListener);
+    public DemoPanel() {
+        super();
     }
 
     private boolean hidePanel = false;
