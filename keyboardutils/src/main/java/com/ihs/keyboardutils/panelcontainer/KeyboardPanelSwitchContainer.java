@@ -192,7 +192,7 @@ public class KeyboardPanelSwitchContainer extends RelativeLayout implements Base
         if (barParams == null || panelParams == null) {
             needAddView = true;
             barParams = new LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
-            panelParams = new LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT);
+            panelParams = new LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
         }
 
         switch (barPosition) {
