@@ -197,20 +197,17 @@ public class KeyboardPanelSwitchContainer extends RelativeLayout implements Base
 
         switch (barPosition) {
             case BAR_TOP:
-                panelParams.addRule(ALIGN_PARENT_TOP, 0);
                 panelParams.addRule(ABOVE, 0);
                 barParams.addRule(ALIGN_PARENT_BOTTOM, 0);
 
-                barParams.addRule(ALIGN_PARENT_TOP, TRUE);
-                panelParams.addRule(BELOW, barViewGroup.getId());
+                barParams.addRule(ABOVE, panelViewGroup.getId());
                 panelParams.addRule(ALIGN_PARENT_BOTTOM, TRUE);
                 break;
             case BAR_BOTTOM:
-                barParams.addRule(ALIGN_PARENT_TOP, 0);
-                panelParams.addRule(BELOW, 0);
+                barParams.addRule(ABOVE, 0);
                 panelParams.addRule(ALIGN_PARENT_BOTTOM, 0);
 
-                panelParams.addRule(ALIGN_PARENT_TOP, TRUE);
+//                panelParams.addRule(ALIGN_PARENT_TOP, TRUE);
                 panelParams.addRule(ABOVE, barViewGroup.getId());
                 barParams.addRule(ALIGN_PARENT_BOTTOM, TRUE);
                 break;
