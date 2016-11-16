@@ -100,6 +100,7 @@ public class NativeAdView extends FrameLayout {
         this.primaryWidth = -1;
         this.primaryHWRatio = primaryHWRatio;
         this.nativeAdTimer = new NativeAdTimer(fetchNativeAdInterval);
+        NativeAdManager.getInstance().getNativeAdProxy(poolName).startNotifyAvailableAdCountChanged();
         if (nativeAdContainerView == null) {
             initNativeAdContainerView(layoutId);
             onScrollChangedListener = new ViewTreeObserver.OnScrollChangedListener() {
@@ -260,6 +261,7 @@ public class NativeAdView extends FrameLayout {
 
     private void removeObserver() {
         if (hasObserver) {
+            HSLog.e("========== removeObserver ========");
             HSGlobalNotificationCenter.removeObserver(nativeAdObserver);
             hasObserver = false;
         }
@@ -267,6 +269,7 @@ public class NativeAdView extends FrameLayout {
 
     private void addObserver() {
         if (!hasObserver) {
+            HSLog.e("========== startObserver ========");
             hasObserver = true;
             HSGlobalNotificationCenter.addObserver(NativeAdManager.NOTIFICATION_NEW_AD, nativeAdObserver);
         }

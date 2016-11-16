@@ -147,7 +147,7 @@ public class MainActivity extends HSActivity {
         adTimes.clear();
         timeAdapter.notifyDataSetChanged();
 //        if (NativeAdManager.getInstance().existNativeAd(poolName)) {
-            refreshNativeAdView.setConfigParams(poolName, R.layout.ad_style_1_demo, NativeAdConfig.getNativeAdFrequency(), R.layout.ad_loading);
+            refreshNativeAdView.setConfigParams(poolName, R.layout.ad_style_1, NativeAdConfig.getNativeAdFrequency(), R.layout.ad_loading);
             if(adContainer.findViewWithTag("Refresh") == null) {
                 adContainer.addView(refreshNativeAdView);
             }
@@ -162,7 +162,7 @@ public class MainActivity extends HSActivity {
             if (NativeAdManager.NOTIFICATION_NEW_AD.equals(s)) {
                 if (poolName.equals(hsBundle.getString(NativeAdManager.NATIVE_AD_POOL_NAME))) {
                     HSGlobalNotificationCenter.removeObserver(NativeAdManager.NOTIFICATION_NEW_AD, iNotificationObserver);
-                    refreshNativeAdView.setConfigParams(poolName, R.layout.ad_style_1_demo, NativeAdConfig.getNativeAdFrequency(), R.layout.ad_loading);
+                    refreshNativeAdView.setConfigParams(poolName, R.layout.ad_style_1, NativeAdConfig.getNativeAdFrequency(), R.layout.ad_loading);
                     if (adContainer.findViewWithTag("Refresh") == null) {
                         adContainer.addView(refreshNativeAdView);
                     }

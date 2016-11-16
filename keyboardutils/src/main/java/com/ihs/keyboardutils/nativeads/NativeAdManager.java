@@ -111,8 +111,8 @@ public class NativeAdManager {
 
                 @Override
                 public void onAvailableAdCountChanged(int i) {
+                    log("onAvailableAdCountChanged", "count", i + "");
                     if (!stopNotifyAvailableAdCountChanged) {
-                        log("onAvailableAdCountChanged", "count", i + "");
                         if (i > 0) {
                             HSBundle hsBundle = new HSBundle();
                             hsBundle.putString(NATIVE_AD_POOL_NAME, poolName);
@@ -177,6 +177,9 @@ public class NativeAdManager {
             }
         }
 
+        void startNotifyAvailableAdCountChanged() {
+            stopNotifyAvailableAdCountChanged = false;
+        }
 
 
         @Override
