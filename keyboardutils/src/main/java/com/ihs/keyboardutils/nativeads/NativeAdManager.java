@@ -138,7 +138,6 @@ public class NativeAdManager {
                     hasShowedCount++;
                     cachedNativeAd = nativeAd;
                     cachedNativeAdTime = System.currentTimeMillis();
-                    log("getNativeAd", "New NativeAd", nativeAd.hashCode() + "");
                     return cachedNativeAd;
                 }
             }
@@ -147,7 +146,6 @@ public class NativeAdManager {
 
         HSNativeAd getCachedNativeAd() {
             if(cachedNativeAd != null) {
-                log("getCachedNativeAd", "Cached NativeAd", cachedNativeAd.hashCode() + "");
                 if (cachedNativeAd.isExpired()) {
                     clearCacheNativeAd();
                 }
