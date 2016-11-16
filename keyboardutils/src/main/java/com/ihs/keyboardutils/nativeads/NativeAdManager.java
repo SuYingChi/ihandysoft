@@ -166,6 +166,7 @@ public class NativeAdManager {
         void release() {
             stopNotifyAvailableAdCountChanged = true;
             clearCacheNativeAd();
+            hasShowedCount = 0;
         }
 
 
