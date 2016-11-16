@@ -187,15 +187,15 @@ public class MainActivity extends HSActivity {
 
     @Override
     protected void onPause() {
-        //HSGlobalNotificationCenter.removeObserver(iNotificationObserver);
+        HSGlobalNotificationCenter.removeObserver(iNotificationObserver);
         super.onPause();
     }
 
     @Override
     protected void onResume() {
         super.onResume();
-//        HSGlobalNotificationCenter.addObserver(NativeAdView.NOTIFICATION_NATIVE_AD_SHOWED, iNotificationObserver);
-//        HSGlobalNotificationCenter.addObserver(NativeAdView.NOTIFICATION_NATIVE_AD_CLIKED, iNotificationObserver);
+        HSGlobalNotificationCenter.addObserver(NativeAdView.NOTIFICATION_NATIVE_AD_SHOWED, iNotificationObserver);
+        HSGlobalNotificationCenter.addObserver(NativeAdView.NOTIFICATION_NATIVE_AD_CLIKED, iNotificationObserver);
     }
 
     @Override
