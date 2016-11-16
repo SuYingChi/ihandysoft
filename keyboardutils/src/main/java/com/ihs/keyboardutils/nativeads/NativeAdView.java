@@ -80,7 +80,11 @@ public class NativeAdView extends FrameLayout {
     }
 
     public void setConfigParams(String poolName, int layoutId) {
-        setConfigParams(poolName, layoutId, 0);
+        setConfigParams(layoutId, 0, poolName);
+    }
+
+    public void setConfigParams(int layoutId, int loadingLayoutId, String poolName) {
+        setConfigParams(poolName, layoutId, 0, loadingLayoutId);
     }
 
     public void setConfigParams(String poolName, int layoutId, int fetchNativeAdInterval) {
@@ -89,6 +93,10 @@ public class NativeAdView extends FrameLayout {
 
     public void setConfigParams(String poolName, int layoutId, int fetchNativeAdInterval, int loadingLayoutId) {
         setConfigParams(poolName, layoutId, 0, fetchNativeAdInterval, loadingLayoutId);
+    }
+
+    public void setConfigParams(String poolName, int layoutId, float primaryHWRatio, int fetchNativeAdInterval) {
+        setConfigParams(poolName, layoutId, primaryHWRatio, fetchNativeAdInterval, 0);
     }
 
     public void setConfigParams(String poolName, int layoutId, float primaryHWRatio, int fetchNativeAdInterval, int loadingLayoutId) {
@@ -100,6 +108,7 @@ public class NativeAdView extends FrameLayout {
         this.primaryWidth = -1;
         this.primaryHWRatio = primaryHWRatio;
         this.nativeAdTimer = new NativeAdTimer(fetchNativeAdInterval);
+        NativeAdManager.getInstance().getNativeAdProxy(poolName).startNotifyAvailableAdCountChanged();
         if (nativeAdContainerView == null) {
             initNativeAdContainerView(layoutId);
             onScrollChangedListener = new ViewTreeObserver.OnScrollChangedListener() {
@@ -111,7 +120,7 @@ public class NativeAdView extends FrameLayout {
             };
             nativeAdContainerView.getViewTreeObserver().addOnScrollChangedListener(onScrollChangedListener);
             addView(nativeAdContainerView);
-            if(loadingLayoutId != 0) {
+            if (loadingLayoutId != 0) {
                 loadingView = LayoutInflater.from(getContext()).inflate(loadingLayoutId, null);
                 addView(loadingView);
             }
@@ -223,7 +232,7 @@ public class NativeAdView extends FrameLayout {
             nativeAdContainerView.getAdIconView().setVisibility(View.GONE);
         }
 
-        if(loadingView != null && loadingView.getVisibility() != GONE){
+        if (loadingView != null && loadingView.getVisibility() != GONE) {
             loadingView.setVisibility(GONE);
         }
     }
@@ -260,6 +269,7 @@ public class NativeAdView extends FrameLayout {
 
     private void removeObserver() {
         if (hasObserver) {
+            HSLog.e("========== removeObserver ========");
             HSGlobalNotificationCenter.removeObserver(nativeAdObserver);
             hasObserver = false;
         }
@@ -267,6 +277,7 @@ public class NativeAdView extends FrameLayout {
 
     private void addObserver() {
         if (!hasObserver) {
+            HSLog.e("========== startObserver ========");
             hasObserver = true;
             HSGlobalNotificationCenter.addObserver(NativeAdManager.NOTIFICATION_NEW_AD, nativeAdObserver);
         }
@@ -309,7 +320,7 @@ public class NativeAdView extends FrameLayout {
                 handler.postDelayed(frequentRunnable, nativeAdTimer.nextFetchNativeAdInterval());
             }
         } else {
-            if(NativeAdManager.getInstance().getNativeAdProxy(poolName).getCachedNativeAd() == null || isCurrentNativeAdClicked) {
+            if (NativeAdManager.getInstance().getNativeAdProxy(poolName).getCachedNativeAd() == null || isCurrentNativeAdClicked) {
                 // fetch new NativeAd
                 HSNativeAd ad = NativeAdManager.getInstance().getNativeAdProxy(poolName).getNativeAd();
                 if (ad != null) {
