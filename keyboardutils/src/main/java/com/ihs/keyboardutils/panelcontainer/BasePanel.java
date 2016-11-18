@@ -27,6 +27,8 @@ public abstract class BasePanel {
 
     protected Context context = HSApplication.getContext();
     protected View rootView = null;
+
+
     protected OnStateChangedListener containerListener;
 
     public BasePanel() {
@@ -64,5 +66,9 @@ public abstract class BasePanel {
 
     public void setContainerListener(OnStateChangedListener onStateChangedListener) {
         this.containerListener = onStateChangedListener;
+    }
+
+    public OnStateChangedListener getContainerListener() {
+        return containerListener;
     }
 }

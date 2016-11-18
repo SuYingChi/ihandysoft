@@ -258,6 +258,8 @@ public class KeyboardPanelSwitchContainer extends RelativeLayout implements Base
         switch (showingType) {
             case MODE_SHOW_CHILD:
                 parentChildStack.add(currentPanel.getClass());
+                BasePanel panel = currentPanel;
+                panelMap.put(panel.getClass(), panel);
                 break;
             case MODE_BACK_PARENT:
                 panelViewGroup.removeView(currentPanel.getPanelView());
@@ -282,6 +284,10 @@ public class KeyboardPanelSwitchContainer extends RelativeLayout implements Base
 
         if (panelClass != null) {
             addPanelViewToRoot(panelClass);
+        } else {
+            if (parentChildStack.size() > 0) {
+                currentPanel = panelMap.get(parentChildStack.getLast());
+            }
         }
     }
 
