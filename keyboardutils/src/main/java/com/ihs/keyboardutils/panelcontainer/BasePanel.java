@@ -71,4 +71,8 @@ public abstract class BasePanel {
     public OnStateChangedListener getContainerListener() {
         return containerListener;
     }
+
+    public void backToParentPanel(boolean keepSelf) {
+        containerListener.backToParentPanel(keepSelf);
+    }
 }

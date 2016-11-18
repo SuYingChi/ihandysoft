@@ -122,6 +122,9 @@ public class KeyboardPanelSwitchContainer extends RelativeLayout implements Base
 
         if (currentPanel != null) {
             if (panelClass == currentPanel.getClass()) {
+                if (currentPanel.getPanelView().getParent() == null) {
+                    panelViewGroup.addView(currentPanel.getPanelView());
+                }
                 HSLog.e("panel", "panel Showed");
                 return;
             } else {
