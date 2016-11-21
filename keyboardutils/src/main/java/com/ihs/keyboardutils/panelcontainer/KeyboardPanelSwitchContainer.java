@@ -156,6 +156,7 @@ public class KeyboardPanelSwitchContainer extends RelativeLayout implements Base
         View view = panel.getPanelView();
         if (view == null) {
             view = panel.onCreatePanelView();
+            panel.setPanelView(view);
         }
 
         ViewGroup.LayoutParams layoutParams = new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
@@ -225,9 +226,10 @@ public class KeyboardPanelSwitchContainer extends RelativeLayout implements Base
     }
 
 
-    private void dismissCurrentPanel(final boolean keepCurrent, final int showingType, @Nullable final Class panelClass) {
+    private void dismissCurrentPanel(final boolean keepCurrent, final int showingType, @Nullable final Class panelClassToShow) {
         if (currentPanel != null) {
-            Animator dismissAnimtor = currentPanel.getDismissAnimator();
+            final BasePanel panelToRemove = currentPanel;
+            Animator dismissAnimtor = panelToRemove.getDismissAnimator();
             if (dismissAnimtor != null) {
                 dismissAnimtor.addListener(new Animator.AnimatorListener() {
                     @Override
@@ -237,7 +239,7 @@ public class KeyboardPanelSwitchContainer extends RelativeLayout implements Base
 
                     @Override
                     public void onAnimationEnd(Animator animation) {
-                        removeCurrentPanel(keepCurrent, showingType, panelClass);
+                        removeCurrentPanel(keepCurrent, showingType, panelClassToShow, panelToRemove);
                     }
 
                     @Override
@@ -252,12 +254,12 @@ public class KeyboardPanelSwitchContainer extends RelativeLayout implements Base
                 });
                 dismissAnimtor.start();
             } else {
-                removeCurrentPanel(keepCurrent, showingType, panelClass);
+                removeCurrentPanel(keepCurrent, showingType, panelClassToShow, panelToRemove);
             }
         }
     }
 
-    private void removeCurrentPanel(boolean keepCurrent, int showingType, @Nullable Class panelClass) {
+    private void removeCurrentPanel(boolean keepCurrent, int showingType, @Nullable Class panelClassToShow, BasePanel panelToRemove) {
         switch (showingType) {
             case MODE_SHOW_CHILD:
                 parentChildStack.add(currentPanel.getClass());
@@ -265,8 +267,8 @@ public class KeyboardPanelSwitchContainer extends RelativeLayout implements Base
                 panelMap.put(panel.getClass(), panel);
                 break;
             case MODE_BACK_PARENT:
-                panelViewGroup.removeView(currentPanel.getPanelView());
-                parentChildStack.remove(currentPanel.getClass());
+                panelViewGroup.removeView(panelToRemove.getPanelView());
+                parentChildStack.remove(panelToRemove.getClass());
                 break;
             case MODE_NORMAL:
                 parentChildStack.clear();
@@ -274,19 +276,22 @@ public class KeyboardPanelSwitchContainer extends RelativeLayout implements Base
                 break;
         }
 
-        if (!keepCurrent && !parentChildStack.contains(currentPanel.getClass())
-                && (keyboardPanel == null || keyboardPanel.getClass() != currentPanel.getClass())
+        if (!keepCurrent && !parentChildStack.contains(panelToRemove.getClass())
+                && (keyboardPanel == null || keyboardPanel.getClass() != panelToRemove.getClass())
                 ) {
-            panelMap.remove(currentPanel.getClass());
-            currentPanel = null;
+            panelMap.remove(panelToRemove.getClass());
+            if (currentPanel != null && currentPanel.getClass() == panelToRemove
+                    .getClass()) {
+                currentPanel = null;
+            }
             System.gc();
             HSLog.e("cause GC");
         } else {
-            panelMap.put(currentPanel.getClass(), currentPanel);
+            panelMap.put(panelToRemove.getClass(), panelToRemove);
         }
 
-        if (panelClass != null) {
-            addPanelViewToRoot(panelClass);
+        if (panelClassToShow != null) {
+            addPanelViewToRoot(panelClassToShow);
         } else {
             if (parentChildStack.size() > 0) {
                 currentPanel = panelMap.get(parentChildStack.getLast());
