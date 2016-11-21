@@ -7,7 +7,6 @@ import android.graphics.Rect;
 import android.os.Handler;
 import android.text.TextUtils;
 import android.util.AttributeSet;
-import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.ViewTreeObserver;
@@ -16,6 +15,7 @@ import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.ihs.app.analytics.HSAnalytics;
 import com.ihs.app.framework.HSApplication;
 import com.ihs.commons.notificationcenter.HSGlobalNotificationCenter;
 import com.ihs.commons.notificationcenter.INotificationObserver;
@@ -33,10 +33,6 @@ import com.ihs.nativeads.base.api.INativeAdListener;
  */
 
 public class NativeAdView extends FrameLayout {
-
-    public static final String NOTIFICATION_NATIVE_AD_SHOWED = "NOTIFICATION_NATIVE_AD_SHOWED";
-    public static final String NOTIFICATION_NATIVE_AD_CLIKED = "NOTIFICATION_NATIVE_AD_CLIKED";
-
 
     private INotificationObserver nativeAdObserver = new INotificationObserver() {
 
@@ -68,65 +64,62 @@ public class NativeAdView extends FrameLayout {
 
     private static Handler handler = new Handler();
 
-    public NativeAdView(Context context) {
+    public NativeAdView(Context context, int layoutId) {
         super(context);
+        initNativeAdContainerView(layoutId);
     }
 
-    public NativeAdView(Context context, AttributeSet attrs) {
+    public NativeAdView(Context context, AttributeSet attrs, int layoutId) {
         super(context, attrs);
+        initNativeAdContainerView(layoutId);
     }
 
-    public NativeAdView(Context context, AttributeSet attrs, int defStyleAttr) {
+    public NativeAdView(Context context, AttributeSet attrs, int defStyleAttr, int layoutId) {
         super(context, attrs, defStyleAttr);
+        initNativeAdContainerView(layoutId);
     }
 
-    public void setConfigParams(String poolName, int layoutId) {
-        setConfigParams(layoutId, 0, poolName);
+    public void showNativeAd(String poolName) {
+        showNativeAd(poolName, null);
     }
 
-    public void setConfigParams(int layoutId, int loadingLayoutId, String poolName) {
-        setConfigParams(poolName, layoutId, 0, loadingLayoutId);
+    public void showNativeAd(String poolName, View loadingView) {
+        showNativeAd(poolName, 0, loadingView);
     }
 
-    public void setConfigParams(String poolName, int layoutId, int fetchNativeAdInterval) {
-        setConfigParams(poolName, layoutId, 0, fetchNativeAdInterval, 0);
+    public void showNativeAd(String poolName, int fetchNativeAdInterval) {
+        showNativeAd(poolName, fetchNativeAdInterval, null);
     }
 
-    public void setConfigParams(String poolName, int layoutId, int fetchNativeAdInterval, int loadingLayoutId) {
-        setConfigParams(poolName, layoutId, 0, fetchNativeAdInterval, loadingLayoutId);
+    public void showNativeAd(String poolName, int fetchNativeAdInterval, View loadingView) {
+        showNativeAd(poolName, 0, fetchNativeAdInterval, loadingView);
     }
 
-    public void setConfigParams(String poolName, int layoutId, float primaryHWRatio, int fetchNativeAdInterval) {
-        setConfigParams(poolName, layoutId, primaryHWRatio, fetchNativeAdInterval, 0);
+    public void showNativeAd(String poolName, float primaryHWRatio, int fetchNativeAdInterval) {
+        showNativeAd(poolName, primaryHWRatio, fetchNativeAdInterval, null);
     }
 
-    public void setConfigParams(String poolName, int layoutId, float primaryHWRatio, int fetchNativeAdInterval, int loadingLayoutId) {
-        if (poolName.equals(this.poolName)) {
+    public void showNativeAd(String poolName, float primaryHWRatio, int fetchNativeAdInterval, View loadingView) {
+        if(this.poolName != null && this.poolName.equals(poolName)){
             return;
         }
-        pauseRefreshing();
         this.poolName = poolName;
         this.primaryWidth = -1;
         this.primaryHWRatio = primaryHWRatio;
         this.nativeAdTimer = new NativeAdTimer(fetchNativeAdInterval);
+        this.loadingView = loadingView;
         NativeAdManager.getInstance().getNativeAdProxy(poolName).startNotifyAvailableAdCountChanged();
-        if (nativeAdContainerView == null) {
-            initNativeAdContainerView(layoutId);
-            onScrollChangedListener = new ViewTreeObserver.OnScrollChangedListener() {
+        onScrollChangedListener = new ViewTreeObserver.OnScrollChangedListener() {
 
-                @Override
-                public void onScrollChanged() {
-                    onViewStateChanged();
-                }
-            };
-            getViewTreeObserver().addOnScrollChangedListener(onScrollChangedListener);
-            addView(nativeAdContainerView);
-            if (loadingLayoutId != 0) {
-                loadingView = LayoutInflater.from(getContext()).inflate(loadingLayoutId, null);
-                addView(loadingView);
+            @Override
+            public void onScrollChanged() {
+                onViewStateChanged();
             }
-        } else {
-            resumeRefreshing();
+        };
+        getViewTreeObserver().addOnScrollChangedListener(onScrollChangedListener);
+        addView(nativeAdContainerView);
+        if (this.loadingView != null) {
+            addView(this.loadingView);
         }
     }
 
@@ -168,15 +161,15 @@ public class NativeAdView extends FrameLayout {
         }
     }
 
-    private Rect getScreenVisibleRect(){
+    private Rect getScreenVisibleRect() {
         int[] out = new int[2];
         getLocationOnScreen(out);
         int left = out[0] > 0 ? out[0] : 0;
         int top = out[1] > 0 ? out[1] : 0;
         int right = getMeasuredWidth() + out[0];
-        right = right > screenRect.right ? screenRect.right : right;
+        right = right >= screenRect.right ? screenRect.right : right;
         int bottom = getMeasuredHeight() + out[1];
-        bottom = bottom > screenRect.bottom ? screenRect.bottom : bottom;
+        bottom = bottom >= screenRect.bottom ? screenRect.bottom : bottom;
         return new Rect(left, top, right, bottom);
     }
 
@@ -190,33 +183,38 @@ public class NativeAdView extends FrameLayout {
     private void initNativeAdContainerView(int layoutId) {
         View view = View.inflate(HSApplication.getContext(), layoutId, null);
         this.nativeAdContainerView = HSNativeAdFactory.getInstance().createNativeAdContainerView(view.getContext(), view);
-        View view1 = view.findViewById(R.id.ad_call_to_action);
+
+        int coverImgId = getResources().getIdentifier("ad_cover_img", "id", getContext().getPackageName());
+        int choiceId = getResources().getIdentifier("ad_choice", "id", getContext().getPackageName());
+        int actionId = getResources().getIdentifier("ad_call_to_action", "id", getContext().getPackageName());
+        int titleId = getResources().getIdentifier("ad_title", "id", getContext().getPackageName());
+        int iconId = getResources().getIdentifier("ad_icon", "id", getContext().getPackageName());
+        int subtitleId = getResources().getIdentifier("ad_subtitle", "id", getContext().getPackageName());
+
+        View view1 = view.findViewById(actionId);
         if (view1 != null) {
             nativeAdContainerView.setAdActionView(view1);
         }
-        view1 = view.findViewById(R.id.ad_title);
+        view1 = view.findViewById(titleId);
         if (view1 != null) {
             nativeAdContainerView.setAdTitleView((TextView) view1);
         }
-        view1 = view.findViewById(R.id.ad_subtitle);
+        view1 = view.findViewById(subtitleId);
         if (view1 != null) {
             nativeAdContainerView.setAdSubTitleView((TextView) view1);
         }
-        view1 = view.findViewById(R.id.ad_icon);
+        view1 = view.findViewById(iconId);
         if (view1 != null) {
             nativeAdContainerView.setAdIconView((ImageView) view1);
         }
-        view1 = view.findViewById(R.id.ad_cover_img);
+        view1 = view.findViewById(coverImgId);
         if (view1 != null) {
             nativeAdContainerView.setAdPrimaryView((HSNativeAdPrimaryView) view1);
         }
-        view1 = view.findViewById(R.id.ad_choice);
+        view1 = view.findViewById(choiceId);
         if (view1 != null) {
             nativeAdContainerView.setAdChoiceView((FrameLayout) view1);
         }
-
-        nativeAdContainerView.setBackgroundColor(Color.BLUE);
-        setBackgroundColor(Color.GREEN);
     }
 
     private void adjustNativeAdContainerView(HSNativeAd hsNativeAd) {
@@ -244,8 +242,9 @@ public class NativeAdView extends FrameLayout {
             nativeAdContainerView.getAdIconView().setVisibility(View.GONE);
         }
 
-        if (loadingView != null && loadingView.getVisibility() != GONE) {
-            loadingView.setVisibility(GONE);
+        if (loadingView != null) {
+            removeView(loadingView);
+            loadingView = null;
         }
     }
 
@@ -358,10 +357,7 @@ public class NativeAdView extends FrameLayout {
             }
 
             boolean flag = currentNativeAdHashCode == hsNativeAd.hashCode();
-            HSBundle hsBundle = new HSBundle();
-            hsBundle.putBoolean("Flag", flag);
-            hsBundle.putString(NativeAdManager.NATIVE_AD_POOL_NAME, poolName);
-            HSGlobalNotificationCenter.sendNotification(NOTIFICATION_NATIVE_AD_SHOWED, hsBundle);
+            logGoogleAnalyticsEvent("Show");
             if (flag) {
                 return;
             }
@@ -382,9 +378,7 @@ public class NativeAdView extends FrameLayout {
                 @Override
                 public void onNativeAdClicked(HSNativeAd hsNativeAd) {
                     isCurrentNativeAdClicked = true;
-                    HSBundle hsBundle = new HSBundle();
-                    hsBundle.putString(NativeAdManager.NATIVE_AD_POOL_NAME, poolName);
-                    HSGlobalNotificationCenter.sendNotification(NOTIFICATION_NATIVE_AD_CLIKED, hsBundle);
+                    logGoogleAnalyticsEvent("Click");
                 }
 
                 @Override
@@ -400,6 +394,12 @@ public class NativeAdView extends FrameLayout {
 
     private void log(String functionName, String key, String value) {
         HSLog.e(poolName + " - " + functionName + " : " + key + " - " + value);
+    }
+
+
+    private void logGoogleAnalyticsEvent(String actionSuffix) {
+        String screenName = HSApplication.getContext().getResources().getString(R.string.english_ime_name);
+        HSAnalytics.logGoogleAnalyticsEvent(screenName, "APP", "NativeAd_" + poolName + "_" + actionSuffix, "", null, null, null);
     }
 
     class NativeAdTimer {

@@ -5,6 +5,7 @@ import android.app.Dialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.os.Bundle;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
@@ -26,9 +27,7 @@ import com.ihs.keyboardutilslib.R;
 
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 /**
@@ -85,7 +84,7 @@ public class MainActivity extends HSActivity {
         timeAdapter = new TimeAdapter(this, adTimes);
         adShowTimes.setAdapter(timeAdapter);
 
-        refreshNativeAdView = new NativeAdView(MainActivity.this);
+        refreshNativeAdView = new NativeAdView(MainActivity.this, R.layout.ad_style_1);
         refreshNativeAdView.setTag("Refresh");
 
         for (NativeAdManager.NativeAdProxy nativeAdProxy : getAllPoolState()) {
@@ -147,8 +146,9 @@ public class MainActivity extends HSActivity {
         adTimes.clear();
         timeAdapter.notifyDataSetChanged();
 //        if (NativeAdManager.getInstance().existNativeAd(poolName)) {
-            refreshNativeAdView.setConfigParams(poolName, R.layout.ad_style_1, NativeAdConfig.getNativeAdFrequency(), R.layout.ad_loading);
             if(adContainer.findViewWithTag("Refresh") == null) {
+                View view1 = LayoutInflater.from(MainActivity.this).inflate(R.layout.ad_loading, null);
+                refreshNativeAdView.showNativeAd(poolName, NativeAdConfig.getNativeAdFrequency(), view1);
                 adContainer.addView(refreshNativeAdView);
             }
 //        } else {
@@ -162,26 +162,27 @@ public class MainActivity extends HSActivity {
             if (NativeAdManager.NOTIFICATION_NEW_AD.equals(s)) {
                 if (poolName.equals(hsBundle.getString(NativeAdManager.NATIVE_AD_POOL_NAME))) {
                     HSGlobalNotificationCenter.removeObserver(NativeAdManager.NOTIFICATION_NEW_AD, iNotificationObserver);
-                    refreshNativeAdView.setConfigParams(poolName, R.layout.ad_style_1, NativeAdConfig.getNativeAdFrequency(), R.layout.ad_loading);
                     if (adContainer.findViewWithTag("Refresh") == null) {
+                        View view = LayoutInflater.from(MainActivity.this).inflate(R.layout.ad_loading, null);
+                        refreshNativeAdView.showNativeAd(poolName, NativeAdConfig.getNativeAdFrequency(), view);
                         adContainer.addView(refreshNativeAdView);
                     }
                 }
             }
-            else if(NativeAdView.NOTIFICATION_NATIVE_AD_SHOWED.equals(s)){
-                for (NativeAdManager.NativeAdProxy nativeAdProxy : getAllPoolState()) {
-                    if (nativeAdProxy.toString().startsWith(poolName)) {
-                        adPoolInfo.setText(nativeAdProxy.toString());
-                        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
-                        adTimes.add(0, simpleDateFormat.format(new Date()) + " : " + (hsBundle.getBoolean("Flag") ? "old" : "new"));
-                        timeAdapter.notifyDataSetChanged();
-                        break;
-                    }
-                }
-            }
-            else if(NativeAdView.NOTIFICATION_NATIVE_AD_CLIKED.equals(s)) {
-
-            }
+//            else if(NativeAdView.NOTIFICATION_NATIVE_AD_SHOWED.equals(s)){
+//                for (NativeAdManager.NativeAdProxy nativeAdProxy : getAllPoolState()) {
+//                    if (nativeAdProxy.toString().startsWith(poolName)) {
+//                        adPoolInfo.setText(nativeAdProxy.toString());
+//                        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
+//                        adTimes.add(0, simpleDateFormat.format(new Date()) + " : " + (hsBundle.getBoolean("Flag") ? "old" : "new"));
+//                        timeAdapter.notifyDataSetChanged();
+//                        break;
+//                    }
+//                }
+//            }
+//            else if(NativeAdView.NOTIFICATION_NATIVE_AD_CLIKED.equals(s)) {
+//
+//            }
         }
     };
 
@@ -194,8 +195,8 @@ public class MainActivity extends HSActivity {
     @Override
     protected void onResume() {
         super.onResume();
-        HSGlobalNotificationCenter.addObserver(NativeAdView.NOTIFICATION_NATIVE_AD_SHOWED, iNotificationObserver);
-        HSGlobalNotificationCenter.addObserver(NativeAdView.NOTIFICATION_NATIVE_AD_CLIKED, iNotificationObserver);
+//        HSGlobalNotificationCenter.addObserver(NativeAdView.NOTIFICATION_NATIVE_AD_SHOWED, iNotificationObserver);
+//        HSGlobalNotificationCenter.addObserver(NativeAdView.NOTIFICATION_NATIVE_AD_CLIKED, iNotificationObserver);
     }
 
     @Override
