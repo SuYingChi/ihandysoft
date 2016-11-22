@@ -5,6 +5,7 @@ import android.animation.ObjectAnimator;
 import android.view.View;
 
 import com.ihs.keyboardutils.panelcontainer.BasePanel;
+import com.ihs.keyboardutils.panelcontainer.KeyboardPanelSwitchContainer;
 import com.ihs.keyboardutilslib.R;
 
 /**
@@ -33,6 +34,17 @@ public class PullDownPanel extends BasePanel {
             }
         });
         return rootView;
+    }
+
+
+    @Override
+    protected boolean onShowPanelView(int appearMode) {
+        return appearMode == KeyboardPanelSwitchContainer.MODE_SHOW_CHILD;
+    }
+
+    @Override
+    protected boolean onHidePanelView(int appearMode) {
+        return appearMode == KeyboardPanelSwitchContainer.MODE_BACK_PARENT;
     }
 
     @Override

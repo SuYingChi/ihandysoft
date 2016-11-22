@@ -36,6 +36,29 @@ public abstract class BasePanel {
 
     protected abstract View onCreatePanelView();
 
+    /**
+     * return 代表是否执行动画，appearMode 参数为下一个panel出现的模式 为MODE_常量之一
+     *
+     * @param appearMode
+     * @return
+     */
+    protected boolean onHidePanelView(int appearMode) {
+        return false;
+    }
+
+    /**
+     * return 代表是否执行动画，appearMode 参数为下一个panel出现的模式 为MODE_常量之一
+     *
+     * @param appearMode
+     * @return
+     */
+    protected boolean onShowPanelView(int appearMode) {
+        return false;
+    }
+
+    protected void onDestroy() {
+    }
+
     public View getPanelView() {
         return rootView;
     }
