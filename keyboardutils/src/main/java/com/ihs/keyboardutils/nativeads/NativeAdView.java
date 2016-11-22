@@ -64,19 +64,19 @@ public class NativeAdView extends FrameLayout {
 
     private static Handler handler = new Handler();
 
-    public NativeAdView(Context context, int layoutId) {
+    public NativeAdView(Context context, View groupView) {
         super(context);
-        initNativeAdContainerView(layoutId);
+        initNativeAdContainerView(groupView);
     }
 
-    public NativeAdView(Context context, AttributeSet attrs, int layoutId) {
+    public NativeAdView(Context context, AttributeSet attrs, View groupView) {
         super(context, attrs);
-        initNativeAdContainerView(layoutId);
+        initNativeAdContainerView(groupView);
     }
 
-    public NativeAdView(Context context, AttributeSet attrs, int defStyleAttr, int layoutId) {
+    public NativeAdView(Context context, AttributeSet attrs, int defStyleAttr, View groupView) {
         super(context, attrs, defStyleAttr);
-        initNativeAdContainerView(layoutId);
+        initNativeAdContainerView(groupView);
     }
 
     public void showNativeAd(String poolName) {
@@ -180,9 +180,8 @@ public class NativeAdView extends FrameLayout {
         }
     }
 
-    private void initNativeAdContainerView(int layoutId) {
-        View view = View.inflate(HSApplication.getContext(), layoutId, null);
-        this.nativeAdContainerView = HSNativeAdFactory.getInstance().createNativeAdContainerView(view.getContext(), view);
+    private void initNativeAdContainerView(View groupView) {
+        this.nativeAdContainerView = HSNativeAdFactory.getInstance().createNativeAdContainerView(getContext(), groupView);
 
         int coverImgId = getResources().getIdentifier("ad_cover_img", "id", getContext().getPackageName());
         int choiceId = getResources().getIdentifier("ad_choice", "id", getContext().getPackageName());
@@ -191,27 +190,27 @@ public class NativeAdView extends FrameLayout {
         int iconId = getResources().getIdentifier("ad_icon", "id", getContext().getPackageName());
         int subtitleId = getResources().getIdentifier("ad_subtitle", "id", getContext().getPackageName());
 
-        View view1 = view.findViewById(actionId);
+        View view1 = groupView.findViewById(actionId);
         if (view1 != null) {
             nativeAdContainerView.setAdActionView(view1);
         }
-        view1 = view.findViewById(titleId);
+        view1 = groupView.findViewById(titleId);
         if (view1 != null) {
             nativeAdContainerView.setAdTitleView((TextView) view1);
         }
-        view1 = view.findViewById(subtitleId);
+        view1 = groupView.findViewById(subtitleId);
         if (view1 != null) {
             nativeAdContainerView.setAdSubTitleView((TextView) view1);
         }
-        view1 = view.findViewById(iconId);
+        view1 = groupView.findViewById(iconId);
         if (view1 != null) {
             nativeAdContainerView.setAdIconView((ImageView) view1);
         }
-        view1 = view.findViewById(coverImgId);
+        view1 = groupView.findViewById(coverImgId);
         if (view1 != null) {
             nativeAdContainerView.setAdPrimaryView((HSNativeAdPrimaryView) view1);
         }
-        view1 = view.findViewById(choiceId);
+        view1 = groupView.findViewById(choiceId);
         if (view1 != null) {
             nativeAdContainerView.setAdChoiceView((FrameLayout) view1);
         }

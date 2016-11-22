@@ -84,7 +84,8 @@ public class MainActivity extends HSActivity {
         timeAdapter = new TimeAdapter(this, adTimes);
         adShowTimes.setAdapter(timeAdapter);
 
-        refreshNativeAdView = new NativeAdView(MainActivity.this, R.layout.ad_style_1);
+        View view = LayoutInflater.from(this).inflate(R.layout.ad_style_1, null);
+        refreshNativeAdView = new NativeAdView(MainActivity.this, view);
         refreshNativeAdView.setTag("Refresh");
 
         for (NativeAdManager.NativeAdProxy nativeAdProxy : getAllPoolState()) {
