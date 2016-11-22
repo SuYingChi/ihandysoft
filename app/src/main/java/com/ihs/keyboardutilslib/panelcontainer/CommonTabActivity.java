@@ -96,6 +96,8 @@ public class CommonTabActivity extends Activity {
 
         ((ViewGroup) mTabLayout_1.getParent()).removeView(mTabLayout_1);
         panelContainer.setBarView(mTabLayout_1);
+
+        FrameLayout.LayoutParams layoutParams = new FrameLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT);
         changVG.addView(panelContainer);
 
         panelContainer.setOnPanelChangedListener(new KeyboardPanelSwitchContainer.OnPanelChangedListener() {
@@ -119,8 +121,9 @@ public class CommonTabActivity extends Activity {
 
             }
         });
-        mTabLayout_1.setCurrentTab(0);
-        panelContainer.showPanel(panelList.get(0));
+        mTabLayout_1.setCurrentTab(2);
+        panelContainer.showPanel(panelList.get(2));
+        panelContainer.setThemeBackground(getResources().getDrawable(R.drawable.keyboard_bg));
 
 
         final Button btn_keyboard = (Button) findViewById(R.id.btn_show_keyboard);

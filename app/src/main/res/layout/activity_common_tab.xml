@@ -33,7 +33,7 @@
             android:id="@+id/tl_1"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="#ffffff"
+            android:background="@null"
             android:paddingBottom="5dp"
             android:paddingTop="5dp"
             tl:tl_textSelectColor="#2C97DE"
@@ -57,6 +57,6 @@
         <FrameLayout
             android:id="@+id/fl_change"
             android:layout_width="match_parent"
-            android:layout_height="350dp" />
+            android:layout_height="500dp" />
     </LinearLayout>
 </RelativeLayout>

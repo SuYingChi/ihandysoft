@@ -2,6 +2,11 @@ package com.ihs.keyboardutils.panelcontainer;
 
 import android.animation.Animator;
 import android.content.Context;
+import android.graphics.Bitmap;
+import android.graphics.Canvas;
+import android.graphics.PixelFormat;
+import android.graphics.Rect;
+import android.graphics.drawable.Drawable;
 import android.support.annotation.Nullable;
 import android.util.AttributeSet;
 import android.view.View;
@@ -23,6 +28,7 @@ import java.util.Map;
 
 public class KeyboardPanelSwitchContainer extends RelativeLayout implements BasePanel.OnStateChangedListener {
 
+
     public interface OnPanelChangedListener {
         void onPanelChanged(Class panelClass);
     }
@@ -33,6 +39,7 @@ public class KeyboardPanelSwitchContainer extends RelativeLayout implements Base
     private static final int MODE_NORMAL = 0;
     private static final int MODE_SHOW_CHILD = 1;
     private static final int MODE_BACK_PARENT = 2;
+    private static final int MODE_NORM_KEEP_SELF = 3;
 
     private int barPosition = BAR_TOP;
 
@@ -45,6 +52,11 @@ public class KeyboardPanelSwitchContainer extends RelativeLayout implements Base
     private Map<Class, BasePanel> panelMap = new HashMap<>();
     private LinkedList<Class> parentChildStack = new LinkedList<>();
 
+    private Bitmap backgroundBitmap;
+    private Rect backgroundRect;
+
+//    private Rect gRect = new Rect(), lRect = new Rect(), cRect = new Rect();
+
     public KeyboardPanelSwitchContainer() {
         super(HSApplication.getContext());
         barViewGroup = new FrameLayout(getContext());
@@ -54,6 +66,7 @@ public class KeyboardPanelSwitchContainer extends RelativeLayout implements Base
         panelViewGroup.setId(R.id.container_panel_id);
 
         adjustViewPosition();
+        setWillNotDraw(false);
     }
 
     private KeyboardPanelSwitchContainer(Context context) {
@@ -111,7 +124,7 @@ public class KeyboardPanelSwitchContainer extends RelativeLayout implements Base
      * @param panelClass
      */
     public void showPanelAndKeepSelf(Class panelClass) {
-        addNewPanel(panelClass, true, MODE_NORMAL);
+        addNewPanel(panelClass, true, MODE_NORM_KEEP_SELF);
     }
 
     private void addNewPanel(Class panelClass, boolean keepCurrent, int showingType) {
@@ -274,6 +287,10 @@ public class KeyboardPanelSwitchContainer extends RelativeLayout implements Base
                 parentChildStack.clear();
                 panelViewGroup.removeAllViews();
                 break;
+            case MODE_NORM_KEEP_SELF:
+                parentChildStack.clear();
+                panelViewGroup.removeView(panelToRemove.getPanelView());
+                break;
         }
 
         if (!keepCurrent && !parentChildStack.contains(panelToRemove.getClass())
@@ -363,5 +380,35 @@ public class KeyboardPanelSwitchContainer extends RelativeLayout implements Base
         }
     }
 
+    public void setThemeBackground(Drawable drawable) {
+        // 取 drawable 的长宽
+        int w = drawable.getIntrinsicWidth();
+        int h = drawable.getIntrinsicHeight();
 
+        // 取 drawable 的颜色格式
+        Bitmap.Config config = drawable.getOpacity() != PixelFormat.OPAQUE ? Bitmap.Config.ARGB_8888
+                : Bitmap.Config.RGB_565;
+        // 建立对应 bitmap
+        Bitmap bitmap = Bitmap.createBitmap(w, h, config);
+        // 建立对应 bitmap 的画布
+        Canvas canvas = new Canvas(bitmap);
+        drawable.setBounds(0, 0, w, h);
+        // 把 drawable 内容画到画布中
+        drawable.draw(canvas);
+        this.backgroundBitmap = bitmap;
+        this.backgroundRect = new Rect();
+        invalidate();
+    }
+
+    @Override
+    protected void onDraw(Canvas canvas) {
+        if (backgroundBitmap != null) {
+            backgroundRect.set(0, (int) Math.min(barViewGroup.getY(), panelViewGroup.getY()), getWidth(), getHeight());
+//            getGlobalVisibleRect(gRect);
+//            getLocalVisibleRect(lRect);
+//            getChildVisibleRect(barViewGroup,cRect,null);
+            canvas.drawBitmap(backgroundBitmap, null, backgroundRect, null);
+        }
+        super.onDraw(canvas);
+    }
 }
