@@ -54,8 +54,11 @@ public class KeyboardPanelSwitchContainer extends RelativeLayout implements Base
 
     private Bitmap backgroundBitmap;
     private Rect backgroundRect;
+    private int backgroundTopY;
 
 //    private Rect gRect = new Rect(), lRect = new Rect(), cRect = new Rect();
+
+    private Rect lRect = new Rect();
 
     public KeyboardPanelSwitchContainer() {
         super(HSApplication.getContext());
@@ -421,9 +424,17 @@ public class KeyboardPanelSwitchContainer extends RelativeLayout implements Base
     @Override
     protected void onDraw(Canvas canvas) {
         if (backgroundBitmap != null) {
-            backgroundRect.set(0, (int) Math.min(barViewGroup.getY(), panelViewGroup.getY()), getWidth(), getHeight());
-//            getGlobalVisibleRect(gRect);
 //            getLocalVisibleRect(lRect);
+//            backgroundRect.set(lRect);
+            if (barViewGroup.getVisibility() == VISIBLE) {
+                backgroundTopY = (int) barViewGroup.getY();
+            }
+            if (panelViewGroup.getVisibility() == VISIBLE && panelViewGroup.getY() > backgroundTopY) {
+                backgroundTopY = (int) panelViewGroup.getY();
+            }
+
+            backgroundRect.set(0, backgroundTopY, getWidth(), getHeight());
+//            getGlobalVisibleRect(gRect);
 //            getChildVisibleRect(barViewGroup,cRect,null);
             canvas.drawBitmap(backgroundBitmap, null, backgroundRect, null);
         }
