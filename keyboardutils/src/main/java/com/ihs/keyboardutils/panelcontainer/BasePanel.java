@@ -12,7 +12,7 @@ import com.ihs.app.framework.HSApplication;
 
 public abstract class BasePanel {
     public interface OnStateChangedListener {
-        void setBarVisibility(boolean hide, boolean expandPanel);
+        void setBarVisibility(int visibility);
 
         void setBarPosition(int position);
 
@@ -71,8 +71,8 @@ public abstract class BasePanel {
         containerListener.showChildPanel(panelClass);
     }
 
-    public void setBarVisibility(boolean hide, boolean expandPanel) {
-        containerListener.setBarVisibility(hide, expandPanel);
+    public void setBarVisibility(int visibility) {
+        containerListener.setBarVisibility(visibility);
     }
 
     public View getKeyboardView() {

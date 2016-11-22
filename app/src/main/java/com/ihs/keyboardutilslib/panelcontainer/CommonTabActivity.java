@@ -22,6 +22,9 @@ import com.ihs.keyboardutilslib.panelcontainer.SwitchTab.ViewFindUtils;
 
 import java.util.ArrayList;
 
+import static android.view.View.GONE;
+import static android.view.View.VISIBLE;
+
 public class CommonTabActivity extends Activity {
     private Context mContext = this;
 
@@ -89,7 +92,11 @@ public class CommonTabActivity extends Activity {
             @Override
             public void onClick(View v) {
                 hideKeyPanel = !hideKeyPanel;
-                panelContainer.setBarVisibility(hideKeyPanel, true);
+                if(hideKeyPanel){
+                    panelContainer.setBarVisibility(GONE);
+                }else{
+                    panelContainer.setBarVisibility(VISIBLE);
+                }
             }
         });
         panelContainer.setKeyboardPanel(DemoPanel.class, keyboard);
@@ -137,12 +144,12 @@ public class CommonTabActivity extends Activity {
                 showKeyboad = !showKeyboad;
                 if (showKeyboad) {
                     BasePanel currentPanel = panelContainer.getCurrentPanel();
-                    currentPanel.setBarVisibility(true, true);
+                    currentPanel.setBarVisibility(GONE);
                     panelContainer.getPanelViewGroup().addView(panelContainer.getKeyboardView());
                     btn_keyboard.setText("移除键盘view");
                 } else {
                     BasePanel currentPanel = panelContainer.getCurrentPanel();
-                    currentPanel.setBarVisibility(false, false);
+                    currentPanel.setBarVisibility(VISIBLE);
                     panelContainer.getPanelViewGroup().removeView(panelContainer.getKeyboardView());
                     btn_keyboard.setText("在当前Panel展示键盘");
                 }

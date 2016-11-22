@@ -229,7 +229,6 @@ public class KeyboardPanelSwitchContainer extends RelativeLayout implements Base
                 barParams.addRule(ABOVE, 0);
                 panelParams.addRule(ALIGN_PARENT_BOTTOM, 0);
 
-//                panelParams.addRule(ALIGN_PARENT_TOP, TRUE);
                 panelParams.addRule(ABOVE, barViewGroup.getId());
                 barParams.addRule(ALIGN_PARENT_BOTTOM, TRUE);
                 break;
@@ -389,16 +388,8 @@ public class KeyboardPanelSwitchContainer extends RelativeLayout implements Base
     }
 
     @Override
-    public void setBarVisibility(boolean hide, boolean expandPanel) {
-        if (hide) {
-            if (expandPanel) {
-                barViewGroup.setVisibility(GONE);
-            } else {
-                barViewGroup.setVisibility(INVISIBLE);
-            }
-        } else {
-            barViewGroup.setVisibility(VISIBLE);
-        }
+    public void setBarVisibility(int visibility) {
+        barViewGroup.setVisibility(visibility);
     }
 
     public void setThemeBackground(Drawable drawable) {

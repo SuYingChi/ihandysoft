@@ -7,6 +7,9 @@ import android.view.ViewGroup;
 import com.ihs.keyboardutils.panelcontainer.BasePanel;
 import com.ihs.keyboardutilslib.R;
 
+import static android.view.View.GONE;
+import static android.view.View.VISIBLE;
+
 /**
  * Created by Arthur on 16/10/24.
  */
@@ -26,7 +29,11 @@ public class DemoPanel2 extends BasePanel {
             @Override
             public void onClick(View v) {
                 hidePanel = !hidePanel;
-                containerListener.setBarVisibility(hidePanel, false);
+                if(hidePanel){
+                    setBarVisibility(GONE);
+                }else{
+                    setBarVisibility(VISIBLE);
+                }
             }
         });
 
