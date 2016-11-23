@@ -69,7 +69,7 @@ public class KeyboardPanelSwitchContainer extends RelativeLayout implements Base
         panelViewGroup.setId(R.id.container_panel_id);
 
         adjustViewPosition();
-        setWillNotDraw(false);
+//        setWillNotDraw(false);
     }
 
     private KeyboardPanelSwitchContainer(Context context) {
@@ -418,11 +418,11 @@ public class KeyboardPanelSwitchContainer extends RelativeLayout implements Base
         drawable.draw(canvas);
         this.backgroundBitmap = bitmap;
         this.backgroundRect = new Rect();
-        invalidate();
+//        invalidate();
     }
 
     @Override
-    protected void onDraw(Canvas canvas) {
+    protected void dispatchDraw(Canvas canvas) {
         if (backgroundBitmap != null) {
 //            getLocalVisibleRect(lRect);
 //            backgroundRect.set(lRect);
@@ -437,8 +437,7 @@ public class KeyboardPanelSwitchContainer extends RelativeLayout implements Base
 //            getChildVisibleRect(barViewGroup,cRect,null);
             canvas.drawBitmap(backgroundBitmap, null, backgroundRect, null);
         }
-        super.onDraw(canvas);
+        HSLog.e("=====");
+        super.dispatchDraw(canvas);
     }
-
-
 }
