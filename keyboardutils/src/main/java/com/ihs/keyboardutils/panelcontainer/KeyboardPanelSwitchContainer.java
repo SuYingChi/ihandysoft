@@ -54,7 +54,6 @@ public class KeyboardPanelSwitchContainer extends RelativeLayout implements Base
 
     private Bitmap backgroundBitmap;
     private Rect backgroundRect;
-    private int backgroundTopY;
 
 //    private Rect gRect = new Rect(), lRect = new Rect(), cRect = new Rect();
 
@@ -418,7 +417,7 @@ public class KeyboardPanelSwitchContainer extends RelativeLayout implements Base
         drawable.draw(canvas);
         this.backgroundBitmap = bitmap;
         this.backgroundRect = new Rect();
-//        invalidate();
+        invalidate();
     }
 
     @Override
@@ -427,17 +426,28 @@ public class KeyboardPanelSwitchContainer extends RelativeLayout implements Base
 //            getLocalVisibleRect(lRect);
 //            backgroundRect.set(lRect);
             if (barViewGroup.getVisibility() == VISIBLE && barPosition == BAR_TOP) {
-                backgroundTopY = (int) barViewGroup.getY();
+                backgroundRect.set(0, (int) barViewGroup.getY(), getWidth(), getHeight());
             } else {
-                backgroundTopY = (int) panelViewGroup.getY();
+                backgroundRect.set(0, (int) panelViewGroup.getY(), getWidth(), getHeight());
             }
-
-            backgroundRect.set(0, backgroundTopY, getWidth(), getHeight());
 //            getGlobalVisibleRect(gRect);
 //            getChildVisibleRect(barViewGroup,cRect,null);
             canvas.drawBitmap(backgroundBitmap, null, backgroundRect, null);
         }
-        HSLog.e("=====");
         super.dispatchDraw(canvas);
+    }
+
+    public void onDestroy() {
+        if (currentPanel != null) {
+            currentPanel.onDestroy();
+            currentPanel = null;
+        }
+        for (BasePanel panel : panelMap.values()) {
+            panel.onDestroy();
+        }
+        panelMap.clear();
+        if (backgroundBitmap != null) {
+            backgroundBitmap.recycle();
+        }
     }
 }

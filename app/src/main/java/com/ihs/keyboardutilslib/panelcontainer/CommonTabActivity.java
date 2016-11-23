@@ -142,6 +142,7 @@ public class CommonTabActivity extends Activity {
                 }
 
                 showKeyboad = !showKeyboad;
+//                panelContainer.setThemeBackground(getResources().getDrawable(R.drawable.bgbg));
                 if (showKeyboad) {
                     BasePanel currentPanel = panelContainer.getCurrentPanel();
                     currentPanel.setBarVisibility(GONE);
