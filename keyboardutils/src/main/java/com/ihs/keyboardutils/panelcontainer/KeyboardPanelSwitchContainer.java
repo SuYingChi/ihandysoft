@@ -130,6 +130,7 @@ public class KeyboardPanelSwitchContainer extends RelativeLayout implements Base
         addNewPanel(panelClass, true, MODE_NORM_KEEP_SELF);
     }
 
+
     private void addNewPanel(Class panelClass, boolean keepCurrent, int showingType) {
         if (!BasePanel.class.isAssignableFrom(panelClass)) {
             HSLog.e("panelCOntainer", "wrong type");
@@ -340,6 +341,14 @@ public class KeyboardPanelSwitchContainer extends RelativeLayout implements Base
         return panelViewGroup;
     }
 
+    public ViewGroup getBarViewGroup() {
+        return barViewGroup;
+    }
+
+    public Map getKeptPanelMap() {
+        return panelMap;
+    }
+
     public BasePanel getCurrentPanel() {
         return currentPanel;
     }
@@ -417,10 +426,9 @@ public class KeyboardPanelSwitchContainer extends RelativeLayout implements Base
         if (backgroundBitmap != null) {
 //            getLocalVisibleRect(lRect);
 //            backgroundRect.set(lRect);
-            if (barViewGroup.getVisibility() == VISIBLE) {
+            if (barViewGroup.getVisibility() == VISIBLE && barPosition == BAR_TOP) {
                 backgroundTopY = (int) barViewGroup.getY();
-            }
-            if (panelViewGroup.getVisibility() == VISIBLE && panelViewGroup.getY() > backgroundTopY) {
+            } else {
                 backgroundTopY = (int) panelViewGroup.getY();
             }
 
