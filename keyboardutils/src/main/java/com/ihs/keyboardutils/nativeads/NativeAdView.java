@@ -103,47 +103,51 @@ public class NativeAdView extends FrameLayout {
             return;
         }
         NativeAdManager.getInstance().getNativeAdProxy(poolName).startAvailableAdCountChangedNotifaction();
-        if (this.poolName == null) {
+        this.poolName = poolName;
+        this.primaryWidth = -1;
+        this.primaryHWRatio = primaryHWRatio;
+        this.nativeAdTimer = new NativeAdTimer(30000);
+        if (nativeAdContainerView.getParent() == null) {
             addView(nativeAdContainerView);
-            this.loadingView = loadingView;
-            if (this.loadingView != null) {
-                addView(this.loadingView);
-            }
-
             onScrollChangedListener = new ViewTreeObserver.OnScrollChangedListener() {
 
                 @Override
                 public void onScrollChanged() {
-                    onViewStateChanged();
+                    onViewPositionChanged();
                 }
             };
             getViewTreeObserver().addOnScrollChangedListener(onScrollChangedListener);
+
+            if(loadingView != null) {
+                this.loadingView = loadingView;
+                addView(this.loadingView);
+            }
         }
-        this.poolName = poolName;
-        this.primaryWidth = -1;
-        this.primaryHWRatio = primaryHWRatio;
-        this.nativeAdTimer = new NativeAdTimer(fetchNativeAdInterval);
-        resumeRefreshing();
     }
 
     @Override
     protected void onWindowVisibilityChanged(int visibility) {
         super.onWindowVisibilityChanged(visibility);
-        onViewStateChanged();
-    }
-
-    @Override
-    protected void onVisibilityChanged(View changedView, int visibility) {
-        super.onVisibilityChanged(changedView, visibility);
-        onViewStateChanged();
+        log("onWindowVisibilityChanged", "visibility", visibility + "");
+        if(visibility == VISIBLE && isPaused){
+            resumeRefreshing();
+        }
+        else if(visibility != VISIBLE && !isPaused){
+            pauseRefreshing();
+        }
     }
 
     @Override
     public void onWindowFocusChanged(boolean hasWindowFocus) {
         super.onWindowFocusChanged(hasWindowFocus);
-        onViewStateChanged();
+        log("onWindowFocusChanged", "visibility", hasWindowFocus + "");
+        if(hasWindowFocus && isPaused){
+            resumeRefreshing();
+        }
+        else if(!hasWindowFocus && !isPaused){
+            pauseRefreshing();
+        }
     }
-
 
     private Rect screenRect = new Rect();
 
@@ -155,9 +159,9 @@ public class NativeAdView extends FrameLayout {
         screenRect = new Rect(0, 0, p.x, p.y);
     }
 
-    private void onViewStateChanged() {
+    private void onViewPositionChanged() {
         Rect rectInScreen = getScreenVisibleRect();
-        if (getWindowVisibility() == VISIBLE && getVisibility() == VISIBLE && hasWindowFocus() && !rectInScreen.isEmpty() && screenRect.contains(rectInScreen)) {
+        if (!rectInScreen.isEmpty() && screenRect.contains(rectInScreen)) {
             resumeRefreshing();
         } else {
             pauseRefreshing();
