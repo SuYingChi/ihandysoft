@@ -1,8 +1,8 @@
 package com.ihs.keyboardutils.nativeads;
 
+import android.provider.Settings;
 import android.support.v4.util.ArrayMap;
 
-import com.ihs.commons.config.HSConfig;
 import com.ihs.commons.notificationcenter.HSGlobalNotificationCenter;
 import com.ihs.commons.utils.HSBundle;
 import com.ihs.commons.utils.HSLog;
@@ -12,10 +12,7 @@ import com.ihs.nativeads.base.api.PreCacheOption;
 import com.ihs.nativeads.pool.api.HSNativeAdPool;
 import com.ihs.nativeads.pool.api.INativeAdPoolListener;
 
-import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
-import java.util.Map;
 
 /**
  * Created by dongdong.han on 16/10/20.
@@ -26,30 +23,13 @@ public class NativeAdManager {
     public static String NOTIFICATION_NEW_AD = "NEW_NATIVE_AD_NOTIFICATION";
     public static String NATIVE_AD_POOL_NAME = "NATIVE_AD_POOL_NAME";
 
-
     private static NativeAdManager nativeAdManager;
-
     private ArrayMap<String, NativeAdProxy> nativeAdProxies;
-
-    private synchronized ArrayList<NativeAdProxy> getAllPoolState() {
-        if (nativeAdProxies != null) {
-            ArrayList<NativeAdProxy> result = new ArrayList<>();
-            Iterator<NativeAdProxy> it = nativeAdProxies.values().iterator();
-            while (it.hasNext()) {
-                result.add(it.next());
-            }
-            return result;
-        }
-        return null;
-    }
 
     private NativeAdManager() {
         nativeAdProxies = new ArrayMap<>();
-        List<?> disabledPools = HSConfig.getList("Application", "NativeAds", "DisabledPools");
-        for (Map.Entry entry : HSConfig.getMap("nativeAdsPool").entrySet()) {
-            if ((entry.getValue() instanceof Map) && !disabledPools.contains(entry.getKey().toString())) {
-                nativeAdProxies.put(entry.getKey().toString(), new NativeAdProxy(entry.getKey().toString()));
-            }
+        for (String poolName : NativeAdConfig.getAvailablePoolNames()) {
+            nativeAdProxies.put(poolName, new NativeAdProxy(poolName));
         }
     }
 
@@ -78,19 +58,15 @@ public class NativeAdManager {
         return null;
     }
 
-    /**
-     * first: notify observer {@link INativeAdPoolListener#onAvailableAdCountChanged(int)}
-     * second: provide the native ad {@link #getNativeAd()}
-     * third: release cachedNativeAd {@link #release()}
-     */
     public static final class NativeAdProxy {
+        /** 广告池名字 **/
         private String poolName;
+        /** 广告池 **/
         private HSNativeAdPool hsNativeAdPool;
+        /** 广告池最近提供的广告 **/
         private HSNativeAd cachedNativeAd;
-        private long cachedNativeAdTime;
-        private boolean stopNotifyAvailableAdCountChanged = false;
-
-        private int hasShowedCount;
+        /** 是否停止发送广告池数量改变通知 **/
+        private boolean stopAvailableAdCountChangedNotification = false;
 
         NativeAdProxy(String poolName) {
             this.poolName = poolName;
@@ -112,7 +88,8 @@ public class NativeAdManager {
                 @Override
                 public void onAvailableAdCountChanged(int i) {
                     log("onAvailableAdCountChanged", "count", i + "");
-                    if (!stopNotifyAvailableAdCountChanged) {
+                    NativeAdProfile.get(poolName).setAvailableCount(i);
+                    if (!stopAvailableAdCountChangedNotification) {
                         if (i > 0) {
                             HSBundle hsBundle = new HSBundle();
                             hsBundle.putString(NATIVE_AD_POOL_NAME, poolName);
@@ -129,23 +106,22 @@ public class NativeAdManager {
         }
 
         HSNativeAd getNativeAd() {
-            if (hsNativeAdPool != null) {
+            if (hsNativeAdPool != null && existNativeAd()) {
+                clearCacheNativeAd();
                 List<HSNativeAd> ads = hsNativeAdPool.getAds(1);
-                if (ads.size() > 0) {
-                    clearCacheNativeAd();
-                    HSNativeAd nativeAd = ads.get(0);
-
-                    hasShowedCount++;
-                    cachedNativeAd = nativeAd;
-                    cachedNativeAdTime = System.currentTimeMillis();
-                    return cachedNativeAd;
-                }
+                cachedNativeAd = ads.get(0);
+                /** 更新广告信息 **/
+                NativeAdProfile nativeAdProfile = NativeAdProfile.get(poolName);
+                nativeAdProfile.incHasShowedCount();
+                nativeAdProfile.setVendorName(cachedNativeAd.getVendor().name());
+                nativeAdProfile.setCachedNativeAdTime(System.currentTimeMillis());
+                return cachedNativeAd;
             }
             return null;
         }
 
-        HSNativeAd getCachedNativeAd() {
-            if(cachedNativeAd != null) {
+        HSNativeAd getCachedNativeAd(){
+            if (cachedNativeAd != null) {
                 if (cachedNativeAd.isExpired()) {
                     clearCacheNativeAd();
                 }
@@ -153,33 +129,27 @@ public class NativeAdManager {
             return cachedNativeAd;
         }
 
-        long getCachedNativeAdTime() {
-            return cachedNativeAdTime;
-        }
 
         boolean existNativeAd() {
             return hsNativeAdPool.getAvailableNativeAdCount() > 0;
         }
 
         void release() {
-            stopNotifyAvailableAdCountChanged = true;
+            stopAvailableAdCountChangedNotification = true;
             clearCacheNativeAd();
-            hasShowedCount = 0;
+            NativeAdProfile.get(poolName).release();
         }
 
-
-        void clearCacheNativeAd(){
+        private void clearCacheNativeAd() {
             if (cachedNativeAd != null) {
                 cachedNativeAd.release();
-                cachedNativeAdTime = 0;
                 cachedNativeAd = null;
             }
         }
 
-        void startNotifyAvailableAdCountChanged() {
-            stopNotifyAvailableAdCountChanged = false;
+        void startAvailableAdCountChangedNotifaction() {
+            stopAvailableAdCountChangedNotification = false;
         }
-
 
         @Override
         public int hashCode() {
@@ -190,19 +160,6 @@ public class NativeAdManager {
         public boolean equals(Object obj) {
             NativeAdProxy nativeAdProxy = (NativeAdProxy) obj;
             return this.poolName.equals(nativeAdProxy.poolName);
-        }
-
-        @Override
-        public String toString() {
-            StringBuilder stringBuilder = new StringBuilder(poolName);
-            stringBuilder.append("(CurrentCount:");
-            stringBuilder.append(hsNativeAdPool.getAvailableNativeAdCount());
-            stringBuilder.append(";HasShowedCount:" + hasShowedCount);
-            if (cachedNativeAd != null) {
-                stringBuilder.append(";VendorName:" + cachedNativeAd.getVendor().name());
-            }
-            stringBuilder.append(")");
-            return stringBuilder.toString();
         }
     }
 }

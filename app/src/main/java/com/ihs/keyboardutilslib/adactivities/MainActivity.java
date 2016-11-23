@@ -22,6 +22,7 @@ import com.ihs.commons.notificationcenter.INotificationObserver;
 import com.ihs.commons.utils.HSBundle;
 import com.ihs.keyboardutils.nativeads.NativeAdConfig;
 import com.ihs.keyboardutils.nativeads.NativeAdManager;
+import com.ihs.keyboardutils.nativeads.NativeAdProfile;
 import com.ihs.keyboardutils.nativeads.NativeAdView;
 import com.ihs.keyboardutilslib.R;
 
@@ -88,9 +89,8 @@ public class MainActivity extends HSActivity {
         refreshNativeAdView = new NativeAdView(MainActivity.this, view);
         refreshNativeAdView.setTag("Refresh");
 
-        for (NativeAdManager.NativeAdProxy nativeAdProxy : getAllPoolState()) {
-            String nativeAdPoolState = nativeAdProxy.toString();
-            data_list.add(nativeAdPoolState.substring(0, nativeAdPoolState.indexOf("(")));
+        for (String poolName : NativeAdConfig.getAvailablePoolNames()) {
+            data_list.add(poolName);
         }
 
 
@@ -112,8 +112,8 @@ public class MainActivity extends HSActivity {
 
                 //    设置一个下拉的列表选择项
                 ArrayList<String> poolStates = new ArrayList<String>();
-                for (NativeAdManager.NativeAdProxy nativeAdProxy : getAllPoolState()) {
-                    poolStates.add(nativeAdProxy.toString());
+                for (String profile : NativeAdProfile.getAllNativeAdPoolState()) {
+                        poolStates.add(profile);
                 }
                 String[] arrPoolStates = new String[poolStates.size()];
                 arrPoolStates = poolStates.toArray(arrPoolStates);
@@ -138,9 +138,9 @@ public class MainActivity extends HSActivity {
     public void showAd(View view) {
         poolName = data_list.get(adPoolName.getSelectedItemPosition()).trim();
 
-        for (NativeAdManager.NativeAdProxy nativeAdProxy : getAllPoolState()) {
-            if (nativeAdProxy.toString().startsWith(poolName)) {
-                adPoolInfo.setText(nativeAdProxy.toString());
+        for (String profile : NativeAdProfile.getAllNativeAdPoolState()) {
+            if (profile.startsWith(poolName)) {
+                adPoolInfo.setText(profile);
                 break;
             }
         }
@@ -148,10 +148,10 @@ public class MainActivity extends HSActivity {
         timeAdapter.notifyDataSetChanged();
 //        if (NativeAdManager.getInstance().existNativeAd(poolName)) {
             if(adContainer.findViewWithTag("Refresh") == null) {
-                View view1 = LayoutInflater.from(MainActivity.this).inflate(R.layout.ad_loading, null);
-                refreshNativeAdView.showNativeAd(poolName, NativeAdConfig.getNativeAdFrequency(), view1);
                 adContainer.addView(refreshNativeAdView);
             }
+                View view1 = LayoutInflater.from(MainActivity.this).inflate(R.layout.ad_loading, null);
+                refreshNativeAdView.showNativeAd(poolName, NativeAdConfig.getNativeAdFrequency(), view1);
 //        } else {
 //            HSGlobalNotificationCenter.addObserver(NativeAdManager.NOTIFICATION_NEW_AD, iNotificationObserver);
 //        }
