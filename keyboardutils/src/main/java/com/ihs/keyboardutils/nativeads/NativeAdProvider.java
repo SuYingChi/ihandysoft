@@ -34,7 +34,7 @@ public class NativeAdProvider {
 
     public NativeAdProvider(NativeAdViewListener nativeAdViewListener) {
         this.nativeAdViewListener = nativeAdViewListener;
-        HSGlobalNotificationCenter.addObserver(NativeAdManager.NOTIFICATION_NEW_AD, nativeAdObserver);
+
     }
 
     private NativeAdViewListener nativeAdViewListener;
@@ -58,7 +58,10 @@ public class NativeAdProvider {
         this.groupView = groupView;
         this.primaryHWRatio = primaryHWRatio;
         this.fetchNativeAdInterval = fetchNativeAdInterval;
-        HSGlobalNotificationCenter.sendNotification(NativeAdManager.NOTIFICATION_NEW_AD);
+        HSGlobalNotificationCenter.addObserver(NativeAdManager.NOTIFICATION_NEW_AD, nativeAdObserver);
+        if(NativeAdManager.getInstance().existNativeAd(poolName)) {
+            HSGlobalNotificationCenter.sendNotification(NativeAdManager.NOTIFICATION_NEW_AD);
+        }
     }
 
     private void log(String functionName, String key, String value) {
