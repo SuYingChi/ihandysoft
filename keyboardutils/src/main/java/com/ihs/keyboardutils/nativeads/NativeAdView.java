@@ -27,6 +27,8 @@ import com.ihs.nativeads.base.api.HSNativeAdFactory;
 import com.ihs.nativeads.base.api.HSNativeAdPrimaryView;
 import com.ihs.nativeads.base.api.INativeAdListener;
 
+import java.util.List;
+
 /**
  * Created by ihandysoft on 16/10/19.
  */
@@ -195,6 +197,8 @@ public class NativeAdView extends FrameLayout {
         int iconId = getResources().getIdentifier("ad_icon", "id", getContext().getPackageName());
         int subtitleId = getResources().getIdentifier("ad_subtitle", "id", getContext().getPackageName());
 
+        List disabledIcons = NativeAdConfig.getDisabledIconPools();
+
         View view1 = groupView.findViewById(actionId);
         if (view1 != null) {
             nativeAdContainerView.setAdActionView(view1);
@@ -209,7 +213,12 @@ public class NativeAdView extends FrameLayout {
         }
         view1 = groupView.findViewById(iconId);
         if (view1 != null) {
-            nativeAdContainerView.setAdIconView((ImageView) view1);
+            if(disabledIcons.contains(poolName)) {
+                view1.setVisibility(GONE);
+            }
+            else {
+                nativeAdContainerView.setAdIconView((ImageView) view1);
+            }
         }
         view1 = groupView.findViewById(coverImgId);
         if (view1 != null) {
