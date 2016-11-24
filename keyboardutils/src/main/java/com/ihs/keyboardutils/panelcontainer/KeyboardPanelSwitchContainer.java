@@ -22,6 +22,9 @@ import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.Map;
 
+import static android.view.ViewGroup.LayoutParams.*;
+
+
 /**
  * Created by Arthur on 16/10/21.
  */
@@ -55,9 +58,9 @@ public class KeyboardPanelSwitchContainer extends RelativeLayout implements Base
     private Bitmap backgroundBitmap;
     private Rect backgroundRect;
 
-//    private Rect gRect = new Rect(), lRect = new Rect(), cRect = new Rect();
+    private int heightMode = MATCH_PARENT;
 
-    private Rect lRect = new Rect();
+//    private Rect gRect = new Rect(), lRect = new Rect(), cRect = new Rect();
 
     public KeyboardPanelSwitchContainer() {
         super(HSApplication.getContext());
@@ -176,7 +179,7 @@ public class KeyboardPanelSwitchContainer extends RelativeLayout implements Base
             panel.setPanelView(view);
         }
 
-        ViewGroup.LayoutParams layoutParams = new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+        ViewGroup.LayoutParams layoutParams = new ViewGroup.LayoutParams(MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
 
         if (view.getParent() != null && view.getParent() != panelViewGroup) {
             removeViewFromParent(view);
@@ -201,7 +204,7 @@ public class KeyboardPanelSwitchContainer extends RelativeLayout implements Base
         }
         ViewGroup.LayoutParams layoutParams = view.getLayoutParams();
         if (layoutParams == null) {
-            layoutParams = new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+            layoutParams = new ViewGroup.LayoutParams(MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
         }
         barViewGroup.addView(view, layoutParams);
     }
@@ -213,24 +216,27 @@ public class KeyboardPanelSwitchContainer extends RelativeLayout implements Base
 
         if (barParams == null || panelParams == null) {
             needAddView = true;
-            barParams = new LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
-            panelParams = new LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+            barParams = new LayoutParams(MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+            panelParams = new LayoutParams(MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
         }
+
+        barParams.addRule(ABOVE, 0);
+        panelParams.addRule(ALIGN_PARENT_BOTTOM, 0);
+        panelParams.addRule(ABOVE, 0);
+        barParams.addRule(ALIGN_PARENT_BOTTOM, 0);
 
         switch (barPosition) {
             case BAR_TOP:
-                panelParams.addRule(ABOVE, 0);
-                barParams.addRule(ALIGN_PARENT_BOTTOM, 0);
-
                 barParams.addRule(ABOVE, panelViewGroup.getId());
-                panelParams.addRule(ALIGN_PARENT_BOTTOM, TRUE);
+                if (heightMode == MATCH_PARENT) {
+                    panelParams.addRule(ALIGN_PARENT_BOTTOM, TRUE);
+                }
                 break;
             case BAR_BOTTOM:
-                barParams.addRule(ABOVE, 0);
-                panelParams.addRule(ALIGN_PARENT_BOTTOM, 0);
-
                 panelParams.addRule(ABOVE, barViewGroup.getId());
-                barParams.addRule(ALIGN_PARENT_BOTTOM, TRUE);
+                if (heightMode == MATCH_PARENT) {
+                    barParams.addRule(ALIGN_PARENT_BOTTOM, TRUE);
+                }
                 break;
         }
 
@@ -450,4 +456,28 @@ public class KeyboardPanelSwitchContainer extends RelativeLayout implements Base
             backgroundBitmap.recycle();
         }
     }
+
+    //当wrap content的时候直接设置高度
+    @Override
+    public void setLayoutParams(ViewGroup.LayoutParams params) {
+        if (heightMode != params.height) {
+            if (params.height == WRAP_CONTENT) {
+                heightMode = WRAP_CONTENT;
+            } else if (params.height == MATCH_PARENT) {
+                heightMode = MATCH_PARENT;
+            }
+            adjustViewPosition();
+        }
+        super.setLayoutParams(params);
+    }
+
+//    @Override
+//    protected void onLayout(boolean changed, int l, int t, int r, int b) {
+//        if (heightMode == ViewGroup.LayoutParams.WRAP_CONTENT) {
+//            t = b - (barViewGroup.getMeasuredHeight() + panelViewGroup.getMeasuredHeight());
+//            getLayoutParams().height = (barViewGroup.getVisibility() == VISIBLE ? barViewGroup.getMeasuredHeight() : 0) + panelViewGroup.getMeasuredHeight();
+//            setMeasuredDimension(getMeasuredWidth(), getLayoutParams().height);
+//        }
+//        super.onLayout(changed, l, t, r, b);
+//    }
 }
