@@ -85,9 +85,6 @@ public class MainActivity extends HSActivity {
         timeAdapter = new TimeAdapter(this, adTimes);
         adShowTimes.setAdapter(timeAdapter);
 
-        View view = LayoutInflater.from(this).inflate(R.layout.ad_style_1, null);
-        refreshNativeAdView = new NativeAdView(MainActivity.this, view);
-        refreshNativeAdView.setTag("Refresh");
 
         for (String poolName : NativeAdConfig.getAvailablePoolNames()) {
             data_list.add(poolName);
@@ -113,7 +110,7 @@ public class MainActivity extends HSActivity {
                 //    设置一个下拉的列表选择项
                 ArrayList<String> poolStates = new ArrayList<String>();
                 for (String profile : NativeAdProfile.getAllNativeAdPoolState()) {
-                        poolStates.add(profile);
+                    poolStates.add(profile);
                 }
                 String[] arrPoolStates = new String[poolStates.size()];
                 arrPoolStates = poolStates.toArray(arrPoolStates);
@@ -132,77 +129,37 @@ public class MainActivity extends HSActivity {
 
     public void hideAd(View view) {
         new AlertDialog.Builder(this).setTitle("Test").show();
-        //startActivity(new Intent(this, SecondActivity.class));
     }
 
     public void showAd(View view) {
         poolName = data_list.get(adPoolName.getSelectedItemPosition()).trim();
-
-        for (String profile : NativeAdProfile.getAllNativeAdPoolState()) {
-            if (profile.startsWith(poolName)) {
-                adPoolInfo.setText(profile);
-                break;
-            }
-        }
         adTimes.clear();
         timeAdapter.notifyDataSetChanged();
-//        if (NativeAdManager.getInstance().existNativeAd(poolName)) {
-            if(adContainer.findViewWithTag("Refresh") == null) {
-                adContainer.addView(refreshNativeAdView);
-            }
-                View view1 = LayoutInflater.from(MainActivity.this).inflate(R.layout.ad_loading, null);
-                refreshNativeAdView.showNativeAd(poolName, NativeAdConfig.getNativeAdFrequency(), view1);
-//        } else {
-//            HSGlobalNotificationCenter.addObserver(NativeAdManager.NOTIFICATION_NEW_AD, iNotificationObserver);
-//        }
-    }
-
-    INotificationObserver iNotificationObserver = new INotificationObserver() {
-        @Override
-        public void onReceive(String s, HSBundle hsBundle) {
-            if (NativeAdManager.NOTIFICATION_NEW_AD.equals(s)) {
-                if (poolName.equals(hsBundle.getString(NativeAdManager.NATIVE_AD_POOL_NAME))) {
-                    HSGlobalNotificationCenter.removeObserver(NativeAdManager.NOTIFICATION_NEW_AD, iNotificationObserver);
-                    if (adContainer.findViewWithTag("Refresh") == null) {
-                        View view = LayoutInflater.from(MainActivity.this).inflate(R.layout.ad_loading, null);
-                        refreshNativeAdView.showNativeAd(poolName, NativeAdConfig.getNativeAdFrequency(), view);
-                        adContainer.addView(refreshNativeAdView);
-                    }
-                }
-            }
-//            else if(NativeAdView.NOTIFICATION_NATIVE_AD_SHOWED.equals(s)){
-//                for (NativeAdManager.NativeAdProxy nativeAdProxy : getAllPoolState()) {
-//                    if (nativeAdProxy.toString().startsWith(poolName)) {
-//                        adPoolInfo.setText(nativeAdProxy.toString());
-//                        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
-//                        adTimes.add(0, simpleDateFormat.format(new Date()) + " : " + (hsBundle.getBoolean("Flag") ? "old" : "new"));
-//                        timeAdapter.notifyDataSetChanged();
-//                        break;
-//                    }
-//                }
-//            }
-//            else if(NativeAdView.NOTIFICATION_NATIVE_AD_CLIKED.equals(s)) {
-//
-//            }
+        if (adContainer.findViewWithTag("Refresh") != null) {
+            adContainer.removeView(refreshNativeAdView);
         }
-    };
+        View view1 = LayoutInflater.from(this).inflate(R.layout.ad_style_1, null);
+        View view2 = LayoutInflater.from(MainActivity.this).inflate(R.layout.ad_loading, null);
+        refreshNativeAdView = new NativeAdView(MainActivity.this, view1, poolName, NativeAdConfig.getNativeAdFrequency(), view2);
+        refreshNativeAdView.setTag("Refresh");
+        adContainer.addView(refreshNativeAdView);
+    }
 
     @Override
     protected void onPause() {
-        HSGlobalNotificationCenter.removeObserver(iNotificationObserver);
         super.onPause();
     }
 
     @Override
     protected void onResume() {
         super.onResume();
-//        HSGlobalNotificationCenter.addObserver(NativeAdView.NOTIFICATION_NATIVE_AD_SHOWED, iNotificationObserver);
-//        HSGlobalNotificationCenter.addObserver(NativeAdView.NOTIFICATION_NATIVE_AD_CLIKED, iNotificationObserver);
     }
 
     @Override
     protected void onDestroy() {
-        refreshNativeAdView.release();
+        if (refreshNativeAdView != null) {
+            refreshNativeAdView.release();
+        }
         super.onDestroy();
     }
 

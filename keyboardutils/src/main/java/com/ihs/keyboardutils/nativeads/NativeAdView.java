@@ -63,50 +63,37 @@ public class NativeAdView extends FrameLayout {
 
     private static Handler handler = new Handler();
 
-    public NativeAdView(Context context, View groupView) {
+    public NativeAdView(Context context, View groupView, String poolName) {
+        this(context, groupView, poolName, null);
+    }
+
+    public NativeAdView(Context context, View groupView, String poolName, View loadingView) {
+        this(context, groupView, poolName, 0, loadingView);
+    }
+
+    public NativeAdView(Context context, View groupView, String poolName, int fetchNativeAdInterval) {
+        this(context, groupView, poolName, fetchNativeAdInterval, null);
+    }
+
+    public NativeAdView(Context context, View groupView, String poolName, int fetchNativeAdInterval, View loadingView) {
+        this(context, groupView, poolName, 0, fetchNativeAdInterval, loadingView);
+    }
+
+    public NativeAdView(Context context, View groupView, String poolName, float primaryHWRatio, int fetchNativeAdInterval) {
+        this(context, groupView, poolName, primaryHWRatio, fetchNativeAdInterval, null);
+    }
+
+    public NativeAdView(Context context, View groupView, String poolName, float primaryHWRatio, int fetchNativeAdInterval, View loadingView) {
         super(context);
-        initNativeAdContainerView(groupView);
-    }
-
-    public NativeAdView(Context context, AttributeSet attrs, View groupView) {
-        super(context, attrs);
-        initNativeAdContainerView(groupView);
-    }
-
-    public NativeAdView(Context context, AttributeSet attrs, int defStyleAttr, View groupView) {
-        super(context, attrs, defStyleAttr);
-        initNativeAdContainerView(groupView);
-    }
-
-    public void showNativeAd(String poolName) {
-        showNativeAd(poolName, null);
-    }
-
-    public void showNativeAd(String poolName, View loadingView) {
-        showNativeAd(poolName, 0, loadingView);
-    }
-
-    public void showNativeAd(String poolName, int fetchNativeAdInterval) {
-        showNativeAd(poolName, fetchNativeAdInterval, null);
-    }
-
-    public void showNativeAd(String poolName, int fetchNativeAdInterval, View loadingView) {
-        showNativeAd(poolName, 0, fetchNativeAdInterval, loadingView);
-    }
-
-    public void showNativeAd(String poolName, float primaryHWRatio, int fetchNativeAdInterval) {
-        showNativeAd(poolName, primaryHWRatio, fetchNativeAdInterval, null);
-    }
-
-    public void showNativeAd(String poolName, float primaryHWRatio, int fetchNativeAdInterval, View loadingView) {
         if (this.poolName != null && this.poolName.equals(poolName)) {
             return;
         }
+        initNativeAdContainerView(groupView);
         NativeAdManager.getInstance().getNativeAdProxy(poolName).startAvailableAdCountChangedNotifaction();
         this.poolName = poolName;
         this.primaryWidth = -1;
         this.primaryHWRatio = primaryHWRatio;
-        this.nativeAdTimer = new NativeAdTimer(30000);
+        this.nativeAdTimer = new NativeAdTimer(fetchNativeAdInterval);
         if (nativeAdContainerView.getParent() == null) {
             addView(nativeAdContainerView);
             onScrollChangedListener = new ViewTreeObserver.OnScrollChangedListener() {
@@ -118,7 +105,7 @@ public class NativeAdView extends FrameLayout {
             };
             getViewTreeObserver().addOnScrollChangedListener(onScrollChangedListener);
 
-            if(loadingView != null) {
+            if (loadingView != null) {
                 this.loadingView = loadingView;
                 addView(this.loadingView);
             }
@@ -129,10 +116,9 @@ public class NativeAdView extends FrameLayout {
     protected void onWindowVisibilityChanged(int visibility) {
         super.onWindowVisibilityChanged(visibility);
         log("onWindowVisibilityChanged", "visibility", visibility + "");
-        if(visibility == VISIBLE && isPaused){
+        if (visibility == VISIBLE && isPaused) {
             resumeRefreshing();
-        }
-        else if(visibility != VISIBLE && !isPaused){
+        } else if (visibility != VISIBLE && !isPaused) {
             pauseRefreshing();
         }
     }
@@ -141,10 +127,9 @@ public class NativeAdView extends FrameLayout {
     public void onWindowFocusChanged(boolean hasWindowFocus) {
         super.onWindowFocusChanged(hasWindowFocus);
         log("onWindowFocusChanged", "visibility", hasWindowFocus + "");
-        if(hasWindowFocus && isPaused){
+        if (hasWindowFocus && isPaused) {
             resumeRefreshing();
-        }
-        else if(!hasWindowFocus && !isPaused){
+        } else if (!hasWindowFocus && !isPaused) {
             pauseRefreshing();
         }
     }
@@ -166,6 +151,19 @@ public class NativeAdView extends FrameLayout {
         } else {
             pauseRefreshing();
         }
+    }
+
+    @Override
+    protected void onAttachedToWindow() {
+        super.onAttachedToWindow();
+        nativeAdTimer.totalDisplayDuration = NativeAdManager.getInstance().getNativeAdProxy(poolName).getCachedNativeAdShowedTime();
+    }
+
+    @Override
+    protected void onDetachedFromWindow() {
+        NativeAdManager.getInstance().getNativeAdProxy(poolName).setCachedNativeAdShowedTime(nativeAdTimer.totalDisplayDuration);
+        log("onDetachedFromWindow", "", "");
+        super.onDetachedFromWindow();
     }
 
     private Rect getScreenVisibleRect() {
@@ -366,11 +364,8 @@ public class NativeAdView extends FrameLayout {
             boolean flag = currentNativeAdHashCode == hsNativeAd.hashCode();
             logGoogleAnalyticsEvent("Show");
             if (flag) {
-
                 return;
             }
-
-
             currentNativeAdHashCode = hsNativeAd.hashCode();
             hsNativeAd.registerView(nativeAdContainerView.getContext(), nativeAdContainerView);
 
@@ -413,10 +408,8 @@ public class NativeAdView extends FrameLayout {
     }
 
     class NativeAdTimer {
-
         private long currentResumeTime;
-        private long currentPauseTime;
-        private long totalDisplayDuration = Integer.MAX_VALUE;
+        private long totalDisplayDuration;
         private int refreshInterval;
 
         NativeAdTimer(int refreshInterval) {
@@ -429,19 +422,22 @@ public class NativeAdView extends FrameLayout {
         }
 
         void resumeTimer() {
-            this.currentResumeTime = System.currentTimeMillis();
+            if(totalDisplayDuration != 0) {
+                this.currentResumeTime = System.currentTimeMillis();
+            }
         }
 
         void pauseTimer() {
-            currentPauseTime = System.currentTimeMillis();
-            totalDisplayDuration += System.currentTimeMillis() - currentResumeTime;
+            if(currentResumeTime != 0) {
+                totalDisplayDuration += System.currentTimeMillis() - currentResumeTime;
+            }
         }
 
         boolean isExpired() {
-            if (currentPauseTime < currentResumeTime) {
+            if(currentResumeTime != 0) {
                 totalDisplayDuration += System.currentTimeMillis() - currentResumeTime;
             }
-            if (totalDisplayDuration < refreshInterval) {
+            if (totalDisplayDuration < refreshInterval && totalDisplayDuration > 0) {
                 log("isExpired", "HasShowedTime", totalDisplayDuration + "");
                 return false;
             }

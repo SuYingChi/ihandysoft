@@ -65,6 +65,8 @@ public class NativeAdManager {
         private HSNativeAdPool hsNativeAdPool;
         /** 广告池最近提供的广告 **/
         private HSNativeAd cachedNativeAd;
+        /** 当前广告实际展示的时间 **/
+        private long cachedNativeAdShowedTime;
         /** 是否停止发送广告池数量改变通知 **/
         private boolean stopAvailableAdCountChangedNotification = false;
 
@@ -101,6 +103,14 @@ public class NativeAdManager {
 
         }
 
+        public long getCachedNativeAdShowedTime() {
+            return cachedNativeAdShowedTime;
+        }
+
+        public void setCachedNativeAdShowedTime(long cachedNativeAdShowedTime) {
+            this.cachedNativeAdShowedTime = cachedNativeAdShowedTime;
+        }
+
         private void log(String functionName, String key, String value) {
             HSLog.e(poolName + " - " + functionName + " : " + key + " - " + value);
         }
@@ -110,6 +120,7 @@ public class NativeAdManager {
                 clearCacheNativeAd();
                 List<HSNativeAd> ads = hsNativeAdPool.getAds(1);
                 cachedNativeAd = ads.get(0);
+                cachedNativeAdShowedTime = 0;
                 /** 更新广告信息 **/
                 NativeAdProfile nativeAdProfile = NativeAdProfile.get(poolName);
                 nativeAdProfile.incHasShowedCount();
@@ -144,6 +155,7 @@ public class NativeAdManager {
             if (cachedNativeAd != null) {
                 cachedNativeAd.release();
                 cachedNativeAd = null;
+                cachedNativeAdShowedTime = 0;
             }
         }
 
