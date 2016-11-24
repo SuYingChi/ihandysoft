@@ -235,8 +235,13 @@ public class NativeAdView extends FrameLayout {
         layoutParams.width = primaryWidth;
         nativeAdContainerView.getContainerView().setLayoutParams(layoutParams);
 
-        if (nativeAdContainerView.getAdSubTitleView() != null && ((TextView) nativeAdContainerView.getAdSubTitleView()).getText().toString().trim().equals("")) {
-            nativeAdContainerView.getAdSubTitleView().setVisibility(View.GONE);
+        if (nativeAdContainerView.getAdSubTitleView() != null && !((TextView) nativeAdContainerView.getAdSubTitleView()).getText().toString().trim().equals("")) {
+            if(nativeAdContainerView.getAdBodyView() != null && ((TextView) nativeAdContainerView.getAdBodyView()).getText().toString().trim().equals("")) {
+                nativeAdContainerView.getAdSubTitleView().setVisibility(View.GONE);
+            }
+            else {
+                ((TextView) nativeAdContainerView.getAdSubTitleView()).setText(((TextView) nativeAdContainerView.getAdBodyView()).getText());
+            }
         }
 
         if (nativeAdContainerView.getAdPrimaryView() != null) {
