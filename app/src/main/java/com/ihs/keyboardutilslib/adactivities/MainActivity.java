@@ -16,6 +16,7 @@ import android.widget.ListView;
 import android.widget.Spinner;
 import android.widget.TextView;
 
+import com.ihs.app.framework.HSApplication;
 import com.ihs.app.framework.activity.HSActivity;
 import com.ihs.commons.notificationcenter.HSGlobalNotificationCenter;
 import com.ihs.commons.notificationcenter.INotificationObserver;
@@ -23,6 +24,7 @@ import com.ihs.commons.utils.HSBundle;
 import com.ihs.keyboardutils.nativeads.NativeAdConfig;
 import com.ihs.keyboardutils.nativeads.NativeAdManager;
 import com.ihs.keyboardutils.nativeads.NativeAdProfile;
+import com.ihs.keyboardutils.nativeads.NativeAdProvider;
 import com.ihs.keyboardutils.nativeads.NativeAdView;
 import com.ihs.keyboardutilslib.R;
 
@@ -139,10 +141,15 @@ public class MainActivity extends HSActivity {
             adContainer.removeView(refreshNativeAdView);
         }
         View view1 = LayoutInflater.from(this).inflate(R.layout.ad_style_1, null);
-        View view2 = LayoutInflater.from(MainActivity.this).inflate(R.layout.ad_loading, null);
-        refreshNativeAdView = new NativeAdView(MainActivity.this, view1, poolName, NativeAdConfig.getNativeAdFrequency(), view2);
-        refreshNativeAdView.setTag("Refresh");
-        adContainer.addView(refreshNativeAdView);
+        new NativeAdProvider(new NativeAdProvider.NativeAdViewListener() {
+            @Override
+            public void NativeAdViewPrepared(NativeAdView nativeAdView) {
+                refreshNativeAdView = nativeAdView;
+                refreshNativeAdView.setTag("Refresh");
+                adContainer.addView(refreshNativeAdView);
+            }
+        }).createNativeAdView(this, view1, poolName, NativeAdConfig.getNativeAdFrequency());
+
     }
 
     @Override

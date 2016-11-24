@@ -244,7 +244,7 @@ public class NativeAdView extends FrameLayout {
             if (primaryHWRatio == 0) {
                 nativeAdContainerView.getAdPrimaryView().setLayoutParams(new FrameLayout.LayoutParams(primaryWidth, primaryWidth));
             } else {
-                nativeAdContainerView.getAdPrimaryView().setLayoutParams(new FrameLayout.LayoutParams(primaryWidth, (int) (nativeAdContainerView.getWidth() * primaryHWRatio)));
+                nativeAdContainerView.getAdPrimaryView().setLayoutParams(new FrameLayout.LayoutParams(primaryWidth, (int) (nativeAdContainerView.getWidth() / primaryHWRatio)));
             }
         }
 
