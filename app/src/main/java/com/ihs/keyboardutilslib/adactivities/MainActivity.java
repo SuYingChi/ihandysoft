@@ -16,15 +16,11 @@ import android.widget.ListView;
 import android.widget.Spinner;
 import android.widget.TextView;
 
-import com.ihs.app.framework.HSApplication;
 import com.ihs.app.framework.activity.HSActivity;
-import com.ihs.commons.notificationcenter.HSGlobalNotificationCenter;
-import com.ihs.commons.notificationcenter.INotificationObserver;
-import com.ihs.commons.utils.HSBundle;
 import com.ihs.keyboardutils.nativeads.NativeAdConfig;
 import com.ihs.keyboardutils.nativeads.NativeAdManager;
+import com.ihs.keyboardutils.nativeads.NativeAdParams;
 import com.ihs.keyboardutils.nativeads.NativeAdProfile;
-import com.ihs.keyboardutils.nativeads.NativeAdProvider;
 import com.ihs.keyboardutils.nativeads.NativeAdView;
 import com.ihs.keyboardutilslib.R;
 
@@ -55,8 +51,6 @@ public class MainActivity extends HSActivity {
 
 
     private String poolName;
-
-    private NativeAdView refreshNativeAdView;
 
     private ArrayList<NativeAdManager.NativeAdProxy> getAllPoolState() {
         NativeAdManager nativeAdManager = NativeAdManager.getInstance();
@@ -133,23 +127,21 @@ public class MainActivity extends HSActivity {
         new AlertDialog.Builder(this).setTitle("Test").show();
     }
 
+    NativeAdView nativeAdView;
     public void showAd(View view) {
         poolName = data_list.get(adPoolName.getSelectedItemPosition()).trim();
         adTimes.clear();
         timeAdapter.notifyDataSetChanged();
-        if (adContainer.findViewWithTag("Refresh") != null) {
-            adContainer.removeView(refreshNativeAdView);
+        if(nativeAdView != null) {
+            adContainer.removeView(nativeAdView);
         }
         View view1 = LayoutInflater.from(this).inflate(R.layout.ad_style_1, null);
-        new NativeAdProvider(new NativeAdProvider.NativeAdViewListener() {
-            @Override
-            public void NativeAdViewPrepared(NativeAdView nativeAdView) {
-                refreshNativeAdView = nativeAdView;
-                refreshNativeAdView.setTag("Refresh");
-                adContainer.addView(refreshNativeAdView);
-            }
-        }).createNativeAdView(this, view1, poolName, NativeAdConfig.getNativeAdFrequency());
-
+        View view2 = LayoutInflater.from(this).inflate(R.layout.ad_loading, null);
+        if(nativeAdView == null) {
+            nativeAdView = new NativeAdView(this, view1, view2);
+            nativeAdView.configParams(new NativeAdParams(poolName, NativeAdConfig.getNativeAdFrequency(), adContainer.getWidth(), 1.9f));
+            adContainer.addView(nativeAdView);
+        }
     }
 
     @Override
@@ -164,8 +156,8 @@ public class MainActivity extends HSActivity {
 
     @Override
     protected void onDestroy() {
-        if (refreshNativeAdView != null) {
-            refreshNativeAdView.release();
+        if(nativeAdView != null) {
+            nativeAdView.release();
         }
         super.onDestroy();
     }
