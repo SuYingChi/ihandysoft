@@ -3,10 +3,7 @@ package com.ihs.keyboardutils.panelcontainer;
 import android.animation.Animator;
 import android.content.Context;
 import android.graphics.Bitmap;
-import android.graphics.Canvas;
-import android.graphics.PixelFormat;
 import android.graphics.Rect;
-import android.graphics.drawable.Drawable;
 import android.support.annotation.Nullable;
 import android.util.AttributeSet;
 import android.view.View;
@@ -22,14 +19,15 @@ import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.Map;
 
-import static android.view.ViewGroup.LayoutParams.*;
+import static android.view.ViewGroup.LayoutParams.MATCH_PARENT;
+import static android.view.ViewGroup.LayoutParams.WRAP_CONTENT;
 
 
 /**
  * Created by Arthur on 16/10/21.
  */
 
-public class KeyboardPanelSwitchContainer extends RelativeLayout implements BasePanel.OnStateChangedListener {
+public class KeyboardPanelSwitchContainer extends RelativeLayout implements BasePanel.OnPanelActionListener {
 
 
     public interface OnPanelChangedListener {
@@ -102,7 +100,7 @@ public class KeyboardPanelSwitchContainer extends RelativeLayout implements Base
         BasePanel panel;
         try {
             panel = (BasePanel) panelClass.getConstructor().newInstance();
-            panel.setContainerListener(this);
+            panel.setPanelActionListener(this);
         } catch (Exception e) {
             e.printStackTrace();
             return;
@@ -163,7 +161,7 @@ public class KeyboardPanelSwitchContainer extends RelativeLayout implements Base
         } else {
             try {
                 panel = (BasePanel) panelClass.getConstructor().newInstance();
-                panel.setContainerListener(this);
+                panel.setPanelActionListener(this);
             } catch (Exception e) {
                 e.printStackTrace();
                 return;
@@ -406,42 +404,42 @@ public class KeyboardPanelSwitchContainer extends RelativeLayout implements Base
         barViewGroup.setVisibility(visibility);
     }
 
-    public void setThemeBackground(Drawable drawable) {
-        // 取 drawable 的长宽
-        int w = drawable.getIntrinsicWidth();
-        int h = drawable.getIntrinsicHeight();
+//    private void setThemeBackground(Drawable drawable) {
+//        // 取 drawable 的长宽
+//        int w = drawable.getIntrinsicWidth();
+//        int h = drawable.getIntrinsicHeight();
+//
+//        // 取 drawable 的颜色格式
+//        Bitmap.Config config = drawable.getOpacity() != PixelFormat.OPAQUE ? Bitmap.Config.ARGB_8888
+//                : Bitmap.Config.RGB_565;
+//        // 建立对应 bitmap
+//        Bitmap bitmap = Bitmap.createBitmap(w, h, config);
+//        // 建立对应 bitmap 的画布
+//        Canvas canvas = new Canvas(bitmap);
+//        drawable.setBounds(0, 0, w, h);
+//        // 把 drawable 内容画到画布中
+//        drawable.draw(canvas);
+//        this.backgroundBitmap = bitmap;
+//        this.backgroundRect = new Rect();
+//        invalidate();
+//    }
 
-        // 取 drawable 的颜色格式
-        Bitmap.Config config = drawable.getOpacity() != PixelFormat.OPAQUE ? Bitmap.Config.ARGB_8888
-                : Bitmap.Config.RGB_565;
-        // 建立对应 bitmap
-        Bitmap bitmap = Bitmap.createBitmap(w, h, config);
-        // 建立对应 bitmap 的画布
-        Canvas canvas = new Canvas(bitmap);
-        drawable.setBounds(0, 0, w, h);
-        // 把 drawable 内容画到画布中
-        drawable.draw(canvas);
-        this.backgroundBitmap = bitmap;
-        this.backgroundRect = new Rect();
-        invalidate();
-    }
-
-    @Override
-    protected void dispatchDraw(Canvas canvas) {
-        if (backgroundBitmap != null) {
-//            getLocalVisibleRect(lRect);
-//            backgroundRect.set(lRect);
-            if (barViewGroup.getVisibility() == VISIBLE && barPosition == BAR_TOP) {
-                backgroundRect.set(0, (int) barViewGroup.getY(), getWidth(), getHeight());
-            } else {
-                backgroundRect.set(0, (int) panelViewGroup.getY(), getWidth(), getHeight());
-            }
-//            getGlobalVisibleRect(gRect);
-//            getChildVisibleRect(barViewGroup,cRect,null);
-            canvas.drawBitmap(backgroundBitmap, null, backgroundRect, null);
-        }
-        super.dispatchDraw(canvas);
-    }
+//    @Override
+//    protected void dispatchDraw(Canvas canvas) {
+//        if (backgroundBitmap != null) {
+////            getLocalVisibleRect(lRect);
+////            backgroundRect.set(lRect);
+//            if (barViewGroup.getVisibility() == VISIBLE && barPosition == BAR_TOP) {
+//                backgroundRect.set(0, (int) barViewGroup.getY(), getWidth(), getHeight());
+//            } else {
+//                backgroundRect.set(0, (int) panelViewGroup.getY(), getWidth(), getHeight());
+//            }
+////            getGlobalVisibleRect(gRect);
+////            getChildVisibleRect(barViewGroup,cRect,null);
+//            canvas.drawBitmap(backgroundBitmap, null, backgroundRect, null);
+//        }
+//        super.dispatchDraw(canvas);
+//    }
 
     public void onDestroy() {
         if (currentPanel != null) {

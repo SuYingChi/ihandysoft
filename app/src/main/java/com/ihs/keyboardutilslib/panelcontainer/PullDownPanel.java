@@ -23,14 +23,14 @@ public class PullDownPanel extends BasePanel {
         rootView.findViewById(R.id.button2).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                containerListener.showPanel(DemoPanel5.class);
+                panelActionListener.showPanel(DemoPanel5.class);
             }
         });
 
         rootView.findViewById(R.id.button3).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                containerListener.backToParentPanel(false);
+                panelActionListener.backToParentPanel(false);
             }
         });
         return rootView;

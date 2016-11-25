@@ -27,7 +27,7 @@ public class DemoPanel5 extends BasePanel {
             @Override
             public void onClick(View v) {
 //                hidePanel = !hidePanel;
-//                containerListener.setBarVisibility(hidePanel, false);
+//                panelActionListener.setBarVisibility(hidePanel, false);
                 KeyboardPanelSwitchContainer container = new KeyboardPanelSwitchContainer();
                 container.showPanel(DemoPanel5.class);
                 ViewGroup.MarginLayoutParams layoutParams = new ViewGroup.MarginLayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT);
@@ -39,7 +39,7 @@ public class DemoPanel5 extends BasePanel {
         rootView.findViewById(R.id.btn_demo5_back).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                containerListener.backToParentPanel(false);
+                panelActionListener.backToParentPanel(false);
             }
         });
         rootView.setPadding(30, 30, 30, 30);

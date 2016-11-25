@@ -11,7 +11,7 @@ import com.ihs.app.framework.HSApplication;
  */
 
 public abstract class BasePanel {
-    public interface OnStateChangedListener {
+    public interface OnPanelActionListener {
         void setBarVisibility(int visibility);
 
         void setBarPosition(int position);
@@ -29,7 +29,7 @@ public abstract class BasePanel {
     protected View rootView = null;
 
 
-    protected OnStateChangedListener containerListener;
+    protected OnPanelActionListener panelActionListener;
 
     public BasePanel() {
     }
@@ -68,15 +68,15 @@ public abstract class BasePanel {
     }
 
     public void showChildPanel(Class panelClass) {
-        containerListener.showChildPanel(panelClass);
+        panelActionListener.showChildPanel(panelClass);
     }
 
     public void setBarVisibility(int visibility) {
-        containerListener.setBarVisibility(visibility);
+        panelActionListener.setBarVisibility(visibility);
     }
 
     public View getKeyboardView() {
-        return containerListener.getKeyboardView();
+        return panelActionListener.getKeyboardView();
     }
 
     public Animator getAppearAnimator() {
@@ -87,15 +87,15 @@ public abstract class BasePanel {
         return null;
     }
 
-    public void setContainerListener(OnStateChangedListener onStateChangedListener) {
-        this.containerListener = onStateChangedListener;
+    public void setPanelActionListener(OnPanelActionListener onPanelActionListener) {
+        this.panelActionListener = onPanelActionListener;
     }
 
-    public OnStateChangedListener getContainerListener() {
-        return containerListener;
+    public OnPanelActionListener getPanelActionListener() {
+        return panelActionListener;
     }
 
     public void backToParentPanel(boolean keepSelf) {
-        containerListener.backToParentPanel(keepSelf);
+        panelActionListener.backToParentPanel(keepSelf);
     }
 }

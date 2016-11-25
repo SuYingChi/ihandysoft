@@ -130,7 +130,7 @@ public class CommonTabActivity extends Activity {
         });
         mTabLayout_1.setCurrentTab(2);
         panelContainer.showPanel(panelList.get(2));
-        panelContainer.setThemeBackground(getResources().getDrawable(R.drawable.keyboard_bg));
+//        panelContainer.setThemeBackground(getResources().getDrawable(R.drawable.keyboard_bg));
 
 
         final Button btn_keyboard = (Button) findViewById(R.id.btn_show_keyboard);
