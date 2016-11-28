@@ -105,7 +105,9 @@ public class NativeAdView extends FrameLayout {
         if (loadingView != null) {
             addView(this.loadingView);
         }
-        resumeRefreshing();
+        if (nativeAdViewListener != null) {
+            resumeRefreshing();
+        }
     }
 
     @Override

@@ -1,6 +1,5 @@
 package com.ihs.keyboardutils.nativeads;
 
-import android.provider.Settings;
 import android.support.v4.util.ArrayMap;
 
 import com.ihs.commons.notificationcenter.HSGlobalNotificationCenter;
