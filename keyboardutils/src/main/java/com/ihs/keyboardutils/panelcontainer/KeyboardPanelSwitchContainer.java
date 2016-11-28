@@ -3,7 +3,10 @@ package com.ihs.keyboardutils.panelcontainer;
 import android.animation.Animator;
 import android.content.Context;
 import android.graphics.Bitmap;
+import android.graphics.Canvas;
+import android.graphics.PixelFormat;
 import android.graphics.Rect;
+import android.graphics.drawable.Drawable;
 import android.support.annotation.Nullable;
 import android.util.AttributeSet;
 import android.view.View;
@@ -27,7 +30,7 @@ import static android.view.ViewGroup.LayoutParams.WRAP_CONTENT;
  * Created by Arthur on 16/10/21.
  */
 
-public class KeyboardPanelSwitchContainer extends RelativeLayout implements BasePanel.OnPanelActionListener {
+public class KeyboardPanelSwitchContainer extends RelativeLayout implements BasePanel.OnPanelActionListener, BarViewGroup.OnBarViewVisibilityChanged {
 
 
     public interface OnPanelChangedListener {
@@ -62,7 +65,7 @@ public class KeyboardPanelSwitchContainer extends RelativeLayout implements Base
 
     public KeyboardPanelSwitchContainer() {
         super(HSApplication.getContext());
-        barViewGroup = new FrameLayout(getContext());
+        barViewGroup = new BarViewGroup(getContext(), this);
         barViewGroup.setId(R.id.container_bar_id);
 
         panelViewGroup = new FrameLayout(getContext());
@@ -219,21 +222,32 @@ public class KeyboardPanelSwitchContainer extends RelativeLayout implements Base
         }
 
         barParams.addRule(ABOVE, 0);
-        panelParams.addRule(ALIGN_PARENT_BOTTOM, 0);
-        panelParams.addRule(ABOVE, 0);
+        barParams.addRule(BELOW, 0);
         barParams.addRule(ALIGN_PARENT_BOTTOM, 0);
+
+        panelParams.addRule(BELOW, 0);
+        panelParams.addRule(ABOVE, 0);
+        panelParams.addRule(ALIGN_PARENT_BOTTOM, 0);
 
         switch (barPosition) {
             case BAR_TOP:
-                barParams.addRule(ABOVE, panelViewGroup.getId());
                 if (heightMode == MATCH_PARENT) {
+                    barParams.addRule(ABOVE, panelViewGroup.getId());
                     panelParams.addRule(ALIGN_PARENT_BOTTOM, TRUE);
+                } else {
+                    panelParams.addRule(BELOW, barViewGroup.getId());
                 }
                 break;
             case BAR_BOTTOM:
-                panelParams.addRule(ABOVE, barViewGroup.getId());
                 if (heightMode == MATCH_PARENT) {
-                    barParams.addRule(ALIGN_PARENT_BOTTOM, TRUE);
+                    if (barViewGroup.getVisibility() == GONE) {
+                        panelParams.addRule(ALIGN_PARENT_BOTTOM, TRUE);
+                    } else {
+                        panelParams.addRule(ABOVE, barViewGroup.getId());
+                        barParams.addRule(ALIGN_PARENT_BOTTOM, TRUE);
+                    }
+                } else {
+                    barParams.addRule(BELOW, panelViewGroup.getId());
                 }
                 break;
         }
@@ -404,42 +418,42 @@ public class KeyboardPanelSwitchContainer extends RelativeLayout implements Base
         barViewGroup.setVisibility(visibility);
     }
 
-//    private void setThemeBackground(Drawable drawable) {
-//        // 取 drawable 的长宽
-//        int w = drawable.getIntrinsicWidth();
-//        int h = drawable.getIntrinsicHeight();
-//
-//        // 取 drawable 的颜色格式
-//        Bitmap.Config config = drawable.getOpacity() != PixelFormat.OPAQUE ? Bitmap.Config.ARGB_8888
-//                : Bitmap.Config.RGB_565;
-//        // 建立对应 bitmap
-//        Bitmap bitmap = Bitmap.createBitmap(w, h, config);
-//        // 建立对应 bitmap 的画布
-//        Canvas canvas = new Canvas(bitmap);
-//        drawable.setBounds(0, 0, w, h);
-//        // 把 drawable 内容画到画布中
-//        drawable.draw(canvas);
-//        this.backgroundBitmap = bitmap;
-//        this.backgroundRect = new Rect();
-//        invalidate();
-//    }
+    public void setThemeBackground(Drawable drawable) {
+        // 取 drawable 的长宽
+        int w = drawable.getIntrinsicWidth();
+        int h = drawable.getIntrinsicHeight();
 
-//    @Override
-//    protected void dispatchDraw(Canvas canvas) {
-//        if (backgroundBitmap != null) {
-////            getLocalVisibleRect(lRect);
-////            backgroundRect.set(lRect);
-//            if (barViewGroup.getVisibility() == VISIBLE && barPosition == BAR_TOP) {
-//                backgroundRect.set(0, (int) barViewGroup.getY(), getWidth(), getHeight());
-//            } else {
-//                backgroundRect.set(0, (int) panelViewGroup.getY(), getWidth(), getHeight());
-//            }
-////            getGlobalVisibleRect(gRect);
-////            getChildVisibleRect(barViewGroup,cRect,null);
-//            canvas.drawBitmap(backgroundBitmap, null, backgroundRect, null);
-//        }
-//        super.dispatchDraw(canvas);
-//    }
+        // 取 drawable 的颜色格式
+        Bitmap.Config config = drawable.getOpacity() != PixelFormat.OPAQUE ? Bitmap.Config.ARGB_8888
+                : Bitmap.Config.RGB_565;
+        // 建立对应 bitmap
+        Bitmap bitmap = Bitmap.createBitmap(w, h, config);
+        // 建立对应 bitmap 的画布
+        Canvas canvas = new Canvas(bitmap);
+        drawable.setBounds(0, 0, w, h);
+        // 把 drawable 内容画到画布中
+        drawable.draw(canvas);
+        this.backgroundBitmap = bitmap;
+        this.backgroundRect = new Rect();
+        invalidate();
+    }
+
+    @Override
+    protected void dispatchDraw(Canvas canvas) {
+        if (backgroundBitmap != null) {
+//            getLocalVisibleRect(lRect);
+//            backgroundRect.set(lRect);
+            if (barViewGroup.getVisibility() == VISIBLE && barPosition == BAR_TOP) {
+                backgroundRect.set(0, (int) barViewGroup.getY(), getWidth(), getHeight());
+            } else {
+                backgroundRect.set(0, (int) panelViewGroup.getY(), getWidth(), getHeight());
+            }
+//            getGlobalVisibleRect(gRect);
+//            getChildVisibleRect(barViewGroup,cRect,null);
+            canvas.drawBitmap(backgroundBitmap, null, backgroundRect, null);
+        }
+        super.dispatchDraw(canvas);
+    }
 
     public void onDestroy() {
         if (currentPanel != null) {
@@ -478,4 +492,13 @@ public class KeyboardPanelSwitchContainer extends RelativeLayout implements Base
 //        }
 //        super.onLayout(changed, l, t, r, b);
 //    }
+
+
+    @Override
+    public void onBarVisibilityChanged(int visibility) {
+        if (barPosition == BAR_BOTTOM && heightMode == MATCH_PARENT) {
+            adjustViewPosition();
+        }
+    }
+
 }
