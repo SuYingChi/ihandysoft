@@ -97,7 +97,7 @@ public class NativeAdView extends FrameLayout {
 
             @Override
             public void onScrollChanged() {
-                onViewPositionChanged();
+                onViewPositionChanged(getScreenVisibleRect());
             }
         };
         getViewTreeObserver().addOnScrollChangedListener(onScrollChangedListener);
@@ -142,8 +142,8 @@ public class NativeAdView extends FrameLayout {
         screenRect = new Rect(0, 0, p.x, p.y);
     }
 
-    private void onViewPositionChanged() {
-        Rect rectInScreen = getScreenVisibleRect();
+    protected void onViewPositionChanged(Rect rectInScreen) {
+        log("onViewPositionChanged", "Rect", "" + rectInScreen);
         if (!rectInScreen.isEmpty() && screenRect.contains(rectInScreen)) {
             resumeRefreshing();
         } else {
@@ -239,11 +239,15 @@ public class NativeAdView extends FrameLayout {
             }
         }
         // 设置subtitle值
-        if (nativeAdContainerView.getAdSubTitleView() != null && !((TextView) nativeAdContainerView.getAdSubTitleView()).getText().toString().trim().equals("")) {
-            if (nativeAdContainerView.getAdBodyView() != null && ((TextView) nativeAdContainerView.getAdBodyView()).getText().toString().trim().equals("")) {
-                nativeAdContainerView.getAdSubTitleView().setVisibility(View.GONE);
+        if (nativeAdContainerView.getAdSubTitleView() != null) {
+            if (((TextView) nativeAdContainerView.getAdSubTitleView()).getText().toString().trim().equals("")) {
+                if (nativeAdContainerView.getAdBodyView() != null && !((TextView) nativeAdContainerView.getAdBodyView()).getText().toString().trim().equals("")) {
+                    ((TextView) nativeAdContainerView.getAdSubTitleView()).setText(((TextView) nativeAdContainerView.getAdBodyView()).getText());
+                } else {
+                    nativeAdContainerView.getAdSubTitleView().setVisibility(View.GONE);
+                }
             } else {
-                ((TextView) nativeAdContainerView.getAdSubTitleView()).setText(((TextView) nativeAdContainerView.getAdBodyView()).getText());
+                nativeAdContainerView.getAdSubTitleView().setVisibility(View.GONE);
             }
         }
 
