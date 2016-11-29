@@ -27,6 +27,7 @@ import com.ihs.nativeads.base.api.HSNativeAdPrimaryView;
 import com.ihs.nativeads.base.api.INativeAdListener;
 
 import java.util.List;
+import java.util.Objects;
 
 /**
  * Created by ihandysoft on 16/10/19.
@@ -240,14 +241,14 @@ public class NativeAdView extends FrameLayout {
         }
         // 设置subtitle值
         if (nativeAdContainerView.getAdSubTitleView() != null) {
-            if (((TextView) nativeAdContainerView.getAdSubTitleView()).getText().toString().trim().equals("")) {
-                if (nativeAdContainerView.getAdBodyView() != null && !((TextView) nativeAdContainerView.getAdBodyView()).getText().toString().trim().equals("")) {
-                    ((TextView) nativeAdContainerView.getAdSubTitleView()).setText(((TextView) nativeAdContainerView.getAdBodyView()).getText());
-                } else {
-                    nativeAdContainerView.getAdSubTitleView().setVisibility(View.GONE);
-                }
-            } else {
-                nativeAdContainerView.getAdSubTitleView().setVisibility(View.GONE);
+            if(hsNativeAd.getSubtitle() != null && !hsNativeAd.getSubtitle().equals("")) {
+                ((TextView) nativeAdContainerView.getAdSubTitleView()).setText(hsNativeAd.getSubtitle());
+            }
+            else if(hsNativeAd.getBody() != null && !hsNativeAd.getBody().equals("")) {
+                ((TextView) nativeAdContainerView.getAdSubTitleView()).setText(hsNativeAd.getBody());
+            }
+            else {
+                nativeAdContainerView.getAdSubTitleView().setVisibility(GONE);
             }
         }
 
@@ -316,6 +317,7 @@ public class NativeAdView extends FrameLayout {
     private void startRefreshing() {
         if (nativeAdTimer.refreshInterval > 0) {
             if (nativeAdTimer.isExpired() || isCurrentNativeAdClicked) {
+                logGoogleAnalyticsEvent("Load");
                 // fetch new NativeAd
                 HSNativeAd ad = NativeAdManager.getInstance().getNativeAdProxy(nativeAdParams.getPoolName()).getNativeAd();
                 if (ad != null) {
