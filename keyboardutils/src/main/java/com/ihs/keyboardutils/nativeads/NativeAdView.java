@@ -68,7 +68,6 @@ public class NativeAdView extends FrameLayout {
     private boolean isCurrentNativeAdClicked = false;
 
     private int currentNativeAdHashCode;
-
     private static Handler handler = new Handler();
 
     public NativeAdView(Context context, View viewGroup) {
@@ -178,6 +177,7 @@ public class NativeAdView extends FrameLayout {
     }
 
     public void release() {
+        logGoogleAnalyticsEvent("DisplayTime", nativeAdTimer.getTotalDisplayDurationOnLifeCycle());
         if (NativeAdManager.getInstance().getNativeAdProxy(nativeAdParams.getPoolName()) != null) {
             NativeAdManager.getInstance().getNativeAdProxy(nativeAdParams.getPoolName()).release();
             log("release", "", "");
@@ -241,13 +241,11 @@ public class NativeAdView extends FrameLayout {
         }
         // 设置subtitle值
         if (nativeAdContainerView.getAdSubTitleView() != null) {
-            if(hsNativeAd.getSubtitle() != null && !hsNativeAd.getSubtitle().equals("")) {
+            if (hsNativeAd.getSubtitle() != null && !hsNativeAd.getSubtitle().equals("")) {
                 ((TextView) nativeAdContainerView.getAdSubTitleView()).setText(hsNativeAd.getSubtitle());
-            }
-            else if(hsNativeAd.getBody() != null && !hsNativeAd.getBody().equals("")) {
+            } else if (hsNativeAd.getBody() != null && !hsNativeAd.getBody().equals("")) {
                 ((TextView) nativeAdContainerView.getAdSubTitleView()).setText(hsNativeAd.getBody());
-            }
-            else {
+            } else {
                 nativeAdContainerView.getAdSubTitleView().setVisibility(GONE);
             }
         }
@@ -419,22 +417,28 @@ public class NativeAdView extends FrameLayout {
         HSLog.e(nativeAdParams.getPoolName() + " - " + functionName + " : " + key + " - " + value + ": " + hashCode());
     }
 
-
     private void logGoogleAnalyticsEvent(String actionSuffix) {
+        logGoogleAnalyticsEvent(actionSuffix, null);
+    }
+
+    private void logGoogleAnalyticsEvent(String actionSuffix, Long value) {
         String screenName = HSApplication.getContext().getResources().getString(R.string.english_ime_name);
-        HSAnalytics.logGoogleAnalyticsEvent(screenName, "APP", "NativeAd_" + nativeAdParams.getPoolName() + "_" + actionSuffix, "", null, null, null);
+        HSAnalytics.logGoogleAnalyticsEvent(screenName, "APP", "NativeAd_" + nativeAdParams.getPoolName() + "_" + actionSuffix, nativeAdParams.getPoolName(), value, null, null);
     }
 
     class NativeAdTimer {
         private long currentResumeTime;
         private long totalDisplayDuration;
         private int refreshInterval;
+        private long totalDisplayDurationOnLifeCycle;
+        private long doIsExpiredTime;
 
         NativeAdTimer(int refreshInterval) {
             this.refreshInterval = refreshInterval;
         }
 
         void resetTimer() {
+            this.totalDisplayDurationOnLifeCycle += totalDisplayDuration;
             this.currentResumeTime = System.currentTimeMillis();
             this.totalDisplayDuration = 0;
         }
@@ -451,9 +455,20 @@ public class NativeAdView extends FrameLayout {
             }
         }
 
+        long getTotalDisplayDurationOnLifeCycle() {
+            if (doIsExpiredTime > currentResumeTime) {
+                totalDisplayDurationOnLifeCycle += totalDisplayDuration - (doIsExpiredTime - currentResumeTime);
+            } else {
+                totalDisplayDurationOnLifeCycle += totalDisplayDuration;
+            }
+            log("getTotalDisplayDurationOnLifeCycle", "", "" + totalDisplayDurationOnLifeCycle);
+            return totalDisplayDurationOnLifeCycle;
+        }
+
         boolean isExpired() {
+            doIsExpiredTime = System.currentTimeMillis();
             if (currentResumeTime != 0) {
-                totalDisplayDuration += System.currentTimeMillis() - currentResumeTime;
+                totalDisplayDuration += doIsExpiredTime - currentResumeTime;
             }
             if (totalDisplayDuration < refreshInterval && totalDisplayDuration > 0) {
                 log("isExpired", "HasShowedTime", totalDisplayDuration + "");
@@ -466,5 +481,6 @@ public class NativeAdView extends FrameLayout {
         long nextFetchNativeAdInterval() {
             return refreshInterval - totalDisplayDuration;
         }
+
     }
 }
