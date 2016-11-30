@@ -61,6 +61,8 @@ public class KeyboardPanelSwitchContainer extends RelativeLayout implements Base
 
     private int heightMode = MATCH_PARENT;
 
+    private View barView;
+
 //    private Rect gRect = new Rect(), lRect = new Rect(), cRect = new Rect();
 
     public KeyboardPanelSwitchContainer() {
@@ -142,10 +144,10 @@ public class KeyboardPanelSwitchContainer extends RelativeLayout implements Base
 
         if (currentPanel != null) {
             if (panelClass == currentPanel.getClass()) {
-                if (currentPanel.getPanelView().getParent() == null) {
-                    panelViewGroup.addView(currentPanel.getPanelView());
-                    currentPanel.onShowPanelView(showingType);
-                }
+//                if (currentPanel.getPanelView().getParent() == null) {
+//                    panelViewGroup.addView(currentPanel.getPanelView());
+//                    currentPanel.onShowPanelView(showingType);
+//                }
                 HSLog.e("panel", "panel Showed");
                 return;
             } else {
@@ -207,6 +209,7 @@ public class KeyboardPanelSwitchContainer extends RelativeLayout implements Base
         if (layoutParams == null) {
             layoutParams = new ViewGroup.LayoutParams(MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
         }
+        barView = view;
         barViewGroup.addView(view, layoutParams);
     }
 
@@ -411,6 +414,11 @@ public class KeyboardPanelSwitchContainer extends RelativeLayout implements Base
             removeViewFromParent(keyboardView);
         }
         return keyboardView;
+    }
+
+    @Override
+    public View getBarView() {
+        return barView;
     }
 
     @Override

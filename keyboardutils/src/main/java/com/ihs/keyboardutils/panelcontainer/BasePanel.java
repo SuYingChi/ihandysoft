@@ -22,6 +22,8 @@ public abstract class BasePanel {
 
         View getKeyboardView();
 
+        View getBarView();
+
         void showPanel(Class panelClass);
     }
 
