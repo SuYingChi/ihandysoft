@@ -283,6 +283,7 @@ public class NativeAdView extends FrameLayout {
     }
 
     public void release() {
+        removeObserver();
         logGoogleAnalyticsEvent("DisplayTime", nativeAdTimer.getTotalDisplayDuration());
         if (NativeAdManager.getInstance().getNativeAdProxy(nativeAdParams.getPoolName()) != null) {
             NativeAdManager.getInstance().getNativeAdProxy(nativeAdParams.getPoolName()).release();
