@@ -102,11 +102,11 @@ public class NativeAdManager {
 
         }
 
-        public long getCachedNativeAdShowedTime() {
+        long getCachedNativeAdShowedTime() {
             return cachedNativeAdShowedTime;
         }
 
-        public void setCachedNativeAdShowedTime(long cachedNativeAdShowedTime) {
+        void setCachedNativeAdShowedTime(long cachedNativeAdShowedTime) {
             this.cachedNativeAdShowedTime = cachedNativeAdShowedTime;
         }
 

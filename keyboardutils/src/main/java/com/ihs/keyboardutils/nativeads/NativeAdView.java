@@ -27,7 +27,6 @@ import com.ihs.nativeads.base.api.HSNativeAdPrimaryView;
 import com.ihs.nativeads.base.api.INativeAdListener;
 
 import java.util.List;
-import java.util.Objects;
 
 /**
  * Created by ihandysoft on 16/10/19.
@@ -45,7 +44,7 @@ public class NativeAdView extends FrameLayout {
         public void onReceive(String notificationName, HSBundle bundle) {
             if (notificationName.equals(NativeAdManager.NOTIFICATION_NEW_AD)) {
                 if (nativeAdParams.getPoolName().equals(bundle.getString(NativeAdManager.NATIVE_AD_POOL_NAME))) {
-                    log("onReceive", "New NativeAd Notification", "");
+                    log("onReceive", "NativeAd Notification", "");
                     startRefreshing();
                 }
             }
@@ -70,6 +69,13 @@ public class NativeAdView extends FrameLayout {
     private int currentNativeAdHashCode;
     private static Handler handler = new Handler();
 
+    private Runnable frequentRunnable = new Runnable() {
+        @Override
+        public void run() {
+            startRefreshing();
+        }
+    };
+
     public NativeAdView(Context context, View viewGroup) {
         super(context);
         this.viewGroup = viewGroup;
@@ -90,6 +96,7 @@ public class NativeAdView extends FrameLayout {
     public void configParams(NativeAdParams nativeAdParams) {
         this.nativeAdParams = nativeAdParams;
         NativeAdManager.getInstance().getNativeAdProxy(this.nativeAdParams.getPoolName()).startAvailableAdCountChangedNotifaction();
+        NativeAdManager.getInstance().getNativeAdProxy(nativeAdParams.getPoolName()).setCachedNativeAdShowedTime(0);
         this.nativeAdTimer = new NativeAdTimer(this.nativeAdParams.getFetchNativeAdInterval());
         initNativeAdContainerView(viewGroup);
 
@@ -100,7 +107,6 @@ public class NativeAdView extends FrameLayout {
                 onViewPositionChanged(getScreenVisibleRect());
             }
         };
-        getViewTreeObserver().addOnScrollChangedListener(onScrollChangedListener);
 
         if (loadingView != null) {
             addView(this.loadingView);
@@ -110,79 +116,6 @@ public class NativeAdView extends FrameLayout {
         }
     }
 
-    @Override
-    protected void onWindowVisibilityChanged(int visibility) {
-        super.onWindowVisibilityChanged(visibility);
-        log("onWindowVisibilityChanged", "visibility", visibility + ": " + hashCode());
-        if (visibility == VISIBLE && isPaused) {
-            resumeRefreshing();
-        } else if (visibility != VISIBLE && !isPaused) {
-            pauseRefreshing();
-        }
-    }
-
-    @Override
-    public void onWindowFocusChanged(boolean hasWindowFocus) {
-        super.onWindowFocusChanged(hasWindowFocus);
-        log("onWindowFocusChanged", "visibility", hasWindowFocus + ": " + hashCode());
-        if (hasWindowFocus && isPaused) {
-            resumeRefreshing();
-        } else if (!hasWindowFocus && !isPaused) {
-            pauseRefreshing();
-        }
-    }
-
-    private Rect screenRect = new Rect();
-
-    {
-        WindowManager wm = (WindowManager) getContext()
-                .getSystemService(Context.WINDOW_SERVICE);
-        Point p = new Point();
-        wm.getDefaultDisplay().getSize(p);
-        screenRect = new Rect(0, 0, p.x, p.y);
-    }
-
-    protected void onViewPositionChanged(Rect rectInScreen) {
-        log("onViewPositionChanged", "Rect", "" + rectInScreen);
-        if (!rectInScreen.isEmpty() && screenRect.contains(rectInScreen)) {
-            resumeRefreshing();
-        } else {
-            pauseRefreshing();
-        }
-    }
-
-    @Override
-    protected void onAttachedToWindow() {
-        super.onAttachedToWindow();
-        nativeAdTimer.totalDisplayDuration = NativeAdManager.getInstance().getNativeAdProxy(nativeAdParams.getPoolName()).getCachedNativeAdShowedTime();
-    }
-
-    @Override
-    protected void onDetachedFromWindow() {
-        NativeAdManager.getInstance().getNativeAdProxy(nativeAdParams.getPoolName()).setCachedNativeAdShowedTime(nativeAdTimer.totalDisplayDuration);
-        log("onDetachedFromWindow", "", "");
-        super.onDetachedFromWindow();
-    }
-
-    private Rect getScreenVisibleRect() {
-        int[] out = new int[2];
-        getLocationOnScreen(out);
-        int left = out[0] > 0 ? out[0] : 0;
-        int top = out[1] > 0 ? out[1] : 0;
-        int right = getMeasuredWidth() + out[0];
-        right = right >= screenRect.right ? screenRect.right : right;
-        int bottom = getMeasuredHeight() + out[1];
-        bottom = bottom >= screenRect.bottom ? screenRect.bottom : bottom;
-        return new Rect(left, top, right, bottom);
-    }
-
-    public void release() {
-        logGoogleAnalyticsEvent("DisplayTime", nativeAdTimer.getTotalDisplayDurationOnLifeCycle());
-        if (NativeAdManager.getInstance().getNativeAdProxy(nativeAdParams.getPoolName()) != null) {
-            NativeAdManager.getInstance().getNativeAdProxy(nativeAdParams.getPoolName()).release();
-            log("release", "", "");
-        }
-    }
 
     private void initNativeAdContainerView(View groupView) {
         this.nativeAdContainerView = HSNativeAdFactory.getInstance().createNativeAdContainerView(getContext(), groupView);
@@ -262,6 +195,57 @@ public class NativeAdView extends FrameLayout {
         }
     }
 
+    @Override
+    protected void onWindowVisibilityChanged(int visibility) {
+        super.onWindowVisibilityChanged(visibility);
+        log("onWindowVisibilityChanged", "visibility", visibility + ": " + hashCode());
+        if (visibility == VISIBLE && isPaused) {
+            resumeRefreshing();
+        } else if (visibility != VISIBLE && !isPaused) {
+            pauseRefreshing();
+        }
+    }
+
+    @Override
+    public void onWindowFocusChanged(boolean hasWindowFocus) {
+        super.onWindowFocusChanged(hasWindowFocus);
+        log("onWindowFocusChanged", "visibility", hasWindowFocus + ": " + hashCode());
+        if (hasWindowFocus && isPaused) {
+            resumeRefreshing();
+        } else if (!hasWindowFocus && !isPaused) {
+            pauseRefreshing();
+        }
+    }
+
+
+    protected void onViewPositionChanged(Rect rectInScreen) {
+        if (!rectInScreen.isEmpty() && screenRect.contains(rectInScreen)) {
+            resumeRefreshing();
+        } else {
+            pauseRefreshing();
+        }
+    }
+
+    @Override
+    protected void onAttachedToWindow() {
+        super.onAttachedToWindow();
+        getViewTreeObserver().addOnScrollChangedListener(onScrollChangedListener);
+        if (NativeAdManager.getInstance().getNativeAdProxy(nativeAdParams.getPoolName()).getCachedNativeAd() != null) {
+            nativeAdTimer.setCurrentTotalDisplayDuration(NativeAdManager.getInstance().getNativeAdProxy(nativeAdParams.getPoolName()).getCachedNativeAdShowedTime());
+            log("onAttachedToWindow", "currentTotalDisplayDuration", "" + nativeAdTimer.getCurrentTotalDisplayDuration());
+        }
+    }
+
+    @Override
+    protected void onDetachedFromWindow() {
+        getViewTreeObserver().removeOnScrollChangedListener(onScrollChangedListener);
+        if (NativeAdManager.getInstance().getNativeAdProxy(nativeAdParams.getPoolName()).getCachedNativeAd() != null) {
+            NativeAdManager.getInstance().getNativeAdProxy(nativeAdParams.getPoolName()).setCachedNativeAdShowedTime(nativeAdTimer.currentTotalDisplayDuration);
+            log("onDetachedFromWindow", "currentTotalDisplayDuration", "" + nativeAdTimer.getCurrentTotalDisplayDuration());
+        }
+        super.onDetachedFromWindow();
+    }
+
     public void resumeRefreshing() {
         if (!isPaused) {
             return;
@@ -279,17 +263,8 @@ public class NativeAdView extends FrameLayout {
         log("pauseRefreshing", "", "");
         nativeAdTimer.pauseTimer();
         isPaused = true;
-        removeObserver();
         handler.removeCallbacks(frequentRunnable);
     }
-
-    private Runnable frequentRunnable = new Runnable() {
-        @Override
-        public void run() {
-            startRefreshing();
-        }
-    };
-
 
     private void removeObserver() {
         if (hasObserver) {
@@ -307,6 +282,14 @@ public class NativeAdView extends FrameLayout {
         }
     }
 
+    public void release() {
+        logGoogleAnalyticsEvent("DisplayTime", nativeAdTimer.getTotalDisplayDuration());
+        if (NativeAdManager.getInstance().getNativeAdProxy(nativeAdParams.getPoolName()) != null) {
+            NativeAdManager.getInstance().getNativeAdProxy(nativeAdParams.getPoolName()).release();
+            log("release", "", "");
+        }
+    }
+
     /**
      * 从缓存池里面拿1条数据，循环读取
      *
@@ -314,12 +297,12 @@ public class NativeAdView extends FrameLayout {
      */
     private void startRefreshing() {
         if (nativeAdTimer.refreshInterval > 0) {
-            if (nativeAdTimer.isExpired() || isCurrentNativeAdClicked) {
+            if (nativeAdTimer.isCurrentExpired() || isCurrentNativeAdClicked) {
                 logGoogleAnalyticsEvent("Load");
+
                 // fetch new NativeAd
                 HSNativeAd ad = NativeAdManager.getInstance().getNativeAdProxy(nativeAdParams.getPoolName()).getNativeAd();
                 if (ad != null) {
-                    log("startRefreshing", "New NativeAd", ad.hashCode() + "");
                     nativeAdTimer.resetTimer();
                     isCurrentNativeAdClicked = false;
                     removeObserver();
@@ -338,10 +321,8 @@ public class NativeAdView extends FrameLayout {
                 // fetch cached NativeAd
                 ad = NativeAdManager.getInstance().getNativeAdProxy(nativeAdParams.getPoolName()).getCachedNativeAd();
                 if (ad != null) {
-                    log("startRefreshing", "Cached NativeAd", ad.hashCode() + "");
                     bindDataToView(ad);
                 }
-
                 if (!isPaused) {
                     addObserver();
                     handler.removeCallbacks(frequentRunnable);
@@ -376,12 +357,11 @@ public class NativeAdView extends FrameLayout {
             if (hsNativeAd == null) {
                 return;
             }
-
-            boolean flag = currentNativeAdHashCode == hsNativeAd.hashCode();
-            logGoogleAnalyticsEvent("Show");
-            if (flag) {
+            log("bindDataToView", "NativeAd", hsNativeAd.hashCode() + "");
+            if (currentNativeAdHashCode == hsNativeAd.hashCode()) {
                 return;
             }
+            logGoogleAnalyticsEvent("Show");
             currentNativeAdHashCode = hsNativeAd.hashCode();
             hsNativeAd.registerView(nativeAdContainerView.getContext(), nativeAdContainerView);
 
@@ -413,8 +393,31 @@ public class NativeAdView extends FrameLayout {
         }
     }
 
+    private Rect screenRect = new Rect();
+
+    {
+        WindowManager wm = (WindowManager) getContext()
+                .getSystemService(Context.WINDOW_SERVICE);
+        Point p = new Point();
+        wm.getDefaultDisplay().getSize(p);
+        screenRect = new Rect(0, 0, p.x, p.y);
+    }
+
+    private Rect getScreenVisibleRect() {
+        int[] out = new int[2];
+        getLocationOnScreen(out);
+        int left = out[0] > 0 ? out[0] : 0;
+        int top = out[1] > 0 ? out[1] : 0;
+        int right = getMeasuredWidth() + out[0];
+        right = right >= screenRect.right ? screenRect.right : right;
+        int bottom = getMeasuredHeight() + out[1];
+        bottom = bottom >= screenRect.bottom ? screenRect.bottom : bottom;
+        return new Rect(left, top, right, bottom);
+    }
+
+
     private void log(String functionName, String key, String value) {
-        HSLog.e(nativeAdParams.getPoolName() + " - " + functionName + " : " + key + " - " + value + ": " + hashCode());
+        HSLog.e(hashCode() + " - " + nativeAdParams.getPoolName() + " - " + functionName + " : " + key + " - " + value + ": ");
     }
 
     private void logGoogleAnalyticsEvent(String actionSuffix) {
@@ -423,64 +426,63 @@ public class NativeAdView extends FrameLayout {
 
     private void logGoogleAnalyticsEvent(String actionSuffix, Long value) {
         String screenName = HSApplication.getContext().getResources().getString(R.string.english_ime_name);
-        HSAnalytics.logGoogleAnalyticsEvent(screenName, "APP", "NativeAd_" + nativeAdParams.getPoolName() + "_" + actionSuffix, nativeAdParams.getPoolName(), value, null, null);
+        HSAnalytics.logGoogleAnalyticsEvent(screenName, "APP", "NativeAd_" + nativeAdParams.getPoolName() + "_" + actionSuffix, "", value, null, null);
     }
 
-    class NativeAdTimer {
+    private static class NativeAdTimer {
         private long currentResumeTime;
-        private long totalDisplayDuration;
+        private long currentTotalDisplayDuration;
         private int refreshInterval;
-        private long totalDisplayDurationOnLifeCycle;
-        private long doIsExpiredTime;
+        private long totalDisplayDuration;
 
-        NativeAdTimer(int refreshInterval) {
+        private NativeAdTimer(int refreshInterval) {
             this.refreshInterval = refreshInterval;
         }
 
-        void resetTimer() {
-            this.totalDisplayDurationOnLifeCycle += totalDisplayDuration;
+        private void resetTimer() {
             this.currentResumeTime = System.currentTimeMillis();
-            this.totalDisplayDuration = 0;
+            this.totalDisplayDuration += currentTotalDisplayDuration + (System.currentTimeMillis() - currentResumeTime);
+            this.currentTotalDisplayDuration = 0;
         }
 
-        void resumeTimer() {
-            if (totalDisplayDuration != 0) {
+        private void resumeTimer() {
+            if (currentTotalDisplayDuration != 0) {
                 this.currentResumeTime = System.currentTimeMillis();
             }
         }
 
-        void pauseTimer() {
+        private void pauseTimer() {
             if (currentResumeTime != 0) {
-                totalDisplayDuration += System.currentTimeMillis() - currentResumeTime;
+                currentTotalDisplayDuration += System.currentTimeMillis() - currentResumeTime;
             }
         }
 
-        long getTotalDisplayDurationOnLifeCycle() {
-            if (doIsExpiredTime > currentResumeTime) {
-                totalDisplayDurationOnLifeCycle += totalDisplayDuration - (doIsExpiredTime - currentResumeTime);
-            } else {
-                totalDisplayDurationOnLifeCycle += totalDisplayDuration;
-            }
-            log("getTotalDisplayDurationOnLifeCycle", "", "" + totalDisplayDurationOnLifeCycle);
-            return totalDisplayDurationOnLifeCycle;
+        private long getTotalDisplayDuration() {
+            totalDisplayDuration += currentTotalDisplayDuration;
+            return totalDisplayDuration;
         }
 
-        boolean isExpired() {
-            doIsExpiredTime = System.currentTimeMillis();
+        private boolean isCurrentExpired() {
+            long displayDuration = 0;
             if (currentResumeTime != 0) {
-                totalDisplayDuration += doIsExpiredTime - currentResumeTime;
+                displayDuration = currentTotalDisplayDuration + (System.currentTimeMillis() - currentResumeTime);
             }
-            if (totalDisplayDuration < refreshInterval && totalDisplayDuration > 0) {
-                log("isExpired", "HasShowedTime", totalDisplayDuration + "");
+            if (displayDuration < refreshInterval && displayDuration > 0) {
                 return false;
             }
-            log("isExpired", "HasShowedTime", totalDisplayDuration + "");
             return true;
         }
 
-        long nextFetchNativeAdInterval() {
-            return refreshInterval - totalDisplayDuration;
+        private long nextFetchNativeAdInterval() {
+            return refreshInterval - currentTotalDisplayDuration;
         }
 
+        private void setCurrentTotalDisplayDuration(long currentTotalDisplayDuration) {
+            this.currentTotalDisplayDuration = currentTotalDisplayDuration;
+        }
+
+        private long getCurrentTotalDisplayDuration() {
+            return currentTotalDisplayDuration;
+        }
     }
 }
