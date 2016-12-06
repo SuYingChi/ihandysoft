@@ -5,9 +5,8 @@ import android.os.Bundle;
 import android.view.View;
 
 import com.ihs.app.framework.activity.HSActivity;
-import com.ihs.keyboardutils.nativeads.NativeAdManager;
+import com.ihs.keyboardutilslib.configfile.ReadConfigSampleActivity;
 import com.ihs.keyboardutilslib.gif.GifViewDemoActivity;
-import com.ihs.keyboardutilslib.panelcontainer.CommonTabActivity;
 
 public class MainActivity extends HSActivity {
 
@@ -17,10 +16,6 @@ public class MainActivity extends HSActivity {
         setContentView(R.layout.activity_main);
     }
 
-    public void startPanelContainer(View view) {
-        startActivity(new Intent(this, CommonTabActivity.class));
-    }
-
     public void startAds(View view){
         startActivity(new Intent(this, com.ihs.keyboardutilslib.adactivities.MainActivity.class));
     }
@@ -28,6 +23,10 @@ public class MainActivity extends HSActivity {
 
     public void startGifDemoAct(View view){
         startActivity(new Intent(this, GifViewDemoActivity.class));
+    }
+
+    public void startReadConfigSample(View view) {
+        startActivity(new Intent(this, ReadConfigSampleActivity.class));
     }
 
 
