@@ -1,22 +1,17 @@
 package com.ihs.keyboardutils.nativeads;
 
-/**
- * Created by ihandysoft on 16/11/25.
- */
-
 public class NativeAdParams {
-
-    private String poolName;
+    private String placementName;
     private int primaryWidth;
     private float primaryHWRatio;
     private int fetchNativeAdInterval;
 
-    public NativeAdParams(String poolName, int fetchNativeAdInterval) {
-        this(poolName, fetchNativeAdInterval, 0, 0);
+    public NativeAdParams(String placementName, int fetchNativeAdInterval) {
+        this(placementName, fetchNativeAdInterval, 0, 0);
     }
 
-    public NativeAdParams(String poolName, int fetchNativeAdInterval, int primaryWidth, float primaryHWRatio) {
-        this.poolName = poolName;
+    public NativeAdParams(String placementName, int fetchNativeAdInterval, int primaryWidth, float primaryHWRatio) {
+        this.placementName = placementName;
         this.primaryWidth = primaryWidth;
         this.primaryHWRatio = primaryHWRatio;
         this.fetchNativeAdInterval = fetchNativeAdInterval;
@@ -30,8 +25,8 @@ public class NativeAdParams {
         return fetchNativeAdInterval;
     }
 
-    String getPoolName() {
-        return poolName;
+    String getPlacementName() {
+        return placementName;
     }
 
     int getPrimaryWidth() {

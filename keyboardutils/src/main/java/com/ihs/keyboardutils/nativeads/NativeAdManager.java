@@ -1,35 +1,27 @@
 package com.ihs.keyboardutils.nativeads;
 
+import android.content.Context;
+import android.os.Handler;
+import android.os.Looper;
 import android.support.v4.util.ArrayMap;
 
-import com.ihs.commons.notificationcenter.HSGlobalNotificationCenter;
-import com.ihs.commons.utils.HSBundle;
+import com.acb.adadapter.AcbNativeAd;
+import com.acb.nativeads.AcbNativeAdLoader;
+import com.ihs.commons.utils.HSError;
 import com.ihs.commons.utils.HSLog;
-import com.ihs.nativeads.base.api.AdVendorOption;
-import com.ihs.nativeads.base.api.HSNativeAd;
-import com.ihs.nativeads.base.api.PreCacheOption;
-import com.ihs.nativeads.pool.api.HSNativeAdPool;
-import com.ihs.nativeads.pool.api.INativeAdPoolListener;
 
 import java.util.List;
 
-/**
- * Created by dongdong.han on 16/10/20.
- */
-
 public class NativeAdManager {
-
-    public static String NOTIFICATION_NEW_AD = "NEW_NATIVE_AD_NOTIFICATION";
-    public static String NATIVE_AD_POOL_NAME = "NATIVE_AD_POOL_NAME";
-
     private static NativeAdManager nativeAdManager;
     private ArrayMap<String, NativeAdProxy> nativeAdProxies;
 
+    public interface AdLoadListener {
+        public void onAdLoaded(AcbNativeAd ad, long remainingDisplayDuration);
+    }
+
     private NativeAdManager() {
         nativeAdProxies = new ArrayMap<>();
-        for (String poolName : NativeAdConfig.getAvailablePoolNames()) {
-            nativeAdProxies.put(poolName, new NativeAdProxy(poolName));
-        }
     }
 
     public static NativeAdManager getInstance() {
@@ -43,63 +35,38 @@ public class NativeAdManager {
         return nativeAdManager;
     }
 
-    public boolean existNativeAd(String poolName) {
-        if (nativeAdProxies != null && nativeAdProxies.containsKey(poolName)) {
-            return nativeAdProxies.get(poolName).existNativeAd();
-        }
-        return false;
+    void markAdAsFinished(String placementName) {
+        getNativeAdProxy(placementName).markAsFinished();
     }
 
-    NativeAdProxy getNativeAdProxy(String poolName) {
-        if (nativeAdProxies != null && nativeAdProxies.containsKey(poolName)) {
-            return nativeAdProxies.get(poolName);
+    void loadNativeAd(Context context, String placementName, AdLoadListener listener) {
+        getNativeAdProxy(placementName).loadNativeAd(context, listener);
+    }
+
+    NativeAdProxy getNativeAdProxy(String placementName) {
+        if (nativeAdProxies.containsKey(placementName)) {
+            return nativeAdProxies.get(placementName);
+        } else {
+            NativeAdProxy proxy = new NativeAdProxy(placementName);
+            nativeAdProxies.put(placementName, proxy);
+            return proxy;
         }
-        return null;
     }
 
     public static final class NativeAdProxy {
-        /** 广告池名字 **/
-        private String poolName;
-        /** 广告池 **/
-        private HSNativeAdPool hsNativeAdPool;
-        /** 广告池最近提供的广告 **/
-        private HSNativeAd cachedNativeAd;
+        /** 广告位名字 **/
+        private String placementName;
+        /** 广告位对应的Loader **/
+        private AcbNativeAdLoader loader;
+        /** 广告位对应的广告 **/
+        private AcbNativeAd cachedNativeAd;
         /** 当前广告实际展示的时间 **/
         private long cachedNativeAdShowedTime;
-        /** 是否停止发送广告池数量改变通知 **/
-        private boolean stopAvailableAdCountChangedNotification = false;
+        /** 显示足够长时间或者已经被点击 **/
+        private boolean displayFinished;
 
-        NativeAdProxy(String poolName) {
-            this.poolName = poolName;
-            createNativeAdPool();
-        }
-
-        private void createNativeAdPool() {
-            AdVendorOption vendorOption = new AdVendorOption(new PreCacheOption(true, true));
-            vendorOption.setMediaType(AdVendorOption.MediaType.IMAGE);
-            hsNativeAdPool = new HSNativeAdPool(poolName, poolName, HSNativeAdPool.AdStrategy.SESSION_POOL, vendorOption);
-            hsNativeAdPool.addListener(new INativeAdPoolListener() {
-
-                @Override
-                public void onAdWillExpire(HSNativeAd hsNativeAd) {
-                    hsNativeAd.release();
-                    hsNativeAd = null;
-                }
-
-                @Override
-                public void onAvailableAdCountChanged(int i) {
-                    log("onAvailableAdCountChanged", "count", i + "");
-                    NativeAdProfile.get(poolName).setAvailableCount(i);
-                    if (!stopAvailableAdCountChangedNotification) {
-                        if (i > 0) {
-                            HSBundle hsBundle = new HSBundle();
-                            hsBundle.putString(NATIVE_AD_POOL_NAME, poolName);
-                            HSGlobalNotificationCenter.sendNotification(NOTIFICATION_NEW_AD, hsBundle);
-                        }
-                    }
-                }
-            });
-
+        NativeAdProxy(String placementName) {
+            this.placementName = placementName;
         }
 
         long getCachedNativeAdShowedTime() {
@@ -108,46 +75,71 @@ public class NativeAdManager {
 
         void setCachedNativeAdShowedTime(long cachedNativeAdShowedTime) {
             this.cachedNativeAdShowedTime = cachedNativeAdShowedTime;
+            if (cachedNativeAdShowedTime > NativeAdConfig.getNativeAdFrequency()) {
+                markAsFinished();
+            }
         }
 
         private void log(String functionName, String key, String value) {
-            HSLog.e(poolName + " - " + functionName + " : " + key + " - " + value);
+            HSLog.e(placementName + " - " + functionName + " : " + key + " - " + value);
         }
 
-        HSNativeAd getNativeAd() {
-            if (hsNativeAdPool != null && existNativeAd()) {
-                clearCacheNativeAd();
-                List<HSNativeAd> ads = hsNativeAdPool.getAds(1);
-                cachedNativeAd = ads.get(0);
-                cachedNativeAdShowedTime = 0;
-                /** 更新广告信息 **/
-                NativeAdProfile nativeAdProfile = NativeAdProfile.get(poolName);
-                nativeAdProfile.incHasShowedCount();
-                nativeAdProfile.setVendorName(cachedNativeAd.getVendor().name());
-                nativeAdProfile.setCachedNativeAdTime(System.currentTimeMillis());
-                return cachedNativeAd;
+        void markAsFinished() {
+            displayFinished = true;
+        }
+
+        void loadNativeAd(Context context, AdLoadListener listener) {
+            final AdLoadListener adLoadListener = listener;
+            if (cachedNativeAd != null && !cachedNativeAd.isExpired() && !displayFinished) {
+                Handler handler = new Handler(Looper.getMainLooper());
+                handler.post(new Runnable() {
+                    @Override
+                    public void run() {
+                        if (adLoadListener != null) {
+                            adLoadListener.onAdLoaded(cachedNativeAd, NativeAdConfig.getNativeAdFrequency() - getCachedNativeAdShowedTime());
+                        }
+                    }
+                });
+
+                return;
             }
-            return null;
-        }
 
-        HSNativeAd getCachedNativeAd(){
             if (cachedNativeAd != null) {
-                if (cachedNativeAd.isExpired()) {
-                    clearCacheNativeAd();
-                }
+                clearCacheNativeAd();
             }
-            return cachedNativeAd;
-        }
 
+            loader = new AcbNativeAdLoader(context, placementName);
 
-        boolean existNativeAd() {
-            return hsNativeAdPool.getAvailableNativeAdCount() > 0;
+            loader.load(1, new AcbNativeAdLoader.AcbNativeAdLoadListener() {
+
+                @Override
+                public void onAdReceived(AcbNativeAdLoader acbNativeAdLoader, List<AcbNativeAd> list) {
+                    clearCacheNativeAd();
+                    cachedNativeAd = list.get(0);
+                    /** 更新广告信息 **/
+                    NativeAdProfile nativeAdProfile = NativeAdProfile.get(placementName);
+                    nativeAdProfile.incHasShowedCount();
+                    nativeAdProfile.setVendorName(cachedNativeAd.getVendor().name());
+                    nativeAdProfile.setCachedNativeAdTime(System.currentTimeMillis());
+
+                    loader = null;
+
+                    adLoadListener.onAdLoaded(cachedNativeAd, NativeAdConfig.getNativeAdFrequency());
+                }
+
+                @Override
+                public void onAdFinished(AcbNativeAdLoader acbNativeAdLoader, HSError hsError) {
+
+                }
+            });
         }
 
         void release() {
-            stopAvailableAdCountChangedNotification = true;
+            if (loader != null) {
+                loader.cancel();
+            }
             clearCacheNativeAd();
-            NativeAdProfile.get(poolName).release();
+            NativeAdProfile.get(placementName).release();
         }
 
         private void clearCacheNativeAd() {
@@ -155,22 +147,24 @@ public class NativeAdManager {
                 cachedNativeAd.release();
                 cachedNativeAd = null;
                 cachedNativeAdShowedTime = 0;
+                displayFinished = false;
             }
-        }
-
-        void startAvailableAdCountChangedNotifaction() {
-            stopAvailableAdCountChangedNotification = false;
         }
 
         @Override
         public int hashCode() {
-            return poolName.hashCode();
+            return placementName.hashCode();
         }
 
         @Override
         public boolean equals(Object obj) {
-            NativeAdProxy nativeAdProxy = (NativeAdProxy) obj;
-            return this.poolName.equals(nativeAdProxy.poolName);
+            if (obj instanceof NativeAdProxy) {
+                NativeAdProxy nativeAdProxy = (NativeAdProxy) obj;
+                return this.placementName.equals(nativeAdProxy.placementName);
+            } else {
+                return false;
+            }
+
         }
     }
 }

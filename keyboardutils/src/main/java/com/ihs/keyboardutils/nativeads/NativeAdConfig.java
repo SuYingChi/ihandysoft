@@ -6,10 +6,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
-/**
- * Created by ihandysoft on 16/11/9.
- */
-
 public class NativeAdConfig {
 
     public static int getNativeAdFrequency() {
@@ -22,9 +18,8 @@ public class NativeAdConfig {
 
     public static List<String> getAvailablePoolNames(){
         List<String> poolNames = new ArrayList<>();
-        List<?> disabledPools = HSConfig.getList("Application", "NativeAds", "DisabledPools");
-        for (Map.Entry entry : HSConfig.getMap("nativeAdsPool").entrySet()) {
-            if ((entry.getValue() instanceof Map) && !disabledPools.contains(entry.getKey().toString())) {
+        for (Map.Entry entry : HSConfig.getMap("nativeAds").entrySet()) {
+            if ((entry.getValue() instanceof Map)) {
                 poolNames.add(entry.getKey().toString());
             }
         }

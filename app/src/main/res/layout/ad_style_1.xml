@@ -9,7 +9,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <com.ihs.nativeads.base.api.HSNativeAdPrimaryView
+        <com.acb.adadapter.ContainerView.AcbNativeAdPrimaryView
             android:id="@+id/ad_cover_img"
             android:layout_width="match_parent"
             android:layout_height="match_parent"

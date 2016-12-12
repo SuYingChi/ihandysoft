@@ -4,22 +4,18 @@ import android.support.v4.util.ArrayMap;
 
 import java.util.ArrayList;
 
-/**
- * Created by ihandysoft on 16/11/23.
- */
-
 public class NativeAdProfile {
 
     private static ArrayMap<String, NativeAdProfile> nativeAdProfileArrayMap = new ArrayMap<>();
 
-    private String poolName;
+    private String placementName;
     private int hasShowedCount;
     private int availableCount;
     private String vendorName;
     private long cachedNativeAdTime;
 
-    private NativeAdProfile(String poolName) {
-        this.poolName = poolName;
+    private NativeAdProfile(String placementName) {
+        this.placementName = placementName;
     }
 
     public static NativeAdProfile get(String poolName) {
@@ -65,14 +61,14 @@ public class NativeAdProfile {
     }
 
     void release(){
-        nativeAdProfileArrayMap.remove(poolName);
+        nativeAdProfileArrayMap.remove(placementName);
     }
 
 
     public static ArrayList<String> getAllNativeAdPoolState() {
         ArrayList<String> result = new ArrayList<>();
         for (NativeAdProfile nativeAdProfile : nativeAdProfileArrayMap.values()) {
-            StringBuilder stringBuilder = new StringBuilder(nativeAdProfile.poolName);
+            StringBuilder stringBuilder = new StringBuilder(nativeAdProfile.placementName);
             stringBuilder.append("(CC:");
             stringBuilder.append(nativeAdProfile.availableCount);
             stringBuilder.append(";SC:" + nativeAdProfile.hasShowedCount + ")");

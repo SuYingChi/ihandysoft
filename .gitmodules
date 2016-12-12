@@ -4,3 +4,6 @@
 [submodule "libs/ihs/libNativeAds"]
 	path = libs/ihs/libNativeAds
 	url = http://git.ihandysoft.com/bingroup/bin_nativeads_android.git
+[submodule "libs/ihs/libCommon"]
+	path = libs/ihs/libCommon
+	url = http://git.ihandysoft.com/bingroup/bin_common_android.git
