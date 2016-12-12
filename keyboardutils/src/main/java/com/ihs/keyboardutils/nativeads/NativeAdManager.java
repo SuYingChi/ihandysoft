@@ -12,6 +12,8 @@ import com.ihs.commons.utils.HSLog;
 
 import java.util.List;
 
+import static android.R.id.list;
+
 public class NativeAdManager {
     private static NativeAdManager nativeAdManager;
     private ArrayMap<String, NativeAdProxy> nativeAdProxies;
@@ -91,16 +93,9 @@ public class NativeAdManager {
         void loadNativeAd(Context context, AdLoadListener listener) {
             final AdLoadListener adLoadListener = listener;
             if (cachedNativeAd != null && !cachedNativeAd.isExpired() && !displayFinished) {
-                Handler handler = new Handler(Looper.getMainLooper());
-                handler.post(new Runnable() {
-                    @Override
-                    public void run() {
-                        if (adLoadListener != null) {
-                            adLoadListener.onAdLoaded(cachedNativeAd, NativeAdConfig.getNativeAdFrequency() - getCachedNativeAdShowedTime());
-                        }
-                    }
-                });
-
+                if (adLoadListener != null) {
+                    adLoadListener.onAdLoaded(cachedNativeAd, NativeAdConfig.getNativeAdFrequency() - getCachedNativeAdShowedTime());
+                }
                 return;
             }
 
