@@ -139,7 +139,7 @@ public class MainActivity extends HSActivity {
         View view2 = LayoutInflater.from(this).inflate(R.layout.ad_loading, null);
         if(nativeAdView == null) {
             nativeAdView = new NativeAdView(this, view1, view2);
-            nativeAdView.configParams(new NativeAdParams(poolName, NativeAdConfig.getNativeAdFrequency(), adContainer.getWidth(), 1.9f));
+            nativeAdView.configParams(new NativeAdParams(poolName, adContainer.getWidth(), 1.9f));
             adContainer.addView(nativeAdView);
         }
     }

@@ -315,7 +315,7 @@ public class NativeAdView extends FrameLayout {
         logGoogleAnalyticsEvent("Load");
 
         isRefreshing = true;
-        NativeAdManager.getInstance().markAdAsFinished(nativeAdParams.getPlacementName());
+
         NativeAdManager.getInstance().loadNativeAd(getContext(), nativeAdParams.getPlacementName(), new NativeAdManager.AdLoadListener() {
             @Override
             public void onAdLoaded(AcbNativeAd ad, long remainingAdDisplayDuration) {
