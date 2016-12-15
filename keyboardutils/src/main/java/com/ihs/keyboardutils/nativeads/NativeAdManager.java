@@ -13,6 +13,8 @@ import com.ihs.commons.utils.HSLog;
 import java.util.List;
 
 import static android.R.id.list;
+import static android.media.CamcorderProfile.get;
+import static com.acb.nativeads.AcbNativeAdLoader.fetch;
 
 public class NativeAdManager {
     private static NativeAdManager nativeAdManager;
@@ -43,6 +45,10 @@ public class NativeAdManager {
 
     void loadNativeAd(Context context, String placementName, AdLoadListener listener) {
         getNativeAdProxy(placementName).loadNativeAd(context, listener);
+    }
+
+    AcbNativeAd loadLocalNativeAd(Context context, String placementName) {
+        return getNativeAdProxy(placementName).loadLocalNativeAd(context);
     }
 
     NativeAdProxy getNativeAdProxy(String placementName) {
@@ -88,6 +94,31 @@ public class NativeAdManager {
 
         void markAsFinished() {
             displayFinished = true;
+        }
+
+        AcbNativeAd loadLocalNativeAd(Context context) {
+            if (cachedNativeAd != null && !cachedNativeAd.isExpired() && !displayFinished) {
+                return cachedNativeAd;
+            }
+
+            if (cachedNativeAd != null) {
+                clearCacheNativeAd();
+            }
+
+            List<AcbNativeAd> ads = AcbNativeAdLoader.fetch(context, placementName, 1);
+
+            if (ads.size() > 0) {
+                cachedNativeAd = ads.get(0);
+                /** 更新广告信息 **/
+                NativeAdProfile nativeAdProfile = NativeAdProfile.get(placementName);
+                nativeAdProfile.incHasShowedCount();
+                nativeAdProfile.setVendorName(cachedNativeAd.getVendor().name());
+                nativeAdProfile.setCachedNativeAdTime(System.currentTimeMillis());
+
+                return cachedNativeAd;
+            } else {
+                return null;
+            }
         }
 
         void loadNativeAd(Context context, AdLoadListener listener) {

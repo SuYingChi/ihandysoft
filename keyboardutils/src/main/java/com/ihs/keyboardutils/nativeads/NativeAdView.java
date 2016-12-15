@@ -72,6 +72,11 @@ public class NativeAdView extends FrameLayout {
         this.loadingView = loadingView;
     }
 
+    public static boolean isLocalAdAvailable(Context context, String placementName) {
+        AcbNativeAd ad = NativeAdManager.getInstance().loadLocalNativeAd(context, placementName);
+        return (ad != null);
+    }
+
     public void setNativeAdViewListener(NativeAdViewListener listener) {
         this.nativeAdViewListener = listener;
     }
