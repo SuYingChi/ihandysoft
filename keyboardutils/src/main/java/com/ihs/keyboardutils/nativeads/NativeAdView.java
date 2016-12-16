@@ -28,8 +28,12 @@ import java.util.List;
 
 public class NativeAdView extends FrameLayout {
 
-    public interface NativeAdViewListener {
-        public void onNativeAdLoaded(NativeAdView adView);
+    public interface OnAdLoadedListener {
+        public void onAdLoaded(NativeAdView adView);
+    }
+
+    public interface OnAdClickedListener {
+        public void onAdClicked(NativeAdView adView);
     }
 
     private View viewGroup;
@@ -40,7 +44,8 @@ public class NativeAdView extends FrameLayout {
     private AcbNativeAdContainerView nativeAdContainerView;
     private ViewTreeObserver.OnScrollChangedListener onScrollChangedListener;
 
-    private NativeAdViewListener nativeAdViewListener;
+    private OnAdLoadedListener adLoadedListener;
+    private OnAdClickedListener adClickedListener;
 
     private boolean isPaused = true;
 
@@ -77,12 +82,20 @@ public class NativeAdView extends FrameLayout {
         return (ad != null);
     }
 
-    public void setNativeAdViewListener(NativeAdViewListener listener) {
-        this.nativeAdViewListener = listener;
+    public void setOnAdLoadedListener(OnAdLoadedListener listener) {
+        this.adLoadedListener = listener;
     }
 
-    public NativeAdViewListener getNativeAdViewListener() {
-        return this.nativeAdViewListener;
+    public void setOnAdClickedListener(OnAdClickedListener listener) {
+        this.adClickedListener = listener;
+    }
+
+    public OnAdLoadedListener getOnAdLoadedListener() {
+        return adLoadedListener;
+    }
+
+    public OnAdClickedListener getOnAdClickedListener() {
+        return this.adClickedListener;
     }
 
     public void configParams(NativeAdParams nativeAdParams) {
@@ -336,8 +349,8 @@ public class NativeAdView extends FrameLayout {
                 if (!adLoaded) {
                     adLoaded = true;
 
-                    if (nativeAdViewListener != null) {
-                        nativeAdViewListener.onNativeAdLoaded(NativeAdView.this);
+                    if (adLoadedListener != null) {
+                        adLoadedListener.onAdLoaded(NativeAdView.this);
                     }
                 }
 
@@ -368,6 +381,10 @@ public class NativeAdView extends FrameLayout {
                 public void onAdClick(AcbAd acbAd) {
                     NativeAdManager.getInstance().markAdAsFinished(nativeAdParams.getPlacementName());
                     logGoogleAnalyticsEvent("Click");
+
+                    if (adClickedListener != null) {
+                        adClickedListener.onAdClicked(NativeAdView.this);
+                    }
                 }
             });
         }
