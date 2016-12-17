@@ -474,6 +474,7 @@ public class KeyboardPanelSwitchContainer extends RelativeLayout implements Base
         panelMap.clear();
         if (backgroundBitmap != null) {
             backgroundBitmap.recycle();
+            backgroundBitmap = null;
         }
     }
 
