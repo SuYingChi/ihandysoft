@@ -187,4 +187,10 @@ public class HSGifImageView extends FrameLayout {
         path.close();
         canvas.drawPath(path, roundPaint);
     }
+
+    @Override
+    protected void onDetachedFromWindow() {
+        stop();
+        super.onDetachedFromWindow();
+    }
 }
