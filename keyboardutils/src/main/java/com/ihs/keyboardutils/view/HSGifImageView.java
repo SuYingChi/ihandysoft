@@ -83,6 +83,10 @@ public class HSGifImageView extends FrameLayout {
         mGifImageView.setImageResource(resId);
     }
 
+    public void setImageDrawable(Drawable drawable){
+        mGifImageView.setImageDrawable(drawable);
+    }
+
     public void setScaleType(ImageView.ScaleType scaleType){
         mGifImageView.setScaleType(scaleType);
     }
