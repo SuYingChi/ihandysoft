@@ -2,7 +2,7 @@ apply plugin: 'com.android.library'
 
 android {
     compileSdkVersion 24
-    buildToolsVersion "24.0.0"
+    buildToolsVersion "24.0.2"
 
     defaultConfig {
         minSdkVersion 14
@@ -26,8 +26,10 @@ android {
 
 dependencies {
     compile(name: 'ihs/libAppFramework/libAppFramework', ext: 'jar')
-    compile(name: 'ihs/libNativeAds/libAdAdapter', ext: 'aar')
     compile(name: 'ihs/libNativeAds/libNativeAds', ext: 'aar')
+    compile(name: 'ihs/libAdsCommon/libAdAdapter', ext: 'aar')
+    compile(name: 'ihs/libAdsCommon/libAdsLoadController', ext: 'aar')
+    compile(name: 'ihs/libInterstitialAds/libInterstitialAds', ext: 'aar')
     compile(name: 'ihs/libCommon/libCommon', ext: 'aar')
     compile fileTree(dir: 'libs', include: ['*.jar'])
     androidTestCompile('com.android.support.test.espresso:espresso-core:2.2.2', {
@@ -36,9 +38,9 @@ dependencies {
     compile 'com.android.support:appcompat-v7:24.2.1'
     testCompile 'junit:junit:4.12'
 
-    compile 'com.google.android.gms:play-services-analytics:9.8.0'
-    compile 'com.google.android.gms:play-services-gcm:9.8.0'
-    compile 'com.google.android.gms:play-services-ads:9.8.0'
+    compile 'com.google.android.gms:play-services-analytics:10.0.1'
+    compile 'com.google.android.gms:play-services-gcm:10.0.1'
+    compile 'com.google.android.gms:play-services-ads:10.0.1'
     compile 'com.facebook.android:audience-network-sdk:4.7.0'
     compile 'com.facebook.android:facebook-android-sdk:4.8.0'
     compile 'pl.droidsonroids.gif:android-gif-drawable:1.2.2'
