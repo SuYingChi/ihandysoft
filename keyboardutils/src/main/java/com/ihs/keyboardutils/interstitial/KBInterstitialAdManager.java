@@ -98,11 +98,34 @@ public class KBInterstitialAdManager {
         return AcbInterstitialAdLoader.fetch(context, placementName, count);
     }
 
-    public static boolean showInterstitialAd(String applyPlacementName, AcbInterstitialAd.IAcbInterstitialAdListener listener) {
+    public static boolean showInterstitialAd(String applyPlacementName, final AcbInterstitialAd.IAcbInterstitialAdListener listener) {
         List<AcbInterstitialAd> interstitialAds = KBInterstitialAdManager.fetch(HSApplication.getContext(), applyPlacementName, 1);
         if (interstitialAds.size() > 0) {
-            AcbInterstitialAd interstitialAd = interstitialAds.get(0);
-            interstitialAd.setInterstitialAdListener(listener);
+            final AcbInterstitialAd interstitialAd = interstitialAds.get(0);
+            interstitialAd.setInterstitialAdListener(new AcbInterstitialAd.IAcbInterstitialAdListener() {
+                @Override
+                public void onAdDisplayed() {
+                    if(listener!=null){
+                        listener.onAdDisplayed();
+                    }
+                }
+
+                @Override
+                public void onAdClicked() {
+                    if(listener!=null){
+                        listener.onAdClicked();
+                    }
+                }
+
+                @Override
+                public void onAdClosed() {
+                    if(listener!=null){
+                        listener.onAdClosed();
+                    }
+                    //在使用完广告后一定要调用release接口避免内存泄漏；
+                    interstitialAd.release();
+                }
+            });
             interstitialAd.show();
             return true;
         } else {
