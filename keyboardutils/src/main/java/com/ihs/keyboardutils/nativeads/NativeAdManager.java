@@ -134,7 +134,7 @@ public class NativeAdManager {
                 clearCacheNativeAd();
             }
 
-            loader = new AcbNativeAdLoader(context, placementName);
+            loader = new AcbNativeAdLoader(context.getApplicationContext(), placementName);
 
             loader.load(1, new AcbNativeAdLoader.AcbNativeAdLoadListener() {
 
