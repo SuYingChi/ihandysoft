@@ -29,7 +29,6 @@ dependencies {
     compile(name: 'ihs/libNativeAds/libNativeAds', ext: 'aar')
     compile(name: 'ihs/libAdsCommon/libAdAdapter', ext: 'aar')
     compile(name: 'ihs/libAdsCommon/libAdsLoadController', ext: 'aar')
-    compile(name: 'ihs/libInterstitialAds/libInterstitialAds', ext: 'aar')
     compile(name: 'ihs/libCommon/libCommon', ext: 'aar')
     compile fileTree(dir: 'libs', include: ['*.jar'])
     androidTestCompile('com.android.support.test.espresso:espresso-core:2.2.2', {
