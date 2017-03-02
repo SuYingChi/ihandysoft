@@ -9,15 +9,11 @@ import android.content.Context;
 import android.support.annotation.IntDef;
 import android.util.AttributeSet;
 import android.view.Gravity;
-import android.view.View;
 import android.widget.TextView;
 
 import com.ihs.charging.HSChargingManager;
-import com.ihs.chargingscreen.HSChargingScreenManager;
 import com.ihs.chargingscreen.utils.ChargingManagerUtil;
 import com.ihs.keyboardutils.R;
-
-import static com.ihs.chargingscreen.utils.ChargingManagerUtil.enableChargingAndStartActivity;
 
 /**
  * Created by zhixiangxiao on 5/16/16.
@@ -61,17 +57,17 @@ public class ChargingAndBatteryLowPush extends BasePush {
 
         updatePush();
 
-        if (pushType == TYPE_CHARGING) {
-            setOnClickListener(new OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    if(HSChargingScreenManager.getInstance().isChargingModuleOpened()) {
-                        enableChargingAndStartActivity();
-                    }
-
-                }
-            });
-        }
+//        if (pushType == TYPE_CHARGING) {
+//            setOnClickListener(new OnClickListener() {
+//                @Override
+//                public void onClick(View v) {
+//                    if(HSChargingScreenManager.getInstance().isChargingModuleOpened()) {
+//                        enableChargingAndStartActivity();
+//                    }
+//
+//                }
+//            });
+//        }
 
     }
 

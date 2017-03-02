@@ -16,8 +16,9 @@ public class ChargingPrefsUtil {
     private static HSPreferenceHelper spHelper;
     private static ChargingPrefsUtil instance;
 
-    private final String USER_ENABLED_CHARGING = "user_enabled_charging";
-    private final String SHOULD_USE_PLIST_SETTING = "should_use_plist_setting";
+    public static final String USER_ENABLED_CHARGING = "user_enabled_charging";
+    private static final String
+            SHOULD_USE_PLIST_SETTING = "should_use_plist_setting";
 
     public static ChargingPrefsUtil getInstance() {
         if (instance == null) {
@@ -75,6 +76,10 @@ public class ChargingPrefsUtil {
     public void setChargingEnableByUser(boolean isEnable) {
         spHelper.putBoolean(USER_ENABLED_CHARGING, isEnable);
         spHelper.putBoolean(SHOULD_USE_PLIST_SETTING, false);
+    }
+
+    public HSPreferenceHelper getSpHelper() {
+        return spHelper;
     }
 
 }

@@ -136,6 +136,9 @@ public class ChargingManagerUtil {
 
 
     public static void enableChargingAndStartActivity() {
+        ChargingGARecorder.getInstance().chargingEnableOnce();
+        ChargingGARecorder.getInstance().chargingEnableNotificationClicked();
+
         ChargingPrefsUtil.getInstance().setChargingEnableByUser(true);
         HSChargingScreenManager.getInstance().start();
         Intent intent1 = new Intent(context, ChargingScreenActivity.class);

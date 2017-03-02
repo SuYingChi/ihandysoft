@@ -57,6 +57,7 @@ import com.ihs.chargingscreen.Constants;
 import com.ihs.chargingscreen.HSChargingScreenManager;
 import com.ihs.chargingscreen.notification.ChargeNotifyManager;
 import com.ihs.chargingscreen.ui.BubbleView;
+import com.ihs.chargingscreen.utils.ChargingGARecorder;
 import com.ihs.chargingscreen.utils.ChargingManagerUtil;
 import com.ihs.chargingscreen.utils.ChargingPrefsUtil;
 import com.ihs.chargingscreen.utils.CommonUtils;
@@ -216,6 +217,7 @@ public class ChargingScreenActivity extends HSActivity {
 
         super.onCreate(savedInstanceState);
 
+        ChargingGARecorder.getInstance().chargingScreenShowed();
 
         Resources resources = getResources();
         Configuration config = resources.getConfiguration();
@@ -395,6 +397,7 @@ public class ChargingScreenActivity extends HSActivity {
             return;
         }
 
+        ChargingGARecorder.getInstance().nativeAdShow();
         adView = getAdView(this, nativeAd);
         adContainer.addView(adView, LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT);
 
@@ -403,7 +406,7 @@ public class ChargingScreenActivity extends HSActivity {
             @Override
             public void onAdClick(AcbAd acbAd) {
                 HSAnalytics.logEvent("HSLib_chargingscreen_Charge_Ad_Clicked");
-
+                ChargingGARecorder.getInstance().nativeAdClick();
                 finish();
             }
         });
@@ -427,6 +430,7 @@ public class ChargingScreenActivity extends HSActivity {
                 this.nativeAdLoader = null;
             }
             this.nativeAdLoader = new AcbNativeAdLoader(this, HSChargingScreenManager.getInstance().getNaitveAdsPlacementName());
+            ChargingGARecorder.getInstance().nativeAdLoad();
             this.nativeAdLoader.load(1, new AcbNativeAdLoader.AcbNativeAdLoadListener() {
                 @Override
                 public void onAdReceived(AcbNativeAdLoader loader, List<AcbNativeAd> list) {
@@ -704,7 +708,7 @@ public class ChargingScreenActivity extends HSActivity {
                     }
 
                     showAlert();
-
+                    ChargingGARecorder.getInstance().chargingDisableTouchedOnce();
                     HSAnalytics.logEvent("HSLib_chargingscreen_Charge_TurnOff_Clicked");
                 }
             });
@@ -755,6 +759,9 @@ public class ChargingScreenActivity extends HSActivity {
                     }
                     closeDialog.dismiss();
                     closeDialog = null;
+
+                    ChargingGARecorder.getInstance().chargingDisableConfirmedOnce();
+
 
                     HSChargingScreenManager.getInstance().stop(true);
                     ChargingPrefsUtil.getInstance().setChargingEnableByUser(false);
@@ -989,7 +996,6 @@ public class ChargingScreenActivity extends HSActivity {
 
         startFlashAnimation(imgChargingStateGreenDrawableCount);
     }
-
 
 
 }

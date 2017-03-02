@@ -10,12 +10,14 @@ import com.ihs.charging.HSChargingManager.HSChargingState;
 import com.ihs.charging.HSChargingManager.IChargingListener;
 import com.ihs.chargingscreen.activity.ChargingScreenActivity;
 import com.ihs.chargingscreen.notification.ChargeNotifyManager;
+import com.ihs.chargingscreen.utils.ChargingGARecorder;
 import com.ihs.chargingscreen.utils.ChargingPrefsUtil;
 import com.ihs.commons.notificationcenter.HSGlobalNotificationCenter;
 import com.ihs.commons.utils.HSLog;
 
 import static com.ihs.charging.HSChargingManager.HSChargingState.STATE_CHARGING_FULL;
 import static com.ihs.charging.HSChargingManager.HSChargingState.STATE_DISCHARGING;
+import static com.ihs.chargingscreen.utils.ChargingPrefsUtil.USER_ENABLED_CHARGING;
 
 /**
  * Created by zhixiangxiao on 6/2/16.
@@ -85,21 +87,22 @@ public class HSChargingScreenManager {
             public void onChargingStateChanged(HSChargingState preChargingState, HSChargingState curChargingState) {
                 HSLog.e(preChargingState.toString() + " -- " + curChargingState.toString() + " -- " + HSChargingScreenManager.getInstance().isChargingModuleOpened());
 
-                if (!HSChargingScreenManager.getInstance().isChargingModuleOpened()) {
+                if (!HSChargingScreenManager.getInstance().isChargingModuleOpened() && !ChargingPrefsUtil.getInstance().getSpHelper().contains(USER_ENABLED_CHARGING)) {
                     //功能未开启时插电 并且6.0以下
                     if ((preChargingState == STATE_DISCHARGING && getChargingState() > 0) ||
-                            (getPreChargingState(preChargingState) > 0 && curChargingState == STATE_DISCHARGING)
-                            ) {
+                            (getPreChargingState(preChargingState) > 0 && curChargingState == STATE_DISCHARGING)) {
+
+                        ChargingGARecorder.getInstance().chargingEnableNotificationShowed();
                         if (Build.VERSION.SDK_INT < 23) {
                             ChargeNotifyManager.getInstance().pendingToShow(ChargeNotifyManager.PUSH_ENABLE_WHEN_PLUG);
                             HSGlobalNotificationCenter.sendNotificationOnMainThread(Constants.EVENT_CHARGING_SHOW_PUSH);
                         }
-
                         HSGlobalNotificationCenter.sendNotificationOnMainThread(Constants.EVENT_SYSTEM_BATTERY_CHARGING_STATE_CHANGED);
-
                     }
 
                     if (preChargingState != STATE_CHARGING_FULL && curChargingState == STATE_CHARGING_FULL) {
+
+                        ChargingGARecorder.getInstance().chargingEnableNotificationShowed();
                         if (Build.VERSION.SDK_INT < 23) {
                             ChargeNotifyManager.getInstance().pendingToShow(ChargeNotifyManager.PUSH_ENABLE_WHEN_FULL_CHARGE);
                             HSGlobalNotificationCenter.sendNotificationOnMainThread(Constants.EVENT_CHARGING_SHOW_PUSH);
