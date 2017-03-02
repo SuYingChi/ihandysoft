@@ -15,12 +15,18 @@ public class KeepAliveService extends Service {
     public static final String ACTION_START_CHARGING_ACTIVITY = "com.artw.charging.ac";
 
 
+    public static boolean isServiceRunning = false;
+
+
     @Override
     public void onCreate() {
         super.onCreate();
 
         IntentFilter receiverFilter = new IntentFilter();
         receiverFilter.addAction(ACTION_START_CHARGING_ACTIVITY);
+        receiverFilter.addAction(Intent.ACTION_BOOT_COMPLETED);
+        receiverFilter.addAction("android.net.wifi.supplicant.CONNECTION_CHANGE");
+        receiverFilter.addAction("android.net.conn.CONNECTIVITY_CHANGE");
         broadcastReceiver = new ChargingBroadcastReceiver();
         getApplicationContext().registerReceiver(broadcastReceiver, receiverFilter);
 
@@ -33,7 +39,7 @@ public class KeepAliveService extends Service {
 
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
-
+        isServiceRunning = true;
         return START_STICKY;
     }
 
@@ -44,6 +50,7 @@ public class KeepAliveService extends Service {
 
     @Override
     public void onDestroy() {
+        isServiceRunning = false;
         getApplicationContext().unregisterReceiver(broadcastReceiver);
         super.onDestroy();
         startService(new Intent(getApplicationContext(), KeepAliveService.class));

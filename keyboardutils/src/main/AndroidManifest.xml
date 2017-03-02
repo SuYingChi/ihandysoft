@@ -4,7 +4,10 @@
 
     <uses-sdk tools:overrideLibrary="com.google.android.gms,com.facebook,com.facebook.shimmer" />
 
+    <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
+
     <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW" />
 
@@ -30,7 +33,13 @@
             android:name="com.ihs.chargingscreen.KeepAliveService"
             android:enabled="true" />
 
-        <receiver android:name="com.ihs.chargingscreen.ChargingBroadcastReceiver" />
+        <receiver android:name="com.ihs.chargingscreen.ChargingBroadcastReceiver">
+            <intent-filter>
+                <action android:name="android.intent.action.BOOT_COMPLETED" />
+                <action android:name="android.net.wifi.supplicant.CONNECTION_CHANGE" />
+                <action android:name="android.net.conn.CONNECTIVITY_CHANGE" />
+            </intent-filter>
+        </receiver>
 
     </application>
 
