@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    //韩语
+    <!-- charging boost -->
+    <string name="charging_module_charging_state_unknown">Unplugged from charger</string>
+    <string name="charging_module_charging_state_speed">정규</string>
+    <string name="charging_module_charging_state_continuous">지속</string>
+    <string name="charging_module_charging_state_trickle">흐름</string>
+    <string name="charging_module_charging_state_finish">완전 충전됨</string>
+    <string name="charging_module_speed_charging_left_time_indicator">완전 충전까지</string>
+    <string name="charging_module_continuous_charging_left_time_indicator">완전 충전까지</string>
+    <string name="charging_module_trickle_charging_left_time_indicator">완전 충전까지</string>
+    <string name="charging_module_finish_charging_left_time_indicator">완전 충전됨</string>
+    <string name="charging_module_discharging_left_time_indicator">남은 시간</string>
+
+    <string name="charging_module_charging_state_speed_charging_indicator">80%까지 최대 속도로 배터리를 충전하세요.</string>
+    <string name="charging_module_charging_state_continuous_charging_indicator">최대 용량까지 배터리를 충전하세요.</string>
+    <string name="charging_module_charging_state_trickle_charging_indicator">배터리 보호를 위해 충전을 유지하고 최적의 성능으로 사용하세요(약 10분).</string>
+
+    <string name="charging_module_close_charging_boost">비활성화</string>
+    <string name="charging_module_alert_close_charge_title">배터리 마스터를 비활성화할까요?</string>
+    <string name="charging_module_default_module_name">배터리 마스터</string>
+    <string name="charging_module_alert_close_charge_tip">배터리가 보호되지 않습니다. 비활성화할까요?</string>
+    <string name="charging_module_alert_close">비활성화</string>
+    <string name="charging_module_alert_cancel">나중에</string>
+
+
+    <!-- charging push -->
+    <string name="charging_module_real_full_charged">완전 충전!</string>
+    <string name="charging_module_real_full_charged_tip">배터리가 완전히 충전되었어요! 언제든지 충전기를 제거하세요. </string>
+    <string name="charging_module_fast_charging">고속 충전</string>
+    <string name="charging_module_battery_low">배터리 부족</string>
+    <string name="charging_module_low_voltage">전압 낮음!</string>
+    <string name="charging_module_low_voltage_tip">이런, 충전기의 전압이 너무 낮습니다!</string>
+    <string name="charging_module_battery_doctor">배터리 닥터!</string>
+    <string name="charging_module_battery_doctor_tip">10분 더 충전하여 배터리 용량을 늘리세요.</string>
+    <string name="charging_module_cut_off_charger">충전기 차단!</string>
+    <string name="charging_module_cut_off_charger_tip">이런, 스마트폰이 완전히 충전되지 않았습니다. 배터리가 손상되었습니다.</string>
+
+</resources>

@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    //意大利语
+    <!-- charging boost -->
+    <string name="charging_module_charging_state_unknown">Unplugged from charger</string>
+    <string name="charging_module_charging_state_speed">Normale</string>
+    <string name="charging_module_charging_state_continuous">Continuo</string>
+    <string name="charging_module_charging_state_trickle">Non continuo</string>
+    <string name="charging_module_charging_state_finish">Completamente carica</string>
+    <string name="charging_module_speed_charging_left_time_indicator">Carica rimanente</string>
+    <string name="charging_module_continuous_charging_left_time_indicator">Carica rimanente</string>
+    <string name="charging_module_trickle_charging_left_time_indicator">Carica rimanente</string>
+    <string name="charging_module_finish_charging_left_time_indicator">Completamente carica</string>
+    <string name="charging_module_discharging_left_time_indicator">Tempo rimanente</string>
+
+    <string name="charging_module_charging_state_speed_charging_indicator">Caricamento della batteria alla velocità massima fino all 80%.</string>
+    <string name="charging_module_charging_state_continuous_charging_indicator">Continua a caricare la batteria fino alla capacità massima.</string>
+    <string name="charging_module_charging_state_trickle_charging_indicator">Continua a caricare per proteggere la batteria e scoprirne le prestazioni ottimali (circa 10 minuti).</string>
+
+    <string name="charging_module_close_charging_boost">Disattiva</string>
+    <string name="charging_module_alert_close_charge_title">Disattivare Battery Master?</string>
+    <string name="charging_module_default_module_name">Battery Master</string>
+    <string name="charging_module_alert_close_charge_tip">La tua batteria non sarà protetta. Vuoi procedere con la disattivazione?</string>
+    <string name="charging_module_alert_close">Disattiva</string>
+    <string name="charging_module_alert_cancel">Non ora</string>
+
+
+    <!-- charging push -->
+    <string name="charging_module_real_full_charged">Completamente carica!</string>
+    <string name="charging_module_real_full_charged_tip">La batteria è completamente carica! Puoi scollegare il caricabatterie quando vuoi.</string>
+    <string name="charging_module_fast_charging">Carica rapida</string>
+    <string name="charging_module_battery_low">Batteria quasi scarica</string>
+    <string name="charging_module_low_voltage">Basso voltaggio!</string>
+    <string name="charging_module_low_voltage_tip">Ops, il voltaggio del caricabatterie è troppo basso!</string>
+    <string name="charging_module_battery_doctor">Soccorso batteria!</string>
+    <string name="charging_module_battery_doctor_tip">Carica per altri 10 minuti per aumentare la capacità della batteria.</string>
+    <string name="charging_module_cut_off_charger">Caricabatterie scollegato!</string>
+    <string name="charging_module_cut_off_charger_tip">Ops, il tuo cellulare non è ancora completamente carico. La batteria è stata danneggiata.</string>
+
+</resources>

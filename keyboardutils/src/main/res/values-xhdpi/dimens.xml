@@ -1,0 +1,4 @@
+<resources>
+
+    <dimen name="charging_left_time_layout_margin_bottom">10dp</dimen>
+</resources>

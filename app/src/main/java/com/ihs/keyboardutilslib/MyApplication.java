@@ -3,6 +3,7 @@ package com.ihs.keyboardutilslib;
 import com.ihs.app.alerts.HSAlertMgr;
 import com.ihs.app.framework.HSApplication;
 import com.ihs.app.framework.HSNotificationConstant;
+import com.ihs.chargingscreen.HSChargingScreenManager;
 import com.ihs.commons.diversesession.HSDiverseSession;
 import com.ihs.commons.notificationcenter.HSGlobalNotificationCenter;
 import com.ihs.commons.notificationcenter.INotificationObserver;
@@ -26,6 +27,13 @@ public class MyApplication extends HSApplication {
             return;
         }
         LeakCanary.install(this);
+
+        HSChargingScreenManager.init(true, "", "Colorkey_A(NativeAds)CardAd", new HSChargingScreenManager.IChargingScreenListener() {
+            @Override
+            public void onClosedByChargingPage() {
+            }
+        });
+
         HSGlobalNotificationCenter.addObserver(HSNotificationConstant.HS_SESSION_START, sessionEventObserver);
         HSGlobalNotificationCenter.addObserver(HSNotificationConstant.HS_SESSION_END, sessionEventObserver);
     }

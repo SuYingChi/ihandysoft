@@ -13,3 +13,6 @@
 [submodule "libs/ihs/libInterstitialAds"]
 	path = libs/ihs/libInterstitialAds
 	url = http://git.ihandysoft.com/bingroup/bin_interstitialads_android.git
+[submodule "libs/ihs/libCharging"]
+	path = libs/ihs/libCharging
+	url = http://git.ihandysoft.com/bingroup/bin_chargingscreen_android.git

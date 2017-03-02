@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    //德语
+    <!-- charging boost -->
+    <string name="charging_module_charging_state_unknown">Unplugged from charger</string>
+    <string name="charging_module_charging_state_speed">Regulär</string>
+    <string name="charging_module_charging_state_continuous">Fortlaufend</string>
+    <string name="charging_module_charging_state_trickle">Tröpfeln</string>
+    <string name="charging_module_charging_state_finish">Voll geladen</string>
+    <string name="charging_module_speed_charging_left_time_indicator">Noch volle Ladung übrig</string>
+    <string name="charging_module_continuous_charging_left_time_indicator">Noch volle Ladung übrig</string>
+    <string name="charging_module_trickle_charging_left_time_indicator">Noch volle Ladung übrig</string>
+    <string name="charging_module_finish_charging_left_time_indicator">Voll geladen</string>
+    <string name="charging_module_discharging_left_time_indicator">Verbleibende Zeit</string>
+
+    <string name="charging_module_charging_state_speed_charging_indicator">Lade deinen Akku bis 80% auf Höchstgeschwindigkeit.</string>
+    <string name="charging_module_charging_state_continuous_charging_indicator">Lade deinen Akku weiter, bis er voll ist.</string>
+    <string name="charging_module_charging_state_trickle_charging_indicator">Lade verlässlich weiter, um den Akku zu schützen und seine optimale Leistung zu finden (ca. 10 Minuten).</string>
+
+    <string name="charging_module_close_charging_boost">Deaktivieren</string>
+    <string name="charging_module_alert_close_charge_title">Akkumeister deaktivieren?</string>
+    <string name="charging_module_default_module_name">Akkumeister</string>
+    <string name="charging_module_alert_close_charge_tip">Dein Akku wird nicht geschützt. Bist du dir sicher, dass du es deaktivieren willst?</string>
+    <string name="charging_module_alert_close">Deaktivieren</string>
+    <string name="charging_module_alert_cancel">Nicht jetzt</string>
+
+
+    <!-- charging push -->
+    <string name="charging_module_real_full_charged">Voll geladen</string>
+    <string name="charging_module_real_full_charged_tip">Der Akku wurde voll geladen! Du kannst das Ladegerät jederzeit entfernen.</string>
+    <string name="charging_module_fast_charging">Schnelladen</string>
+    <string name="charging_module_battery_low">Akkustand niedrig</string>
+    <string name="charging_module_low_voltage">Geringe Spannung!</string>
+    <string name="charging_module_low_voltage_tip">Huch, die Spannung des Ladegeräts ist zu niedrig!</string>
+    <string name="charging_module_battery_doctor">Akkudoktor!</string>
+    <string name="charging_module_battery_doctor_tip">Lade noch 10 Minuten länger auf, um deine Akkuleistung zu erweitern.</string>
+    <string name="charging_module_cut_off_charger">Ladegerät entfernt!</string>
+    <string name="charging_module_cut_off_charger_tip">Huch, dein Mobiltelefon ist nicht vollständig geladen.  Der Akku hat Schaden genommen.</string>
+
+</resources>

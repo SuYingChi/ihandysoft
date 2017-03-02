@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    //日语
+    <!-- charging boost -->
+    <string name="charging_module_charging_state_unknown">Unplugged from charger</string>
+    <string name="charging_module_charging_state_speed">標準</string>
+    <string name="charging_module_charging_state_continuous">継続的</string>
+    <string name="charging_module_charging_state_trickle">トリクル</string>
+    <string name="charging_module_charging_state_finish">充電完了</string>
+    <string name="charging_module_speed_charging_left_time_indicator">充電完了まで</string>
+    <string name="charging_module_continuous_charging_left_time_indicator">充電完了まで</string>
+    <string name="charging_module_trickle_charging_left_time_indicator">充電完了まで</string>
+    <string name="charging_module_finish_charging_left_time_indicator">充電完了</string>
+    <string name="charging_module_discharging_left_time_indicator">残り時間</string>
+
+    <string name="charging_module_charging_state_speed_charging_indicator">電池を残量80%まで最大速度で充電する。</string>
+    <string name="charging_module_charging_state_continuous_charging_indicator">電池を最大限度まで継続的に充電する。</string>
+    <string name="charging_module_charging_state_trickle_charging_indicator">電池を確実に保護しながら充電し、最適なパフォーマンスができるレベルを探す(およそ10分)。</string>
+
+    <string name="charging_module_close_charging_boost">無効化</string>
+    <string name="charging_module_alert_close_charge_title">Battery Masterを無効にしますか？</string>
+    <string name="charging_module_default_module_name">Battery Master</string>
+    <string name="charging_module_alert_close_charge_tip">電池は保護されなくなります。本当に無効にしますか？</string>
+    <string name="charging_module_alert_close">無効化</string>
+    <string name="charging_module_alert_cancel">今は止めておく</string>
+
+
+    <!-- charging push -->
+    <string name="charging_module_real_full_charged">充電完了！</string>
+    <string name="charging_module_real_full_charged_tip">充電が完了しました！充電器をいつでも抜いてください。</string>
+    <string name="charging_module_fast_charging">高速充電</string>
+    <string name="charging_module_battery_low">電池残量残り僅か</string>
+    <string name="charging_module_low_voltage">低い電圧！</string>
+    <string name="charging_module_low_voltage_tip">充電器からの電圧が低すぎます！</string>
+    <string name="charging_module_battery_doctor">電池ドクター！</string>
+    <string name="charging_module_battery_doctor_tip">あと10分充電して電池のキャパシティを延長しましょう。</string>
+    <string name="charging_module_cut_off_charger">充電器の接続解除！</string>
+    <string name="charging_module_cut_off_charger_tip">携帯電話の充電が完了していません。電池に損害があります。</string>
+
+</resources>

@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:layout_width="match_parent"
+              android:layout_height="wrap_content"
+              android:background="#ff192633"
+              android:layout_gravity="bottom"
+              android:orientation="horizontal">
+
+    <RelativeLayout
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_vertical"
+        android:layout_weight="1">
+
+        <ImageView
+            android:id="@+id/img_battery_frame"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:paddingBottom="20dp"
+            android:paddingTop="20dp"
+            android:src="@mipmap/charging_module_push_vertical"/>
+
+        <LinearLayout
+            android:id="@+id/layout_battery"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:layout_marginLeft="3dp"
+            android:layout_marginStart="3dp"
+            android:orientation="vertical">
+
+            <ImageView
+                android:id="@+id/img_battery5"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="4dp"
+                android:src="@mipmap/charging_module_push_battery_vertical"/>
+
+            <ImageView
+                android:id="@+id/img_battery4"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@mipmap/charging_module_push_battery_vertical"/>
+
+            <ImageView
+                android:id="@+id/img_battery3"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@mipmap/charging_module_push_battery_vertical"/>
+
+            <ImageView
+                android:id="@+id/img_battery2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@mipmap/charging_module_push_battery_vertical"/>
+
+            <ImageView
+                android:id="@+id/img_battery1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@mipmap/charging_module_push_battery_vertical"/>
+        </LinearLayout>
+
+        <ImageView
+            android:id="@+id/img_warning_sign"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignBottom="@id/img_battery_frame"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentRight="true"
+            android:layout_marginBottom="10dp"
+            android:layout_marginEnd="6dp"
+            android:layout_marginRight="6dp"
+            android:background="@mipmap/charging_module_push_lowvoltage"/>
+
+    </RelativeLayout>
+
+    <LinearLayout
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_vertical"
+        android:layout_marginEnd="20dp"
+        android:layout_marginRight="20dp"
+        android:layout_weight="3"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/txt_warning_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/charging_module_low_voltage"
+            android:textColor="#ffffffff"
+            android:textSize="14sp"/>
+
+        <TextView
+            android:id="@+id/txt_warning_tip"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:text="@string/charging_module_low_voltage_tip"
+            android:textColor="#99ffffff"
+            android:textSize="11sp"/>
+    </LinearLayout>
+
+
+</LinearLayout>

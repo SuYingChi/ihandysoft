@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    //葡萄牙语
+    <!-- charging boost -->
+    <string name="charging_module_charging_state_unknown">Unplugged from charger</string>
+    <string name="charging_module_charging_state_speed">Normal</string>
+    <string name="charging_module_charging_state_continuous">Contínuo</string>
+    <string name="charging_module_charging_state_trickle">Intermitente</string>
+    <string name="charging_module_charging_state_finish">Completamente carregado</string>
+    <string name="charging_module_speed_charging_left_time_indicator">Tempo restante de carga</string>
+    <string name="charging_module_continuous_charging_left_time_indicator">Tempo restante de carga</string>
+    <string name="charging_module_trickle_charging_left_time_indicator">Tempo restante de carga</string>
+    <string name="charging_module_finish_charging_left_time_indicator">Completamente carregado</string>
+    <string name="charging_module_discharging_left_time_indicator">Tempo restante</string>
+
+    <string name="charging_module_charging_state_speed_charging_indicator">A carregar a sua bateria a uma velocidade máxima até atingir 80%.</string>
+    <string name="charging_module_charging_state_continuous_charging_indicator">Mantenha a sua bateria em carga até chegar à capacidade máxima.</string>
+    <string name="charging_module_charging_state_trickle_charging_indicator">Mantenha o carregamento para proteger, de forma fiável, a sua bateria e assim explorar o seu desempenho ótimo (Cerca de 10 min.).</string>
+
+    <string name="charging_module_close_charging_boost">Desativar</string>
+    <string name="charging_module_alert_close_charge_title">Desativar a Battery Master?</string>
+    <string name="charging_module_default_module_name">Battery Master</string>
+    <string name="charging_module_alert_close_charge_tip">A sua bateria não será protegida. Tem a certeza de que quer desativar?</string>
+    <string name="charging_module_alert_close">Desativar</string>
+    <string name="charging_module_alert_cancel">Agora não</string>
+
+
+    <!-- charging push -->
+    <string name="charging_module_real_full_charged">Completamente carregada!</string>
+    <string name="charging_module_real_full_charged_tip">A bateria foi completamente carregada! Pode desligar o carregador quando quiser.</string>
+    <string name="charging_module_fast_charging">Carregamento rápido</string>
+    <string name="charging_module_battery_low">Bateria fraca</string>
+    <string name="charging_module_low_voltage">Tensão fraca!</string>
+    <string name="charging_module_low_voltage_tip">Ups, a tensão do carregador é demasiado fraca!</string>
+    <string name="charging_module_battery_doctor">Battery Doctor!</string>
+    <string name="charging_module_battery_doctor_tip">Carregue por mais 10 minutos para melhorar a capacidade da sua bateria.</string>
+    <string name="charging_module_cut_off_charger">Corte do carregador!</string>
+    <string name="charging_module_cut_off_charger_tip">Ups, o seu telemóvel ainda não carregou completamente. A bateria foi danificada.</string>
+
+</resources>

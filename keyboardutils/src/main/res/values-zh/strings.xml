@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    //中文
+<!-- charging boost -->
+<string name="charging_module_charging_state_unknown">充电器连接失败</string>
+<string name="charging_module_charging_state_speed">普通</string>
+<string name="charging_module_charging_state_continuous">继续充电</string>
+<string name="charging_module_charging_state_trickle">涓流充电</string>
+<string name="charging_module_charging_state_finish">已充满</string>
+<string name="charging_module_speed_charging_left_time_indicator">充满剩余时间</string>
+<string name="charging_module_continuous_charging_left_time_indicator">充满剩余时间</string>
+<string name="charging_module_trickle_charging_left_time_indicator">充满剩余时间</string>
+<string name="charging_module_finish_charging_left_time_indicator">已充满</string>
+<string name="charging_module_discharging_left_time_indicator">剩余时间</string>
+
+<string name="charging_module_charging_state_speed_charging_indicator">电量到80%前将以最大速度充电。</string>
+<string name="charging_module_charging_state_continuous_charging_indicator">持续充电以达到电池最大容量。</string>
+<string name="charging_module_charging_state_trickle_charging_indicator">正在持续充电以保护电池使其发挥最好的性能。</string>
+
+<string name="charging_module_close_charging_boost">关闭</string>
+<string name="charging_module_alert_close_charge_title">关闭电池卫士？</string>
+<string name="charging_module_default_module_name">电池卫士</string>
+<string name="charging_module_alert_close_charge_tip">你的电池将不再被保护。确定要关闭该功能么？</string>
+<string name="charging_module_alert_close">关闭</string>
+<string name="charging_module_alert_cancel">下次再说</string>
+
+
+<!-- charging push -->
+<string name="charging_module_real_full_charged">已充满！</string>
+<string name="charging_module_real_full_charged_tip">电池已充满！可以随时拔下充电器。</string>
+<string name="charging_module_fast_charging">快充</string>
+<string name="charging_module_battery_low">电量过低</string>
+<string name="charging_module_low_voltage">电压过低！</string>
+<string name="charging_module_low_voltage_tip">糟糕，充电电压过低！</string>
+<string name="charging_module_battery_doctor">电池卫士！</string>
+<string name="charging_module_battery_doctor_tip">再充10分钟有益于电池健康</string>
+<string name="charging_module_cut_off_charger">充电器连接失败</string>
+<string name="charging_module_cut_off_charger_tip">糟糕，由于电池还没有完全充满，可能对电池造成了一定的伤害。</string>
+
+</resources>

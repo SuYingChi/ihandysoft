@@ -1,4 +1,49 @@
 <resources>
     <string name="app_name">keyboardutils</string>
     <string name="english_ime_name">KeyboardTemplate</string>
+
+    <string name="facebook_app_id">1493491937637672</string>
+
+    <!-- charging boost -->
+    <string name="charging_module_charging_state_unknown">Unplugged from charger</string>
+    <string name="charging_module_charging_state_speed">Regular</string>
+    <string name="charging_module_charging_state_continuous">Continuous</string>
+    <string name="charging_module_charging_state_trickle">Trickle</string>
+    <string name="charging_module_charging_state_finish">Fully Charged</string>
+    <string name="charging_module_speed_charging_left_time_indicator">Full Charge Left</string>
+    <string name="charging_module_continuous_charging_left_time_indicator">Full Charge Left</string>
+    <string name="charging_module_trickle_charging_left_time_indicator">Full Charge Left</string>
+    <string name="charging_module_finish_charging_left_time_indicator">Fully charged</string>
+    <string name="charging_module_discharging_left_time_indicator">Remaining Time</string>
+
+    <string name="charging_module_charging_state_speed_charging_indicator">Charging your battery at the maximum speed till 80%.</string>
+    <string name="charging_module_charging_state_continuous_charging_indicator">Keep charging your battery to its maximum capacity.</string>
+    <string name="charging_module_charging_state_trickle_charging_indicator">Keep charging to reliably protect battery and explore it\'s optimal performance (About 10 mins).</string>
+
+    <string name="charging_module_close_charging_boost">Disable</string>
+    <string name="charging_module_alert_close_charge_title">Disable Battery Master?</string>
+    <string name="charging_module_default_module_name">Battery Master</string>
+    <string name="charging_module_alert_close_charge_tip">Your battery will not be protected. Are you sure to disable?</string>
+    <string name="charging_module_alert_close">Disable</string>
+    <string name="charging_module_alert_cancel">Not now</string>
+
+
+    <!-- charging push -->
+    <string name="charging_module_real_full_charged">Fully Charged!</string>
+    <string name="charging_module_real_full_charged_tip">Battery has been fully charged! You can unplug charger anytime you want.</string>
+    <string name="charging_module_fast_charging">Fast Charging</string>
+    <string name="charging_module_battery_low">Battery Low</string>
+    <string name="charging_module_low_voltage">Low Voltage!</string>
+    <string name="charging_module_low_voltage_tip">Opps, the voltage from charger is too low!</string>
+    <string name="charging_module_battery_doctor">Battery Doctor!</string>
+    <string name="charging_module_battery_doctor_tip">Charge for 10 more minutes to extend your battery capacity.</string>
+    <string name="charging_module_cut_off_charger">Charger Cut off!</string>
+    <string name="charging_module_cut_off_charger_tip">Oops, your mobile phone hasn\'t fully charged yet.  Battery has suffered a damage.</string>
+
+    <string name="charging_module_enable_plug_title">Enable Fast Charging</string>
+    <string name="charging_module_enable_plug_tip">enable fassssst charging tip</string>
+    <string name="enable">ENABLE</string>
+    <string name="charger_connected_title_disabled">Charger Connected</string>
+    <string name="enable_charging_detail">Enable smart charging to optimize battery. Contains Ads.</string>
+
 </resources>

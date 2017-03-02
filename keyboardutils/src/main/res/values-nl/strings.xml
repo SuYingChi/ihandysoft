@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    //荷兰语
+    <!-- charging boost -->
+    <string name="charging_module_charging_state_unknown">Unplugged from charger</string>
+    <string name="charging_module_charging_state_speed">Gewoon</string>
+    <string name="charging_module_charging_state_continuous">Continu</string>
+    <string name="charging_module_charging_state_trickle">Druppelsgewijs</string>
+    <string name="charging_module_charging_state_finish">Volledig opgeladen</string>
+    <string name="charging_module_speed_charging_left_time_indicator">Tijd tot volledig opladen</string>
+    <string name="charging_module_continuous_charging_left_time_indicator">Tijd tot volledig opladen</string>
+    <string name="charging_module_trickle_charging_left_time_indicator">Tijd tot volledig opladen</string>
+    <string name="charging_module_finish_charging_left_time_indicator">Volledig opgeladen</string>
+    <string name="charging_module_discharging_left_time_indicator">Resterende tijd</string>
+
+    <string name="charging_module_charging_state_speed_charging_indicator">Je batterij wordt tot 80% opgeladen met de maximumsnelheid.</string>
+    <string name="charging_module_charging_state_continuous_charging_indicator">Blijf je batterij opladen tot de maximumcapaciteit.</string>
+    <string name="charging_module_charging_state_trickle_charging_indicator">Blijf opladen om de batterij betrouwbaar te beschermen en zijn optimale prestaties te verkennen (circa 10 min).</string>
+
+    <string name="charging_module_close_charging_boost">Uitschakelen</string>
+    <string name="charging_module_alert_close_charge_title">Batterijmeester uitschakelen?</string>
+    <string name="charging_module_default_module_name">Batterijmeester</string>
+    <string name="charging_module_alert_close_charge_tip">Je batterij wordt niet beschermd. Weet je zeker dat je wilt uitschakelen?</string>
+    <string name="charging_module_alert_close">Uitschakelen</string>
+    <string name="charging_module_alert_cancel">Niet nu</string>
+
+
+    <!-- charging push -->
+    <string name="charging_module_real_full_charged">Volledig opgeladen!</string>
+    <string name="charging_module_real_full_charged_tip">De batterij is volledig opgeladen! Je kunt de lader op elk moment verwijderen.</string>
+    <string name="charging_module_fast_charging">Snel opladen</string>
+    <string name="charging_module_battery_low">Batterij bijna leeg</string>
+    <string name="charging_module_low_voltage">Lage spanning!</string>
+    <string name="charging_module_low_voltage_tip">Oei, de spanning van de lader is te laag!</string>
+    <string name="charging_module_battery_doctor">Batterijdokter!</string>
+    <string name="charging_module_battery_doctor_tip">Laad nog 10 minuten op om je batterijcapaciteit te vergroten.</string>
+    <string name="charging_module_cut_off_charger">Lader is verwijderd!</string>
+    <string name="charging_module_cut_off_charger_tip">Oei, je mobiele telefoon is nog niet volledig opgeladen.  De batterij is beschadigd.</string>
+
+</resources>
