@@ -12,7 +12,6 @@ import com.ihs.app.framework.HSApplication;
 import com.ihs.charging.HSChargingManager;
 import com.ihs.chargingscreen.HSChargingScreenManager;
 import com.ihs.chargingscreen.activity.ChargingScreenActivity;
-import com.ihs.commons.config.HSConfig;
 import com.ihs.keyboardutils.R;
 
 /**
@@ -26,7 +25,8 @@ public class ChargingManagerUtil {
 
     public static boolean isPushEnabled() {
         //TODO 从 config 读取是否打开 push
-        return HSConfig.optBoolean(true, "libChargingScreen", "ShowPush") && hasPermission("android.permission.SYSTEM_ALERT_WINDOW");
+//        return HSConfig.optBoolean(true, "libChargingScreen", "ShowPush") && hasPermission("android.permission.SYSTEM_ALERT_WINDOW");
+        return true;
     }
 
     public static boolean hasPermission(String permission) {

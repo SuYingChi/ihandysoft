@@ -18,7 +18,6 @@ import com.ihs.chargingscreen.ChargingBroadcastReceiver;
 import com.ihs.chargingscreen.Constants;
 import com.ihs.chargingscreen.HSChargingScreenManager;
 import com.ihs.chargingscreen.KeepAliveService;
-import com.ihs.chargingscreen.utils.ChargingManagerUtil;
 import com.ihs.commons.notificationcenter.HSGlobalNotificationCenter;
 import com.ihs.commons.notificationcenter.INotificationObserver;
 import com.ihs.commons.utils.HSBundle;
@@ -76,12 +75,10 @@ public class ChargingNotificationManager {
 
     public void cancel() {
         notificationManager.cancel(NOTIFICATION_ID);
-        handler.removeCallbacksAndMessages(null);
-        HSGlobalNotificationCenter.removeObserver(notificationObserver);
     }
 
     public void update() {
-        if (!ChargingManagerUtil.isPushEnabled() || HSChargingScreenManager.getInstance().isChargingModuleOpened()) {
+        if (HSChargingScreenManager.getInstance().isChargingModuleOpened()) {
             return;
         }
         String remoteViewsTitle = getRemoteViewsTitle();

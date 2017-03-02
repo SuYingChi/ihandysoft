@@ -125,7 +125,7 @@ public abstract class BasePush extends LinearLayout {
         rootView.setVisibility(INVISIBLE);
 
         try {
-            windowManager.addView(this, layoutParams);
+               windowManager.addView(this, layoutParams);
         } catch (Exception e) {
             e.printStackTrace();
         }
