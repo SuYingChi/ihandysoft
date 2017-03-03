@@ -113,6 +113,9 @@ public class HSChargingScreenManager {
                     return;
                 }
 
+                if (!isChargingModuleOpened) {
+                    return;
+                }
 //
 //                if (preChargingState == HSChargingState.STATE_DISCHARGING &&
 //                        HSChargingManager.getInstance().getBatteryPluggedSource() == BatteryPluggedSource.USB) {

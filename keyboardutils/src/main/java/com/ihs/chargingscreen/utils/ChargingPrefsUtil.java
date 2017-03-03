@@ -10,7 +10,7 @@ import com.ihs.commons.utils.HSPreferenceHelper;
  */
 public class ChargingPrefsUtil {
 
-    private static final String PREFS_FILE_NAME = "ChargingPrefs";
+    private static final String PREFS_FILE_NAME = "chargingsp";
 
     private static final String PREFS_FULL_CHARGED_PUSH_SHOWED_COUNT = "PREFS_FULL_CHARGED_PUSH_SHOWED_COUNT";
     private static HSPreferenceHelper spHelper;
