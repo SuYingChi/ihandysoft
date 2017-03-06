@@ -70,7 +70,7 @@ public class ChargingPrefsUtil {
 
 
     public boolean isChargingEnableByUser() {
-        return spHelper.getBoolean(USER_ENABLED_CHARGING, true);
+        return spHelper.getBoolean(USER_ENABLED_CHARGING, false);
     }
 
     public void setChargingEnableByUser(boolean isEnable) {

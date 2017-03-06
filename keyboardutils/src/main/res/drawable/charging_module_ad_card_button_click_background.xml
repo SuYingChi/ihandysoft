@@ -3,13 +3,6 @@
     android:shape="rectangle">
 
     <corners
-        android:topLeftRadius="3dp"
-        android:topRightRadius="3dp"
-        android:bottomLeftRadius="3dp"
-        android:bottomRightRadius="3dp"/>
-
-    <gradient
-        android:startColor="#ff259816"
-        android:endColor="#ff259816"
-        android:angle="0"/>
+        android:radius="2dp" />
+    <solid android:color="@color/ad_button_blue_pressed" />
 </shape>

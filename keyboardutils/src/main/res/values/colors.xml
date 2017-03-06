@@ -6,4 +6,6 @@
     <color name="charging_green">#00c753</color>
     <color name="charging_green_darker">#cc00c753</color>
     <color name="charging_grey">#66ffffff</color>
+    <color name="ad_button_blue">#536dfe</color>
+    <color name="ad_button_blue_pressed">#80536dfe</color>
 </resources>
