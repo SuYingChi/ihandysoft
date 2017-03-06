@@ -135,15 +135,25 @@ public class ChargingManagerUtil {
     }
 
 
-    public static void enableChargingAndStartActivity() {
+    public static void enableCharging(boolean startChagringActivity) {
         ChargingGARecorder.getInstance().chargingEnableOnce();
         ChargingGARecorder.getInstance().chargingEnableNotificationClicked();
-
         ChargingPrefsUtil.getInstance().setChargingEnableByUser(true);
         HSChargingScreenManager.getInstance().start();
+
+        if (startChagringActivity) {
+            startChargingActivity();
+        }
+    }
+
+    public static void startChargingActivity() {
         Intent intent1 = new Intent(context, ChargingScreenActivity.class);
         intent1.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         context.startActivity(intent1);
     }
 
+    public static void disableCharging() {
+        HSChargingScreenManager.getInstance().stop();
+        ChargingPrefsUtil.getInstance().setChargingEnableByUser(false);
+    }
 }

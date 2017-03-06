@@ -13,13 +13,13 @@ import android.view.View;
 import android.widget.TextView;
 
 import com.ihs.chargingscreen.ui.RippleDrawableUtils;
+import com.ihs.chargingscreen.utils.ChargingManagerUtil;
 import com.ihs.keyboardutils.R;
 
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 
 import static com.ihs.chargingscreen.notification.ChargingNotificationManager.getRemoteViewsTitle;
-import static com.ihs.chargingscreen.utils.ChargingManagerUtil.enableChargingAndStartActivity;
 
 /**
  * Created by Arthur on 2017/2/27
@@ -33,9 +33,7 @@ public class ChargingModuleDisabledPush extends BasePush {
     private int pushType;
 
     private TextView txtTitle;
-    private TextView txtBatteryRemainingPercent;
     private TextView txtLeftTimeIndicator;
-    private TextView txtChargingLeftTime;
 
     private ObjectAnimator disappearAnimator;
 
@@ -60,16 +58,14 @@ public class ChargingModuleDisabledPush extends BasePush {
         this.pushType = pushType;
 
         txtTitle = (TextView) rootView.findViewById(R.id.txt_title);
-        txtBatteryRemainingPercent = (TextView) rootView.findViewById(R.id.txt_battery_remaining_percent);
         txtLeftTimeIndicator = (TextView) rootView.findViewById(R.id.txt_left_time_indicator);
-        txtChargingLeftTime = (TextView) rootView.findViewById(R.id.txt_charging_left_time);
 
         View enableTv = rootView.findViewById(R.id.tv_enable);
         enableTv.setBackgroundDrawable(RippleDrawableUtils.getButtonRippleBackground(R.color.charging_green));
         enableTv.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
-                enableChargingAndStartActivity();
+                ChargingManagerUtil.enableCharging(true);
             }
         });
         updatePush();
@@ -77,7 +73,7 @@ public class ChargingModuleDisabledPush extends BasePush {
         setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
-                enableChargingAndStartActivity();
+                ChargingManagerUtil.enableCharging(true);
             }
         });
 
@@ -94,17 +90,9 @@ public class ChargingModuleDisabledPush extends BasePush {
 
         if (pushType == TYPE_CHARGING_PLUG) {
             txtTitle.setText(remoteViewsTitle);
-//            txtBatteryRemainingPercent.setText(String.valueOf(HSChargingManager.getInstance().getBatteryRemainingPercent()));
-//            txtLeftTimeIndicator.setVisibility(VISIBLE);
-//            txtLeftTimeIndicator.setText(ChargingManagerUtil.getLeftTimeIndicatorString());
-//            txtChargingLeftTime.setVisibility(VISIBLE);
-//            txtChargingLeftTime.setText(ChargingManagerUtil.getChargingLeftTimeString(HSChargingManager.getInstance().getChargingLeftMinutes()));
 
         } else if (pushType == TYPE_FULL_CHARGED) {
             txtTitle.setText(getContext().getResources().getString(R.string.charging_module_real_full_charged));
-//            txtBatteryRemainingPercent.setText(String.valueOf(HSChargingManager.getInstance().getBatteryRemainingPercent()));
-//            txtLeftTimeIndicator.setVisibility(GONE);
-//            txtChargingLeftTime.setVisibility(GONE);
         }
 
         txtLeftTimeIndicator.setVisibility(VISIBLE);
