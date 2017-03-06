@@ -2,7 +2,6 @@ package com.ihs.chargingscreen.activity;
 
 import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
-import android.animation.AnimatorSet;
 import android.animation.ObjectAnimator;
 import android.animation.ValueAnimator;
 import android.animation.ValueAnimator.AnimatorUpdateListener;
@@ -102,8 +101,6 @@ public class ChargingScreenActivity extends HSActivity {
     private TextView txtLeftTime;
     private TextView txtLeftTimeIndicator;
     private TextView txtChargingIndicator;
-    private View layoutBatteryBackground;
-    private View imgBatteryTail;
 
     private Dialog closeDialog;
     private PopupWindow popupWindow;
@@ -124,9 +121,7 @@ public class ChargingScreenActivity extends HSActivity {
     private long startDisplayTime;
 
     //    private AnimatorSet imgScrollUpAnimatorSet;
-    private AnimatorSet flashAnimatorSet;
     private ValueAnimator rootViewTransXAnimator;
-    private ValueAnimator imgBatteryTailTransXAnimator;
 
     private TelephonyManager telephonyManager;
 
@@ -318,9 +313,6 @@ public class ChargingScreenActivity extends HSActivity {
         txtLeftTime = (TextView) findViewById(R.id.txt_left_time);
         txtLeftTimeIndicator = (TextView) findViewById(R.id.txt_left_time_indicator);
         txtChargingIndicator = (TextView) findViewById(R.id.txt_charging_indicator);
-
-        layoutBatteryBackground = findViewById(R.id.layout_battery_background);
-        imgBatteryTail = findViewById(R.id.img_battery_tail);
 
         ImageView appIcon = (ImageView) findViewById(R.id.app_icon);
         TextView appName = (TextView) findViewById(R.id.app_name);
@@ -812,15 +804,9 @@ public class ChargingScreenActivity extends HSActivity {
 
     private void cancelAllAnimators() {
 
-//        cancelAnimator(imgScrollUpAnimatorSet);
-        cancelAnimator(flashAnimatorSet);
         cancelAnimator(rootViewTransXAnimator);
-        cancelAnimator(imgBatteryTailTransXAnimator);
 
-//        imgScrollUpAnimatorSet = null;
-        flashAnimatorSet = null;
         rootViewTransXAnimator = null;
-        imgBatteryTailTransXAnimator = null;
     }
 
     private void cancelAnimator(Animator animator) {
@@ -840,9 +826,6 @@ public class ChargingScreenActivity extends HSActivity {
     }
 
     private void startFlashAnimation(int imgChargingStateGreenDrawableCount) {
-
-        cancelAnimator(flashAnimatorSet);
-        flashAnimatorSet = null;
 
         if (!isImgChargingStateFlash()) {
 
@@ -865,45 +848,9 @@ public class ChargingScreenActivity extends HSActivity {
         imgChargingStateAppearAnimator.setDuration(500);
         imgChargingStateAppearAnimator.setStartDelay(ANIMATION_START_DELAY);
 
-
-        imgBatteryTailTransXAnimator = ObjectAnimator.ofFloat(imgBatteryTail, "translationX", -DisplayUtils.dip2px(30), HSChargingManager.getInstance().getBatteryRemainingPercent()
-                * DisplayUtils.dip2px(120) / 100);
-        imgBatteryTailTransXAnimator.setDuration(ANIMATION_DURATION);
-        imgBatteryTailTransXAnimator.setStartDelay(150);
-        imgBatteryTailTransXAnimator.addListener(new AnimatorListenerAdapter() {
-            @Override
-            public void onAnimationStart(Animator animation) {
-                super.onAnimationStart(animation);
-                imgBatteryTail.setVisibility(View.VISIBLE);
-            }
-
-            @Override
-            public void onAnimationEnd(Animator animation) {
-                super.onAnimationEnd(animation);
-                if (imgBatteryTailTransXAnimator != null) {
-                    imgBatteryTail.setVisibility(View.INVISIBLE);
-                }
-            }
-        });
-
-        flashAnimatorSet = new AnimatorSet();
-        flashAnimatorSet.play(imgChargingStateAppearAnimator).after(imgChargingStateDisAppearAnimator).with(imgBatteryTailTransXAnimator);
-
-        flashAnimatorSet.start();
-        flashAnimatorSet.addListener(new AnimatorListenerAdapter() {
-            @Override
-            public void onAnimationEnd(Animator animation) {
-                super.onAnimationEnd(animation);
-                if (flashAnimatorSet != null) {
-                    flashAnimatorSet.start();
-                }
-            }
-        });
     }
 
     private void updateInfo() {
-        layoutBatteryBackground.setMinimumWidth(HSChargingManager.getInstance().getBatteryRemainingPercent()
-                * DisplayUtils.dip2px(120) / 100);
         txtBatteryLevelPercent.setText(new StringBuilder(String.valueOf((HSChargingManager.getInstance().getBatteryRemainingPercent())))
                 .toString());
 

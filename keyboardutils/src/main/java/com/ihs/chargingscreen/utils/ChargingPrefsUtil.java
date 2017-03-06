@@ -45,12 +45,12 @@ public class ChargingPrefsUtil {
             if (spHelper.contains(USER_ENABLED_CHARGING)) {
                 return spHelper.getBoolean(USER_ENABLED_CHARGING, true);
             } else {
-                return HSConfig.optBoolean(true, "Application", "ChargeLocker", "enable");
+                return HSConfig.optBoolean(false, "Application", "ChargeLocker", "enable");
             }
         }
 
         if (spHelper.getBoolean(SHOULD_USE_PLIST_SETTING, true)) {
-            return HSConfig.optBoolean(true, "Application", "ChargeLocker", "enable");
+            return HSConfig.optBoolean(false, "Application", "ChargeLocker", "enable");
         } else {
             return isChargingEnableByUser();
         }

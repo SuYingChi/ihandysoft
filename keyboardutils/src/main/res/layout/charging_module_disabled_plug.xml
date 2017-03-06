@@ -17,61 +17,6 @@
         android:src="@drawable/charger_battery" />
 
 
-    <FrameLayout
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center_vertical"
-        android:layout_marginLeft="15dp"
-        android:layout_marginStart="15dp"
-        android:rotation="90"
-        android:visibility="gone">
-
-        <ImageView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:src="@mipmap/charging_module_push_horizontal" />
-
-        <LinearLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_horizontal"
-            android:layout_marginEnd="2dp"
-            android:layout_marginRight="2dp"
-            android:layout_marginTop="4dp"
-            android:orientation="horizontal">
-
-            <ImageView
-                android:id="@+id/img_battery1"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:src="@mipmap/charging_module_push_batter_horizontal" />
-
-            <ImageView
-                android:id="@+id/img_battery2"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:src="@mipmap/charging_module_push_batter_horizontal" />
-
-            <ImageView
-                android:id="@+id/img_battery3"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:src="@mipmap/charging_module_push_batter_horizontal" />
-
-            <ImageView
-                android:id="@+id/img_battery4"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:src="@mipmap/charging_module_push_batter_horizontal" />
-
-            <ImageView
-                android:id="@+id/img_battery5"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:src="@mipmap/charging_module_push_batter_horizontal" />
-        </LinearLayout>
-
-    </FrameLayout>
 
     <LinearLayout
         android:layout_width="wrap_content"

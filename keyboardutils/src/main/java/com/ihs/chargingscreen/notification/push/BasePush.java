@@ -8,20 +8,13 @@ import android.graphics.PixelFormat;
 import android.os.Build.VERSION;
 import android.os.Build.VERSION_CODES;
 import android.os.Handler;
-import android.support.annotation.CallSuper;
 import android.support.annotation.LayoutRes;
 import android.util.AttributeSet;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewTreeObserver.OnGlobalLayoutListener;
 import android.view.WindowManager;
-import android.widget.ImageView;
 import android.widget.LinearLayout;
-
-import com.ihs.keyboardutils.R;
-
-import java.util.ArrayList;
-import java.util.List;
 
 /**
  * Created by zhixiangxiao on 5/16/16.
@@ -33,7 +26,6 @@ public abstract class BasePush extends LinearLayout {
     public static final int PUSH_APPEAR_DURATION = 400;
 
     protected View rootView;
-    protected List<ImageView> imgBatteryList = new ArrayList<>();
 
     protected WindowManager windowManager;
     protected WindowManager.LayoutParams layoutParams;
@@ -71,20 +63,6 @@ public abstract class BasePush extends LinearLayout {
         initLayoutParams();
 
         rootView = LayoutInflater.from(context).inflate(getRootViewLayoutId(), this);
-
-        ImageView imgBattery1 = (ImageView) rootView.findViewById(R.id.img_battery1);
-        ImageView imgBattery2 = (ImageView) rootView.findViewById(R.id.img_battery2);
-        ImageView imgBattery3 = (ImageView) rootView.findViewById(R.id.img_battery3);
-        ImageView imgBattery4 = (ImageView) rootView.findViewById(R.id.img_battery4);
-        ImageView imgBattery5 = (ImageView) rootView.findViewById(R.id.img_battery5);
-
-        imgBatteryList.add(imgBattery1);
-        imgBatteryList.add(imgBattery2);
-        imgBatteryList.add(imgBattery3);
-        imgBatteryList.add(imgBattery4);
-        imgBatteryList.add(imgBattery5);
-
-
     }
 
 
@@ -175,12 +153,5 @@ public abstract class BasePush extends LinearLayout {
         handler.removeCallbacksAndMessages(null);
 
     }
-
-
-    @CallSuper
-    protected void onViewClick() {
-
-    }
-
 
 }

@@ -15,6 +15,9 @@ import com.ihs.charging.HSChargingManager;
 import com.ihs.chargingscreen.utils.ChargingManagerUtil;
 import com.ihs.keyboardutils.R;
 
+import java.lang.annotation.Retention;
+import java.lang.annotation.RetentionPolicy;
+
 /**
  * Created by zhixiangxiao on 5/16/16.
  */
@@ -32,6 +35,7 @@ public class ChargingAndBatteryLowPush extends BasePush {
     private ObjectAnimator disappearAnimator;
 
     @IntDef({TYPE_CHARGING, TYPE_BATTERY_LOW})
+    @Retention(RetentionPolicy.SOURCE)
     public @interface PushType {
     }
 
@@ -74,14 +78,6 @@ public class ChargingAndBatteryLowPush extends BasePush {
 
 
     public void updatePush() {
-        for (int i = 0; i < imgBatteryList.size(); i++) {
-            if (i < ChargingManagerUtil.getImgBatteryVisibleCount()) {
-                imgBatteryList.get(i).setVisibility(VISIBLE);
-            } else {
-                imgBatteryList.get(i).setVisibility(INVISIBLE);
-            }
-        }
-
         if (pushType == TYPE_CHARGING) {
             txtTitle.setText(getContext().getResources().getString(R.string.charging_module_fast_charging));
             txtBatteryRemainingPercent.setText(String.valueOf(HSChargingManager.getInstance().getBatteryRemainingPercent()));

@@ -7,7 +7,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Build.VERSION;
 import android.os.Build.VERSION_CODES;
-import android.os.Handler;
 import android.support.v7.app.NotificationCompat;
 import android.text.TextUtils;
 import android.widget.RemoteViews;
@@ -31,18 +30,11 @@ public class ChargingNotificationManager {
 
     private static final int NOTIFICATION_ID = 19349; // TODO uniform all notification id
 
-    private static final int[] BATTERY_IMAGE_RES_IDS = {
-            R.id.img_battery1, R.id.img_battery2, R.id.img_battery3,
-            R.id.img_battery4, R.id.img_battery5};
 
     private Notification notification;
     private RemoteViews remoteViews;
 
     private NotificationManager notificationManager;
-
-    private Handler handler = new Handler();
-
-    private String leftTimeString = "abb";
 
     private INotificationObserver notificationObserver = new INotificationObserver() {
         @Override

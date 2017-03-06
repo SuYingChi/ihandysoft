@@ -5,7 +5,6 @@ import android.animation.PropertyValuesHolder;
 import android.content.Context;
 import android.view.Gravity;
 
-import com.ihs.chargingscreen.utils.ChargingManagerUtil;
 import com.ihs.keyboardutils.R;
 
 /**
@@ -46,12 +45,5 @@ public class FullChargedPush extends BasePush {
     }
 
     public void updatePush() {
-        for (int i = 0; i < imgBatteryList.size(); i++) {
-            if (i < ChargingManagerUtil.getImgBatteryVisibleCount()) {
-                imgBatteryList.get(i).setVisibility(VISIBLE);
-            } else {
-                imgBatteryList.get(i).setVisibility(INVISIBLE);
-            }
-        }
     }
 }
