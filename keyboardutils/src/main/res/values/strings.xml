@@ -45,5 +45,6 @@
     <string name="enable">ENABLE</string>
     <string name="charger_connected_title_disabled">Charger Connected</string>
     <string name="enable_charging_detail">Enable smart charging to optimize battery. Contains Ads.</string>
+    <string name="disable_battery_master">Disable Battery Master</string>
 
 </resources>

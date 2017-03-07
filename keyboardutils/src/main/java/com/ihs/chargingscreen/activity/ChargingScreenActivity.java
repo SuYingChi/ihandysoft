@@ -727,8 +727,9 @@ public class ChargingScreenActivity extends HSActivity {
             if (moduleName == null || "".equals(moduleName)) {
                 moduleName = getResources().getString(R.string.charging_module_default_module_name);
             }
-            closeAlertTitle.setText(getResources().getString(R.string.charging_module_close_charging_boost) + moduleName + "?");
+//            closeAlertTitle.setText(getResources().getString(R.string.charging_module_close_charging_boost) + moduleName + "?");
 
+            closeAlertTitle.setText(R.string.disable_battery_master);
             View btnCancel = closeDialog.findViewById(R.id.alert_cancel);
             View btnClose = closeDialog.findViewById(R.id.alert_close);
 
