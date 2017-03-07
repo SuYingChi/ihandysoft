@@ -883,7 +883,7 @@ public class ChargingScreenActivity extends HSActivity {
 
     private void unplugged() {
         txtLeftTimeIndicator.setText(txtLeftTimeIndicatorStrings[4]);
-        txtLeftTime.setVisibility(View.INVISIBLE);
+        txtLeftTime.setVisibility(View.GONE);
         bubbleView.stop();
         for (int i = 0; i < imgChargingStateList.length; i++) {
             imgChargingStateList[i].setImageDrawable(imgChargingStateDarkDrawables.get(i));
