@@ -12,6 +12,8 @@ import android.widget.TextView;
 import com.ihs.chargingscreen.utils.ChargingManagerUtil;
 import com.ihs.keyboardutils.R;
 
+import java.lang.annotation.Retention;
+import java.lang.annotation.RetentionPolicy;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -32,6 +34,7 @@ public class WarningPush extends BasePush {
     private int pushType;
 
     @IntDef({WARNING_LOW_VOLTAGE, WARNING_BATTERY_DOCTOR, WARNING_CUT_OFF_CHARGE, WARNING_ENABLE_PLUG})
+    @Retention(RetentionPolicy.SOURCE)
     public @interface WarningType {
     }
 
