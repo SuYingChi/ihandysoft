@@ -88,12 +88,12 @@ public class HSChargingScreenManager {
                 HSLog.e(preChargingState.toString() + " -- " + curChargingState.toString() + " -- " + HSChargingScreenManager.getInstance().isChargingModuleOpened());
 
                 if (!HSChargingScreenManager.getInstance().isChargingModuleOpened() && !ChargingPrefsUtil.getInstance().getSpHelper().contains(USER_ENABLED_CHARGING)) {
-                    //功能未开启时插电 并且6.0以下
+                    //功能未开启时插电 并且5.0以下
                     if ((preChargingState == STATE_DISCHARGING && getChargingState() > 0) ||
                             (getPreChargingState(preChargingState) > 0 && curChargingState == STATE_DISCHARGING)) {
 
                         ChargingGARecorder.getInstance().chargingEnableNotificationShowed();
-                        if (Build.VERSION.SDK_INT < 23) {
+                        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.LOLLIPOP) {
                             ChargeNotifyManager.getInstance().pendingToShow(ChargeNotifyManager.PUSH_ENABLE_WHEN_PLUG);
                             HSGlobalNotificationCenter.sendNotificationOnMainThread(Constants.EVENT_CHARGING_SHOW_PUSH);
                         }
@@ -103,7 +103,7 @@ public class HSChargingScreenManager {
                     if (preChargingState != STATE_CHARGING_FULL && curChargingState == STATE_CHARGING_FULL) {
 
                         ChargingGARecorder.getInstance().chargingEnableNotificationShowed();
-                        if (Build.VERSION.SDK_INT < 23) {
+                        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.LOLLIPOP) {
                             ChargeNotifyManager.getInstance().pendingToShow(ChargeNotifyManager.PUSH_ENABLE_WHEN_FULL_CHARGE);
                             HSGlobalNotificationCenter.sendNotificationOnMainThread(Constants.EVENT_CHARGING_SHOW_PUSH);
                         }
