@@ -2,6 +2,7 @@ package com.ihs.chargingscreen.activity;
 
 import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
+import android.animation.AnimatorSet;
 import android.animation.ObjectAnimator;
 import android.animation.ValueAnimator;
 import android.animation.ValueAnimator.AnimatorUpdateListener;
@@ -805,8 +806,10 @@ public class ChargingScreenActivity extends HSActivity {
 
     private void cancelAllAnimators() {
 
+        cancelAnimator(flashAnimatorSet);
         cancelAnimator(rootViewTransXAnimator);
 
+        flashAnimatorSet = null;
         rootViewTransXAnimator = null;
     }
 
@@ -826,12 +829,17 @@ public class ChargingScreenActivity extends HSActivity {
                 && chargingState != HSChargingState.STATE_CHARGING_FULL;
     }
 
-    private void startFlashAnimation(int imgChargingStateGreenDrawableCount) {
+    private AnimatorSet flashAnimatorSet;
+
+    private void startFlashAnimation(final int imgChargingStateGreenDrawableCount) {
+
+        cancelAnimator(flashAnimatorSet);
+        flashAnimatorSet = null;
 
         if (!isImgChargingStateFlash()) {
-
             return;
         }
+
         if (imgChargingStateGreenDrawableCount <= 0) {
             return;
         }
@@ -840,20 +848,47 @@ public class ChargingScreenActivity extends HSActivity {
         final int ANIMATION_START_DELAY = 150;
 
         ValueAnimator imgChargingStateDisAppearAnimator = ObjectAnimator.ofInt(imgChargingStateList[imgChargingStateGreenDrawableCount - 1],
-                "alpha", 255, 160);
+                "alpha", 255, 125);
         imgChargingStateDisAppearAnimator.setDuration(ANIMATION_DURATION);
         imgChargingStateDisAppearAnimator.setStartDelay(ANIMATION_START_DELAY);
 
+
         ValueAnimator imgChargingStateAppearAnimator = ObjectAnimator.ofInt(imgChargingStateList[imgChargingStateGreenDrawableCount - 1],
-                "alpha", 160, 255);
+                "alpha", 125, 255);
         imgChargingStateAppearAnimator.setDuration(500);
         imgChargingStateAppearAnimator.setStartDelay(ANIMATION_START_DELAY);
+
+        flashAnimatorSet = new AnimatorSet();
+        flashAnimatorSet.play(imgChargingStateAppearAnimator).after(imgChargingStateDisAppearAnimator);
+
+        flashAnimatorSet.start();
+        flashAnimatorSet.addListener(new AnimatorListenerAdapter() {
+            @Override
+            public void onAnimationEnd(Animator animation) {
+                super.onAnimationEnd(animation);
+                if (flashAnimatorSet != null) {
+                    flashAnimatorSet.start();
+                }
+            }
+
+            @Override
+            public void onAnimationCancel(Animator animation) {
+                imgChargingStateList[imgChargingStateGreenDrawableCount - 1].setAlpha(255);
+            }
+        });
 
     }
 
     private void updateInfo() {
         txtBatteryLevelPercent.setText(new StringBuilder(String.valueOf((HSChargingManager.getInstance().getBatteryRemainingPercent())))
                 .toString());
+
+
+        for (ImageView imgChargingState : imgChargingStateList) {
+            imgChargingState.clearAnimation();
+            imgChargingState.setAlpha(255);
+        }
+
 
         switch (HSChargingManager.getInstance().getChargingState()) {
 
@@ -883,14 +918,14 @@ public class ChargingScreenActivity extends HSActivity {
     }
 
     private void unplugged() {
+        startFlashAnimation(0);
+
         txtLeftTimeIndicator.setText(txtLeftTimeIndicatorStrings[4]);
         txtLeftTime.setVisibility(View.GONE);
         bubbleView.stop();
         for (int i = 0; i < imgChargingStateList.length; i++) {
             imgChargingStateList[i].setImageDrawable(imgChargingStateDarkDrawables.get(i));
         }
-
-
     }
 
     private void updateTxtAndImgAndStartFlashAnim(@IntRange(from = 0, to = 4) int txtChargingStateStringIndex,
@@ -920,9 +955,6 @@ public class ChargingScreenActivity extends HSActivity {
 
         for (int i = 0; i < imgChargingStateList.length; i++) {
             ImageView imgChargingState = imgChargingStateList[i];
-
-            imgChargingState.clearAnimation();
-            imgChargingState.setAlpha(255);
 
             if (i < imgChargingStateGreenDrawableCount) {
                 imgChargingState.setImageDrawable(imgChargingStateGreenDrawables.get(i));
