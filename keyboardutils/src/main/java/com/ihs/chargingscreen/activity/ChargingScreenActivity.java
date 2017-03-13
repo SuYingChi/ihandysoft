@@ -14,7 +14,6 @@ import android.content.pm.PackageManager;
 import android.content.res.Configuration;
 import android.content.res.Resources;
 import android.graphics.BitmapFactory;
-import android.graphics.Color;
 import android.graphics.drawable.Drawable;
 import android.os.Build.VERSION;
 import android.os.Build.VERSION_CODES;
@@ -201,7 +200,6 @@ public class ChargingScreenActivity extends HSActivity {
             }
         }
     };
-    private TextView[] txtChargingStateList;
     private BubbleView bubbleView;
     private PowerManager powerManager = (PowerManager) HSApplication.getContext().getSystemService(Context.POWER_SERVICE);
 
@@ -325,11 +323,6 @@ public class ChargingScreenActivity extends HSActivity {
 
         adContainer = (FrameLayout) findViewById(R.id.ad_container);
         txtBatteryLevelPercent = (TextView) findViewById(R.id.txt_battery_level);
-        txtChargingStateList = new TextView[]{
-                (TextView) findViewById(R.id.tv_regular),
-                (TextView) findViewById(R.id.tv_continuous),
-                (TextView) findViewById(R.id.tv_trickle),
-        };
 
         imgChargingStateList = new ImageView[]{
                 (ImageView) findViewById(R.id.img_charging_state1),
@@ -962,16 +955,10 @@ public class ChargingScreenActivity extends HSActivity {
                 imgChargingState.setImageDrawable(imgChargingStateDarkDrawables.get(i));
             }
 
-            if (i < imgChargingStateGreenDrawableCount) {
-                txtChargingStateList[i].setTextColor(Color.WHITE);
-            } else {
-                txtChargingStateList[i].setTextColor(getResources().getColor(R.color.charging_grey));
-            }
 
         }
 
         if (txtChargingStateStringIndex == 4) {
-            txtChargingStateList[0].setTextColor(getResources().getColor(R.color.charging_grey));
             imgChargingStateList[0].setImageDrawable(imgChargingStateDarkDrawables.get(0));
         }
 
