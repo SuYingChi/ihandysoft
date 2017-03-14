@@ -10,6 +10,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.ViewTreeObserver;
 import android.view.WindowManager;
+import android.view.animation.Animation;
+import android.view.animation.ScaleAnimation;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -48,6 +50,10 @@ public class NativeAdView extends FrameLayout {
         }
     }
 
+    public enum NativeAdType {
+        ICON, NORMAL
+    }
+
     private View viewGroup;
     private View loadingView;
 
@@ -71,6 +77,8 @@ public class NativeAdView extends FrameLayout {
     private long currentAdDisplayDurationBeforeResume = 0;
     private long totalAdDisplayDurationBeforeRefresh = 0;
     private long currentAdDisplayLimit = 0;
+
+    private NativeAdType nativeAdType = NativeAdType.NORMAL;
 
     private Runnable displayFinishRunnable = new Runnable() {
         @Override
@@ -117,6 +125,10 @@ public class NativeAdView extends FrameLayout {
 
     public void setOnFirstAdRespondListener(OnFirstAdRespondListener adRespondListener) {
         this.firstAdRespondListener = adRespondListener;
+    }
+
+    public void setNativeAdType(NativeAdType nativeAdType) {
+        this.nativeAdType = nativeAdType;
     }
 
     public void configParams(NativeAdParams nativeAdParams) {
@@ -412,6 +424,9 @@ public class NativeAdView extends FrameLayout {
 
             // 调整布局
             fillNativeAdContainerView(hsNativeAd);
+            if(nativeAdType == NativeAdType.ICON) {
+                addScaleAnimTo(nativeAdContainerView);
+            }
             hsNativeAd.setNativeClickListener(new AcbNativeAd.AcbNativeClickListener() {
                 @Override
                 public void onAdClick(AcbAd acbAd) {
@@ -424,6 +439,12 @@ public class NativeAdView extends FrameLayout {
                 }
             });
         }
+    }
+
+    private void addScaleAnimTo(AcbNativeAdContainerView nativeAdContainerView) {
+        ScaleAnimation scaleAnimation = new ScaleAnimation(0.0f, 1.0f, 0.0f, 1.0f, Animation.RELATIVE_TO_SELF, 0.5f, Animation.RELATIVE_TO_SELF, 0.5f);
+        scaleAnimation.setDuration(300);
+        nativeAdContainerView.startAnimation(scaleAnimation);
     }
 
     private Rect screenRect = new Rect();
