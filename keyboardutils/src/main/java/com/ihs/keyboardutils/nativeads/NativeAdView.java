@@ -36,6 +36,18 @@ public class NativeAdView extends FrameLayout {
         public void onAdClicked(NativeAdView adView);
     }
 
+    public abstract class OnFirstAdRespondListener {
+
+        private AcbNativeAd ad;
+        private long remainingAdDisplayDuration;
+
+        public abstract void onAdResponse(NativeAdView nativeAdView);
+        public void onAdResponseFinished() {
+            adLoaded(ad, remainingAdDisplayDuration);
+            setOnFirstAdRespondListener(null);
+        }
+    }
+
     private View viewGroup;
     private View loadingView;
 
@@ -46,6 +58,7 @@ public class NativeAdView extends FrameLayout {
 
     private OnAdLoadedListener adLoadedListener;
     private OnAdClickedListener adClickedListener;
+    private OnFirstAdRespondListener firstAdRespondListener;
 
     private boolean isPaused = true;
 
@@ -96,6 +109,14 @@ public class NativeAdView extends FrameLayout {
 
     public OnAdClickedListener getOnAdClickedListener() {
         return this.adClickedListener;
+    }
+
+    public OnFirstAdRespondListener getOnFirstAdRespondListener() {
+        return firstAdRespondListener;
+    }
+
+    public void setOnFirstAdRespondListener(OnFirstAdRespondListener adRespondListener) {
+        this.firstAdRespondListener = adRespondListener;
     }
 
     public void configParams(NativeAdParams nativeAdParams) {
@@ -336,27 +357,42 @@ public class NativeAdView extends FrameLayout {
 
         NativeAdManager.getInstance().loadNativeAd(getContext(), nativeAdParams.getPlacementName(), new NativeAdManager.AdLoadListener() {
             @Override
-            public void onAdLoaded(AcbNativeAd ad, long remainingAdDisplayDuration) {
-                if (firstAdLoadedTime == 0) {
-                    firstAdLoadedTime = System.currentTimeMillis();
-                }
-                currentAdDisplayLimit = remainingAdDisplayDuration;
-
-                bindDataToView(ad);
-
-                isRefreshing = false;
-
-                if (!adLoaded) {
-                    adLoaded = true;
-
-                    if (adLoadedListener != null) {
-                        adLoadedListener.onAdLoaded(NativeAdView.this);
+            public void onAdLoaded(final AcbNativeAd ad, final long remainingAdDisplayDuration) {
+                if(firstAdRespondListener != null) {
+                    if (loadingView != null) {
+                        removeView(loadingView);
+                        loadingView = null;
                     }
+                    firstAdRespondListener.ad = ad;
+                    firstAdRespondListener.remainingAdDisplayDuration = remainingAdDisplayDuration;
+                    firstAdRespondListener.onAdResponse(NativeAdView.this);
                 }
-
-                startAutoRefreshingIfNeeded();
+                else {
+                    adLoaded(ad, remainingAdDisplayDuration);
+                }
             }
         });
+    }
+
+    private void adLoaded(final AcbNativeAd ad, final long remainingAdDisplayDuration) {
+        if (firstAdLoadedTime == 0) {
+            firstAdLoadedTime = System.currentTimeMillis();
+        }
+        currentAdDisplayLimit = remainingAdDisplayDuration;
+
+        bindDataToView(ad);
+
+        isRefreshing = false;
+
+        if (!adLoaded) {
+            adLoaded = true;
+
+            if (adLoadedListener != null) {
+                adLoadedListener.onAdLoaded(NativeAdView.this);
+            }
+        }
+
+        startAutoRefreshingIfNeeded();
     }
 
     /**
