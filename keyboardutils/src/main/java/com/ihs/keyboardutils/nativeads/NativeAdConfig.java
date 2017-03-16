@@ -16,7 +16,7 @@ public class NativeAdConfig {
         return HSConfig.getList("Application", "NativeAds", "DisabledIconPools");
     }
 
-    public static List<String> getAvailablePoolNames(){
+    public static List<String> getAvailablePoolNames() {
         List<String> poolNames = new ArrayList<>();
         for (Map.Entry entry : HSConfig.getMap("nativeAds").entrySet()) {
             if ((entry.getValue() instanceof Map)) {
@@ -24,5 +24,9 @@ public class NativeAdConfig {
             }
         }
         return poolNames;
+    }
+
+    public static boolean canShowIconAd() {
+        return HSConfig.optBoolean(true, "Application", "NativeAds", "ShowIconAd");
     }
 }
