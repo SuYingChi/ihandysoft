@@ -44,6 +44,7 @@ public class NativeAdView extends FrameLayout {
         private long remainingAdDisplayDuration;
 
         public abstract void onAdResponse(NativeAdView nativeAdView);
+
         public void onAdResponseFinished() {
             adLoaded(ad, remainingAdDisplayDuration);
             setOnFirstAdRespondListener(null);
@@ -201,7 +202,7 @@ public class NativeAdView extends FrameLayout {
         nativeAdContainerView.getContentView().setLayoutParams(layoutParams);
 
         if (nativeAdContainerView.getAdPrimaryView() != null) {
-            nativeAdContainerView.getAdPrimaryView().getNormalImageView().setScaleType(ImageView.ScaleType.FIT_XY);
+            nativeAdContainerView.getAdPrimaryView().getNormalImageView().setScaleType(nativeAdParams.getScaleType());
             if (nativeAdParams.getPrimaryHWRatio() == 0) {
                 nativeAdContainerView.getAdPrimaryView().setLayoutParams(new FrameLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
             } else {
@@ -359,6 +360,7 @@ public class NativeAdView extends FrameLayout {
     }
 
     private boolean isRefreshing = false;
+
     private void refresh() {
         if (isRefreshing) {
             return;
@@ -370,7 +372,7 @@ public class NativeAdView extends FrameLayout {
         NativeAdManager.getInstance().loadNativeAd(getContext(), nativeAdParams.getPlacementName(), new NativeAdManager.AdLoadListener() {
             @Override
             public void onAdLoaded(final AcbNativeAd ad, final long remainingAdDisplayDuration) {
-                if(firstAdRespondListener != null) {
+                if (firstAdRespondListener != null) {
                     if (loadingView != null) {
                         removeView(loadingView);
                         loadingView = null;
@@ -378,8 +380,7 @@ public class NativeAdView extends FrameLayout {
                     firstAdRespondListener.ad = ad;
                     firstAdRespondListener.remainingAdDisplayDuration = remainingAdDisplayDuration;
                     firstAdRespondListener.onAdResponse(NativeAdView.this);
-                }
-                else {
+                } else {
                     adLoaded(ad, remainingAdDisplayDuration);
                 }
             }
@@ -424,7 +425,7 @@ public class NativeAdView extends FrameLayout {
 
             // 调整布局
             fillNativeAdContainerView(hsNativeAd);
-            if(nativeAdType == NativeAdType.ICON) {
+            if (nativeAdType == NativeAdType.ICON) {
                 addScaleAnimTo(nativeAdContainerView);
             }
             hsNativeAd.setNativeClickListener(new AcbNativeAd.AcbNativeClickListener() {
