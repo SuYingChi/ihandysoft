@@ -46,7 +46,6 @@ import com.acb.adadapter.ContainerView.AcbNativeAdContainerView;
 import com.acb.adadapter.ContainerView.AcbNativeAdIconView;
 import com.acb.adadapter.ContainerView.AcbNativeAdPrimaryView;
 import com.acb.nativeads.AcbNativeAdLoader;
-import com.acb.nativeads.AcbNativeAdManager;
 import com.ihs.app.analytics.HSAnalytics;
 import com.ihs.app.framework.HSApplication;
 import com.ihs.app.framework.activity.HSActivity;
@@ -407,7 +406,6 @@ public class ChargingScreenActivity extends HSActivity {
 
         startDisplayTime = System.currentTimeMillis();
         ChargeNotifyManager.getInstance().setIsChargingActivityAlive(true);
-        AcbNativeAdManager.startManualPreLoad(HSChargingScreenManager.getInstance().getNaitveAdsPlacementName(), this);
 
         PowerManager powerManager = (PowerManager) getSystemService(Context.POWER_SERVICE);
         if (powerManager.isScreenOn()) {
@@ -454,9 +452,6 @@ public class ChargingScreenActivity extends HSActivity {
         HSLog.d("chargingtest onStop");
 
         bubbleView.stop();
-
-        AcbNativeAdManager.stopManualPreLoad(HSChargingScreenManager.getInstance().getNaitveAdsPlacementName(), this);
-
         removeAdView();
     }
 
