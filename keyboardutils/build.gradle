@@ -23,12 +23,19 @@ android {
         abortOnError false
     }
 }
+def adsCommonVersion="4.0.3.beta04"
+def nativeAdsVersion="4.0.1.beta03"
 
 dependencies {
+    compile getIHandyDependency("com.ihandy.nativeads:libNativeAds",nativeAdsVersion)
+    compile getIHandyDependency("com.ihandy.adscommon:libAdAdapter",adsCommonVersion)
+    compile getIHandyDependency("com.ihandy.adscommon:libAdsLoadController",adsCommonVersion)
+
+
     compile(name: 'ihs/libAppFramework/libAppFramework', ext: 'jar')
-    compile(name: 'ihs/libNativeAds/libNativeAds', ext: 'aar')
-    compile(name: 'ihs/libAdsCommon/libAdAdapter', ext: 'aar')
-    compile(name: 'ihs/libAdsCommon/libAdsLoadController', ext: 'aar')
+//    compile(name: 'ihs/libNativeAds/libNativeAds', ext: 'aar')
+//    compile(name: 'ihs/libAdsCommon/libAdAdapter', ext: 'aar')
+//    compile(name: 'ihs/libAdsCommon/libAdsLoadController', ext: 'aar')
     compile(name: 'ihs/libCommon/libCommon', ext: 'aar')
     compile fileTree(dir: 'libs', include: ['*.jar'])
 
