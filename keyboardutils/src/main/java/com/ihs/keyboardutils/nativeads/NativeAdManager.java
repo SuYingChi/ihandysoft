@@ -1,20 +1,15 @@
 package com.ihs.keyboardutils.nativeads;
 
 import android.content.Context;
-import android.os.Handler;
-import android.os.Looper;
 import android.support.v4.util.ArrayMap;
 
 import com.acb.adadapter.AcbNativeAd;
 import com.acb.nativeads.AcbNativeAdLoader;
+import com.ihs.app.framework.HSApplication;
 import com.ihs.commons.utils.HSError;
 import com.ihs.commons.utils.HSLog;
 
 import java.util.List;
-
-import static android.R.id.list;
-import static android.media.CamcorderProfile.get;
-import static com.acb.nativeads.AcbNativeAdLoader.fetch;
 
 public class NativeAdManager {
     private static NativeAdManager nativeAdManager;
@@ -43,6 +38,10 @@ public class NativeAdManager {
         getNativeAdProxy(placementName).markAsFinished();
     }
 
+    public static void preloadGivenPlacementAd(String placementName) {
+        getInstance().loadNativeAd(HSApplication.getContext(), placementName, null);
+    }
+
     void loadNativeAd(Context context, String placementName, AdLoadListener listener) {
         getNativeAdProxy(placementName).loadNativeAd(context, listener);
     }
@@ -62,15 +61,25 @@ public class NativeAdManager {
     }
 
     public static final class NativeAdProxy {
-        /** 广告位名字 **/
+        /**
+         * 广告位名字
+         **/
         private String placementName;
-        /** 广告位对应的Loader **/
+        /**
+         * 广告位对应的Loader
+         **/
         private AcbNativeAdLoader loader;
-        /** 广告位对应的广告 **/
+        /**
+         * 广告位对应的广告
+         **/
         private AcbNativeAd cachedNativeAd;
-        /** 当前广告实际展示的时间 **/
+        /**
+         * 当前广告实际展示的时间
+         **/
         private long cachedNativeAdShowedTime;
-        /** 显示足够长时间或者已经被点击 **/
+        /**
+         * 显示足够长时间或者已经被点击
+         **/
         private boolean displayFinished;
 
         NativeAdProxy(String placementName) {
@@ -150,7 +159,9 @@ public class NativeAdManager {
 
                     loader = null;
 
-                    adLoadListener.onAdLoaded(cachedNativeAd, NativeAdConfig.getNativeAdFrequency());
+                    if (adLoadListener != null) {
+                        adLoadListener.onAdLoaded(cachedNativeAd, NativeAdConfig.getNativeAdFrequency());
+                    }
                 }
 
                 @Override
