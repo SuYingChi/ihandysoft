@@ -38,7 +38,7 @@ public class NativeAdManager {
         getNativeAdProxy(placementName).markAsFinished();
     }
 
-    public static void preloadGivenPlacementAd(String placementName) {
+    public static void preloadAd(String placementName) {
         getInstance().loadNativeAd(HSApplication.getContext(), placementName, null);
     }
 
