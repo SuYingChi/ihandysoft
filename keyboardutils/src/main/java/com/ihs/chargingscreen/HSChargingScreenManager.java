@@ -17,6 +17,9 @@ import com.ihs.commons.utils.HSLog;
 
 import static com.ihs.charging.HSChargingManager.HSChargingState.STATE_CHARGING_FULL;
 import static com.ihs.charging.HSChargingManager.HSChargingState.STATE_DISCHARGING;
+import static com.ihs.chargingscreen.utils.ChargingPrefsUtil.FULL_CHARGED_MAX_TIME;
+import static com.ihs.chargingscreen.utils.ChargingPrefsUtil.PLUG_MAX_TIME;
+import static com.ihs.chargingscreen.utils.ChargingPrefsUtil.UNPLUG_MAX_TIME;
 import static com.ihs.chargingscreen.utils.ChargingPrefsUtil.USER_ENABLED_CHARGING;
 
 /**
@@ -89,25 +92,16 @@ public class HSChargingScreenManager {
 
                 if (!HSChargingScreenManager.getInstance().isChargingModuleOpened() && !ChargingPrefsUtil.getInstance().getSpHelper().contains(USER_ENABLED_CHARGING)) {
                     //功能未开启时插电 并且5.0以下
-                    if ((preChargingState == STATE_DISCHARGING && getChargingState() > 0) ||
-                            (getPreChargingState(preChargingState) > 0 && curChargingState == STATE_DISCHARGING)) {
-
-                        ChargingGARecorder.getInstance().chargingEnableNotificationShowed();
-                        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.LOLLIPOP) {
-                            ChargeNotifyManager.getInstance().pendingToShow(ChargeNotifyManager.PUSH_ENABLE_WHEN_PLUG);
-                            HSGlobalNotificationCenter.sendNotificationOnMainThread(Constants.EVENT_CHARGING_SHOW_PUSH);
-                        }
-                        HSGlobalNotificationCenter.sendNotificationOnMainThread(Constants.EVENT_SYSTEM_BATTERY_CHARGING_STATE_CHANGED);
+                    if (canShowPlugNotification(preChargingState)) {
+                        showChargingStateChangedNotification(ChargeNotifyManager.PUSH_ENABLE_WHEN_PLUG);
                     }
 
-                    if (preChargingState != STATE_CHARGING_FULL && curChargingState == STATE_CHARGING_FULL) {
+                    if (canShowUnplugNotification(preChargingState, curChargingState)) {
+                        showChargingStateChangedNotification(ChargeNotifyManager.PUSH_ENABLE_WHEN_PLUG);
+                    }
 
-                        ChargingGARecorder.getInstance().chargingEnableNotificationShowed();
-                        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.LOLLIPOP) {
-                            ChargeNotifyManager.getInstance().pendingToShow(ChargeNotifyManager.PUSH_ENABLE_WHEN_FULL_CHARGE);
-                            HSGlobalNotificationCenter.sendNotificationOnMainThread(Constants.EVENT_CHARGING_SHOW_PUSH);
-                        }
-                        HSGlobalNotificationCenter.sendNotificationOnMainThread(Constants.EVENT_SYSTEM_BATTERY_CHARGING_STATE_CHANGED);
+                    if (canShowFullChargNotification(preChargingState, curChargingState)) {
+                        showChargingStateChangedNotification(ChargeNotifyManager.PUSH_ENABLE_WHEN_FULL_CHARGE);
                     }
 
                     return;
@@ -159,6 +153,31 @@ public class HSChargingScreenManager {
 
 //                HSGlobalNotificationCenter.sendNotificationOnMainThread(Constants.EVENT_CHARGING_SHOW_PUSH);
 //                HSGlobalNotificationCenter.sendNotificationOnMainThread(Constants.EVENT_SYSTEM_BATTERY_CHARGING_STATE_CHANGED);
+            }
+
+            private boolean canShowFullChargNotification(HSChargingState preChargingState, HSChargingState curChargingState) {
+                return preChargingState != STATE_CHARGING_FULL && curChargingState == STATE_CHARGING_FULL
+                        && ChargingPrefsUtil.getInstance().isChagringNotifyMaxAppearTimesAcheived(FULL_CHARGED_MAX_TIME);
+            }
+
+            private void showChargingStateChangedNotification(int pushEnableWhenPlug) {
+                ChargingGARecorder.getInstance().chargingEnableNotificationShowed();
+                if (Build.VERSION.SDK_INT < Build.VERSION_CODES.LOLLIPOP) {
+                    ChargeNotifyManager.getInstance().pendingToShow(pushEnableWhenPlug);
+                    HSGlobalNotificationCenter.sendNotificationOnMainThread(Constants.EVENT_CHARGING_SHOW_PUSH);
+                }
+                HSGlobalNotificationCenter.sendNotificationOnMainThread(Constants.EVENT_SYSTEM_BATTERY_CHARGING_STATE_CHANGED);
+            }
+
+            private boolean canShowUnplugNotification(HSChargingState preChargingState, HSChargingState curChargingState) {
+                return getPreChargingState(preChargingState) > 0 && curChargingState == STATE_DISCHARGING
+                        && ChargingPrefsUtil.getInstance().isChagringNotifyMaxAppearTimesAcheived(UNPLUG_MAX_TIME);
+            }
+
+            private boolean canShowPlugNotification(HSChargingState preChargingState) {
+                return preChargingState == STATE_DISCHARGING && getChargingState() > 0
+                        && ChargingPrefsUtil.getInstance().isChagringNotifyMaxAppearTimesAcheived(PLUG_MAX_TIME);
+
             }
 
             @Override

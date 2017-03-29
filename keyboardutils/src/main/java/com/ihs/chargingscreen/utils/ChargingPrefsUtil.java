@@ -9,6 +9,10 @@ import com.ihs.commons.utils.HSPreferenceHelper;
  * Created by zhixiangxiao on 5/6/16.
  */
 public class ChargingPrefsUtil {
+    public static final String PLUG_MAX_TIME = "plug_max_time";
+    public static final String UNPLUG_MAX_TIME = "unplug_max_time";
+    public static final String FULL_CHARGED_MAX_TIME = "full_charged_max_time";
+    private static final int CHARGING_STATE_MAX_APPEAR_TIMES = 3;
 
     private static final String PREFS_FILE_NAME = "chargingsp";
 
@@ -19,6 +23,7 @@ public class ChargingPrefsUtil {
     public static final String USER_ENABLED_CHARGING = "user_enabled_charging";
     private static final String
             SHOULD_USE_PLIST_SETTING = "should_use_plist_setting";
+
 
     public static ChargingPrefsUtil getInstance() {
         if (instance == null) {
@@ -68,6 +73,13 @@ public class ChargingPrefsUtil {
         }
     }
 
+    private int chargingNotifyAppearTimes(String chargingType) {
+        return spHelper.getInt(chargingType, 0);
+    }
+
+    private void incrementNotifyAppearTimes(String chargingType) {
+        spHelper.putInt(chargingType, chargingNotifyAppearTimes(chargingType) + 1);
+    }
 
     public boolean isChargingEnableByUser() {
         return spHelper.getBoolean(USER_ENABLED_CHARGING, false);
@@ -82,4 +94,13 @@ public class ChargingPrefsUtil {
         return spHelper;
     }
 
+
+    public boolean isChagringNotifyMaxAppearTimesAcheived(String chargingType) {
+        if (chargingNotifyAppearTimes(chargingType) < CHARGING_STATE_MAX_APPEAR_TIMES) {
+            incrementNotifyAppearTimes(chargingType);
+            return true;
+        } else {
+            return false;
+        }
+    }
 }

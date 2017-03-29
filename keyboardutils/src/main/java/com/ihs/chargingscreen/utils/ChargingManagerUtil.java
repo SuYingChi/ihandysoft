@@ -156,4 +156,6 @@ public class ChargingManagerUtil {
         HSChargingScreenManager.getInstance().stop();
         ChargingPrefsUtil.getInstance().setChargingEnableByUser(false);
     }
+
+
 }
