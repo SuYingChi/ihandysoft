@@ -17,6 +17,9 @@ import com.ihs.commons.utils.HSLog;
 
 import static com.ihs.charging.HSChargingManager.HSChargingState.STATE_CHARGING_FULL;
 import static com.ihs.charging.HSChargingManager.HSChargingState.STATE_DISCHARGING;
+import static com.ihs.chargingscreen.utils.ChargingPrefsUtil.CHARGING_DEFAULT_ACTIVE;
+import static com.ihs.chargingscreen.utils.ChargingPrefsUtil.CHARGING_DEFAULT_DISABLED;
+import static com.ihs.chargingscreen.utils.ChargingPrefsUtil.CHARGING_MUTED;
 import static com.ihs.chargingscreen.utils.ChargingPrefsUtil.FULL_CHARGED_MAX_TIME;
 import static com.ihs.chargingscreen.utils.ChargingPrefsUtil.PLUG_MAX_TIME;
 import static com.ihs.chargingscreen.utils.ChargingPrefsUtil.UNPLUG_MAX_TIME;
@@ -238,15 +241,15 @@ public class HSChargingScreenManager {
 
     public static void registerChargingService() {
         HSApplication.getContext().startService(new Intent(HSApplication.getContext(), KeepAliveService.class));
-        int chargingEnabled = ChargingPrefsUtil.getInstance().isChargingEnabled();
+        int chargingEnabled = ChargingPrefsUtil.getInstance().getChargingEnableStates();
         switch (chargingEnabled) {
-            case 0:
+            case CHARGING_MUTED:
             default:
                 return;
-            case 1:
+            case CHARGING_DEFAULT_DISABLED:
                 HSChargingScreenManager.getInstance().stop(false);
                 break;
-            case 2:
+            case CHARGING_DEFAULT_ACTIVE:
                 HSChargingScreenManager.getInstance().start();
                 break;
         }

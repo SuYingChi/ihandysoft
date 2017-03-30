@@ -30,7 +30,7 @@ public class KeepAliveService extends Service {
         @Override
         public void onReceive(String notificationName, HSBundle bundle) {
             if (HSNotificationConstant.HS_CONFIG_CHANGED.equals(notificationName)) {
-                if (ChargingPrefsUtil.getInstance().isChargingEnabled() == 0) {
+                if (ChargingPrefsUtil.getInstance().getChargingEnableStates() == ChargingPrefsUtil.CHARGING_MUTED) {
                     HSChargingManager.getInstance().stop();
                 } else {
                     HSChargingManager.getInstance().start();

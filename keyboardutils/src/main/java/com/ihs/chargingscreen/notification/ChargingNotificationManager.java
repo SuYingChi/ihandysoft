@@ -80,8 +80,8 @@ public class ChargingNotificationManager {
             try {
                 notificationManager.notify(NOTIFICATION_ID, notification);
             } catch (Exception e) {
+                //某些机型会出现权限bug错误。
                 e.printStackTrace();
-                //谁知道会报什么奇怪的错。
             }
         }
     }

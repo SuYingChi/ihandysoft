@@ -14,6 +14,11 @@ public class ChargingPrefsUtil {
     public static final String FULL_CHARGED_MAX_TIME = "full_charged_max_time";
     private static final int CHARGING_STATE_MAX_APPEAR_TIMES = 3;
 
+    public static final int CHARGING_MUTED = 0;
+    public static final int CHARGING_DEFAULT_DISABLED = 1;
+    public static final int CHARGING_DEFAULT_ACTIVE = 2;
+
+
     private static final String PREFS_FILE_NAME = "chargingsp";
 
     private static final String PREFS_FULL_CHARGED_PUSH_SHOWED_COUNT = "PREFS_FULL_CHARGED_PUSH_SHOWED_COUNT";
@@ -47,21 +52,22 @@ public class ChargingPrefsUtil {
 
     /**
      * charging 是否已经被完全关闭
+     *
      * @return
      */
     public static boolean isChargingMuted() {
-        return HSConfig.optInteger(0, "Application", "ChargeLocker", "state") == 0;
+        return HSConfig.optInteger(CHARGING_MUTED, "Application", "ChargeLocker", "state") == CHARGING_MUTED;
     }
 
-    public int isChargingEnabled() {
-        int moduleStates = HSConfig.optInteger(0, "Application", "ChargeLocker", "state");
+    public int getChargingEnableStates() {
+        int moduleStates = HSConfig.optInteger(CHARGING_MUTED, "Application", "ChargeLocker", "state");
         switch (moduleStates) {
-            case 0:
-                return 0;
+            case CHARGING_MUTED:
+                return CHARGING_MUTED;
         }
         if (!spHelper.contains(SHOULD_USE_PLIST_SETTING)) {
             if (spHelper.contains(USER_ENABLED_CHARGING)) {
-                return spHelper.getBoolean(USER_ENABLED_CHARGING, true) ? 2 : 1;
+                return spHelper.getBoolean(USER_ENABLED_CHARGING, true) ? CHARGING_DEFAULT_ACTIVE : CHARGING_DEFAULT_DISABLED;
             } else {
                 return moduleStates;
             }
@@ -70,7 +76,7 @@ public class ChargingPrefsUtil {
         if (spHelper.getBoolean(SHOULD_USE_PLIST_SETTING, true)) {
             return moduleStates;
         } else {
-            return isChargingEnableByUser() ? 2 : 1;
+            return isChargingEnableByUser() ? CHARGING_DEFAULT_ACTIVE : CHARGING_DEFAULT_DISABLED;
         }
     }
 
