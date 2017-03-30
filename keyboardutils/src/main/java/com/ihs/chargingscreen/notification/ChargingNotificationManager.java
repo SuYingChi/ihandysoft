@@ -77,7 +77,12 @@ public class ChargingNotificationManager {
         if (!TextUtils.isEmpty(remoteViewsTitle)) {
             remoteViews.setTextViewText(R.id.txt_title, remoteViewsTitle);
             remoteViews.setTextViewText(R.id.txt_left_time_indicator, HSApplication.getContext().getResources().getString(R.string.enable_charging_detail));
-            notificationManager.notify(NOTIFICATION_ID, notification);
+            try {
+                notificationManager.notify(NOTIFICATION_ID, notification);
+            } catch (Exception e) {
+                e.printStackTrace();
+                //谁知道会报什么奇怪的错。
+            }
         }
     }
 

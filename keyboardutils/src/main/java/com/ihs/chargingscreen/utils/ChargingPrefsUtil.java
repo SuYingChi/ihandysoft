@@ -45,6 +45,14 @@ public class ChargingPrefsUtil {
         HSPreferenceHelper.create(HSApplication.getContext(), PREFS_FILE_NAME).putInt(PREFS_FULL_CHARGED_PUSH_SHOWED_COUNT, fullChargedPushShowedCount + 1);
     }
 
+    /**
+     * charging 是否已经被完全关闭
+     * @return
+     */
+    public static boolean isChargingMuted() {
+        return HSConfig.optInteger(0, "Application", "ChargeLocker", "state") == 0;
+    }
+
     public int isChargingEnabled() {
         int moduleStates = HSConfig.optInteger(0, "Application", "ChargeLocker", "state");
         switch (moduleStates) {
