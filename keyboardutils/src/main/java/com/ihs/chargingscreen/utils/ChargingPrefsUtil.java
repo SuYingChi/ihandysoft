@@ -45,19 +45,24 @@ public class ChargingPrefsUtil {
         HSPreferenceHelper.create(HSApplication.getContext(), PREFS_FILE_NAME).putInt(PREFS_FULL_CHARGED_PUSH_SHOWED_COUNT, fullChargedPushShowedCount + 1);
     }
 
-    public boolean isChargingEnabled() {
+    public int isChargingEnabled() {
+        int moduleStates = HSConfig.optInteger(0, "Application", "ChargeLocker", "state");
+        switch (moduleStates) {
+            case 0:
+                return 0;
+        }
         if (!spHelper.contains(SHOULD_USE_PLIST_SETTING)) {
             if (spHelper.contains(USER_ENABLED_CHARGING)) {
-                return spHelper.getBoolean(USER_ENABLED_CHARGING, true);
+                return spHelper.getBoolean(USER_ENABLED_CHARGING, true) ? 2 : 1;
             } else {
-                return HSConfig.optBoolean(false, "Application", "ChargeLocker", "enable");
+                return moduleStates;
             }
         }
 
         if (spHelper.getBoolean(SHOULD_USE_PLIST_SETTING, true)) {
-            return HSConfig.optBoolean(false, "Application", "ChargeLocker", "enable");
+            return moduleStates;
         } else {
-            return isChargingEnableByUser();
+            return isChargingEnableByUser() ? 2 : 1;
         }
     }
 

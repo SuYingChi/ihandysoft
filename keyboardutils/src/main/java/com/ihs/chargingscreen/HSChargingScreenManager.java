@@ -55,8 +55,6 @@ public class HSChargingScreenManager {
 
             registerChargingService();
 
-            HSChargingManager.getInstance().start();
-
             ChargeNotifyManager.getInstance().refreshChargingNotification();
 
         }
@@ -240,12 +238,19 @@ public class HSChargingScreenManager {
 
     public static void registerChargingService() {
         HSApplication.getContext().startService(new Intent(HSApplication.getContext(), KeepAliveService.class));
-
-        if (ChargingPrefsUtil.getInstance().isChargingEnabled()) {
-            HSChargingScreenManager.getInstance().start();
-        } else {
-            HSChargingScreenManager.getInstance().stop();
+        int chargingEnabled = ChargingPrefsUtil.getInstance().isChargingEnabled();
+        switch (chargingEnabled) {
+            case 0:
+            default:
+                return;
+            case 1:
+                HSChargingScreenManager.getInstance().stop(false);
+                break;
+            case 2:
+                HSChargingScreenManager.getInstance().start();
+                break;
         }
+        HSChargingManager.getInstance().start();
     }
 
 
