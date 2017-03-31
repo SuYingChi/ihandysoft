@@ -13,7 +13,6 @@ import android.view.WindowManager;
 import android.view.animation.Animation;
 import android.view.animation.ScaleAnimation;
 import android.widget.FrameLayout;
-import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.acb.adadapter.AcbAd;
@@ -482,5 +481,9 @@ public class NativeAdView extends FrameLayout {
     private void logGoogleAnalyticsEvent(String actionSuffix, Long value) {
         String screenName = HSApplication.getContext().getResources().getString(R.string.english_ime_name);
         HSAnalytics.logGoogleAnalyticsEvent(screenName, "APP", "NativeAd_" + nativeAdParams.getPlacementName() + "_" + actionSuffix, "", value, null, null);
+    }
+
+    public AcbNativeAdContainerView getNativeAdContainerView() {
+        return nativeAdContainerView;
     }
 }
