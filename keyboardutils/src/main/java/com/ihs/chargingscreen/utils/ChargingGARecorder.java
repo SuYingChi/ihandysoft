@@ -32,7 +32,7 @@ public class ChargingGARecorder {
     }
 
 
-    private static final String app_chargingLocker_enable = "app_chargingLocker_enable";//充电锁屏开启 - 每个用户只记一次
+    static final String app_chargingLocker_enable = "app_chargingLocker_enable";//充电锁屏开启 - 每个用户只记一次
     private static final String app_chargingLocker_show = "app_chargingLocker_show";//充电锁屏展示
     private static final String notification_chargingLocker_show = "notification_chargingLocker_show";//充电锁屏通知出现
     private static final String notification_chargingLocker_click = "notification_chargingLocker_click";//充电锁屏通知点击
