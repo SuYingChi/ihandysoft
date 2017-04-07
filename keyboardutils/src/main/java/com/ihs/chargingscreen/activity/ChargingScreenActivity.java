@@ -81,6 +81,8 @@ import static com.ihs.chargingscreen.HSChargingScreenManager.getChargingState;
  */
 public class ChargingScreenActivity extends HSActivity {
 
+    public static final String CHARGING_ACTIVITY_STARTED = "charging_activity_started";
+
     private static final int EVENT_CIRCULAR = 100;
     private static final int EVENT_START_SCROLL_UP_ANIMATOR = 101;
 
@@ -204,8 +206,10 @@ public class ChargingScreenActivity extends HSActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        HSGlobalNotificationCenter.sendNotification(CHARGING_ACTIVITY_STARTED);
 
         requestWindowFeature(Window.FEATURE_NO_TITLE);
+
         this.getWindow().setFlags(LayoutParams.FLAG_FULLSCREEN, LayoutParams.FLAG_FULLSCREEN);
 
         super.onCreate(savedInstanceState);
