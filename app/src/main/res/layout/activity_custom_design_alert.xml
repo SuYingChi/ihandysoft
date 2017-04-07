@@ -12,26 +12,27 @@
     tools:context="com.ihs.keyboardutilslib.MainActivity">
 
     <Button
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:onClick="startAds"
-        android:text="Native Ad Demo" />
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:onClick="showOneButtonAlert"
+    android:text="Show one button alert" />
 
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:onClick="startGifDemoAct"
-        android:text="startGifDemoAct" />
+        android:onClick="showTwoButtonAlert"
+        android:text="Show two button alert" />
 
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:onClick="startReadConfigSample"
-        android:text="Read Config Sample" />
+        android:onClick="showOneButtonAlertWithoutImage"
+        android:text="Show one button alert(No image)" />
 
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:onClick="startCustomDesignAlertDemo"
-        android:text="Custom Design Alert Demo" />
+        android:onClick="showTwoButtonAlertWithoutImage"
+        android:text="Show two button alert(No image)" />
+
 </LinearLayout>

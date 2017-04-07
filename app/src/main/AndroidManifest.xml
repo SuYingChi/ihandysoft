@@ -30,6 +30,7 @@
         </activity>
         <activity android:name=".gif.GifViewDemoActivity" />
         <activity android:name=".adactivities.MainActivity" />
+        <activity android:name=".alerts.CustomDesignAlertActivity"/>
 
         <meta-data
             android:name="com.facebook.sdk.ApplicationId"
