@@ -8,10 +8,6 @@ import java.util.Map;
 
 public class NativeAdConfig {
 
-    public static int getNativeAdFrequency() {
-        return HSConfig.optInteger(0, "Application", "NativeAds", "FetchAdInterval");
-    }
-
     static List getDisabledIconPools() {
         return HSConfig.getList("Application", "NativeAds", "DisabledIconPools");
     }

@@ -78,6 +78,10 @@ public class NativeAdManager {
          **/
         private long cachedNativeAdShowedTime;
         /**
+         * 刷新时间频率，单位毫秒
+         **/
+        private long refreshFrequency;
+        /**
          * 显示足够长时间或者已经被点击
          **/
         private boolean displayFinished;
@@ -92,9 +96,13 @@ public class NativeAdManager {
 
         void setCachedNativeAdShowedTime(long cachedNativeAdShowedTime) {
             this.cachedNativeAdShowedTime = cachedNativeAdShowedTime;
-            if (cachedNativeAdShowedTime > NativeAdConfig.getNativeAdFrequency()) {
+            if (cachedNativeAdShowedTime > refreshFrequency) {
                 markAsFinished();
             }
+        }
+
+        public void setRefreshFrequency(long refreshFrequency) {
+            this.refreshFrequency = refreshFrequency;
         }
 
         private void log(String functionName, String key, String value) {
@@ -134,7 +142,7 @@ public class NativeAdManager {
             final AdLoadListener adLoadListener = listener;
             if (cachedNativeAd != null && !cachedNativeAd.isExpired() && !displayFinished) {
                 if (adLoadListener != null) {
-                    adLoadListener.onAdLoaded(cachedNativeAd, NativeAdConfig.getNativeAdFrequency() - getCachedNativeAdShowedTime());
+                    adLoadListener.onAdLoaded(cachedNativeAd, refreshFrequency - getCachedNativeAdShowedTime());
                 }
                 return;
             }
@@ -160,7 +168,7 @@ public class NativeAdManager {
                     loader = null;
 
                     if (adLoadListener != null) {
-                        adLoadListener.onAdLoaded(cachedNativeAd, NativeAdConfig.getNativeAdFrequency());
+                        adLoadListener.onAdLoaded(cachedNativeAd, refreshFrequency);
                     }
                 }
 

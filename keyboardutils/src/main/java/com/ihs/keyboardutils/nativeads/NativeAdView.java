@@ -368,6 +368,7 @@ public class NativeAdView extends FrameLayout {
 
         isRefreshing = true;
 
+        NativeAdManager.getInstance().getNativeAdProxy(nativeAdParams.getPlacementName()).setRefreshFrequency(nativeAdParams.getRefreshFrequency());
         NativeAdManager.getInstance().loadNativeAd(getContext(), nativeAdParams.getPlacementName(), new NativeAdManager.AdLoadListener() {
             @Override
             public void onAdLoaded(final AcbNativeAd ad, final long remainingAdDisplayDuration) {
