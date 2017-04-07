@@ -3,11 +3,11 @@ package com.ihs.keyboardutils.nativeads;
 import android.widget.ImageView;
 
 public class NativeAdParams {
-    private final static long FRESH_FREQUENCY_DEFAULT = 15 * 1000;//mill
+    private final static long FRESH_INTERVAL_DEFAULT = 15 * 1000;//mill
 
 
     private String placementName;
-    private long refreshFrequency = FRESH_FREQUENCY_DEFAULT;
+    private long refreshInterval = FRESH_INTERVAL_DEFAULT;
     private int primaryWidth;
     private float primaryHWRatio;
     private ImageView.ScaleType scaleType = ImageView.ScaleType.FIT_XY;
@@ -38,12 +38,12 @@ public class NativeAdParams {
         this.scaleType = scaleType;
     }
 
-    public void setRefreshFrequency(long refreshFrequency){
-        this.refreshFrequency = refreshFrequency;
+    public void setRefreshInterval(long interval){
+        this.refreshInterval = interval;
     }
 
-    public long getRefreshFrequency() {
-        return refreshFrequency;
+    public long getRefreshInterval() {
+        return refreshInterval;
     }
 
     public ImageView.ScaleType getScaleType() {

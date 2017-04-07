@@ -38,6 +38,10 @@ public class NativeAdManager {
         getNativeAdProxy(placementName).markAsFinished();
     }
 
+    void setRereshInterval(String placementName,long interval) {
+        getNativeAdProxy(placementName).setRefreshInterval(interval);
+    }
+
     public static void preloadAd(String placementName) {
         getInstance().loadNativeAd(HSApplication.getContext(), placementName, null);
     }
@@ -80,7 +84,7 @@ public class NativeAdManager {
         /**
          * 刷新时间频率，单位毫秒
          **/
-        private long refreshFrequency;
+        private long refreshInterval;
         /**
          * 显示足够长时间或者已经被点击
          **/
@@ -96,13 +100,13 @@ public class NativeAdManager {
 
         void setCachedNativeAdShowedTime(long cachedNativeAdShowedTime) {
             this.cachedNativeAdShowedTime = cachedNativeAdShowedTime;
-            if (cachedNativeAdShowedTime > refreshFrequency) {
+            if (cachedNativeAdShowedTime > refreshInterval) {
                 markAsFinished();
             }
         }
 
-        public void setRefreshFrequency(long refreshFrequency) {
-            this.refreshFrequency = refreshFrequency;
+        public void setRefreshInterval(long refreshInterval) {
+            this.refreshInterval = refreshInterval;
         }
 
         private void log(String functionName, String key, String value) {
@@ -142,7 +146,7 @@ public class NativeAdManager {
             final AdLoadListener adLoadListener = listener;
             if (cachedNativeAd != null && !cachedNativeAd.isExpired() && !displayFinished) {
                 if (adLoadListener != null) {
-                    adLoadListener.onAdLoaded(cachedNativeAd, refreshFrequency - getCachedNativeAdShowedTime());
+                    adLoadListener.onAdLoaded(cachedNativeAd, refreshInterval - getCachedNativeAdShowedTime());
                 }
                 return;
             }
@@ -168,7 +172,7 @@ public class NativeAdManager {
                     loader = null;
 
                     if (adLoadListener != null) {
-                        adLoadListener.onAdLoaded(cachedNativeAd, refreshFrequency);
+                        adLoadListener.onAdLoaded(cachedNativeAd, refreshInterval);
                     }
                 }
 
