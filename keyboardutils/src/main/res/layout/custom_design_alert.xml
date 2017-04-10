@@ -22,7 +22,8 @@
             android:visibility="gone"/>
 
         <LinearLayout
-            style="@style/DesignDialogFrame">
+            style="@style/DesignDialogFrame"
+            android:background="@android:color/white">
 
             <LinearLayout
                 style="@style/DesignDialogContentArea">
