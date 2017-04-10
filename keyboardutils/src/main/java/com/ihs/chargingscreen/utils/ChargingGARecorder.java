@@ -43,47 +43,47 @@ public class ChargingGARecorder {
     public void chargingEnableOnce() {
         if (!ChargingPrefsUtil.getInstance().getSpHelper().contains(app_chargingLocker_enable)) {
             ChargingPrefsUtil.getInstance().getSpHelper().putBoolean(app_chargingLocker_enable, true);
-            gaLogger(app_chargingLocker_enable);
+            HSAnalytics.logEvent(app_chargingLocker_enable);
         }
     }
 
     public void chargingScreenShowed() {
-        gaLogger(app_chargingLocker_show);
+        HSAnalytics.logEvent(app_chargingLocker_show);
     }
 
     public void chargingEnableNotificationShowed() {
-        gaLogger(notification_chargingLocker_show);
+        HSAnalytics.logEvent(notification_chargingLocker_show);
     }
 
     public void chargingEnableNotificationClicked() {
-        gaLogger(notification_chargingLocker_click);
+        HSAnalytics.logEvent(notification_chargingLocker_click);
     }
 
     public void chargingDisableTouchedOnce() {
         if (!ChargingPrefsUtil.getInstance().getSpHelper().contains(app_chargingLocker_disable_clicked)) {
             ChargingPrefsUtil.getInstance().getSpHelper().putBoolean(app_chargingLocker_disable_clicked, true);
-            gaLogger(app_chargingLocker_disable_clicked);
+            HSAnalytics.logEvent(app_chargingLocker_disable_clicked);
         }
     }
 
     public void chargingDisableConfirmedOnce() {
         if (!ChargingPrefsUtil.getInstance().getSpHelper().contains(app_chargingLocker_disable)) {
             ChargingPrefsUtil.getInstance().getSpHelper().putBoolean(app_chargingLocker_disable, true);
-            gaLogger(app_chargingLocker_disable);
+            HSAnalytics.logEvent(app_chargingLocker_disable);
         }
     }
 
 
     public void nativeAdLoad() {
-        gaLogger(NativeAd_Charging_Load);
+        HSAnalytics.logEvent(NativeAd_Charging_Load);
     }
 
     public void nativeAdShow() {
-        gaLogger(NativeAd_Charging_Show);
+        HSAnalytics.logEvent(NativeAd_Charging_Show);
     }
 
     public void nativeAdClick() {
-        gaLogger(NativeAd_Charging_Click);
+        HSAnalytics.logEvent(NativeAd_Charging_Click);
     }
 
 

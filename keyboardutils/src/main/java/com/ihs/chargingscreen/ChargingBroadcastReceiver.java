@@ -4,6 +4,7 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 
+import com.ihs.chargingscreen.utils.ChargingGARecorder;
 import com.ihs.chargingscreen.utils.ChargingManagerUtil;
 
 import static com.ihs.chargingscreen.KeepAliveService.ACTION_START_CHARGING_ACTIVITY;
@@ -18,6 +19,7 @@ public class ChargingBroadcastReceiver extends BroadcastReceiver {
     public void onReceive(Context context, Intent intent) {
         if (intent.getAction().equals(ACTION_START_CHARGING_ACTIVITY)) {
             ChargingManagerUtil.enableCharging(true);
+            ChargingGARecorder.getInstance().chargingEnableNotificationClicked();
         } else if (!isServiceRunning) {
             context.startService(new Intent(context, KeepAliveService.class));
         }
