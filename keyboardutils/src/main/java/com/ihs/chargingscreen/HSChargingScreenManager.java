@@ -10,7 +10,7 @@ import com.ihs.charging.HSChargingManager.HSChargingState;
 import com.ihs.charging.HSChargingManager.IChargingListener;
 import com.ihs.chargingscreen.activity.ChargingScreenActivity;
 import com.ihs.chargingscreen.notification.ChargeNotifyManager;
-import com.ihs.chargingscreen.utils.ChargingGARecorder;
+import com.ihs.chargingscreen.utils.ChargingAnalytics;
 import com.ihs.chargingscreen.utils.ChargingPrefsUtil;
 import com.ihs.commons.notificationcenter.HSGlobalNotificationCenter;
 import com.ihs.commons.utils.HSLog;
@@ -162,7 +162,7 @@ public class HSChargingScreenManager {
             }
 
             private void showChargingStateChangedNotification(int pushEnableWhenPlug) {
-                ChargingGARecorder.getInstance().chargingEnableNotificationShowed();
+                ChargingAnalytics.getInstance().chargingEnableNotificationShowed();
                 if (Build.VERSION.SDK_INT < Build.VERSION_CODES.LOLLIPOP) {
                     ChargeNotifyManager.getInstance().pendingToShow(pushEnableWhenPlug);
                     HSGlobalNotificationCenter.sendNotificationOnMainThread(Constants.EVENT_CHARGING_SHOW_PUSH);

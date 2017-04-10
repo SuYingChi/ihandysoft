@@ -13,7 +13,7 @@ import android.view.View;
 import android.widget.TextView;
 
 import com.ihs.chargingscreen.ui.RippleDrawableUtils;
-import com.ihs.chargingscreen.utils.ChargingGARecorder;
+import com.ihs.chargingscreen.utils.ChargingAnalytics;
 import com.ihs.chargingscreen.utils.ChargingManagerUtil;
 import com.ihs.keyboardutils.R;
 
@@ -67,7 +67,7 @@ public class ChargingModuleDisabledPush extends BasePush {
             @Override
             public void onClick(View v) {
                 ChargingManagerUtil.enableCharging(true);
-                ChargingGARecorder.getInstance().chargingEnableNotificationClicked();
+                ChargingAnalytics.getInstance().chargingEnableNotificationClicked();
             }
         });
         updatePush();
@@ -76,7 +76,7 @@ public class ChargingModuleDisabledPush extends BasePush {
             @Override
             public void onClick(View v) {
                 ChargingManagerUtil.enableCharging(true);
-                ChargingGARecorder.getInstance().chargingEnableNotificationClicked();
+                ChargingAnalytics.getInstance().chargingEnableNotificationClicked();
             }
         });
 

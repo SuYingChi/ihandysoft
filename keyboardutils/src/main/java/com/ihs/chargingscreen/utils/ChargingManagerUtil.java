@@ -136,7 +136,7 @@ public class ChargingManagerUtil {
 
 
     public static void enableCharging(boolean startChagringActivity) {
-        ChargingGARecorder.getInstance().chargingEnableOnce();
+        ChargingAnalytics.getInstance().chargingEnableOnce();
         ChargingPrefsUtil.getInstance().setChargingEnableByUser(true);
         HSChargingScreenManager.getInstance().start();
 
@@ -154,7 +154,7 @@ public class ChargingManagerUtil {
     public static void disableCharging() {
         HSChargingScreenManager.getInstance().stop();
         ChargingPrefsUtil.getInstance().setChargingEnableByUser(false);
-        ChargingGARecorder.getInstance().chargingDisableConfirmedOnce();
+        ChargingAnalytics.getInstance().chargingDisableConfirmedOnce();
     }
 
 

@@ -5,7 +5,7 @@ import com.ihs.app.framework.HSSessionMgr;
 import com.ihs.commons.config.HSConfig;
 import com.ihs.commons.utils.HSPreferenceHelper;
 
-import static com.ihs.chargingscreen.utils.ChargingGARecorder.app_chargingLocker_enable;
+import static com.ihs.chargingscreen.utils.ChargingAnalytics.app_chargingLocker_enable;
 
 /**
  * Created by zhixiangxiao on 5/6/16.

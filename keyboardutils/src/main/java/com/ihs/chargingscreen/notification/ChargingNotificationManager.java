@@ -17,7 +17,7 @@ import com.ihs.chargingscreen.ChargingBroadcastReceiver;
 import com.ihs.chargingscreen.Constants;
 import com.ihs.chargingscreen.HSChargingScreenManager;
 import com.ihs.chargingscreen.KeepAliveService;
-import com.ihs.chargingscreen.utils.ChargingGARecorder;
+import com.ihs.chargingscreen.utils.ChargingAnalytics;
 import com.ihs.commons.notificationcenter.HSGlobalNotificationCenter;
 import com.ihs.commons.notificationcenter.INotificationObserver;
 import com.ihs.commons.utils.HSBundle;
@@ -80,7 +80,7 @@ public class ChargingNotificationManager {
             remoteViews.setTextViewText(R.id.txt_left_time_indicator, HSApplication.getContext().getResources().getString(R.string.enable_charging_detail));
             try {
                 notificationManager.notify(NOTIFICATION_ID, notification);
-                ChargingGARecorder.getInstance().chargingEnableNotificationShowed();
+                ChargingAnalytics.getInstance().chargingEnableNotificationShowed();
             } catch (Exception e) {
                 //某些机型会出现权限bug错误。
                 e.printStackTrace();

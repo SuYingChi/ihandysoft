@@ -5,28 +5,24 @@ import android.content.Context;
 import com.ihs.app.analytics.HSAnalytics;
 import com.ihs.app.framework.HSApplication;
 
-/**
- * Created by Arthur on 17/3/2.
- */
+public class ChargingAnalytics {
 
-public class ChargingGARecorder {
-
-    private static ChargingGARecorder instance = null;
+    private static ChargingAnalytics instance = null;
     private static Context context = HSApplication.getContext();
 
     private String NativeAd_Charging_Load;
     private String NativeAd_Charging_Show;
     private String NativeAd_Charging_Click;
 
-    private ChargingGARecorder() {
+    private ChargingAnalytics() {
         NativeAd_Charging_Load = "NativeAd_" + context.getPackageName() + "_Charging_Load";
         NativeAd_Charging_Show = "NativeAd_" + context.getPackageName() + "_Charging_Show";
         NativeAd_Charging_Click = "NativeAd_" + context.getPackageName() + "_Charging_Click";
     }
 
-    public static synchronized ChargingGARecorder getInstance() {
+    public static synchronized ChargingAnalytics getInstance() {
         if (instance == null) {
-            instance = new ChargingGARecorder();
+            instance = new ChargingAnalytics();
         }
         return instance;
     }
@@ -84,10 +80,5 @@ public class ChargingGARecorder {
 
     public void nativeAdClick() {
         HSAnalytics.logEvent(NativeAd_Charging_Click);
-    }
-
-
-    private void gaLogger(String action) {
-        HSAnalytics.logGoogleAnalyticsEvent("charging", "charging", action, "", null, null, null);
     }
 }
