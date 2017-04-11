@@ -24,9 +24,9 @@ android {
     }
 }
 dependencies {
-    compile getIHandyDependency("com.ihandy.nativeads:libNativeAds", "${rootProject.ext.nativeAdsVersion}")
+    compile "com.ihandy.nativeads:libNativeAds.${rootProject.ext.nativeAdsVersion}"
 
-    compile getIHandyDependency("com.ihandy.appframework:libAppframework", "${rootProject.ext.frameworkVersion}")
+    compile "com.ihandy.appframework:libAppframework.${rootProject.ext.frameworkVersion}"
     compile(name: 'ihs/libCommon/libCommon', ext: 'aar')
     compile fileTree(dir: 'libs', include: ['*.jar'])
 
