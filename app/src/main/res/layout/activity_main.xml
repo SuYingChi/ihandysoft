@@ -34,4 +34,9 @@
         android:layout_height="wrap_content"
         android:onClick="startCustomDesignAlertDemo"
         android:text="Custom Design Alert Demo" />
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:onClick="showCustomShare"
+        android:text="showCustomShare" />
 </LinearLayout>

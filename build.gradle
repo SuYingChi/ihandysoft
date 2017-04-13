@@ -24,7 +24,7 @@ allprojects {
         interstitialAdsVersion = "gm:4.0.1.gm"
         nativeAdsVersion = "gm:4.0.1.gm"
         supportVersion = "25.2.0"
-        facebookSdkVersion = "4.20.0"
+        facebookSdkVersion = "4.8.2"
         gmsVersion = "10.2.0"
     }
 

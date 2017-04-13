@@ -203,10 +203,12 @@ public class NativeAdView extends FrameLayout {
 
         if (nativeAdContainerView.getAdPrimaryView() != null) {
             nativeAdContainerView.getAdPrimaryView().getNormalImageView().setScaleType(nativeAdParams.getScaleType());
+            ViewGroup.LayoutParams adPrimaryViewLayoutParams = nativeAdContainerView.getAdPrimaryView().getLayoutParams();
             if (nativeAdParams.getPrimaryHWRatio() == 0) {
-                nativeAdContainerView.getAdPrimaryView().setLayoutParams(new FrameLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
+                adPrimaryViewLayoutParams.width = adPrimaryViewLayoutParams.height = ViewGroup.LayoutParams.MATCH_PARENT;
             } else {
-                nativeAdContainerView.getAdPrimaryView().setLayoutParams(new FrameLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, (int) (nativeAdParams.getPrimaryWidth() / nativeAdParams.getPrimaryHWRatio())));
+                adPrimaryViewLayoutParams.width = ViewGroup.LayoutParams.MATCH_PARENT;
+                adPrimaryViewLayoutParams.height = (int) (nativeAdParams.getPrimaryWidth() / nativeAdParams.getPrimaryHWRatio());
             }
         }
 

@@ -1,10 +1,12 @@
 package com.ihs.keyboardutilslib;
 
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.view.View;
 
 import com.ihs.app.framework.activity.HSActivity;
+import com.ihs.keyboardutils.utils.CustomShareUtils;
 import com.ihs.keyboardutilslib.alerts.CustomDesignAlertActivity;
 import com.ihs.keyboardutilslib.configfile.ReadConfigSampleActivity;
 import com.ihs.keyboardutilslib.gif.GifViewDemoActivity;
@@ -32,6 +34,11 @@ public class MainActivity extends HSActivity {
 
     public void startCustomDesignAlertDemo(View view) {
         startActivity(new Intent(this, CustomDesignAlertActivity.class));
+    }
+
+    public void showCustomShare(View view){
+        Uri uri = Uri.parse("file:///storage/emulated/0/DCIM/Camera/IMG_20170412_014232854.jpg");
+        CustomShareUtils.shareImage(null,uri);
     }
 
     @Override

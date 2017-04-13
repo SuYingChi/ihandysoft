@@ -1,5 +1,5 @@
 <resources>
-
+    <dimen name="corner_radius">2dp</dimen>
     <!-- charging-->
     <dimen name="charging_module_current_time_text_size">24sp</dimen>
     <dimen name="charging_module_data_text_size">12sp</dimen>
@@ -8,4 +8,6 @@
 
     <dimen name="charging_left_time_layout_margin_bottom">20dp</dimen>
     <dimen name="white_dots_margins">4dp</dimen>
+
+    <dimen name="share_item_column_space">16dp</dimen>
 </resources>
