@@ -6,7 +6,7 @@
 
     <ProgressBar
         android:id="@+id/progress_bar"
-        style="@style/Base.Widget.AppCompat.ProgressBar"
+        style="@style/AdProgressStyle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center" />

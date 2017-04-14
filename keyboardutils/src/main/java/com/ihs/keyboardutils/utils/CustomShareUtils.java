@@ -46,7 +46,7 @@ public class CustomShareUtils {
     private final static float SHARE_COLUMN_ITEM_COUNT_PORTRAIT = 4.5f;
     private final static float SHARE_COLUMN_ITEM_COUNT_LANDSCAPE = 7.5f;
 
-    public static void shareImage(final Activity activity, Uri uri) {
+    public static Dialog shareImage(final Activity activity, Uri uri ,String adPlaceName) {
         Resources resources = activity.getResources();
 
         Intent shareIntent = new Intent();
@@ -110,7 +110,7 @@ public class CustomShareUtils {
                 dismissDialog(activity, dialog);
             }
         });
-        nativeAdView.configParams(new NativeAdParams(activity.getString(R.string.ad_native_placement_custom_share), resources.getDisplayMetrics().widthPixels, 1.9f));
+        nativeAdView.configParams(new NativeAdParams(adPlaceName, resources.getDisplayMetrics().widthPixels, 1.9f));
 
         shareAdContainer.addView(nativeAdView);
 
@@ -121,6 +121,7 @@ public class CustomShareUtils {
             }
         });
         dialog.show();
+        return dialog;
     }
 
     private static List<ResolveInfo> getFilteredShareList(List<ResolveInfo> resolveInfoList) {
@@ -228,7 +229,7 @@ public class CustomShareUtils {
 
                     dismissDialog(context, dialog);
 
-                    HSAnalytics.logEvent("share_app_clicked", "appName", resolveInfo.loadLabel(HSApplication.getContext().getPackageManager()).toString());
+                    HSAnalytics.logEvent("share_app_clicked", "appName", resolveInfo.activityInfo.applicationInfo.loadLabel(HSApplication.getContext().getPackageManager()).toString());
                 }
             });
         }

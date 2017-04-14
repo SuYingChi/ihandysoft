@@ -38,7 +38,7 @@ public class MainActivity extends HSActivity {
 
     public void showCustomShare(View view){
         Uri uri = Uri.parse("file:///storage/emulated/0/DCIM/Camera/IMG_20170412_014232854.jpg");
-        CustomShareUtils.shareImage(this,uri);
+        CustomShareUtils.shareImage(this,uri,"Colorkey_A(NativeAds)CardAd");
     }
 
     @Override

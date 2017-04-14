@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <color name="transparent">#00000000</color>
+    <color name="ad_progress_color">#1E88E5</color>
     <color name="function_card_body_text_color">#99666666</color>
     <color name="notify_color_background">#ff212121</color>
     <color name="charging_green">#00c753</color>
