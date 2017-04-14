@@ -31,11 +31,10 @@ public class AdLoadingView extends RelativeLayout implements NativeAdView.OnAdLo
     public ProgressBar progressBar;
     private AdLoadingDialog dialog;
     public TextView tvApply;
+    private int delayAfterDownloadComplete;
 
     public interface OnAdBufferingListener {
         void onDismiss();
-
-        void onProgressComplete();
     }
 
     private String[] onLoadingText = {"Applying...", "Applying SuccessFully"};
@@ -115,23 +114,23 @@ public class AdLoadingView extends RelativeLayout implements NativeAdView.OnAdLo
      *
      * @param percent
      */
-    public void updateProgressPercent(int percent, int delayTimer, boolean fakeLoading) {
-        if (!fakeLoading) {
-            if (percent < 100) {
-                percent = percent - 5;
-                progressBar.setProgress(percent);
-            } else {
-                fakeLoadingProgress(94, 100, delayTimer);
-            }
-
+    public void updateProgressPercent(int percent) {
+        if (percent < 100) {
+            percent = percent - 5;
+            progressBar.setProgress(percent);
         } else {
-            fakeLoadingProgress(0, 100, delayTimer);
+            fakeLoadingProgress(94, 100);
         }
+
     }
 
-    private void fakeLoadingProgress(final int startPercent, final int endPercent, int delayTimer) {
+    public void startFakeLoading() {
+        fakeLoadingProgress(0, 100);
+    }
+
+    private void fakeLoadingProgress(final int startPercent, final int endPercent) {
         ValueAnimator valueAnimator = ValueAnimator.ofInt(startPercent, endPercent);
-        valueAnimator.setDuration(delayTimer);
+        valueAnimator.setDuration(delayAfterDownloadComplete);
         valueAnimator.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
             @Override
             public void onAnimationUpdate(ValueAnimator animation) {
@@ -169,8 +168,10 @@ public class AdLoadingView extends RelativeLayout implements NativeAdView.OnAdLo
         valueAnimator.start();
     }
 
-    public void configParams(Drawable bg, Drawable icon, String loadingText, String loadComplete, String adPlacementName, OnAdBufferingListener onAdBufferingListener) {
+    public void configParams(Drawable bg, Drawable icon, String loadingText, String loadComplete, String adPlacementName, OnAdBufferingListener onAdBufferingListener
+            , int delayAfterDownloadComplete) {
         setBackgroundPreview(bg).setIcon(icon).setAdPlacementName(adPlacementName).setOnLoadingText(loadingText, loadComplete);
+        this.delayAfterDownloadComplete = delayAfterDownloadComplete;
         this.onAdBufferingListener = onAdBufferingListener;
     }
 
