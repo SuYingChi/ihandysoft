@@ -9,6 +9,8 @@ import android.content.Intent;
 import android.content.pm.ActivityInfo;
 import android.content.pm.PackageManager;
 import android.content.pm.ResolveInfo;
+import android.content.res.Configuration;
+import android.content.res.Resources;
 import android.graphics.Rect;
 import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.Drawable;
@@ -26,12 +28,14 @@ import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.ihs.app.analytics.HSAnalytics;
 import com.ihs.app.framework.HSApplication;
 import com.ihs.keyboardutils.R;
 import com.ihs.keyboardutils.alerts.HSAlertDialog;
 import com.ihs.keyboardutils.nativeads.NativeAdParams;
 import com.ihs.keyboardutils.nativeads.NativeAdView;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -39,23 +43,40 @@ import java.util.List;
  */
 
 public class CustomShareUtils {
+    private final static float SHARE_COLUMN_ITEM_COUNT_PORTRAIT = 4.5f;
+    private final static float SHARE_COLUMN_ITEM_COUNT_LANDSCAPE = 7.5f;
 
-
-    public static void shareImage(Activity activity, Uri uri) {
-        final Context context = activity != null ? activity : HSApplication.getContext();
+    public static void shareImage(final Activity activity, Uri uri) {
+        Resources resources = activity.getResources();
 
         Intent shareIntent = new Intent();
         shareIntent.setAction(Intent.ACTION_SEND);
         shareIntent.putExtra(Intent.EXTRA_STREAM, uri);
         shareIntent.setType("image/*");
 
-        PackageManager pm = context.getPackageManager();
-        List<ResolveInfo> launchables = pm.queryIntentActivities(shareIntent, 0);
+        PackageManager pm = activity.getPackageManager();
+        List<ResolveInfo> resolveInfoList = pm.queryIntentActivities(shareIntent, 0);
+        resolveInfoList = getFilteredShareList(resolveInfoList);
 
+        View view = View.inflate(activity, R.layout.share_layout, null);
+        FrameLayout shareAdContainer = (FrameLayout) view.findViewById(R.id.share_ad_container);
 
-        View view = View.inflate(context, R.layout.share_layout, null);
+        View adLoadingView = View.inflate(activity, R.layout.ad_default_loading, null);
+        int itemWidth = (int) (resources.getDisplayMetrics().widthPixels * 1.0f / SHARE_COLUMN_ITEM_COUNT_PORTRAIT) - resources.getDimensionPixelSize(R.dimen.share_item_column_space);
+        //处理横屏
+        if (resources.getConfiguration().orientation == Configuration.ORIENTATION_LANDSCAPE) {
+            itemWidth = (int) ((resources.getDisplayMetrics().widthPixels * 1.0f  / SHARE_COLUMN_ITEM_COUNT_LANDSCAPE)) - resources.getDimensionPixelSize(R.dimen.share_item_column_space);
+            adLoadingView.setLayoutParams(new FrameLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,(int) (resources.getDisplayMetrics().heightPixels -  resources.getDimension(R.dimen.share_layout_title_height)
+                    - resources.getDimension(R.dimen.share_layout_recycler_martin_top) - resources.getDimension(R.dimen.share_layout_recycler_martin_bottom) - itemWidth)));
+        } else {
+            adLoadingView.setLayoutParams(new FrameLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, (int) (resources.getDisplayMetrics().widthPixels * 1.0f / 1.9f
+                    + Math.abs(resources.getDimension(R.dimen.share_ad_icon_margin_top)) + resources.getDimension(R.dimen.share_ad_title_height)
+                    + resources.getDimension(R.dimen.share_ad_title_margin_top) + resources.getDimension(R.dimen.share_ad_subtitle_height)
+                    + resources.getDimension(R.dimen.share_ad_subtitle_margin_top) + resources.getDimension(R.dimen.share_ad_cation_height)
+                    + resources.getDimension(R.dimen.share_ad_cation_margin_top))));
+        }
 
-        HSAlertDialog build = HSAlertDialog.build(R.style.DialogSlideUpFromBottom);
+        HSAlertDialog build = HSAlertDialog.build(activity,R.style.DialogSlideUpFromBottom);
         build.setView(view);
         final AlertDialog dialog = build.create();
         Window window = dialog.getWindow();
@@ -72,30 +93,25 @@ public class CustomShareUtils {
         imageView.setImageURI(uri);
 
         RecyclerView recyclerView = (RecyclerView) view.findViewById(R.id.share_list);
-        ShareAdapter shareAdapter = new ShareAdapter(context, dialog, uri, launchables);
-        recyclerView.setLayoutManager(new LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false));
+        ShareAdapter shareAdapter = new ShareAdapter(activity, dialog, uri, resolveInfoList, itemWidth);
+        recyclerView.setLayoutManager(new LinearLayoutManager(activity, LinearLayoutManager.HORIZONTAL, false));
         recyclerView.setAdapter(shareAdapter);
-        recyclerView.addItemDecoration(new ShareItemDecoration(context.getResources().getDimensionPixelSize(R.dimen.share_item_column_space)));
+        recyclerView.addItemDecoration(new ShareItemDecoration(resources.getDimensionPixelSize(R.dimen.share_item_column_space)));
 
-
-        View adLoadingView = View.inflate(context, R.layout.ad_default_loading, null);
-        adLoadingView.setLayoutParams(new FrameLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, (int) (context.getResources().getDisplayMetrics().widthPixels * 1.0f / 1.9f + context.getResources().getDisplayMetrics().density * 100)));
-
-        final View shareAdView = View.inflate(context, R.layout.ad_share, null);
+        final View shareAdView = View.inflate(activity, R.layout.ad_share, null);
         View adActionView = shareAdView.findViewById(R.id.ad_call_to_action);
-        adActionView.setBackgroundDrawable(RippleDrawableUtils.getCompatRippleDrawable(context.getResources().getColor(R.color.ad_share_action_button_bg),context.getResources().getDimension(R.dimen.corner_radius)));
+        adActionView.setBackgroundDrawable(RippleDrawableUtils.getCompatRippleDrawable(resources.getColor(R.color.ad_share_action_button_bg), resources.getDimension(R.dimen.corner_radius)));
         shareAdView.setLayoutParams(new FrameLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT));
 
-        final NativeAdView nativeAdView = new NativeAdView(context, shareAdView, adLoadingView);
+        final NativeAdView nativeAdView = new NativeAdView(activity, shareAdView, adLoadingView);
         nativeAdView.setOnAdClickedListener(new NativeAdView.OnAdClickedListener() {
             @Override
             public void onAdClicked(NativeAdView adView) {
-                dismissDialog(context,dialog);
+                dismissDialog(activity, dialog);
             }
         });
-        nativeAdView.configParams(new NativeAdParams(context.getString(R.string.ad_native_placement_custom_share), context.getResources().getDisplayMetrics().widthPixels, 1.9f));
+        nativeAdView.configParams(new NativeAdParams(activity.getString(R.string.ad_native_placement_custom_share), resources.getDisplayMetrics().widthPixels, 1.9f));
 
-        FrameLayout shareAdContainer = (FrameLayout) view.findViewById(R.id.share_ad_container);
         shareAdContainer.addView(nativeAdView);
 
         dialog.setOnDismissListener(new DialogInterface.OnDismissListener() {
@@ -107,30 +123,92 @@ public class CustomShareUtils {
         dialog.show();
     }
 
+    private static List<ResolveInfo> getFilteredShareList(List<ResolveInfo> resolveInfoList) {
+        List<ResolveInfo> filteredResolveInfoList = new ArrayList();
+        //优先级排前的应用包名列表
+        String[] priorityFirstList = new String[]{"com.whatsapp", "com.snapchat.android", "com.facebook.katana", "com.instagram.android", "com.facebook.orca", "com.twitter.android", "com.android.mms", "com.tumblr", "com.pinterest", "com.google.android.gm"};
+        ResolveInfo[] priorityResolveInfoList = new ResolveInfo[priorityFirstList.length];
+
+        //黑名单关键字列表
+        String[] blacklist = new String[]{"bluetooth" /** 蓝牙 */, "com.android.nfc"/** Android Beam */, "calendar"/** 日历 */};
+
+        if (!resolveInfoList.isEmpty()) {
+            for (ResolveInfo resolveInfo : resolveInfoList) {
+                String packageName = resolveInfo.activityInfo.packageName;
+                if (resolveInfo.activityInfo == null)
+                    continue;
+
+                boolean isContainBlackList = false;
+                boolean isPriority = false;
+                //找出在黑名单中的应用
+                for (String keyword : blacklist) {
+                    if (packageName.contains(keyword)) {
+                        isContainBlackList = true;
+                        break;
+                    }
+                }
+
+                //找出优先级排前的应用，并将其位置记录
+                int index = 0;
+                for (int i = 0; i < priorityResolveInfoList.length; i++) {
+                    if (packageName.contains(priorityFirstList[i])) {
+                        isPriority = true;
+                        index = i;
+                        break;
+                    }
+
+                }
+
+                if (isContainBlackList) {
+                    continue;
+                }
+
+                if (isPriority) {
+                    priorityResolveInfoList[index] = resolveInfo;
+                    continue;
+                }
+
+                filteredResolveInfoList.add(resolveInfo);
+            }
+
+        }
+
+        for (int i = priorityResolveInfoList.length - 1; i >= 0; i--) {
+            if (priorityResolveInfoList[i] != null) {
+                filteredResolveInfoList.add(0, priorityResolveInfoList[i]);
+            }
+        }
+        return filteredResolveInfoList;
+    }
+
     private static class ShareAdapter extends RecyclerView.Adapter<ShareViewHolder> {
         Context context;
         AlertDialog dialog;
         Uri uri;
         List<ResolveInfo> resolveInfoList;
+        int itemWidth;
 
-        public ShareAdapter(Context context, AlertDialog dialog, Uri uri, List<ResolveInfo> resolveInfoList) {
+        public ShareAdapter(Context context, AlertDialog dialog, Uri uri, List<ResolveInfo> resolveInfoList, int width) {
             this.context = context;
             this.dialog = dialog;
             this.uri = uri;
             this.resolveInfoList = resolveInfoList;
+            this.itemWidth = width;
         }
 
         @Override
         public ShareViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-            return new ShareViewHolder(LayoutInflater.from(parent.getContext()).inflate(R.layout.share_app_item, parent, false));
+            View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.share_app_item, parent, false);
+            view.setLayoutParams(new RecyclerView.LayoutParams(itemWidth, itemWidth));
+            return new ShareViewHolder(view);
         }
 
         @Override
         public void onBindViewHolder(ShareViewHolder holder, int position) {
             final ResolveInfo resolveInfo = resolveInfoList.get(position);
             PackageManager packageManager = HSApplication.getContext().getPackageManager();
-            holder.shareAppIcon.setImageDrawable(resolveInfo.loadIcon(packageManager));
-            holder.shareAppLabel.setText(resolveInfo.loadLabel(packageManager));
+            holder.shareAppIcon.setImageDrawable(resolveInfo.activityInfo.applicationInfo.loadIcon(packageManager));
+            holder.shareAppLabel.setText(resolveInfo.activityInfo.applicationInfo.loadLabel(packageManager));
             holder.itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -149,6 +227,8 @@ public class CustomShareUtils {
                     HSApplication.getContext().startActivity(shareIntent);
 
                     dismissDialog(context, dialog);
+
+                    HSAnalytics.logEvent("share_app_clicked", "appName", resolveInfo.loadLabel(HSApplication.getContext().getPackageManager()).toString());
                 }
             });
         }
@@ -174,8 +254,6 @@ public class CustomShareUtils {
 
             if (position == 0) {
                 leftPadding = 0;
-            } else if (position == parent.getChildCount() - 1) {
-                rightPadding = 0;
             }
             outRect.set(leftPadding, 0, rightPadding, 0);
         }

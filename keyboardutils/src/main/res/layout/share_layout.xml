@@ -7,7 +7,7 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="56dp">
+        android:layout_height="@dimen/share_layout_title_height">
 
         <TextView
             android:layout_width="wrap_content"
@@ -16,16 +16,16 @@
             android:layout_marginLeft="15dp"
             android:layout_weight="1"
             android:text="Share"
-            android:textSize="19sp"
             android:textColor="#000"
+            android:textSize="19sp"
             android:textStyle="bold" />
 
 
         <ImageView
             android:id="@+id/share_image"
-            android:layout_margin="10dp"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
+            android:layout_margin="10dp"
             android:adjustViewBounds="true"
             android:scaleType="fitCenter" />
     </LinearLayout>
@@ -40,11 +40,11 @@
         android:id="@+id/share_list"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="15dp"
-        android:layout_marginTop="15dp"
-        android:clipToPadding="true"
-        android:paddingLeft="15dp"
-        android:paddingRight="15dp" />
+        android:layout_marginBottom="@dimen/share_layout_recycler_martin_top"
+        android:layout_marginTop="@dimen/share_layout_recycler_martin_bottom"
+        android:clipToPadding="false"
+        android:paddingLeft="@dimen/share_layout_recycler_padding_left"
+        android:paddingRight="@dimen/share_layout_recycler_padding_left" />
 
 
     <FrameLayout
