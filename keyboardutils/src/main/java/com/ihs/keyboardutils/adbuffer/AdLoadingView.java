@@ -1,19 +1,20 @@
 package com.ihs.keyboardutils.adbuffer;
 
+import android.animation.Animator;
 import android.animation.ObjectAnimator;
+import android.animation.ValueAnimator;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.graphics.drawable.Drawable;
-import android.os.CountDownTimer;
 import android.support.annotation.Nullable;
 import android.text.TextUtils;
 import android.util.AttributeSet;
-import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.BounceInterpolator;
 import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
+import android.widget.TextView;
 
 import com.ihs.keyboardutils.R;
 import com.ihs.keyboardutils.nativeads.NativeAdParams;
@@ -28,9 +29,12 @@ public class AdLoadingView extends RelativeLayout implements NativeAdView.OnAdLo
 
     public ProgressBar progressBar;
     private AdLoadingDialog dialog;
+    public TextView tvApply;
 
     public interface OnAdBufferingListener {
         void onDismiss();
+
+        void onProgressComplete();
     }
 
     private String[] onLoadingText = {"Applying...", "Applying SuccessFully"};
@@ -53,7 +57,9 @@ public class AdLoadingView extends RelativeLayout implements NativeAdView.OnAdLo
     }
 
     private void init() {
-        LayoutInflater.from(getContext()).inflate(R.layout.layout_ad_loading, null);
+        inflate(getContext(), R.layout.layout_ad_loading, this);
+
+        tvApply = (TextView) findViewById(R.id.tv_apply);
 
         nativeAdView = new NativeAdView(getContext(), inflate(getContext(), R.layout.layout_ad_loading_adview, null));
         nativeAdView.setOnAdLoadedListener(this);
@@ -83,6 +89,7 @@ public class AdLoadingView extends RelativeLayout implements NativeAdView.OnAdLo
     private AdLoadingView setOnLoadingText(String loadingText, String loadComplete) {
         onLoadingText[0] = loadingText;
         onLoadingText[1] = loadComplete;
+        tvApply.setText(onLoadingText[0]);
         return this;
     }
 
@@ -100,44 +107,57 @@ public class AdLoadingView extends RelativeLayout implements NativeAdView.OnAdLo
      * @param percent
      */
     public void updateProgressPercent(int percent, int delayTimer, boolean fakeLoading) {
-        int timerCounter;
-        int timerSteps;
         if (!fakeLoading) {
-            percent = percent - 5;
             if (percent < 100) {
+                percent = percent - 5;
                 progressBar.setProgress(percent);
             } else {
-                timerCounter = delayTimer;
-                timerSteps = delayTimer / 5;
-                fakeLoadingProgress(percent, timerCounter, timerSteps);
+                fakeLoadingProgress(94, 100, delayTimer);
             }
 
         } else {
-            percent = 0;
-            timerCounter = delayTimer;
-            timerSteps = delayTimer / 100;
-            fakeLoadingProgress(percent, timerCounter, timerSteps);
+            fakeLoadingProgress(0, 100, delayTimer);
         }
     }
 
-    private void fakeLoadingProgress(final int percent, final int timerCounter, final int timerSteps) {
-        final int[] i = {0};
-        CountDownTimer mCountDownTimer = new CountDownTimer(timerCounter, timerSteps) {
-
+    private void fakeLoadingProgress(final int startPercent, final int endPercent, int delayTimer) {
+        ValueAnimator valueAnimator = ValueAnimator.ofInt(startPercent, endPercent);
+        valueAnimator.setDuration(delayTimer);
+        valueAnimator.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
             @Override
-            public void onTick(long millisUntilFinished) {
-                i[0]++;
-                progressBar.setProgress(i[0] + percent);
+            public void onAnimationUpdate(ValueAnimator animation) {
+                int animatedValue = (int) animation.getAnimatedValue();
+                progressBar.setProgress(animatedValue);
+            }
+        });
+        valueAnimator.addListener(new Animator.AnimatorListener() {
+            @Override
+            public void onAnimationStart(Animator animation) {
+
             }
 
             @Override
-            public void onFinish() {
-                //Do what you want
-                i[0]++;
-                progressBar.setProgress(i[0] + percent);
+            public void onAnimationEnd(Animator animation) {
+                ViewGroup adContainer = (ViewGroup) findViewById(R.id.fl_ad_container);
+                adContainer.addView(nativeAdView);
+                ObjectAnimator scaleY = ObjectAnimator.ofFloat(adContainer, "scaleY", 0f, 1f).setDuration(1000);
+                scaleY.setInterpolator(new BounceInterpolator());
+                scaleY.start();
+
+                tvApply.setText(onLoadingText[1]);
             }
-        };
-        mCountDownTimer.start();
+
+            @Override
+            public void onAnimationCancel(Animator animation) {
+
+            }
+
+            @Override
+            public void onAnimationRepeat(Animator animation) {
+
+            }
+        });
+        valueAnimator.start();
     }
 
     public void configParams(Drawable icon, String loadingText, String loadComplete, String adPlacementName, OnAdBufferingListener onAdBufferingListener) {
@@ -159,10 +179,6 @@ public class AdLoadingView extends RelativeLayout implements NativeAdView.OnAdLo
 
     @Override
     public void onAdLoaded(NativeAdView adView) {
-        ViewGroup adContainer = (ViewGroup) findViewById(R.id.fl_ad_container);
-        adContainer.addView(adView);
-        ObjectAnimator scaleY = ObjectAnimator.ofFloat(adContainer, "scaleY", 0f, 1f).setDuration(300);
-        scaleY.setInterpolator(new BounceInterpolator());
-        scaleY.start();
+
     }
 }

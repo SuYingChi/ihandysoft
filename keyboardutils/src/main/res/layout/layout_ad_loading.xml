@@ -13,13 +13,13 @@
         <com.ihs.keyboardutils.view.RoundedCornerLayout
             android:id="@+id/icon_area"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:layout_margin="10dp">
 
             <ImageView
                 android:id="@+id/iv_icon"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_margin="10dp"
+                android:layout_width="48dp"
+                android:layout_height="48dp"
                 android:background="@android:drawable/sym_def_app_icon" />
         </com.ihs.keyboardutils.view.RoundedCornerLayout>
 
@@ -27,30 +27,28 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
-            android:layout_toEndOf="@id/icon_area"
-            android:layout_toLeftOf="@id/iv_close"
-            android:layout_toRightOf="@id/icon_area"
-            android:layout_toStartOf="@id/iv_close"
+            android:layout_toEndOf="@+id/icon_area"
+            android:layout_toLeftOf="@+id/iv_close"
+            android:layout_toRightOf="@+id/icon_area"
+            android:layout_toStartOf="@+id/iv_close"
             android:orientation="vertical">
 
             <TextView
-                android:fontFamily="sans-serif-medium"
                 android:id="@+id/tv_apply"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginBottom="8dp"
+                android:fontFamily="sans-serif-medium"
                 android:text="@string/applying"
-                android:textColor="#000" />
-
-            <View
-                android:layout_width="wrap_content"
-                android:layout_height="8dp" />
+                android:textColor="#000"
+                android:textStyle="bold" />
 
             <ProgressBar
                 android:id="@+id/pb"
                 style="@style/Widget.AppCompat.ProgressBar.Horizontal"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:progress="20" />
+                android:progress="0" />
 
         </LinearLayout>
 
