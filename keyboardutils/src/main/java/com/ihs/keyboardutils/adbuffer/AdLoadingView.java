@@ -12,6 +12,7 @@ import android.util.AttributeSet;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.BounceInterpolator;
+import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -80,10 +81,18 @@ public class AdLoadingView extends RelativeLayout implements NativeAdView.OnAdLo
 
     private AdLoadingView setIcon(Drawable icon) {
         if (icon != null) {
-            findViewById(R.id.iv_icon).setBackgroundDrawable(icon);
-            return this;
+            ((ImageView) findViewById(R.id.iv_icon)).setImageDrawable(icon);
         }
-        throw new RuntimeException("ad loading 图标错误");
+        return this;
+//        throw new RuntimeException("ad loading 图标错误");
+    }
+
+    private AdLoadingView setBackgroundPreview(Drawable icon) {
+        if (icon != null) {
+            findViewById(R.id.iv_icon).setBackgroundDrawable(icon);
+        }
+        return this;
+//        throw new RuntimeException("ad loading 图标错误");
     }
 
     private AdLoadingView setOnLoadingText(String loadingText, String loadComplete) {
@@ -160,8 +169,8 @@ public class AdLoadingView extends RelativeLayout implements NativeAdView.OnAdLo
         valueAnimator.start();
     }
 
-    public void configParams(Drawable icon, String loadingText, String loadComplete, String adPlacementName, OnAdBufferingListener onAdBufferingListener) {
-        setIcon(icon).setAdPlacementName(adPlacementName).setOnLoadingText(loadingText, loadComplete);
+    public void configParams(Drawable bg, Drawable icon, String loadingText, String loadComplete, String adPlacementName, OnAdBufferingListener onAdBufferingListener) {
+        setBackgroundPreview(bg).setIcon(icon).setAdPlacementName(adPlacementName).setOnLoadingText(loadingText, loadComplete);
         this.onAdBufferingListener = onAdBufferingListener;
     }
 
