@@ -39,4 +39,9 @@
         android:layout_height="wrap_content"
         android:onClick="showCustomShare"
         android:text="showCustomShare" />
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:onClick="showExitDialog"
+        android:text="showExitDialog" />
 </LinearLayout>

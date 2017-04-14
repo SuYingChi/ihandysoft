@@ -6,17 +6,25 @@ import android.os.Bundle;
 import android.view.View;
 
 import com.ihs.app.framework.activity.HSActivity;
+import com.ihs.keyboardutils.alerts.ExitAlert;
 import com.ihs.keyboardutils.utils.CustomShareUtils;
 import com.ihs.keyboardutilslib.alerts.CustomDesignAlertActivity;
 import com.ihs.keyboardutilslib.configfile.ReadConfigSampleActivity;
 import com.ihs.keyboardutilslib.gif.GifViewDemoActivity;
 
 public class MainActivity extends HSActivity {
+    private ExitAlert exitAlert;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        exitAlert = new ExitAlert(MainActivity.this, getString(R.string.exit_alert_native_ad_name));
     }
 
     public void startAds(View view){
@@ -41,6 +49,9 @@ public class MainActivity extends HSActivity {
         CustomShareUtils.shareImage(this,uri,"Colorkey_A(NativeAds)CardAd");
     }
 
+    public void showExitDialog(View view) {
+        exitAlert.show();
+    }
     @Override
     protected void onDestroy() {
         super.onDestroy();
