@@ -33,6 +33,9 @@ public class AdLoadingView extends RelativeLayout implements NativeAdView.OnAdLo
     public TextView tvApply;
     private int delayAfterDownloadComplete;
 
+    //下载延迟常量
+    private static final int DELAY_PERCENT_AFTER_DOWNLOAD_COMPLETE = 5;
+
     public interface OnAdBufferingListener {
         void onDismiss();
     }
@@ -115,11 +118,12 @@ public class AdLoadingView extends RelativeLayout implements NativeAdView.OnAdLo
      * @param percent
      */
     public void updateProgressPercent(int percent) {
-        if (percent < 100) {
-            percent = percent - 5;
+        int maxProgress = 100;
+        if (percent < maxProgress) {
+            percent = percent - DELAY_PERCENT_AFTER_DOWNLOAD_COMPLETE;
             progressBar.setProgress(percent);
         } else {
-            fakeLoadingProgress(94, 100);
+            fakeLoadingProgress(maxProgress - DELAY_PERCENT_AFTER_DOWNLOAD_COMPLETE, maxProgress);
         }
 
     }
