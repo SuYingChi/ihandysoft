@@ -46,12 +46,18 @@ public class CustomShareUtils {
     private final static float SHARE_COLUMN_ITEM_COUNT_PORTRAIT = 4.5f;
     private final static float SHARE_COLUMN_ITEM_COUNT_LANDSCAPE = 7.5f;
 
-    public static Dialog shareImage(final Activity activity, Uri uri ,String adPlaceName) {
+    public static Dialog shareImage(final Activity activity,Uri uri ,String adPlaceName){
+        ArrayList<Uri> uriList = new ArrayList<>();
+        uriList.add(uri);
+        return shareImage(activity,uriList,adPlaceName);
+    }
+
+    public static Dialog shareImage(final Activity activity, ArrayList<Uri> uriList ,String adPlaceName) {
         Resources resources = activity.getResources();
 
         Intent shareIntent = new Intent();
         shareIntent.setAction(Intent.ACTION_SEND);
-        shareIntent.putExtra(Intent.EXTRA_STREAM, uri);
+        shareIntent.putParcelableArrayListExtra(Intent.EXTRA_STREAM, uriList);
         shareIntent.setType("image/*");
 
         PackageManager pm = activity.getPackageManager();
@@ -90,10 +96,10 @@ public class CustomShareUtils {
         window.setBackgroundDrawable(new ColorDrawable(android.graphics.Color.TRANSPARENT));
 
         ImageView imageView = (ImageView) view.findViewById(R.id.share_image);
-        imageView.setImageURI(uri);
+        imageView.setImageURI(uriList.get(0));
 
         RecyclerView recyclerView = (RecyclerView) view.findViewById(R.id.share_list);
-        ShareAdapter shareAdapter = new ShareAdapter(activity, dialog, uri, resolveInfoList, itemWidth);
+        ShareAdapter shareAdapter = new ShareAdapter(activity, dialog, uriList, resolveInfoList, itemWidth);
         recyclerView.setLayoutManager(new LinearLayoutManager(activity, LinearLayoutManager.HORIZONTAL, false));
         recyclerView.setAdapter(shareAdapter);
         recyclerView.addItemDecoration(new ShareItemDecoration(resources.getDimensionPixelSize(R.dimen.share_item_column_space)));
@@ -123,6 +129,8 @@ public class CustomShareUtils {
         dialog.show();
         return dialog;
     }
+
+
 
     private static List<ResolveInfo> getFilteredShareList(List<ResolveInfo> resolveInfoList) {
         List<ResolveInfo> filteredResolveInfoList = new ArrayList();
@@ -185,14 +193,14 @@ public class CustomShareUtils {
     private static class ShareAdapter extends RecyclerView.Adapter<ShareViewHolder> {
         Context context;
         AlertDialog dialog;
-        Uri uri;
+        ArrayList<Uri>  uriList;
         List<ResolveInfo> resolveInfoList;
         int itemWidth;
 
-        public ShareAdapter(Context context, AlertDialog dialog, Uri uri, List<ResolveInfo> resolveInfoList, int width) {
+        public ShareAdapter(Context context, AlertDialog dialog, ArrayList<Uri> uriList, List<ResolveInfo> resolveInfoList, int width) {
             this.context = context;
             this.dialog = dialog;
-            this.uri = uri;
+            this.uriList = uriList;
             this.resolveInfoList = resolveInfoList;
             this.itemWidth = width;
         }
@@ -215,7 +223,7 @@ public class CustomShareUtils {
                 public void onClick(View v) {
                     Intent shareIntent = new Intent();
                     shareIntent.setAction(Intent.ACTION_SEND);
-                    shareIntent.putExtra(Intent.EXTRA_STREAM, uri);
+                    shareIntent.putParcelableArrayListExtra(Intent.EXTRA_STREAM, uriList);
                     shareIntent.setType("image/*");
 
                     ActivityInfo activity = resolveInfo.activityInfo;
