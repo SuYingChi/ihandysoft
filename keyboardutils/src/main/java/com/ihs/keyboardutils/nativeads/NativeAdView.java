@@ -103,6 +103,10 @@ public class NativeAdView extends FrameLayout {
         return (ad != null);
     }
 
+    public boolean isAdLoaded() {
+        return adLoaded;
+    }
+
     public void setOnAdLoadedListener(OnAdLoadedListener listener) {
         this.adLoadedListener = listener;
     }
@@ -484,6 +488,14 @@ public class NativeAdView extends FrameLayout {
     private void logGoogleAnalyticsEvent(String actionSuffix, Long value) {
         String screenName = HSApplication.getContext().getResources().getString(R.string.english_ime_name);
         HSAnalytics.logGoogleAnalyticsEvent(screenName, "APP", "NativeAd_" + nativeAdParams.getPlacementName() + "_" + actionSuffix, "", value, null, null);
+        StringBuilder stringBuilder = new StringBuilder(screenName)
+                .append("APP")
+                .append("NativeAd_")
+                .append(nativeAdParams.getPlacementName())
+                .append("_")
+                .append(actionSuffix)
+                .append(value);
+        HSAnalytics.logEvent(stringBuilder.toString());
     }
 
     public AcbNativeAdContainerView getNativeAdContainerView() {

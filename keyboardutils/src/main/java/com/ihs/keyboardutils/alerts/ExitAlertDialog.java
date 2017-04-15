@@ -12,6 +12,7 @@ import android.widget.TextView;
 
 import com.ihs.app.analytics.HSAnalytics;
 import com.ihs.chargingscreen.utils.DisplayUtils;
+import com.ihs.commons.utils.HSLog;
 import com.ihs.keyboardutils.R;
 import com.ihs.keyboardutils.nativeads.NativeAdParams;
 import com.ihs.keyboardutils.nativeads.NativeAdView;
@@ -22,12 +23,8 @@ import com.ihs.keyboardutils.nativeads.NativeAdView;
 
 class ExitAlertDialog extends AlertDialog implements View.OnClickListener {
 
-    private boolean isNativeAdViewLoaded = false;
     private TextView exitButton;
-    private NativeAdView nativeAdView;
-    private FrameLayout nativeAdViewContainer;
-    private NativeAdView.OnAdClickedListener onAdClickedListener;
-    private String adPlacement;
+    private View sponsorView;
     private Activity activity;
 
     /**
@@ -36,35 +33,9 @@ class ExitAlertDialog extends AlertDialog implements View.OnClickListener {
      * @param activity the parent activity
      * @see R.style#DesignDialog
      */
-    ExitAlertDialog(@NonNull Activity activity, String adPlacement) {
+    ExitAlertDialog(@NonNull Activity activity) {
         super(activity, R.style.DesignDialog);
         this.activity = activity;
-        this.adPlacement = adPlacement;
-        initNativeAdView();
-    }
-
-    private void initNativeAdView() {
-        isNativeAdViewLoaded = false;
-        onAdClickedListener = new NativeAdView.OnAdClickedListener() {
-            @Override
-            public void onAdClicked(NativeAdView adView) {
-                dismiss();
-            }
-        };
-        if (nativeAdView == null) {
-            View view = LayoutInflater.from(getContext()).inflate(R.layout.exit_app_native_ad_view, null);
-            nativeAdView = new NativeAdView(getContext(), view, null);
-            nativeAdView.setOnAdLoadedListener(new NativeAdView.OnAdLoadedListener() {
-                @Override
-                public void onAdLoaded(NativeAdView adView) {
-                    isNativeAdViewLoaded = true;
-                    adView.setOnAdClickedListener(onAdClickedListener);
-                }
-            });
-            nativeAdView.configParams(new NativeAdParams(adPlacement, calculateAdWidth(), 1.9f));
-        } else {
-            // do nothing
-        }
     }
 
     private int calculateAdWidth() {
@@ -73,14 +44,18 @@ class ExitAlertDialog extends AlertDialog implements View.OnClickListener {
         return width;
     }
 
+    public void setSponsorView(View sponsorView) {
+        this.sponsorView = sponsorView;
+    }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.exit_app_native_ad_alert);
 
-        nativeAdViewContainer = (FrameLayout) findViewById(R.id.native_ad_container);
-        if (nativeAdView != null) {
-            nativeAdViewContainer.addView(nativeAdView);
+        FrameLayout nativeAdViewContainer = (FrameLayout) findViewById(R.id.native_ad_container);
+        if (sponsorView != null) {
+            nativeAdViewContainer.addView(sponsorView);
         }
 
         exitButton = (TextView) findViewById(R.id.btn_alert_exit);
@@ -114,25 +89,6 @@ class ExitAlertDialog extends AlertDialog implements View.OnClickListener {
         if (activity != null) {
             activity.finish();
         }
-    }
-
-    /**
-     * Dismiss this dialog, removing it from the screen. This method can be
-     * invoked safely from any thread.  Note that you should not override this
-     * method to do cleanup when the dialog is dismissed, instead implement
-     * that in {@link #onStop}.
-     */
-    @Override
-    public void dismiss() {
-        if (nativeAdViewContainer != null) {
-            nativeAdViewContainer.removeAllViews();
-        }
-        isNativeAdViewLoaded = false;
-        super.dismiss();
-    }
-
-    public boolean isReadyToShow() {
-        return isNativeAdViewLoaded;
     }
 
     @Override

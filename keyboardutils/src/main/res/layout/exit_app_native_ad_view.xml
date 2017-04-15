@@ -40,7 +40,8 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:layout_marginBottom="12dp"
-                android:layout_marginLeft="12dp"
+                android:layout_marginLeft="16dp"
+                android:layout_marginRight="16dp"
                 android:layout_marginTop="12dp"
                 android:maxHeight="25dp"
                 android:maxWidth="25dp"
@@ -89,10 +90,13 @@
             <TextView
                 android:id="@+id/ad_call_to_action"
                 style="@style/DesignDialogSingleActionButton"
-                android:layout_marginBottom="8dp"
-                android:layout_marginEnd="8dp"
-                android:layout_marginStart="8dp"
-                android:background="@drawable/shape_exit_alert_ad_button_background" />
+                android:layout_height="50dp"
+                android:layout_marginLeft="16dp"
+                android:layout_marginRight="16dp"
+                android:layout_marginTop="8dp"
+                android:background="@drawable/shape_exit_alert_ad_button_background"
+                android:textAllCaps="true"
+                android:textSize="17sp" />
         </LinearLayout>
     </LinearLayout>
 
