@@ -83,7 +83,8 @@
 
         <LinearLayout
             android:id="@+id/ll_call_to_action"
-            style="@style/DesignDialogFrame">
+            style="@style/DesignDialogFrame"
+            android:background="@android:color/white">
 
             <TextView
                 android:id="@+id/ad_call_to_action"
