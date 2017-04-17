@@ -3,7 +3,6 @@ package com.ihs.keyboardutils.adbuffer;
 import android.animation.Animator;
 import android.animation.ObjectAnimator;
 import android.animation.ValueAnimator;
-import android.app.Activity;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.graphics.drawable.Drawable;
@@ -12,17 +11,18 @@ import android.text.TextUtils;
 import android.util.AttributeSet;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.animation.BounceInterpolator;
+import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.ihs.app.analytics.HSAnalytics;
+import com.ihs.chargingscreen.utils.DisplayUtils;
 import com.ihs.keyboardutils.R;
 import com.ihs.keyboardutils.nativeads.NativeAdParams;
 import com.ihs.keyboardutils.nativeads.NativeAdView;
-
-ximport android.app.Activity;
+import com.ihs.keyboardutils.utils.RippleDrawableUtils;
 
 /**
  * Created by Arthur on 17/4/12.
@@ -41,6 +41,7 @@ public class AdLoadingView extends RelativeLayout implements NativeAdView.OnAdLo
 
     @Override
     public void onAdClicked(NativeAdView adView) {
+        logEvent("NativeAds_A(NativeAds)ApplyingItem_Click");
         dismissSelf();
     }
 
@@ -73,8 +74,15 @@ public class AdLoadingView extends RelativeLayout implements NativeAdView.OnAdLo
 
         tvApply = (TextView) findViewById(R.id.tv_apply);
 
-        nativeAdView = new NativeAdView(getContext(), inflate(getContext(), R.layout.layout_ad_loading_adview, null));
+        View inflate = inflate(getContext(), R.layout.layout_ad_loading_adview, null);
+        nativeAdView = new NativeAdView(getContext(), inflate);
+        inflate.setLayoutParams(new FrameLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT));
         nativeAdView.setOnAdLoadedListener(this);
+
+        inflate.findViewById(R.id.ad_call_to_action)
+                .setBackgroundDrawable(
+                        RippleDrawableUtils.getButtonRippleBackground(R.color.ad_share_action_button_bg));
+
 
         findViewById(R.id.iv_close).setOnClickListener(new OnClickListener() {
             @Override
@@ -82,6 +90,10 @@ public class AdLoadingView extends RelativeLayout implements NativeAdView.OnAdLo
                 dismissSelf();
             }
         });
+
+        findViewById(R.id.iv_close).setBackgroundDrawable(
+                RippleDrawableUtils.getTransparentRippleBackground());
+
 
         nativeAdView.setOnAdClickedListener(this);
 
@@ -93,7 +105,6 @@ public class AdLoadingView extends RelativeLayout implements NativeAdView.OnAdLo
             ((ImageView) findViewById(R.id.iv_icon)).setImageDrawable(icon);
         }
         return this;
-//        throw new RuntimeException("ad loading 图标错误");
     }
 
     private AdLoadingView setBackgroundPreview(Drawable icon) {
@@ -101,7 +112,6 @@ public class AdLoadingView extends RelativeLayout implements NativeAdView.OnAdLo
             findViewById(R.id.iv_icon).setBackgroundDrawable(icon);
         }
         return this;
-//        throw new RuntimeException("ad loading 图标错误");
     }
 
     private AdLoadingView setOnLoadingText(String loadingText, String loadComplete) {
@@ -113,7 +123,11 @@ public class AdLoadingView extends RelativeLayout implements NativeAdView.OnAdLo
 
     private AdLoadingView setAdPlacementName(String adPlacementName) {
         if (!TextUtils.isEmpty(adPlacementName)) {
-            nativeAdView.configParams(new NativeAdParams(adPlacementName));
+            //吉祥阁跟我敲板
+            nativeAdView.configParams(new NativeAdParams(adPlacementName,
+                    (int) (DisplayUtils.getScreenWidthPixels() * 0.9),
+                    1.9f));
+            logEvent("NativeAds_A(NativeAds)ApplyingItem_Load");
             return this;
         }
         throw new RuntimeException("ad loading 广告池名字未配置");
@@ -159,8 +173,8 @@ public class AdLoadingView extends RelativeLayout implements NativeAdView.OnAdLo
             public void onAnimationEnd(Animator animation) {
                 ViewGroup adContainer = (ViewGroup) findViewById(R.id.fl_ad_container);
                 adContainer.addView(nativeAdView);
-                ObjectAnimator scaleY = ObjectAnimator.ofFloat(adContainer, "scaleY", 0f, 1f).setDuration(1000);
-                scaleY.setInterpolator(new BounceInterpolator());
+                adContainer.setPivotY(0);
+                ObjectAnimator scaleY = ObjectAnimator.ofFloat(adContainer, "scaleY", 0f, 1f).setDuration(400);
                 scaleY.start();
 
                 tvApply.setText(onLoadingText[1]);
@@ -202,14 +216,20 @@ public class AdLoadingView extends RelativeLayout implements NativeAdView.OnAdLo
 
     @Override
     public void onAdLoaded(NativeAdView adView) {
-
+        logEvent("NativeAds_A(NativeAds)ApplyingItem_Show");
     }
 
     private void dismissSelf() {
+        nativeAdView.release();
         if (dialog == null) {
             onAdBufferingListener.onDismiss();
         } else {
             dialog.dismiss();
         }
+    }
+
+    private void logEvent(String action) {
+        HSAnalytics.logEvent(action);
+        HSAnalytics.logGoogleAnalyticsEvent("app", "AdLoading", action, null, null, null, null);
     }
 }

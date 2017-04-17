@@ -54,19 +54,18 @@
 
 
         <android.support.v7.widget.AppCompatImageButton
-            android:layout_margin="5dp"
             android:id="@+id/iv_close"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentEnd="true"
             android:layout_alignParentRight="true"
-            android:src="@drawable/ic_ad_loading_close"
-            android:visibility="invisible" />
+            android:layout_margin="5dp"
+            android:src="@drawable/ic_ad_loading_close" />
 
     </RelativeLayout>
 
     <FrameLayout
         android:id="@+id/fl_ad_container"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content" />
 </LinearLayout>

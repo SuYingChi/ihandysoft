@@ -13,7 +13,9 @@
         <com.acb.adadapter.ContainerView.AcbNativeAdPrimaryView
             android:id="@+id/ad_cover_img"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
+            android:layout_height="wrap_content"
+            android:scaleType="fitXY"
+            />
 
         <android.support.v7.widget.CardView
             android:layout_width="@dimen/share_ad_icon_height"

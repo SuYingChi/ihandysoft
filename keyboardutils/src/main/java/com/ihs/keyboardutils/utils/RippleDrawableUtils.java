@@ -39,7 +39,7 @@ public class RippleDrawableUtils {
 
         float radius = 0;
         int normalColor = Color.TRANSPARENT;
-        int pressedColor = Color.parseColor("#30ffffff");
+        int pressedColor = Color.parseColor("#dddddd");
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             return new RippleDrawable(ColorStateList.valueOf(getRippleColor(normalColor)),

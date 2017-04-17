@@ -22,4 +22,5 @@
     <dimen name="share_ad_subtitle_margin_top">5dp</dimen>
     <dimen name="share_ad_cation_height">40dp</dimen>
     <dimen name="share_ad_cation_margin_top">15dp</dimen>
+    <dimen name="corner_radius">2dp</dimen>
 </resources>
