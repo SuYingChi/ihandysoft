@@ -3,6 +3,7 @@ package com.ihs.keyboardutils.adbuffer;
 import android.animation.Animator;
 import android.animation.ObjectAnimator;
 import android.animation.ValueAnimator;
+import android.app.Activity;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.graphics.drawable.Drawable;
@@ -21,11 +22,13 @@ import com.ihs.keyboardutils.R;
 import com.ihs.keyboardutils.nativeads.NativeAdParams;
 import com.ihs.keyboardutils.nativeads.NativeAdView;
 
+ximport android.app.Activity;
+
 /**
  * Created by Arthur on 17/4/12.
  */
 
-public class AdLoadingView extends RelativeLayout implements NativeAdView.OnAdLoadedListener {
+public class AdLoadingView extends RelativeLayout implements NativeAdView.OnAdLoadedListener, NativeAdView.OnAdClickedListener {
 
 
     public ProgressBar progressBar;
@@ -35,6 +38,12 @@ public class AdLoadingView extends RelativeLayout implements NativeAdView.OnAdLo
 
     //下载延迟常量
     private static final int DELAY_PERCENT_AFTER_DOWNLOAD_COMPLETE = 5;
+
+    @Override
+    public void onAdClicked(NativeAdView adView) {
+        dismissSelf();
+    }
+
 
     public interface OnAdBufferingListener {
         void onDismiss();
@@ -70,13 +79,11 @@ public class AdLoadingView extends RelativeLayout implements NativeAdView.OnAdLo
         findViewById(R.id.iv_close).setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (dialog == null) {
-                    onAdBufferingListener.onDismiss();
-                } else {
-                    dialog.dismiss();
-                }
+                dismissSelf();
             }
         });
+
+        nativeAdView.setOnAdClickedListener(this);
 
         progressBar = (ProgressBar) findViewById(R.id.pb);
     }
@@ -157,6 +164,8 @@ public class AdLoadingView extends RelativeLayout implements NativeAdView.OnAdLo
                 scaleY.start();
 
                 tvApply.setText(onLoadingText[1]);
+
+                findViewById(R.id.iv_close).setVisibility(VISIBLE);
             }
 
             @Override
@@ -194,5 +203,13 @@ public class AdLoadingView extends RelativeLayout implements NativeAdView.OnAdLo
     @Override
     public void onAdLoaded(NativeAdView adView) {
 
+    }
+
+    private void dismissSelf() {
+        if (dialog == null) {
+            onAdBufferingListener.onDismiss();
+        } else {
+            dialog.dismiss();
+        }
     }
 }
