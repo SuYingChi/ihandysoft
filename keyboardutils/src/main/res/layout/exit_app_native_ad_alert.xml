@@ -16,21 +16,24 @@
         <FrameLayout
             android:id="@+id/native_ad_container"
             style="@style/DesignDialogFrame"
+            android:layout_gravity="center_horizontal"
             android:background="@android:color/white" />
 
         <LinearLayout
             android:id="@+id/ll_exit_button"
             style="@style/DesignDialogFrame"
-            android:layout_height="50dp"
+            android:layout_height="wrap_content"
             android:background="@android:color/white">
 
             <TextView
                 android:id="@+id/btn_alert_exit"
                 android:layout_width="match_parent"
-                android:layout_height="@dimen/design_dialog_action_button_height"
+                android:layout_height="50dp"
                 android:layout_gravity="center"
-                android:layout_marginBottom="@dimen/design_base_padding"
-                android:layout_marginTop="@dimen/design_base_padding"
+                android:layout_marginBottom="7dp"
+                android:layout_marginTop="7dp"
+                android:layout_marginLeft="16dp"
+                android:layout_marginRight="16dp"
                 android:fontFamily="sans-serif-medium"
                 android:gravity="center"
                 android:text="@string/exit_alert_exit_button_text"

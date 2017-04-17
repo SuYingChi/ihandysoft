@@ -41,7 +41,7 @@
                 android:layout_gravity="center"
                 android:layout_marginBottom="12dp"
                 android:layout_marginLeft="16dp"
-                android:layout_marginRight="16dp"
+                android:layout_marginRight="8dp"
                 android:layout_marginTop="12dp"
                 android:maxHeight="25dp"
                 android:maxWidth="25dp"
@@ -61,7 +61,10 @@
                 android:layout_gravity="center_vertical"
                 android:layout_weight="1"
                 android:orientation="vertical"
-                android:padding="@dimen/design_base_padding">
+                android:paddingLeft="4dp"
+                android:paddingRight="4dp"
+                android:paddingTop="8dp"
+                android:paddingBottom="8dp">
 
                 <TextView
                     android:id="@+id/ad_title"

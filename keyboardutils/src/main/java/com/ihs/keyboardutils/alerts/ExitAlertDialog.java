@@ -2,9 +2,9 @@ package com.ihs.keyboardutils.alerts;
 
 import android.app.Activity;
 import android.app.AlertDialog;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
-import android.view.LayoutInflater;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.FrameLayout;
@@ -12,10 +12,8 @@ import android.widget.TextView;
 
 import com.ihs.app.analytics.HSAnalytics;
 import com.ihs.chargingscreen.utils.DisplayUtils;
-import com.ihs.commons.utils.HSLog;
 import com.ihs.keyboardutils.R;
-import com.ihs.keyboardutils.nativeads.NativeAdParams;
-import com.ihs.keyboardutils.nativeads.NativeAdView;
+import com.ihs.keyboardutils.utils.RippleDrawableUtils;
 
 /**
  * Created by yanxia on 2017/4/12.
@@ -57,12 +55,15 @@ class ExitAlertDialog extends AlertDialog implements View.OnClickListener {
         if (sponsorView != null) {
             nativeAdViewContainer.addView(sponsorView);
         }
-
+        float radius = getContext().getResources().getDimension(R.dimen.design_base_corner_radius);
         exitButton = (TextView) findViewById(R.id.btn_alert_exit);
         if (exitButton != null) {
             exitButton.setOnClickListener(this);
+            exitButton.setBackgroundDrawable(RippleDrawableUtils.getCompatRippleDrawable(Color.WHITE, radius));
         }
 
+        TextView adActionView = (TextView) sponsorView.findViewById(R.id.ad_call_to_action);
+        adActionView.setBackgroundDrawable(RippleDrawableUtils.getCompatRippleDrawable(0xff43bb48, radius));
         findViewById(R.id.exit_alert_root_view).getLayoutParams().width = calculateAdWidth();
     }
 
@@ -74,6 +75,8 @@ class ExitAlertDialog extends AlertDialog implements View.OnClickListener {
     @Override
     public void onBackPressed() {
         super.onBackPressed();
+        HSAnalytics.logEvent("app_quit_way", "app_quit_way" ,"back");
+        HSAnalytics.logGoogleAnalyticsEvent("app","alertdialog","app_quit_way","back",null,null,null);
         finishActivity();
     }
 

@@ -1,6 +1,7 @@
 package com.ihs.keyboardutils.alerts;
 
 import android.app.Activity;
+import android.content.DialogInterface;
 import android.view.LayoutInflater;
 import android.view.View;
 
@@ -24,6 +25,12 @@ public class ExitAlert {
         this.adPlacement = adPlacementName;
         alertDialog = new ExitAlertDialog(activity);
         initNativeAdView();
+        alertDialog.setOnDismissListener(new DialogInterface.OnDismissListener() {
+            @Override
+            public void onDismiss(DialogInterface dialog) {
+                nativeAdView.release();
+            }
+        });
     }
 
     private void initNativeAdView() {
