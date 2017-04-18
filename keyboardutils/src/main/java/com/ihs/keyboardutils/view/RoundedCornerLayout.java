@@ -10,10 +10,11 @@ import android.util.AttributeSet;
 import android.view.View;
 import android.widget.FrameLayout;
 
+import com.ihs.chargingscreen.utils.DisplayUtils;
 import com.ihs.keyboardutils.R;
 
 public class RoundedCornerLayout extends FrameLayout {
-    private final static int CORNER_RADIUS = 3;
+    private final static int CORNER_RADIUS = DisplayUtils.dip2px(2);
     private float cornerRadius;
     private boolean isCircle;
 

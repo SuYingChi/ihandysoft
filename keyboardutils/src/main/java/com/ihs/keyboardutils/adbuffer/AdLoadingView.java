@@ -1,7 +1,6 @@
 package com.ihs.keyboardutils.adbuffer;
 
 import android.animation.Animator;
-import android.animation.ObjectAnimator;
 import android.animation.ValueAnimator;
 import android.content.Context;
 import android.content.DialogInterface;
@@ -13,7 +12,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
-import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
@@ -23,6 +21,7 @@ import com.ihs.keyboardutils.R;
 import com.ihs.keyboardutils.nativeads.NativeAdParams;
 import com.ihs.keyboardutils.nativeads.NativeAdView;
 import com.ihs.keyboardutils.utils.RippleDrawableUtils;
+import com.ihs.keyboardutils.view.CustomProgressDrawable;
 
 /**
  * Created by Arthur on 17/4/12.
@@ -31,10 +30,10 @@ import com.ihs.keyboardutils.utils.RippleDrawableUtils;
 public class AdLoadingView extends RelativeLayout implements NativeAdView.OnAdLoadedListener, NativeAdView.OnAdClickedListener {
 
 
-    public ProgressBar progressBar;
     private AdLoadingDialog dialog;
     public TextView tvApply;
     private int delayAfterDownloadComplete;
+    private ImageView progressBar;
 
     //下载延迟常量
     private static final int DELAY_PERCENT_AFTER_DOWNLOAD_COMPLETE = 5;
@@ -81,7 +80,7 @@ public class AdLoadingView extends RelativeLayout implements NativeAdView.OnAdLo
 
         inflate.findViewById(R.id.ad_call_to_action)
                 .setBackgroundDrawable(
-                        RippleDrawableUtils.getButtonRippleBackground(R.color.ad_share_action_button_bg));
+                        RippleDrawableUtils.getButtonRippleBackground(R.color.ad_button_blue));
 
 
         findViewById(R.id.iv_close).setOnClickListener(new OnClickListener() {
@@ -97,7 +96,9 @@ public class AdLoadingView extends RelativeLayout implements NativeAdView.OnAdLo
 
         nativeAdView.setOnAdClickedListener(this);
 
-        progressBar = (ProgressBar) findViewById(R.id.pb);
+
+        progressBar = (ImageView) findViewById(R.id.iv_pb);
+        progressBar.setImageDrawable(new CustomProgressDrawable());
     }
 
     private AdLoadingView setIcon(Drawable icon) {
@@ -142,7 +143,7 @@ public class AdLoadingView extends RelativeLayout implements NativeAdView.OnAdLo
         int maxProgress = 100;
         if (percent < maxProgress) {
             percent = percent - DELAY_PERCENT_AFTER_DOWNLOAD_COMPLETE;
-            progressBar.setProgress(percent);
+            progressBar.getDrawable().setLevel(percent);
         } else {
             fakeLoadingProgress(maxProgress - DELAY_PERCENT_AFTER_DOWNLOAD_COMPLETE, maxProgress);
         }
@@ -160,7 +161,7 @@ public class AdLoadingView extends RelativeLayout implements NativeAdView.OnAdLo
             @Override
             public void onAnimationUpdate(ValueAnimator animation) {
                 int animatedValue = (int) animation.getAnimatedValue();
-                progressBar.setProgress(animatedValue);
+                progressBar.getDrawable().setLevel(animatedValue);
             }
         });
         valueAnimator.addListener(new Animator.AnimatorListener() {
@@ -173,9 +174,6 @@ public class AdLoadingView extends RelativeLayout implements NativeAdView.OnAdLo
             public void onAnimationEnd(Animator animation) {
                 ViewGroup adContainer = (ViewGroup) findViewById(R.id.fl_ad_container);
                 adContainer.addView(nativeAdView);
-                adContainer.setPivotY(0);
-                ObjectAnimator scaleY = ObjectAnimator.ofFloat(adContainer, "scaleY", 0f, 1f).setDuration(400);
-                scaleY.start();
 
                 tvApply.setText(onLoadingText[1]);
 

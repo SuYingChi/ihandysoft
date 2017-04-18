@@ -68,7 +68,7 @@
     <TextView
         android:id="@+id/ad_subtitle"
         android:layout_width="wrap_content"
-        android:layout_height="@dimen/share_ad_subtitle_height"
+        android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
         android:layout_marginLeft="20dp"
         android:layout_marginRight="20dp"
@@ -76,7 +76,7 @@
         android:ellipsize="end"
         android:fontFamily="sans-serif"
         android:gravity="center"
-        android:maxLines="1"
+        android:maxLines="2"
         android:textColor="#88000000"
         android:textSize="11sp"
         android:textStyle="normal"
