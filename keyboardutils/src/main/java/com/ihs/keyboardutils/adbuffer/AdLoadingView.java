@@ -37,6 +37,7 @@ public class AdLoadingView extends RelativeLayout implements NativeAdView.OnAdLo
 
     //下载延迟常量
     private static final int DELAY_PERCENT_AFTER_DOWNLOAD_COMPLETE = 5;
+    private boolean hasPurchaseNoAds = false;
 
     @Override
     public void onAdClicked(NativeAdView adView) {
@@ -73,15 +74,9 @@ public class AdLoadingView extends RelativeLayout implements NativeAdView.OnAdLo
 
         tvApply = (TextView) findViewById(R.id.tv_apply);
 
-        View inflate = inflate(getContext(), R.layout.layout_ad_loading_adview, null);
-        nativeAdView = new NativeAdView(getContext(), inflate);
-        inflate.setLayoutParams(new FrameLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT));
-        nativeAdView.setOnAdLoadedListener(this);
-
-        inflate.findViewById(R.id.ad_call_to_action)
-                .setBackgroundDrawable(
-                        RippleDrawableUtils.getButtonRippleBackground(R.color.ad_button_blue));
-
+        if (!hasPurchaseNoAds) {
+            initAdView();
+        }
 
         findViewById(R.id.iv_close).setOnClickListener(new OnClickListener() {
             @Override
@@ -93,12 +88,22 @@ public class AdLoadingView extends RelativeLayout implements NativeAdView.OnAdLo
         findViewById(R.id.iv_close).setBackgroundDrawable(
                 RippleDrawableUtils.getTransparentRippleBackground());
 
-
-        nativeAdView.setOnAdClickedListener(this);
-
-
         progressBar = (ImageView) findViewById(R.id.iv_pb);
         progressBar.setImageDrawable(new CustomProgressDrawable());
+    }
+
+    private void initAdView() {
+        View inflate = inflate(getContext(), R.layout.layout_ad_loading_adview, null);
+        nativeAdView = new NativeAdView(getContext(), inflate);
+        inflate.setLayoutParams(new FrameLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT));
+        nativeAdView.setOnAdLoadedListener(this);
+
+        inflate.findViewById(R.id.ad_call_to_action)
+                .setBackgroundDrawable(
+                        RippleDrawableUtils.getButtonRippleBackground(R.color.ad_button_blue));
+
+
+        nativeAdView.setOnAdClickedListener(this);
     }
 
     private AdLoadingView setIcon(Drawable icon) {
@@ -123,7 +128,7 @@ public class AdLoadingView extends RelativeLayout implements NativeAdView.OnAdLo
     }
 
     private AdLoadingView setAdPlacementName(String adPlacementName) {
-        if (!TextUtils.isEmpty(adPlacementName)) {
+        if (!TextUtils.isEmpty(adPlacementName) && !hasPurchaseNoAds) {
             //吉祥阁跟我敲板
             nativeAdView.configParams(new NativeAdParams(adPlacementName,
                     (int) (DisplayUtils.getScreenWidthPixels() * 0.9),
@@ -172,8 +177,10 @@ public class AdLoadingView extends RelativeLayout implements NativeAdView.OnAdLo
 
             @Override
             public void onAnimationEnd(Animator animation) {
-                ViewGroup adContainer = (ViewGroup) findViewById(R.id.fl_ad_container);
-                adContainer.addView(nativeAdView);
+                if (!hasPurchaseNoAds) {
+                    ViewGroup adContainer = (ViewGroup) findViewById(R.id.fl_ad_container);
+                    adContainer.addView(nativeAdView);
+                }
 
                 tvApply.setText(onLoadingText[1]);
 
@@ -194,13 +201,15 @@ public class AdLoadingView extends RelativeLayout implements NativeAdView.OnAdLo
     }
 
     public void configParams(Drawable bg, Drawable icon, String loadingText, String loadComplete, String adPlacementName, OnAdBufferingListener onAdBufferingListener
-            , int delayAfterDownloadComplete) {
+            , int delayAfterDownloadComplete, boolean hasPurchaseNoAds) {
         setBackgroundPreview(bg).setIcon(icon).setAdPlacementName(adPlacementName).setOnLoadingText(loadingText, loadComplete);
         this.delayAfterDownloadComplete = delayAfterDownloadComplete;
         this.onAdBufferingListener = onAdBufferingListener;
+        this.hasPurchaseNoAds = hasPurchaseNoAds;
     }
 
     public void showInDialog() {
+        logEvent("app_alert_applyingItem_show");
         dialog = new AdLoadingDialog(getContext());
         dialog.setContentView(this);
         dialog.show();
@@ -218,7 +227,10 @@ public class AdLoadingView extends RelativeLayout implements NativeAdView.OnAdLo
     }
 
     private void dismissSelf() {
-        nativeAdView.release();
+        if (nativeAdView != null) {
+            nativeAdView.release();
+        }
+
         if (dialog == null) {
             onAdBufferingListener.onDismiss();
         } else {
