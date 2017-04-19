@@ -56,7 +56,7 @@ public class CustomShareUtils {
         Resources resources = activity.getResources();
 
         Intent shareIntent = new Intent();
-        shareIntent.setAction(Intent.ACTION_SEND);
+        shareIntent.setAction(Intent.ACTION_SEND_MULTIPLE);
         shareIntent.putParcelableArrayListExtra(Intent.EXTRA_STREAM, uriList);
         shareIntent.setType("image/*");
 
@@ -222,7 +222,7 @@ public class CustomShareUtils {
                 @Override
                 public void onClick(View v) {
                     Intent shareIntent = new Intent();
-                    shareIntent.setAction(Intent.ACTION_SEND);
+                    shareIntent.setAction(Intent.ACTION_SEND_MULTIPLE);
                     shareIntent.putParcelableArrayListExtra(Intent.EXTRA_STREAM, uriList);
                     shareIntent.setType("image/*");
 
