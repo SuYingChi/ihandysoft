@@ -27,6 +27,8 @@ import com.ihs.keyboardutils.R;
 
 import java.util.List;
 
+import static android.R.attr.value;
+
 public class NativeAdView extends FrameLayout {
 
     public interface OnAdLoadedListener {
@@ -351,7 +353,6 @@ public class NativeAdView extends FrameLayout {
     }
 
     public void release() {
-        logGoogleAnalyticsEvent("DisplayTime", getTotalAdDisplayDuration());
         if (NativeAdManager.getInstance().getNativeAdProxy(nativeAdParams.getPlacementName()) != null) {
             NativeAdManager.getInstance().getNativeAdProxy(nativeAdParams.getPlacementName()).setCachedNativeAdShowedTime(getCurrentAdDisplayDuration());
             log("release", "", "");
@@ -371,7 +372,7 @@ public class NativeAdView extends FrameLayout {
         if (isRefreshing) {
             return;
         }
-        logGoogleAnalyticsEvent("Load");
+        logAnalyticsEvent("Load");
 
         isRefreshing = true;
 
@@ -425,7 +426,7 @@ public class NativeAdView extends FrameLayout {
             if (currentNativeAdHashCode == hsNativeAd.hashCode()) {
                 return;
             }
-            logGoogleAnalyticsEvent("Show");
+            logAnalyticsEvent("Show");
             currentNativeAdHashCode = hsNativeAd.hashCode();
             nativeAdContainerView.fillNativeAd(hsNativeAd);
 
@@ -438,7 +439,7 @@ public class NativeAdView extends FrameLayout {
                 @Override
                 public void onAdClick(AcbAd acbAd) {
                     NativeAdManager.getInstance().markAdAsFinished(nativeAdParams.getPlacementName());
-                    logGoogleAnalyticsEvent("Click");
+                    logAnalyticsEvent("Click");
 
                     if (adClickedListener != null) {
                         adClickedListener.onAdClicked(NativeAdView.this);
@@ -481,20 +482,15 @@ public class NativeAdView extends FrameLayout {
         HSLog.e(hashCode() + " - " + nativeAdParams.getPlacementName() + " - " + functionName + " : " + key + " - " + value + ": ");
     }
 
-    private void logGoogleAnalyticsEvent(String actionSuffix) {
-        logGoogleAnalyticsEvent(actionSuffix, null);
-    }
-
-    private void logGoogleAnalyticsEvent(String actionSuffix, Long value) {
+    private void logAnalyticsEvent(String actionSuffix) {
         String screenName = HSApplication.getContext().getResources().getString(R.string.english_ime_name);
-        HSAnalytics.logGoogleAnalyticsEvent(screenName, "APP", "NativeAd_" + nativeAdParams.getPlacementName() + "_" + actionSuffix, "", value, null, null);
+        HSAnalytics.logGoogleAnalyticsEvent(screenName, "APP", "NativeAd_" + nativeAdParams.getPlacementName() + "_" + actionSuffix, "", null, null, null);
         StringBuilder stringBuilder = new StringBuilder(screenName)
                 .append("APP")
                 .append("NativeAd_")
                 .append(nativeAdParams.getPlacementName())
                 .append("_")
-                .append(actionSuffix)
-                .append(value);
+                .append(actionSuffix);
         HSAnalytics.logEvent(stringBuilder.toString());
     }
 
