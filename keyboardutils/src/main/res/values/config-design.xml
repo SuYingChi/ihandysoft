@@ -19,6 +19,6 @@
     <color name="design_dialog_action_button_text_color">#3d6efa</color>
     <color name="design_dialog_action_button_highlight_text_color">#ffffff</color>
 
-    <fraction name="design_dialog_width">85%</fraction>
+    <fraction name="design_dialog_width">90%</fraction>
 
 </resources>

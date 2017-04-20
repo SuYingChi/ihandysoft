@@ -51,5 +51,7 @@
     <string name="exit_alert_native_ad_name">Master_A(NativeAds)AppQuit</string>
 
     <string name="applying">Applying...</string>
+    <string name="cancel">cancel</string>
+    <string name="exit_dialog_msg">Are you sure you want to exit?</string>
 
 </resources>

@@ -6,6 +6,7 @@ import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.view.View;
+import android.view.ViewGroup;
 import android.view.WindowManager;
 import android.widget.FrameLayout;
 import android.widget.TextView;
@@ -14,6 +15,8 @@ import com.ihs.app.analytics.HSAnalytics;
 import com.ihs.chargingscreen.utils.DisplayUtils;
 import com.ihs.keyboardutils.R;
 import com.ihs.keyboardutils.utils.RippleDrawableUtils;
+
+import static com.ihs.keyboardutils.alerts.ExitAlert.EXIT_ALERT_STYLE_1;
 
 /**
  * Created by yanxia on 2017/4/12.
@@ -24,16 +27,22 @@ class ExitAlertDialog extends AlertDialog implements View.OnClickListener {
     private TextView exitButton;
     private View sponsorView;
     private Activity activity;
+    private int alterViewStyle;
+    private boolean hasRemovedAds;
 
     /**
      * Creates an alert dialog that uses the DesignDialog alert dialog theme.
      *
-     * @param activity the parent activity
+     * @param activity       the parent activity
+     * @param alterViewStyle
+     * @param hasRemovedAds
      * @see R.style#DesignDialog
      */
-    ExitAlertDialog(@NonNull Activity activity) {
+    ExitAlertDialog(@NonNull Activity activity, int alterViewStyle, boolean hasRemovedAds) {
         super(activity, R.style.DesignDialog);
         this.activity = activity;
+        this.alterViewStyle = alterViewStyle;
+        this.hasRemovedAds = hasRemovedAds;
     }
 
     private int calculateAdWidth() {
@@ -49,21 +58,41 @@ class ExitAlertDialog extends AlertDialog implements View.OnClickListener {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.exit_app_native_ad_alert);
 
-        FrameLayout nativeAdViewContainer = (FrameLayout) findViewById(R.id.native_ad_container);
-        if (sponsorView != null) {
-            nativeAdViewContainer.addView(sponsorView);
+        if (alterViewStyle == EXIT_ALERT_STYLE_1 && !hasRemovedAds) {
+            setContentView(R.layout.exit_app_native_ad_alert1);
+        } else {
+            setContentView(R.layout.exit_app_native_ad_alert2);
         }
+
         float radius = getContext().getResources().getDimension(R.dimen.design_base_corner_radius);
+        if (sponsorView != null) {
+            FrameLayout nativeAdViewContainer = (FrameLayout) findViewById(R.id.native_ad_container);
+            if (alterViewStyle == EXIT_ALERT_STYLE_1 && sponsorView != null) {
+                nativeAdViewContainer.addView(sponsorView);
+            } else {
+                nativeAdViewContainer.addView(sponsorView, new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, (int) (calculateAdWidth() / 1.6)));
+            }
+            TextView adActionView = (TextView) sponsorView.findViewById(R.id.ad_call_to_action);
+            adActionView.setBackgroundDrawable(RippleDrawableUtils.getCompatRippleDrawable(0xff43bb48, radius));
+        }
         exitButton = (TextView) findViewById(R.id.btn_alert_exit);
         if (exitButton != null) {
             exitButton.setOnClickListener(this);
             exitButton.setBackgroundDrawable(RippleDrawableUtils.getCompatRippleDrawable(Color.WHITE, radius));
         }
 
-        TextView adActionView = (TextView) sponsorView.findViewById(R.id.ad_call_to_action);
-        adActionView.setBackgroundDrawable(RippleDrawableUtils.getCompatRippleDrawable(0xff43bb48, radius));
+        View btnCancel = findViewById(R.id.btn_cancel);
+        if (btnCancel != null) {
+            btnCancel.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    dismiss();
+                }
+            });
+            btnCancel.setBackgroundDrawable(RippleDrawableUtils.getCompatRippleDrawable(Color.WHITE, radius));
+        }
+
         findViewById(R.id.exit_alert_root_view).getLayoutParams().width = calculateAdWidth();
     }
 
@@ -75,8 +104,8 @@ class ExitAlertDialog extends AlertDialog implements View.OnClickListener {
     @Override
     public void onBackPressed() {
         super.onBackPressed();
-        HSAnalytics.logEvent("app_quit_way", "app_quit_way" ,"back");
-        HSAnalytics.logGoogleAnalyticsEvent("app","alertdialog","app_quit_way","back",null,null,null);
+        HSAnalytics.logEvent("app_quit_way", "app_quit_way", "back");
+        HSAnalytics.logGoogleAnalyticsEvent("app", "alertdialog", "app_quit_way", "back", null, null, null);
         finishActivity();
     }
 
