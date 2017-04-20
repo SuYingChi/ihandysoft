@@ -34,6 +34,7 @@ public class AdLoadingView extends RelativeLayout implements NativeAdView.OnAdLo
     public TextView tvApply;
     private int delayAfterDownloadComplete;
     private ImageView progressBar;
+    private boolean progressComplete;
 
     //下载延迟常量
     private static final int DELAY_PERCENT_AFTER_DOWNLOAD_COMPLETE = 5;
@@ -47,7 +48,7 @@ public class AdLoadingView extends RelativeLayout implements NativeAdView.OnAdLo
 
 
     public interface OnAdBufferingListener {
-        void onDismiss();
+        void onDismiss(boolean progressComplete);
     }
 
     private String[] onLoadingText = {"Applying...", "Applying SuccessFully"};
@@ -184,7 +185,9 @@ public class AdLoadingView extends RelativeLayout implements NativeAdView.OnAdLo
 
                 tvApply.setText(onLoadingText[1]);
 
+                progressBar.setVisibility(INVISIBLE);
                 findViewById(R.id.iv_close).setVisibility(VISIBLE);
+                progressComplete = true;
             }
 
             @Override
