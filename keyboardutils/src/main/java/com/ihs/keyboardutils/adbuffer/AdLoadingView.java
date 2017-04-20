@@ -219,7 +219,7 @@ public class AdLoadingView extends RelativeLayout implements NativeAdView.OnAdLo
         dialog.setOnDismissListener(new DialogInterface.OnDismissListener() {
             @Override
             public void onDismiss(DialogInterface dialog) {
-                onAdBufferingListener.onDismiss();
+                onAdBufferingListener.onDismiss(progressComplete);
             }
         });
     }
@@ -235,7 +235,7 @@ public class AdLoadingView extends RelativeLayout implements NativeAdView.OnAdLo
         }
 
         if (dialog == null) {
-            onAdBufferingListener.onDismiss();
+            onAdBufferingListener.onDismiss(progressComplete);
         } else {
             dialog.dismiss();
         }
