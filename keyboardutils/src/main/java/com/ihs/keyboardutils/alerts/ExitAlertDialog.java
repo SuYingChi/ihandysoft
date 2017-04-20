@@ -69,7 +69,7 @@ class ExitAlertDialog extends AlertDialog implements View.OnClickListener {
         if (sponsorView != null) {
             FrameLayout nativeAdViewContainer = (FrameLayout) findViewById(R.id.native_ad_container);
             if (alterViewStyle == EXIT_ALERT_STYLE_1 && sponsorView != null) {
-                nativeAdViewContainer.addView(sponsorView);
+                nativeAdViewContainer.addView(sponsorView, new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT));
             } else {
                 nativeAdViewContainer.addView(sponsorView, new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, (int) (calculateAdWidth() / 1.6)));
             }

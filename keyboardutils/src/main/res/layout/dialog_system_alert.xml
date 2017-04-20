@@ -100,7 +100,7 @@
                 android:layout_weight="1"
                 android:maxLines="2"
                 android:text="@string/exit_alert_exit_button_text"
-                android:textColor="#007eff" />
+                android:textColor="@color/ad_exit_alert_button_green" />
 
         </LinearLayout>
     </LinearLayout>
