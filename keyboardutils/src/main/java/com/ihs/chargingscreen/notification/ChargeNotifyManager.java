@@ -22,6 +22,8 @@ import com.ihs.chargingscreen.notification.push.FullChargedPush;
 import com.ihs.chargingscreen.notification.push.WarningPush;
 import com.ihs.chargingscreen.utils.ChargingManagerUtil;
 import com.ihs.chargingscreen.utils.ChargingPrefsUtil;
+import com.ihs.chargingscreen.utils.FeatureDelayReleaseUtil;
+import com.ihs.commons.config.HSConfig;
 import com.ihs.commons.notificationcenter.HSGlobalNotificationCenter;
 import com.ihs.commons.notificationcenter.INotificationObserver;
 import com.ihs.commons.utils.HSBundle;
@@ -41,6 +43,7 @@ public class ChargeNotifyManager {
 
     private static final int INTERVAL_TIME_OF_SHOW_PUSH_LOW_VOLTAGE = 10 * 60 * 1000;
     private static final int PUSH_FULL_CHARGED_MAX_SHOWED_COUNT = 5;
+    private static final String PREF_APP_FIRST_TRY_TO_CHARGING = "pref_app_first_try_to_charging";
 
     public static final int PUSH_FULL_CHARGE_PRIORITY = 0x20;
     public static final int PUSH_BATTERY_DOCTOR_PRIORITY = 0x10;
@@ -102,8 +105,9 @@ public class ChargeNotifyManager {
             }
 
             if (Intent.ACTION_SCREEN_OFF.equals(intent.getAction())) {
-
-                if (HSChargingManager.getInstance().isCharging()) {
+                int delayHours = HSConfig.optInteger(0, "Application", "ChargeLocker", "EnableStatus", "HoursFromFirstUse");
+                boolean chargingReadyToWork = isReady(PREF_APP_FIRST_TRY_TO_CHARGING, delayHours);
+                if (HSChargingManager.getInstance().isCharging() && chargingReadyToWork) {
                     Intent intent1 = new Intent(context, ChargingScreenActivity.class);
                     intent1.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                     context.startActivity(intent1);
@@ -111,6 +115,15 @@ public class ChargeNotifyManager {
             }
         }
     };
+
+    private boolean isReady(String key, int delayHours) {
+        boolean chargingReadyToWork = FeatureDelayReleaseUtil.checkFeatureReadyToWork(key, delayHours);
+        if (ChargingPrefsUtil.getInstance().isChargingEnableByUser()) {
+            return true;
+        }
+        int moduleStates = HSConfig.optInteger(ChargingPrefsUtil.CHARGING_MUTED, "Application", "ChargeLocker", "EnableStatus", "state");
+        return moduleStates != ChargingPrefsUtil.CHARGING_DEFAULT_ACTIVE || chargingReadyToWork;
+    }
 
     private ChargeNotifyManager() {
 
