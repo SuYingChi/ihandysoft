@@ -40,8 +40,8 @@
         android:id="@+id/share_list"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="@dimen/share_layout_recycler_martin_top"
-        android:layout_marginTop="@dimen/share_layout_recycler_martin_bottom"
+        android:layout_marginBottom="@dimen/share_layout_recycler_margin_top"
+        android:layout_marginTop="@dimen/share_layout_recycler_margin_bottom"
         android:clipToPadding="false"
         android:paddingLeft="@dimen/share_layout_recycler_padding_left"
         android:paddingRight="@dimen/share_layout_recycler_padding_left" />

@@ -11,8 +11,8 @@
 
     <dimen name="share_item_column_space">16dp</dimen>
     <dimen name="share_layout_title_height">56dp</dimen>
-    <dimen name="share_layout_recycler_martin_top">15dp</dimen>
-    <dimen name="share_layout_recycler_martin_bottom">15dp</dimen>
+    <dimen name="share_layout_recycler_margin_top">10dp</dimen>
+    <dimen name="share_layout_recycler_margin_bottom">10dp</dimen>
     <dimen name="share_layout_recycler_padding_left">15dp</dimen>
     <dimen name="share_ad_icon_height">54dp</dimen>
     <dimen name="share_ad_icon_margin_top">-20dp</dimen>

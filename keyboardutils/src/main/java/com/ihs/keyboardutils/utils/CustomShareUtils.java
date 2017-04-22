@@ -46,19 +46,24 @@ public class CustomShareUtils {
     private final static float SHARE_COLUMN_ITEM_COUNT_PORTRAIT = 4.5f;
     private final static float SHARE_COLUMN_ITEM_COUNT_LANDSCAPE = 7.5f;
 
-    public static Dialog shareImage(final Activity activity,Uri uri ,String adPlaceName){
-        ArrayList<Uri> uriList = new ArrayList<>();
-        uriList.add(uri);
-        return shareImage(activity,uriList,adPlaceName);
+    public static Dialog shareImage(final Activity activity, Uri uri, String adPlaceName) {
+        Intent shareIntent = new Intent();
+        shareIntent.setAction(Intent.ACTION_SEND);
+        shareIntent.putExtra(Intent.EXTRA_STREAM, uri);
+        shareIntent.setType("image/*");
+        return shareImage(activity, shareIntent, uri, adPlaceName);
     }
 
-    public static Dialog shareImage(final Activity activity, ArrayList<Uri> uriList ,String adPlaceName) {
-        Resources resources = activity.getResources();
-
+    public static Dialog shareImage(final Activity activity, ArrayList<Uri> uriList, String adPlaceName) {
         Intent shareIntent = new Intent();
         shareIntent.setAction(Intent.ACTION_SEND_MULTIPLE);
         shareIntent.putParcelableArrayListExtra(Intent.EXTRA_STREAM, uriList);
         shareIntent.setType("image/*");
+        return shareImage(activity, shareIntent, uriList.get(0), adPlaceName);
+    }
+
+    private static Dialog shareImage(final Activity activity, Intent shareIntent, Uri previewUri, String adPlaceName) {
+        Resources resources = activity.getResources();
 
         PackageManager pm = activity.getPackageManager();
         List<ResolveInfo> resolveInfoList = pm.queryIntentActivities(shareIntent, 0);
@@ -71,9 +76,9 @@ public class CustomShareUtils {
         int itemWidth = (int) (resources.getDisplayMetrics().widthPixels * 1.0f / SHARE_COLUMN_ITEM_COUNT_PORTRAIT) - resources.getDimensionPixelSize(R.dimen.share_item_column_space);
         //处理横屏
         if (resources.getConfiguration().orientation == Configuration.ORIENTATION_LANDSCAPE) {
-            itemWidth = (int) ((resources.getDisplayMetrics().widthPixels * 1.0f  / SHARE_COLUMN_ITEM_COUNT_LANDSCAPE)) - resources.getDimensionPixelSize(R.dimen.share_item_column_space);
-            adLoadingView.setLayoutParams(new FrameLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,(int) (resources.getDisplayMetrics().heightPixels -  resources.getDimension(R.dimen.share_layout_title_height)
-                    - resources.getDimension(R.dimen.share_layout_recycler_martin_top) - resources.getDimension(R.dimen.share_layout_recycler_martin_bottom) - itemWidth)));
+            itemWidth = (int) ((resources.getDisplayMetrics().widthPixels * 1.0f / SHARE_COLUMN_ITEM_COUNT_LANDSCAPE)) - resources.getDimensionPixelSize(R.dimen.share_item_column_space);
+            adLoadingView.setLayoutParams(new FrameLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, (int) (resources.getDisplayMetrics().heightPixels - resources.getDimension(R.dimen.share_layout_title_height)
+                    - resources.getDimension(R.dimen.share_layout_recycler_margin_top) - resources.getDimension(R.dimen.share_layout_recycler_margin_bottom) - itemWidth)));
         } else {
             adLoadingView.setLayoutParams(new FrameLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, (int) (resources.getDisplayMetrics().widthPixels * 1.0f / 1.9f
                     + Math.abs(resources.getDimension(R.dimen.share_ad_icon_margin_top)) + resources.getDimension(R.dimen.share_ad_title_height)
@@ -82,7 +87,7 @@ public class CustomShareUtils {
                     + resources.getDimension(R.dimen.share_ad_cation_margin_top))));
         }
 
-        HSAlertDialog build = HSAlertDialog.build(activity,R.style.DialogSlideUpFromBottom);
+        HSAlertDialog build = HSAlertDialog.build(activity, R.style.DialogSlideUpFromBottom);
         build.setView(view);
         final AlertDialog dialog = build.create();
         Window window = dialog.getWindow();
@@ -96,10 +101,10 @@ public class CustomShareUtils {
         window.setBackgroundDrawable(new ColorDrawable(android.graphics.Color.TRANSPARENT));
 
         ImageView imageView = (ImageView) view.findViewById(R.id.share_image);
-        imageView.setImageURI(uriList.get(0));
+        imageView.setImageURI(previewUri);
 
         RecyclerView recyclerView = (RecyclerView) view.findViewById(R.id.share_list);
-        ShareAdapter shareAdapter = new ShareAdapter(activity, dialog, uriList, resolveInfoList, itemWidth);
+        ShareAdapter shareAdapter = new ShareAdapter(activity, dialog, shareIntent, resolveInfoList, itemWidth);
         recyclerView.setLayoutManager(new LinearLayoutManager(activity, LinearLayoutManager.HORIZONTAL, false));
         recyclerView.setAdapter(shareAdapter);
         recyclerView.addItemDecoration(new ShareItemDecoration(resources.getDimensionPixelSize(R.dimen.share_item_column_space)));
@@ -131,15 +136,11 @@ public class CustomShareUtils {
     }
 
 
-
     private static List<ResolveInfo> getFilteredShareList(List<ResolveInfo> resolveInfoList) {
         List<ResolveInfo> filteredResolveInfoList = new ArrayList();
         //优先级排前的应用包名列表
         String[] priorityFirstList = new String[]{"com.whatsapp", "com.snapchat.android", "com.facebook.katana", "com.instagram.android", "com.facebook.orca", "com.twitter.android", "com.android.mms", "com.tumblr", "com.pinterest", "com.google.android.gm"};
-        ResolveInfo[] priorityResolveInfoList = new ResolveInfo[priorityFirstList.length];
-
-        //黑名单关键字列表
-        String[] blacklist = new String[]{"bluetooth" /** 蓝牙 */, "com.android.nfc"/** Android Beam */, "calendar"/** 日历 */};
+        PriorityResolveInfo[] priorityResolveInfoList = new PriorityResolveInfo[priorityFirstList.length];
 
         if (!resolveInfoList.isEmpty()) {
             for (ResolveInfo resolveInfo : resolveInfoList) {
@@ -147,16 +148,7 @@ public class CustomShareUtils {
                 if (resolveInfo.activityInfo == null)
                     continue;
 
-                boolean isContainBlackList = false;
                 boolean isPriority = false;
-                //找出在黑名单中的应用
-                for (String keyword : blacklist) {
-                    if (packageName.contains(keyword)) {
-                        isContainBlackList = true;
-                        break;
-                    }
-                }
-
                 //找出优先级排前的应用，并将其位置记录
                 int index = 0;
                 for (int i = 0; i < priorityResolveInfoList.length; i++) {
@@ -168,12 +160,11 @@ public class CustomShareUtils {
 
                 }
 
-                if (isContainBlackList) {
-                    continue;
-                }
-
                 if (isPriority) {
-                    priorityResolveInfoList[index] = resolveInfo;
+                    if (priorityResolveInfoList[index] == null) {
+                        priorityResolveInfoList[index] = new PriorityResolveInfo();
+                    }
+                    priorityResolveInfoList[index].addResolveInfo(resolveInfo);
                     continue;
                 }
 
@@ -184,23 +175,38 @@ public class CustomShareUtils {
 
         for (int i = priorityResolveInfoList.length - 1; i >= 0; i--) {
             if (priorityResolveInfoList[i] != null) {
-                filteredResolveInfoList.add(0, priorityResolveInfoList[i]);
+                filteredResolveInfoList.addAll(0, priorityResolveInfoList[i].getResolveInfoList());
             }
         }
         return filteredResolveInfoList;
     }
 
+    private static class PriorityResolveInfo {
+        List<ResolveInfo> resolveInfoList;
+
+        public List<ResolveInfo> getResolveInfoList() {
+            return resolveInfoList;
+        }
+
+        public void addResolveInfo(ResolveInfo resolveInfo) {
+            if (resolveInfoList == null) {
+                resolveInfoList = new ArrayList<>();
+            }
+            resolveInfoList.add(resolveInfo);
+        }
+    }
+
     private static class ShareAdapter extends RecyclerView.Adapter<ShareViewHolder> {
         Context context;
         AlertDialog dialog;
-        ArrayList<Uri>  uriList;
+        Intent shareIntent;
         List<ResolveInfo> resolveInfoList;
         int itemWidth;
 
-        public ShareAdapter(Context context, AlertDialog dialog, ArrayList<Uri> uriList, List<ResolveInfo> resolveInfoList, int width) {
+        public ShareAdapter(Context context, AlertDialog dialog, Intent shareIntent, List<ResolveInfo> resolveInfoList, int width) {
             this.context = context;
             this.dialog = dialog;
-            this.uriList = uriList;
+            this.shareIntent = shareIntent;
             this.resolveInfoList = resolveInfoList;
             this.itemWidth = width;
         }
@@ -208,7 +214,7 @@ public class CustomShareUtils {
         @Override
         public ShareViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
             View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.share_app_item, parent, false);
-            view.setLayoutParams(new RecyclerView.LayoutParams(itemWidth, itemWidth));
+            view.setLayoutParams(new RecyclerView.LayoutParams(itemWidth, (int) (itemWidth * 1.3f)));
             return new ShareViewHolder(view);
         }
 
@@ -216,16 +222,11 @@ public class CustomShareUtils {
         public void onBindViewHolder(ShareViewHolder holder, int position) {
             final ResolveInfo resolveInfo = resolveInfoList.get(position);
             PackageManager packageManager = HSApplication.getContext().getPackageManager();
-            holder.shareAppIcon.setImageDrawable(resolveInfo.activityInfo.applicationInfo.loadIcon(packageManager));
-            holder.shareAppLabel.setText(resolveInfo.activityInfo.applicationInfo.loadLabel(packageManager));
+            holder.shareAppIcon.setImageDrawable(resolveInfo.loadIcon(packageManager));
+            holder.shareAppLabel.setText(resolveInfo.loadLabel(packageManager));
             holder.itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    Intent shareIntent = new Intent();
-                    shareIntent.setAction(Intent.ACTION_SEND_MULTIPLE);
-                    shareIntent.putParcelableArrayListExtra(Intent.EXTRA_STREAM, uriList);
-                    shareIntent.setType("image/*");
-
                     ActivityInfo activity = resolveInfo.activityInfo;
                     ComponentName name = new ComponentName(activity.applicationInfo.packageName,
                             activity.name);
