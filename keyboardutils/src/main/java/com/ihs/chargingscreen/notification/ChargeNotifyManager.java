@@ -105,7 +105,7 @@ public class ChargeNotifyManager {
             }
 
             if (Intent.ACTION_SCREEN_OFF.equals(intent.getAction())) {
-                int delayHours = HSConfig.optInteger(0, "Application", "ChargeLocker", "EnableStatus", "HoursFromFirstUse");
+                int delayHours = HSConfig.optInteger(0, "Application", "ChargeLocker", "HoursFromFirstUse");
                 boolean chargingReadyToWork = isReady(PREF_APP_FIRST_TRY_TO_CHARGING, delayHours);
                 if (HSChargingManager.getInstance().isCharging() && chargingReadyToWork) {
                     Intent intent1 = new Intent(context, ChargingScreenActivity.class);
@@ -121,7 +121,7 @@ public class ChargeNotifyManager {
         if (ChargingPrefsUtil.getInstance().isChargingEnableByUser()) {
             return true;
         }
-        int moduleStates = HSConfig.optInteger(ChargingPrefsUtil.CHARGING_MUTED, "Application", "ChargeLocker", "EnableStatus", "state");
+        int moduleStates = HSConfig.optInteger(ChargingPrefsUtil.CHARGING_MUTED, "Application", "ChargeLocker", "state");
         return moduleStates != ChargingPrefsUtil.CHARGING_DEFAULT_ACTIVE || chargingReadyToWork;
     }
 
