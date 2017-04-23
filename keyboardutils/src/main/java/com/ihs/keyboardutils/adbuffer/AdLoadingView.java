@@ -180,6 +180,9 @@ public class AdLoadingView extends RelativeLayout implements NativeAdView.OnAdLo
             public void onAnimationEnd(Animator animation) {
                 if (!hasPurchaseNoAds) {
                     ViewGroup adContainer = (ViewGroup) findViewById(R.id.fl_ad_container);
+                    if (nativeAdView.getParent() != null) {
+                        ((ViewGroup) nativeAdView.getParent()).removeView(nativeAdView);
+                    }
                     adContainer.addView(nativeAdView);
                 }
 
