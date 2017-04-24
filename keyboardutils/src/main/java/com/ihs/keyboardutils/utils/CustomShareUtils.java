@@ -46,33 +46,33 @@ public class CustomShareUtils {
     private final static float SHARE_COLUMN_ITEM_COUNT_PORTRAIT = 4.5f;
     private final static float SHARE_COLUMN_ITEM_COUNT_LANDSCAPE = 7.5f;
 
-    public static Dialog shareImage(final Activity activity, Uri uri, String adPlaceName) {
+    public static Dialog shareImage(final Context context, Uri uri, String adPlaceName) {
         Intent shareIntent = new Intent();
         shareIntent.setAction(Intent.ACTION_SEND);
         shareIntent.putExtra(Intent.EXTRA_STREAM, uri);
         shareIntent.setType("image/*");
-        return shareImage(activity, shareIntent, uri, adPlaceName);
+        return shareImage(context, shareIntent, uri, adPlaceName);
     }
 
-    public static Dialog shareImage(final Activity activity, ArrayList<Uri> uriList, String adPlaceName) {
+    public static Dialog shareImage(final Context context, ArrayList<Uri> uriList, String adPlaceName) {
         Intent shareIntent = new Intent();
         shareIntent.setAction(Intent.ACTION_SEND_MULTIPLE);
         shareIntent.putParcelableArrayListExtra(Intent.EXTRA_STREAM, uriList);
         shareIntent.setType("image/*");
-        return shareImage(activity, shareIntent, uriList.get(0), adPlaceName);
+        return shareImage(context, shareIntent, uriList.get(0), adPlaceName);
     }
 
-    private static Dialog shareImage(final Activity activity, Intent shareIntent, Uri previewUri, String adPlaceName) {
-        Resources resources = activity.getResources();
+    private static Dialog shareImage(final Context context, Intent shareIntent, Uri previewUri, String adPlaceName) {
+        Resources resources = context.getResources();
 
-        PackageManager pm = activity.getPackageManager();
+        PackageManager pm = context.getPackageManager();
         List<ResolveInfo> resolveInfoList = pm.queryIntentActivities(shareIntent, 0);
         resolveInfoList = getFilteredShareList(resolveInfoList);
 
-        View view = View.inflate(activity, R.layout.share_layout, null);
+        View view = View.inflate(context, R.layout.share_layout, null);
         FrameLayout shareAdContainer = (FrameLayout) view.findViewById(R.id.share_ad_container);
 
-        View adLoadingView = View.inflate(activity, R.layout.ad_default_loading, null);
+        View adLoadingView = View.inflate(context, R.layout.ad_default_loading, null);
         int itemWidth = (int) (resources.getDisplayMetrics().widthPixels * 1.0f / SHARE_COLUMN_ITEM_COUNT_PORTRAIT) - resources.getDimensionPixelSize(R.dimen.share_item_column_space);
         //处理横屏
         if (resources.getConfiguration().orientation == Configuration.ORIENTATION_LANDSCAPE) {
@@ -87,7 +87,7 @@ public class CustomShareUtils {
                     + resources.getDimension(R.dimen.share_ad_cation_margin_top))));
         }
 
-        HSAlertDialog build = HSAlertDialog.build(activity, R.style.DialogSlideUpFromBottom);
+        HSAlertDialog build = HSAlertDialog.build(context, R.style.DialogSlideUpFromBottom);
         build.setView(view);
         final AlertDialog dialog = build.create();
         Window window = dialog.getWindow();
@@ -104,21 +104,21 @@ public class CustomShareUtils {
         imageView.setImageURI(previewUri);
 
         RecyclerView recyclerView = (RecyclerView) view.findViewById(R.id.share_list);
-        ShareAdapter shareAdapter = new ShareAdapter(activity, dialog, shareIntent, resolveInfoList, itemWidth);
-        recyclerView.setLayoutManager(new LinearLayoutManager(activity, LinearLayoutManager.HORIZONTAL, false));
+        ShareAdapter shareAdapter = new ShareAdapter(context, dialog, shareIntent, resolveInfoList, itemWidth);
+        recyclerView.setLayoutManager(new LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false));
         recyclerView.setAdapter(shareAdapter);
         recyclerView.addItemDecoration(new ShareItemDecoration(resources.getDimensionPixelSize(R.dimen.share_item_column_space)));
 
-        final View shareAdView = View.inflate(activity, R.layout.ad_share, null);
+        final View shareAdView = View.inflate(context, R.layout.ad_share, null);
         View adActionView = shareAdView.findViewById(R.id.ad_call_to_action);
         adActionView.setBackgroundDrawable(RippleDrawableUtils.getCompatRippleDrawable(resources.getColor(R.color.ad_share_action_button_bg), resources.getDimension(R.dimen.corner_radius)));
         shareAdView.setLayoutParams(new FrameLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT));
 
-        final NativeAdView nativeAdView = new NativeAdView(activity, shareAdView, adLoadingView);
+        final NativeAdView nativeAdView = new NativeAdView(context, shareAdView, adLoadingView);
         nativeAdView.setOnAdClickedListener(new NativeAdView.OnAdClickedListener() {
             @Override
             public void onAdClicked(NativeAdView adView) {
-                dismissDialog(activity, dialog);
+                dismissDialog(context, dialog);
             }
         });
         nativeAdView.configParams(new NativeAdParams(adPlaceName, resources.getDisplayMetrics().widthPixels, 1.9f));
@@ -231,10 +231,11 @@ public class CustomShareUtils {
                     ComponentName name = new ComponentName(activity.applicationInfo.packageName,
                             activity.name);
                     shareIntent.addCategory(Intent.CATEGORY_LAUNCHER);
-                    shareIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK |
-                            Intent.FLAG_ACTIVITY_RESET_TASK_IF_NEEDED);
                     shareIntent.setComponent(name);
-                    HSApplication.getContext().startActivity(shareIntent);
+                    if(!(context instanceof Activity)) {
+                        shareIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                    }
+                    context.startActivity(shareIntent);
 
                     dismissDialog(context, dialog);
 

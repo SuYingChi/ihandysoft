@@ -52,6 +52,10 @@ public class HSAlertDialog {
         return new HSAlertDialog(activity, style);
     }
 
+    public static HSAlertDialog build(@NonNull Context activity, int style) {
+        return new HSAlertDialog(activity, style);
+    }
+
     public HSAlertDialog setTitle(String title) {
         builder.setTitle(title);
         return this;
