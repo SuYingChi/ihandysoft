@@ -63,11 +63,15 @@ public class CustomShareUtils {
     }
 
     public static Dialog shareImage(final Context context, ArrayList<Uri> uriList, String adPlaceName) {
+        return shareImage(context, uriList, adPlaceName, null);
+    }
+
+    public static Dialog shareImage(final Context context, ArrayList<Uri> uriList, String adPlaceName, OnShareItemClickedListener shareItemClickedListener) {
         Intent shareIntent = new Intent();
         shareIntent.setAction(Intent.ACTION_SEND_MULTIPLE);
         shareIntent.putParcelableArrayListExtra(Intent.EXTRA_STREAM, uriList);
         shareIntent.setType("image/*");
-        return shareImage(context, shareIntent, uriList.get(0), adPlaceName, null);
+        return shareImage(context, shareIntent, uriList.get(0), adPlaceName, shareItemClickedListener);
     }
 
     private static Dialog shareImage(final Context context, Intent shareIntent, Uri previewUri, String adPlaceName, OnShareItemClickedListener shareItemClickedListener) {
