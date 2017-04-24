@@ -5,6 +5,7 @@ import android.content.Context;
 import android.graphics.Point;
 import android.graphics.Rect;
 import android.os.Handler;
+import android.support.annotation.NonNull;
 import android.text.TextUtils;
 import android.view.View;
 import android.view.ViewGroup;
@@ -20,72 +21,56 @@ import com.acb.adadapter.AcbNativeAd;
 import com.acb.adadapter.ContainerView.AcbNativeAdContainerView;
 import com.acb.adadapter.ContainerView.AcbNativeAdIconView;
 import com.acb.adadapter.ContainerView.AcbNativeAdPrimaryView;
+import com.acb.nativeads.AcbNativeAdLoader;
 import com.ihs.app.analytics.HSAnalytics;
 import com.ihs.app.framework.HSApplication;
+import com.ihs.commons.utils.HSError;
 import com.ihs.commons.utils.HSLog;
 import com.ihs.keyboardutils.R;
 
 import java.util.List;
 
-import static android.R.attr.value;
-
 public class NativeAdView extends FrameLayout {
 
     public interface OnAdLoadedListener {
-        public void onAdLoaded(NativeAdView adView);
+        void onAdLoaded(NativeAdView adView);
     }
 
     public interface OnAdClickedListener {
-        public void onAdClicked(NativeAdView adView);
-    }
-
-    public abstract class OnFirstAdRespondListener {
-
-        private AcbNativeAd ad;
-        private long remainingAdDisplayDuration;
-
-        public abstract void onAdResponse(NativeAdView nativeAdView);
-
-        public void onAdResponseFinished() {
-            adLoaded(ad, remainingAdDisplayDuration);
-            setOnFirstAdRespondListener(null);
-        }
+        void onAdClicked(NativeAdView adView);
     }
 
     public enum NativeAdType {
         ICON, NORMAL
     }
 
-    private View viewGroup;
+    private View adLayoutView;
     private View loadingView;
+
+    private AcbNativeAdLoader adLoader;
+    private AcbNativeAd nativeAd;
+    private AcbNativeAdContainerView nativeAdContainerView;
 
     private NativeAdParams nativeAdParams;
 
-    private AcbNativeAdContainerView nativeAdContainerView;
     private ViewTreeObserver.OnScrollChangedListener onScrollChangedListener;
 
     private OnAdLoadedListener adLoadedListener;
     private OnAdClickedListener adClickedListener;
-    private OnFirstAdRespondListener firstAdRespondListener;
 
     private boolean isPaused = true;
 
-    private int currentNativeAdHashCode;
     private static Handler handler = new Handler();
 
     private boolean adLoaded = false;
-    private long firstAdLoadedTime = 0;
     private long resumeTime = 0;
     private long currentAdDisplayDurationBeforeResume = 0;
-    private long totalAdDisplayDurationBeforeRefresh = 0;
-    private long currentAdDisplayLimit = 0;
 
     private NativeAdType nativeAdType = NativeAdType.NORMAL;
 
     private Runnable displayFinishRunnable = new Runnable() {
         @Override
         public void run() {
-            NativeAdManager.getInstance().markAdAsFinished(nativeAdParams.getPlacementName());
             refresh();
         }
     };
@@ -96,13 +81,8 @@ public class NativeAdView extends FrameLayout {
 
     public NativeAdView(Context context, View viewGroup, View loadingView) {
         super(context);
-        this.viewGroup = viewGroup;
+        this.adLayoutView = viewGroup;
         this.loadingView = loadingView;
-    }
-
-    public static boolean isLocalAdAvailable(Context context, String placementName) {
-        AcbNativeAd ad = NativeAdManager.getInstance().loadLocalNativeAd(context, placementName);
-        return (ad != null);
     }
 
     public boolean isAdLoaded() {
@@ -125,14 +105,6 @@ public class NativeAdView extends FrameLayout {
         return this.adClickedListener;
     }
 
-    public OnFirstAdRespondListener getOnFirstAdRespondListener() {
-        return firstAdRespondListener;
-    }
-
-    public void setOnFirstAdRespondListener(OnFirstAdRespondListener adRespondListener) {
-        this.firstAdRespondListener = adRespondListener;
-    }
-
     public void setNativeAdType(NativeAdType nativeAdType) {
         this.nativeAdType = nativeAdType;
     }
@@ -140,7 +112,7 @@ public class NativeAdView extends FrameLayout {
     public void configParams(NativeAdParams nativeAdParams) {
         this.nativeAdParams = nativeAdParams;
 
-        initNativeAdContainerView(viewGroup);
+        initNativeAdContainerView(adLayoutView);
 
         onScrollChangedListener = new ViewTreeObserver.OnScrollChangedListener() {
 
@@ -154,7 +126,6 @@ public class NativeAdView extends FrameLayout {
             addView(this.loadingView);
         }
 
-        NativeAdManager.getInstance().setRereshInterval(nativeAdParams.getPlacementName(),nativeAdParams.getRefreshInterval());
         refresh();
     }
 
@@ -169,40 +140,34 @@ public class NativeAdView extends FrameLayout {
         int iconId = getResources().getIdentifier("ad_icon", "id", getContext().getPackageName());
         int subtitleId = getResources().getIdentifier("ad_subtitle", "id", getContext().getPackageName());
 
-        List disabledIcons = NativeAdConfig.getDisabledIconPools();
-
-        View view1 = groupView.findViewById(actionId);
-        if (view1 != null) {
-            nativeAdContainerView.setAdActionView(view1);
+        View view = groupView.findViewById(actionId);
+        if (view != null) {
+            nativeAdContainerView.setAdActionView(view);
         }
-        view1 = groupView.findViewById(titleId);
-        if (view1 != null) {
-            nativeAdContainerView.setAdTitleView((TextView) view1);
+        view = groupView.findViewById(titleId);
+        if (view != null) {
+            nativeAdContainerView.setAdTitleView((TextView) view);
         }
-        view1 = groupView.findViewById(subtitleId);
-        if (view1 != null) {
-            nativeAdContainerView.setAdSubTitleView((TextView) view1);
+        view = groupView.findViewById(subtitleId);
+        if (view != null) {
+            nativeAdContainerView.setAdSubTitleView((TextView) view);
         }
-        view1 = groupView.findViewById(iconId);
-        if (view1 != null) {
-            if (disabledIcons.contains(nativeAdParams.getPlacementName())) {
-                view1.setVisibility(GONE);
-            } else {
-                nativeAdContainerView.setAdIconView((AcbNativeAdIconView) view1);
-            }
+        view = groupView.findViewById(iconId);
+        if (view != null) {
+            nativeAdContainerView.setAdIconView((AcbNativeAdIconView) view);
         }
-        view1 = groupView.findViewById(coverImgId);
-        if (view1 != null) {
-            nativeAdContainerView.setAdPrimaryView((AcbNativeAdPrimaryView) view1);
+        view = groupView.findViewById(coverImgId);
+        if (view != null) {
+            nativeAdContainerView.setAdPrimaryView((AcbNativeAdPrimaryView) view);
         }
-        view1 = groupView.findViewById(choiceId);
-        if (view1 != null) {
-            nativeAdContainerView.setAdChoiceView((FrameLayout) view1);
+        view = groupView.findViewById(choiceId);
+        if (view != null) {
+            nativeAdContainerView.setAdChoiceView((FrameLayout) view);
         }
         addView(nativeAdContainerView);
     }
 
-    private void fillNativeAdContainerView(AcbNativeAd hsNativeAd) {
+    private void fillNativeAdContainerView(AcbNativeAd nativeAd) {
         ViewGroup.LayoutParams layoutParams = nativeAdContainerView.getContentView().getLayoutParams();
         layoutParams.width = ViewGroup.LayoutParams.MATCH_PARENT;
         nativeAdContainerView.getContentView().setLayoutParams(layoutParams);
@@ -219,16 +184,16 @@ public class NativeAdView extends FrameLayout {
         }
 
         if (nativeAdContainerView.getAdSubTitleView() != null) {
-            if (hsNativeAd.getSubtitle() != null && !hsNativeAd.getSubtitle().equals("")) {
-                ((TextView) nativeAdContainerView.getAdSubTitleView()).setText(hsNativeAd.getSubtitle());
-            } else if (hsNativeAd.getBody() != null && !hsNativeAd.getBody().equals("")) {
-                ((TextView) nativeAdContainerView.getAdSubTitleView()).setText(hsNativeAd.getBody());
+            if (nativeAd.getSubtitle() != null && !nativeAd.getSubtitle().equals("")) {
+                ((TextView) nativeAdContainerView.getAdSubTitleView()).setText(nativeAd.getSubtitle());
+            } else if (nativeAd.getBody() != null && !nativeAd.getBody().equals("")) {
+                ((TextView) nativeAdContainerView.getAdSubTitleView()).setText(nativeAd.getBody());
             } else {
                 nativeAdContainerView.getAdSubTitleView().setVisibility(GONE);
             }
         }
 
-        if (TextUtils.isEmpty(hsNativeAd.getIconUrl())) {
+        if (TextUtils.isEmpty(nativeAd.getIconUrl())) {
             if (nativeAdContainerView.getAdIconView() != null) {
                 nativeAdContainerView.getAdIconView().setVisibility(View.GONE);
             }
@@ -258,7 +223,7 @@ public class NativeAdView extends FrameLayout {
     protected void onViewEnviromentChanged() {
         boolean ready = isViewEnviromentReady();
 
-        if (adLoaded) {
+        if (adLoaded && nativeAdParams.getRefreshInterval() > 0) {
             if (ready) {
                 resumeAutoRefreshing();
             } else {
@@ -274,7 +239,7 @@ public class NativeAdView extends FrameLayout {
     }
 
     @Override
-    protected void onVisibilityChanged(View changedView, int visibility) {
+    protected void onVisibilityChanged(@NonNull View changedView, int visibility) {
         super.onVisibilityChanged(changedView, visibility);
         onViewEnviromentChanged();
     }
@@ -303,12 +268,7 @@ public class NativeAdView extends FrameLayout {
     }
 
     private void startAutoRefreshingIfNeeded() {
-        log("resumeAutoRefreshing", "", "");
-
-        totalAdDisplayDurationBeforeRefresh += getCurrentAdDisplayDuration();
-        currentAdDisplayDurationBeforeResume = 0;
-
-        if (isViewEnviromentReady()) {
+        if (isViewEnviromentReady() && nativeAdParams.getRefreshInterval() > 0) {
             isPaused = false;
             resumeTime = System.currentTimeMillis();
             scheduleRefreshing();
@@ -332,7 +292,6 @@ public class NativeAdView extends FrameLayout {
         if (isPaused) {
             return;
         }
-        log("pauseAutoRefreshing", "", "");
 
         isPaused = true;
         handler.removeCallbacks(displayFinishRunnable);
@@ -348,61 +307,52 @@ public class NativeAdView extends FrameLayout {
         }
     }
 
-    private long getTotalAdDisplayDuration() {
-        return totalAdDisplayDurationBeforeRefresh + getCurrentAdDisplayDuration();
-    }
-
     public void release() {
-        if (NativeAdManager.getInstance().getNativeAdProxy(nativeAdParams.getPlacementName()) != null) {
-            NativeAdManager.getInstance().getNativeAdProxy(nativeAdParams.getPlacementName()).setCachedNativeAdShowedTime(getCurrentAdDisplayDuration());
-            log("release", "", "");
+        if (adLoader != null) {
+            adLoader.cancel();
+            adLoader = null;
+        }
+        if (nativeAd != null) {
+            nativeAd.release();
+            nativeAd = null;
         }
     }
 
     private void scheduleRefreshing() {
-        if (!isPaused && currentAdDisplayLimit > 0) {
+        if (!isPaused) {
             handler.removeCallbacks(displayFinishRunnable);
-            handler.postDelayed(displayFinishRunnable, currentAdDisplayLimit - getCurrentAdDisplayDuration());
+            handler.postDelayed(displayFinishRunnable, nativeAdParams.getRefreshInterval() - getCurrentAdDisplayDuration());
         }
     }
 
-    private boolean isRefreshing = false;
-
     private void refresh() {
-        if (isRefreshing) {
+        if (adLoader != null) {
             return;
         }
+
         logAnalyticsEvent("Load");
 
-        isRefreshing = true;
+        adLoader = new AcbNativeAdLoader(getContext().getApplicationContext(), nativeAdParams.getPlacementName());
 
-        NativeAdManager.getInstance().loadNativeAd(getContext(), nativeAdParams.getPlacementName(), new NativeAdManager.AdLoadListener() {
+        adLoader.load(1, new AcbNativeAdLoader.AcbNativeAdLoadListener() {
+
             @Override
-            public void onAdLoaded(final AcbNativeAd ad, final long remainingAdDisplayDuration) {
-                if (firstAdRespondListener != null) {
-                    if (loadingView != null) {
-                        removeView(loadingView);
-                        loadingView = null;
-                    }
-                    firstAdRespondListener.ad = ad;
-                    firstAdRespondListener.remainingAdDisplayDuration = remainingAdDisplayDuration;
-                    firstAdRespondListener.onAdResponse(NativeAdView.this);
-                } else {
-                    adLoaded(ad, remainingAdDisplayDuration);
-                }
+            public void onAdReceived(AcbNativeAdLoader acbNativeAdLoader, List<AcbNativeAd> list) {
+                AcbNativeAd nativeAd = list.get(0);
+                adLoaded(nativeAd);
+            }
+
+            @Override
+            public void onAdFinished(AcbNativeAdLoader acbNativeAdLoader, HSError hsError) {
+                HSLog.e("Load native ad failed: " + hsError);
+                adLoader = null;
             }
         });
     }
 
-    private void adLoaded(final AcbNativeAd ad, final long remainingAdDisplayDuration) {
-        if (firstAdLoadedTime == 0) {
-            firstAdLoadedTime = System.currentTimeMillis();
-        }
-        currentAdDisplayLimit = remainingAdDisplayDuration;
-
+    private void adLoaded(final AcbNativeAd ad) {
+        currentAdDisplayDurationBeforeResume = 0;
         bindDataToView(ad);
-
-        isRefreshing = false;
 
         if (!adLoaded) {
             adLoaded = true;
@@ -418,27 +368,21 @@ public class NativeAdView extends FrameLayout {
     /**
      * 绑定获取的广告数据
      *
-     * @param hsNativeAd
+     * @param nativeAd
      */
-    private void bindDataToView(AcbNativeAd hsNativeAd) {
-        if (nativeAdContainerView != null && hsNativeAd != null) {
-            log("bindDataToView", "NativeAd", hsNativeAd.hashCode() + "");
-            if (currentNativeAdHashCode == hsNativeAd.hashCode()) {
-                return;
-            }
+    private void bindDataToView(AcbNativeAd nativeAd) {
+        if (nativeAdContainerView != null && nativeAd != null) {
             logAnalyticsEvent("Show");
-            currentNativeAdHashCode = hsNativeAd.hashCode();
-            nativeAdContainerView.fillNativeAd(hsNativeAd);
+            nativeAdContainerView.fillNativeAd(nativeAd);
 
             // 调整布局
-            fillNativeAdContainerView(hsNativeAd);
+            fillNativeAdContainerView(nativeAd);
             if (nativeAdType == NativeAdType.ICON) {
                 addScaleAnimTo(nativeAdContainerView);
             }
-            hsNativeAd.setNativeClickListener(new AcbNativeAd.AcbNativeClickListener() {
+            nativeAd.setNativeClickListener(new AcbNativeAd.AcbNativeClickListener() {
                 @Override
                 public void onAdClick(AcbAd acbAd) {
-                    NativeAdManager.getInstance().markAdAsFinished(nativeAdParams.getPlacementName());
                     logAnalyticsEvent("Click");
 
                     if (adClickedListener != null) {
@@ -475,11 +419,6 @@ public class NativeAdView extends FrameLayout {
         int bottom = getMeasuredHeight() + out[1];
         bottom = bottom >= screenRect.bottom ? screenRect.bottom : bottom;
         return new Rect(left, top, right, bottom);
-    }
-
-
-    private void log(String functionName, String key, String value) {
-        HSLog.e(hashCode() + " - " + nativeAdParams.getPlacementName() + " - " + functionName + " : " + key + " - " + value + ": ");
     }
 
     private void logAnalyticsEvent(String actionSuffix) {

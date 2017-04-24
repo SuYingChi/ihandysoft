@@ -9,7 +9,6 @@ import com.ihs.commons.notificationcenter.HSGlobalNotificationCenter;
 import com.ihs.commons.notificationcenter.INotificationObserver;
 import com.ihs.commons.utils.HSBundle;
 import com.ihs.commons.utils.HSLog;
-import com.ihs.keyboardutils.nativeads.NativeAdManager;
 import com.squareup.leakcanary.LeakCanary;
 
 
@@ -60,6 +59,5 @@ public class MyApplication extends HSApplication {
 
     private void onSessionStart() {
         HSLog.e("onSessionStart");
-        NativeAdManager.getInstance();
     }
 }

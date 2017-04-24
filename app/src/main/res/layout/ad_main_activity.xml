@@ -4,132 +4,44 @@
     android:layout_height="match_parent"
     android:orientation="vertical">
 
-
-    <LinearLayout
+    <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical">
+        android:text="广告位列表" />
+
+    <Spinner
+        android:id="@+id/spinner_placement"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+    <Button
+        android:id="@+id/btn_show_ad"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:onClick="showAd"
+        android:text="显示广告" />
+
+    <Button
+        android:id="@+id/btn_close_ad"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:onClick="closeAd"
+        android:text="关闭广告" />
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="300dp"
-            android:background="#ffff0000"
+            android:layout_height="wrap_content"
             android:orientation="vertical">
 
             <LinearLayout
+                android:id="@+id/ad_container"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="vertical">
+                android:orientation="vertical" />
 
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="horizontal">
-
-                    <Button
-                        android:id="@+id/btn_pool_state"
-                        android:layout_width="match_parent"
-                        android:layout_height="50dp"
-                        android:text="查看池子状态" />
-                </LinearLayout>
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="horizontal">
-
-                    <TextView
-
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:text="PoolName:" />
-
-                    <Spinner
-                        android:id="@+id/spinner_poolname"
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1" />
-                </LinearLayout>
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="horizontal">
-
-                    <Button
-                        android:id="@+id/btn_show_ad"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="center_horizontal"
-                        android:onClick="showAd"
-                        android:text="ShowAd" />
-
-                    <Button
-                        android:id="@+id/btn_hide_ad"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="center_horizontal"
-                        android:onClick="hideAd"
-                        android:text="HideAd" />
-                </LinearLayout>
-
-
-            </LinearLayout>
-
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="vertical">
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="当前广告池状态:" />
-
-                <TextView
-                    android:id="@+id/tv_pool_info"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content" />
-            </LinearLayout>
-
-            <TextView
-
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="当前广告展示时间(new/old):" />
-
-            <ListView
-                android:id="@+id/lv_pool_ad_showTime"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_gravity="center_horizontal" />
         </LinearLayout>
-
-        <ScrollView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="vertical">
-
-                <View
-                    android:layout_width="match_parent"
-                    android:layout_height="500dp"
-                    android:background="#ff00ff00" />
-
-                <LinearLayout
-                    android:id="@+id/ad_container"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="vertical"/>
-
-            </LinearLayout>
-        </ScrollView>
-    </LinearLayout>
-
-
+    </ScrollView>
 </LinearLayout>
