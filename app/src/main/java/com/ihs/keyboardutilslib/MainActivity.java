@@ -1,10 +1,13 @@
 package com.ihs.keyboardutilslib;
 
 import android.content.Intent;
+import android.content.pm.ActivityInfo;
 import android.net.Uri;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.Toast;
 
+import com.ihs.app.framework.HSApplication;
 import com.ihs.app.framework.activity.HSActivity;
 import com.ihs.keyboardutils.alerts.ExitAlert;
 import com.ihs.keyboardutils.utils.CustomShareUtils;
@@ -13,7 +16,7 @@ import com.ihs.keyboardutilslib.charginglocker.ChargingLockerSettingsActivity;
 import com.ihs.keyboardutilslib.configfile.ReadConfigSampleActivity;
 import com.ihs.keyboardutilslib.gif.GifViewDemoActivity;
 
-public class MainActivity extends HSActivity {
+public class MainActivity extends HSActivity implements CustomShareUtils.OnShareItemClickedListener{
     private ExitAlert exitAlert;
 
     @Override
@@ -42,7 +45,12 @@ public class MainActivity extends HSActivity {
 
     public void showCustomShare(View view){
         Uri uri = Uri.parse("file:///storage/emulated/0/DCIM/Camera/IMG_20170412_014232854.jpg");
-        CustomShareUtils.shareImage(this,uri,"Colorkey_A(NativeAds)CardAd");
+        CustomShareUtils.shareImage(this, uri, "Colorkey_A(NativeAds)CardAd", this);
+    }
+
+    @Override
+    public void OnShareItemClicked(ActivityInfo activityInfo) {
+        Toast.makeText(HSApplication.getContext(), activityInfo.name, Toast.LENGTH_SHORT).show();
     }
 
     public void showExitDialog(View view) {

@@ -46,12 +46,20 @@ public class CustomShareUtils {
     private final static float SHARE_COLUMN_ITEM_COUNT_PORTRAIT = 4.5f;
     private final static float SHARE_COLUMN_ITEM_COUNT_LANDSCAPE = 7.5f;
 
+    public interface OnShareItemClickedListener {
+        public void OnShareItemClicked(ActivityInfo activityInfo);
+    }
+
     public static Dialog shareImage(final Context context, Uri uri, String adPlaceName) {
+        return shareImage(context, uri, adPlaceName, null);
+    }
+
+    public static Dialog shareImage(final Context context, Uri uri, String adPlaceName, OnShareItemClickedListener shareItemClickedListener) {
         Intent shareIntent = new Intent();
         shareIntent.setAction(Intent.ACTION_SEND);
         shareIntent.putExtra(Intent.EXTRA_STREAM, uri);
         shareIntent.setType("image/*");
-        return shareImage(context, shareIntent, uri, adPlaceName);
+        return shareImage(context, shareIntent, uri, adPlaceName, shareItemClickedListener);
     }
 
     public static Dialog shareImage(final Context context, ArrayList<Uri> uriList, String adPlaceName) {
@@ -59,10 +67,10 @@ public class CustomShareUtils {
         shareIntent.setAction(Intent.ACTION_SEND_MULTIPLE);
         shareIntent.putParcelableArrayListExtra(Intent.EXTRA_STREAM, uriList);
         shareIntent.setType("image/*");
-        return shareImage(context, shareIntent, uriList.get(0), adPlaceName);
+        return shareImage(context, shareIntent, uriList.get(0), adPlaceName, null);
     }
 
-    private static Dialog shareImage(final Context context, Intent shareIntent, Uri previewUri, String adPlaceName) {
+    private static Dialog shareImage(final Context context, Intent shareIntent, Uri previewUri, String adPlaceName, OnShareItemClickedListener shareItemClickedListener) {
         Resources resources = context.getResources();
 
         PackageManager pm = context.getPackageManager();
@@ -104,7 +112,7 @@ public class CustomShareUtils {
         imageView.setImageURI(previewUri);
 
         RecyclerView recyclerView = (RecyclerView) view.findViewById(R.id.share_list);
-        ShareAdapter shareAdapter = new ShareAdapter(context, dialog, shareIntent, resolveInfoList, itemWidth);
+        ShareAdapter shareAdapter = new ShareAdapter(context, dialog, shareIntent, resolveInfoList, itemWidth, shareItemClickedListener);
         recyclerView.setLayoutManager(new LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false));
         recyclerView.setAdapter(shareAdapter);
         recyclerView.addItemDecoration(new ShareItemDecoration(resources.getDimensionPixelSize(R.dimen.share_item_column_space)));
@@ -202,13 +210,15 @@ public class CustomShareUtils {
         Intent shareIntent;
         List<ResolveInfo> resolveInfoList;
         int itemWidth;
+        OnShareItemClickedListener shareItemClickedListener;
 
-        public ShareAdapter(Context context, AlertDialog dialog, Intent shareIntent, List<ResolveInfo> resolveInfoList, int width) {
+        public ShareAdapter(Context context, AlertDialog dialog, Intent shareIntent, List<ResolveInfo> resolveInfoList, int width, OnShareItemClickedListener shareItemClickedListener) {
             this.context = context;
             this.dialog = dialog;
             this.shareIntent = shareIntent;
             this.resolveInfoList = resolveInfoList;
             this.itemWidth = width;
+            this.shareItemClickedListener = shareItemClickedListener;
         }
 
         @Override
@@ -239,6 +249,9 @@ public class CustomShareUtils {
 
                     dismissDialog(context, dialog);
 
+                    if (null != shareItemClickedListener) {
+                        shareItemClickedListener.OnShareItemClicked(activity);
+                    }
                     HSAnalytics.logEvent("share_app_clicked", "appName", resolveInfo.activityInfo.applicationInfo.loadLabel(HSApplication.getContext().getPackageManager()).toString());
                 }
             });
