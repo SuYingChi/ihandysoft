@@ -73,6 +73,9 @@
             android:enabled="true"
             android:exported="false" />
 
+        <activity
+            android:name=".charginglocker.ChargingLockerSettingsActivity"
+            android:label="@string/title_activity_charging_locker_settings"></activity>
     </application>
 
 </manifest>

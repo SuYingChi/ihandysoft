@@ -44,4 +44,9 @@
         android:layout_height="wrap_content"
         android:onClick="showExitDialog"
         android:text="showExitDialog" />
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:onClick="chargingLockerSetting"
+        android:text="chargingLockerSetting" />
 </LinearLayout>

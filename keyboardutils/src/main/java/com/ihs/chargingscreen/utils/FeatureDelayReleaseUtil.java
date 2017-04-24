@@ -17,7 +17,6 @@ public final class FeatureDelayReleaseUtil {
         if (!preferences.contains(featureName)) {
             appFirstLaunchTime = currentTime;
             preferences.putLong(featureName, appFirstLaunchTime);
-            return false;
         } else {
             appFirstLaunchTime = preferences.getLong(featureName, 0L);
         }

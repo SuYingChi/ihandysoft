@@ -86,7 +86,7 @@ public class ChargingPrefsUtil {
     //第一次session退出检查用户是否设置过 charging
     public void setChargingForFirstSession() {
         if (HSSessionMgr.getCurrentSessionId() <= 1) {
-            if (!spHelper.contains(USER_ENABLED_CHARGING)) {
+            if (spHelper.contains(USER_ENABLED_CHARGING)) {
                 spHelper.putBoolean(SHOULD_USE_PLIST_SETTING, false);
             } else {
                 spHelper.putBoolean(SHOULD_USE_PLIST_SETTING, true);

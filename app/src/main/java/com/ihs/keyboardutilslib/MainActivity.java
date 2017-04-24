@@ -9,6 +9,7 @@ import com.ihs.app.framework.activity.HSActivity;
 import com.ihs.keyboardutils.alerts.ExitAlert;
 import com.ihs.keyboardutils.utils.CustomShareUtils;
 import com.ihs.keyboardutilslib.alerts.CustomDesignAlertActivity;
+import com.ihs.keyboardutilslib.charginglocker.ChargingLockerSettingsActivity;
 import com.ihs.keyboardutilslib.configfile.ReadConfigSampleActivity;
 import com.ihs.keyboardutilslib.gif.GifViewDemoActivity;
 
@@ -46,6 +47,10 @@ public class MainActivity extends HSActivity {
 
     public void showExitDialog(View view) {
         exitAlert.show();
+    }
+    public void chargingLockerSetting(View view) {
+        Intent intent = new Intent(this, ChargingLockerSettingsActivity.class);
+        startActivity(intent);
     }
     @Override
     protected void onDestroy() {

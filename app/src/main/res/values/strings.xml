@@ -1,5 +1,16 @@
 <resources>
     <string name="app_name">KeyboardUtilsLib</string>
     <string name="fb_app_id">910238615719294</string>
+    <string name="title_activity_charging_locker_settings">Settings</string>
+
+    <!-- Strings related to Settings -->
+
+    <!-- Example General settings -->
+    <string name="pref_header_general">General</string>
+
+    <string name="pref_title_social_recommendations">Enable charging locker screen</string>
+    <string name="pref_description_social_recommendations">Enable smart charging to optimize battery. Contains Ads.</string>
+    <string name="pref_header_key">charger_example_switch</string>
+
 
 </resources>
