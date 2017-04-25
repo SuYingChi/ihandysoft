@@ -73,7 +73,7 @@ public class ChargingPrefsUtil {
         }
 
         //用户没有设置过，并且不在第一个session的话。就返回第一个session结束时，被记录的plist值。
-        if (HSSessionMgr.getCurrentSessionId() > 1) {
+        if (HSSessionMgr.getCurrentSessionId() > 0) {
             HSLog.e("CHARGING 获取已经记录值" );
             return spHelper.getInt(RECORD_CURRENT_PLIST_SETTING, CHARGING_DEFAULT_DISABLED);
         } else {
@@ -84,9 +84,9 @@ public class ChargingPrefsUtil {
     }
 
 
-    //第一次session退出检查用户是否设置过 charging
+    //前3次session退出检查用户是否设置过 charging
     public void setChargingForFirstSession() {
-        if (HSSessionMgr.getCurrentSessionId() <= 3) {
+        if (HSSessionMgr.getCurrentSessionId() < 3) {
             //如果用户设置过了就不用记录
             if (!spHelper.contains(USER_ENABLED_CHARGING) && !spHelper.contains(RECORD_CURRENT_PLIST_SETTING)) {
                 HSLog.e("chagring 正在记录");
