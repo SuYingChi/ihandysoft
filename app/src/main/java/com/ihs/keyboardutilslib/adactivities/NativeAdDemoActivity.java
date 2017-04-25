@@ -21,7 +21,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class MainActivity extends HSActivity {
+public class NativeAdDemoActivity extends HSActivity {
 
     private LinearLayout adContainer;
     private Spinner adPlacementSpinner;
@@ -84,7 +84,7 @@ public class MainActivity extends HSActivity {
             adContainer.removeView(nativeAdView);
             adViewMap.remove(placement);
             updateButtonStates();
-            Toast.makeText(MainActivity.this, placement + " is released.", Toast.LENGTH_SHORT).show();
+            Toast.makeText(NativeAdDemoActivity.this, placement + " is released.", Toast.LENGTH_SHORT).show();
         }
     }
 
@@ -99,7 +99,7 @@ public class MainActivity extends HSActivity {
         nativeAdView.setTag(placement);
         adContainer.addView(nativeAdView);
         adViewMap.put(placement, nativeAdView);
-        Toast.makeText(MainActivity.this, placement + " is loading.", Toast.LENGTH_SHORT).show();
+        Toast.makeText(NativeAdDemoActivity.this, placement + " is loading.", Toast.LENGTH_SHORT).show();
 
         updateButtonStates();
     }
@@ -109,7 +109,7 @@ public class MainActivity extends HSActivity {
         @Override
         public void onAdLoaded(NativeAdView adView) {
             String placement = (String) adView.getTag();
-            Toast.makeText(MainActivity.this, placement + " is loaded.", Toast.LENGTH_SHORT).show();
+            Toast.makeText(NativeAdDemoActivity.this, placement + " is loaded.", Toast.LENGTH_SHORT).show();
         }
     };
 
@@ -118,7 +118,7 @@ public class MainActivity extends HSActivity {
         @Override
         public void onAdClicked(NativeAdView adView) {
             String placement = (String) adView.getTag();
-            Toast.makeText(MainActivity.this, placement + " is clicked.", Toast.LENGTH_SHORT).show();
+            Toast.makeText(NativeAdDemoActivity.this, placement + " is clicked.", Toast.LENGTH_SHORT).show();
         }
     };
 

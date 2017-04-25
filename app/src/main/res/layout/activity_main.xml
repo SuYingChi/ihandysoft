@@ -11,42 +11,8 @@
     android:paddingTop="@dimen/activity_vertical_margin"
     tools:context="com.ihs.keyboardutilslib.MainActivity">
 
-    <Button
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:onClick="startAds"
-        android:text="Native Ad Demo" />
-
-    <Button
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:onClick="startGifDemoAct"
-        android:text="startGifDemoAct" />
-
-    <Button
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:onClick="startReadConfigSample"
-        android:text="Read Config Sample" />
-
-    <Button
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:onClick="startCustomDesignAlertDemo"
-        android:text="Custom Design Alert Demo" />
-    <Button
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:onClick="showCustomShare"
-        android:text="showCustomShare" />
-    <Button
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:onClick="showExitDialog"
-        android:text="showExitDialog" />
-    <Button
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:onClick="chargingLockerSetting"
-        android:text="chargingLockerSetting" />
+    <ListView
+        android:id="@+id/demo_list"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
 </LinearLayout>
