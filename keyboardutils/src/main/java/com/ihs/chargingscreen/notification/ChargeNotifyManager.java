@@ -121,7 +121,7 @@ public class ChargeNotifyManager {
         if (ChargingPrefsUtil.getInstance().isChargingEnableByUser()) {
             return true;
         }
-        int moduleStates = HSConfig.optInteger(ChargingPrefsUtil.CHARGING_MUTED, "Application", "ChargeLocker", "state");
+        int moduleStates = ChargingPrefsUtil.getChargingEnableStates();
         return moduleStates != ChargingPrefsUtil.CHARGING_DEFAULT_ACTIVE || chargingReadyToWork;
     }
 

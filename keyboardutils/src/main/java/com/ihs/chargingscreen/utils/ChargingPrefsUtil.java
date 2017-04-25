@@ -3,6 +3,7 @@ package com.ihs.chargingscreen.utils;
 import com.ihs.app.framework.HSApplication;
 import com.ihs.app.framework.HSSessionMgr;
 import com.ihs.commons.config.HSConfig;
+import com.ihs.commons.utils.HSLog;
 import com.ihs.commons.utils.HSPreferenceHelper;
 
 import static com.ihs.chargingscreen.utils.ChargingAnalytics.app_chargingLocker_enable;
@@ -28,8 +29,10 @@ public class ChargingPrefsUtil {
     private static ChargingPrefsUtil instance;
 
     public static final String USER_ENABLED_CHARGING = "user_enabled_charging";
+
+    //这个值是为了让老用户使用现在的
     private static final String
-            SHOULD_USE_PLIST_SETTING = "should_use_plist_setting";
+            RECORD_CURRENT_PLIST_SETTING = "record_current_plist_setting";
 
 
     public static ChargingPrefsUtil getInstance() {
@@ -58,40 +61,40 @@ public class ChargingPrefsUtil {
      * @return
      */
     public static boolean isChargingMuted() {
-        return HSConfig.optInteger(CHARGING_MUTED, "Application", "ChargeLocker", "state") == CHARGING_MUTED;
+        return getChargingEnableStates() == CHARGING_MUTED;
     }
 
-    public int getChargingEnableStates() {
-        int moduleStates = HSConfig.optInteger(CHARGING_MUTED, "Application", "ChargeLocker", "state");
-        switch (moduleStates) {
-            case CHARGING_MUTED:
-                return CHARGING_MUTED;
-        }
-        if (!spHelper.contains(SHOULD_USE_PLIST_SETTING)) {
-            if (spHelper.contains(USER_ENABLED_CHARGING)) {
-                return spHelper.getBoolean(USER_ENABLED_CHARGING, true) ? CHARGING_DEFAULT_ACTIVE : CHARGING_DEFAULT_DISABLED;
-            } else {
-                return moduleStates;
-            }
+
+    public static int getChargingEnableStates() {
+        //用户设置过的话，直接返回用户设置的状态。不管plist任何值，包括静默。
+        if (spHelper.contains(USER_ENABLED_CHARGING)) {
+            HSLog.e("CHARGING 获取用户设置" );
+            return spHelper.getBoolean(USER_ENABLED_CHARGING, false) ? CHARGING_DEFAULT_ACTIVE : CHARGING_DEFAULT_DISABLED;
         }
 
-        if (spHelper.getBoolean(SHOULD_USE_PLIST_SETTING, true)) {
-            return moduleStates;
+        //用户没有设置过，并且不在第一个session的话。就返回第一个session结束时，被记录的plist值。
+        if (HSSessionMgr.getCurrentSessionId() > 1) {
+            HSLog.e("CHARGING 获取已经记录值" );
+            return spHelper.getInt(RECORD_CURRENT_PLIST_SETTING, CHARGING_DEFAULT_DISABLED);
         } else {
-            return isChargingEnableByUser() ? CHARGING_DEFAULT_ACTIVE : CHARGING_DEFAULT_DISABLED;
+            //第一个session就取plist值
+            HSLog.e("CHARGING 获取plist" );
+            return getChargingPlistConfig();
         }
     }
 
 
     //第一次session退出检查用户是否设置过 charging
     public void setChargingForFirstSession() {
-        if (HSSessionMgr.getCurrentSessionId() <= 1) {
-            if (spHelper.contains(USER_ENABLED_CHARGING)) {
-                spHelper.putBoolean(SHOULD_USE_PLIST_SETTING, false);
-            } else {
-                spHelper.putBoolean(SHOULD_USE_PLIST_SETTING, true);
+        if (HSSessionMgr.getCurrentSessionId() <= 3) {
+            //如果用户设置过了就不用记录
+            if (!spHelper.contains(USER_ENABLED_CHARGING) && !spHelper.contains(RECORD_CURRENT_PLIST_SETTING)) {
+                HSLog.e("chagring 正在记录");
+                //没有设置的话就获取当前plist配置 并记录下来。
+                spHelper.putInt(RECORD_CURRENT_PLIST_SETTING, getChargingPlistConfig());
             }
         }
+        HSLog.e("chagring 已经记录 ");
     }
 
     private int chargingNotifyAppearTimes(String chargingType) {
@@ -106,9 +109,10 @@ public class ChargingPrefsUtil {
         return spHelper.getBoolean(USER_ENABLED_CHARGING, false);
     }
 
+
+    //用户每次更改设置都要记录值，以便下次直接读取。
     public void setChargingEnableByUser(boolean isEnable) {
         spHelper.putBoolean(USER_ENABLED_CHARGING, isEnable);
-        spHelper.putBoolean(SHOULD_USE_PLIST_SETTING, false);
     }
 
     public HSPreferenceHelper getSpHelper() {
@@ -127,5 +131,10 @@ public class ChargingPrefsUtil {
 
     public boolean isChargingEnabledBefore() {
         return spHelper.contains(app_chargingLocker_enable);
+    }
+
+
+    private static int getChargingPlistConfig() {
+        return HSConfig.optInteger(CHARGING_MUTED, "Application", "ChargeLocker", "state");
     }
 }
