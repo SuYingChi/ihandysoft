@@ -176,7 +176,7 @@ public class NativeAdView extends FrameLayout {
             nativeAdContainerView.getAdPrimaryView().getNormalImageView().setScaleType(nativeAdParams.getScaleType());
             ViewGroup.LayoutParams adPrimaryViewLayoutParams = nativeAdContainerView.getAdPrimaryView().getLayoutParams();
             if (nativeAdParams.getPrimaryHWRatio() == 0) {
-                adPrimaryViewLayoutParams.width = adPrimaryViewLayoutParams.height = ViewGroup.LayoutParams.MATCH_PARENT;
+                
             } else {
                 adPrimaryViewLayoutParams.width = ViewGroup.LayoutParams.MATCH_PARENT;
                 adPrimaryViewLayoutParams.height = (int) (nativeAdParams.getPrimaryWidth() / nativeAdParams.getPrimaryHWRatio());
