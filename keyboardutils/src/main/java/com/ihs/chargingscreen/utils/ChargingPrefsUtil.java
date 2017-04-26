@@ -72,12 +72,12 @@ public class ChargingPrefsUtil {
             return spHelper.getBoolean(USER_ENABLED_CHARGING, false) ? CHARGING_DEFAULT_ACTIVE : CHARGING_DEFAULT_DISABLED;
         }
 
-        //用户没有设置过，并且不在第一个session的话。就返回第一个session结束时，被记录的plist值。
-        if (HSSessionMgr.getCurrentSessionId() > 0) {
+        //用户没有设置过，并且超过3个Session，并且本地记录过值，就返回被记录的plist值。
+        if (HSSessionMgr.getCurrentSessionId() > 3 || spHelper.contains(RECORD_CURRENT_PLIST_SETTING)) {
             HSLog.e("CHARGING 获取已经记录值" );
             return spHelper.getInt(RECORD_CURRENT_PLIST_SETTING, CHARGING_DEFAULT_DISABLED);
         } else {
-            //第一个session就取plist值
+            //否则 直接取plist
             HSLog.e("CHARGING 获取plist" );
             return getChargingPlistConfig();
         }
