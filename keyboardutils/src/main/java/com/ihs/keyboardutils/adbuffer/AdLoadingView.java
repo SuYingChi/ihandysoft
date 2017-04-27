@@ -108,16 +108,12 @@ public class AdLoadingView extends RelativeLayout implements NativeAdView.OnAdLo
     }
 
     private AdLoadingView setIcon(Drawable icon) {
-        if (icon != null) {
-            ((ImageView) findViewById(R.id.iv_icon)).setImageDrawable(icon);
-        }
+        ((ImageView) findViewById(R.id.iv_icon)).setImageDrawable(icon);
         return this;
     }
 
     private AdLoadingView setBackgroundPreview(Drawable icon) {
-        if (icon != null) {
-            findViewById(R.id.iv_icon).setBackgroundDrawable(icon);
-        }
+        findViewById(R.id.iv_icon).setBackgroundDrawable(icon);
         return this;
     }
 
