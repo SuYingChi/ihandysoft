@@ -4,6 +4,8 @@ import android.app.Activity;
 import android.content.Context;
 import android.graphics.Point;
 import android.graphics.Rect;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.os.Handler;
 import android.support.annotation.NonNull;
 import android.text.TextUtils;
@@ -344,7 +346,20 @@ public class NativeAdView extends FrameLayout {
 
             @Override
             public void onAdFinished(AcbNativeAdLoader acbNativeAdLoader, HSError hsError) {
-                HSLog.e("Load native ad failed: " + hsError);
+                if (hsError != null) {
+                    HSLog.e("Load native ad failed: " + hsError);
+                    try {
+                        ConnectivityManager cm =
+                                (ConnectivityManager) getContext().getSystemService(Context.CONNECTIVITY_SERVICE);
+                        NetworkInfo netInfo = cm.getActiveNetworkInfo();
+                        if (netInfo == null || !netInfo.isAvailable() || !netInfo.isConnected()) {
+                            logAnalyticsEvent("NoNetwork");
+                        }
+                    } catch (Exception e) {
+                        // 防止因为没有权限而Crash
+                    }
+                }
+
                 adLoader = null;
             }
         });
