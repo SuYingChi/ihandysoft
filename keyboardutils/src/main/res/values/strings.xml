@@ -42,7 +42,7 @@
 
     <string name="charging_module_enable_plug_title">Enable Fast Charging</string>
     <string name="charging_module_enable_plug_tip">enable fassssst charging tip</string>
-    <string name="enable">ENABLE</string>
+    <string name="enable">OK</string>
     <string name="charger_connected_title_disabled">Charger Connected</string>
     <string name="enable_charging_detail">Enable smart charging to optimize battery. Contains Ads.</string>
     <string name="disable_battery_master">Disable Battery Master</string>
