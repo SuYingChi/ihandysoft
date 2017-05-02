@@ -130,6 +130,7 @@ class ExitAlertDialog extends AlertDialog implements View.OnClickListener {
          * 设置dialog宽度全屏
          */
         HSAnalytics.logEvent("app_quit_confirm_alert_show");
+        HSAnalytics.logGoogleAnalyticsEvent("app", "alertdialog", "app_quit_confirm_alert_show", null, null, null, null);
         WindowManager.LayoutParams params = getWindow().getAttributes();  //获取对话框当前的参数值、
         params.width = DisplayUtils.getScreenWidthPixels();    //宽度设置全屏宽度
         getWindow().setAttributes(params);     //设置生效
