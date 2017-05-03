@@ -12,9 +12,10 @@ import android.widget.Toast;
 
 import com.ihs.app.framework.HSApplication;
 import com.ihs.app.framework.activity.HSActivity;
+import com.ihs.keyboardutils.ads.KCInterstitialAd;
 import com.ihs.keyboardutils.alerts.ExitAlert;
 import com.ihs.keyboardutils.utils.CustomShareUtils;
-import com.ihs.keyboardutilslib.adactivities.NativeAdDemoActivity;
+import com.ihs.keyboardutilslib.adactivities.AdDemoActivity;
 import com.ihs.keyboardutilslib.alerts.CustomDesignAlertActivity;
 import com.ihs.keyboardutilslib.charginglocker.ChargingLockerSettingsActivity;
 import com.ihs.keyboardutilslib.configfile.ReadConfigSampleActivity;
@@ -24,7 +25,7 @@ public class MainActivity extends HSActivity {
     private ExitAlert exitAlert;
 
     String[] displayNameArray = {
-            "NativeAdView Demo",
+            "Ad Demo",
             "Gif Demo",
             "KCConfig Demo",
             "Custom Alert Demo",
@@ -34,7 +35,7 @@ public class MainActivity extends HSActivity {
     };
 
     Class[] activityClassArray = {
-            NativeAdDemoActivity.class,
+            AdDemoActivity.class,
             GifViewDemoActivity.class,
             ReadConfigSampleActivity.class,
             CustomDesignAlertActivity.class,

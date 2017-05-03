@@ -18,14 +18,29 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:onClick="showAd"
-        android:text="显示广告" />
+        android:text="显示原生广告" />
 
     <Button
         android:id="@+id/btn_close_ad"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:onClick="closeAd"
-        android:text="关闭广告" />
+        android:text="关闭原生广告" />
+
+    <Button
+        android:id="@+id/btn_load_interstitial_ad"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:onClick="loadInterstitialAd"
+        android:text="加载插页广告" />
+
+    <Button
+        android:id="@+id/btn_show_interstitial_ad"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:onClick="showInterstitialAd"
+        android:text="显示插页广告" />
+
 
     <ScrollView
         android:layout_width="match_parent"

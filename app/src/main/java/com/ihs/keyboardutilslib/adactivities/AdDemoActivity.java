@@ -12,6 +12,7 @@ import android.widget.Toast;
 
 import com.ihs.app.framework.activity.HSActivity;
 import com.ihs.commons.config.HSConfig;
+import com.ihs.keyboardutils.ads.KCInterstitialAd;
 import com.ihs.keyboardutils.nativeads.NativeAdParams;
 import com.ihs.keyboardutils.nativeads.NativeAdView;
 import com.ihs.keyboardutilslib.R;
@@ -21,7 +22,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class NativeAdDemoActivity extends HSActivity {
+public class AdDemoActivity extends HSActivity {
 
     private LinearLayout adContainer;
     private Spinner adPlacementSpinner;
@@ -31,6 +32,8 @@ public class NativeAdDemoActivity extends HSActivity {
     private List<String> adPlacementList = new ArrayList<>();
 
     private Map<String, NativeAdView> adViewMap = new HashMap<>();
+
+    private String interstitialAdPlacement;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -84,7 +87,7 @@ public class NativeAdDemoActivity extends HSActivity {
             adContainer.removeView(nativeAdView);
             adViewMap.remove(placement);
             updateButtonStates();
-            Toast.makeText(NativeAdDemoActivity.this, placement + " is released.", Toast.LENGTH_SHORT).show();
+            Toast.makeText(AdDemoActivity.this, placement + " is released.", Toast.LENGTH_SHORT).show();
         }
     }
 
@@ -99,7 +102,7 @@ public class NativeAdDemoActivity extends HSActivity {
         nativeAdView.setTag(placement);
         adContainer.addView(nativeAdView);
         adViewMap.put(placement, nativeAdView);
-        Toast.makeText(NativeAdDemoActivity.this, placement + " is loading.", Toast.LENGTH_SHORT).show();
+        Toast.makeText(AdDemoActivity.this, placement + " is loading.", Toast.LENGTH_SHORT).show();
 
         updateButtonStates();
     }
@@ -109,7 +112,7 @@ public class NativeAdDemoActivity extends HSActivity {
         @Override
         public void onAdLoaded(NativeAdView adView) {
             String placement = (String) adView.getTag();
-            Toast.makeText(NativeAdDemoActivity.this, placement + " is loaded.", Toast.LENGTH_SHORT).show();
+            Toast.makeText(AdDemoActivity.this, placement + " is loaded.", Toast.LENGTH_SHORT).show();
         }
     };
 
@@ -118,7 +121,7 @@ public class NativeAdDemoActivity extends HSActivity {
         @Override
         public void onAdClicked(NativeAdView adView) {
             String placement = (String) adView.getTag();
-            Toast.makeText(NativeAdDemoActivity.this, placement + " is clicked.", Toast.LENGTH_SHORT).show();
+            Toast.makeText(AdDemoActivity.this, placement + " is clicked.", Toast.LENGTH_SHORT).show();
         }
     };
 
@@ -149,5 +152,17 @@ public class NativeAdDemoActivity extends HSActivity {
             }
         }
         return poolNames;
+    }
+
+    public void loadInterstitialAd(View view) {
+        interstitialAdPlacement = HSConfig.getMap("interstitialAds").keySet().iterator().next();
+        KCInterstitialAd.load(interstitialAdPlacement);
+    }
+
+    public void showInterstitialAd(View view) {
+        boolean success = KCInterstitialAd.show(interstitialAdPlacement);
+        if (!success) {
+            Toast.makeText(this, "No interstitial ad right now", Toast.LENGTH_SHORT);
+        }
     }
 }

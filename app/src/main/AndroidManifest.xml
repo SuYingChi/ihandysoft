@@ -29,7 +29,7 @@
             </intent-filter>
         </activity>
         <activity android:name=".gif.GifViewDemoActivity" />
-        <activity android:name=".adactivities.NativeAdDemoActivity" />
+        <activity android:name=".adactivities.AdDemoActivity" />
         <activity android:name=".alerts.CustomDesignAlertActivity"/>
 
         <meta-data
