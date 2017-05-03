@@ -2,7 +2,6 @@ package com.ihs.keyboardutils.alerts;
 
 import android.app.Activity;
 import android.content.DialogInterface;
-import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 
@@ -26,12 +25,14 @@ public class ExitAlert {
     private ExitAlertDialog alertDialog;
     private String adPlacement;
     private NativeAdView nativeAdView;
-    private boolean hasRemovedAds = false;
 
     public ExitAlert(Activity activity, String adPlacementName) {
+       this(activity,adPlacementName,false);//默认没有购买removeAds
+    }
+
+    public ExitAlert(Activity activity, String adPlacementName,boolean hasRemovedAds) {
         alterViewStyle = HSConfig.optInteger(EXIT_ALERT_STYLE_2, "Application", "ExitAlert", "style");
         this.adPlacement = adPlacementName;
-        this.hasRemovedAds = TextUtils.isEmpty(adPlacementName);
         alertDialog = new ExitAlertDialog(activity, alterViewStyle, hasRemovedAds);
         if (!hasRemovedAds) {
             initNativeAdView();
@@ -76,6 +77,10 @@ public class ExitAlert {
     }
 
     public boolean show() {
+        return show(false);//默认没有购买removeAds
+    }
+
+    public boolean show(boolean hasRemovedAds) {
         if (alertDialog != null) {
             if (!hasRemovedAds && nativeAdView.isAdLoaded()) {
                 alertDialog.setSponsorView(nativeAdView);

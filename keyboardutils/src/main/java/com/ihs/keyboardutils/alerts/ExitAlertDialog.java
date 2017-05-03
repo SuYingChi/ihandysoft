@@ -59,6 +59,7 @@ class ExitAlertDialog extends AlertDialog implements View.OnClickListener {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
+        setCancelable(false);
         if (alterViewStyle == EXIT_ALERT_STYLE_1 && !hasRemovedAds) {
             setContentView(R.layout.exit_app_native_ad_alert1);
         } else {
@@ -94,19 +95,6 @@ class ExitAlertDialog extends AlertDialog implements View.OnClickListener {
         }
 
         findViewById(R.id.exit_alert_root_view).getLayoutParams().width = calculateAdWidth();
-    }
-
-    /**
-     * Called when the dialog has detected the user's press of the back
-     * key.  The default implementation simply cancels the dialog (only if
-     * it is cancelable), but you can override this to do whatever you want.
-     */
-    @Override
-    public void onBackPressed() {
-        super.onBackPressed();
-        HSAnalytics.logEvent("app_quit_way", "app_quit_way", "back");
-        HSAnalytics.logGoogleAnalyticsEvent("app", "alertdialog", "app_quit_way", "back", null, null, null);
-        finishActivity();
     }
 
     @Override
