@@ -223,15 +223,22 @@ public class NativeAdView extends FrameLayout {
     }
 
     protected void onViewEnviromentChanged() {
-        boolean ready = isViewEnviromentReady();
+        // 这里使用 Handler 来延迟一个周期执行的目的是为了解决 View 的回调方法调用时，相关方法的获取值还没变化的情况
+        // 比如，onWindowVisibilityChanged 调用且参数值为 GONE 时，使用 getWindowVisibility 仍返回 VISIBLE
+        handler.post(new Runnable() {
+            @Override
+            public void run() {
+                boolean ready = isViewEnviromentReady();
 
-        if (adLoaded && nativeAdParams.getRefreshInterval() > 0) {
-            if (ready) {
-                resumeAutoRefreshing();
-            } else {
-                pauseAutoRefreshing();
+                if (adLoaded && nativeAdParams.getRefreshInterval() > 0) {
+                    if (ready) {
+                        resumeAutoRefreshing();
+                    } else {
+                        pauseAutoRefreshing();
+                    }
+                }
             }
-        }
+        });
     }
 
     @Override
