@@ -17,6 +17,7 @@ import android.view.animation.Animation;
 import android.view.animation.ScaleAnimation;
 import android.widget.FrameLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.acb.adadapter.AcbAd;
 import com.acb.adadapter.AcbNativeAd;
@@ -406,6 +407,10 @@ public class NativeAdView extends FrameLayout {
                 @Override
                 public void onAdClick(AcbAd acbAd) {
                     logAnalyticsEvent("Click");
+
+                    if (HSApplication.isDebugging) {
+                        Toast.makeText(getContext(), nativeAdParams.getPlacementName() + ":" + acbAd.getVendor().name(), Toast.LENGTH_SHORT);
+                    }
 
                     if (adClickedListener != null) {
                         adClickedListener.onAdClicked(NativeAdView.this);

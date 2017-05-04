@@ -2,6 +2,7 @@ package com.ihs.keyboardutils.ads;
 
 import android.os.Handler;
 import android.os.Looper;
+import android.widget.Toast;
 
 import com.acb.adadapter.AcbInterstitialAd;
 import com.acb.interstitialads.AcbInterstitialAdLoader;
@@ -33,6 +34,10 @@ public class KCInterstitialAd {
 
             @Override
             public void onAdClicked() {
+                if (HSApplication.isDebugging) {
+                    Toast.makeText(HSApplication.getContext(), placement + ":" + interstitialAd.getVendor().name(), Toast.LENGTH_SHORT);
+                }
+
                 logAnalyticsEvent(placement, "Click");
                 releaseInterstitialAd(interstitialAd);
             }
