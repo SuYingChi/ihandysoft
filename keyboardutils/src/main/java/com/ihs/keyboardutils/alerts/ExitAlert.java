@@ -2,6 +2,7 @@ package com.ihs.keyboardutils.alerts;
 
 import android.app.Activity;
 import android.content.DialogInterface;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 
@@ -25,16 +26,14 @@ public class ExitAlert {
     private ExitAlertDialog alertDialog;
     private String adPlacement;
     private NativeAdView nativeAdView;
+    private boolean showAd;
 
     public ExitAlert(Activity activity, String adPlacementName) {
-       this(activity,adPlacementName,false);//默认没有购买removeAds
-    }
-
-    public ExitAlert(Activity activity, String adPlacementName,boolean hasRemovedAds) {
         alterViewStyle = HSConfig.optInteger(EXIT_ALERT_STYLE_2, "Application", "ExitAlert", "style");
         this.adPlacement = adPlacementName;
-        alertDialog = new ExitAlertDialog(activity, alterViewStyle, hasRemovedAds);
-        if (!hasRemovedAds) {
+        showAd = !TextUtils.isEmpty(adPlacementName);//如果没有广告位，说明不用显示广告
+        alertDialog = new ExitAlertDialog(activity, alterViewStyle, showAd);
+        if (showAd) {
             initNativeAdView();
         }
         alertDialog.setOnDismissListener(new DialogInterface.OnDismissListener() {
@@ -76,13 +75,20 @@ public class ExitAlert {
         return width;
     }
 
-    public boolean show() {
-        return show(false);//默认没有购买removeAds
+    public void setShowAd(boolean showAd){
+        this.showAd = showAd;
+
+        if(!showAd){
+            if (nativeAdView != null) {
+                nativeAdView.release();
+                nativeAdView = null;
+            }
+        }
     }
 
-    public boolean show(boolean hasRemovedAds) {
+    public boolean show() {
         if (alertDialog != null) {
-            if (!hasRemovedAds && nativeAdView.isAdLoaded()) {
+            if (showAd && nativeAdView.isAdLoaded()) {
                 alertDialog.setSponsorView(nativeAdView);
             }
             alertDialog.setCancelable(true);

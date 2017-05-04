@@ -28,21 +28,21 @@ class ExitAlertDialog extends AlertDialog implements View.OnClickListener {
     private View sponsorView;
     private Activity activity;
     private int alterViewStyle;
-    private boolean hasRemovedAds;
+    private boolean showAd;
 
     /**
      * Creates an alert dialog that uses the DesignDialog alert dialog theme.
      *
      * @param activity       the parent activity
      * @param alterViewStyle
-     * @param hasRemovedAds
+     * @param showAd
      * @see R.style#DesignDialog
      */
-    ExitAlertDialog(@NonNull Activity activity, int alterViewStyle, boolean hasRemovedAds) {
+    ExitAlertDialog(@NonNull Activity activity, int alterViewStyle, boolean showAd) {
         super(activity, R.style.DesignDialog);
         this.activity = activity;
         this.alterViewStyle = alterViewStyle;
-        this.hasRemovedAds = hasRemovedAds;
+        this.showAd = showAd;
     }
 
     private int calculateAdWidth() {
@@ -60,7 +60,7 @@ class ExitAlertDialog extends AlertDialog implements View.OnClickListener {
         super.onCreate(savedInstanceState);
 
         setCancelable(false);
-        if (alterViewStyle == EXIT_ALERT_STYLE_1 && !hasRemovedAds) {
+        if (alterViewStyle == EXIT_ALERT_STYLE_1 && showAd) {
             setContentView(R.layout.exit_app_native_ad_alert1);
         } else {
             setContentView(R.layout.exit_app_native_ad_alert2);
