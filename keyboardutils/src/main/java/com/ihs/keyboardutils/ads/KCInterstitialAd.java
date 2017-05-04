@@ -13,12 +13,14 @@ import java.util.List;
 
 public class KCInterstitialAd {
     public static void load(String placement) {
+        logAnalyticsEvent(placement, "Load");
         new AcbInterstitialAdLoader(HSApplication.getContext(), placement).load(1, null);
     }
 
     public static boolean show(final String placement) {
         List<AcbInterstitialAd> interstitialAds = AcbInterstitialAdLoader.fetch(HSApplication.getContext(), placement, 1);
         if (interstitialAds.size() <= 0) {
+            logAnalyticsEvent(placement, "FetchNoAd");
             return false;
         }
 
@@ -37,6 +39,7 @@ public class KCInterstitialAd {
 
             @Override
             public void onAdClosed() {
+                logAnalyticsEvent(placement, "Close");
                 releaseInterstitialAd(interstitialAd);
             }
         });
