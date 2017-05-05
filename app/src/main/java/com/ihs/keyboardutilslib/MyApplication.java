@@ -1,5 +1,8 @@
 package com.ihs.keyboardutilslib;
 
+import android.app.PendingIntent;
+import android.content.Intent;
+
 import com.ihs.app.alerts.HSAlertMgr;
 import com.ihs.app.framework.HSApplication;
 import com.ihs.app.framework.HSNotificationConstant;
@@ -9,7 +12,12 @@ import com.ihs.commons.notificationcenter.HSGlobalNotificationCenter;
 import com.ihs.commons.notificationcenter.INotificationObserver;
 import com.ihs.commons.utils.HSBundle;
 import com.ihs.commons.utils.HSLog;
+import com.ihs.keyboardutils.notification.KCNotificationManager;
 import com.squareup.leakcanary.LeakCanary;
+
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 
 
 /**
@@ -18,7 +26,8 @@ import com.squareup.leakcanary.LeakCanary;
 
 public class MyApplication extends HSApplication {
 
-    @Override public void onCreate() {
+    @Override
+    public void onCreate() {
         super.onCreate();
         if (LeakCanary.isInAnalyzerProcess(this)) {
             // This process is dedicated to LeakCanary for heap analysis.
@@ -35,6 +44,41 @@ public class MyApplication extends HSApplication {
 
         HSGlobalNotificationCenter.addObserver(HSNotificationConstant.HS_SESSION_START, sessionEventObserver);
         HSGlobalNotificationCenter.addObserver(HSNotificationConstant.HS_SESSION_END, sessionEventObserver);
+
+        KCNotificationManager.getInstance().init(new KCNotificationManager.INotificationListener() {
+            @Override
+            public Map<String, PendingIntent> onInitIntent(ArrayList<String> eventList) {
+                HashMap<String, PendingIntent> map = new HashMap<>();
+
+                for (String event : eventList) {
+                    int reqCode = 0;
+                    switch (event) {
+                        case "ScreenLocker":
+                            reqCode = 1;
+                            break;
+                        case "Charging":
+                            reqCode = 2;
+                            break;
+                        case "AddNewPhotoToPrivate":
+                            reqCode = 3;
+                            break;
+                    }
+
+                    Intent resultIntent = new Intent(getContext(), MainActivity.class);
+                    resultIntent.putExtra("reqCode", reqCode);
+                    PendingIntent resultPendingIntent =
+                            PendingIntent.getActivity(
+                                    getContext(),
+                                    reqCode,
+                                    resultIntent,
+                                    PendingIntent.FLAG_UPDATE_CURRENT | PendingIntent.FLAG_ONE_SHOT
+                            );
+                    map.put(event, resultPendingIntent);
+                }
+
+                return map;
+            }
+        });
     }
 
     private INotificationObserver sessionEventObserver = new INotificationObserver() {
