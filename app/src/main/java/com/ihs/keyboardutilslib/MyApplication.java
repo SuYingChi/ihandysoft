@@ -1,6 +1,5 @@
 package com.ihs.keyboardutilslib;
 
-import android.app.PendingIntent;
 import android.content.Intent;
 
 import com.ihs.app.alerts.HSAlertMgr;
@@ -47,8 +46,8 @@ public class MyApplication extends HSApplication {
 
         KCNotificationManager.getInstance().init(new KCNotificationManager.INotificationListener() {
             @Override
-            public Map<String, PendingIntent> onInitIntent(ArrayList<String> eventList) {
-                HashMap<String, PendingIntent> map = new HashMap<>();
+            public Map<String, Intent> onInitIntent(ArrayList<String> eventList) {
+                HashMap<String, Intent> map = new HashMap<>();
 
                 for (String event : eventList) {
                     int reqCode = 0;
@@ -66,14 +65,7 @@ public class MyApplication extends HSApplication {
 
                     Intent resultIntent = new Intent(getContext(), MainActivity.class);
                     resultIntent.putExtra("reqCode", reqCode);
-                    PendingIntent resultPendingIntent =
-                            PendingIntent.getActivity(
-                                    getContext(),
-                                    reqCode,
-                                    resultIntent,
-                                    PendingIntent.FLAG_ONE_SHOT
-                            );
-                    map.put(event, resultPendingIntent);
+                    map.put(event, resultIntent);
                 }
 
                 return map;

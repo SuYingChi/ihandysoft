@@ -3,11 +3,11 @@ package com.ihs.keyboardutils.notification;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.content.Context;
+import android.content.Intent;
 import android.os.Handler;
 import android.os.Message;
 import android.support.v4.app.NotificationCompat;
 
-import com.ihs.app.framework.HSApplication;
 import com.ihs.commons.config.HSConfig;
 import com.ihs.commons.utils.HSLog;
 import com.ihs.commons.utils.HSPreferenceHelper;
@@ -20,6 +20,7 @@ import java.util.Locale;
 import java.util.Map;
 
 import static android.content.Context.NOTIFICATION_SERVICE;
+import static com.ihs.app.framework.HSApplication.getContext;
 
 /**
  * Created by Arthur on 17/4/29.
@@ -35,7 +36,7 @@ public class KCNotificationManager {
     private static KCNotificationManager instance;
     private ArrayList<NotificationBean> notificationBeanList;
 
-    private Map<String, PendingIntent> intentMap;
+    private Map<String, Intent> intentMap;
     private Context context;
     private INotificationListener notificationListener;
     private HSPreferenceHelper spHelper;
@@ -51,7 +52,7 @@ public class KCNotificationManager {
     };
 
     public interface INotificationListener {
-        Map<String, PendingIntent> onInitIntent(ArrayList<String> eventList);
+        Map<String, Intent> onInitIntent(ArrayList<String> eventList);
     }
 
     public synchronized static KCNotificationManager getInstance() {
@@ -68,8 +69,8 @@ public class KCNotificationManager {
     }
 
     private KCNotificationManager() {
-        context = HSApplication.getContext();
-        spHelper = HSPreferenceHelper.create(HSApplication.getContext(), PREFS_FILE_NAME);
+        context = getContext();
+        spHelper = HSPreferenceHelper.create(getContext(), PREFS_FILE_NAME);
     }
 
     private void scheduleNotify() {
@@ -148,16 +149,23 @@ public class KCNotificationManager {
         mBuilder.setPriority(NotificationCompat.PRIORITY_MAX);
 
         if (intentMap != null) {
-            PendingIntent intent = intentMap.get(notificationBean.getEvent());
+            Intent intent = intentMap.get(notificationBean.getEvent());
             if (intent != null) {
-                mBuilder.setContentIntent(intent);
+                PendingIntent resultPendingIntent =
+                        PendingIntent.getActivity(
+                                getContext(),
+                                101,
+                                intent,
+                                PendingIntent.FLAG_ONE_SHOT
+                        );
+                mBuilder.setContentIntent(resultPendingIntent);
             }
         }
 
 
         NotificationManager manager = (NotificationManager) context.getSystemService(NOTIFICATION_SERVICE);
         try {
-            manager.notify((int) (System.currentTimeMillis()/666), mBuilder.build());
+            manager.notify(notificationBean.getEvent(), 58887, mBuilder.build());
         } catch (Exception e) {
             e.printStackTrace();
         }
