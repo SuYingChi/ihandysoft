@@ -27,7 +27,7 @@ import static android.content.Context.NOTIFICATION_SERVICE;
 
 public class KCNotificationManager {
     private static final String PREFS_FILE_NAME = "notification_prefs";
-    private static int intervalDuration = 30 * 1000;//24 * 3600 * 1000;
+    private static int intervalDuration = 5 * 1000;//24 * 3600 * 1000;
     //方法延迟或者计算误差
     private static final int METHOD_EXCUTION_ERROR_TIME = 10;
     private static final int HANDLER_MSG_WHAT = 10;
@@ -84,7 +84,7 @@ public class KCNotificationManager {
 
             //如果达到可以出现的条件
             if ((notificationBean.getMaxShowCount() == 0 ||
-                    eventShowTimes <= notificationBean.getMaxShowCount()) && //出现次数小于等于最大次数，从1开始记录
+                    eventShowTimes < notificationBean.getMaxShowCount()) && //出现次数小于等于最大次数，从1开始记录
                     //出现间隔
                     System.currentTimeMillis() - lastShow >= intervalDuration * notificationBean.getInterval()) {
 
@@ -157,7 +157,7 @@ public class KCNotificationManager {
 
         NotificationManager manager = (NotificationManager) context.getSystemService(NOTIFICATION_SERVICE);
         try {
-            manager.notify(58887, mBuilder.build());
+            manager.notify((int) (System.currentTimeMillis()/666), mBuilder.build());
         } catch (Exception e) {
             e.printStackTrace();
         }

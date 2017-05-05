@@ -71,7 +71,7 @@ public class MyApplication extends HSApplication {
                                     getContext(),
                                     reqCode,
                                     resultIntent,
-                                    PendingIntent.FLAG_UPDATE_CURRENT | PendingIntent.FLAG_ONE_SHOT
+                                    PendingIntent.FLAG_ONE_SHOT
                             );
                     map.put(event, resultPendingIntent);
                 }
