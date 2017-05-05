@@ -8,6 +8,7 @@ import android.os.Handler;
 import android.os.Message;
 import android.support.v4.app.NotificationCompat;
 
+import com.ihs.app.framework.HSApplication;
 import com.ihs.commons.config.HSConfig;
 import com.ihs.commons.utils.HSLog;
 import com.ihs.commons.utils.HSPreferenceHelper;
@@ -165,7 +166,8 @@ public class KCNotificationManager {
 
         NotificationManager manager = (NotificationManager) context.getSystemService(NOTIFICATION_SERVICE);
         try {
-            manager.notify(notificationBean.getEvent(), 58887, mBuilder.build());
+            //用event名 加 packageName的hashcode来确保，每个程序有自己的一套通知系统，并且，每种通知事件不重复。
+            manager.notify(notificationBean.getEvent(), HSApplication.getContext().getPackageName().hashCode(), mBuilder.build());
         } catch (Exception e) {
             e.printStackTrace();
         }
