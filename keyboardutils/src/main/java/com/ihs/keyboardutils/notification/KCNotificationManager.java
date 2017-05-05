@@ -147,9 +147,13 @@ public class KCNotificationManager {
         mBuilder.setStyle(bigText);
         mBuilder.setPriority(NotificationCompat.PRIORITY_MAX);
 
-        if (intentMap != null && intentMap.get(notificationBean.getEvent()) != null) {
-            mBuilder.setContentIntent(intentMap.get(notificationBean.getEvent()));
+        if (intentMap != null) {
+            PendingIntent intent = intentMap.get(notificationBean.getEvent());
+            if (intent != null) {
+                mBuilder.setContentIntent(intent);
+            }
         }
+
 
         NotificationManager manager = (NotificationManager) context.getSystemService(NOTIFICATION_SERVICE);
         try {
