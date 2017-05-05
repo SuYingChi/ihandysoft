@@ -34,6 +34,9 @@ public class KCNotificationManager {
     private static final int METHOD_EXCUTION_ERROR_TIME = 10;
     private static final int HANDLER_MSG_WHAT = 10;
 
+    private static final int NOTIFICATION_ID = Math.abs(HSApplication.getContext().hashCode() / 100000);
+
+
     private static KCNotificationManager instance;
     private ArrayList<NotificationBean> notificationBeanList;
 
@@ -41,6 +44,7 @@ public class KCNotificationManager {
     private Context context;
     private INotificationListener notificationListener;
     private HSPreferenceHelper spHelper;
+
 
     private Handler handler = new Handler() {
         @Override
@@ -152,10 +156,11 @@ public class KCNotificationManager {
         if (intentMap != null) {
             Intent intent = intentMap.get(notificationBean.getEvent());
             if (intent != null) {
+                intent.setAction(Long.toString(System.currentTimeMillis()));
                 PendingIntent resultPendingIntent =
                         PendingIntent.getActivity(
                                 getContext(),
-                                101,
+                                0,
                                 intent,
                                 PendingIntent.FLAG_ONE_SHOT
                         );
@@ -167,7 +172,7 @@ public class KCNotificationManager {
         NotificationManager manager = (NotificationManager) context.getSystemService(NOTIFICATION_SERVICE);
         try {
             //用event名 加 packageName的hashcode来确保，每个程序有自己的一套通知系统，并且，每种通知事件不重复。
-            manager.notify(notificationBean.getEvent(), HSApplication.getContext().getPackageName().hashCode(), mBuilder.build());
+            manager.notify(notificationBean.getEvent(), NOTIFICATION_ID, mBuilder.build());
         } catch (Exception e) {
             e.printStackTrace();
         }
