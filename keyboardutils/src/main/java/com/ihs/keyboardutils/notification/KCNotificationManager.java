@@ -135,18 +135,17 @@ public class KCNotificationManager {
 
     private void sendNotification(NotificationBean notificationBean) {
 
-
-//        NotificationCompat.Builder mBuilder = new NotificationCompat.Builder(context);
-//        mBuilder.mContentText = notificationBean.getMessage();
-//        mBuilder.mContentTitle = notificationBean.getTitle();
-//        mBuilder.setSmallIcon(R.drawable.ic_notification);
-
-
         NotificationCompat.Builder mBuilder = new NotificationCompat.Builder(context)
+                .setAutoCancel(true)
                 .setSmallIcon(R.drawable.ic_notification)
                 .setContentTitle(notificationBean.getTitle())
-                .setContentText(notificationBean.getMessage())
-                .setStyle(new NotificationCompat.BigTextStyle().bigText(notificationBean.getMessage()));
+                .setContentText(notificationBean.getMessage());
+
+        NotificationCompat.BigTextStyle bigText = new NotificationCompat.BigTextStyle();
+        bigText.bigText(notificationBean.getMessage());
+        bigText.setBigContentTitle(notificationBean.getTitle());
+        mBuilder.setStyle(bigText);
+        mBuilder.setPriority(NotificationCompat.PRIORITY_MAX);
 
         if (intentMap != null && intentMap.get(notificationBean.getEvent()) != null) {
             mBuilder.setContentIntent(intentMap.get(notificationBean.getEvent()));
