@@ -231,7 +231,10 @@ public class NativeAdView extends FrameLayout {
             public void run() {
                 boolean ready = isViewEnviromentReady();
 
-                if (adLoaded && nativeAdParams.getRefreshInterval() > 0) {
+                if (!adLoaded && adLoader == null && ready) {
+                    // 如果没有广告在显示或加载，则重新加载一次广告
+                    refresh();
+                } else if (adLoaded && nativeAdParams.getRefreshInterval() > 0) {
                     if (ready) {
                         resumeAutoRefreshing();
                     } else {
