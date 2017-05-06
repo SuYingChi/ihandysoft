@@ -9,7 +9,11 @@ import android.os.Message;
 import android.support.v4.app.NotificationCompat;
 
 import com.ihs.app.framework.HSApplication;
+import com.ihs.app.framework.HSNotificationConstant;
 import com.ihs.commons.config.HSConfig;
+import com.ihs.commons.notificationcenter.HSGlobalNotificationCenter;
+import com.ihs.commons.notificationcenter.INotificationObserver;
+import com.ihs.commons.utils.HSBundle;
 import com.ihs.commons.utils.HSLog;
 import com.ihs.commons.utils.HSPreferenceHelper;
 import com.ihs.keyboardutils.R;
@@ -29,21 +33,22 @@ import static com.ihs.app.framework.HSApplication.getContext;
 
 public class KCNotificationManager {
     private static final String PREFS_FILE_NAME = "notification_prefs";
+    private static final String PREFS_NEXT_EVENT_TIME = "prefs_next_event_time";
     private static int intervalDuration = 5 * 1000;//24 * 3600 * 1000;
     //方法延迟或者计算误差
     private static final int METHOD_EXCUTION_ERROR_TIME = 10;
     private static final int HANDLER_MSG_WHAT = 10;
 
-    private static final int NOTIFICATION_ID = Math.abs(HSApplication.getContext().hashCode() / 100000);
+    private static final int NOTIFICATION_ID = Math.abs(HSApplication.getContext().getPackageName().hashCode() / 100000);
 
 
     private static KCNotificationManager instance;
     private ArrayList<NotificationBean> notificationBeanList;
 
-    private Map<String, Intent> intentMap;
     private Context context;
-    private INotificationListener notificationListener;
     private HSPreferenceHelper spHelper;
+    private Map<String, Intent> intentMap;
+    private ArrayList<String> eventNameList;
 
 
     private Handler handler = new Handler() {
@@ -56,9 +61,6 @@ public class KCNotificationManager {
         }
     };
 
-    public interface INotificationListener {
-        Map<String, Intent> onInitIntent(ArrayList<String> eventList);
-    }
 
     public synchronized static KCNotificationManager getInstance() {
         if (instance == null) {
@@ -67,15 +69,20 @@ public class KCNotificationManager {
         return instance;
     }
 
-    public void init(INotificationListener listener) {
-        this.notificationListener = listener;
-        refreshConfig();
-        scheduleNotify();
-    }
-
     private KCNotificationManager() {
         context = getContext();
         spHelper = HSPreferenceHelper.create(getContext(), PREFS_FILE_NAME);
+        intentMap = new HashMap<>();
+        HSGlobalNotificationCenter.addObserver(HSNotificationConstant.HS_CONFIG_CHANGED, new INotificationObserver() {
+            @Override
+            public void onReceive(String s, HSBundle hsBundle) {
+                if (s.equals(HSNotificationConstant.HS_CONFIG_CHANGED)) {
+                    refreshConfig();
+                }
+            }
+        });
+        refreshConfig();
+        checkNextEventTime();
     }
 
     private void scheduleNotify() {
@@ -107,15 +114,14 @@ public class KCNotificationManager {
         handler.sendEmptyMessageDelayed(HANDLER_MSG_WHAT, intervalDuration);
     }
 
-    public void refreshConfig() {
+    private void refreshConfig() {
         Map<String, ?> configs = HSConfig.getMap("Application", "LocalNotifications");
         if (configs == null) {
             HSLog.e("没有配置本地提醒");
             return;
         }
-        intentMap = new HashMap<>();
         notificationBeanList = new ArrayList<>();
-        ArrayList<String> eventList = new ArrayList<>();
+        eventNameList = new ArrayList<>();
         for (Map.Entry<String, ?> entry : configs.entrySet()) {
             String eventType = entry.getKey();
             try {
@@ -124,7 +130,7 @@ public class KCNotificationManager {
                 bean.setEvent(eventType);
 
                 notificationBeanList.add(bean);
-                eventList.add(eventType);
+                eventNameList.add(eventType);
             } catch (Exception e) {
                 HSLog.e("wrong config for ==> " + eventType);
             }
@@ -136,7 +142,6 @@ public class KCNotificationManager {
                 HSLog.d(notificationBean.toString());
             }
         }
-        intentMap = notificationListener.onInitIntent(eventList);
     }
 
     private void sendNotification(NotificationBean notificationBean) {
@@ -178,7 +183,27 @@ public class KCNotificationManager {
         }
     }
 
+    private void checkNextEventTime() {
+
+        //todo finish next time
+        long nextTime = spHelper.getLong(PREFS_NEXT_EVENT_TIME, 0);
+        handler.sendEmptyMessageDelayed(HANDLER_MSG_WHAT, intervalDuration);
+    }
+
     public static void setIntervalDuration(int intervalDuration) {
         KCNotificationManager.intervalDuration = intervalDuration;
     }
+
+    public void addNotificationEvent(String event, Intent intent) {
+        if (eventNameList.contains(event)) {
+            intentMap.put(event, intent);
+        }
+    }
+
+    public void removeNotificationEvent(String event) {
+        eventNameList.remove(event);
+        intentMap.remove(event);
+    }
+
+
 }

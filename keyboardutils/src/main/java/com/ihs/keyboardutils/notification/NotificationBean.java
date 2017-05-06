@@ -39,7 +39,6 @@ public class NotificationBean implements Comparable<NotificationBean> {
     }
 
 
-
     private int readIntConfig(Map<String, Object> configs, String key, int defaultValue) {
         int item = defaultValue;
         try {
@@ -82,7 +81,7 @@ public class NotificationBean implements Comparable<NotificationBean> {
 
     @Override
     public int compareTo(@NonNull NotificationBean o) {
-        return priority - o.getPriority();
+        return o.getPriority() - priority;
     }
 
 
