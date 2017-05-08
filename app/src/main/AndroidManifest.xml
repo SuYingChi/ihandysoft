@@ -31,6 +31,7 @@
         <activity android:name=".gif.GifViewDemoActivity" />
         <activity android:name=".adactivities.AdDemoActivity" />
         <activity android:name=".alerts.CustomDesignAlertActivity"/>
+        <activity android:name=".CameraUtilActivity"/>
 
         <meta-data
             android:name="com.facebook.sdk.ApplicationId"

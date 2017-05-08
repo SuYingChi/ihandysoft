@@ -31,7 +31,8 @@ public class MainActivity extends HSActivity {
             "Custom Alert Demo",
             "Custom Share Demo",
             "Exit Alert Demo",
-            "Charging Locker Settings"
+            "Charging Locker Settings",
+            "Camera Utils"
     };
 
     Class[] activityClassArray = {
@@ -41,7 +42,8 @@ public class MainActivity extends HSActivity {
             CustomDesignAlertActivity.class,
             null,
             null,
-            ChargingLockerSettingsActivity.class
+            ChargingLockerSettingsActivity.class,
+            CameraUtilActivity.class
     };
 
     @Override
