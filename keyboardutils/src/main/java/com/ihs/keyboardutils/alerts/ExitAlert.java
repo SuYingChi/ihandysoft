@@ -27,13 +27,15 @@ public class ExitAlert {
     private String adPlacement;
     private NativeAdView nativeAdView;
     private boolean showAd;
+    private boolean enableAlert;
 
     public ExitAlert(Activity activity, String adPlacementName) {
+        enableAlert = HSConfig.optBoolean(false, "Application", "ExitAlert", "Enable");
         alterViewStyle = HSConfig.optInteger(EXIT_ALERT_STYLE_2, "Application", "ExitAlert", "style");
         this.adPlacement = adPlacementName;
         showAd = !TextUtils.isEmpty(adPlacementName);//如果没有广告位，说明不用显示广告
         alertDialog = new ExitAlertDialog(activity, alterViewStyle, showAd);
-        if (showAd) {
+        if (enableAlert && showAd) {
             initNativeAdView();
         }
         alertDialog.setOnDismissListener(new DialogInterface.OnDismissListener() {
@@ -87,7 +89,7 @@ public class ExitAlert {
     }
 
     public boolean show() {
-        if (alertDialog != null) {
+        if (enableAlert && alertDialog != null) {
             if (showAd && nativeAdView.isAdLoaded()) {
                 alertDialog.setSponsorView(nativeAdView);
             }
