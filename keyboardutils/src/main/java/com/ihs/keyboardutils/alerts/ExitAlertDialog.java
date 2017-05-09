@@ -101,6 +101,8 @@ class ExitAlertDialog extends AlertDialog implements View.OnClickListener {
     public void onClick(View v) {
         dismiss();
         if (v == exitButton) {
+            HSAnalytics.logEvent("app_quit_way", "app_quit_way", "back");
+            HSAnalytics.logGoogleAnalyticsEvent("app", "alertdialog", "app_quit_way", "back", null, null, null);
             finishActivity();
         }
     }
