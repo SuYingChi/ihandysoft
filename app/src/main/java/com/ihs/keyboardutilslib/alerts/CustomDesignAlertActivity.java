@@ -4,7 +4,9 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Toast;
 
+import com.ihs.app.framework.HSApplication;
 import com.ihs.app.framework.activity.HSActivity;
+import com.ihs.keyboardutils.alerts.CustomUIRateAlert;
 import com.ihs.keyboardutils.alerts.KCAlert;
 import com.ihs.keyboardutilslib.R;
 
@@ -84,5 +86,30 @@ public class CustomDesignAlertActivity extends HSActivity {
                     }
                 })
                 .show();
+    }
+
+    public void showCustomUIRateAlert(View view) {
+        final CustomUIRateAlert dialog = new CustomUIRateAlert(HSApplication.getContext());
+
+        dialog.setPositiveButtonOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Toast.makeText(CustomDesignAlertActivity.this, "onPositiveButtonClick", Toast.LENGTH_SHORT).show();
+            }
+        });
+        dialog.setNegativeButtonOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Toast.makeText(CustomDesignAlertActivity.this, "onNegativeButtonClick", Toast.LENGTH_SHORT).show();
+            }
+        });
+        dialog.setNeutralButtonOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Toast.makeText(CustomDesignAlertActivity.this, "onNeutralButtonClick", Toast.LENGTH_SHORT).show();
+            }
+        });
+
+        dialog.show();
     }
 }

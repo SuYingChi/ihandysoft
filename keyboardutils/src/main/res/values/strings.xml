@@ -54,4 +54,14 @@
     <string name="cancel">cancel</string>
     <string name="exit_dialog_msg">Are you sure you want to exit?</string>
 
+    <!-- Custom ui rate alert -->
+    <string name="custom_ui_rate_alert_title">Enjoy %1$s?</string>
+    <string name="custom_ui_rate_alert_description">Tap the number of stars you\'d give us.</string>
+    <string name="custom_ui_rate_alert_title_rate_five">Thanks! Please share the love on the Google Play.</string>
+    <string name="custom_ui_rate_alert_title_rate_less_than_five">Thanks!\nWe need your feedback.</string>
+    <string name="custom_ui_rate_alert_negative_button">Maybe Later</string>
+    <string name="custom_ui_rate_alert_positive_button_rate_five">Rate Now</string>
+    <string name="custom_ui_rate_alert_positive_button_rate_less_than_five">Send Email</string>
+    <string name="feedback_email">Fill by app</string>
+
 </resources>
