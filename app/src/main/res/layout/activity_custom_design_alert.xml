@@ -35,4 +35,10 @@
         android:onClick="showTwoButtonAlertWithoutImage"
         android:text="Show two button alert(No image)" />
 
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:onClick="showFullScreenAlert"
+        android:text="Show FullScreen alert" />
+
 </LinearLayout>

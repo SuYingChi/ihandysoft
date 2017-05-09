@@ -1,10 +1,12 @@
 package com.ihs.keyboardutilslib.alerts;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Toast;
 
 import com.ihs.app.framework.activity.HSActivity;
+import com.ihs.keyboardutils.alerts.FullScreenDialogActivity;
 import com.ihs.keyboardutils.alerts.KCAlert;
 import com.ihs.keyboardutilslib.R;
 
@@ -84,5 +86,26 @@ public class CustomDesignAlertActivity extends HSActivity {
                     }
                 })
                 .show();
+    }
+
+
+    public void showFullScreenAlert(View view) {
+        Intent intent = new Intent(this,FullScreenDialogActivity.class);
+        intent.putExtra("type","charging");
+        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        this.startActivity(intent);
+//        new KCAlert.Builder(this)
+//                .setTitle("Quickly Open Camera")
+//                .setMessage("Even faster to open camera by adding\n" +
+//                        " a shortcut on lock screen")
+//                .setTopImageResource(R.drawable.top_pic_enable_locker)
+//                .setPositiveButton("OK", new View.OnClickListener() {
+//                    @Override
+//                    public void onClick(View view) {
+//                        Toast.makeText(CustomDesignAlertActivity.this, "Positive button clicked", Toast.LENGTH_SHORT).show();
+//                    }
+//                })
+//                .setFullScreen(true)
+//                .show();
     }
 }

@@ -23,12 +23,27 @@
         <item name="android:windowAnimationStyle">@style/DialogSlideAnim</item>
 
     </style>
-    <style name="DialogSlideAnim" >
+
+    <style name="DialogSlideAnim">
         <item name="android:windowEnterAnimation">@anim/slide_up</item>
         <item name="android:windowExitAnimation">@anim/slide_down</item>
     </style>
 
     <style name="AdProgressStyle" parent="Base.Widget.AppCompat.ProgressBar">
-        <item name="android:indeterminateTint" tools:targetApi="lollipop">@color/ad_progress_color</item>
+        <item name="android:indeterminateTint" tools:targetApi="lollipop">@color/ad_progress_color
+        </item>
+    </style>
+
+    <style name="FullscreenDialog" parent="@android:style/Theme.Light.NoTitleBar.Fullscreen">
+        <item name="android:windowTranslucentStatus">true</item>
+        <item name="android:windowTranslucentNavigation">true</item>
+    </style>
+
+    <style name="Transparent" parent="Theme.AppCompat">
+        <item name="android:windowFullscreen">true</item>
+        <item name="android:windowContentOverlay">@null</item>
+        <item name="android:windowBackground">@color/transparent</item>
+        <item name="android:windowIsTranslucent">true</item>
+        <item name="android:windowAnimationStyle">@android:style/Animation.Translucent</item>
     </style>
 </resources>

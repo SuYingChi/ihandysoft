@@ -2,12 +2,15 @@ package com.ihs.keyboardutils.alerts;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.pm.ActivityInfo;
 import android.graphics.Color;
+import android.graphics.PixelFormat;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AlertDialog;
 import android.text.TextUtils;
 import android.view.View;
+import android.view.Window;
 import android.view.WindowManager;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -29,15 +32,25 @@ class CustomDesignAlert extends AlertDialog implements View.OnClickListener {
     private View.OnClickListener negativeButtonClickListener;
     private TextView positiveButton;
     private TextView negativeButton;
+    private boolean isFullScreen;
 
     CustomDesignAlert(@NonNull Context context) {
         super(context, R.style.DesignDialog);
     }
 
+    CustomDesignAlert(@NonNull Context context,boolean isFullScreen) {
+        super(context, R.style.FullscreenDialog);
+    }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        requestWindowFeature(Window.FEATURE_NO_TITLE);
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.custom_design_alert);
+        if (!isFullScreen) {
+            setContentView(R.layout.custom_design_alert);
+        } else {
+            setContentView(R.layout.custom_design_alert_full);
+        }
 
         TextView titleTextView = (TextView) findViewById(R.id.tv_title);
         titleTextView.setText(title);
@@ -55,11 +68,23 @@ class CustomDesignAlert extends AlertDialog implements View.OnClickListener {
 
         prepareButtons();
 
-        int screenWidth = DisplayUtils.getScreenWidthPixels();
-        int width = (int) getContext().getResources().getFraction(R.fraction.design_dialog_width, screenWidth, screenWidth);
-        findViewById(R.id.root_view).getLayoutParams().width = width;
-
-        findViewById(R.id.iv_image).getLayoutParams().height = width / 2;
+        if (isFullScreen) {
+            View iv_close = findViewById(R.id.iv_close);
+            if (iv_close != null) {
+                iv_close.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        cancel();
+                    }
+                });
+                iv_close.setBackgroundDrawable(RippleDrawableUtils.getTransparentRippleBackground());
+            }
+        } else {
+            int screenWidth = DisplayUtils.getScreenWidthPixels();
+            int width = (int) getContext().getResources().getFraction(R.fraction.design_dialog_width, screenWidth, screenWidth);
+            findViewById(R.id.root_view).getLayoutParams().width = width;
+            findViewById(R.id.iv_image).getLayoutParams().height = width / 2;
+        }
 
         if (!(getContext() instanceof Activity)) {
             if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.M && !android.provider.Settings.canDrawOverlays(HSApplication.getContext())) {
@@ -89,7 +114,11 @@ class CustomDesignAlert extends AlertDialog implements View.OnClickListener {
         if (positiveButton != null) {
             positiveButton.setText(positiveButtonText);
             positiveButton.setOnClickListener(this);
-            positiveButton.setBackgroundDrawable(RippleDrawableUtils.getCompatRippleDrawable(positiveButtonColor, radius));
+            if (isFullScreen) {
+                positiveButton.setBackgroundDrawable(RippleDrawableUtils.getCompatRippleDrawable(Color.WHITE, radius));
+            } else {
+                positiveButton.setBackgroundDrawable(RippleDrawableUtils.getCompatRippleDrawable(positiveButtonColor, radius));
+            }
         }
 
         if (negativeButton != null) {
@@ -105,8 +134,6 @@ class CustomDesignAlert extends AlertDialog implements View.OnClickListener {
         for (int layout : layouts) {
             if (layout == visibleLayoutId) {
                 findViewById(layout).setVisibility(View.VISIBLE);
-            } else {
-                findViewById(layout).setVisibility(View.GONE);
             }
         }
     }
@@ -148,6 +175,14 @@ class CustomDesignAlert extends AlertDialog implements View.OnClickListener {
         this.negativeButtonClickListener = listener;
     }
 
+    boolean isFullScreen() {
+        return isFullScreen;
+    }
+
+    void setFullScreen(boolean fullScreen) {
+        isFullScreen = fullScreen;
+    }
+
     void setTopImageResource(int resId) {
         this.imageResId = resId;
     }
@@ -163,13 +198,27 @@ class CustomDesignAlert extends AlertDialog implements View.OnClickListener {
             return;
         }
 
+        if (isFullScreen) {
+            /**
+             * 设置dialog宽度全屏
+             */
+//            WindowManager.LayoutParams params = getWindow().getAttributes();  //获取对话框当前的参数值、
+
+            WindowManager.LayoutParams layoutParams = new WindowManager.LayoutParams();
+
+            layoutParams.format = PixelFormat.RGBA_8888;
+            layoutParams.flags |= WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON | WindowManager.LayoutParams.FLAG_FULLSCREEN;
+            layoutParams.flags |= WindowManager.LayoutParams.FLAG_NOT_FOCUSABLE | WindowManager.LayoutParams.FLAG_NOT_TOUCH_MODAL | WindowManager.LayoutParams.FLAG_LAYOUT_IN_SCREEN;
+            layoutParams.screenOrientation = ActivityInfo.SCREEN_ORIENTATION_PORTRAIT;
+
+            layoutParams.width = DisplayUtils.getScreenWidthPixels();    //宽度设置全屏宽度
+            layoutParams.height = DisplayUtils.getScreenHeightPixels();    //宽度设置全屏宽度
+
+
+//            getWindow().setAttributes(layoutParams);
+            getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
+        }
         super.show();
 
-        /**
-         * 设置dialog宽度全屏
-         */
-        WindowManager.LayoutParams params = getWindow().getAttributes();  //获取对话框当前的参数值、
-        params.width = DisplayUtils.getScreenWidthPixels();    //宽度设置全屏宽度
-        getWindow().setAttributes(params);     //设置生效
     }
 }

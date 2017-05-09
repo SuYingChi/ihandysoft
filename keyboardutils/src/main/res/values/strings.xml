@@ -54,4 +54,9 @@
     <string name="cancel">cancel</string>
     <string name="exit_dialog_msg">Are you sure you want to exit?</string>
 
+    <string name="font_robot_medium">sans-serif-medium</string>
+    <string name="font_robot_regular">sans-serif</string>
+    <string name="font_robot_light">sans-serif-light</string>
+    <string name="prefs_notification_enable">prefs_notification_enable</string>
+
 </resources>

@@ -1,5 +1,6 @@
 package com.ihs.keyboardutils.notification;
 
+import android.app.Notification;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.content.Context;
@@ -7,6 +8,7 @@ import android.content.Intent;
 import android.os.Handler;
 import android.os.Message;
 import android.support.v4.app.NotificationCompat;
+import android.text.TextUtils;
 
 import com.ihs.app.framework.HSApplication;
 import com.ihs.app.framework.HSNotificationConstant;
@@ -34,11 +36,16 @@ import static com.ihs.app.framework.HSApplication.getContext;
 public class KCNotificationManager {
     private static final String PREFS_FILE_NAME = "notification_prefs";
     private static final String PREFS_NEXT_EVENT_TIME = "prefs_next_event_time";
+    public static final String PREFS_NOTIFICATION_ENABLE = HSApplication.getContext().getString(R.string.prefs_notification_enable);
+
+    public static final int TYPE_ACTIVITY = 1;
+    public static final int TYPE_BROADCAST = 2;
+    public static final int TYPE_SERVICE = 3;
+
     private static int intervalDuration = 5 * 1000;//24 * 3600 * 1000;
     //方法延迟或者计算误差
     private static final int METHOD_EXCUTION_ERROR_TIME = 10;
     private static final int HANDLER_MSG_WHAT = 10;
-
     private static final int NOTIFICATION_ID = Math.abs(HSApplication.getContext().getPackageName().hashCode() / 100000);
 
 
@@ -49,6 +56,7 @@ public class KCNotificationManager {
     private HSPreferenceHelper spHelper;
     private Map<String, Intent> intentMap;
     private ArrayList<String> eventNameList;
+    private int responserType = TYPE_ACTIVITY;
 
 
     private Handler handler = new Handler() {
@@ -70,6 +78,10 @@ public class KCNotificationManager {
     }
 
     private KCNotificationManager() {
+        //初始化notification 设置项
+        if (!HSPreferenceHelper.getDefault().contains(PREFS_NOTIFICATION_ENABLE)) {
+            HSPreferenceHelper.getDefault().putBoolean(PREFS_NOTIFICATION_ENABLE, true);
+        }
         context = getContext();
         spHelper = HSPreferenceHelper.create(getContext(), PREFS_FILE_NAME);
         intentMap = new HashMap<>();
@@ -81,11 +93,22 @@ public class KCNotificationManager {
                 }
             }
         });
+        HSGlobalNotificationCenter.addObserver(HSNotificationConstant.HS_SESSION_END, new INotificationObserver() {
+            @Override
+            public void onReceive(String s, HSBundle hsBundle) {
+                if (s.equals(HSNotificationConstant.HS_SESSION_END)) {
+                    scheduleNotify();
+                }
+            }
+        });
         refreshConfig();
         checkNextEventTime();
     }
 
     private void scheduleNotify() {
+        if (!HSPreferenceHelper.getDefault().getBoolean(PREFS_NOTIFICATION_ENABLE, true)) {
+            return;
+        }
 
         //循环已经按priority排序的bean列表
         for (NotificationBean notificationBean : notificationBeanList) {
@@ -102,12 +125,12 @@ public class KCNotificationManager {
                     System.currentTimeMillis() - lastShow >= intervalDuration * notificationBean.getInterval()) {
 
                 //一天只发送一个notification
-                sendNotification(notificationBean);
+                if(sendNotification(notificationBean)){
+                    eventShowTimes++;
+                    spHelper.putString(notificationBean.getEvent(), String.format(Locale.ENGLISH, "%d,%d", eventShowTimes, System.currentTimeMillis()));
+                    break;
+                }
 
-                eventShowTimes++;
-
-                spHelper.putString(notificationBean.getEvent(), String.format(Locale.ENGLISH, "%d,%d", eventShowTimes, System.currentTimeMillis()));
-                break;
             }
         }
 
@@ -144,13 +167,17 @@ public class KCNotificationManager {
         }
     }
 
-    private void sendNotification(NotificationBean notificationBean) {
+    private boolean sendNotification(NotificationBean notificationBean) {
+        if (intentMap.get(notificationBean.getEvent()) == null) {
+            return false;
+        }
 
         NotificationCompat.Builder mBuilder = new NotificationCompat.Builder(context)
                 .setAutoCancel(true)
                 .setSmallIcon(R.drawable.ic_notification)
                 .setContentTitle(notificationBean.getTitle())
-                .setContentText(notificationBean.getMessage());
+                .setContentText(notificationBean.getMessage())
+                .setDefaults(Notification.DEFAULT_ALL);
 
         NotificationCompat.BigTextStyle bigText = new NotificationCompat.BigTextStyle();
         bigText.bigText(notificationBean.getMessage());
@@ -161,14 +188,40 @@ public class KCNotificationManager {
         if (intentMap != null) {
             Intent intent = intentMap.get(notificationBean.getEvent());
             if (intent != null) {
-                intent.setAction(Long.toString(System.currentTimeMillis()));
-                PendingIntent resultPendingIntent =
-                        PendingIntent.getActivity(
+                if (TextUtils.isEmpty(intent.getAction())) {
+                    intent.setAction(Long.toString(System.currentTimeMillis()));
+                }
+                PendingIntent resultPendingIntent;
+
+                switch (responserType) {
+                    default:
+                    case TYPE_ACTIVITY:
+                        resultPendingIntent = PendingIntent.getActivity(
                                 getContext(),
                                 0,
                                 intent,
                                 PendingIntent.FLAG_ONE_SHOT
                         );
+
+                        break;
+                    case TYPE_BROADCAST:
+                        resultPendingIntent = PendingIntent.getBroadcast(
+                                getContext(),
+                                0,
+                                intent,
+                                PendingIntent.FLAG_ONE_SHOT
+                        );
+
+                        break;
+                    case TYPE_SERVICE:
+                        resultPendingIntent = PendingIntent.getService(
+                                getContext(),
+                                0,
+                                intent,
+                                PendingIntent.FLAG_ONE_SHOT
+                        );
+                        break;
+                }
                 mBuilder.setContentIntent(resultPendingIntent);
             }
         }
@@ -180,7 +233,13 @@ public class KCNotificationManager {
             manager.notify(notificationBean.getEvent(), NOTIFICATION_ID, mBuilder.build());
         } catch (Exception e) {
             e.printStackTrace();
+            return false;
         }
+        return true;
+    }
+
+    public void setNotificationResponserType(int type) {
+        responserType = type;
     }
 
     private void checkNextEventTime() {
@@ -201,7 +260,6 @@ public class KCNotificationManager {
     }
 
     public void removeNotificationEvent(String event) {
-        eventNameList.remove(event);
         intentMap.remove(event);
     }
 

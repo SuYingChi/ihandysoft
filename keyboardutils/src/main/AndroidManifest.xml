@@ -41,6 +41,10 @@
             </intent-filter>
         </receiver>
 
+        <activity android:name=".alerts.FullScreenDialogActivity" android:theme="@style/Transparent">
+
+        </activity>
+
     </application>
 
 </manifest>
