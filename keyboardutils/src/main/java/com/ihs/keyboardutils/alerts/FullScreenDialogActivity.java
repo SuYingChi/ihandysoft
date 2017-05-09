@@ -37,15 +37,33 @@ public class FullScreenDialogActivity extends Activity {
     }
 
     private void initLockerDialog() {
-
-    }
-
-    private void initChargingDialog() {
         new KCAlert.Builder(this)
                 .setTitle("Quickly Open Camera")
                 .setMessage("Even faster to open camera by adding\n" +
                         " a shortcut on lock screen")
                 .setTopImageResource(R.drawable.top_pic_enable_locker)
+                .setPositiveButton("OK", new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        Toast.makeText(FullScreenDialogActivity.this, "Positive button clicked", Toast.LENGTH_SHORT).show();
+                    }
+                })
+                .setOnDismissListener(new DialogInterface.OnDismissListener() {
+                    @Override
+                    public void onDismiss(DialogInterface dialog) {
+                        finish();
+                    }
+                })
+                .setFullScreen(true)
+                .show();
+    }
+
+    private void initChargingDialog() {
+        new KCAlert.Builder(this)
+                .setTitle("Battery Protection")
+                .setMessage("Enable battery protection to speed up \n" +
+                        "the charging by 50%")
+                .setTopImageResource(R.drawable.top_pic_enable_charging)
                 .setPositiveButton("OK", new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {

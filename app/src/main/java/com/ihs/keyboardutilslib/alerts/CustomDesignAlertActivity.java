@@ -89,23 +89,17 @@ public class CustomDesignAlertActivity extends HSActivity {
     }
 
 
-    public void showFullScreenAlert(View view) {
+    public void showFullScreenChargingAlert(View view) {
         Intent intent = new Intent(this,FullScreenDialogActivity.class);
         intent.putExtra("type","charging");
         intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         this.startActivity(intent);
-//        new KCAlert.Builder(this)
-//                .setTitle("Quickly Open Camera")
-//                .setMessage("Even faster to open camera by adding\n" +
-//                        " a shortcut on lock screen")
-//                .setTopImageResource(R.drawable.top_pic_enable_locker)
-//                .setPositiveButton("OK", new View.OnClickListener() {
-//                    @Override
-//                    public void onClick(View view) {
-//                        Toast.makeText(CustomDesignAlertActivity.this, "Positive button clicked", Toast.LENGTH_SHORT).show();
-//                    }
-//                })
-//                .setFullScreen(true)
-//                .show();
+    }
+
+    public void showFullScreenLockerAlert(View view) {
+        Intent intent = new Intent(this,FullScreenDialogActivity.class);
+        intent.putExtra("type","locker");
+        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        this.startActivity(intent);
     }
 }

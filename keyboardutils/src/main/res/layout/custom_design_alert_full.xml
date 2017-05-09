@@ -1,93 +1,99 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/root_view"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:layout_gravity="center"
-    android:background="#2687ff"
-    android:orientation="vertical">
+    android:background="#2687ff">
 
     <RelativeLayout
+        android:id="@+id/rl_close"
         android:layout_width="match_parent"
         android:layout_height="50dp">
 
         <ImageView
             android:id="@+id/iv_close"
-            android:layout_marginTop="12dp"
-            android:layout_marginRight="12dp"
-            android:layout_marginEnd="12dp"
-            android:padding="5dp"
             android:layout_width="36dp"
             android:layout_height="36dp"
             android:layout_alignParentEnd="true"
             android:layout_alignParentRight="true"
-            android:src="@drawable/ic_ad_loading_close" />
+            android:layout_marginEnd="12dp"
+            android:layout_marginRight="12dp"
+            android:layout_marginTop="12dp"
+            android:padding="5dp"
+            android:src="@drawable/ic_fullscreen_alert_close" />
     </RelativeLayout>
 
 
-    <ImageView
-        android:id="@+id/iv_image"
+    <LinearLayout
+        android:layout_centerVertical="true"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:scaleType="centerInside"
-        android:src="@drawable/top_pic_enable_locker" />
+        android:orientation="vertical">
 
-    <LinearLayout
-        style="@style/DesignDialogFrame"
-        android:background="@null">
+        <ImageView
+            android:id="@+id/iv_image"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:scaleType="centerInside"
+            android:src="@drawable/top_pic_enable_locker" />
 
         <LinearLayout
-            style="@style/DesignDialogContentArea"
-            android:gravity="center">
+            style="@style/DesignDialogFrame"
+            android:background="@null">
 
-            <TextView
-                android:fontFamily="@string/font_robot_medium"
-                android:id="@+id/tv_title"
-                style="@style/DesignDialogContentTitle"
-                android:gravity="center"
-                android:textSize="24sp"
-                android:textColor="@android:color/white" />
+            <LinearLayout
+                style="@style/DesignDialogContentArea"
+                android:gravity="center">
 
-            <TextView
-                android:fontFamily="@string/font_robot_medium"
-                android:id="@+id/tv_message"
-                style="@style/DesignDialogContentBody"
-                android:gravity="center"
-                android:textColor="#ccffffff" />
+                <TextView
+                    android:id="@+id/tv_title"
+                    style="@style/DesignDialogContentTitle"
+                    android:fontFamily="@string/font_robot_medium"
+                    android:gravity="center"
+                    android:textColor="@android:color/white"
+                    android:textSize="24sp" />
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="(May contains ads)"
-                android:textColor="#99ffffff" />
+                <TextView
+                    android:layout_marginTop="8dp"
+                    android:id="@+id/tv_message"
+                    style="@style/DesignDialogContentBody"
+                    android:fontFamily="@string/font_robot_medium"
+                    android:gravity="center"
+                    android:textColor="#ccffffff" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="(May contains ads)"
+                    android:textColor="#99ffffff" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_height="62dp"
+                android:layout_marginLeft="33dp"
+                android:layout_marginRight="33dp"
+                android:id="@+id/ll_single_button"
+                style="@style/DesignDialogActionArea"
+                android:clipChildren="false"
+                android:clipToPadding="false"
+                android:visibility="visible">
+
+                <TextView
+                    android:layout_height="50dp"
+                    android:id="@+id/btn_positive_single"
+                    style="@style/DesignDialogSingleActionButton"
+                    android:elevation="2dp"
+                    android:text="OK"
+                    android:textColor="#2687ff"
+                    android:visibility="visible" />
+
+            </LinearLayout>
 
         </LinearLayout>
 
-        <LinearLayout
-            android:clipToPadding="false"
-            android:clipChildren="false"
-            android:visibility="visible"
-            android:id="@+id/ll_single_button"
-            style="@style/DesignDialogActionArea">
-
-            <TextView
-                android:elevation="2dp"
-                android:visibility="visible"
-                android:id="@+id/btn_positive_single"
-                style="@style/DesignDialogSingleActionButton"
-                android:textColor="#2687ff"
-                android:text="OK"
-                />
-
-        </LinearLayout>
 
     </LinearLayout>
 
-
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="1" />
-
-</LinearLayout>
+</RelativeLayout>

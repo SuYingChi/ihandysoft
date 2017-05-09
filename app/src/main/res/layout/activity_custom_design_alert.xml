@@ -38,7 +38,13 @@
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:onClick="showFullScreenAlert"
-        android:text="Show FullScreen alert" />
+        android:onClick="showFullScreenChargingAlert"
+        android:text="Show FullScreen Charging alert" />
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:onClick="showFullScreenLockerAlert"
+        android:text="Show FullScreen Locker alert" />
 
 </LinearLayout>

@@ -1,12 +1,11 @@
 package com.ihs.keyboardutils.notification;
 
+import android.app.AlarmManager;
 import android.app.Notification;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
-import android.os.Handler;
-import android.os.Message;
 import android.support.v4.app.NotificationCompat;
 import android.text.TextUtils;
 
@@ -26,6 +25,7 @@ import java.util.HashMap;
 import java.util.Locale;
 import java.util.Map;
 
+import static android.content.Context.ALARM_SERVICE;
 import static android.content.Context.NOTIFICATION_SERVICE;
 import static com.ihs.app.framework.HSApplication.getContext;
 
@@ -58,18 +58,6 @@ public class KCNotificationManager {
     private ArrayList<String> eventNameList;
     private int responserType = TYPE_ACTIVITY;
 
-
-    private Handler handler = new Handler() {
-        @Override
-        public void handleMessage(Message msg) {
-            if (hasMessages(HANDLER_MSG_WHAT)) {
-                return;
-            }
-            scheduleNotify();
-        }
-    };
-
-
     public synchronized static KCNotificationManager getInstance() {
         if (instance == null) {
             instance = new KCNotificationManager();
@@ -85,6 +73,7 @@ public class KCNotificationManager {
         context = getContext();
         spHelper = HSPreferenceHelper.create(getContext(), PREFS_FILE_NAME);
         intentMap = new HashMap<>();
+
         HSGlobalNotificationCenter.addObserver(HSNotificationConstant.HS_CONFIG_CHANGED, new INotificationObserver() {
             @Override
             public void onReceive(String s, HSBundle hsBundle) {
@@ -105,7 +94,7 @@ public class KCNotificationManager {
         checkNextEventTime();
     }
 
-    private void scheduleNotify() {
+    public void scheduleNotify() {
         if (!HSPreferenceHelper.getDefault().getBoolean(PREFS_NOTIFICATION_ENABLE, true)) {
             return;
         }
@@ -133,8 +122,6 @@ public class KCNotificationManager {
 
             }
         }
-
-        handler.sendEmptyMessageDelayed(HANDLER_MSG_WHAT, intervalDuration);
     }
 
     private void refreshConfig() {
@@ -243,10 +230,10 @@ public class KCNotificationManager {
     }
 
     private void checkNextEventTime() {
-
-        //todo finish next time
-        long nextTime = spHelper.getLong(PREFS_NEXT_EVENT_TIME, 0);
-        handler.sendEmptyMessageDelayed(HANDLER_MSG_WHAT, intervalDuration);
+        Intent intent = new Intent(context,NotificationExecutionReceiver.class);
+        PendingIntent pendingIntent = PendingIntent.getBroadcast(context,1,intent,PendingIntent.FLAG_UPDATE_CURRENT);
+        AlarmManager alarmManager = (AlarmManager)context.getSystemService(ALARM_SERVICE);
+        alarmManager.setRepeating(AlarmManager.RTC_WAKEUP,intervalDuration,intervalDuration,pendingIntent);
     }
 
     public static void setIntervalDuration(int intervalDuration) {
