@@ -99,7 +99,7 @@ public class ChargingFullScreenAlertDialogActivity extends Activity {
                 .show();
     }
 
-    public static Map<String, String> getAlertConfigMap(String keyLowercase){
+    private Map<String, String> getAlertConfigMap(String keyLowercase){
         Map<String,String> alertMap = new HashMap();
 
         switch (keyLowercase) {
@@ -112,5 +112,19 @@ public class ChargingFullScreenAlertDialogActivity extends Activity {
                 break;
         }
         return alertMap;
+    }
+
+    public static void startChargingAlert(){
+        Intent intent = new Intent(HSApplication.getContext(),ChargingFullScreenAlertDialogActivity.class);
+        intent.putExtra("type","charging");
+        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        HSApplication.getContext().startActivity(intent);
+    }
+
+    public static void startLockerAlert(){
+        Intent intent = new Intent(HSApplication.getContext(),ChargingFullScreenAlertDialogActivity.class);
+        intent.putExtra("type","charging");
+        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        HSApplication.getContext().startActivity(intent);
     }
 }

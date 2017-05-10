@@ -57,7 +57,7 @@ public class KCAlert {
 
 
             if (!TextUtils.isEmpty(adText)) {
-                alert.setMessage(adText);
+                alert.setAdText(adText);
             }
 
             if (!TextUtils.isEmpty(positiveButtonText)) {
