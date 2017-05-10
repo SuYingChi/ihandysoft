@@ -14,7 +14,6 @@ import com.ihs.app.framework.HSApplication;
 import com.ihs.charging.HSChargingManager;
 import com.ihs.chargingscreen.Constants;
 import com.ihs.chargingscreen.HSChargingScreenManager;
-import com.ihs.chargingscreen.activity.ChargingScreenActivity;
 import com.ihs.chargingscreen.notification.push.BasePush;
 import com.ihs.chargingscreen.notification.push.ChargingAndBatteryLowPush;
 import com.ihs.chargingscreen.notification.push.ChargingModuleDisabledPush;
@@ -108,9 +107,7 @@ public class ChargeNotifyManager {
                 int delayHours = HSConfig.optInteger(0, "Application", "ChargeLocker", "HoursFromFirstUse");
                 boolean chargingReadyToWork = isReady(PREF_APP_FIRST_TRY_TO_CHARGING, delayHours);
                 if (HSChargingManager.getInstance().isCharging() && chargingReadyToWork) {
-                    Intent intent1 = new Intent(context, ChargingScreenActivity.class);
-                    intent1.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                    context.startActivity(intent1);
+                    ChargingManagerUtil.startChargingActivity();
                 }
             }
         }

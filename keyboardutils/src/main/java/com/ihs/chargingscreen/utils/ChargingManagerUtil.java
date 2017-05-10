@@ -1,7 +1,6 @@
 package com.ihs.chargingscreen.utils;
 
 import android.content.Context;
-import android.content.Intent;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.content.pm.PackageManager.NameNotFoundException;
@@ -11,7 +10,7 @@ import android.net.NetworkInfo;
 import com.ihs.app.framework.HSApplication;
 import com.ihs.charging.HSChargingManager;
 import com.ihs.chargingscreen.HSChargingScreenManager;
-import com.ihs.chargingscreen.activity.ChargingScreenActivity;
+import com.ihs.chargingscreen.activity.DismissKeyguradActivity;
 import com.ihs.keyboardutils.R;
 
 /**
@@ -146,9 +145,7 @@ public class ChargingManagerUtil {
     }
 
     public static void startChargingActivity() {
-        Intent intent1 = new Intent(context, ChargingScreenActivity.class);
-        intent1.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-        context.startActivity(intent1);
+        DismissKeyguradActivity.startSelfIfKeyguardSecure(HSApplication.getContext());
     }
 
     public static void disableCharging() {

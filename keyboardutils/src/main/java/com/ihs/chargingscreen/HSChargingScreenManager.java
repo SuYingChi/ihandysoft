@@ -8,9 +8,9 @@ import com.ihs.app.framework.HSApplication;
 import com.ihs.charging.HSChargingManager;
 import com.ihs.charging.HSChargingManager.HSChargingState;
 import com.ihs.charging.HSChargingManager.IChargingListener;
-import com.ihs.chargingscreen.activity.ChargingScreenActivity;
 import com.ihs.chargingscreen.notification.ChargeNotifyManager;
 import com.ihs.chargingscreen.utils.ChargingAnalytics;
+import com.ihs.chargingscreen.utils.ChargingManagerUtil;
 import com.ihs.chargingscreen.utils.ChargingPrefsUtil;
 import com.ihs.commons.notificationcenter.HSGlobalNotificationCenter;
 import com.ihs.commons.utils.HSLog;
@@ -133,9 +133,7 @@ public class HSChargingScreenManager {
 //
                 if (preChargingState == HSChargingState.STATE_DISCHARGING && curChargingState != HSChargingState.STATE_DISCHARGING) {
                     //插电
-                    Intent intent1 = new Intent(HSApplication.getContext(), ChargingScreenActivity.class);
-                    intent1.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                    HSApplication.getContext().startActivity(intent1);
+                    ChargingManagerUtil.startChargingActivity();
                 }
 
 //                    ChargeNotifyManager.getInstance().pendingToShow(ChargeNotifyManager.PUSH_CHARGING_PRIORITY);

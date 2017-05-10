@@ -7,7 +7,6 @@ import android.animation.ObjectAnimator;
 import android.animation.ValueAnimator;
 import android.animation.ValueAnimator.AnimatorUpdateListener;
 import android.app.Dialog;
-import android.app.KeyguardManager;
 import android.content.ContentResolver;
 import android.content.Context;
 import android.content.pm.PackageManager;
@@ -15,8 +14,7 @@ import android.content.res.Configuration;
 import android.content.res.Resources;
 import android.graphics.BitmapFactory;
 import android.graphics.drawable.Drawable;
-import android.os.Build.VERSION;
-import android.os.Build.VERSION_CODES;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -74,7 +72,14 @@ import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 
+import static android.view.WindowManager.LayoutParams.FLAG_DISMISS_KEYGUARD;
+import static android.view.WindowManager.LayoutParams.FLAG_FULLSCREEN;
+import static android.view.WindowManager.LayoutParams.FLAG_SHOW_WHEN_LOCKED;
+import static android.view.WindowManager.LayoutParams.FLAG_TRANSLUCENT_NAVIGATION;
+import static android.view.WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS;
+import static android.view.WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN;
 import static com.ihs.chargingscreen.HSChargingScreenManager.getChargingState;
+import static com.ihs.chargingscreen.activity.DismissKeyguradActivity.isKeyguardSecure;
 
 /**
  * Created by zhixiangxiao on 5/4/16.
@@ -209,10 +214,26 @@ public class ChargingScreenActivity extends HSActivity {
         HSGlobalNotificationCenter.sendNotification(NOTIFICATION_CHARGING_ACTIVITY_STARTED);
 
         requestWindowFeature(Window.FEATURE_NO_TITLE);
-
-        this.getWindow().setFlags(LayoutParams.FLAG_FULLSCREEN, LayoutParams.FLAG_FULLSCREEN);
-
         super.onCreate(savedInstanceState);
+
+        Window window = getWindow();
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
+            window.addFlags(FLAG_TRANSLUCENT_STATUS);
+            window.addFlags(FLAG_TRANSLUCENT_NAVIGATION);
+        }
+
+        //原生系统会闪烁？
+        if (!(Build.VERSION_CODES.LOLLIPOP == Build.VERSION.SDK_INT
+                && ("Google".equals(Build.BRAND) || "google".equals(Build.BRAND)))) {
+            window.addFlags(FLAG_FULLSCREEN);
+        }
+
+        window.addFlags(FLAG_SHOW_WHEN_LOCKED);
+        window.setSoftInputMode(SOFT_INPUT_STATE_ALWAYS_HIDDEN);
+        if (!isKeyguardSecure(this, false)) {
+            window.addFlags(FLAG_DISMISS_KEYGUARD);
+        }
+
 
         ChargingAnalytics.getInstance().chargingScreenShowed();
 
@@ -258,30 +279,6 @@ public class ChargingScreenActivity extends HSActivity {
                 telephonyManager.listen(phoneStateListener, PhoneStateListener.LISTEN_CALL_STATE);
             }
 
-        }
-
-        boolean keyguardFlag;
-        if (VERSION.SDK_INT < VERSION_CODES.JELLY_BEAN) {
-            keyguardFlag = false;
-        } else {
-            KeyguardManager keyguardManager = (KeyguardManager) getSystemService(Context.KEYGUARD_SERVICE);
-            if (keyguardManager == null) {
-                keyguardFlag = false;
-            } else {
-                keyguardFlag = keyguardManager.isKeyguardSecure();
-                HSLog.i("isKeyguardSecure: " + keyguardManager.isKeyguardSecure()
-                        + " isKeyguardLocked: " + keyguardManager.isKeyguardLocked());
-            }
-        }
-
-        Window window = getWindow();
-        if (VERSION.SDK_INT >= VERSION_CODES.KITKAT) {
-            window.addFlags(LayoutParams.FLAG_TRANSLUCENT_STATUS);
-            window.addFlags(LayoutParams.FLAG_TRANSLUCENT_NAVIGATION);
-        }
-        window.addFlags(LayoutParams.FLAG_SHOW_WHEN_LOCKED);
-        if (!keyguardFlag) {
-            window.addFlags(LayoutParams.FLAG_DISMISS_KEYGUARD);
         }
 
         setContentView(R.layout.charging_module_activity_charging_screen);
