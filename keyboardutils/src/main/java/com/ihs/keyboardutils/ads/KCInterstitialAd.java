@@ -1,5 +1,6 @@
 package com.ihs.keyboardutils.ads;
 
+import android.graphics.PixelFormat;
 import android.os.Handler;
 import android.os.Looper;
 import android.widget.Toast;
@@ -13,12 +14,21 @@ import com.ihs.keyboardutils.R;
 import java.util.List;
 
 public class KCInterstitialAd {
+
+    public interface OnAdCloseListener {
+        void onAdClose();
+    }
+
     public static void load(String placement) {
         logAnalyticsEvent(placement, "Load");
         new AcbInterstitialAdLoader(HSApplication.getContext(), placement).load(1, null);
     }
 
     public static boolean show(final String placement) {
+        show(placement, null);
+    }
+
+    public static boolean show(final String placement, final OnAdCloseListener onAdCloseListener) {
         List<AcbInterstitialAd> interstitialAds = AcbInterstitialAdLoader.fetch(HSApplication.getContext(), placement, 1);
         if (interstitialAds.size() <= 0) {
             logAnalyticsEvent(placement, "FetchNoAd");
@@ -46,6 +56,9 @@ public class KCInterstitialAd {
             public void onAdClosed() {
                 logAnalyticsEvent(placement, "Close");
                 releaseInterstitialAd(interstitialAd);
+                if (onAdCloseListener != null) {
+                    onAdCloseListener.onAdClose();
+                }
             }
         });
 
