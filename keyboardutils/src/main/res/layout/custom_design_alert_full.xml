@@ -63,6 +63,7 @@
                     android:textColor="#ccffffff" />
 
                 <TextView
+                    android:id="@+id/tv_adtext"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="(May contains ads)"
@@ -85,7 +86,9 @@
                     android:id="@+id/btn_positive_single"
                     style="@style/DesignDialogSingleActionButton"
                     android:elevation="2dp"
+                    android:textSize="20sp"
                     android:text="OK"
+                    android:fontFamily="@string/font_robot_medium"
                     android:textColor="#2687ff"
                     android:visibility="visible" />
 

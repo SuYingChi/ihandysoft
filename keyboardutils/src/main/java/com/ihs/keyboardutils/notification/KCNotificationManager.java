@@ -82,14 +82,6 @@ public class KCNotificationManager {
                 }
             }
         });
-        HSGlobalNotificationCenter.addObserver(HSNotificationConstant.HS_SESSION_END, new INotificationObserver() {
-            @Override
-            public void onReceive(String s, HSBundle hsBundle) {
-                if (s.equals(HSNotificationConstant.HS_SESSION_END)) {
-                    scheduleNotify();
-                }
-            }
-        });
         refreshConfig();
         checkNextEventTime();
     }

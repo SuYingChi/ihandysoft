@@ -32,6 +32,7 @@ public class KCAlert {
         private boolean canceledOnTouchOutside;
         private CharSequence title;
         private CharSequence message;
+        private CharSequence adText;
         private CharSequence positiveButtonText;
         private CharSequence negativeButtonText;
         private View.OnClickListener positiveButtonClickListener;
@@ -52,6 +53,11 @@ public class KCAlert {
 
             if (!TextUtils.isEmpty(message)) {
                 alert.setMessage(message);
+            }
+
+
+            if (!TextUtils.isEmpty(adText)) {
+                alert.setMessage(adText);
             }
 
             if (!TextUtils.isEmpty(positiveButtonText)) {
@@ -92,6 +98,11 @@ public class KCAlert {
 
         public Builder setTitle(CharSequence title) {
             alertParams.title = title;
+            return this;
+        }
+
+        public Builder setAdText(CharSequence adText) {
+            alertParams.adText = adText;
             return this;
         }
 

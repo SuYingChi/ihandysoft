@@ -6,48 +6,37 @@
 	<dict>
 		<key>Application</key>
 		<dict>
-			<key>LocalNotifications</key>
+			<key>Locker</key>
 			<dict>
-				<key>AddNewPhotoToPrivate</key>
-				<dict>
-					<key>Body</key>
-					<string>Move photos to private album to keep snoopers out of your photos.</string>
-					<key>Title</key>
-					<string>USE PRIVATE ALBUM NOW!</string>
-					<key>Priority</key>
-					<integer>0</integer>
-					<key>Interval</key>
-					<integer>3</integer>
-				</dict>
-				<key>ScreenLocker</key>
+				<key>Alert</key>
 				<dict>
 					<key>Title</key>
-					<string>ENABLE SCREEN LOCKER!</string>
-					<key>Body</key>
-					<string>Enable screen locker to prevent overcharging efficiently.</string>
-					<key>Priority</key>
-					<integer>1</integer>
-					<key>MaxShowCount</key>
-					<integer>3</integer>
-					<key>Interval</key>
-					<integer>3</integer>
-				</dict>
-				<key>Charging</key>
-				<dict>
-					<key>Body</key>
-					<string>Enable smart charging to prevent overcharging efficiently.</string>
-					<key>Title</key>
-					<string>ENABLE SMART CHARGING!</string>
-					<key>Priority</key>
-					<integer>2</integer>
-					<key>MaxShowCount</key>
-					<integer>3</integer>
-					<key>Interval</key>
-					<integer>3</integer>
+					<string>t</string>
+					<key>b</key>
+					<string></string>
+					<key>m</key>
+					<string></string>
+					<key>ad</key>
+					<string></string>
+					<key>EnableAlertStyle</key>
+					<string>1</string>
 				</dict>
 			</dict>
 			<key>ChargeLocker</key>
 			<dict>
+				<key>Alert</key>
+				<dict>
+					<key>Title</key>
+					<string>t</string>
+					<key>b</key>
+					<string></string>
+					<key>m</key>
+					<string></string>
+					<key>ad</key>
+					<string></string>
+					<key>EnableAlertStyle</key>
+					<string>1</string>
+				</dict>
 				<key>HoursFromFirstUse</key>
 				<integer>0</integer>
 				<key>state</key>

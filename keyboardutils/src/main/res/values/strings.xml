@@ -58,5 +58,6 @@
     <string name="font_robot_regular">sans-serif</string>
     <string name="font_robot_light">sans-serif-light</string>
     <string name="prefs_notification_enable">prefs_notification_enable</string>
+    <string name="charging_enable_alert_toast">Smart Charging Enabled</string>
 
 </resources>

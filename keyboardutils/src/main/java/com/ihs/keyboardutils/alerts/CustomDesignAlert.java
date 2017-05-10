@@ -26,6 +26,7 @@ class CustomDesignAlert extends AlertDialog implements View.OnClickListener {
     private int imageResId;
     private CharSequence title;
     private CharSequence message;
+    private CharSequence adText;
     private CharSequence positiveButtonText;
     private CharSequence negativeButtonText;
     private View.OnClickListener positiveButtonClickListener;
@@ -57,6 +58,15 @@ class CustomDesignAlert extends AlertDialog implements View.OnClickListener {
 
         TextView messageTextView = (TextView) findViewById(R.id.tv_message);
         messageTextView.setText(message);
+
+        TextView adTextView = (TextView) findViewById(R.id.tv_adtext);
+        if( adTextView!=null){
+            if(TextUtils.isEmpty(adText)){
+                adTextView.setVisibility(View.GONE);
+            }else{
+                adTextView.setText(adText);
+            }
+        }
 
         ImageView imageView = (ImageView) findViewById(R.id.iv_image);
         if (imageResId != 0) {
@@ -132,8 +142,13 @@ class CustomDesignAlert extends AlertDialog implements View.OnClickListener {
         int layouts[] = {R.id.ll_single_button, R.id.ll_buttons};
 
         for (int layout : layouts) {
-            if (layout == visibleLayoutId) {
-                findViewById(layout).setVisibility(View.VISIBLE);
+            View viewById = findViewById(layout);
+            if(viewById!=null){
+                if (layout == visibleLayoutId ) {
+                    viewById.setVisibility(View.VISIBLE);
+                } else {
+                    viewById.setVisibility(View.GONE);
+                }
             }
         }
     }
@@ -156,6 +171,10 @@ class CustomDesignAlert extends AlertDialog implements View.OnClickListener {
     @Override
     public void setTitle(CharSequence title) {
         this.title = title;
+    }
+
+    public void setAdText(CharSequence adText) {
+        this.adText = adText;
     }
 
     @Override

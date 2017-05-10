@@ -10,13 +10,26 @@ import android.view.Window;
 import android.view.WindowManager;
 import android.widget.Toast;
 
+import com.ihs.app.framework.HSApplication;
+import com.ihs.chargingscreen.utils.ChargingManagerUtil;
+import com.ihs.commons.config.HSConfig;
+import com.ihs.commons.notificationcenter.HSGlobalNotificationCenter;
 import com.ihs.keyboardutils.R;
+import com.ihs.keyboardutils.utils.KCAnalyticUtil;
+
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * Created by Arthur on 17/5/8.
  */
 
 public class FullScreenDialogActivity extends Activity {
+
+    public static final String NOTIFICATION_LOCKER_ENABLED = "notification_locker_enabled";
+
+    private String alertType;
+
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         requestWindowFeature(Window.FEATURE_NO_TITLE);
@@ -24,8 +37,8 @@ public class FullScreenDialogActivity extends Activity {
         super.onCreate(savedInstanceState);
         Intent intent = getIntent();
         if (intent != null) {
-            String type = intent.getStringExtra("type");
-            switch (type) {
+            alertType= intent.getStringExtra("type");
+            switch (alertType) {
                 case "charging":
                     initChargingDialog();
                     break;
@@ -37,15 +50,16 @@ public class FullScreenDialogActivity extends Activity {
     }
 
     private void initLockerDialog() {
+
+        Map<String, String> chargingMap = getAlertConfigMap(alertType);
         new KCAlert.Builder(this)
-                .setTitle("Quickly Open Camera")
-                .setMessage("Even faster to open camera by adding\n" +
-                        " a shortcut on lock screen")
+                .setTitle(chargingMap.get("Title"))
+                .setMessage(chargingMap.get("Body"))
                 .setTopImageResource(R.drawable.top_pic_enable_locker)
-                .setPositiveButton("OK", new View.OnClickListener() {
+                .setPositiveButton(chargingMap.get("Button"), new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
-                        Toast.makeText(FullScreenDialogActivity.this, "Positive button clicked", Toast.LENGTH_SHORT).show();
+                        HSGlobalNotificationCenter.sendNotification(NOTIFICATION_LOCKER_ENABLED);
                     }
                 })
                 .setOnDismissListener(new DialogInterface.OnDismissListener() {
@@ -55,19 +69,22 @@ public class FullScreenDialogActivity extends Activity {
                     }
                 })
                 .setFullScreen(true)
+                .setAdText(chargingMap.get("AdText"))
                 .show();
     }
 
     private void initChargingDialog() {
+        Map<String, String> chargingMap = getAlertConfigMap(alertType);
         new KCAlert.Builder(this)
-                .setTitle("Battery Protection")
-                .setMessage("Enable battery protection to speed up \n" +
-                        "the charging by 50%")
+                .setTitle(chargingMap.get("Title"))
+                .setMessage(chargingMap.get("Body"))
                 .setTopImageResource(R.drawable.top_pic_enable_charging)
-                .setPositiveButton("OK", new View.OnClickListener() {
+                .setPositiveButton(chargingMap.get("Button"), new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
-                        Toast.makeText(FullScreenDialogActivity.this, "Positive button clicked", Toast.LENGTH_SHORT).show();
+                        ChargingManagerUtil.enableCharging(false,"alert");
+                        Toast.makeText(HSApplication.getContext(), HSApplication.getContext().getString(R.string.charging_enable_alert_toast), Toast.LENGTH_SHORT).show();
+                        KCAnalyticUtil.logEvent("alert_charging_click");
                     }
                 })
                 .setOnDismissListener(new DialogInterface.OnDismissListener() {
@@ -77,6 +94,22 @@ public class FullScreenDialogActivity extends Activity {
                     }
                 })
                 .setFullScreen(true)
+                .setAdText(chargingMap.get("AdText"))
                 .show();
+    }
+
+    public static Map<String, String> getAlertConfigMap(String keyLowercase){
+        Map<String,String> alertMap = new HashMap();
+
+        switch (keyLowercase) {
+            case "charging":
+                alertMap = (Map<String, String>) HSConfig.getMap("Application","ChargeLocker","Alert");
+                break;
+
+            case "locker":
+                alertMap = (Map<String, String>) HSConfig.getMap("Application","Locker","Alert");
+                break;
+        }
+        return alertMap;
     }
 }
