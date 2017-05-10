@@ -18,7 +18,7 @@ public class ChargingBroadcastReceiver extends BroadcastReceiver {
     @Override
     public void onReceive(Context context, Intent intent) {
         if (intent.getAction().equals(ACTION_START_CHARGING_ACTIVITY)) {
-            ChargingManagerUtil.enableCharging(true);
+            ChargingManagerUtil.enableCharging(true,"popupNotification");
             ChargingAnalytics.getInstance().chargingEnableNotificationClicked();
         } else if (!isServiceRunning) {
             context.startService(new Intent(context, KeepAliveService.class));

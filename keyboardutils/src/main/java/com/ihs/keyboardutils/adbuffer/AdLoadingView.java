@@ -15,11 +15,11 @@ import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
-import com.ihs.app.analytics.HSAnalytics;
 import com.ihs.chargingscreen.utils.DisplayUtils;
 import com.ihs.keyboardutils.R;
 import com.ihs.keyboardutils.nativeads.NativeAdParams;
 import com.ihs.keyboardutils.nativeads.NativeAdView;
+import com.ihs.keyboardutils.utils.KCAnalyticUtil;
 import com.ihs.keyboardutils.utils.RippleDrawableUtils;
 import com.ihs.keyboardutils.view.CustomProgressDrawable;
 
@@ -42,7 +42,7 @@ public class AdLoadingView extends RelativeLayout implements NativeAdView.OnAdLo
 
     @Override
     public void onAdClicked(NativeAdView adView) {
-        logEvent("NativeAds_A(NativeAds)ApplyingItem_Click");
+        KCAnalyticUtil.logEvent("NativeAds_A(NativeAds)ApplyingItem_Click");
         dismissSelf();
     }
 
@@ -130,7 +130,7 @@ public class AdLoadingView extends RelativeLayout implements NativeAdView.OnAdLo
             nativeAdView.configParams(new NativeAdParams(adPlacementName,
                     (int) (DisplayUtils.getScreenWidthPixels() * 0.9),
                     1.9f));
-            logEvent("NativeAds_A(NativeAds)ApplyingItem_Load");
+            KCAnalyticUtil.logEvent("NativeAds_A(NativeAds)ApplyingItem_Load");
             return this;
         }
         throw new RuntimeException("ad loading 广告池名字未配置");
@@ -211,7 +211,7 @@ public class AdLoadingView extends RelativeLayout implements NativeAdView.OnAdLo
     }
 
     public void showInDialog() {
-        logEvent("app_alert_applyingItem_show");
+        KCAnalyticUtil.logEvent("app_alert_applyingItem_show");
         dialog = new AdLoadingDialog(getContext());
         dialog.setContentView(this);
         dialog.show();
@@ -225,7 +225,7 @@ public class AdLoadingView extends RelativeLayout implements NativeAdView.OnAdLo
 
     @Override
     public void onAdLoaded(NativeAdView adView) {
-        logEvent("NativeAds_A(NativeAds)ApplyingItem_Show");
+        KCAnalyticUtil.logEvent("NativeAds_A(NativeAds)ApplyingItem_Show");
     }
 
     private void dismissSelf() {
@@ -240,8 +240,4 @@ public class AdLoadingView extends RelativeLayout implements NativeAdView.OnAdLo
         }
     }
 
-    private void logEvent(String action) {
-        HSAnalytics.logEvent(action);
-        HSAnalytics.logGoogleAnalyticsEvent("app", "AdLoading", action, null, null, null, null);
-    }
 }

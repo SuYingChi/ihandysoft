@@ -6,9 +6,8 @@ import android.widget.Toast;
 
 import com.acb.adadapter.AcbInterstitialAd;
 import com.acb.interstitialads.AcbInterstitialAdLoader;
-import com.ihs.app.analytics.HSAnalytics;
 import com.ihs.app.framework.HSApplication;
-import com.ihs.keyboardutils.R;
+import com.ihs.keyboardutils.utils.KCAnalyticUtil;
 
 import java.util.List;
 
@@ -70,10 +69,7 @@ public class KCInterstitialAd {
     }
 
     private static void logAnalyticsEvent(String placement, String actionSuffix) {
-        String screenName = HSApplication.getContext().getResources().getString(R.string.english_ime_name);
         String eventName = "InterstitialAd_" + placement + "_" + actionSuffix;
-
-        HSAnalytics.logEvent(eventName);
-        HSAnalytics.logGoogleAnalyticsEvent(screenName, "APP", eventName, null, null, null, null);
+        KCAnalyticUtil.logEvent(eventName);
     }
 }

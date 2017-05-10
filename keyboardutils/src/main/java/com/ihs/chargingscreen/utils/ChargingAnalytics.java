@@ -2,8 +2,8 @@ package com.ihs.chargingscreen.utils;
 
 import android.content.Context;
 
-import com.ihs.app.analytics.HSAnalytics;
 import com.ihs.app.framework.HSApplication;
+import com.ihs.keyboardutils.utils.KCAnalyticUtil;
 
 public class ChargingAnalytics {
 
@@ -36,49 +36,49 @@ public class ChargingAnalytics {
     private static final String app_chargingLocker_disable = "app_chargingLocker_disable";//充电锁屏关闭 - 每个用户只记一次
 
 
-    public void chargingEnableOnce() {
+    public void chargingEnableOnce(String triggerFrom) {
         if (!ChargingPrefsUtil.getInstance().getSpHelper().contains(app_chargingLocker_enable)) {
             ChargingPrefsUtil.getInstance().getSpHelper().putBoolean(app_chargingLocker_enable, true);
-            HSAnalytics.logEvent(app_chargingLocker_enable);
+            KCAnalyticUtil.logEvent(app_chargingLocker_enable,triggerFrom);
         }
     }
 
     public void chargingScreenShowed() {
-        HSAnalytics.logEvent(app_chargingLocker_show);
+        KCAnalyticUtil.logEvent(app_chargingLocker_show);
     }
 
     public void chargingEnableNotificationShowed() {
-        HSAnalytics.logEvent(notification_chargingLocker_show);
+        KCAnalyticUtil.logEvent(notification_chargingLocker_show);
     }
 
     public void chargingEnableNotificationClicked() {
-        HSAnalytics.logEvent(notification_chargingLocker_click);
+        KCAnalyticUtil.logEvent(notification_chargingLocker_click);
     }
 
-    public void chargingDisableTouchedOnce() {
+    public void chargingDisableTouchedOnce(String from) {
         if (!ChargingPrefsUtil.getInstance().getSpHelper().contains(app_chargingLocker_disable_clicked)) {
             ChargingPrefsUtil.getInstance().getSpHelper().putBoolean(app_chargingLocker_disable_clicked, true);
-            HSAnalytics.logEvent(app_chargingLocker_disable_clicked);
+            KCAnalyticUtil.logEvent(app_chargingLocker_disable_clicked,from);
         }
     }
 
-    public void chargingDisableConfirmedOnce() {
+    public void chargingDisableConfirmedOnce(String from) {
         if (!ChargingPrefsUtil.getInstance().getSpHelper().contains(app_chargingLocker_disable)) {
             ChargingPrefsUtil.getInstance().getSpHelper().putBoolean(app_chargingLocker_disable, true);
-            HSAnalytics.logEvent(app_chargingLocker_disable);
+            KCAnalyticUtil.logEvent(app_chargingLocker_disable,from);
         }
     }
 
 
     public void nativeAdLoad() {
-        HSAnalytics.logEvent(NativeAd_Charging_Load);
+        KCAnalyticUtil.logEvent(NativeAd_Charging_Load);
     }
 
     public void nativeAdShow() {
-        HSAnalytics.logEvent(NativeAd_Charging_Show);
+        KCAnalyticUtil.logEvent(NativeAd_Charging_Show);
     }
 
     public void nativeAdClick() {
-        HSAnalytics.logEvent(NativeAd_Charging_Click);
+        KCAnalyticUtil.logEvent(NativeAd_Charging_Click);
     }
 }
