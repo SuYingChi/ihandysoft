@@ -73,8 +73,8 @@
 
             <LinearLayout
                 android:layout_height="62dp"
-                android:layout_marginLeft="33dp"
-                android:layout_marginRight="33dp"
+                android:layout_marginLeft="20dp"
+                android:layout_marginRight="20dp"
                 android:id="@+id/ll_single_button"
                 style="@style/DesignDialogActionArea"
                 android:clipChildren="false"

@@ -18,6 +18,7 @@ import com.ihs.commons.utils.HSBundle;
 import com.ihs.commons.utils.HSLog;
 import com.ihs.commons.utils.HSPreferenceHelper;
 import com.ihs.keyboardutils.R;
+import com.ihs.keyboardutils.utils.KCAnalyticUtil;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -214,6 +215,7 @@ public class KCNotificationManager {
             e.printStackTrace();
             return false;
         }
+        KCAnalyticUtil.logEvent("notification_show",notificationBean.getEvent());
         return true;
     }
 
