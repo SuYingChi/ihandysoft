@@ -25,7 +25,7 @@ public class KCInterstitialAd {
     }
 
     public static boolean show(final String placement) {
-        show(placement, null);
+        return show(placement, null);
     }
 
     public static boolean show(final String placement, final OnAdCloseListener onAdCloseListener) {
