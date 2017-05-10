@@ -11,6 +11,7 @@ import android.view.WindowManager;
 import android.widget.FrameLayout;
 import android.widget.TextView;
 
+import com.ihs.app.analytics.HSAnalytics;
 import com.ihs.chargingscreen.utils.DisplayUtils;
 import com.ihs.keyboardutils.R;
 import com.ihs.keyboardutils.utils.KCAnalyticUtil;
