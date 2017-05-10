@@ -41,7 +41,7 @@
             </intent-filter>
         </receiver>
 
-        <activity android:name="com.ihs.chargingscreen.activity.FullScreenDialogActivity" android:theme="@style/Transparent">
+        <activity android:name="com.ihs.chargingscreen.activity.ChargingFullScreenAlertDialogActivity" android:theme="@style/Transparent">
 
         </activity>
 

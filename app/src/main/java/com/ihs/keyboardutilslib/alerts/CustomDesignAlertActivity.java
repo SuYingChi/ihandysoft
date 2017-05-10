@@ -6,7 +6,7 @@ import android.view.View;
 import android.widget.Toast;
 
 import com.ihs.app.framework.activity.HSActivity;
-import com.ihs.chargingscreen.activity.FullScreenDialogActivity;
+import com.ihs.chargingscreen.activity.ChargingFullScreenAlertDialogActivity;
 import com.ihs.keyboardutils.alerts.KCAlert;
 import com.ihs.keyboardutilslib.R;
 
@@ -90,14 +90,14 @@ public class CustomDesignAlertActivity extends HSActivity {
 
 
     public void showFullScreenChargingAlert(View view) {
-        Intent intent = new Intent(this,FullScreenDialogActivity.class);
+        Intent intent = new Intent(this,ChargingFullScreenAlertDialogActivity.class);
         intent.putExtra("type","charging");
         intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         this.startActivity(intent);
     }
 
     public void showFullScreenLockerAlert(View view) {
-        Intent intent = new Intent(this,FullScreenDialogActivity.class);
+        Intent intent = new Intent(this,ChargingFullScreenAlertDialogActivity.class);
         intent.putExtra("type","locker");
         intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         this.startActivity(intent);

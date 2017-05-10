@@ -25,7 +25,7 @@ import java.util.Map;
  * Created by Arthur on 17/5/8.
  */
 
-public class FullScreenDialogActivity extends Activity {
+public class ChargingFullScreenAlertDialogActivity extends Activity {
 
     public static final String NOTIFICATION_LOCKER_ENABLED = "notification_locker_enabled";
 
