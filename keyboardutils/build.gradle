@@ -23,8 +23,8 @@ android {
     }
 }
 dependencies {
-    compile "com.ihandy.nativeads:libNativeAds.gm:4.0.1.gm"
-    compile "com.ihandy.interstitialads:InterstitialAds.gm:4.0.1.gm"
+    compile "com.ihandy.nativeads:libNativeAds.gm:4.1.4.gm"
+    compile "com.ihandy.interstitialads:InterstitialAds.gm:4.1.2.gm"
 
     compile "com.ihandy.appframework:libAppframework.${rootProject.ext.frameworkVersion}"
     compile(name: 'ihs/libCommon/libCommon', ext: 'aar')

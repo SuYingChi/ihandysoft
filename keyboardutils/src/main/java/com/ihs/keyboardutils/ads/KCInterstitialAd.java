@@ -44,7 +44,7 @@ public class KCInterstitialAd {
             @Override
             public void onAdClicked() {
                 if (HSApplication.isDebugging) {
-                    Toast.makeText(HSApplication.getContext(), placement + ":" + interstitialAd.getVendor().name(), Toast.LENGTH_SHORT);
+                    Toast.makeText(HSApplication.getContext(), placement + ":" + interstitialAd.getVendorConfig().name(), Toast.LENGTH_SHORT).show();
                 }
 
                 logAnalyticsEvent(placement, "Click");
