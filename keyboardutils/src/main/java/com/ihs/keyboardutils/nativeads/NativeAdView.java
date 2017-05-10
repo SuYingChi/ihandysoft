@@ -413,7 +413,7 @@ public class NativeAdView extends FrameLayout {
                     logAnalyticsEvent("Click");
 
                     if (HSApplication.isDebugging) {
-                        Toast.makeText(getContext(), nativeAdParams.getPlacementName() + ":" + acbAd.getVendor().name(), Toast.LENGTH_SHORT);
+                        Toast.makeText(getContext(), nativeAdParams.getPlacementName() + ":" + acbAd.getVendor().name(), Toast.LENGTH_SHORT).show();
                     }
 
                     if (adClickedListener != null) {
