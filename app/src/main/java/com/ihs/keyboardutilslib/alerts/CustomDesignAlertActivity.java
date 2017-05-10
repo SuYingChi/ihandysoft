@@ -6,7 +6,7 @@ import android.view.View;
 import android.widget.Toast;
 
 import com.ihs.app.framework.activity.HSActivity;
-import com.ihs.keyboardutils.alerts.FullScreenDialogActivity;
+import com.ihs.chargingscreen.activity.FullScreenDialogActivity;
 import com.ihs.keyboardutils.alerts.KCAlert;
 import com.ihs.keyboardutilslib.R;
 

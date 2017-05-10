@@ -1,4 +1,4 @@
-package com.ihs.keyboardutils.alerts;
+package com.ihs.chargingscreen.activity;
 
 import android.app.Activity;
 import android.content.DialogInterface;
@@ -15,6 +15,7 @@ import com.ihs.chargingscreen.utils.ChargingManagerUtil;
 import com.ihs.commons.config.HSConfig;
 import com.ihs.commons.notificationcenter.HSGlobalNotificationCenter;
 import com.ihs.keyboardutils.R;
+import com.ihs.keyboardutils.alerts.KCAlert;
 import com.ihs.keyboardutils.utils.KCAnalyticUtil;
 
 import java.util.HashMap;
