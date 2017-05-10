@@ -1,5 +1,7 @@
 package com.ihs.keyboardutilslib;
 
+import android.content.Intent;
+
 import com.ihs.app.alerts.HSAlertMgr;
 import com.ihs.app.framework.HSApplication;
 import com.ihs.app.framework.HSNotificationConstant;
@@ -9,7 +11,10 @@ import com.ihs.commons.notificationcenter.HSGlobalNotificationCenter;
 import com.ihs.commons.notificationcenter.INotificationObserver;
 import com.ihs.commons.utils.HSBundle;
 import com.ihs.commons.utils.HSLog;
+import com.ihs.keyboardutils.notification.KCNotificationManager;
 import com.squareup.leakcanary.LeakCanary;
+
+import java.util.ArrayList;
 
 
 /**
@@ -18,7 +23,8 @@ import com.squareup.leakcanary.LeakCanary;
 
 public class MyApplication extends HSApplication {
 
-    @Override public void onCreate() {
+    @Override
+    public void onCreate() {
         super.onCreate();
         if (LeakCanary.isInAnalyzerProcess(this)) {
             // This process is dedicated to LeakCanary for heap analysis.
@@ -35,6 +41,30 @@ public class MyApplication extends HSApplication {
 
         HSGlobalNotificationCenter.addObserver(HSNotificationConstant.HS_SESSION_START, sessionEventObserver);
         HSGlobalNotificationCenter.addObserver(HSNotificationConstant.HS_SESSION_END, sessionEventObserver);
+
+
+        ArrayList<String> eventList = new ArrayList<>();
+        eventList.add("ScreenLocker");
+        eventList.add("Charging");
+        eventList.add("AddNewPhotoToPrivate");
+        for (String event : eventList) {
+            int reqCode = 0;
+            switch (event) {
+                case "ScreenLocker":
+                    reqCode = 1;
+                    break;
+                case "Charging":
+                    reqCode = 2;
+                    break;
+                case "AddNewPhotoToPrivate":
+                    reqCode = 3;
+                    break;
+            }
+
+            Intent resultIntent = new Intent(getContext(), MainActivity.class);
+            resultIntent.putExtra("reqCode", reqCode);
+            KCNotificationManager.getInstance().addNotificationEvent(event, resultIntent);
+        }
     }
 
     private INotificationObserver sessionEventObserver = new INotificationObserver() {

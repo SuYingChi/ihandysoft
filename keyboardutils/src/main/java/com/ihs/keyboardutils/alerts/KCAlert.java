@@ -10,8 +10,12 @@ import com.ihs.app.framework.HSApplication;
 public class KCAlert {
     private CustomDesignAlert alert;
 
-    private KCAlert(Context context) {
-        alert = new CustomDesignAlert(context);
+    private KCAlert(Context context, boolean isFullScreen) {
+        if (isFullScreen) {
+            alert = new CustomDesignAlert(context, isFullScreen);
+        } else {
+            alert = new CustomDesignAlert(context);
+        }
     }
 
     public void show() {
@@ -28,12 +32,14 @@ public class KCAlert {
         private boolean canceledOnTouchOutside;
         private CharSequence title;
         private CharSequence message;
+        private CharSequence adText;
         private CharSequence positiveButtonText;
         private CharSequence negativeButtonText;
         private View.OnClickListener positiveButtonClickListener;
         private View.OnClickListener negativeButtonClickListener;
         private DialogInterface.OnDismissListener onDismissListener;
         private DialogInterface.OnCancelListener onCancelListener;
+        private boolean isFullScreen;
 
         AlertParams() {
             cancelable = true;
@@ -47,6 +53,11 @@ public class KCAlert {
 
             if (!TextUtils.isEmpty(message)) {
                 alert.setMessage(message);
+            }
+
+
+            if (!TextUtils.isEmpty(adText)) {
+                alert.setMessage(adText);
             }
 
             if (!TextUtils.isEmpty(positiveButtonText)) {
@@ -68,6 +79,7 @@ public class KCAlert {
             alert.setCancelable(cancelable);
             alert.setCanceledOnTouchOutside(canceledOnTouchOutside);
             alert.setTopImageResource(topImageResId);
+            alert.setFullScreen(isFullScreen);
         }
     }
 
@@ -86,6 +98,11 @@ public class KCAlert {
 
         public Builder setTitle(CharSequence title) {
             alertParams.title = title;
+            return this;
+        }
+
+        public Builder setAdText(CharSequence adText) {
+            alertParams.adText = adText;
             return this;
         }
 
@@ -131,8 +148,14 @@ public class KCAlert {
             return this;
         }
 
+        public Builder setFullScreen(boolean isFullScreen) {
+            alertParams.isFullScreen = isFullScreen;
+            return this;
+        }
+
+
         public KCAlert build() {
-            KCAlert alert = new KCAlert(context);
+            KCAlert alert = new KCAlert(context, alertParams.isFullScreen);
             alertParams.apply(alert.alert);
             return alert;
         }

@@ -66,7 +66,7 @@ public class ChargingModuleDisabledPush extends BasePush {
         enableTv.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
-                ChargingManagerUtil.enableCharging(true);
+                ChargingManagerUtil.enableCharging(true,"popUp");
                 ChargingAnalytics.getInstance().chargingEnableNotificationClicked();
             }
         });
@@ -75,7 +75,7 @@ public class ChargingModuleDisabledPush extends BasePush {
         setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
-                ChargingManagerUtil.enableCharging(true);
+                ChargingManagerUtil.enableCharging(true,"popUp");
                 ChargingAnalytics.getInstance().chargingEnableNotificationClicked();
             }
         });

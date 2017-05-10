@@ -63,6 +63,7 @@ import com.ihs.commons.notificationcenter.HSGlobalNotificationCenter;
 import com.ihs.commons.utils.HSError;
 import com.ihs.commons.utils.HSLog;
 import com.ihs.keyboardutils.R;
+import com.ihs.keyboardutils.utils.KCAnalyticUtil;
 
 import java.io.File;
 import java.text.SimpleDateFormat;
@@ -304,7 +305,7 @@ public class ChargingScreenActivity extends HSActivity {
                     return;
                 }
                 showPopupWindow(ChargingScreenActivity.this, imgSetting);
-                HSAnalytics.logEvent("HSLib_chargingscreen_settings_clicked");
+                KCAnalyticUtil.logEvent("HSLib_chargingscreen_settings_clicked");
 
             }
         });
@@ -391,12 +392,12 @@ public class ChargingScreenActivity extends HSActivity {
         nativeAd.setNativeClickListener(new AcbNativeAd.AcbNativeClickListener() {
             @Override
             public void onAdClick(AcbAd acbAd) {
-                HSAnalytics.logEvent("HSLib_chargingscreen_Charge_Ad_Clicked");
+                KCAnalyticUtil.logEvent("HSLib_chargingscreen_Charge_Ad_Clicked");
                 ChargingAnalytics.getInstance().nativeAdClick();
                 finish();
             }
         });
-        HSAnalytics.logEvent("HSLib_chargingscreen_Charge_Ad_Viewed");
+        KCAnalyticUtil.logEvent("HSLib_chargingscreen_Charge_Ad_Viewed");
     }
 
     @Override
@@ -690,8 +691,8 @@ public class ChargingScreenActivity extends HSActivity {
                     }
 
                     showAlert();
-                    ChargingAnalytics.getInstance().chargingDisableTouchedOnce();
-                    HSAnalytics.logEvent("HSLib_chargingscreen_Charge_TurnOff_Clicked");
+                    ChargingAnalytics.getInstance().chargingDisableTouchedOnce("activity");
+                    KCAnalyticUtil.logEvent("HSLib_chargingscreen_Charge_TurnOff_Clicked");
                 }
             });
 
@@ -743,7 +744,7 @@ public class ChargingScreenActivity extends HSActivity {
                     closeDialog.dismiss();
                     closeDialog = null;
 
-                    ChargingAnalytics.getInstance().chargingDisableConfirmedOnce();
+                    ChargingAnalytics.getInstance().chargingDisableConfirmedOnce("activity");
 
 
                     HSChargingScreenManager.getInstance().stop(true);
@@ -751,7 +752,7 @@ public class ChargingScreenActivity extends HSActivity {
 
                     finish();
 
-                    HSAnalytics.logEvent("HSLib_chargingscreen_Charge_Alert_Disable_Clicked");
+                    KCAnalyticUtil.logEvent("HSLib_chargingscreen_Charge_Alert_Disable_Clicked");
                 }
             });
         }

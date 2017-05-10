@@ -1,5 +1,6 @@
 package com.ihs.keyboardutilslib.alerts;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Toast;
@@ -7,6 +8,7 @@ import android.widget.Toast;
 import com.ihs.app.framework.HSApplication;
 import com.ihs.app.framework.activity.HSActivity;
 import com.ihs.keyboardutils.alerts.CustomUIRateAlert;
+import com.ihs.chargingscreen.activity.ChargingFullScreenAlertDialogActivity;
 import com.ihs.keyboardutils.alerts.KCAlert;
 import com.ihs.keyboardutilslib.R;
 
@@ -111,5 +113,19 @@ public class CustomDesignAlertActivity extends HSActivity {
         });
 
         dialog.show();
+    }
+
+    public void showFullScreenChargingAlert(View view) {
+        Intent intent = new Intent(this,ChargingFullScreenAlertDialogActivity.class);
+        intent.putExtra("type","charging");
+        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        this.startActivity(intent);
+    }
+
+    public void showFullScreenLockerAlert(View view) {
+        Intent intent = new Intent(this,ChargingFullScreenAlertDialogActivity.class);
+        intent.putExtra("type","locker");
+        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        this.startActivity(intent);
     }
 }

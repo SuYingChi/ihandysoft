@@ -134,8 +134,9 @@ public class ChargingManagerUtil {
     }
 
 
-    public static void enableCharging(boolean startChagringActivity) {
-        ChargingAnalytics.getInstance().chargingEnableOnce();
+
+    public static void enableCharging(boolean startChagringActivity,String enableFrom) {
+        ChargingAnalytics.getInstance().chargingEnableOnce(enableFrom);
         ChargingPrefsUtil.getInstance().setChargingEnableByUser(true);
         HSChargingScreenManager.getInstance().start();
 
@@ -148,10 +149,10 @@ public class ChargingManagerUtil {
         DismissKeyguradActivity.startSelfIfKeyguardSecure(HSApplication.getContext());
     }
 
-    public static void disableCharging() {
+    public static void disableCharging(String from) {
         HSChargingScreenManager.getInstance().stop();
         ChargingPrefsUtil.getInstance().setChargingEnableByUser(false);
-        ChargingAnalytics.getInstance().chargingDisableConfirmedOnce();
+        ChargingAnalytics.getInstance().chargingDisableConfirmedOnce(from);
     }
 
 

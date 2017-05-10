@@ -30,6 +30,7 @@ import com.ihs.app.framework.HSApplication;
 import com.ihs.commons.utils.HSError;
 import com.ihs.commons.utils.HSLog;
 import com.ihs.keyboardutils.R;
+import com.ihs.keyboardutils.utils.KCAnalyticUtil;
 
 import java.util.List;
 
@@ -454,7 +455,6 @@ public class NativeAdView extends FrameLayout {
     private void logAnalyticsEvent(String actionSuffix) {
         String screenName = HSApplication.getContext().getResources().getString(R.string.english_ime_name);
         String eventName = "NativeAd_" + nativeAdParams.getPlacementName() + "_" + actionSuffix;
-
         HSAnalytics.logEvent(eventName);
         HSAnalytics.logGoogleAnalyticsEvent(screenName, "APP", eventName, null, null, null, null);
     }

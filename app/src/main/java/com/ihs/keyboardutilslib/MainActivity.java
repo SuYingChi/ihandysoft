@@ -51,12 +51,48 @@ public class MainActivity extends HSActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        ArrayAdapter<String> adapter = new ArrayAdapter<>(this,R.layout.demo_list_row, displayNameArray);
-        ListView listView = (ListView)findViewById(R.id.demo_list);
+        ArrayAdapter<String> adapter = new ArrayAdapter<>(this, R.layout.demo_list_row, displayNameArray);
+        ListView listView = (ListView) findViewById(R.id.demo_list);
         listView.setAdapter(adapter);
         listView.setOnItemClickListener(onItemClickListener);
 
         exitAlert = new ExitAlert(MainActivity.this, getString(R.string.exit_alert_native_ad_name));
+
+        processIntent();
+    }
+
+    @Override
+    protected void onNewIntent(Intent intent) {
+        super.onNewIntent(intent);
+        setIntent(intent);
+        processIntent();
+    }
+
+    private void processIntent() {
+        Intent intent = getIntent();
+        if (intent != null) {
+            int reqCode = intent.getIntExtra("reqCode", 0);
+            String from = "";
+            switch (reqCode) {
+                case 1:
+                    from = "ScreenLocker";
+                    break;
+                case 2:
+                    from = "Charging";
+                    break;
+                case 3:
+                    from = "AddNewPhotoToPrivate";
+                    break;
+            }
+            Toast.makeText(getApplicationContext(), from, Toast.LENGTH_LONG).show();
+        }
+    }
+
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
     }
 
     private AdapterView.OnItemClickListener onItemClickListener = new AdapterView.OnItemClickListener() {
@@ -85,4 +121,6 @@ public class MainActivity extends HSActivity {
             exitAlert.show();
         }
     }
+
+
 }

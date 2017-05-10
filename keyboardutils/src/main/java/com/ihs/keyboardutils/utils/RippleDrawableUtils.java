@@ -36,10 +36,9 @@ public class RippleDrawableUtils {
     }
 
     public static Drawable getTransparentRippleBackground() {
-
-        float radius = 0;
+        float radius = DisplayUtils.dip2px(2);
         int normalColor = Color.TRANSPARENT;
-        int pressedColor = Color.parseColor("#dddddd");
+        int pressedColor = Color.parseColor("#30ffffff");
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             return new RippleDrawable(ColorStateList.valueOf(getRippleColor(normalColor)),
