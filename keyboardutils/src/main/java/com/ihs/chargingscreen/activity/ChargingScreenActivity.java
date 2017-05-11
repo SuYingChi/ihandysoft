@@ -13,6 +13,7 @@ import android.content.pm.PackageManager;
 import android.content.res.Configuration;
 import android.content.res.Resources;
 import android.graphics.BitmapFactory;
+import android.graphics.Color;
 import android.graphics.drawable.Drawable;
 import android.os.Build;
 import android.os.Bundle;
@@ -64,6 +65,7 @@ import com.ihs.commons.utils.HSError;
 import com.ihs.commons.utils.HSLog;
 import com.ihs.keyboardutils.R;
 import com.ihs.keyboardutils.utils.KCAnalyticUtil;
+import com.ihs.keyboardutils.utils.RippleDrawableUtils;
 
 import java.io.File;
 import java.text.SimpleDateFormat;
@@ -755,6 +757,9 @@ public class ChargingScreenActivity extends HSActivity {
                     KCAnalyticUtil.logEvent("HSLib_chargingscreen_Charge_Alert_Disable_Clicked");
                 }
             });
+            btnCancel.setBackgroundDrawable(RippleDrawableUtils.getCompatRippleDrawable(Color.parseColor("#2687ff"),0,0,0,DisplayUtils.dip2px(8)));
+            btnClose.setBackgroundDrawable(RippleDrawableUtils.getCompatRippleDrawable(Color.WHITE,0,0,DisplayUtils.dip2px(8),0));
+
         }
         closeDialog.show();
     }

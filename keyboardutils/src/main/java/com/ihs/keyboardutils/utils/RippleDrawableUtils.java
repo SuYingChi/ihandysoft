@@ -95,7 +95,7 @@ public class RippleDrawableUtils {
         return shapeDrawable;
     }
 
-    public static StateListDrawable getStateListDrawable(
+    private static StateListDrawable getStateListDrawable(
             int normalColor, int pressedColor, int disableColor, float radius) {
         StateListDrawable states = new StateListDrawable();
         if (disableColor != -1) {
@@ -115,10 +115,66 @@ public class RippleDrawableUtils {
         return states;
     }
 
-    public static GradientDrawable getShapeDrawable(int color, float radius) {
+    private static GradientDrawable getShapeDrawable(int color, float radius) {
         GradientDrawable shape = new GradientDrawable();
         shape.setCornerRadius(radius);
         shape.setColor(color);
         return shape;
     }
+
+
+    //从此处开始都是为 4个corner角度不相同的 ripple做的
+    public static Drawable getCompatRippleDrawable(
+            int normalColor, float radiusTopLeft, float radiusTopRight, float radiusBottomLeft, float radiusBottomRight) {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            return new RippleDrawable(ColorStateList.valueOf(getRippleColor(normalColor)),
+                    getStateListDrawable(normalColor, -1, -1, radiusTopLeft, radiusTopRight, radiusBottomLeft, radiusBottomRight), getRippleMask(normalColor, radiusTopLeft, radiusTopRight, radiusBottomLeft, radiusBottomRight));
+        } else {
+            return getStateListDrawable(normalColor, getRippleColor(normalColor), -1, radiusTopLeft, radiusTopRight, radiusBottomLeft, radiusBottomRight);
+        }
+    }
+
+    private static StateListDrawable getStateListDrawable(
+            int normalColor, int pressedColor, int disableColor,
+            float radiusTopLeft, float radiusTopRight, float radiusBottomLeft, float radiusBottomRight) {
+        StateListDrawable states = new StateListDrawable();
+        if (disableColor != -1) {
+            states.addState(new int[]{-android.R.attr.state_enabled},
+                    getShapeDrawable(disableColor, radiusTopLeft, radiusTopRight, radiusBottomLeft, radiusBottomRight));
+        }
+        if (pressedColor != -1) {
+            states.addState(new int[]{android.R.attr.state_pressed},
+                    getShapeDrawable(pressedColor, radiusTopLeft, radiusTopRight, radiusBottomLeft, radiusBottomRight));
+            states.addState(new int[]{android.R.attr.state_focused},
+                    getShapeDrawable(pressedColor, radiusTopLeft, radiusTopRight, radiusBottomLeft, radiusBottomRight));
+            states.addState(new int[]{android.R.attr.state_activated},
+                    getShapeDrawable(pressedColor, radiusTopLeft, radiusTopRight, radiusBottomLeft, radiusBottomRight));
+        }
+        states.addState(new int[]{},
+                getShapeDrawable(normalColor, radiusTopLeft, radiusTopRight, radiusBottomLeft, radiusBottomRight));
+        return states;
+    }
+
+    private static GradientDrawable getShapeDrawable(int color,
+                                                     float radiusTopLeft,
+                                                     float radiusTopRight,
+                                                     float radiusBottomLeft,
+                                                     float radiusBottomRight) {
+        GradientDrawable shape = new GradientDrawable();
+        shape.setCornerRadii(new float[]{radiusTopLeft, radiusTopLeft,
+                radiusTopRight, radiusTopRight, radiusBottomRight,
+                radiusBottomRight, radiusBottomLeft, radiusBottomLeft});
+        shape.setColor(color);
+        return shape;
+    }
+
+
+    private static Drawable getRippleMask(int color, float radiusTopLeft, float radiusTopRight, float radiusBottomLeft, float radiusBottomRight) {
+        float[] outerRadii = new float[]{radiusTopLeft, radiusTopLeft, radiusTopRight, radiusTopRight, radiusBottomRight, radiusBottomRight, radiusBottomLeft, radiusBottomLeft};
+        RoundRectShape r = new RoundRectShape(outerRadii, null, null);
+        ShapeDrawable shapeDrawable = new ShapeDrawable(r);
+        shapeDrawable.getPaint().setColor(color);
+        return shapeDrawable;
+    }
+
 }
