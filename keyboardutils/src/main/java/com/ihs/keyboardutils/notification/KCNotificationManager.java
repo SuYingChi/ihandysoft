@@ -43,7 +43,7 @@ public class KCNotificationManager {
     public static final int TYPE_BROADCAST = 2;
     public static final int TYPE_SERVICE = 3;
 
-    private static int intervalDuration = 5 * 1000;//24 * 3600 * 1000;
+    private static long intervalDuration = AlarmManager.INTERVAL_DAY;
     //方法延迟或者计算误差
     private static final int METHOD_EXCUTION_ERROR_TIME = 10;
     private static final int HANDLER_MSG_WHAT = 10;
@@ -230,7 +230,7 @@ public class KCNotificationManager {
         alarmManager.setRepeating(AlarmManager.RTC_WAKEUP,intervalDuration,intervalDuration,pendingIntent);
     }
 
-    public static void setIntervalDuration(int intervalDuration) {
+    public static void setIntervalDuration(long intervalDuration) {
         KCNotificationManager.intervalDuration = intervalDuration;
     }
 

@@ -43,6 +43,7 @@ public class MyApplication extends HSApplication {
         HSGlobalNotificationCenter.addObserver(HSNotificationConstant.HS_SESSION_END, sessionEventObserver);
 
 
+        KCNotificationManager.getInstance().setNotificationResponserType(KCNotificationManager.TYPE_ACTIVITY);
         ArrayList<String> eventList = new ArrayList<>();
         eventList.add("ScreenLocker");
         eventList.add("Charging");
