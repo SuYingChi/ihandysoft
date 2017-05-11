@@ -360,6 +360,7 @@ public class ChargingScreenActivity extends HSActivity {
     private void loadAd() {
         AcbNativeAdLoader adLoader = new AcbNativeAdLoader(HSApplication.getContext(), HSChargingScreenManager.getInstance().getNaitveAdsPlacementName());
         adLoader.load(1, null);
+        ChargingAnalytics.getInstance().nativeAdLoad();
     }
 
 
@@ -432,7 +433,7 @@ public class ChargingScreenActivity extends HSActivity {
             List<AcbNativeAd> nativeAds = AcbNativeAdLoader.fetch(HSApplication.getContext(), HSChargingScreenManager.getInstance().getNaitveAdsPlacementName(), 1);
             if (nativeAds != null && !nativeAds.isEmpty()) {
                 if (!nativeAds.get(0).isExpired()) {
-                    HSLog.d("charging, release old ads, using new ad");
+                    HSLog.d("NativeAd_Charging_fetch");
                     showAd(nativeAds.get(0));
                     HSAnalytics.logEvent("Charge_Ad_Viewed");
                     lastAd = nativeAds.get(0);
