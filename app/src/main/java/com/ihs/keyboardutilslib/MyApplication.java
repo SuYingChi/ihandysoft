@@ -33,7 +33,7 @@ public class MyApplication extends HSApplication {
         }
         LeakCanary.install(this);
 
-        HSChargingScreenManager.init(true, "", "Colorkey_A(NativeAds)CardAd", new HSChargingScreenManager.IChargingScreenListener() {
+        HSChargingScreenManager.init(true, "", "Master_A((NativeAds)BoostDone", new HSChargingScreenManager.IChargingScreenListener() {
             @Override
             public void onClosedByChargingPage() {
             }

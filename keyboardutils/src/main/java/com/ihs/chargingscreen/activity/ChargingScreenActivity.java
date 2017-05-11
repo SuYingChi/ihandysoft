@@ -22,6 +22,7 @@ import android.os.Message;
 import android.os.PowerManager;
 import android.provider.Settings;
 import android.support.annotation.IntRange;
+import android.support.annotation.NonNull;
 import android.telephony.PhoneStateListener;
 import android.telephony.TelephonyManager;
 import android.text.TextUtils;
@@ -211,6 +212,7 @@ public class ChargingScreenActivity extends HSActivity {
     };
     private BubbleView bubbleView;
     private PowerManager powerManager = (PowerManager) HSApplication.getContext().getSystemService(Context.POWER_SERVICE);
+    private AcbNativeAd lastAd;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -218,6 +220,9 @@ public class ChargingScreenActivity extends HSActivity {
 
         requestWindowFeature(Window.FEATURE_NO_TITLE);
         super.onCreate(savedInstanceState);
+        ChargingManagerUtil.enableCharging(false,"plist");
+
+        loadAd();
 
         Window window = getWindow();
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
@@ -352,16 +357,23 @@ public class ChargingScreenActivity extends HSActivity {
 
     }
 
+    private void loadAd() {
+        AcbNativeAdLoader adLoader = new AcbNativeAdLoader(HSApplication.getContext(), HSChargingScreenManager.getInstance().getNaitveAdsPlacementName());
+        adLoader.load(1, null);
+    }
+
 
     private void removeAdView() {
         if (adView != null) {
             adContainer.removeView(adView);
             adView = null;
         }
-        if (nativeAd != null) {
-            nativeAd.release();
-            nativeAd = null;
-        }
+
+        //根据max的方法这里只removeview 不释放ad
+//        if (nativeAd != null) {
+//            nativeAd.release();
+//            nativeAd = null;
+//        }
 
         if (nativeAdLoader != null) {
             nativeAdLoader.cancel();
@@ -400,6 +412,10 @@ public class ChargingScreenActivity extends HSActivity {
             }
         });
         KCAnalyticUtil.logEvent("HSLib_chargingscreen_Charge_Ad_Viewed");
+
+
+        //max ad
+        loadAd();
     }
 
     @Override
@@ -408,35 +424,76 @@ public class ChargingScreenActivity extends HSActivity {
 
         HSLog.d("chargingtest onStart");
 
-        startDisplayTime = System.currentTimeMillis();
-        ChargeNotifyManager.getInstance().setIsChargingActivityAlive(true);
-
+        //max ad
         PowerManager powerManager = (PowerManager) getSystemService(Context.POWER_SERVICE);
+
+        boolean hasValidAd = false;
         if (powerManager.isScreenOn()) {
-            if (this.nativeAdLoader != null) {
-                this.nativeAdLoader.cancel();
-                this.nativeAdLoader = null;
+            List<AcbNativeAd> nativeAds = AcbNativeAdLoader.fetch(HSApplication.getContext(), HSChargingScreenManager.getInstance().getNaitveAdsPlacementName(), 1);
+            if (nativeAds != null && !nativeAds.isEmpty()) {
+                if (!nativeAds.get(0).isExpired()) {
+                    HSLog.d("charging, release old ads, using new ad");
+                    showAd(nativeAds.get(0));
+                    HSAnalytics.logEvent("Charge_Ad_Viewed");
+                    lastAd = nativeAds.get(0);
+                    hasValidAd = true;
+                } else {
+                    nativeAds.get(0).release();
+                }
             }
-            this.nativeAdLoader = new AcbNativeAdLoader(this, HSChargingScreenManager.getInstance().getNaitveAdsPlacementName());
-            ChargingAnalytics.getInstance().nativeAdLoad();
-            this.nativeAdLoader.load(1, new AcbNativeAdLoader.AcbNativeAdLoadListener() {
-                @Override
-                public void onAdReceived(AcbNativeAdLoader loader, List<AcbNativeAd> list) {
-                    if (ChargingScreenActivity.this.nativeAd == null) {
-                        AcbNativeAd nativeAd = (list != null && list.size() > 0) ? list.get(0) : null;
-                        if (nativeAd != null) {
-                            ChargingScreenActivity.this.nativeAd = nativeAd;
-                            ChargingScreenActivity.this.showAd(ChargingScreenActivity.this.nativeAd);
-                        }
+
+            if (!hasValidAd) {
+                if (lastAd != null && !lastAd.isExpired()) {
+                    HSLog.d("charging activity, using last ad");
+
+                    showAd(lastAd);
+                    hasValidAd = true;
+                }
+            }
+
+            if (!hasValidAd) {
+                if (this.nativeAdLoader != null) {
+                    this.nativeAdLoader.cancel();
+                    this.nativeAdLoader = null;
+                }
+                this.nativeAdLoader = new AcbNativeAdLoader(this, HSChargingScreenManager.getInstance().getNaitveAdsPlacementName());
+                ChargingAnalytics.getInstance().nativeAdLoad();
+                this.nativeAdLoader.load(1, newAcbNativeAdLoadListener());
+            }
+
+            startDisplayTime = System.currentTimeMillis();
+            ChargeNotifyManager.getInstance().setIsChargingActivityAlive(true);
+        }
+
+
+
+    }
+
+    @NonNull
+    private AcbNativeAdLoader.AcbNativeAdLoadListener newAcbNativeAdLoadListener() {
+        return new AcbNativeAdLoader.AcbNativeAdLoadListener() {
+            @Override
+            public void onAdReceived(AcbNativeAdLoader loader, List<AcbNativeAd> list) {
+                if (ChargingScreenActivity.this.nativeAd == null) {
+                    AcbNativeAd nativeAd = (list != null && list.size() > 0) ? list.get(0) : null;
+                    if (nativeAd != null) {
+                        ChargingScreenActivity.this.nativeAd = nativeAd;
+                        lastAd = nativeAd;
+                        ChargingScreenActivity.this.showAd(ChargingScreenActivity.this.nativeAd);
                     }
                 }
+            }
 
-                @Override
-                public void onAdFinished(AcbNativeAdLoader loader, HSError hsError) {
-                    ChargingScreenActivity.this.nativeAdLoader = null;
+            @Override
+            public void onAdFinished(AcbNativeAdLoader loader, HSError hsError) {
+                ChargingScreenActivity.this.nativeAdLoader = null;
+
+                if (hsError != null) {
+                    HSLog.d("Chagring onAdFinished(), hsError message = " + hsError.getMessage());
+                    loadAd();
                 }
-            });
-        }
+            }
+        };
     }
 
     @Override
@@ -757,8 +814,8 @@ public class ChargingScreenActivity extends HSActivity {
                     KCAnalyticUtil.logEvent("HSLib_chargingscreen_Charge_Alert_Disable_Clicked");
                 }
             });
-            btnCancel.setBackgroundDrawable(RippleDrawableUtils.getCompatRippleDrawable(Color.parseColor("#2687ff"),0,0,0,DisplayUtils.dip2px(8)));
-            btnClose.setBackgroundDrawable(RippleDrawableUtils.getCompatRippleDrawable(Color.WHITE,0,0,DisplayUtils.dip2px(8),0));
+            btnCancel.setBackgroundDrawable(RippleDrawableUtils.getCompatRippleDrawable(Color.WHITE, 0, 0, 0, DisplayUtils.dip2px(8)));
+            btnClose.setBackgroundDrawable(RippleDrawableUtils.getCompatRippleDrawable(Color.WHITE, 0, 0, DisplayUtils.dip2px(8), 0));
 
         }
         closeDialog.show();

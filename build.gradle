@@ -3,6 +3,8 @@
 buildscript {
     repositories {
         jcenter()
+        maven { url "http://dl.appnext.com/" }
+        maven { url "https://s3.amazonaws.com/avocarrot-android-builds/dist" }
     }
     dependencies {
         classpath 'com.android.tools.build:gradle:2.3.0'
@@ -39,6 +41,15 @@ allprojects {
         }
         maven {
             url "http://git.ihandysoft.com:8081/nexus/content/repositories/gm"  // gm仓库
+            credentials {
+                username project.username // 使用之前配置的用户名
+                password project.credentials."${project.username}" // 使用之前配置的密码
+            }
+        }
+
+        maven {
+            url "http://git.ihandysoft.com:8081/nexus/content/repositories/thirdparty"
+            // thirdparty仓库
             credentials {
                 username project.username // 使用之前配置的用户名
                 password project.credentials."${project.username}" // 使用之前配置的密码

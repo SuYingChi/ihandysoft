@@ -67,7 +67,7 @@
             android:layout_weight="1"
             android:gravity="center_horizontal"
             android:text="@string/charging_module_alert_cancel"
-            android:textColor="#ccffffff"
+            android:textColor="#2687ff"
             android:textSize="16sp"/>
 
     </LinearLayout>
