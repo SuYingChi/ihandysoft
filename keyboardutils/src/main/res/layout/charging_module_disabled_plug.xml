@@ -98,6 +98,7 @@
         android:layout_weight="1" />
 
     <TextView
+        android:minWidth="65dp"
         android:id="@+id/tv_enable"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
