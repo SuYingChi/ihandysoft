@@ -376,10 +376,10 @@ public class ChargingScreenActivity extends HSActivity {
 //            nativeAd = null;
 //        }
 
-        if (nativeAdLoader != null) {
-            nativeAdLoader.cancel();
-            nativeAdLoader = null;
-        }
+//        if (nativeAdLoader != null) {
+//            nativeAdLoader.cancel();
+//            nativeAdLoader = null;
+//        }
 
         final HSChargingState chargingState = HSChargingManager.getInstance().getChargingState();
         if (chargingState == HSChargingState.STATE_CHARGING_SPEED || chargingState == HSChargingState.STATE_CHARGING_CONTINUOUS
