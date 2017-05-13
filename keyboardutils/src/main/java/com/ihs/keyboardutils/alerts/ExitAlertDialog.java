@@ -129,7 +129,7 @@ class ExitAlertDialog extends AlertDialog implements View.OnClickListener {
         getWindow().setAttributes(params);     //设置生效
     }
 
-    public void release() {
+    void release() {
         if (activity != null) {
             activity = null;
         }
