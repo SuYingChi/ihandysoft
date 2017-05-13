@@ -14,6 +14,7 @@ import android.widget.TextView;
 import com.ihs.app.analytics.HSAnalytics;
 import com.ihs.chargingscreen.utils.DisplayUtils;
 import com.ihs.keyboardutils.R;
+import com.ihs.keyboardutils.nativeads.NativeAdView;
 import com.ihs.keyboardutils.utils.KCAnalyticUtil;
 import com.ihs.keyboardutils.utils.RippleDrawableUtils;
 
@@ -26,7 +27,7 @@ import static com.ihs.keyboardutils.alerts.ExitAlert.EXIT_ALERT_STYLE_1;
 class ExitAlertDialog extends AlertDialog implements View.OnClickListener {
 
     private TextView exitButton;
-    private View sponsorView;
+    private NativeAdView sponsorView;
     private Activity activity;
     private int alterViewStyle;
     private boolean showAd;
@@ -52,7 +53,7 @@ class ExitAlertDialog extends AlertDialog implements View.OnClickListener {
         return width;
     }
 
-    public void setSponsorView(View sponsorView) {
+    public void setSponsorView(NativeAdView sponsorView) {
         this.sponsorView = sponsorView;
     }
 
@@ -105,6 +106,7 @@ class ExitAlertDialog extends AlertDialog implements View.OnClickListener {
             HSAnalytics.logEvent("app_quit_way", "app_quit_way", "back");
             HSAnalytics.logGoogleAnalyticsEvent("app", "alertdialog", "app_quit_way", "back", null, null, null);
             finishActivity();
+            release();
         }
     }
 
@@ -125,5 +127,15 @@ class ExitAlertDialog extends AlertDialog implements View.OnClickListener {
         WindowManager.LayoutParams params = getWindow().getAttributes();  //获取对话框当前的参数值、
         params.width = DisplayUtils.getScreenWidthPixels();    //宽度设置全屏宽度
         getWindow().setAttributes(params);     //设置生效
+    }
+
+    public void release() {
+        if (activity != null) {
+            activity = null;
+        }
+        if (sponsorView != null) {
+            sponsorView.release();
+            sponsorView = null;
+        }
     }
 }

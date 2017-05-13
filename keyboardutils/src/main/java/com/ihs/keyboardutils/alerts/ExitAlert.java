@@ -41,9 +41,7 @@ public class ExitAlert {
         alertDialog.setOnDismissListener(new DialogInterface.OnDismissListener() {
             @Override
             public void onDismiss(DialogInterface dialog) {
-                if (nativeAdView != null) {
-                    nativeAdView.release();
-                }
+                releaseAdIfNecessary();
             }
         });
     }
@@ -81,10 +79,14 @@ public class ExitAlert {
         this.showAd = showAd;
 
         if(!showAd){
-            if (nativeAdView != null) {
-                nativeAdView.release();
-                nativeAdView = null;
-            }
+            releaseAdIfNecessary();
+        }
+    }
+
+    private void releaseAdIfNecessary() {
+        if (nativeAdView != null) {
+            nativeAdView.release();
+            nativeAdView = null;
         }
     }
 
@@ -98,6 +100,11 @@ public class ExitAlert {
             alertDialog.show();
             return true;
         } else {
+            if (alertDialog!=null){
+                alertDialog.release();
+                alertDialog = null;
+                releaseAdIfNecessary();
+            }
             return false;
         }
     }
