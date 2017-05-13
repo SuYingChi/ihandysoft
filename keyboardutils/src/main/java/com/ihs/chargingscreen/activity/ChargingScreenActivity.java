@@ -462,7 +462,6 @@ public class ChargingScreenActivity extends HSActivity {
                 this.nativeAdLoader.load(1, newAcbNativeAdLoadListener());
             }
 
-            startDisplayTime = System.currentTimeMillis();
             ChargeNotifyManager.getInstance().setIsChargingActivityAlive(true);
         }
 
@@ -503,7 +502,7 @@ public class ChargingScreenActivity extends HSActivity {
         if (getChargingState() > 0) {
             bubbleView.start();
         }
-
+        startDisplayTime = System.currentTimeMillis();
         HSLog.d("chargingtest onResume");
 
     }
@@ -531,10 +530,7 @@ public class ChargingScreenActivity extends HSActivity {
         ChargeNotifyManager.getInstance().setIsChargingActivityAlive(false);
 
         long endDisplayTime = System.currentTimeMillis();
-
-        if (endDisplayTime - startDisplayTime >= 1000) {
-            HSAnalytics.logEvent("HSLib_chargingscreen_Charge_FullPage_Viewed", "Stay_Length", (endDisplayTime - startDisplayTime) / 1000 + "s");
-        }
+        logDisplayTime("app_chargingLocker_displaytime",(endDisplayTime - startDisplayTime) / 1000);
     }
 
     @Override
@@ -1025,5 +1021,27 @@ public class ChargingScreenActivity extends HSActivity {
         startFlashAnimation(imgChargingStateGreenDrawableCount);
     }
 
+
+    public static void logDisplayTime(String key,long startDisplayTime){
+        if(startDisplayTime < 1){
+            KCAnalyticUtil.logEvent(key,"0~1s");
+        }else if(startDisplayTime < 2){
+            KCAnalyticUtil.logEvent(key,"1~2s");
+        }else if(startDisplayTime < 3){
+            KCAnalyticUtil.logEvent(key,"2~3s");
+        }else if(startDisplayTime < 4){
+            KCAnalyticUtil.logEvent(key,"3~4s");
+        }else if(startDisplayTime < 5){
+            KCAnalyticUtil.logEvent(key,"4~5s");
+        }else if(startDisplayTime < 6){
+            KCAnalyticUtil.logEvent(key,"5~6s");
+        }else if(startDisplayTime < 7){
+            KCAnalyticUtil.logEvent(key,"6~7s");
+        }else if(startDisplayTime < 8){
+            KCAnalyticUtil.logEvent(key,"7~8s");
+        }else {
+            KCAnalyticUtil.logEvent(key,"8s+");
+        }
+    }
 
 }
