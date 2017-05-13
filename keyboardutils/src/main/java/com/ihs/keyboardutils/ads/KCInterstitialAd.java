@@ -23,6 +23,10 @@ public class KCInterstitialAd {
         void onAdClose();
     }
 
+    public interface OnAdShowListener {
+        void onAdShow(boolean success);
+    }
+
     public static void load(String placement) {
         logAnalyticsEvent(placement, "Load");
         new AcbInterstitialAdLoader(HSApplication.getContext(), placement).load(1, null);
@@ -34,14 +38,19 @@ public class KCInterstitialAd {
      * @param onAdCloseListener 广告关闭时的回调
      * @return 广告的Loader，需要在合适的时机去 Cancel
      */
-    public static AcbInterstitialAdLoader loadAndShow(final String placement, final OnAdCloseListener onAdCloseListener) {
+    public static AcbInterstitialAdLoader loadAndShow(final String placement, final OnAdShowListener onAdShowListener, final OnAdCloseListener onAdCloseListener) {
         logAnalyticsEvent(placement, "Load");
         AcbInterstitialAdLoader loader = new AcbInterstitialAdLoader(HSApplication.getContext(), placement);
         loader.load(1, new AcbInterstitialAdLoader.AcbInterstitialAdLoadListener() {
+            OnAdShowListener listener = onAdShowListener;
 
             @Override
             public void onAdReceived(AcbInterstitialAdLoader acbInterstitialAdLoader, List<AcbInterstitialAd> list) {
-                show(placement, list, onAdCloseListener);
+                boolean success = show(placement, list, onAdCloseListener);
+                if (listener != null) {
+                    listener.onAdShow(success);
+                    listener = null;
+                }
             }
 
             @Override
@@ -57,6 +66,10 @@ public class KCInterstitialAd {
                         }
                     } catch (Exception e) {
                         // 防止因为没有权限而Crash
+                    }
+                    if (listener != null) {
+                        listener.onAdShow(false);
+                        listener = null;
                     }
                 }
             }
@@ -80,7 +93,9 @@ public class KCInterstitialAd {
     }
 
     private static boolean show(final String placement, List<AcbInterstitialAd> interstitialAds, final OnAdCloseListener onAdCloseListener) {
-
+        if (interstitialAds == null || interstitialAds.size() == 0) {
+            return false;
+        }
         final AcbInterstitialAd interstitialAd = interstitialAds.get(0);
         interstitialAd.setInterstitialAdListener(new AcbInterstitialAd.IAcbInterstitialAdListener() {
             @Override
@@ -108,12 +123,8 @@ public class KCInterstitialAd {
             }
         });
 
-        if (interstitialAd != null) {
-            interstitialAd.show();
-            return true;
-        } else {
-            return false;
-        }
+        interstitialAd.show();
+        return true;
     }
 
     private static void releaseInterstitialAd(final AcbInterstitialAd interstitialAd) {
