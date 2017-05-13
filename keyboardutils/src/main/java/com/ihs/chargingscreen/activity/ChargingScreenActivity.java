@@ -129,6 +129,7 @@ public class ChargingScreenActivity extends HSActivity {
     private boolean isAnimatorQuit;
 
     private long startDisplayTime;
+    private long adAddedTime;
 
     //    private AnimatorSet imgScrollUpAnimatorSet;
     private ValueAnimator rootViewTransXAnimator;
@@ -370,6 +371,8 @@ public class ChargingScreenActivity extends HSActivity {
             adView = null;
         }
 
+        logDisplayTime("app_chargingLockerAD_displaytime",adAddedTime);
+
         //根据max的方法这里只removeview 不释放ad
 //        if (nativeAd != null) {
 //            nativeAd.release();
@@ -402,6 +405,8 @@ public class ChargingScreenActivity extends HSActivity {
         ChargingAnalytics.getInstance().nativeAdShow();
         adView = getAdView(this, nativeAd);
         adContainer.addView(adView, LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT);
+
+        adAddedTime = System.currentTimeMillis();
 
         txtChargingIndicator.setVisibility(View.INVISIBLE);
         nativeAd.setNativeClickListener(new AcbNativeAd.AcbNativeClickListener() {
@@ -529,8 +534,7 @@ public class ChargingScreenActivity extends HSActivity {
 
         ChargeNotifyManager.getInstance().setIsChargingActivityAlive(false);
 
-        long endDisplayTime = System.currentTimeMillis();
-        logDisplayTime("app_chargingLocker_displaytime",(endDisplayTime - startDisplayTime) / 1000);
+        logDisplayTime("app_chargingLocker_displaytime", startDisplayTime);
     }
 
     @Override
@@ -1023,6 +1027,8 @@ public class ChargingScreenActivity extends HSActivity {
 
 
     public static void logDisplayTime(String key,long startDisplayTime){
+        long totalTime = (System.currentTimeMillis() - startDisplayTime)/1000;
+
         if(startDisplayTime < 1){
             KCAnalyticUtil.logEvent(key,"0~1s");
         }else if(startDisplayTime < 2){
