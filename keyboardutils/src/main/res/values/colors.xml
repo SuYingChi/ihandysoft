@@ -11,4 +11,6 @@
     <color name="ad_button_blue_pressed">#cc536dfe</color>
     <color name="ad_share_action_button_bg">#2a89ff</color>
     <color name="ad_exit_alert_button_green">#43bb48</color>
+    <color name="result_page_button_flash_light">#99ffffff</color>
+    <color name="interstitial_gift_ad_background">#99666666</color>
 </resources>

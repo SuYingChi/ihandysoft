@@ -68,4 +68,7 @@
     <string name="font_robot_light">sans-serif-light</string>
     <string name="prefs_notification_enable">prefs_notification_enable</string>
     <string name="charging_enable_alert_toast">Smart Charging Enabled</string>
+    <string name="all_apps_interstitial_ad_display_failed_txt">Oops… try again later.</string>
+    <string name="all_apps_interstitial_ad_notice">WOW! Check out this amazing app!</string>
+    <string name="locker_wallpaper_network_error">Network errors. Please try again.</string>
 </resources>

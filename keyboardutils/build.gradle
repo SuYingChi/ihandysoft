@@ -29,7 +29,7 @@ dependencies {
     compile "com.ihandy.appframework:libAppframework.${rootProject.ext.frameworkVersion}"
     compile(name: 'ihs/libCommon/libCommon', ext: 'aar')
     compile fileTree(dir: 'libs', include: ['*.jar'])
-
+    compile 'com.airbnb.android:lottie:1.5.3'
     compile "com.android.support:appcompat-v7:${rootProject.ext.supportVersion}"
     compile "com.android.support:recyclerview-v7:${rootProject.ext.supportVersion}"
     compile "com.android.support:cardview-v7:${rootProject.ext.supportVersion}"

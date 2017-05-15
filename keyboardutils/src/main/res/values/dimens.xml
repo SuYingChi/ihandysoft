@@ -23,4 +23,7 @@
     <dimen name="share_ad_cation_height">40dp</dimen>
     <dimen name="share_ad_cation_margin_top">15dp</dimen>
     <dimen name="corner_radius">2dp</dimen>
+    <dimen name="result_page_action_button_light_width">20dp</dimen>
+    <integer name="config_resultPageActionButtonRevealDuration">420</integer>
+    <integer name="config_resultPageActionButtonFlashDuration">600</integer>
 </resources>

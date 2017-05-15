@@ -11,8 +11,10 @@ import android.widget.Spinner;
 import android.widget.Toast;
 
 import com.ihs.app.framework.activity.HSActivity;
+import com.ihs.chargingscreen.HSChargingScreenManager;
 import com.ihs.commons.config.HSConfig;
 import com.ihs.keyboardutils.ads.KCInterstitialAd;
+import com.ihs.keyboardutils.giftad.GiftInterstitialHelper;
 import com.ihs.keyboardutils.nativeads.NativeAdParams;
 import com.ihs.keyboardutils.nativeads.NativeAdView;
 import com.ihs.keyboardutilslib.R;
@@ -28,6 +30,7 @@ public class AdDemoActivity extends HSActivity {
     private Spinner adPlacementSpinner;
     private Button showAdButton;
     private Button closeAdButton;
+    private Button giftButtonView;
 
     private List<String> adPlacementList = new ArrayList<>();
 
@@ -44,6 +47,13 @@ public class AdDemoActivity extends HSActivity {
         adPlacementSpinner = (Spinner) findViewById(R.id.spinner_placement);
         showAdButton = (Button) findViewById(R.id.btn_show_ad);
         closeAdButton = (Button) findViewById(R.id.btn_close_ad);
+        giftButtonView = (Button) findViewById(R.id.gift_btn);
+        giftButtonView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                GiftInterstitialHelper.showInterstitialGiftAd(HSChargingScreenManager.getInstance().getNaitveAdsPlacementName());
+            }
+        });
 
 
         for (String adPlacement : getAdPlacementList()) {
