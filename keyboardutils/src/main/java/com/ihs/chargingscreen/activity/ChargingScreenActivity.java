@@ -14,6 +14,7 @@ import android.content.res.Configuration;
 import android.content.res.Resources;
 import android.graphics.BitmapFactory;
 import android.graphics.Color;
+import android.graphics.Typeface;
 import android.graphics.drawable.Drawable;
 import android.os.Build;
 import android.os.Bundle;
@@ -332,6 +333,8 @@ public class ChargingScreenActivity extends HSActivity {
 
         adContainer = (FrameLayout) findViewById(R.id.ad_container);
         txtBatteryLevelPercent = (TextView) findViewById(R.id.txt_battery_level);
+        Typeface tf = Typeface.createFromAsset(getAssets(), "fonts/dincond_medium.otf");
+        txtBatteryLevelPercent.setTypeface(tf);
 
         imgChargingStateList = new ImageView[]{
                 (ImageView) findViewById(R.id.img_charging_state1),
@@ -623,7 +626,7 @@ public class ChargingScreenActivity extends HSActivity {
         }
 
 
-        final int tempWidth = DisplayUtils.getDisplayMetrics().widthPixels - DisplayUtils.dip2px(50);
+        final int tempWidth = DisplayUtils.getDisplayMetrics().widthPixels - DisplayUtils.dip2px(10);
         String imageFilePath = nativeAd.getResourceFilePath(AcbNativeAd.LOAD_RESOURCE_TYPE_IMAGE);
         if (!TextUtils.isEmpty(imageFilePath) && new File(imageFilePath).exists()) {
             BitmapFactory.Options options = new BitmapFactory.Options();
