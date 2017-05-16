@@ -51,7 +51,7 @@ public class AdDemoActivity extends HSActivity {
         giftButtonView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                GiftInterstitialHelper.showInterstitialGiftAd(HSChargingScreenManager.getInstance().getNaitveAdsPlacementName());
+                GiftInterstitialHelper.showInterstitialGiftAd(AdDemoActivity.this, HSChargingScreenManager.getInstance().getNaitveAdsPlacementName());
             }
         });
 

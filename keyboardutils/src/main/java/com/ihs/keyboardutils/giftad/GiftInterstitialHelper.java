@@ -1,5 +1,6 @@
 package com.ihs.keyboardutils.giftad;
 
+import android.content.Context;
 import android.content.Intent;
 
 import com.ihs.app.framework.HSApplication;
@@ -9,10 +10,23 @@ import com.ihs.app.framework.HSApplication;
  */
 
 public class GiftInterstitialHelper {
+
     public static void showInterstitialGiftAd(String placement) {
-        Intent intent = new Intent(HSApplication.getContext(), InterstitialGiftActivity.class);
-        intent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION | Intent.FLAG_ACTIVITY_NEW_TASK);
-        intent.putExtra(InterstitialGiftActivity.PLACEMENT_MESSAGE, placement);
-        HSApplication.getContext().startActivity(intent);
+        showInterstitialGiftAd(null, placement);
+    }
+
+    public static void showInterstitialGiftAd(Context context, String placement) {
+        Intent intent;
+        if (null == context) {
+            intent = new Intent(HSApplication.getContext(), InterstitialGiftActivity.class);
+            intent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION | Intent.FLAG_ACTIVITY_NEW_TASK);
+            intent.putExtra(InterstitialGiftActivity.PLACEMENT_MESSAGE, placement);
+            HSApplication.getContext().startActivity(intent);
+        } else {
+            intent = new Intent(context, InterstitialGiftActivity.class);
+            intent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
+            intent.putExtra(InterstitialGiftActivity.PLACEMENT_MESSAGE, placement);
+            context.startActivity(intent);
+        }
     }
 }
