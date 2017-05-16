@@ -56,8 +56,7 @@
 
         <activity
             android:name=".giftad.InterstitialGiftActivity"
-            android:launchMode="singleTop"
-            android:taskAffinity="com.ihs.keyboardutils.giftad.InterstitialGiftActivity"
+            android:excludeFromRecents="true"
             android:theme="@style/FullScreenAnimationAd" />
     </application>
 
