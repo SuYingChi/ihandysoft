@@ -651,7 +651,7 @@ public class ChargingScreenActivity extends HSActivity {
     }
 
     @Override
-    public boolean onTouchEvent(MotionEvent event) {
+    public boolean dispatchTouchEvent(MotionEvent event) {
 
         if (isAnimatorQuit) {
             return true;
@@ -700,7 +700,7 @@ public class ChargingScreenActivity extends HSActivity {
             velocityTracker.recycle();
         }
 
-        return true;
+        return super.dispatchTouchEvent(event);
     }
 
     private void startRootViewTranXAnimator(float endTransX, final float windowWidth) {
