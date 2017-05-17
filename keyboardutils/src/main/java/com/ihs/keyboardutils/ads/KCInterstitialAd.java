@@ -32,13 +32,18 @@ public class KCInterstitialAd {
         new AcbInterstitialAdLoader(HSApplication.getContext(), placement).load(1, null);
     }
 
+    public static AcbInterstitialAdLoader loadAndShow(final String placement, final OnAdShowListener onAdShowListener, final OnAdCloseListener onAdCloseListener) {
+        return loadAndShow(placement, onAdShowListener, onAdCloseListener, false);
+    }
+
     /**
      * 加载插页广告，并在加载完成后显示，使用这种方式时需要在合适的时机去 Cancel 返回的 Loader
      * @param placement 广告位
      * @param onAdCloseListener 广告关闭时的回调
+     * @param showQuietly 是否使用安静模式
      * @return 广告的Loader，需要在合适的时机去 Cancel
      */
-    public static AcbInterstitialAdLoader loadAndShow(final String placement, final OnAdShowListener onAdShowListener, final OnAdCloseListener onAdCloseListener) {
+    public static AcbInterstitialAdLoader loadAndShow(final String placement, final OnAdShowListener onAdShowListener, final OnAdCloseListener onAdCloseListener, final boolean showQuietly) {
         logAnalyticsEvent(placement, "Load");
         AcbInterstitialAdLoader loader = new AcbInterstitialAdLoader(HSApplication.getContext(), placement);
         loader.load(1, new AcbInterstitialAdLoader.AcbInterstitialAdLoadListener() {
@@ -46,7 +51,7 @@ public class KCInterstitialAd {
 
             @Override
             public void onAdReceived(AcbInterstitialAdLoader acbInterstitialAdLoader, List<AcbInterstitialAd> list) {
-                boolean success = show(placement, list, onAdCloseListener);
+                boolean success = show(placement, list, onAdCloseListener, showQuietly);
                 if (listener != null) {
                     listener.onAdShow(success);
                     listener = null;
@@ -79,20 +84,24 @@ public class KCInterstitialAd {
     }
 
     public static boolean show(final String placement) {
-        return show(placement, null);
+        return show(placement, null, false);
     }
 
     public static boolean show(final String placement, final OnAdCloseListener onAdCloseListener) {
+        return show(placement, onAdCloseListener, false);
+    }
+
+    public static boolean show(final String placement, final OnAdCloseListener onAdCloseListener, boolean showQuietly) {
         List<AcbInterstitialAd> interstitialAds = AcbInterstitialAdLoader.fetch(HSApplication.getContext(), placement, 1);
         if (interstitialAds.size() <= 0) {
             logAnalyticsEvent(placement, "FetchNoAd");
             return false;
         }
 
-        return show(placement, interstitialAds, onAdCloseListener);
+        return show(placement, interstitialAds, onAdCloseListener, showQuietly);
     }
 
-    private static boolean show(final String placement, List<AcbInterstitialAd> interstitialAds, final OnAdCloseListener onAdCloseListener) {
+    private static boolean show(final String placement, List<AcbInterstitialAd> interstitialAds, final OnAdCloseListener onAdCloseListener, boolean showQuietly) {
         if (interstitialAds == null || interstitialAds.size() == 0) {
             return false;
         }
@@ -123,7 +132,12 @@ public class KCInterstitialAd {
             }
         });
 
-        interstitialAd.show();
+        if (showQuietly) {
+            interstitialAd.showQuietly(HSApplication.getContext());
+        } else {
+            interstitialAd.show();
+        }
+
         return true;
     }
 
