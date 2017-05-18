@@ -1,9 +1,6 @@
 [submodule "libs/ihs/libAppFramework"]
 	path = libs/ihs/libAppFramework
 	url = http://git.ihandysoft.com/bingroup/bin_appframework_android.git
-[submodule "libs/ihs/libCommon"]
-	path = libs/ihs/libCommon
-	url = http://git.ihandysoft.com/bingroup/bin_common_android.git
 [submodule "libs/ihs/libInterstitialAds"]
 	path = libs/ihs/libInterstitialAds
 	url = http://git.ihandysoft.com/bingroup/bin_interstitialads_android.git

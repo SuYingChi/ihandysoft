@@ -27,7 +27,6 @@ dependencies {
     compile "com.ihandy.interstitialads:InterstitialAds.gm:4.1.4.gm"
 
     compile "com.ihandy.appframework:libAppframework.${rootProject.ext.frameworkVersion}"
-    compile(name: 'ihs/libCommon/libCommon', ext: 'aar')
     compile fileTree(dir: 'libs', include: ['*.jar'])
     compile 'com.airbnb.android:lottie:1.5.3'
     compile "com.android.support:appcompat-v7:${rootProject.ext.supportVersion}"
