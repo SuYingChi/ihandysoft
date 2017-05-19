@@ -635,7 +635,7 @@ public class ChargingScreenActivity extends HSActivity {
             if (options.outWidth > options.outHeight) {
                 HSLog.i("onSizeReady:" + options.outWidth + "x" + options.outHeight);
                 containerView.getAdPrimaryView().getLayoutParams().width = tempWidth;
-                containerView.getAdPrimaryView().getLayoutParams().height = options.outHeight * tempWidth / options.outWidth;
+                containerView.getAdPrimaryView().getLayoutParams().height = (int) (tempWidth / 1.9f);
             } else {
                 HSLog.i("onSizeReady:" + options.outWidth + "x" + options.outHeight);
                 containerView.getAdPrimaryView().getLayoutParams().height = tempWidth / 2;

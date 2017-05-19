@@ -13,4 +13,33 @@
     <declare-styleable name="AllAppsScaleLinearLayout">
         <attr name="lengthWidthRatio" format="float"/>
     </declare-styleable>
+    <declare-styleable name="FlashFrameLayout">
+        <attr name="flash_auto_start" format="boolean" />
+        <attr name="flash_base_alpha" format="float" />
+        <attr name="flash_duration" format="integer" />
+        <attr name="flash_repeat_count" format="integer" />
+        <attr name="flash_repeat_delay" format="integer" />
+        <attr name="flash_repeat_mode" format="enum">
+            <enum name="restart" value="1" />
+            <enum name="reverse" value="2" />
+        </attr>
+        <attr name="flash_angle" format="enum">
+            <enum name="cw_0" value="0" />
+            <enum name="cw_90" value="90" />
+            <enum name="cw_180" value="180" />
+            <enum name="cw_270" value="270" />
+        </attr>
+        <attr name="flash_dropoff" format="float" />
+        <attr name="flash_fixed_width" format="dimension" />
+        <attr name="flash_fixed_height" format="dimension" />
+        <attr name="flash_intensity" format="float" />
+        <attr name="flash_relative_width" format="float" />
+        <attr name="flash_relative_height" format="float" />
+        <attr name="flash_shape" format="enum">
+            <enum name="linear" value="0" />
+            <enum name="radial" value="1" />
+        </attr>
+        <attr name="flash_tilt" format="float" />
+    </declare-styleable>
+
 </resources>
