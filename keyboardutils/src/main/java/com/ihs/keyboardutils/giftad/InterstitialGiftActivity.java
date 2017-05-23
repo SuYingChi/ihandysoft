@@ -147,7 +147,7 @@ public class InterstitialGiftActivity extends Activity {
 
         // display content.
         mInterstitialAdContainer = (FrameLayout) findViewById(R.id.all_apps_Interstitial_ad_container);
-        View containerView = inflater.inflate(R.layout.all_apps_interstitial_ad_display_content, null);
+        View containerView = inflater.inflate(R.layout.all_apps_interstitial_ad_display_content, mInterstitialAdContainer, false);
         mInterstitialAdDisplayContent = new AcbNativeAdContainerView(HSApplication.getContext());
         mInterstitialAdDisplayContent.addContentView(containerView);
 
