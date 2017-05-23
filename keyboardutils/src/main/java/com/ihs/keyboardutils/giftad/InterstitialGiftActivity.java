@@ -333,7 +333,7 @@ public class InterstitialGiftActivity extends Activity {
     }
 
     private void setInterstitialAdDisplayPosition() {
-        interstitialLayout.getViewTreeObserver().addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
+        mInterstitialAdContainer.getViewTreeObserver().addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
             @Override
             public void onGlobalLayout() {
                 int animHeight = mLottieAnimationView.getHeight();
