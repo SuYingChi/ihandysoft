@@ -23,11 +23,12 @@ android {
     }
 }
 dependencies {
-    compile "com.ihandy.nativeads:libNativeAds.gm:4.1.6.gm"
-    compile "com.ihandy.interstitialads:InterstitialAds.gm:4.1.4.gm"
+    compile "com.ihandy.nativeads:libNativeAds.beta:4.1.7.beta01"
+    compile ("com.ihandy.interstitialads:InterstitialAds.gm:4.1.4.gm"){
+        exclude group: 'com.ihandy.adscommon'
+    }
 
     compile "com.ihandy.appframework:libAppframework.${rootProject.ext.frameworkVersion}"
-    compile fileTree(dir: 'libs', include: ['*.jar'])
     compile 'com.airbnb.android:lottie:1.5.3'
     compile "com.android.support:appcompat-v7:${rootProject.ext.supportVersion}"
     compile "com.android.support:recyclerview-v7:${rootProject.ext.supportVersion}"

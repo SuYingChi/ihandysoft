@@ -12,7 +12,6 @@ import android.content.Context;
 import android.content.pm.PackageManager;
 import android.content.res.Configuration;
 import android.content.res.Resources;
-import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.graphics.Typeface;
 import android.graphics.drawable.Drawable;
@@ -23,7 +22,6 @@ import android.os.Message;
 import android.os.PowerManager;
 import android.provider.Settings;
 import android.support.annotation.IntRange;
-import android.support.annotation.NonNull;
 import android.telephony.PhoneStateListener;
 import android.telephony.TelephonyManager;
 import android.text.TextUtils;
@@ -33,7 +31,6 @@ import android.view.MotionEvent;
 import android.view.VelocityTracker;
 import android.view.View;
 import android.view.View.OnClickListener;
-import android.view.ViewGroup;
 import android.view.Window;
 import android.view.WindowManager.LayoutParams;
 import android.widget.FrameLayout;
@@ -41,13 +38,7 @@ import android.widget.ImageView;
 import android.widget.PopupWindow;
 import android.widget.TextView;
 
-import com.acb.adadapter.AcbAd;
-import com.acb.adadapter.AcbNativeAd;
-import com.acb.adadapter.ContainerView.AcbNativeAdContainerView;
-import com.acb.adadapter.ContainerView.AcbNativeAdIconView;
-import com.acb.adadapter.ContainerView.AcbNativeAdPrimaryView;
-import com.acb.nativeads.AcbNativeAdLoader;
-import com.ihs.app.analytics.HSAnalytics;
+import com.acb.expressads.AcbExpressAdView;
 import com.ihs.app.framework.HSApplication;
 import com.ihs.app.framework.activity.HSActivity;
 import com.ihs.charging.HSChargingManager;
@@ -63,13 +54,11 @@ import com.ihs.chargingscreen.utils.CommonUtils;
 import com.ihs.chargingscreen.utils.DisplayUtils;
 import com.ihs.commons.config.HSConfig;
 import com.ihs.commons.notificationcenter.HSGlobalNotificationCenter;
-import com.ihs.commons.utils.HSError;
 import com.ihs.commons.utils.HSLog;
 import com.ihs.keyboardutils.R;
 import com.ihs.keyboardutils.utils.KCAnalyticUtil;
 import com.ihs.keyboardutils.utils.RippleDrawableUtils;
 
-import java.io.File;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -136,10 +125,6 @@ public class ChargingScreenActivity extends HSActivity {
     private ValueAnimator rootViewTransXAnimator;
 
     private TelephonyManager telephonyManager;
-
-
-    private AcbNativeAd nativeAd;
-    private AcbNativeAdLoader nativeAdLoader;
 
     private Handler handler = new Handler() {
         @Override
@@ -214,7 +199,8 @@ public class ChargingScreenActivity extends HSActivity {
     };
     private BubbleView bubbleView;
     private PowerManager powerManager = (PowerManager) HSApplication.getContext().getSystemService(Context.POWER_SERVICE);
-    private AcbNativeAd lastAd;
+    private AcbExpressAdView acbExpressAdView;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -222,9 +208,7 @@ public class ChargingScreenActivity extends HSActivity {
 
         requestWindowFeature(Window.FEATURE_NO_TITLE);
         super.onCreate(savedInstanceState);
-        ChargingManagerUtil.enableCharging(false,"plist");
-
-        loadAd();
+        ChargingManagerUtil.enableCharging(false, "plist");
 
         Window window = getWindow();
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
@@ -359,14 +343,16 @@ public class ChargingScreenActivity extends HSActivity {
             findViewById(R.id.img_setting).setVisibility(View.INVISIBLE);
         }
 
+        acbExpressAdView = new AcbExpressAdView(HSApplication.getContext(), HSChargingScreenManager.getInstance().getNaitveAdsPlacementName());
+        adContainer.addView(acbExpressAdView);
+        acbExpressAdView.setExpressAdViewListener(new AcbExpressAdView.AcbExpressAdViewListener() {
+            @Override
+            public void onAdClicked(AcbExpressAdView acbExpressAdView) {
+                ChargingAnalytics.getInstance().nativeAdClick();
+                finish();
+            }
+        });
     }
-
-    private void loadAd() {
-        AcbNativeAdLoader adLoader = new AcbNativeAdLoader(HSApplication.getContext(), HSChargingScreenManager.getInstance().getNaitveAdsPlacementName());
-        adLoader.load(1, null);
-        ChargingAnalytics.getInstance().nativeAdLoad();
-    }
-
 
     private void removeAdView() {
         if (adView != null) {
@@ -374,18 +360,7 @@ public class ChargingScreenActivity extends HSActivity {
             adView = null;
         }
 
-        logDisplayTime("app_chargingLockerAD_displaytime",adAddedTime);
-
-        //根据max的方法这里只removeview 不释放ad
-//        if (nativeAd != null) {
-//            nativeAd.release();
-//            nativeAd = null;
-//        }
-
-//        if (nativeAdLoader != null) {
-//            nativeAdLoader.cancel();
-//            nativeAdLoader = null;
-//        }
+        logDisplayTime("app_chargingLockerAD_displaytime", adAddedTime);
 
         final HSChargingState chargingState = HSChargingManager.getInstance().getChargingState();
         if (chargingState == HSChargingState.STATE_CHARGING_SPEED || chargingState == HSChargingState.STATE_CHARGING_CONTINUOUS
@@ -396,112 +371,14 @@ public class ChargingScreenActivity extends HSActivity {
         }
     }
 
-    private void showAd(AcbNativeAd nativeAd) {
-        if (adView != null) {
-            return;
-        }
-
-        if (!HSChargingScreenManager.getInstance().isShowNativeAd()) {
-            return;
-        }
-
-        ChargingAnalytics.getInstance().nativeAdShow();
-        adView = getAdView(this, nativeAd);
-        adContainer.addView(adView, LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT);
-
-        adAddedTime = System.currentTimeMillis();
-
-        txtChargingIndicator.setVisibility(View.INVISIBLE);
-        nativeAd.setNativeClickListener(new AcbNativeAd.AcbNativeClickListener() {
-            @Override
-            public void onAdClick(AcbAd acbAd) {
-                KCAnalyticUtil.logEvent("HSLib_chargingscreen_Charge_Ad_Clicked");
-                ChargingAnalytics.getInstance().nativeAdClick();
-                finish();
-            }
-        });
-        KCAnalyticUtil.logEvent("HSLib_chargingscreen_Charge_Ad_Viewed");
-
-
-        //max ad
-        loadAd();
-    }
-
     @Override
     public void onStart() {
         super.onStart();
 
-        HSLog.d("chargingtest onStart");
-
-        //max ad
         PowerManager powerManager = (PowerManager) getSystemService(Context.POWER_SERVICE);
-
-        boolean hasValidAd = false;
         if (powerManager.isScreenOn()) {
-            List<AcbNativeAd> nativeAds = AcbNativeAdLoader.fetch(HSApplication.getContext(), HSChargingScreenManager.getInstance().getNaitveAdsPlacementName(), 1);
-            if (nativeAds != null && !nativeAds.isEmpty()) {
-                if (!nativeAds.get(0).isExpired()) {
-                    HSLog.d("NativeAd_Charging_fetch");
-                    showAd(nativeAds.get(0));
-                    HSAnalytics.logEvent("Charge_Ad_Viewed");
-                    lastAd = nativeAds.get(0);
-                    hasValidAd = true;
-                } else {
-                    nativeAds.get(0).release();
-                }
-            }
-
-            if (!hasValidAd) {
-                if (lastAd != null && !lastAd.isExpired()) {
-                    HSLog.d("charging activity, using last ad");
-
-                    showAd(lastAd);
-                    hasValidAd = true;
-                }
-            }
-
-            if (!hasValidAd) {
-                if (this.nativeAdLoader != null) {
-                    this.nativeAdLoader.cancel();
-                    this.nativeAdLoader = null;
-                }
-                this.nativeAdLoader = new AcbNativeAdLoader(this, HSChargingScreenManager.getInstance().getNaitveAdsPlacementName());
-                ChargingAnalytics.getInstance().nativeAdLoad();
-                this.nativeAdLoader.load(1, newAcbNativeAdLoadListener());
-            }
-
             ChargeNotifyManager.getInstance().setIsChargingActivityAlive(true);
         }
-
-
-
-    }
-
-    @NonNull
-    private AcbNativeAdLoader.AcbNativeAdLoadListener newAcbNativeAdLoadListener() {
-        return new AcbNativeAdLoader.AcbNativeAdLoadListener() {
-            @Override
-            public void onAdReceived(AcbNativeAdLoader loader, List<AcbNativeAd> list) {
-                if (ChargingScreenActivity.this.nativeAd == null) {
-                    AcbNativeAd nativeAd = (list != null && list.size() > 0) ? list.get(0) : null;
-                    if (nativeAd != null) {
-                        ChargingScreenActivity.this.nativeAd = nativeAd;
-                        lastAd = nativeAd;
-                        ChargingScreenActivity.this.showAd(ChargingScreenActivity.this.nativeAd);
-                    }
-                }
-            }
-
-            @Override
-            public void onAdFinished(AcbNativeAdLoader loader, HSError hsError) {
-                ChargingScreenActivity.this.nativeAdLoader = null;
-
-                if (hsError != null) {
-                    HSLog.d("Chagring onAdFinished(), hsError message = " + hsError.getMessage());
-                    loadAd();
-                }
-            }
-        };
     }
 
     @Override
@@ -550,6 +427,8 @@ public class ChargingScreenActivity extends HSActivity {
 
     @Override
     public void onDestroy() {
+        acbExpressAdView.destroy();
+
         super.onDestroy();
         ChargingPrefsUtil.getInstance().setChargingForFirstSession();
 
@@ -562,16 +441,6 @@ public class ChargingScreenActivity extends HSActivity {
         }
 
         handler.removeCallbacksAndMessages(null);
-
-        if (this.nativeAdLoader != null) {
-            this.nativeAdLoader.cancel();
-            this.nativeAdLoader = null;
-        }
-
-        if (this.nativeAd != null) {
-            this.nativeAd.release();
-            this.nativeAd = null;
-        }
 
         if (null != closeDialog) {
             closeDialog.dismiss();
@@ -601,53 +470,6 @@ public class ChargingScreenActivity extends HSActivity {
         txtDay.setText(String.valueOf(calendar.get(Calendar.DAY_OF_MONTH)));
         txtWeek.setText(calendar.getDisplayName(Calendar.DAY_OF_WEEK, Calendar.SHORT, Locale.ENGLISH));
         txtMonth.setText(calendar.getDisplayName(Calendar.MONTH, Calendar.SHORT, Locale.ENGLISH));
-    }
-
-    private FrameLayout getAdView(Context context, final AcbNativeAd nativeAd) {
-        View contentView = LayoutInflater.from(context).inflate(R.layout.charging_module_ad_card, null);
-
-        final AcbNativeAdContainerView containerView = new AcbNativeAdContainerView(context);
-        containerView.addContentView(contentView);
-
-        containerView.setAdTitleView((TextView) contentView.findViewById(R.id.ad_title));
-        containerView.setAdSubTitleView((TextView) contentView.findViewById(R.id.ad_subtitle));
-        containerView.setAdActionView(contentView.findViewById(R.id.ad_call_to_action));
-        containerView.setAdIconView((AcbNativeAdIconView) contentView.findViewById(R.id.ad_icon));
-        containerView.setAdPrimaryView((AcbNativeAdPrimaryView) contentView.findViewById(R.id.ad_cover_img));
-        containerView.setAdChoiceView((ViewGroup) contentView.findViewById(R.id.ad_conner));
-
-        containerView.fillNativeAd(nativeAd);
-
-        ((TextView) containerView.getAdTitleView()).setText(nativeAd.getTitle().replace("&nbsp;", ""));
-        if (!TextUtils.isEmpty(nativeAd.getSubtitle()) && !TextUtils.isEmpty(nativeAd.getSubtitle().trim())) {
-            ((TextView) containerView.getAdSubTitleView()).setText(String.format("(%s)", nativeAd.getSubtitle().trim()));
-        } else {
-            containerView.getAdSubTitleView().setVisibility(View.GONE);
-        }
-
-
-        final int tempWidth = DisplayUtils.getDisplayMetrics().widthPixels - DisplayUtils.dip2px(10);
-        String imageFilePath = nativeAd.getResourceFilePath(AcbNativeAd.LOAD_RESOURCE_TYPE_IMAGE);
-        if (!TextUtils.isEmpty(imageFilePath) && new File(imageFilePath).exists()) {
-            BitmapFactory.Options options = new BitmapFactory.Options();
-            options.inJustDecodeBounds = true;
-            BitmapFactory.decodeFile(imageFilePath, options);
-            if (options.outWidth > options.outHeight) {
-                HSLog.i("onSizeReady:" + options.outWidth + "x" + options.outHeight);
-                containerView.getAdPrimaryView().getLayoutParams().width = tempWidth;
-                containerView.getAdPrimaryView().getLayoutParams().height = (int) (tempWidth / 1.9f);
-            } else {
-                HSLog.i("onSizeReady:" + options.outWidth + "x" + options.outHeight);
-                containerView.getAdPrimaryView().getLayoutParams().height = tempWidth / 2;
-                containerView.getAdPrimaryView().getLayoutParams().width = tempWidth;
-            }
-        } else {
-            containerView.getAdPrimaryView().getLayoutParams().height = tempWidth / 2;
-            containerView.getAdPrimaryView().getLayoutParams().width = tempWidth;
-
-        }
-
-        return containerView;
     }
 
     @Override
@@ -1029,27 +851,27 @@ public class ChargingScreenActivity extends HSActivity {
     }
 
 
-    public static void logDisplayTime(String key,long startDisplayTime){
-        long totalTime = (System.currentTimeMillis() - startDisplayTime)/1000;
+    public static void logDisplayTime(String key, long startDisplayTime) {
+        long totalTime = (System.currentTimeMillis() - startDisplayTime) / 1000;
 
-        if(startDisplayTime < 1){
-            KCAnalyticUtil.logEvent(key,"0~1s");
-        }else if(startDisplayTime < 2){
-            KCAnalyticUtil.logEvent(key,"1~2s");
-        }else if(startDisplayTime < 3){
-            KCAnalyticUtil.logEvent(key,"2~3s");
-        }else if(startDisplayTime < 4){
-            KCAnalyticUtil.logEvent(key,"3~4s");
-        }else if(startDisplayTime < 5){
-            KCAnalyticUtil.logEvent(key,"4~5s");
-        }else if(startDisplayTime < 6){
-            KCAnalyticUtil.logEvent(key,"5~6s");
-        }else if(startDisplayTime < 7){
-            KCAnalyticUtil.logEvent(key,"6~7s");
-        }else if(startDisplayTime < 8){
-            KCAnalyticUtil.logEvent(key,"7~8s");
-        }else {
-            KCAnalyticUtil.logEvent(key,"8s+");
+        if (totalTime < 1) {
+            KCAnalyticUtil.logEvent(key, "0~1s");
+        } else if (totalTime < 2) {
+            KCAnalyticUtil.logEvent(key, "1~2s");
+        } else if (totalTime < 3) {
+            KCAnalyticUtil.logEvent(key, "2~3s");
+        } else if (totalTime < 4) {
+            KCAnalyticUtil.logEvent(key, "3~4s");
+        } else if (totalTime < 5) {
+            KCAnalyticUtil.logEvent(key, "4~5s");
+        } else if (totalTime < 6) {
+            KCAnalyticUtil.logEvent(key, "5~6s");
+        } else if (totalTime < 7) {
+            KCAnalyticUtil.logEvent(key, "6~7s");
+        } else if (totalTime < 8) {
+            KCAnalyticUtil.logEvent(key, "7~8s");
+        } else {
+            KCAnalyticUtil.logEvent(key, "8s+");
         }
     }
 
