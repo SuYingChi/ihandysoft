@@ -96,8 +96,6 @@ public class ChargingScreenActivity extends HSActivity {
     private TextView txtBatteryLevelPercent;
     private ImageView imgSetting;
 
-    private FrameLayout adContainer;
-    private FrameLayout adView;
     private TextView txtLeftTime;
     private TextView txtLeftTimeIndicator;
     private TextView txtChargingIndicator;
@@ -119,7 +117,6 @@ public class ChargingScreenActivity extends HSActivity {
     private boolean isAnimatorQuit;
 
     private long startDisplayTime;
-    private long adAddedTime;
 
     //    private AnimatorSet imgScrollUpAnimatorSet;
     private ValueAnimator rootViewTransXAnimator;
@@ -315,7 +312,7 @@ public class ChargingScreenActivity extends HSActivity {
         } catch (Exception e) {
         }
 
-        adContainer = (FrameLayout) findViewById(R.id.ad_container);
+        FrameLayout adContainer = (FrameLayout) findViewById(R.id.ad_container);
         txtBatteryLevelPercent = (TextView) findViewById(R.id.txt_battery_level);
         Typeface tf = Typeface.createFromAsset(getAssets(), "fonts/dincond_medium.otf");
         txtBatteryLevelPercent.setTypeface(tf);
@@ -355,13 +352,6 @@ public class ChargingScreenActivity extends HSActivity {
     }
 
     private void removeAdView() {
-        if (adView != null) {
-            adContainer.removeView(adView);
-            adView = null;
-        }
-
-        logDisplayTime("app_chargingLockerAD_displaytime", adAddedTime);
-
         final HSChargingState chargingState = HSChargingManager.getInstance().getChargingState();
         if (chargingState == HSChargingState.STATE_CHARGING_SPEED || chargingState == HSChargingState.STATE_CHARGING_CONTINUOUS
                 || chargingState == HSChargingState.STATE_CHARGING_TRICKLE) {
@@ -427,7 +417,10 @@ public class ChargingScreenActivity extends HSActivity {
 
     @Override
     public void onDestroy() {
-        acbExpressAdView.destroy();
+        if (acbExpressAdView != null) {
+            acbExpressAdView.destroy();
+        }
+        acbExpressAdView = null;
 
         super.onDestroy();
         ChargingPrefsUtil.getInstance().setChargingForFirstSession();
