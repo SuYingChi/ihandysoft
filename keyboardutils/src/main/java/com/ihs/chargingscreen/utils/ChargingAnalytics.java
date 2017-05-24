@@ -69,16 +69,4 @@ public class ChargingAnalytics {
         }
     }
 
-
-    public void nativeAdLoad() {
-        KCAnalyticUtil.logEvent(NativeAd_Charging_Load);
-    }
-
-    public void nativeAdShow() {
-        KCAnalyticUtil.logEvent(NativeAd_Charging_Show);
-    }
-
-    public void nativeAdClick() {
-        KCAnalyticUtil.logEvent(NativeAd_Charging_Click);
-    }
 }

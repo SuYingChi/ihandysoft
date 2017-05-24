@@ -345,13 +345,12 @@ public class ChargingScreenActivity extends HSActivity {
         acbExpressAdView.setExpressAdViewListener(new AcbExpressAdView.AcbExpressAdViewListener() {
             @Override
             public void onAdClicked(AcbExpressAdView acbExpressAdView) {
-                ChargingAnalytics.getInstance().nativeAdClick();
                 finish();
             }
         });
     }
 
-    private void removeAdView() {
+    private void showChargingIndicatorText() {
         final HSChargingState chargingState = HSChargingManager.getInstance().getChargingState();
         if (chargingState == HSChargingState.STATE_CHARGING_SPEED || chargingState == HSChargingState.STATE_CHARGING_CONTINUOUS
                 || chargingState == HSChargingState.STATE_CHARGING_TRICKLE) {
@@ -388,7 +387,7 @@ public class ChargingScreenActivity extends HSActivity {
         HSLog.d("chargingtest onStop");
 
         bubbleView.stop();
-        removeAdView();
+        showChargingIndicatorText();
     }
 
     @Override
