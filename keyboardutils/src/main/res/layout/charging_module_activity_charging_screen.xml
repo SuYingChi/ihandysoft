@@ -180,7 +180,7 @@
                 android:layout_alignParentBottom="true"
                 android:layout_centerHorizontal="true"
                 android:layout_marginTop="10dp"
-                android:layout_marginBottom="45dp"
+                android:layout_marginBottom="25dp"
                 android:gravity="center_vertical"
                 android:orientation="horizontal">
 
@@ -293,6 +293,7 @@
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_weight="8"
+            android:layout_marginBottom="5dp"
             android:clipChildren="false">
 
             <com.ihs.keyboardutils.view.RoundedCornerLayout
@@ -328,6 +329,7 @@
                 android:layout_height="wrap_content"
                 android:layout_alignParentBottom="true"
                 android:layout_centerHorizontal="true"
+                android:layout_marginTop="10dp"
                 android:layout_marginBottom="20dp"
                 app:angle="cw_0"
                 app:auto_start="true"
