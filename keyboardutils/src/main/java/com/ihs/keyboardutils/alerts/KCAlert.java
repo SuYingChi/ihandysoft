@@ -8,6 +8,8 @@ import android.view.View;
 import com.ihs.app.framework.HSApplication;
 
 public class KCAlert {
+    public static final int INVALID_COLOR = -1;
+
     private CustomDesignAlert alert;
 
     private KCAlert(Context context, boolean isFullScreen) {
@@ -28,6 +30,7 @@ public class KCAlert {
 
     private static class AlertParams {
         private int topImageResId;
+        private int positiveButtonColor;
         private boolean cancelable;
         private boolean canceledOnTouchOutside;
         private CharSequence title;
@@ -55,13 +58,12 @@ public class KCAlert {
                 alert.setMessage(message);
             }
 
-
             if (!TextUtils.isEmpty(adText)) {
                 alert.setAdText(adText);
             }
 
             if (!TextUtils.isEmpty(positiveButtonText)) {
-                alert.setPositiveButton(positiveButtonText, positiveButtonClickListener);
+                alert.setPositiveButton(positiveButtonText, positiveButtonClickListener, positiveButtonColor);
             }
 
             if (!TextUtils.isEmpty(negativeButtonText)) {
@@ -112,8 +114,14 @@ public class KCAlert {
         }
 
         public Builder setPositiveButton(CharSequence text, View.OnClickListener listener) {
+            setPositiveButton(text, listener, INVALID_COLOR);
+            return this;
+        }
+
+        public Builder setPositiveButton(CharSequence text, View.OnClickListener listener, int color) {
             alertParams.positiveButtonText = text;
             alertParams.positiveButtonClickListener = listener;
+            alertParams.positiveButtonColor = color;
             return this;
         }
 

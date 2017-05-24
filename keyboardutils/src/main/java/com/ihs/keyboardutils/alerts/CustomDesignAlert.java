@@ -24,6 +24,7 @@ import com.ihs.keyboardutils.utils.RippleDrawableUtils;
 class CustomDesignAlert extends AlertDialog implements View.OnClickListener {
     private static final String TAG = CustomDesignAlert.class.getSimpleName();
     private int imageResId;
+    private int positiveButtonColor;
     private CharSequence title;
     private CharSequence message;
     private CharSequence adText;
@@ -91,9 +92,7 @@ class CustomDesignAlert extends AlertDialog implements View.OnClickListener {
             }
         } else {
             int screenWidth = DisplayUtils.getScreenWidthPixels();
-            int width = (int) getContext().getResources().getFraction(R.fraction.design_dialog_width, screenWidth, screenWidth);
-            findViewById(R.id.root_view).getLayoutParams().width = width;
-            findViewById(R.id.iv_image).getLayoutParams().height = width / 2;
+            findViewById(R.id.root_view).getLayoutParams().width = (int) getContext().getResources().getFraction(R.fraction.design_dialog_width, screenWidth, screenWidth);;
         }
 
         if (!(getContext() instanceof Activity)) {
@@ -107,9 +106,17 @@ class CustomDesignAlert extends AlertDialog implements View.OnClickListener {
 
     private void prepareButtons() {
         if (TextUtils.isEmpty(negativeButtonText)) {
-            prepareButtons(R.id.ll_single_button, R.id.btn_positive_single, 0xff4db752, 0, 0);
+            if (positiveButtonColor == KCAlert.INVALID_COLOR) {
+                // Set default color
+                positiveButtonColor = 0xff4db752;
+            }
+            prepareButtons(R.id.ll_single_button, R.id.btn_positive_single, positiveButtonColor, 0, 0);
         } else {
-            prepareButtons(R.id.ll_buttons, R.id.btn_positive, 0xff3d6efa, R.id.btn_negative, Color.WHITE);
+            if (positiveButtonColor == KCAlert.INVALID_COLOR) {
+                // Set default color
+                positiveButtonColor = 0xff3d6efa;
+            }
+            prepareButtons(R.id.ll_buttons, R.id.btn_positive, positiveButtonColor, R.id.btn_negative, Color.WHITE);
         }
     }
 
@@ -182,10 +189,11 @@ class CustomDesignAlert extends AlertDialog implements View.OnClickListener {
         this.message = message;
     }
 
-    void setPositiveButton(CharSequence text, View.OnClickListener listener) {
+    void setPositiveButton(CharSequence text, View.OnClickListener listener, int color) {
         HSLog.d(TAG, text.toString());
         this.positiveButtonText = text;
         this.positiveButtonClickListener = listener;
+        this.positiveButtonColor = color;
     }
 
     void setNegativeButton(CharSequence text, View.OnClickListener listener) {
