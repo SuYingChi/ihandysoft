@@ -7,7 +7,7 @@ import com.ihs.commons.countrycode.HSCountryCodeManager;
 import java.util.List;
 import java.util.Map;
 
-public final class FeatureRestrictionPolicyConfig {
+public final class KCFeatureRestrictionConfig {
     private static final String CONFIG_KEY_APPLICAITON = "Application";
     private static final String CONFIG_KEY_FEATURE_RESTRICTION = "FeatureRestriction";
     private static final String CONFIG_KEY_DELAY_HOURS = "HoursFromFirstUse";

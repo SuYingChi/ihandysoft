@@ -20,6 +20,6 @@ public final class FeatureDelayReleaseUtil {
         } else {
             appFirstLaunchTime = preferences.getLong(featureName, 0L);
         }
-        return currentTime >= appFirstLaunchTime + delayHours * 3600 * 1000;
+        return currentTime >= appFirstLaunchTime + (long)(delayHours * 3600 * 1000);
     }
 }

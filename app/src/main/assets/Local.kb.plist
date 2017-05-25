@@ -6,6 +6,24 @@
 	<dict>
 		<key>Application</key>
 		<dict>
+			<key>FeatureRestriction</key>
+			<dict>
+				<key>TestFeatureA</key>
+				<dict>
+					<key>HoursFromFirstUse</key>
+					<real>0.002</real>
+				</dict>
+				<key>TestFeatureB</key>
+				<dict>
+					<key>HoursFromFirstUse</key>
+					<real>0.002</real>
+					<key>RegionException</key>
+					<array>
+						<string>US</string>
+						<string>GB</string>
+					</array>
+				</dict>
+			</dict>
 			<key>ChargeLocker</key>
 			<dict>
 				<key>Alert</key>

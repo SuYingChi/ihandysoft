@@ -28,6 +28,7 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity android:name=".configfile.ReadConfigSampleActivity" />
         <activity android:name=".gif.GifViewDemoActivity" />
         <activity android:name=".adactivities.AdDemoActivity" />
         <activity android:name=".alerts.CustomDesignAlertActivity"/>

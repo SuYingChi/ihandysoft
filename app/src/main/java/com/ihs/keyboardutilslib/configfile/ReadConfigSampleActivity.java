@@ -10,7 +10,7 @@ import android.widget.TextView;
 import com.ihs.commons.utils.HSLog;
 import com.ihs.keyboardutils.configfile.KCMap;
 import com.ihs.keyboardutils.configfile.KCParser;
-import com.ihs.keyboardutils.utils.FeatureRestrictionPolicyConfig;
+import com.ihs.keyboardutils.utils.KCFeatureRestrictionConfig;
 import com.ihs.keyboardutilslib.R;
 
 import org.json.JSONObject;
@@ -35,7 +35,7 @@ public class ReadConfigSampleActivity extends AppCompatActivity {
     private void checkFeatureRestriction() {
         String[] featureNames = {"TestFeatureA", "TestFeatureB", "TestFeatureC"};
         for (String featureName : featureNames) {
-            boolean restricted = FeatureRestrictionPolicyConfig.isFeatureRestricted(featureName);
+            boolean restricted = KCFeatureRestrictionConfig.isFeatureRestricted(featureName);
 
             if (restricted) {
                 HSLog.d(featureName + " is restricted");
