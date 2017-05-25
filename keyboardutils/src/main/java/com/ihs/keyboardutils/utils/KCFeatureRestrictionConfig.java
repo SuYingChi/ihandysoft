@@ -12,11 +12,17 @@ public final class KCFeatureRestrictionConfig {
     private static final String CONFIG_KEY_FEATURE_RESTRICTION = "FeatureRestriction";
     private static final String CONFIG_KEY_DELAY_HOURS = "HoursFromFirstUse";
     private static final String CONFIG_KEY_REGION_BLACKLIST = "RegionException";
+    private static final String CONFIG_KEY_ENABLED = "Enabled";
 
     public static boolean isFeatureRestricted(String featureName) {
         Map<String, ?> featureRestrictionConfig = HSConfig.getMap(CONFIG_KEY_APPLICAITON, CONFIG_KEY_FEATURE_RESTRICTION, featureName);
         if (featureRestrictionConfig == null || featureRestrictionConfig.size() == 0) {
             return false;
+        }
+
+        boolean enabled = HSConfig.optBoolean(true, CONFIG_KEY_APPLICAITON, CONFIG_KEY_FEATURE_RESTRICTION, featureName, CONFIG_KEY_ENABLED);
+        if (!enabled) {
+            return true;
         }
 
         float delayHours = HSConfig.optFloat(0, CONFIG_KEY_APPLICAITON, CONFIG_KEY_FEATURE_RESTRICTION, featureName, CONFIG_KEY_DELAY_HOURS);
