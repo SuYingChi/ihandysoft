@@ -10,7 +10,7 @@ import com.ihs.commons.utils.HSPreferenceHelper;
 public final class FeatureDelayReleaseUtil {
     private static final String PREF_FILE_NAME = "FeatureDelayReleaseUtilSp";
 
-    public static boolean checkFeatureReadyToWork(String featureName, int delayHours) {
+    public static boolean checkFeatureReadyToWork(String featureName, float delayHours) {
         HSPreferenceHelper preferences = HSPreferenceHelper.create(HSApplication.getContext(), PREF_FILE_NAME);
         long currentTime = System.currentTimeMillis();
         long appFirstLaunchTime;

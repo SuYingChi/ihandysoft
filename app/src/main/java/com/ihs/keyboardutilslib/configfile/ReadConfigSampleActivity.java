@@ -1,14 +1,16 @@
 package com.ihs.keyboardutilslib.configfile;
 
+import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 import android.view.View;
 import android.widget.TextView;
 
+import com.ihs.commons.utils.HSLog;
 import com.ihs.keyboardutils.configfile.KCMap;
 import com.ihs.keyboardutils.configfile.KCParser;
+import com.ihs.keyboardutils.utils.FeatureRestrictionPolicyConfig;
 import com.ihs.keyboardutilslib.R;
 
 import org.json.JSONObject;
@@ -26,6 +28,21 @@ public class ReadConfigSampleActivity extends AppCompatActivity {
         setContentView(R.layout.activity_read_config_sample);
         textView = (TextView) findViewById(R.id.output_view);
         handler = new Handler(Looper.getMainLooper());
+
+        checkFeatureRestriction();
+    }
+
+    private void checkFeatureRestriction() {
+        String[] featureNames = {"TestFeatureA", "TestFeatureB", "TestFeatureC"};
+        for (String featureName : featureNames) {
+            boolean restricted = FeatureRestrictionPolicyConfig.isFeatureRestricted(featureName);
+
+            if (restricted) {
+                HSLog.d(featureName + " is restricted");
+            } else {
+                HSLog.d(featureName + " is not restricted");
+            }
+        }
     }
 
     public void readKCFile(View view) {
