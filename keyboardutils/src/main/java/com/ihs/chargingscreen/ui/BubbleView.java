@@ -18,10 +18,9 @@ public class BubbleView extends View {
     private Handler handler = new Handler() {
         @Override
         public void handleMessage(Message msg) {
-            if (!hasMessages(0)) {
-                sendEmptyMessageDelayed(0, 2000);
-                addBubble();
-            }
+            removeMessages(0);
+            addBubble();
+            sendEmptyMessageDelayed(0, 2000);
         }
     };
 
@@ -115,6 +114,7 @@ public class BubbleView extends View {
 
     public void start() {
         handler.sendEmptyMessage(0);
+        bubbles.clear();
     }
 
     public void stop() {
