@@ -376,7 +376,11 @@ public class ChargingScreenActivity extends HSActivity {
         if (getChargingState() > 0) {
             bubbleView.start();
         }
-        startDisplayTime = System.currentTimeMillis();
+        if(System.currentTimeMillis() - startDisplayTime >1000 ){
+            startDisplayTime = System.currentTimeMillis();
+        }else{
+            startDisplayTime = -1;
+        }
         HSLog.d("chargingtest onResume");
 
     }
@@ -403,7 +407,9 @@ public class ChargingScreenActivity extends HSActivity {
 
         ChargeNotifyManager.getInstance().setIsChargingActivityAlive(false);
 
-        logDisplayTime("app_chargingLocker_displaytime", startDisplayTime);
+        if(startDisplayTime!=-1){
+            logDisplayTime("app_chargingLocker_displaytime", startDisplayTime);
+        }
     }
 
     @Override
