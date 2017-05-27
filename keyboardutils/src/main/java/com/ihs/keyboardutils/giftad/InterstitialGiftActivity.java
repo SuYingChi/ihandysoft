@@ -68,7 +68,6 @@ public class InterstitialGiftActivity extends Activity {
     private AcbNativeAdContainerView mInterstitialAdDisplayContent;
     private LinearLayout mInterstitialAdWindow;
     private LinearLayout mInterstitialAdRefreshContent;
-    private FrameLayout interstitialLayout;
     private LottieAnimationView mLottieAnimationView;
     private ValueAnimator mInterstitialAdAnimator = null;
     private AcbNativeAd mAd = null;
@@ -125,7 +124,6 @@ public class InterstitialGiftActivity extends Activity {
 
     private void initInterstitialAd() {
         LayoutInflater inflater = LayoutInflater.from(HSApplication.getContext());
-        interstitialLayout = (FrameLayout) inflater.inflate(R.layout.activity_interstitial_gift, null);
         // adWindow
         mInterstitialAdWindow = (LinearLayout) findViewById(R.id.all_apps_interstitial_ad_window);
         mInterstitialAdWindowTitle = (RelativeLayout) findViewById(R.id.all_apps_interstitial_ad_window_title);
@@ -341,9 +339,9 @@ public class InterstitialGiftActivity extends Activity {
                     return;
                 }
                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
-                    interstitialLayout.getViewTreeObserver().removeOnGlobalLayoutListener(this);
+                    mInterstitialAdContainer.getViewTreeObserver().removeOnGlobalLayoutListener(this);
                 } else {
-                    interstitialLayout.getViewTreeObserver().removeGlobalOnLayoutListener(this);
+                    mInterstitialAdContainer.getViewTreeObserver().removeGlobalOnLayoutListener(this);
                 }
                 mInterstitialAdTransDistance = -120f * animHeight / 1920f;
             }
