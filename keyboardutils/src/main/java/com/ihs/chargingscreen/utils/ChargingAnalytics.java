@@ -4,6 +4,9 @@ import android.content.Context;
 
 import com.ihs.app.framework.HSApplication;
 import com.ihs.keyboardutils.utils.KCAnalyticUtil;
+import com.ihs.keyboardutils.utils.PublisherUtils;
+
+import java.util.HashMap;
 
 public class ChargingAnalytics {
 
@@ -39,12 +42,17 @@ public class ChargingAnalytics {
     public void chargingEnableOnce(String triggerFrom) {
         if (!ChargingPrefsUtil.getInstance().getSpHelper().contains(app_chargingLocker_enable)) {
             ChargingPrefsUtil.getInstance().getSpHelper().putBoolean(app_chargingLocker_enable, true);
-            KCAnalyticUtil.logEvent(app_chargingLocker_enable,triggerFrom);
+
+            HashMap<String, String> paras = new HashMap<>();
+            paras.put("install_type", PublisherUtils.getInstallType());
+            KCAnalyticUtil.logEvent(app_chargingLocker_enable, triggerFrom, paras);
         }
     }
 
     public void chargingScreenShowed() {
-        KCAnalyticUtil.logEvent(app_chargingLocker_show);
+        HashMap<String, String> paras = new HashMap<>();
+        paras.put("install_type", PublisherUtils.getInstallType());
+        KCAnalyticUtil.logEvent(app_chargingLocker_show, null, paras);
     }
 
     public void chargingEnableNotificationShowed() {
@@ -65,7 +73,10 @@ public class ChargingAnalytics {
     public void chargingDisableConfirmedOnce(String from) {
         if (!ChargingPrefsUtil.getInstance().getSpHelper().contains(app_chargingLocker_disable)) {
             ChargingPrefsUtil.getInstance().getSpHelper().putBoolean(app_chargingLocker_disable, true);
-            KCAnalyticUtil.logEvent(app_chargingLocker_disable,from);
+
+            HashMap<String, String> paras = new HashMap<>();
+            paras.put("install_type", PublisherUtils.getInstallType());
+            KCAnalyticUtil.logEvent(app_chargingLocker_disable, from, paras);
         }
     }
 
