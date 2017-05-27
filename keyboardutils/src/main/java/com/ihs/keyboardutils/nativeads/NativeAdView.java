@@ -30,7 +30,6 @@ import com.ihs.app.framework.HSApplication;
 import com.ihs.commons.utils.HSError;
 import com.ihs.commons.utils.HSLog;
 import com.ihs.keyboardutils.R;
-import com.ihs.keyboardutils.utils.KCAnalyticUtil;
 
 import java.util.List;
 

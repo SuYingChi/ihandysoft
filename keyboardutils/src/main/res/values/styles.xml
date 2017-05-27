@@ -52,4 +52,18 @@
         <item name="android:windowBackground">@color/interstitial_gift_ad_background</item>
         <item name="android:windowIsTranslucent">true</item>
     </style>
+
+    <style name="LuckyBannerImage">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_marginLeft">12dp</item>
+        <item name="android:layout_marginRight">12dp</item>
+    </style>
+
+    <style name="BaseWallpaperTheme" parent="@style/Theme.AppCompat.NoActionBar">
+        <item name="android:colorBackgroundCacheHint">@null</item>
+        <item name="android:windowShowWallpaper">true</item>
+        <item name="android:windowNoTitle">true</item>
+    </style>
+
 </resources>
