@@ -47,7 +47,7 @@ public class FlashFrameLayout extends FrameLayout {
     // struct storing various mask related parameters, which are used to construct the mask bitmap
     private static class Mask {
 
-        public FlashFrameLayout.MaskAngle angle;
+        public MaskAngle angle;
         public float tilt;
         public float dropoff;
         public int fixedWidth;
@@ -55,7 +55,7 @@ public class FlashFrameLayout extends FrameLayout {
         public float intensity;
         public float relativeWidth;
         public float relativeHeight;
-        public FlashFrameLayout.MaskShape shape;
+        public MaskShape shape;
 
         public int maskWidth(int width) {
             return fixedWidth > 0 ? fixedWidth : (int) (width * relativeWidth);
@@ -74,7 +74,7 @@ public class FlashFrameLayout extends FrameLayout {
             switch (shape) {
                 default:
                 case LINEAR:
-                    return new int[]{0x1affffff, 0xb3ffffff, 0xb3ffffff, 0x1affffff};
+                    return new int[]{Color.TRANSPARENT, 0x1affffff, 0xb3ffffff, 0xb3ffffff, 0x1affffff, Color.TRANSPARENT};
                 case RADIAL:
                     return new int[]{Color.BLACK, Color.BLACK, Color.TRANSPARENT};
             }
@@ -91,8 +91,10 @@ public class FlashFrameLayout extends FrameLayout {
                 case LINEAR:
                     return new float[]{
                             Math.max((1.0f - intensity - dropoff) / 2, 0.0f),
+                            Math.max((1.0f - intensity - dropoff) / 2, 0.0f),
                             Math.max((1.0f - intensity) / 2, 0.0f),
                             Math.min((1.0f + intensity) / 2, 1.0f),
+                            Math.min((1.0f + intensity + dropoff) / 2, 1.0f),
                             Math.min((1.0f + intensity + dropoff) / 2, 1.0f)};
                 case RADIAL:
                     return new float[]{
@@ -122,8 +124,8 @@ public class FlashFrameLayout extends FrameLayout {
     private Paint mAlphaPaint;
     private Paint mMaskPaint;
 
-    private FlashFrameLayout.Mask mMask;
-    private FlashFrameLayout.MaskTranslation mMaskTranslation;
+    private Mask mMask;
+    private MaskTranslation mMaskTranslation;
 
     private Bitmap mRenderMaskBitmap;
     private Bitmap mRenderUnmaskBitmap;
@@ -156,7 +158,7 @@ public class FlashFrameLayout extends FrameLayout {
 
         setWillNotDraw(false);
 
-        mMask = new FlashFrameLayout.Mask();
+        mMask = new Mask();
         mAlphaPaint = new Paint();
         mMaskPaint = new Paint();
         mMaskPaint.setAntiAlias(true);
@@ -259,8 +261,8 @@ public class FlashFrameLayout extends FrameLayout {
         setRepeatDelay(0);
         setRepeatMode(ObjectAnimator.RESTART);
 
-        mMask.angle = FlashFrameLayout.MaskAngle.CW_0;
-        mMask.shape = FlashFrameLayout.MaskShape.LINEAR;
+        mMask.angle = MaskAngle.CW_0;
+        mMask.shape = MaskShape.LINEAR;
         mMask.dropoff = 0.5f;
         mMask.fixedWidth = 0;
         mMask.fixedHeight = 0;
@@ -269,7 +271,7 @@ public class FlashFrameLayout extends FrameLayout {
         mMask.relativeHeight = 1.0f;
         mMask.tilt = 20;
 
-        mMaskTranslation = new FlashFrameLayout.MaskTranslation();
+        mMaskTranslation = new MaskTranslation();
 
         setBaseAlpha(1.0f);
 
@@ -407,7 +409,7 @@ public class FlashFrameLayout extends FrameLayout {
      *
      * @return The shape of the highlight mask
      */
-    public FlashFrameLayout.MaskShape getMaskShape() {
+    public MaskShape getMaskShape() {
         return mMask.shape;
     }
 
@@ -416,7 +418,7 @@ public class FlashFrameLayout extends FrameLayout {
      *
      * @param shape The shape of the highlight mask
      */
-    public void setMaskShape(FlashFrameLayout.MaskShape shape) {
+    public void setMaskShape(MaskShape shape) {
         mMask.shape = shape;
         resetAll();
     }
@@ -432,7 +434,7 @@ public class FlashFrameLayout extends FrameLayout {
      *
      * @return The {@link FlashFrameLayout.MaskAngle} of the current animation
      */
-    public FlashFrameLayout.MaskAngle getAngle() {
+    public MaskAngle getAngle() {
         return mMask.angle;
     }
 
@@ -447,7 +449,7 @@ public class FlashFrameLayout extends FrameLayout {
      *
      * @param angle The {@link FlashFrameLayout.MaskAngle} of the new animation
      */
-    public void setAngle(FlashFrameLayout.MaskAngle angle) {
+    public void setAngle(MaskAngle angle) {
         mMask.angle = angle;
         resetAll();
     }
@@ -717,8 +719,8 @@ public class FlashFrameLayout extends FrameLayout {
             return false;
         }
         // First draw a desaturated version
-        drawUnmasked(new Canvas(unmaskBitmap));
-        canvas.drawBitmap(unmaskBitmap, 0, 0, mAlphaPaint);
+        //drawUnmasked(new Canvas(unmaskBitmap));
+        //canvas.drawBitmap(unmaskBitmap, 0, 0, mAlphaPaint);
 
         // Then draw the masked version
         drawMasked(new Canvas(maskBitmap));
@@ -767,6 +769,7 @@ public class FlashFrameLayout extends FrameLayout {
 
     // Draws the children without any mask.
     private void drawUnmasked(Canvas renderCanvas) {
+        renderCanvas.drawColor(0, PorterDuff.Mode.CLEAR);
         super.dispatchDraw(renderCanvas);
     }
 
@@ -777,14 +780,14 @@ public class FlashFrameLayout extends FrameLayout {
             return;
         }
 
-        renderCanvas.clipRect(
-                mMaskOffsetX,
-                mMaskOffsetY,
-                mMaskOffsetX + maskBitmap.getWidth(),
-                mMaskOffsetY + maskBitmap.getHeight());
+//    renderCanvas.clipRect(
+//        mMaskOffsetX,
+//        mMaskOffsetY,
+//        mMaskOffsetX + maskBitmap.getWidth(),
+//        mMaskOffsetY + maskBitmap.getHeight());
+        renderCanvas.drawColor(0, PorterDuff.Mode.CLEAR);
         super.dispatchDraw(renderCanvas);
-
-        renderCanvas.drawBitmap(maskBitmap, mMaskOffsetX, mMaskOffsetY, mMaskPaint);
+        renderCanvas.drawBitmap(maskBitmap, mMaskOffsetX, mMaskOffsetY, null);
     }
 
     private void resetAll() {
