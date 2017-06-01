@@ -16,10 +16,10 @@ import android.widget.RelativeLayout;
 
 import com.ihs.app.framework.HSApplication;
 import com.ihs.feature.common.AnimatorListenerAdapter;
-import com.ihs.feature.common.CommonUtils;
 import com.ihs.feature.common.ViewUtils;
 import com.ihs.feature.lucky.LuckyActivity;
 import com.ihs.keyboardutils.R;
+import com.ihs.keyboardutils.utils.CommonUtils;
 
 
 public class BoxView extends RelativeLayout implements View.OnClickListener {

@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/boost_bg"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    tools:background="#232323">
+
+    <LinearLayout
+        android:id="@+id/content_wrapper"
+        android:layout_width="310dp"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:background="@android:color/transparent"
+        android:orientation="vertical"
+        tools:ignore="UselessParent">
+
+        <!-- Normal boost popup -->
+        <RelativeLayout
+            android:id="@+id/content_wrapper_popup"
+            android:layout_width="match_parent"
+            android:layout_height="54dp"
+            android:orientation="horizontal"
+            android:background="@drawable/dialog_normal_bg"
+            android:clickable="true">
+
+            <ImageView
+                android:id="@+id/boost_type_icon"
+                android:layout_width="31dp"
+                android:layout_height="31dp"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="13dp"
+                tools:src="@drawable/boost_result_memory" />
+
+            <com.honeycomb.launcher.view.TypefacedTextView
+                android:id="@+id/boost_title_text"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_toEndOf="@id/boost_type_icon"
+                android:layout_toRightOf="@id/boost_type_icon"
+                android:textColor="#df000000"
+                android:textSize="15sp"
+                app:typeface="@string/proxima_nova_semibold"
+                tools:text="@string/boost_tip_title_memory" />
+
+            <LinearLayout
+                android:id="@+id/boost_dismiss_btn"
+                android:layout_width="35dp"
+                android:layout_height="35dp"
+                android:layout_alignParentEnd="true"
+                android:layout_alignParentRight="true"
+                android:layout_alignParentTop="true"
+                android:background="@drawable/material_boost_dismiss_bg"
+                android:clickable="true"
+                android:gravity="center">
+
+                <!-- dismiss icon -->
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:clickable="true"
+                    android:src="@drawable/boost_toast_close" />
+            </LinearLayout>
+        </RelativeLayout>
+
+        <!-- ad window -->
+        <RelativeLayout
+            android:id="@+id/boost_ad_window"
+            android:layout_width="match_parent"
+            android:layout_height="265dp"
+            android:layout_gravity="center"
+            android:clipChildren="true">
+
+            <RelativeLayout
+                android:id="@+id/boost_ad_container"
+                android:layout_width="match_parent"
+                android:layout_height="265dp"
+                android:layout_alignParentTop="true"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentStart="true" />
+        </RelativeLayout>
+    </LinearLayout>
+</FrameLayout>

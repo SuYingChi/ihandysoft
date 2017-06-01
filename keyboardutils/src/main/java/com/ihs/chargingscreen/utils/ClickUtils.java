@@ -2,7 +2,7 @@ package com.ihs.chargingscreen.utils;
 
 import android.os.SystemClock;
 
-public class CommonUtils {
+public class ClickUtils {
 
     private static volatile long lastClickTime;
 

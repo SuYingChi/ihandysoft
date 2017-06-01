@@ -18,4 +18,19 @@
     <color name="material_text_white_primary">#deffffff</color>
     <color name="material_ripple_white">#33FFFFFF</color>
 
+
+    <!-- Boost -->
+    <color name="boost_foreign_anim_bg">#55000000</color>
+    <color name="boost_result_text_memory">#42c093</color>
+    <color name="boost_result_text_cpu_temperature">#49c3fb</color>
+    <color name="boost_result_text_battery">#46c096</color>
+
+
+    <!-- Containers -->
+    <color name="container_fastscroll_thumb_inactive_color">#009688</color>
+    <color name="container_fastscroll_thumb_active_color">#009688</color>
+    <color name="workspace_icon_text_color">#FFF</color>
+    <color name="paged_pad_view_icon_text_color">#585858</color>
+    <color name="text_shadow">#33000000</color>
+    <color name="quantum_panel_bg_color">#FFF5F5F5</color>
 </resources>

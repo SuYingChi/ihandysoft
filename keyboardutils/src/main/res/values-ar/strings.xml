@@ -1,0 +1,834 @@
+<?xml version="1.0" encoding="utf-8" standalone="no"?>
+<resources xmlns:tools="http://schemas.android.com/tools">
+    <string name="empty_folder_name">مجلد جديد</string>
+    <string name="activity_not_found">التطبيق غير مثبت</string>
+    <string name="activity_not_available">التطبيق غير متاح</string>
+    <string name="safe_mode_shortcut_error">التطبيق الذي تم تنزيله معطل في الوضع الآمن</string>
+    <string name="safe_mode_widget_error">الأدوات الذكية معطلة في الوضع الآمن</string>
+    <string name="long_press_widget_to_add">المس &amp; ثبت لالتقاط أداة ذكية</string>
+    <string name="widget_dims_format">%1$d \u00d7 %2$d</string>
+    <string name="all_apps_search_bar_hint">" البحث عن التطبيقات"</string>
+    <string name="all_apps_search_bar_empty">لم يتم العثور على شيء</string>
+    <skip/>
+    <string name="out_of_space">لا مزيد من المساحة على هذه الشاشة الرئيسية</string>
+    <string name="hotseat_out_of_space">لا مزيد من المساحة في درج المفضلات</string>
+    <string name="all_apps_button_label">التطبيقات</string>
+    <string name="delete_target_label">إزالة</string>
+    <string name="delete_target_uninstall_label">إلغاء التثبيت</string>
+    <string name="info_target_label">معلومات التطبيق</string>
+    <string name="desktop_target_label">سطح المكتب</string>
+    <skip/>
+    <string name="permlab_read_settings">قراءة إعدادات الرئيسية والاختصارات</string>
+    <string name="permdesc_read_settings">يسمح للتطبيق بقراءة الإعدادات والاختصارات في الشاشة الرئيسية</string>
+    <string name="permlab_write_settings">كتابة إعدادات الرئيسية والاختصارات</string>
+    <string name="permdesc_write_settings">يسمح للتطبيق بتغيير الإعدادات والاختصارات في الشاشة الرئيسية</string>
+    <string name="msg_no_phone_permission">%1$s غير مسموح له إجراء مكالمات هاتفية</string>
+    <string name="failed_to_add_widget_text">فشل إضافة الأداة الذكية إلى سطح المكتب</string>
+    <skip/>
+    <string name="gadget_error_text">مشكلة في تحميل الأداة الذكية</string>
+    <string name="gadget_setup_text">الإعداد</string>
+    <string name="uninstall_system_app_text">هذا تطبيق نظام ولا يمكن إلغاء تثبيته</string>
+    <string name="folder_add_shortcuts_view_cancel_button">إلغاء</string>
+    <string name="folder_add_shortcuts_view_ok_button">موافق</string>
+    <string name="app_store_category_name_favorite_tools">مجموعة الأدوات</string>
+    <string name="app_store_category_name_tools">الأدوات</string>
+    <string name="app_store_category_name_social">التواصل الاجتماعي</string>
+    <string name="app_store_category_name_games">الألعاب</string>
+    <string name="app_store_category_name_lifestyle">نمط الحياة</string>
+    <string name="app_store_category_name_photography">التصوير</string>
+    <string name="app_store_category_name_media">وسائل الإعلام</string>
+    <string name="app_store_category_name_news">الأخبار \u0026 الكتب</string>
+    <string name="app_store_others">أخرى</string>
+    <string name="folder_placeholder_text">يمكنك إضافة أي تطبيقات في هذا المجلد.</string>
+    <string name="abandoned_clean_this">إزالة</string>
+    <string name="abandoned_search">بحث</string>
+    <string name="abandoned_promises_title">هذا التطبيق غير مثبت</string>
+    <string name="abandoned_promise_explanation">تطبيق هذه الأيقونة غير مثبت. \nيمكنك إزالتها، أو البحث عن التطبيق وتثبيته يدويًا.</string>
+    <string name="weather_title">الطقس</string>
+    <string name="weather_wind_speed">سرعة الرياح:</string>
+    <string name="weather_wind_direction">اتجاه الرياح:</string>
+    <string name="weather_visibility">الرؤية:</string>
+    <string name="weather_humidity">الرطوبة:</string>
+    <string name="weather_sunrise">الشروق:</string>
+    <string name="weather_sunset">الغروب:</string>
+    <string name="weather_last_update_today">تم التحديث في %1$s</string>
+    <string name="weather_last_update_before_today">تم التحديث بتاريخ %1$s</string>
+    <string name="weather_no_info_placeholder">--</string>
+    <string name="weather_no_info_placeholder_time">--:--</string>
+    <string name="weather_high_low_temperature">%1$s\u00b0\u00a0/\u00a0%2$s\u00b0</string>
+    <string name="weather_kph">km/h</string>
+    <string name="weather_mph">mph</string>
+    <string name="weather_km">km</string>
+    <string name="weather_mi">mi</string>
+    <string name="weather_time">%1$s:%2$s</string>
+    <string name="weather_today">اليوم</string>
+    <string name="weather_settings_title">إعدادات الطقس</string>
+    <string name="weather_settings_item_temperature_unit">وحدة درجة الحرارة</string>
+    <string name="weather_settings_item_distance_unit">وحدة المسافة</string>
+    <string name="weather_settings_item_add_new_city">إضافة مدينة جديدة</string>
+    <string name="weather_settings_celsius">\u00b0C</string>
+    <string name="weather_settings_fahrenheit">\u00b0F</string>
+    <string name="weather_settings_cf_slash">/</string>
+    <string name="weather_settings_cities_title">المدينة</string>
+    <string name="weather_city_add_new_btn">إضافة مدينة جديدة</string>
+    <string name="weather_city_more_than_limit">يمكنك إضافة 12 مدينة فقط</string>
+    <string name="weather_city_searching_prompt">جارٍ البحث في المدن…</string>
+    <string name="weather_city_empty_result_prompt">لم يتم العثور على مدينة مطابقة</string>
+    <string name="weather_city_loading_message">جارٍ التحميل…</string>
+    <string name="weather_city_load_failed_message">معذرة، لا يمكن تحميل الطقس.</string>
+    <string name="weather_clock_widget_name">الطقس &amp; الساعة</string>
+    <string name="weather_clock_unknown_weather_message">غير معروف</string>
+    <string name="sunny">مشمس</string>
+    <string name="overcast">ملبد بالغيوم</string>
+    <string name="clear">صاف</string>
+    <string name="cloudy">غائم</string>
+    <string name="rain">مطر</string>
+    <string name="drizzle">مطر رذاذ</string>
+    <string name="rain_shower">زخة مطر</string>
+    <string name="snow">ثلوج</string>
+    <string name="snow_shower">زخة ثلوج</string>
+    <string name="sleet">مطر متجمد</string>
+    <string name="hazy">ضبابي</string>
+    <string name="dust">غبار</string>
+    <string name="thunderstorm">عاصفة رعدية</string>
+    <string name="cold">بارد</string>
+    <string name="hot">ساخن</string>
+    <string name="windy">عاصف</string>
+    <string name="menu_item_settings">الإعدادات</string>
+    <string name="setting_item_mobile">بيانات الجوال</string>
+    <string name="setting_item_wifi">واي فاي</string>
+    <string name="setting_item_airplane">وضع الطيران</string>
+    <string name="setting_item_auto_brightness">ضبط السطوع التلقائي</string>
+    <string name="setting_item_rotate">التدوير التلقائي</string>
+    <string name="setting_item_silence">صامت</string>
+    <string name="setting_item_vibration">هزاز</string>
+    <string name="setting_item_bluetooth">البلوتوث</string>
+    <string name="setting_item_flashlight">الكشاف</string>
+    <string name="more_system_settings_button_title">إعدادات النظام</string>
+    <string name="more_launcher_settings_button_title">إعدادات Launcher</string>
+    <string name="setting_device_not_support_message">جهازك لا يدعم هذا.</string>
+    <string name="boost_tip_optimal">جهازك يعمل بكفاءة بالفعل!</string>
+    <string name="customize_title">تخصيص</string>
+    <string name="customize_wallpapers_title">الخلفيات</string>
+    <string name="customize_themes_title">القوالب</string>
+    <string name="wallpaper_toast_set_failed">حدثت مشكلة مع هذه الخلفية، برجاء إعادة المحاولة</string>
+    <string name="customize_local_title">خاصتي</string>
+    <string name="wallpaper_setting_progress_dialog_text">جارٍ تعيين الخلفية…</string>
+    <string name="icon_pack_name">افتراضي Launcher</string>
+    <string name="no_icon_pack_name">افتراضي النظام</string>
+    <string name="theme_set_alert_title">تعيين القالب</string>
+    <string name="theme_set_alert_set_system_theme_body">أتود تعيين افتراضي النظام كقالبك؟</string>
+    <string name="feedback_title">الملاحظات</string>
+    <string name="feedback_content_placeholder">" ملاحظاتك تساعدنا على إجراء تحسينات"</string>
+    <string name="feedback_email_placeholder">" برجاء إدخال عنوان بريدك الإلكتروني"</string>
+    <string name="feedback_submit_btn">إرسال</string>
+    <string name="feedback_toast_empty_content">برجاء كتابة ملاحظاتك</string>
+    <string name="feedback_toast_invalid_email">برجاء إدخال عنوان بريد إلكتروني صالح</string>
+    <string name="feedback_toast_send_success">شكرًا على ملاحظاتك!</string>
+    <string name="effect_classic">كلاسيكي</string>
+    <string name="effect_cube">مكعب</string>
+    <string name="effect_roll">أسطواني</string>
+    <string name="effect_rotation">دوران</string>
+    <string name="effect_stack">تراكمي</string>
+    <string name="effect_windmill">طاحونة هوائية</string>
+    <string name="effect_flip">قلب</string>
+    <string name="effect_page">قلب الصفحات</string>
+    <string name="launcher_widget_time_title">الساعة+الطقس</string>
+    <string name="launcher_widget_widgets_title">أدوات النظام الذكية</string>
+    <string name="launcher_widget_boost_title">التسريع</string>
+    <string name="launcher_widget_settings_title">الإعدادات</string>
+    <string name="launcher_widget_wallpaper_title">الخلفيات</string>
+    <string name="launcher_widget_flashlight_title">الكشاف</string>
+    <string name="launcher_widget_data_usage_title">استخدام البيانات</string>
+    <string name="launcher_widget_battery_title">البطارية</string>
+    <string name="launcher_widget_app_mgr_title">مدير التطبيقات</string>
+    <string name="launcher_widget_update_title">تحديث</string>
+    <string name="launcher_widget_feedback_title">الملاحظات</string>
+    <string name="launcher_widget_effects_title">التأثيرات</string>
+    <string name="launcher_widget_theme_title">القوالب</string>
+    <string name="launcher_settings_title">إعدادات Air Launcher</string>
+    <string name="launcher_settings_section_default_launcher">تعيين كمُشغّل افتراضي</string>
+    <string name="preferences">التفضيلات</string>
+    <string name="launcher_settings_advanced_clean_detail">نشّط هاتفك بشكلٍ أكثر فعالية</string>
+    <string name="launcher_settings_advanced_section_about">نبذة</string>
+    <string name="launcher_settings_auto_boost_section">التنشيط التلقائي</string>
+    <string name="launcher_settings_auto_boost_detail">تنشيط تلقائي عند تباطؤ الهاتف</string>
+    <string name="settings_auth_line1">ما هي كيفية التمكين؟</string>
+    <string name="settings_auth_line2">ابحث عن \"Air Launcher\" وقم بتشغيله.</string>
+    <string name="launcher_settings_five_star">تقييم 5 نجوم</string>
+    <string name="launcher_settings_tell_my_friends">أخبر أصدقائي</string>
+    <string name="launcher_settings_feedback">الملاحظات</string>
+    <string name="launcher_settings_update">تحديث</string>
+    <string name="launcher_settings_current_version_detail">الإصدار الحالي: v%1$s</string>
+    <string name="privacy_policy">سياسة الخصوصية</string>
+    <string name="terms_of_service">شروط الخدمة</string>
+    <string name="auto_category_title">الفرز الذكي</string>
+    <string name="auto_category_open_btn">فتح</string>
+
+    <string name="set_as_default_btn_text">موافق</string>
+    <string name="resolver_wizard_select_launcher_1">اختر</string>
+    <string name="resolver_wizard_select_launcher_2">\"Air Launcher\"</string>
+    <string name="resolver_wizard_click_always">انقر على \"دائمًا\"</string>
+    <string name="share_through">مشاركة بواسطة</string>
+    <string name="news_title">العناوين الرئيسية</string>
+    <string name="news_settings_item_show_on_home_des">مرر لليمين على الشاشة الرئيسية</string>
+
+    <string name="news_settings_title">إعدادات العناوين الرئيسية</string>
+    <string name="news_refresh_success_news_updated">تم تحديث %1$s خبرًا</string>
+    <string name="news_refresh_success_no_news_updated">التحديث إلى أحدث الأخبار</string>
+    <string name="news_settings_item_load_pictures_title">حفظ البيانات</string>
+    <string name="news_settings_item_load_pictures_des">عدم عرض الصور عند الاتصال بشبكة الجوال</string>
+    <string name="news_detail_error_reload">إعادة التحميل</string>
+    <string name="pull_to_refresh">اسحب للتحديث</string>
+    <string name="release_to_refresh">اترك للتحديث</string>
+    <string name="icon_size_title">حجم الأيقونة</string>
+    <string name="icon_size_settings_title">حجم الأيقونة</string>
+    <string name="icon_font_size_settings_title">حجم وسمة الأيقونة</string>
+    <string name="icon_font_color_settings_title">لون وسمة الأيقونة</string>
+    <string name="icon_preview_title">معاينة</string>
+    <string name="icon_preview_messenger_title">المسنجر</string>
+    <string name="icon_preview_phone_title">الهاتف</string>
+    <string name="icon_preview_camera_title">الكاميرا</string>
+    <string name="icon_preview_browser_title">المستعرض</string>
+    <string name="folder_unpack_confirm_title">إطلاق المجلد</string>
+    <string name="release_target_label">إطلاق</string>
+
+    <!-- %1$s is the version number which should be kept, for example “v1.0.0"" -->
+    <string name="launcher_settings_latest_version_detail">أحدث نسخة: v%1$s</string>
+
+    <!-- The following is an alert dialog which includes title, description and actions. Air is the name of the APP that needn’t to be translated.  -->
+    <string name="set_as_default_alert_title">تحذير</string>
+    <string name="set_as_default_alert_detail"> فشل في تحديد Air Launcher  باعتباره افتراضيا. حاول مرة أخرى. ?</string>
+    <string name="set_as_default_alert_ok_btn">حاول مرة أخرى</string>
+    <string name="set_as_default_alert_cancel_btn">فيما بعد</string>
+
+    <!-- It’s the slogan of the app which can make your phone fast & stylish. &amp;stands for & in program. -->
+    <string name="welcome_description_text">سريع وأنيق </string>
+
+    <!-- It’s an action button, so it’s better to be short -->
+    <string name="welcome_start_btn">ابدأ</string>
+    <string name="welcome_select_wallpaper">اختر الخلفية التي تريدها </string>
+
+    <!-- It’s a prompt message that our app is preparing the desktop of the phone. -->
+    <string name="workspace_loading">إعداد سطح المكتب الخاص بك…</string>
+
+
+    <string name="online_wallpaper_tab_title_categories">الفئات</string>
+    <string name="settings_badge_unread_msg">رسائل غير مقروءة</string>
+    <string name="settings_badge_recommended_apps">تطبيقات مختارة</string>
+    <string name="settings_badge_switch_hint">إشارات للرسائل غير المقروءة</string>
+    <string name="settings_auth_button_text">شغل</string>
+
+    <!-- Hide apps means apps invisible on desktop -->
+
+    <string name="hide_apps_bottom_button_hide">أخف</string>
+    <string name="hide_apps_settings_title">أخف إعدادات التطبيقات</string>
+    <string name="hide_apps_empty_prompt">يمكنك إضافة أي تطبيقات في هذا الملف</string>
+
+    <!-- It’s a gesture of swiping up on desktop with one finger -->
+    <string name="hide_apps_activation_method_one_finger">اسحب للأعلى بإصبع واحد</string>
+    <string name="hide_apps_activation_method_two_fingers">اسحب للأعلى بإصبعين</string>
+
+    <!-- Unlock pattern is a kind of password, which has 9 dots on the screen organized in a 3×3 matrix. To unlock the phone the pattern has to be drawn on the screen, connecting certain points in a certain order. -->
+    <string name="hide_apps_password_toggle">إتاحة كلمة المرور</string>
+    <string name="hide_apps_set_password_title">إعداد كلمة المرور</string>
+    <string name="set_passwd_reset">إعادة ضبط كلمة المرور</string>
+    <string name="change_gesture_passwd_info">من أجل الأمان، يرجى رسم نموذج فتح القفل</string>
+    <string name="set_gesture_passwd_please">يرجى رسم نموذج</string>
+    <string name="set_gesture_passwd_verify">يرجى رسم نموذج فتح القفل مرة أخرى</string>
+    <string name="set_gesture_passwd_least">أوصل 4 نقاط على الأقل، يرجى المحاولة مرة أخرى</string>
+    <string name="set_gesture_passwd_failed">النموذج غير متطابق، يرجى المحاولة مرة أخرى</string>
+    <string name="set_gesture_passwd_success">تم تشغيل النموذج</string>
+
+    <string name="loading">جارٍ التحميل…</string>
+    <string name="customize_themes_title_local">قوالبي</string>
+    <string name="terms_of_service_settings_title">شروط الخدمة</string>
+    <string name="privacy_policy_settings_title">سياسة الخصوصية</string>
+    <string name="customize_wallpapers_title_local"> خلفياتي </string>
+    <string name="load_more">جارٍ التحميل…</string>
+
+    <!-- Please translate and replace the words in red color -->
+
+
+    <!--It guides users to enter password -->
+    <string name="input_passwd">إدخال كلمة السر</string>
+
+
+    <!-- Notification toolbar is a bar with icons of Wi-Fi, Mobile Data, Flashlight and so on, which you can set your phone quickly by switching them On/Off. -->
+    <string name="notification_toolbar_title">شريط الإشعارات</string>
+
+
+    <!-- It’s a switch to turn On/Off Mobile Data, better be short in one word or two -->
+    <string name="notification_toolbar_data">البيانات</string>
+
+
+    <!-- A collection of all apps in your phone -->
+    <string name="notification_toolbar_all_apps">جميع التطبيقات </string>
+    
+
+
+    <!-- It shows how much battery has been left. It will be used like “20% Battery Left” -->
+
+
+    <!-- It’s a button for saving battery, better be short in one word or two -->
+
+    <!-- It shows how much battery has been save. It will be used like “Battery Life Extended 20 minutes” -->
+    <string name="boost_tip_title_battery">عمر البطارية امتد</string>
+
+
+    <string name="daily_weather_notification">حالة الطقس اليومية</string>
+
+
+    <!-- It’s a button for detail content, better be short in one word or two -->
+    <string name="weather_notification_btn">التفاصيل</string>
+
+
+    <!-- It show how much memory has been used. It will be used like “200MB Memory Used” -->
+
+    <!-- It shows how much memory has been released. It will be used like “Memory Released 200MB” -->
+    <string name="boost_tip_title_memory">الذاكرة المفرغة</string>
+
+
+    <!-- The temperature of phone is too hot, better be short -->
+
+
+    <!-- It’s a button for cooling down temperature of phone, better be short in one word or two -->
+
+
+    <!-- It shows how much temperature has been cooled down. It will be used like “Cool Down 10 ℉／℃” -->
+    <string name="boost_tip_title_cpu_temperature">تبريد</string>
+
+
+    <!-- A new themes for phone including wallpapers and app icons. -->
+
+    <string name="boost_notification_low_ram_btn">تنشيط</string>
+    <string name="boost_title">التسريع</string>
+    <string name="notification_toolbar_wifi">واي فاي</string>
+    <string name="notification_toolbar_flash_light">الكشاف</string>
+
+    <!-- Please translate and replace the words in red color -->
+
+
+    <!-- Advanced cleaning is an operation that cleaning memory in an advanced way to stop apps and make apps can not restart, which can make phone run faster! -->
+    <string name="advanced_boost_title">تنظيف متقدم</string>
+    <!-- Accessibility Service is a settings option in phone! -->
+    <!-- It will be used like “Freed up 200MB” , which means memory released in phone-->
+
+    <!-- An operation to make a app visible on the screen, better be short in one word or two -->
+    <string name="unhide_label">إظهار</string>
+
+    <!-- “Magic Locker” is an app name, don’t need to translate. Themes include images and app icons, which can make phone screen stylish. -->
+    <string name="locker_download_hint">احصل على تطبيق ماجيك لوكر لاستخدام هذه المواضيع الرائعة </string>
+    <!-- An operation to install an app, better be short in one word or two -->
+    <string name="install_btn">تثبيت</string>
+
+    <!-- Icon pack is a collection of designed app icons that can replace the default ones of your phone. -->
+    <string name="icon_pack_settings_title">حزمة الأيقونات</string>
+    <!-- Memory has been released of the phone, which boosts your phone and makes it run faster. Better be short in one word or two.-->
+    <!-- Type the English name of the city and select the city from the search result. Only support English -->
+    <string name="weather_search_hint">"اكتب اسم المدينة واختارها (باللغة الإنجليزية فقط)"</string>
+    <!-- Air Launcher is the name of App, which don’t need to translate. Themes can make your phone beautiful including wallpapers and app icons. The sentence below will be used in Applying theme like “ iOS 10 theme for Air Launcher has been installed. Apply it now?”-->
+    <string name="apply_theme_text">%1$s الخاصة بآير لانشر قد تم تثبيتها، هل تفعلها الآن؟</string>
+    <string name="apply_btn">تفعيل</string>
+    <string name="welcome_apply_theme">تفعيل الموضوع</string>
+
+    <string name="app_store_name_system">نظام</string>
+    <!-- A container with groups of apps, to keep and organize apps in phone. -->
+    <string name="auto_default_name_prefix">ملف</string>
+
+
+    <!-- The following words are operations in Screen manager. -->
+    <!-- Screen Manager is a feature that you can manage your phone’s screens by ranking screens, increasing a new screen or deleting a screen . -->
+    <string name="launcher_widget_screen_manager_title">مدير الشاشة</string>
+    <!-- You can drag one screen and move its position to rank screens. -->
+    <string name="screen_manager_hint_drag">يمكن سحب الصفحة للترتيب</string>
+    <!-- Shake the phone to remove blanks between icons and make icons orderliness. -->
+    <string name="screen_manager_hint_shake">هز الهاتف لترتيب الأيكونات</string>
+
+
+    <!-- The following words are operations in editing pictures. -->
+    <!-- Crop, zoom in or zoom out a picture to suit your want.-->
+    <!-- You can move the picture to choose the most beautiful part and scale to make the picture big or small. -->
+    <!--Edit the picture over again without storing the changes you have edited. -->
+    <string name="online_wallpaper_edit_reset_btn">إعادة تعيين</string>
+    <!-- Exit the picture editing without storing the changes you have edited. -->
+    <string name="online_wallpaper_cancel_edit_dialog_content">تجاهل التغييرات للخروج؟</string>
+
+    <string name="launcher_widget_icon_size_title">حجم الأيقونة</string>
+    <string name="online_wallpaper_edit_cancel_btn">إلغاء</string>
+    <string name="customize_my_wallpapers_remove_btn">إزالة</string>
+    <string name="launcher_widget_system_settings_title">إعدادات النظام</string>
+    <string name="network_error">أخطاء في الشبكة.</string>
+    <string name="launcher_widget_launcher_settings_title">إعدادات Launcher</string>
+    <string name="online_wallpaper_apply_btn">تعيين كخلفية</string>
+
+    <string name="launcher_widget_lucky_title"> محظوظ</string>
+    <string name="lucky_game_award_boom_description">مرات</string>
+    <string name="lucky_game_award_chances_description">تهانينا +3 مرات</string>
+    <string name="lucky_game_award_chances_receive_btn">استلام</string>
+    <string name="lucky_game_award_empty_action">حاول مرة أخرى</string>
+    <string name="lucky_game_award_no_network_description">  لا يوجد اتصال بالشبكة!</string>
+    <string name="no_network_connection">  لا يوجد اتصال بالشبكة!</string>
+    <string name="lucky_game_award_theme_action">تثبيت</string>
+    <string name="lucky_game_award_theme_description">وجدنا نسقاً جديداً</string>
+    <string name="lucky_game_award_wallpaper_description">خلفية رائعة!</string>
+    <string name="lucky_game_award_wallpaper_action">تعيين كخلفية</string>
+    <string name="lucky_game_chance_counter">%1$s فرصة </string>
+    <string name="set_as_default">تعيين Air Launcher   كرئيسي</string>
+    <string name="notification_clear_default_title">تم مسح تعيين الشاشة الرئيسية</string>
+    <string name="set_as_default_info_2">Air Launcher يمكّنك من تخصيص شكل شاشة هاتفك بتصميمه الأنيق! تعيين Air Launcher كرئيسي؟</string>
+    <string name="set_as_default_info_3">Air Launcher يحسّن كفاءة هاتفك! تعيين Air Launcher كرئيسي؟</string>
+    <string name="notification_set_as_default_description_1">حسّن هاتفك ليبقى سريعاً.</string>
+    <string name="notification_set_as_default_description_2">خصص تصميم هاتفك بما يناسب ذوقك.</string>
+    <string name="notification_set_as_default_description_3">اجعل هاتفك أكثر كفاءة</string>
+    <string name="notification_set_as_default_title">تعيين كرئيسي</string>
+    <string name="set_as_default_boost_battery_figure">%1$d د</string>
+    <string name="local_wallpaper_pick_error">حصل خطأ ما أثناء اختيار الخلفية</string>
+    <string name="local_wallpaper_pick_error_gif_not_supported">نسق GIF غير معتمد</string>
+    <string name="nearby_title">قريب</string>
+    <string name="launcher_widget_nearby_title">قريب</string>
+    <string name="notification_set_as_default_btn">تعيين</string>
+
+    <string name="update_toast_no_network">يرجى التحقق من الاتصال</string>
+    <string name="update_toast_already_latest">أنت تستخدم أحدث إصدار</string>
+    <string name="update_toast_downloading">يتم تحميل ملف Apk حالياً</string>
+    <string name="update_dialog_title">تحميل أحدث إصدار</string>
+    <string name="download_capital">تحميل</string>
+    <string name="search_settings">إعدادات البحث</string>
+    <string name="search_settings_result_title">النتيجة</string>
+    <string name="search_widget">ودجة البحث</string>
+    <string name="search_show_suggestions">إظهار اقتراحات البحث</string>
+    <string name="search_show_history">إظهار تاريخ البحث</string>
+    <string name="search_show_local_apps">التطبيقات</string>
+    <string name="search_show_contacts">جهات الاتصال</string>
+    <string name="search_trending_words">الكلمات الشائعة</string>
+    <string name="search_history">تاريخ البحث</string>
+    <string name="search_bar_remove_confirm_dialog_title">إزالة شريط البحث هذا؟</string>
+    <string name="search_bar_remove_confirm_dialog_description">يمكنك الوصول إلى البحث عن طريق: \n1. تشغيله من إعدادات المشغل-&gt;إعدادات البحث \n2.تشغيله من القائمة-&gt; الودجات</string>
+    <string name="search_bar_widget">شريط البحث</string>
+    <string name="lucky_game_award_ad_related_title">لقد حصلت على جائزة!</string>
+    <string name="lucky_game_chance_restore_timer">المزيد من المكافآت في %1$s</string>
+    <string name="search_contacts">جهات الاتصال</string>
+
+    <string name="wallpaper_network_error_reload">إعادة التحميل</string>
+    <string name="set_as_default_info_1">Air Launcher يسرّع هاتفك فلا داعٍ للقلق حول سرعته! تعيين Air Launcher كرئيسي؟</string>
+    <string name="set_as_default_boost_mem_title">الذاكرة المفرغة</string>
+    <string name="search_settings_category_title">الإعدادات</string>
+    <string name="search_more">المزيد</string>
+    <string name="search_remove">إزالة</string>
+    <string name="search_bar_default_text">بحث</string>
+    <string name="launcher_menu_panel_title_effects">التأثيرات</string>
+    <string name="launcher_menu_panel_title_widgets">الأدوات الذكية</string>
+    <string name="launcher_widget_menu_widgets_title">الأدوات الذكية</string>
+    <string name="search_apps">التطبيقات</string>
+
+    <string name="battery_already_optimal">جهازك يعمل على النحو الأمثل بالفعل.</string>
+    <string name="battery_auto">تلقائي</string>
+    <string name="battery_auto_sync">مزامنة تلقائية</string>
+    <string name="battery_brightness">السطوع</string>
+    <string name="battery_careful">كن حذراً</string>
+    <string name="battery_careful_content">بطاريتك تستنزف أسرع من المعتاد.</string>
+    <string name="battery_charging_completed">اكتمل الشحن</string>
+    <string name="battery_charging_completed_content">يرجى فصل الهاتف عن الشاحن لحماية بطاريتك.</string>
+    <string name="battery_charging_content">شحن ثلاثي المراحل يحمي بطارية هاتفك من البلى.</string>
+    <string name="battery_charging_left">الشحن الباقي</string>
+    <string name="battery_clean_finished_line_o">تهانينا!</string>
+    <string name="battery_clean_finished_line_i">لقد مددت عمر البطارية</string>
+    <string name="battery_cleaning">جارٍ التنظيف…</string>
+    <string name="battery_continue">استمرار</string>
+    <string name="battery_current_content">سيتم حفظ إعداداتك الحالية هنا.</string>
+    <string name="battery_excellent">ممتاز</string>
+    <string name="battery_excellent_content">بطاريتك في حالة جيدة </string>
+    <string name="battery_haptic_feedback">استجابة لمسية</string>
+    <string name="battery_hide_system_apps">إخفاء تطبيقات النظام</string>
+    <string name="battery_low">البطارية ضعيفة</string>
+    <string name="battery_low_content">يمكنك تحسين أمثلية عمل الهاتف لإطالة عمر البطارية.</string>
+    <string name="battery_max_saver">أقصى توفير</string>
+    <string name="battery_max_saver_content">إيقاف WiFi وبلوتوث والاهتزاز وتعيين مهلة قفل الشاشة إلى 15 ثانية.</string>
+    <string name="battery_mode">الوضع</string>
+    <string name="battery_off">معطل</string>
+    <string name="battery_on">مفعّل</string>
+    <string name="battery_optimize">تحسين أمثلية</string>
+    <string name="battery_power_remaining">الطاقة المتبقية</string>
+    <string name="battery_previous">السابق</string>
+    <string name="battery_previous_content">العودة إلى آخر إعدادات.</string>
+    <string name="battery_rank">المرتبة</string>
+    <string name="battery_reapply">إعادة تطبيق</string>
+    <string name="battery_screen_timeout">مهلة الشاشة</string>
+    <string name="battery_smart_saver">التوفير الذكي</string>
+    <string name="battery_smart_saver_content">إيقاف بلوتوث والاهتزاز وتعيين مهلة الشاشة إلى 30 ثانية.</string>
+    <string name="battery_speed">السرعة</string>
+    <string name="battery_stop">توقف</string>
+    <string name="battery_trickle">شحن نضيض التيار</string>
+    <string name="battery_vibrate">الاهتزاز</string>
+    <string name="battery_view">عرض</string>
+    <string name="battery_wifi">WiFi</string>
+    <string name="downloading">جارٍ التنزيل…</string>
+    <string name="effect_bounce">ارتداد</string>
+    <string name="effect_extrusion">انبثاق</string>
+    <string name="effect_shrink">انكماش</string>
+    <string name="effect_wave">تموج</string>
+    <string name="monday">الإثنين</string>
+    <string name="tuesday">الثلاثاء</string>
+    <string name="wednesday">الأربعاء</string>
+    <string name="thursday">الخميس </string>
+    <string name="friday">الجمعة</string>
+    <string name="saturday">السبت</string>
+    <string name="sunday">الأحد </string>
+    <string name="notification_toolbar_search">بحث</string>
+    <string name="refresh">تحديث</string>
+    <string name="resolver_wizard_choose_default">اختر \"الافتراضي\"</string>
+    <string name="search_guide_title">جرّب كلمات بحث مثل…</string>
+    <string name="search_guide_internet">الإنترنت</string>
+    <string name="search_guide_apps">التطبيقات المحلية</string>
+    <string name="search_guide_location">الموقع</string>
+    <string name="search_select_engine">حدد محرك البحث</string>
+    <string name="search_show_places">الخريطة</string>
+    <string name="wallpaper_edit_fixed">تم الإصلاح</string>
+    <string name="wallpaper_edit_scrollable">قابل للتمرير</string>
+    <string name="hide_apps_guide_welcome_action">إخفاء التطبيقات</string>
+    <string name="hide_apps_guide_success_title">تهانينا!</string>
+    <string name="hide_apps_guide_success_content_one">لقد أخفيت %1$s.</string>
+    <string name="hide_apps_guide_success_content">لقد أخفيت %1$s تطبيقات خاصة.</string>
+    <string name="hide_apps_guide_recommend_hide_percent">%1$s%% من المستخدمين يخفون هذا التطبيق</string>
+    <string name="hide_apps_guide_recommend_apps_size">%1$s تطبيقات مقترحة</string>
+    <string name="hide_apps_guide_recommend_other_apps_size">%1$s تطبيقات أخرى</string>
+    <string name="hide_apps_secret_folder">التطبيقات الخاصة</string>
+
+
+    <string name="search_guide_contacts">جهات الاتصال</string>
+
+    <string name="launcher_widget_boost_plus_title">التسريع+</string>
+    <string name="advanced_boost_authorize_btn">Enable</string>
+    <string name="boost_plus_action_button_text">التسريع (%1$s)</string>
+    <string name="boost_plus_cleaning_running_apps">جارٍ إيقاف تشغيل التطبيقات</string>
+    <string name="boost_plus_settings_auto_boost_description">&gt;الدخول التلقائي في وضع السبات بعد دقائق محددة من انطفاء الشاشة. سيؤدي تفعيل هذه الخاصية إلى تعتيم الشاشة، ثم الدخول في وضع السبات بعد إطفاء الشاشة.</string>
+    <string name="boost_plus_settings_auto_boost_title">السبات التلقائي</string>
+    <string name="boost_plus_dialog_accessibility">تحتاج إلى أذونات الوصول ليتمكن Air Launcher من الدخول في وضع السبات التلقائي بشكل صحيح.</string>
+    <string name="boost_plus_dialog_device_admin">تحتاج إلى تفعيل خاصية مسؤول الجهاز ليتمكن Air Launcher من الدخول في وضع السبات التلقائي بشكل صحيح.</string>
+    <string name="boost_plus_empty_view_text_line_2">أحسنت!</string>
+    <string name="boost_plus_free_up">تم تحريرها</string>
+    <string name="boost_plus_exiting">جارٍ الخروج</string>
+    <string name="boost_plus_running_time">وقت التشغيل: %1$s</string>
+    <string name="boost_plus_scanned_list_running_apps">التطبيقات الجارية</string>
+    <string name="boost_plus_scanned_list_select_all">تحديد الكل</string>
+    <string name="boost_plus_selected_size_text">المحددة: %1$s</string>
+    <string name="boost_plus_settings_lock_delay">تأكد من أنه قد تم تعيين مهلة \'القفل التلقائي\' للشاشة إلى (</string>
+    <string name="boost_plus_settings_lock_instantly">تأكد من عدم تفعيل خاصية  \'القفل الفوري بزر التشغيل\'! يتطلب السبات التلقائي مدة تأخير صغيرة قبل قفل شاشة</string>
+    <string name="boost_plus_stop_clean_content">بمجرد إيقاف التسريع+، لن يكون بإمكان هذه الخدمة تحرير ذاكرة جهازك. هل أنت متأكد من إيقافها؟</string>
+    <string name="boost_plus_stop_clean_title">إيقاف التنظيف؟</string>
+    <string name="boost_plus_stop_sure">طبعاً</string>
+    <string name="boost_plus_tip_battery_desc">ضاعف عمر بطاريتك.</string>
+    <string name="boost_plus_tip_battery_title">جرّب التسريع+ لتمديد عمر البطارية!</string>
+    <string name="boost_plus_tip_memory_btn">تنظيف</string>
+    <string name="boost_plus_tip_memory_desc">استخدم تنظيفاً أكثر عمقاً لتوفير المزيد من الذاكرة!</string>
+    <string name="boost_plus_tip_memory_title">جرّب التسريع+ لتنظيف ذاكرة هاتفك بشكل أفضل!</string>
+    <string name="boost_plus_tip_optimal_desc">بعض التطبيقات لا يمكن إغلاقها إلا باستخدام التسريع+,</string>
+    <string name="boost_plus_tip_optimal_title">ما زال بطيئاً؟ جرّب التسريع+!</string>
+    <string name="boost_plus_warning_toast">هذا التطبيق قد يرسل لك إخطارات لحظية. قد يتوقف عن إرسال الإخطارات إذا اخترته.</string>
+    <string name="device_admin_explanation">السماح لـ Air Launcher بإيقاف التطبيقات التي تستنزف البطارية تلقائياً.</string>
+    <string name="folder_remove_confirm_body">بمجرد إزالة المجلد، لن تظهر أي من التطبيقات الموجودة في المجلد على الشاشة الرئيسية.</string>
+    <string name="folder_remove_confirm_title">إزالة المجلد</string>
+    <string name="folder_unpack_confirm_body">بمجرد فك حزمة الملف، سيتم نقل اختصاراته إلى الشاشة الرئيسية.</string>
+    <string name="hide_apps_remove_password_title">إزالة نمط فك القفل</string>
+    <string name="hide_apps_reset_password_title">إعادة تعيين نمط فك القفل</string>
+    <string name="install_dialog_title">تم العثور على إصدار جديد</string>
+    <string name="launcher_app_index_desc">تطبيق مخصص رائع</string>
+    <string name="launcher_app_index_title">نظّم تطبيقاتك بفعالية واجعل هاتفك اسرع.</string>
+    <string name="moment_good_afternoon">طاب مساؤك!</string>
+    <string name="moment_good_evening">مساء الخير!</string>
+    <string name="moment_good_morning">صباح الخير!</string>
+    <string name="moment_good_night">تصبح على خير!</string>
+    <string name="moment_nearby_title">الأشخاص بقربك يستخدمون</string>
+    <string name="moment_news_title">أخبار</string>
+    <string name="set_as_default_wizard_huawei_title">اختر \"Air Launcher\"</string>
+    <string name="set_up">إعداد</string>
+    <string name="storm">عاصفة</string>
+    <string name="update_toast_storage_not_ready">خاصية التخزين الخارجي غير متوفرة</string>
+    <string name="weather_tip_dust">من الأفضل البقاء في المنزل.</string>
+    <string name="weather_tip_hazy">خذ حذرك وقُد بأمان.</string>
+    <string name="weather_tip_sleet">خذ معك مظلة وحافظ على دفئك.</string>
+    <string name="weather_tip_snow">البس ملابس دافئة.</string>
+    <string name="weather_tip_storm">خذ معك مظلة.</string>
+    <string name="all_apps_more_horizontal">أفقي</string>
+    <string name="all_apps_more_vertical">عمودي</string>
+
+
+    <string name="folder_remove_confirm_positive">إزالة</string>
+    <string name="boost_plus_empty_view_text_line_1">جهازك يعمل بكفاءة بالفعل!</string>
+    <string name="battery_bluetooth">البلوتوث</string>
+    <string name="boost_plus_memory_used">الذاكرة المستخدمة</string>
+    <string name="folder_unpack_confirm_positive">إطلاق</string>
+    <string name="boost_plus_tip_battery_btn">تنظيف</string>
+    <string name="weather_tip_thunderstorm">من الأفضل البقاء في المنزل.</string>
+    <string name="battery_mobile_data">بيانات الجوال</string>
+    <string name="battery_title">البطارية</string>
+
+
+    <string name="wind_chime_remove_btn">إزالة</string>
+
+    <string name="battery_current">الحالية</string>
+    <string name="boost_plus_settings_device_admin_title">مسؤول الجهاز</string>
+    <string name="boost_plus_settings_device_admin_description">إذا أردت إلغاء تثبيت Air Launcher، عليك تعطيل خاصية مسؤول الجهاز أولاً.</string>
+    <string name="boost_plus_start_toast">اضغط التسريع مرتين لتشغيل التسريع+!</string>
+    <string name="launcher_shortcut_boost">تسريع بلمسة واحدة</string>
+    <string name="notification_battery_consuming_title">%1$s تطبيقات تستهلك الطاقة</string>
+    <string name="notification_battery_consuming_description">حسّن الأداء للإطالة عمر البطارية.</string>
+
+    <string name="battery_low_tip_title">طاقة منخفضة!</string>
+    <string name="battery_low_tip_desc">جرّب موفّر البطارية لاستهلاك أقل قدر من الطاقة.</string>
+    <string name="launcher_widget_moment_title">Air Moment</string>
+    <string name="wind_chime_remove_confirm_dialog_title">إزالة "Air Moment"؟</string>
+    <string name="wind_chime_remove_confirm_dialog_description">يمكنك الوصول إلى Air Moment عن طريق:&lt;br /&gt;التشغيل من &lt;b&gt;القائمة&lt;/b&gt; -&gt; &lt;b&gt;الودجات&lt;/b&gt;</string>
+    <string name="gesture_guide_content_down">اسحب للأسفل بسرعة لفتح Air Moment</string>
+    <string name="gesture_guide_content_up">اسحب للأعلى بسرعة لفتح البحث</string>
+    <string name="hide_apps_guide_new_install">التطبيق المثبت حديثاً</string>
+
+    <string name="battery_low_tip_btn_ok">جربه الآن</string>
+    <string name="weather_city_search_error_prompt">أخطاء في الشبكة.</string>
+    <string name="battery_low_tip_btn_cancel">فيما بعد</string>
+
+
+    <string name="moment_lucky_draw">فز بهدية المحظوظين</string>
+    <string name="moment_lucky_draw_tip">خمّن ما يمكن أن تحصل عليه من الصندوق! فز وتمتع بالمفاجأة أيها المحظوظ!</string>
+    <string name="moment_lucky_start">فز بالهدية الآن</string>
+    <string name="news_load_more_re_try">انقر لإعادة المحاولة</string>
+    <string name="boost_plus_authorize_title">هل تريد تشغيل إمكانية الوصول؟</string>
+    <string name="boost_plus_authorize_desc">لتوقيف هذه التطبيقات، يحتاج التسريع+ إلى الحصول على إمكانية الوصول. وهو يسرّع الهاتف 80\%%  أو أكثر ويطيل عمر البطارية 200\%% ! 93\%% من المستخدمين قاموا بتشغيله.</string>
+    <string name="boost_plus_security_setting_for_samsung_device">! قم بتنصيبه في \'قفل الشاشة والسلامة\'</string>
+    <string name="permission_guide_description">ابحث عن ☆Air Launcher☆ وقم بتشغيله.</string>
+    <string name="got_it">فهمت</string>
+
+    <string name="boost_plus_clean_tip_prefix">نصائح: </string>
+    <string-array name="boost_plus_clean_tips">
+        <item>يستغرق الإيقاف الإجباري للتطبيقات العنيدة بعض الوقت. تحلَّ بالصبر من فضلك!</item>
+        <item>استخدم التسريع+ قبل خلودك للنوم لتقليل استنزاف البطارية.</item>
+        <item>ستعمل الألعاب بشكل أفضل عند استخدام التسريع+.</item>
+        <item>هل هاتفك أسخن من المعتاد؟ اطلب المساعدة من التسريع+!</item>
+        <item>استخدم التسريع+ كلما سنحت لك الفرصة لتحافظ على سرعة هاتفك دوماً.</item>
+    </string-array>
+    <string name="boost_plus_optimal">مثالي</string>
+    <string name="charging_screen_charged_full">مشحون بالكامل</string>
+    <string formatted="false" name="charging_screen_charged_left_describe">بقي حتى الشحن الكامل %s</string>
+    <string name="charging_screen_charging_continue_charging_state_tip_view">الهاتف ليس مشحوناً بالكامل، ولكن يمكنك فصل الشاحن بأمان</string>
+    <string name="charging_screen_charging_speed_charging_state_tip_view">سيضر فصل الشاحن بالبطارية</string>
+    <string name="charging_screen_unlock_describe">اسحب للفتح</string>
+    <string name="charging_screen_charging_state_des">...........</string>
+    <string name="charging_screen_charging_tip1">وقف تطبيقات الخلفية قد يسرّع عملية الشحن.</string>
+    <string name="charging_screen_charging_tip2">وصول درجة الحرارة إلى 40\u2103 قد يضر بالبطارية.</string>
+    <string name="charging_screen_charging_tip3">يتولى الشحن الذكي رصد حالة الشحن ليتأكد من سلامة حالة البطارية.</string>
+    <string name="charging_screen_charging_tip4">قد يضرّ فصل الشاحن أثناء التواجد في وضع الشحن ببطاريتك.</string>
+    <string name="charging_screen_charging_tip5">رغم أن الهاتف ليس مشحوناً بالكامل، يمكنك فصل الشاحن بأمان أثناء التواجد في وضع "مشحون تقريباً".</string>
+    <string formatted="false" name="charging_screen_charging_tip6">%s سيقلل الشحنة لحماية بطاريتك أثناء التواجد في وضع الشحن الكامل.</string>
+    <string name="charging_screen_charging_trickle_charging_state_tip_view">يقوم Air Launcher بتقليل الشحنة لحماية بطاريتك.</string>
+    <string name="charging_screen_close_dialog_title">إيقاف الشحن الذكي؟</string>
+    <string name="charging_screen_close_dialog_content">إذا قمت بإيقاف الشحن الذكي، لن تتمكن من حماية بطاريتك. هل أنت متأكد من رغبتك في إيقافه؟</string>
+    <string name="charging_screen_close_dialog_negative_action">إيقاف</string>
+    <string name="charging_screen_close_dialog_positive_action">ليس الآن</string>
+    <string formatted="false" name="charging_screen_date">%s %s %s</string>
+    <string name="charging_screen_guide_battery_title">شغّل حماية البطارية لإطالة عمر البطارية!</string>
+    <string name="charging_screen_guide_subtitle">احمِ الجهاز من الشحن الزائد!</string>
+    <string name="charging_screen_guide_temperature_title">شغّل حماية البطارية لتبريد الجهاز!</string>
+    <string name="charging_screen_guide_turn_on">بطاريتك محمية!</string>
+    <string name="charging_screen_settings_title">حماية البطارية</string>
+    <string name="charging_screen_settings_description">احمِ الجهاز من الشحن الزائد</string>
+    <string name="charging_screen_settings_subtitle">(يحتوي على إعلانات)</string>
+    <string formatted="false" name="charging_screen_time">%s:%s</string>
+    <string name="five_star_hint_text">كيف كانت تجربتك معنا؟</string>
+    <string name="five_star_five_text">أعجبني كثيراً</string>
+    <string name="five_star_four_text">أعجبني</string>
+    <string name="five_star_three_text">لا بأس به</string>
+    <string name="five_star_two_text">لم يعجبني</string>
+    <string name="five_star_one_text">كرهته</string>
+    <string name="five_star_positive_text">إرسال</string>
+    <string name="launcher_widget_market_title">تطبيقات مختارة</string>
+    <string name="locker_2g">2G</string>
+    <string name="locker_3g">3G</string>
+    <string name="locker_4g">4G</string>
+    <string name="locker_disable_confirm">متأكد من إيقافه؟</string>
+    <string name="locker_disable_confirm_detail">بعد الإيقاف، سيتم إلغاء تنشيط ميزات شاشة القفل، هل أنت متأكد من رغبتك في الاستمرار؟</string>
+    <string name="locker_diabled_success">تم إيقاف القافل</string>
+    <string name="locker_menu_disable">تعطيل القافل</string>
+    <string name="slide_to_unlock">مرر للفتح</string>
+    <string name="locker_settings">إعدادات القافل</string>
+    <string name="locker_settings_title">قافل الشاشة</string>
+    <string name="locker_slide_wallpaper_title">خلفة شاشة القافل</string>
+    <string name="locker_unkown">Unk</string>
+    <string name="moment_ad_title">AD</string>
+    <string name="moment_set_launcher">عيّن Air Launcher كمشغّلك الافتراضي لتسريع هاتفك!</string>
+    <string name="moment_set_locker">شغّل حماية الجهاز من الشحن الزائد!</string>
+    <string name="moment_open_locker">بطاريتك محمية!</string>
+    <string name="result_page_card_battery_protection_title">حماية البطارية</string>
+    <string name="result_page_card_battery_protection_description">سرّع شحن هاتفك بنسبة 50\%% (قد يحتوي على إعلانات)</string>
+    <string name="result_page_card_battery_protection_toast">حماية البطارية مفعّلة.</string>
+    <string name="result_page_card_battery_saver_title">توفير البطارية</string>
+    <string name="result_page_card_battery_saver_description_low_battery">الطاقة المتبقية %s. حسّن الأداء للإطالة عمر البطارية.</string>
+    <string name="result_page_card_battery_saver_description_normal">استنزاف خطير لطاقة بطاريتك. حسّن الأداء للإطالة عمر البطارية.</string>
+    <string name="search_show_trending_words">عرض الأخبار الأكثر مشاهدة</string>
+    <string name="search_trending_news">الأخبار الأكثر مشاهدة</string>
+    <string name="search_trending_news_bottom">المزيد من القصص</string>
+    <string name="search_trending_news_latest">تحديث للحصول على آخر الأخبار</string>
+    <string name="search_news_new_tag">جديد</string>
+    <string name="settings_badge_recommended_apps_hint">قد يتطلب التكوين منح بعض الأذونات</string>
+    <string name="settings_badge_common_apps">تطبيقات شائعة</string>
+    <string name="settings_badge_common_apps_hint">قد يتطلب التكوين الوصول إلى الإخطارات</string>
+
+
+    <string name="result_page_card_boost_plus_btn">تنشيط</string>
+    <string name="moment_locker_contains_ads">(يحتوي على إعلانات)</string>
+    <string name="locker_settings_subtitle">(يحتوي على إعلانات)</string>
+    <string name="result_page_card_battery_protection_btn">Enable</string>
+    <string name="charging_screen_menu_item">إيقاف</string>
+    <string name="result_page_card_boost_plus_title">التسريع+</string>
+
+    <string name="moment_try_it_now">جربه الآن</string>
+
+    <string name="news_network_error">أخطاء في الشبكة.</string>
+
+
+
+    <string name="gesture_guide_content_two_up">اسحب للأعلى لفتح إخفاء التطبيقات.</string>
+    <string name="gesture_guide_content_folder_down">اسحب للأسفل لبدء التحكم بيد واحدة.</string>
+    <string name="result_page_battery_you_have_extend">تم تمديد عمر البطارية</string>
+    <string name="result_page_card_boost_plus_description">تؤدي تطبيقات الخلفية إلى استهلاك غير طبيعي للبطارية. جرّب خاصية التسريع المتقدم لوقفها!</string>
+    <string name="hide_apps_guide_welcome_title">إخفاء التطبيقات</string>
+    <string name="hide_apps_add_apps_title">اختر تطبيقاتك الخاصة التي ترغب في عدم إظهارها على الشاشة الرئيسية.</string>
+    <string name="customize_keyboard_title">لوحة المفاتيح</string>
+    <string name="customize_locker_title">القافل</string>
+    <string name="upload_wallpaper_tip">نصائح: \n1. سيتم تغيير حجم الصورة تلقائياً إلى الحجم الأمثل\n2. سيتم عرض صورتك في \“أنا\”\n3. يجمع Air Launcher الصور عالية الجودة بفعالية أكبر\n4. ستظهر صورتك في موجز التحديثات بعد مراجعتها</string>
+    <string name="upload_wallpaper_declaration">ببدئك عملية الرفع، تقر بأنك توافق على Air Launcher</string>
+    <string name="upload_wallpaper_success">تم الرفع بنجاح</string>
+    <string name="all_apps_interstitial_ad_notice">ألقِ نظرة على ما اخترناه لك!</string>
+    <string name="all_apps_interstitial_ad_display_failed_txt">حظاً أوفر في المرة القادمة!</string>
+    <string name="locker_wallpaper_network_error">أخطاء في شبكة الاتصال. يرجى المحاولة مرة أخرى.</string>
+    <string name="clean_title">منظف ملفات القمامة</string>
+    <string name="clean_junk_found_title_case">وجدنا ملفات قمامة</string>
+    <string name="clean_junk_selected">تم اختيار ملفات القمامة</string>
+    <string name="clean_scanning">جارٍ البحث: %1$s</string>
+    <string name="clean_system_junk">قمامة النظام</string>
+    <string name="clean_ad_junk">قمامة الإعلانات</string>
+    <string name="clean_app_junk">قمامة التطبيقات</string>
+    <string name="clean_memory_cache">ذاكرة التخزين المؤقت</string>
+
+    <string name="clean_hidden_cache_junk">ملفات مؤقتة خفية</string>
+    <string name="clean_residual_files">ملفات متخلفة</string>
+    <string name="clean_obsolete_apk">APK باطلة</string>
+    <string name="installed">مثبَت</string>
+    <string name="uninstalled">مُزال</string>
+    <string name="clean_powerful_clean">تنظيف قوي</string>
+    <string name="clean_action_button_text">تنظيف (%1$s) </string>
+    <string name="clean_need_authorization">هناك %1$s ملفات قمامة عنيدة سيتم تنظيفها بعد تمكين إعدادات الوصول. تمكين أم لا؟</string>
+    <string name="clean_capital">تمكين</string>
+    <string name="clean_hidden_junk_dialog_message">هناك %1$s ملفات قمامة عنيدة سيتم تنظيفها بعد تمكين إعدادات الوصول. تمكين أم لا؟</string>
+    <string name="skip">تخطي</string>
+    <string name="notification_junk_clean_title">وجدنا %1$s ملفات قمامة!</string>
+    <string name="notification_junk_clean_content">نظفها لتوفير المساحة على هاتفك.</string>
+    <string name="clean_title_capital">منظف ملفات القمامة</string>
+    <string name="clean_uninstall_dialog_content">تم ترك %1$s من الملفات المتبقية %2$s. تنظيف الآن!</string>
+    <string name="clean_install_dialog_content">لم يتم حذف %1$s أبك (%2$s) بعد تثبيته. تنظيف الآن!</string>
+    <string name="clean_card_content">وجدنا كثير ملفات قمامة. نظفها لتسريع هاتفك.</string>
+    <string name="clean_stop_title">إيقاف التنظيف</string>
+    <string name="clean_stop_content">قد يؤدي هذا إلى مخلفات غير متوقعة. استمرار؟</string>
+    <string name="clean_powerful_clean_description"> ملفات قمامة أخرى %1$s يمكن تنظيفها! جربه %2$s من المستخدمين.</string>
+    <string name="accessibility_service_description" tools:ignore="UnusedResources">شغّل مفتاح التبديل أعلاه ثم اضغط موافق.\n\nفعّل هذه الخاصية لـ:\n1) تسريع هاتفك بنسبة 80\%%\n2) تنظيف ملفات القمامة\n3) إيقاف التطبيقات التي تستنزف البطارية\n\nفريق تسريع+ حريص على بذل قصارى جهده لتسريع هاتفك ولن يقوم أبداً بجمع أي بيانات شخصية.</string>
+
+    <string name="boost_plus_freeable">ذاكرة قابلة للتنظيف</string>
+    <string name="promotion_security_title">الحماية الفائقة</string>
+    <string name="promotion_security_banner_description">مسح وإزالة التطبيقات المحتوية على برمجيات خبيثة أو فيروسات تعطل أو تبطئ جهازك.</string>
+    <string name="promotion_security_alert_title">حماية الهاتف </string>
+    <string name="promotion_security_alert_description">فعّل الحماية الحماية الفائقة لحماية نظامك من البرمجيات الخبيثة والفيروسات.</string>
+    <string name="promotion_ignore_btn">تجاهل</string>
+    <string name="promotion_activate_btn">تفعيل</string>
+    <string name="promotion_security_card_description">تُهدد نظامك مخاطر خفية، فعّل الحماية الفائقة لحماية نظامك.</string>
+    <string name="promotion_max_card_title_cpu_cooler">مبرّد CPU</string>
+    <string name="promotion_max_card_title_game_booster">مسرّع الألعاب</string>
+    <string name="promotion_max_card_description_game_booster">هل تعاني ألعابك من البطء والتقطيع؟ يقوم مسرّع الألعاب بتسريع ألعابك تلقائياً بنسبة 30%%.</string>
+    <string name="promotion_enable_btn">تمكين</string>
+    <string name="promotion_max_card_title_app_locker">قافل التطبيقات</string>
+    <string name="promotion_max_card_description_app_locker">أبقِ المتلصصين بعيداً عن التطبيقات التي تحتوي على معلوماتك الخاصة.</string>
+    <string name="promotion_set_now_btn">إعداد الآن</string>
+    <string name="settings_auth_guide">عرض الشارات للرسائل غير المقروءة في تطبيقي "الرسائل" و "الهاتف". قد يتطلب منح الأذونات.</string>
+    <string name="notification_toast_badge_on">الشارات مفعلة.</string>
+    <string name="notification_toast_badge_on_failed">فشل تفعيل الشارات.</string>
+    <string name="notification_toast_access_failed">فشل الوصول إلى الإخطارات</string>
+    <string name="search_show_news">عرض الأخبار الأكثر مشاهدة</string>
+
+
+    <string name="online_wallpaper_tab_title_hot">ساخن</string>
+    <string name="launcher_widget_flashlight_promotion_title">الكشاف</string>
+    <string name="online_theme_tab_title_hot">ساخن</string>
+    <string name="locker_install_btn">تثبيت</string>
+
+    <string name="clean_ad_cache">ذاكرة تخزين الإعلانات</string>
+    <string name="clean_app_cache">ذاكرة تخزين %1$s</string>
+    <string name="boost_plus_normal_toast">تسريع عادي!</string>
+    <string name="notice">ملاحظة</string>
+    <string name="accessibility_dialog_description">تم اكتشاف: %1$s تطبيقات دائماً تشغّل نفسها تلقائياً. أوقف هذه التطبيقات بعد تمكين أذونات الوصول!</string>
+    <string name="enable_now">تمكين الآن</string>
+    <string name="cpu_cooler_scanning_cpu">جارٍ فحص CPU…</string>
+    <string name="cpu_cooler_list_head_title">تطبيقات تزيد سخونة CPU</string>
+    <string name="cpu_cooler_button_title">تبريد</string>
+    <string name="cpu_cooler_state_hint">الـ CPU %s</string>
+    <string name="cpu_cooler_state_cool">بارد</string>
+    <string name="cpu_cooler_state_overheated">ساخن جداً</string>
+    <string name="cpu_cooler_state_extremely_heated">ساخن</string>
+    <string name="cpu_cooler_cleaning_hint">جارٍ إغلاق التطبيقات المستهلة لـ CPU…</string>
+    <string name="cpu_cooler_dropped_down">انخفاض</string>
+    <string name="cpu_cooler_card_description">درجة حرارة الـ CPU %1$s، برّد هاتفك الآن!</string>
+    <string name="cool_capital">تبريد</string>
+    <string name="notification_battery_consuming_title_level">بقي في البطارية %1$s%%!</string>
+    <string name="notification_boost_plus_title_ram">%1$s%% من الذاكرة قيد الاستخدام!</string>
+    <string name="notification_boost_plus_content_ram">سرّع الآن بلمسة زر!</string>
+    <string name="notification_cpu_cooler_title">%1$s°C هاتفك يعاني من سخونة زائدة!</string>
+    <string name="notification_boost_plus_title">%1$s تطبيقات تبطئ هاتفك!</string>
+    <string name="notification_boost_plus_content">استخدم خاصية التسريع لتسريعه! </string>
+    <string name="result_page_card_default_boost_plus_title">لماذا استخدم تسريع+؟</string>
+    <string name="result_page_card_default_boost_plus_description">يعجز التسريع الاعتيادي عن وقف التطبيقات التي تعيد تشغيل نفسها تلقائياً مما يؤدي إلى بطء دائم في أداء هاتفك. استخدم تسريع+ لوقف هذه التطبيقات.\nتسريع+ أكثر فعالية من 90\%% من تطبيقات التنظيف والتسريع.</string>
+    <string name="result_page_card_default_junk_cleaner_title">استخدم منظف ملفات القمامة مراراً</string>
+    <string name="result_page_card_default_junk_cleaner_description">تحتل ملفات التخزين المؤقت وملفات القمامة مساحة كبيرة على هاتفك وتبطئه. استخدم منظف ملفات القمامة للتخلص منها تماماً.</string>
+    <string name="result_page_card_default_cpu_cooler_title">لماذا أستخدم مبرّد CPU؟</string>
+    <string name="result_page_card_default_cpu_cooler_description">عندما تزداد درجة حرارة الـ CPU فوق المعتاد يؤدي ذلك إلى بطء الهاتف واستهلاك الطاقة، بل وانفجار الهاتف في بعض الحالات. استخدم مبرّد CPU لتبريد هاتفك!</string>
+    <string name="result_page_card_default_battery_title">موفّر البطارية</string>
+    <string name="result_page_card_default_battery_description">تستهلك التطبيقات التي تعمل في الخلفية الطاقة بشكل مستمر. استخدم موفّر البطارية لتمديد عمر بطاريتك بنسبة 50\%% أو أكثر.</string>
+    <string name="result_page_card_default_notification_center_title">لماذا استخدم منظّف الإخطارات؟</string>
+    <string name="result_page_card_default_notification_center_description">يساعد منظّف الإخطارات على إخفاء الإخطارات غير المرغوب فيها وتنظيف مركز الاخطارات بلمسة زر واحدة. استخدمه مراراً ليبقى هاتفك نظيفاً!</string>
+    <string name="promotion_max_card_title_data_thieves">لصوص البيانات</string>
+    <string name="promotion_max_card_description_data_thieves">اكتشف التطبيقات التي تستخدم بياناتك الخلوية عندما تكون شاشتك مقفلة!</string>
+    <string name="promotion_max_card_title_accessibility">تعزيز الطاقة</string>
+    <string name="promotion_max_card_description_accessibility">هناك تطبيقات دائماً تشغّل نفسها تلقائياً. أوقف هذه التطبيقات بعد تمكين أذونات الوصول.</string>
+    <string name="notification_cleaner_title">منظّف الإخطارات</string>
+    <string name="notification_cleaner_clean_now_tip">قم بإخفاء الإخطارات غير المرغوب فيها!\nليبقى شريط الإخطارات نظيفاً ومرتباً!</string>
+    <string name="notification_cleaner_clean_now">تنظيف الآن</string>
+    <string name="notification_cleaner_cleared_up">تم تنظيف %s إخطارات!</string>
+    <string name="notification_cleaner_settings_description">حدد التطبيقات لحظر الإخطارات</string>
+    
+    <string name="notification_cleaner_guide_white_list">إعدادات القائمة البيضاء</string>
+    <string name="notification_cleaner_guide_details">اضغط الإخطار للتفاصيل</string>
+    <string name="notification_cleaner_hidden_description">لا توجد إخطارات.</string>
+    <string formatted="false" name="notification_cleaner_intercepted">%s إخطارات مخفية</string>
+    <string name="notification_cleaner_clean_all">تنظيف الكل</string>
+    <string name="yesterday">أمس</string>
+    <string name="notification_cleaner_accessibility_description">اسمح بإذن الوصول لتنظيف الإخطارات غير المرغوب فيها!</string>
+    
+    <string name="launcher_widget_one_tap_wallpaper_title">خلط</string>
+    <string name="wallpaper_change_revert">العودة</string>
+    <string name="wallpaper_change_retry">حاول مرة أخرى</string>
+    <string name="wallpaper_change_network_error">عذراً! حدث خطأ ما، يرجى إعادة المحاولة.</string>
+    <string name="upload_wallpaper">تحميل خلفية</string>
+    <string name="upload_wallpaper_button_text">تحميل </string>
+    <string name="add_wallpaper">إضافة خلفية</string>
+    <string name="desktop_grid_dialog_title">شبكة الشاشة (عمود × صف)</string>
+    <string name="desktop_grid_settings_title">شبكة الشاشة</string>
+    <string name="folder_add_button_title">إضافة تطبيقات</string>
+    <string name="promotion_camera_description">Camera pro، التطبيق المجاني للسيلفي والجمال وتحرير الصور.</string>
+    <string name="promotion_max_description">MAX هو تطبيق شامل لتحسين أداء هاتفك يحتوي على مسرّع للهاتف ومنظّف لملفات القمامة وبرنامج وقاية وأمان.</string>
+    <string name="promotion_rainbow_keyboard_description">أيقونات Emoji رائعة وملصقات قابلة للخصيص وطباعة سريعة بالسحب، كلها اجتمعت في لوحة مفاتيح ملوّنة واحدة - RainbowKey.</string>
+    <string name="promotion_security_description">سريع وآمن، Super Security هو تطبيق أمان موثوق لهاتف.</string>
+    <string name="promotion_dialog_action_btn">احصل عليه الآن</string>
+    
+
+
+    <string name="wallpaper_change_more">المزيد</string>
+    <string name="online_theme_tab_title_category">الفئات</string>
+    <string name="theme_category_foot_text">- نعمل دوماً على إضافة المزيد من النُسُق الجميلة. -</string>
+</resources>

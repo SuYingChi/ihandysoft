@@ -62,5 +62,38 @@
     <dimen name="lucky_award_ad_view_container_top_margin">80dp</dimen>
     <!--  ========================== Lucky game  end ==========================  -->
 
+    <!-- Boost+ -->
+    <dimen name="boost_icon_size">80dp</dimen>
+    <dimen name="boost_plus_action_btn_anim_translation">72dp</dimen>
+    <dimen name="boost_plus_optimal">23sp</dimen>
+    <dimen name="boost_plus_percent">48sp</dimen>
+    <dimen name="boost_plus_clean_boosted">23sp</dimen>
+    <dimen name="boost_plus_ring_size">219dp</dimen>
 
+
+    <!-- Shadows and outlines -->
+    <dimen name="blur_size_thin_outline">1dp</dimen>
+    <dimen name="blur_size_medium_outline">2dp</dimen>
+    <dimen name="blur_size_click_shadow">4dp</dimen>
+    <dimen name="click_shadow_high_shift">2dp</dimen>
+
+
+    <dimen name="container_fastscroll_thumb_min_width">6dp</dimen>
+    <dimen name="container_fastscroll_thumb_max_width">9dp</dimen>
+    <dimen name="container_fastscroll_thumb_height">72dp</dimen>
+    <dimen name="container_fastscroll_thumb_touch_inset">-24dp</dimen>
+    <dimen name="container_fastscroll_popup_size">72dp</dimen>
+    <dimen name="container_fastscroll_popup_text_size">48dp</dimen>
+    <dimen name="container_fastscroll_thumb_margin_height">2dp</dimen>
+
+
+    <!-- Dialog -->
+    <dimen name="dialog_elevation">24dp</dimen>
+    <dimen name="dialog_rounded_corner_radius">2.3dp</dimen>
+    <dimen name="dialog_button_rounded_corner_radius">3dp</dimen>
+    <dimen name="dialog_content_text_margin">16dp</dimen>
+    <dimen name="dialog_button_margin">16dp</dimen>
+    <dimen name="dialog_margin">40dp</dimen>
+    <dimen name="dialog_content_margin">24dp</dimen>
+    <dimen name="dialog_button_padding">16dp</dimen>
 </resources>

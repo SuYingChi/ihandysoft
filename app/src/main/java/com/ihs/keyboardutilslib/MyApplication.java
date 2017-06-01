@@ -11,6 +11,7 @@ import com.ihs.commons.notificationcenter.HSGlobalNotificationCenter;
 import com.ihs.commons.notificationcenter.INotificationObserver;
 import com.ihs.commons.utils.HSBundle;
 import com.ihs.commons.utils.HSLog;
+import com.ihs.feature.boost.BoostActivity;
 import com.ihs.keyboardutils.notification.KCNotificationManager;
 import com.squareup.leakcanary.LeakCanary;
 
@@ -66,6 +67,7 @@ public class MyApplication extends HSApplication {
             resultIntent.putExtra("reqCode", reqCode);
             KCNotificationManager.getInstance().addNotificationEvent(event, resultIntent);
         }
+        BoostActivity.createShortCut();
     }
 
     private INotificationObserver sessionEventObserver = new INotificationObserver() {

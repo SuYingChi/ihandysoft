@@ -9,10 +9,10 @@ import android.view.View;
 import android.widget.FrameLayout;
 import android.widget.TextView;
 
-import com.ihs.feature.common.CommonUtils;
 import com.ihs.feature.common.ViewUtils;
 import com.ihs.feature.lucky.LuckyActivity;
 import com.ihs.keyboardutils.R;
+import com.ihs.keyboardutils.utils.CommonUtils;
 
 import java.util.Locale;
 

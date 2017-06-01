@@ -16,6 +16,7 @@ import com.ihs.app.analytics.HSAnalytics;
 import com.ihs.feature.common.AnimatorListenerAdapter;
 import com.ihs.feature.common.ViewUtils;
 import com.ihs.feature.lucky.LuckyPreloadManager;
+import com.ihs.feature.lucky.ThemeBean;
 import com.ihs.keyboardutils.R;
 import com.nostra13.universalimageloader.core.ImageLoader;
 
@@ -24,15 +25,11 @@ import java.io.File;
 
 public class ThemeView extends FlyAwardBaseView implements View.OnClickListener {
 
-    public static final String THEME_DIRECTORY = "preload" + File.separator + "theme";
-    public static final String ICON = "Icon";
-    public static final String BANNER = "banner";
-
     private View mContainer;
     private ImageView mBanner;
     private TextView mTitle;
     private TextView mBody;
-    private HSKeyboardTheme themeItem;
+    private ThemeBean themeItem;
 
     public ThemeView(Context context, AttributeSet attrs) {
         super(context, attrs);

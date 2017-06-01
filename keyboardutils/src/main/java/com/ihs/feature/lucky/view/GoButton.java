@@ -15,9 +15,9 @@ import android.view.MotionEvent;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 
-import com.ihs.feature.common.CommonUtils;
 import com.ihs.feature.common.ViewUtils;
 import com.ihs.keyboardutils.R;
+import com.ihs.keyboardutils.utils.CommonUtils;
 
 
 /**

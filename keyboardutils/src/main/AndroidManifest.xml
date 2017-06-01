@@ -11,6 +11,7 @@
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="com.android.launcher.permission.INSTALL_SHORTCUT" />
 
     <application>
         <meta-data
@@ -60,6 +61,22 @@
             android:screenOrientation="portrait"
             android:taskAffinity="com.ihs.keyboardutils.giftad.InterstitialGiftActivity"
             android:theme="@style/FullScreenAnimationAd" />
+
+        <activity
+            android:name="com.ihs.feature.boost.BoostActivity"
+            android:excludeFromRecents="true"
+            android:icon="@drawable/boost_icon"
+            android:label="@string/launcher_widget_boost_title"
+            android:launchMode="singleTask"
+            android:noHistory="true"
+            android:screenOrientation="portrait"
+            android:taskAffinity=".lucky.boost"
+            android:theme="@android:style/Theme.Translucent.NoTitleBar.Fullscreen">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <action android:name="android.intent.category.HOME" />
+            </intent-filter>
+        </activity>
     </application>
 
 </manifest>

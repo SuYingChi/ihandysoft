@@ -36,7 +36,7 @@ import com.ihs.keyboardutils.utils.ToastUtils;
 
 import java.util.Locale;
 
-import static com.ihs.feature.common.CommonUtils.setupTransparentSystemBarsForLmp;
+import static com.ihs.keyboardutils.utils.CommonUtils.setupTransparentSystemBarsForLmp;
 
 
 /**

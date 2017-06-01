@@ -43,6 +43,7 @@ import android.graphics.PaintFlagsDrawFilter;
 import android.graphics.Point;
 import android.graphics.Rect;
 import android.graphics.Typeface;
+import android.graphics.drawable.Drawable;
 import android.net.ConnectivityManager;
 import android.net.Network;
 import android.net.NetworkInfo;
@@ -77,6 +78,8 @@ import android.widget.TextView;
 import com.ihs.app.framework.HSApplication;
 import com.ihs.commons.config.HSConfig;
 import com.ihs.commons.utils.HSLog;
+import com.ihs.keyboardutils.R;
+import com.ihs.keyboardutils.utils.CommonUtils;
 import com.nostra13.universalimageloader.core.ImageLoader;
 
 import java.io.BufferedReader;
@@ -155,6 +158,10 @@ public final class Utils {
 
     public static boolean equals(float a, float b) {
         return Math.abs(a - b) < EPSILON;
+    }
+
+    public static float celsiusToFahrenheit(float celsius) {
+        return celsius * 1.8f + 32f;
     }
 
     public static boolean isPropertyEnabled(String propertyName) {
@@ -1455,5 +1462,15 @@ public final class Utils {
             return true;
         }
         return false;
+    }
+
+    public static Drawable getAppIcon(String packageName) {
+        Drawable icon;
+        try {
+            icon = HSApplication.getContext().getPackageManager().getApplicationIcon(packageName);
+        } catch (Exception e) {
+            icon = HSApplication.getContext().getResources().getDrawable(R.drawable.ic_lucky);
+        }
+        return icon;
     }
 }

@@ -15,6 +15,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 
+import com.ihs.keyboardutils.utils.CommonUtils;
+
 import java.lang.reflect.Field;
 
 public class ViewUtils {

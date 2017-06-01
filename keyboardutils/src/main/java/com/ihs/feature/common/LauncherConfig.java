@@ -3,6 +3,7 @@ package com.ihs.feature.common;
 import com.ihs.app.framework.HSApplication;
 import com.ihs.commons.config.HSConfig;
 import com.ihs.keyboardutils.BuildConfig;
+import com.ihs.keyboardutils.utils.CommonUtils;
 
 import java.util.Map;
 

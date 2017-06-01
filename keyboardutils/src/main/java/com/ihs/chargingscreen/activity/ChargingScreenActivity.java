@@ -50,7 +50,7 @@ import com.ihs.chargingscreen.ui.BubbleView;
 import com.ihs.chargingscreen.utils.ChargingAnalytics;
 import com.ihs.chargingscreen.utils.ChargingManagerUtil;
 import com.ihs.chargingscreen.utils.ChargingPrefsUtil;
-import com.ihs.chargingscreen.utils.CommonUtils;
+import com.ihs.chargingscreen.utils.ClickUtils;
 import com.ihs.chargingscreen.utils.DisplayUtils;
 import com.ihs.commons.config.HSConfig;
 import com.ihs.commons.notificationcenter.HSGlobalNotificationCenter;
@@ -291,7 +291,7 @@ public class ChargingScreenActivity extends HSActivity {
         imgSetting.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (CommonUtils.isFastDoubleClick()) {
+                if (ClickUtils.isFastDoubleClick()) {
                     return;
                 }
                 showPopupWindow(ChargingScreenActivity.this, imgSetting);
@@ -565,7 +565,7 @@ public class ChargingScreenActivity extends HSActivity {
             txtCloseChargingBoost.setOnClickListener(new OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    if (CommonUtils.isFastDoubleClick()) {
+                    if (ClickUtils.isFastDoubleClick()) {
                         return;
                     }
 

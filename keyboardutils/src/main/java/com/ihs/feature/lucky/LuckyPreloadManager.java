@@ -34,7 +34,7 @@ public class LuckyPreloadManager {
     private Random mRandom = new Random();
 
     private Map<String, String> themeItemInfo;
-    private HSKeyboardTheme themeItem;
+    private ThemeBean themeItem;
 
 
     public static LuckyPreloadManager getInstance() {
@@ -166,19 +166,6 @@ public class LuckyPreloadManager {
                 if (!force) {
                     return;
                 }
-                //不重新下载图
-//                HSLog.e(TAG,"Force Refresh");
-//                File themeIcon = new File(Utils.getDirectory(ThemeView.THEME_DIRECTORY), ThemeView.ICON);
-//                if (themeIcon.exists()) {
-//                    boolean deleted = themeIcon.delete();
-//                    HSLog.d(TAG, "Delete file " + themeIcon + ": " + deleted);
-//                }
-//
-//                File theme = new File(Utils.getDirectory(ThemeView.THEME_DIRECTORY), ThemeView.BANNER);
-//                if (theme.exists()) {
-//                    boolean deleted = theme.delete();
-//                    HSLog.d(TAG, "Delete file " + theme + ": " + deleted);
-//                }
 
                 themeItemInfo = getRandomThemeName();
                 if (themeItemInfo == null || themeItemInfo.isEmpty()) {
@@ -196,7 +183,9 @@ public class LuckyPreloadManager {
                     downloadFileAsync(themeIcon, themeIconUrl);
                 }
 
-                for (HSKeyboardTheme hsKeyboardTheme : HSKeyboardThemeManager.getAllKeyboardThemeList()) {
+//                themeItem = new ThemeBean(themeName,themeItemInfo.get())
+
+                for (ThemeBean hsKeyboardTheme : HSKeyboardThemeManager.getAllKeyboardThemeList()) {
                     if (hsKeyboardTheme.mThemeName.equals(themeName)) {
                         themeItem = hsKeyboardTheme;
                     }
@@ -212,7 +201,7 @@ public class LuckyPreloadManager {
     }
 
 
-    public HSKeyboardTheme getThemeInfo() {
+    public ThemeBean getThemeInfo() {
         if(themeItem == null){
             refreshTheme(true);
             return null;
