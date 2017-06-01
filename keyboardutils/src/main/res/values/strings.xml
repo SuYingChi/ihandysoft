@@ -73,7 +73,8 @@
     <string name="all_apps_interstitial_ad_notice">WOW! Check out this amazing app!</string>
     <string name="locker_wallpaper_network_error">Network errors. Please try again.</string>
 
-    <string name="ad_placement_lucky">Master_A((NativeAds)Lucky</string>
+    <string name="ad_placement_lucky" translatable="false">Master_A((NativeAds)Lucky</string>
+    <string name="ad_placement_boost_tip" translatable="false">500_A(NativeAds)SevenInOne</string>
 
     <string name="lucky_game_award_no_network_description">No network connection!</string>
     <string name="lucky_game_award_chances_receive_btn">ACCEPT</string>

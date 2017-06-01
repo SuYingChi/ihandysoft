@@ -20,9 +20,11 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.ihs.commons.utils.HSLog;
+import com.ihs.feature.boost.BoostConditionManager;
 import com.ihs.feature.boost.BoostSource;
 import com.ihs.feature.boost.BoostType;
 import com.ihs.feature.boost.RamUsageDisplayUpdater;
+import com.ihs.feature.common.LauncherTipManager;
 import com.ihs.keyboardutils.R;
 import com.ihs.keyboardutils.utils.CommonUtils;
 

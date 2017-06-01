@@ -3,14 +3,8 @@ package com.ihs.feature.boost;
 import android.app.ActivityManager;
 import android.content.Context;
 
-import com.ihs.app.analytics.HSAnalytics;
-import com.ihs.app.utils.HSVersionControlUtils;
-import com.ihs.commons.utils.HSLog;
-import com.ihs.commons.utils.HSPreferenceHelper;
 import com.ihs.feature.common.CompatUtils;
 import com.ihs.feature.common.LauncherConfig;
-import com.ihs.feature.common.LauncherFiles;
-import com.ihs.feature.common.PreferenceHelper;
 
 import java.util.Random;
 
@@ -41,13 +35,6 @@ public class BoostUtils {
 //            HSAnalytics.logEvent("Boost_Plus_Auto_Boost_Switch_On");
 //            PreferenceHelper.get(LauncherFiles.BOOST_PREFS).putBoolean(PREF_KEY_BOOST_PLUS_ONCE_FOREVER, true);
 //        }
-    }
-
-    public static void restartAutoCleanIfNeeded(Context applicationContext) {
-        boolean autoBoostEnabled = HSPreferenceHelper.getDefault().getBoolean(BoostPlusSettingsActivity.PREF_KEY_AUTO_BOOST_ENABLED, false);
-        if (autoBoostEnabled) {
-            AutoCleanService.restart(applicationContext);
-        }
     }
 
     private static final Random mRand = new Random();

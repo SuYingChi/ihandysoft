@@ -34,7 +34,7 @@
                 android:layout_marginRight="13dp"
                 tools:src="@drawable/boost_result_memory" />
 
-            <com.honeycomb.launcher.view.TypefacedTextView
+            <com.ihs.feature.common.TypefacedTextView
                 android:id="@+id/boost_title_text"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"

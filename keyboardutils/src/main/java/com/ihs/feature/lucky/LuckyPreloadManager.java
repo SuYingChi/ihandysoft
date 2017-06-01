@@ -11,7 +11,6 @@ import com.ihs.commons.utils.HSLog;
 import com.ihs.commons.utils.HSPreferenceHelper;
 import com.ihs.feature.common.ConcurrentUtils;
 import com.ihs.feature.common.Utils;
-import com.ihs.feature.lucky.view.ThemeView;
 import com.ihs.keyboardutils.BuildConfig;
 
 import java.io.File;
@@ -177,23 +176,21 @@ public class LuckyPreloadManager {
                 String themeName = themeItemInfo.get("Name");
                 HSPreferenceHelper.getDefault().putString(PREF_KEY_THEME_PACKAGE_NAME, themeName);
 
-                File themeIcon = new File(getDirectory(themeName), ThemeView.ICON);
+               File themeIcon = new File(getDirectory(themeName), ThemeBean.ICON);
                 if(!themeIcon.exists()){
-                    String themeIconUrl = themeItemInfo.get(ThemeView.ICON);
+                    String themeIconUrl = themeItemInfo.get(ThemeBean.ICON);
                     downloadFileAsync(themeIcon, themeIconUrl);
                 }
 
-//                themeItem = new ThemeBean(themeName,themeItemInfo.get())
+//                for (ThemeBean hsKeyboardTheme : HSKeyboardThemeManager.getAllKeyboardThemeList()) {
+//                    if (hsKeyboardTheme.mThemeName.equals(themeName)) {
+//                        themeItem = hsKeyboardTheme;
+//                    }
+//                }
 
-                for (ThemeBean hsKeyboardTheme : HSKeyboardThemeManager.getAllKeyboardThemeList()) {
-                    if (hsKeyboardTheme.mThemeName.equals(themeName)) {
-                        themeItem = hsKeyboardTheme;
-                    }
-                }
-
-                File themeBanner = new File(getDirectory(themeName), ThemeView.BANNER);
+                File themeBanner = new File(getDirectory(themeName), ThemeBean.BANNER);
                 if(!themeBanner.exists()){
-                    String banner = themeItem.getThemeBannerImgUrl();
+                    String banner = themeItem.getThemeBannerUrl();
                     downloadFileAsync(themeBanner, banner);
                 }
             }
@@ -207,8 +204,8 @@ public class LuckyPreloadManager {
             return null;
         }
 
-        File themeIcon = new File(getDirectory(themeItem.mThemeName), ThemeView.ICON);
-        File theme = new File(getDirectory(themeItem.mThemeName), ThemeView.BANNER);
+        File themeIcon = new File(getDirectory(themeItem.getThemeName()), ThemeBean.ICON);
+        File theme = new File(getDirectory(themeItem.getThemeName()), ThemeBean.BANNER);
         if (themeItemInfo == null || themeItemInfo.isEmpty() ||
                 !themeIcon.exists() || !theme.exists()) {
             return null;
@@ -221,7 +218,7 @@ public class LuckyPreloadManager {
     }
 
     public static File getDirectory(String themeName) {
-        return Utils.getDirectory(ThemeView.THEME_DIRECTORY+File.separator+themeName);
+        return Utils.getDirectory(ThemeBean.THEME_DIRECTORY+File.separator+themeName);
     }
 
 }

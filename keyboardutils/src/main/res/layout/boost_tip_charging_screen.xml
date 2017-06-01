@@ -27,7 +27,7 @@
         android:background="#3db16b"
         android:orientation="vertical">
 
-        <com.honeycomb.launcher.view.TypefacedTextView
+        <com.ihs.feature.common.TypefacedTextView
             android:id="@+id/boost_tip_charging_screen_title"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -40,7 +40,7 @@
             app:typeface="@string/proxima_nova_semibold"
             tools:text="@string/charging_screen_guide_battery_title"/>
 
-        <com.honeycomb.launcher.view.TypefacedTextView
+        <com.ihs.feature.common.TypefacedTextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginLeft="16dp"

@@ -59,7 +59,7 @@
                 android:gravity="center_vertical"
                 android:orientation="vertical">
                 <!-- ad title Text-->
-                <com.honeycomb.launcher.view.AdsTitleTextView
+                <com.ihs.feature.ui.AdsTitleTextView
                     android:id="@+id/boost_ad_title"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -74,7 +74,7 @@
                     tools:text="temp text for tttttttttttttttttttt" />
 
                 <!-- ad description Text-->
-                <com.honeycomb.launcher.view.AdsTitleTextView
+                <com.ihs.feature.ui.AdsTitleTextView
                     android:id="@+id/boost_ad_description"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -101,7 +101,7 @@
             android:layout_marginRight="10dp"
             android:layout_marginStart="10dp">
 
-            <com.honeycomb.launcher.view.TypefacedTextView
+            <com.ihs.feature.common.TypefacedTextView
                 android:id="@+id/boost_ad_action"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"

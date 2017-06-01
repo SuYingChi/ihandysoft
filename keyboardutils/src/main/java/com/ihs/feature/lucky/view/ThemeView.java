@@ -63,7 +63,7 @@ public class ThemeView extends FlyAwardBaseView implements View.OnClickListener 
         holdOn.addListener(new AnimatorListenerAdapter() {
             @Override
             public void onAnimationEnd(Animator animator) {
-                File themeIcon = new File(LuckyPreloadManager.getDirectory(themeItem.mThemeName), ThemeView.ICON);
+                File themeIcon = new File(LuckyPreloadManager.getDirectory(themeItem.getThemeName()),  ThemeBean.ICON);
                 ImageLoader.getInstance().displayImage(
                         Uri.fromFile(themeIcon).toString(),
                         mDragIcon);
@@ -90,11 +90,11 @@ public class ThemeView extends FlyAwardBaseView implements View.OnClickListener 
             return false;
         }
 
-        File theme = new File(LuckyPreloadManager.getDirectory(themeItem.mThemeName), ThemeView.BANNER);
+        File theme = new File(LuckyPreloadManager.getDirectory(themeItem.getThemeName()), ThemeBean.BANNER);
         ImageLoader.getInstance().displayImage(
                 Uri.fromFile(theme).toString(),
                 mBanner);
-        mTitle.setText(themeItem.getThemeShowName());
+        mTitle.setText(themeItem.getThemeName());
         return true;
     }
 
@@ -105,7 +105,8 @@ public class ThemeView extends FlyAwardBaseView implements View.OnClickListener 
     @Override
     public void onClick(View view) {
         if (view.getId() == R.id.lucky_game_theme_action) {
-            ThemeDownloadManager.getInstance().downloadTheme(themeItem);
+            //// TODO: 17/6/1 获取theme
+//            ThemeDownloadManager.getInstance().downloadTheme(themeItem);
             HSAnalytics.logEvent("Lucky_Award_Theme_Install_Clicked");
         }
     }
