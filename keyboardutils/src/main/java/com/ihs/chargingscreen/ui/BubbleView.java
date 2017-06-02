@@ -59,6 +59,10 @@ public class BubbleView extends View {
         bubbleList = new ArrayList<Bubble>(bubbles);
         //依次绘制气泡
         for (Bubble bubble : bubbleList) {
+            if(bubble == null){
+                continue;
+            }
+
             //碰到上边界从数组中移除
             if (bubble.getY() - bubble.getSpeedY() <= -bubble.getRadius() * 2) {
                 bubbles.remove(bubble);
@@ -90,26 +94,22 @@ public class BubbleView extends View {
     }
 
     private void addBubble() {
-        new Thread() {
-            public void run() {
-                Bubble bubble = new Bubble();
-                float speedY = 0;
-                while (speedY < 1) {
-                    speedY = random.nextFloat() * 8;
-                }
-                bubble.setSpeedY(speedY);
-                bubble.setRadius(randomGenerator(10, (float) (getWidth() * 0.3)));
-                bubble.setX(randomGenerator(bubble.getRadius() + 1, getWidth() - bubble.getRadius() - 1));
-                bubble.setY(getHeight() + bubble.getRadius());
+        Bubble bubble = new Bubble();
+        float speedY = 0;
+        while (speedY < 1) {
+            speedY = random.nextFloat() * 8;
+        }
+        bubble.setSpeedY(speedY);
+        bubble.setRadius(randomGenerator(10, (float) (getWidth() * 0.3)));
+        bubble.setX(randomGenerator(bubble.getRadius() + 1, getWidth() - bubble.getRadius() - 1));
+        bubble.setY(getHeight() + bubble.getRadius());
 
-                float speedX = 0;
-                while (speedX == 0) {
-                    speedX = random.nextFloat() - 0.5f;
-                }
-                bubble.setSpeedX(speedX * 8);
-                bubbles.add(bubble);
-            }
-        }.start();
+        float speedX = 0;
+        while (speedX == 0) {
+            speedX = random.nextFloat() - 0.5f;
+        }
+        bubble.setSpeedX(speedX * 8);
+        bubbles.add(bubble);
     }
 
     public void start() {
