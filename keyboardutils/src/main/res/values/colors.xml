@@ -37,4 +37,6 @@
     <color name="button_pressed_bg">#0d000000</color>
     <color name="material_ripple">#33000000</color>
     <color name="battery_green">#4caf50</color>
+    <color name="material_text_black_primary">#de000000</color>
+    <color name="material_text_black_secondary">#8a000000</color>
 </resources>

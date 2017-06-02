@@ -67,7 +67,7 @@ public class MyApplication extends HSApplication {
             resultIntent.putExtra("reqCode", reqCode);
             KCNotificationManager.getInstance().addNotificationEvent(event, resultIntent);
         }
-        BoostActivity.createShortCut();
+        BoostActivity.initBoost();
     }
 
     private INotificationObserver sessionEventObserver = new INotificationObserver() {
