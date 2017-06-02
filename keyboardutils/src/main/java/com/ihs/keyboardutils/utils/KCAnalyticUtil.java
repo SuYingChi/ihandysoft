@@ -24,20 +24,21 @@ public class KCAnalyticUtil {
         HSAnalytics.logGoogleAnalyticsEvent("app", "kcLogger", action, label, null, null, null);
     }
 
-    public static void logEvent(String action, String label, Map<String, String> paras) {
+    public static void logEvent(String action, String label, String installType) {
         HashMap<String, String> valueMap = new HashMap<>();
         if (label != null) {
             valueMap.put(action, label);
         }
-        valueMap.putAll(paras);
+        if (installType != null) {
+            valueMap.put("install_type", installType);
+        }
         HSAnalytics.logEvent(action, valueMap);
 
-        HashMap<Integer, String> dimensions = new HashMap<>();
-        int index = 1;
-        for (Map.Entry<String, String> e : valueMap.entrySet()) {
-            dimensions.put(index, e.getValue());
-            index++;
+        Map<Integer, String> dimensions = new HashMap<>();
+        if (installType != null) {
+            dimensions.put(4, installType);
         }
+
         HSAnalytics.logGoogleAnalyticsEvent("app", "kcLogger", action, label, null, dimensions, null);
     }
 }
