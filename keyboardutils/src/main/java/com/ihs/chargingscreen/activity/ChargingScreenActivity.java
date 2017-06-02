@@ -6,6 +6,7 @@ import android.animation.AnimatorSet;
 import android.animation.ObjectAnimator;
 import android.animation.ValueAnimator;
 import android.animation.ValueAnimator.AnimatorUpdateListener;
+import android.app.Activity;
 import android.app.Dialog;
 import android.content.ContentResolver;
 import android.content.Context;
@@ -40,7 +41,6 @@ import android.widget.TextView;
 
 import com.acb.expressads.AcbExpressAdView;
 import com.ihs.app.framework.HSApplication;
-import com.ihs.app.framework.activity.HSActivity;
 import com.ihs.charging.HSChargingManager;
 import com.ihs.charging.HSChargingManager.HSChargingState;
 import com.ihs.chargingscreen.Constants;
@@ -78,7 +78,7 @@ import static com.ihs.chargingscreen.activity.DismissKeyguradActivity.isKeyguard
 /**
  * Created by zhixiangxiao on 5/4/16.
  */
-public class ChargingScreenActivity extends HSActivity {
+public class ChargingScreenActivity extends Activity {
 
     public static final String NOTIFICATION_CHARGING_ACTIVITY_STARTED = "notification_charging_activity_started";
 
