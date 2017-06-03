@@ -925,9 +925,12 @@ public class FlashFrameLayout extends FrameLayout {
         if (mMaskBitmap != null) {
             bitmapWidth = mMaskBitmap.getWidth();
             bitmapHeight = mMaskBitmap.getHeight();
+        } else {
+            HSLog.e(TAG, "getMaskBitmap error");
         }
         int width = bitmapWidth > getWidth() ? bitmapWidth : getWidth();
         int height = bitmapHeight > getHeight() ? bitmapHeight : getHeight();
+        HSLog.d(TAG, "bitmapWidth: " + bitmapWidth + " FlashFrameLayout width: " + getWidth());
         resetMaskBitmap();
         switch (mMask.shape) {
             default:
