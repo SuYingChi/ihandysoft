@@ -1,8 +1,6 @@
 package com.ihs.feature.boost.notification;
 
-import android.app.AlarmManager;
 import android.app.Notification;
-import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
@@ -10,24 +8,16 @@ import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.PorterDuff;
-import android.graphics.PorterDuffXfermode;
 import android.graphics.RectF;
 import android.graphics.drawable.Drawable;
-import android.net.Uri;
-import android.net.wifi.WifiManager;
 import android.os.Build;
 import android.os.Handler;
-import android.os.SystemClock;
 import android.support.annotation.ColorInt;
 import android.support.v4.app.NavUtils;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.NotificationCompat;
 import android.support.v7.widget.AppCompatDrawableManager;
-import android.text.SpannableString;
-import android.text.Spanned;
 import android.text.TextUtils;
-import android.text.format.DateUtils;
-import android.text.style.ForegroundColorSpan;
 import android.util.SparseArray;
 import android.widget.RemoteViews;
 
@@ -43,6 +33,7 @@ import com.ihs.feature.boost.BoostType;
 import com.ihs.feature.boost.RamUsageDisplayUpdater;
 import com.ihs.feature.common.ConcurrentUtils;
 import com.ihs.feature.common.LauncherConstants;
+import com.ihs.feature.common.ResultConstants;
 import com.ihs.feature.common.Thunk;
 import com.ihs.feature.common.Utils;
 import com.ihs.keyboardutils.R;
@@ -228,16 +219,7 @@ public class NotificationManager {
         Intent collapseIntent = new Intent(Intent.ACTION_CLOSE_SYSTEM_DIALOGS);
         context.sendBroadcast(collapseIntent);
 
-        final LifeCycleCallbacks lifeCycleCallbacks = ((LauncherApplication) context.getApplicationContext()).getActivityLifecycleCallbacks();
-        if (lifeCycleCallbacks == null) {
-            CrashlyticsCore.getInstance().logException(new CrashlyticsLog(LauncherApplication.getProcessName()));
-            return;
-        }
         // Notification set alarm to remove self when user not handle it long time.
-        boolean timeoutSelfClean = intent.getBooleanExtra(EXTRA_NOTIFICATION_TIME_OUT_CLEAN, false);
-        if (timeoutSelfClean) {
-            cancelTimeoutCleanAlarm(intent.getIntExtra(EXTRA_NOTIFICATION_ID, 0));
-        }
 
         HSLog.d("ToolBar.Click", "Click action = " + intent.getAction());
         switch (intent.getAction()) {
@@ -278,109 +260,6 @@ public class NotificationManager {
             case ACTION_BOOST_NOTIFICATION_DELETE:
                 int typeOrdinal = intent.getIntExtra(NotificationManager.EXTRA_BOOST_TYPE, 0);
                 break;
-            case ACTION_WEATHER:
-                HSAnalytics.logEvent("Notification_Clicked", "Type", WEATHER, "time",
-                        String.valueOf(Calendar.getInstance().get(Calendar.HOUR_OF_DAY)));
-                if (!lifeCycleCallbacks.isWeatherActivityInForeground()) {
-                    NavUtils.startActivity(context, WeatherActivity.class);
-                }
-                break;
-            case ACTION_WEATHER_DELETE:
-                break;
-            case ACTION_THEME:
-                String themePackage = intent.getStringExtra(EXTRA_THEME_PACKAGE);
-                if (TextUtils.isEmpty(themePackage)) {
-                    return;
-                }
-                HSAnalytics.logEvent("Notification_Clicked", "Type", THEME,  "theme", themePackage);
-                HSAnalytics.logEvent("Notification_Themes_Clicked", "PackageName", themePackage);
-//                HSMarketUtils.browseAPP(themePackage);
-                Intent themeIntent = ThemeOnlineActivity.getOnlineIntent(context, themePackage);
-                themeIntent.putExtra(ThemeOnlineActivity.INTENT_KEY_RETURN_TO_THEME_NEW, true);
-                NavUtils.startActivitySafely(context, themeIntent);
-                break;
-            case ACTION_THEME_DELETE:
-                Set<Integer> newThemeIds = ThemeNotifier.getNewThemeNotificationIds();
-                themePackage = intent.getStringExtra(EXTRA_THEME_PACKAGE);
-                int notificationId = Utils.md5(themePackage).hashCode();
-                if (newThemeIds != null && newThemeIds.contains(notificationId)) {
-                    newThemeIds.remove(notificationId);
-                }
-                break;
-            case ACTION_MOBILE_DATA:
-                NavUtils.startSystemDataUsageSetting(context, true);
-                break;
-            case ACTION_CPU_COOLER:
-                logNotificationClicked(CPU_COOLER);
-                HSAnalytics.logEvent("CPUCooler_Open", "Type", "Notification");
-                mHandler.postDelayed(() -> {
-                    Intent cpuCoolerIntent = new Intent(context, CpuCoolDownActivity.class);
-                    cpuCoolerIntent.putExtra(CpuCoolDownActivity.EXTRA_KEY_NEED_SCAN, true);
-                    cpuCoolerIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_SINGLE_TOP | Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                    NavUtils.startActivitySafely(context, cpuCoolerIntent);
-                }, 500);
-                break;
-            case ACTION_CPU_COOLER_TOOLBAR:
-                HSAnalytics.logEvent("Notification_Toolbar_CPU_Clicked", "Type", CpuCoolerUtils.getTemperatureColorText(mCpuTemperature));
-                HSAnalytics.logEvent("CPUCooler_Open", "Type", "Toolbar");
-                mHandler.postDelayed(() -> {
-                    Intent cpuCoolerIntent = new Intent(context, CpuCoolDownActivity.class);
-                    cpuCoolerIntent.putExtra(CpuCoolDownActivity.EXTRA_KEY_NEED_SCAN, true);
-                    cpuCoolerIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_SINGLE_TOP | Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                    NavUtils.startActivitySafely(context, cpuCoolerIntent);
-                }, 500);
-                break;
-            case ACTION_BATTERY_TOOLBAR:
-                Intent intentBattery = new Intent(context, BatteryActivity.class);
-                intentBattery.putExtra(BatteryActivity.EXTRA_AUTO_RUN, true);
-                NavUtils.startActivitySafely(context, intentBattery);
-//                NavUtils.startActivity(context, BatteryActivity.class);
-//                String batteryType = intent.getStringExtra(EXTRA_NOTIFICATION_TYPE);
-                HSAnalytics.logEvent("Notification_Toolbar_Battery_Clicked");
-                HSAnalytics.logEvent("Battery_OpenFrom", "type", "From Toolbar");
-                break;
-//            case ACTION_ALL_APPS:
-//                final Runnable allApps = new Runnable() {
-//                    @Override
-//                    public void run() {
-//                        if (!lifeCycleCallbacks.isAllAppsShowing()) {
-//                            CommonUtils.startLauncherAndShowAllApps(context);
-//                        }
-//                        HSAnalytics.logEvent("Notification_Toolbar_Allapps_Clicked");
-//                        HSAnalytics.logEvent("Notification_Toolbar_Icon_Clicked", "type", "AllApps");
-//                    }
-//                };
-//                if (Utils.isKeyguardLocked(context, true)) {
-//                    DismissKeyguradActivity.startSelfIfKeyguardSecure(context);
-//                    new Handler().postDelayed(allApps, 500);
-//                } else {
-//                    allApps.run();
-//                }
-//                break;
-            case ACTION_TOOLBAR_SETTINGS:
-                Intent toolBarIntent = new Intent(context, ToolbarSettingsActivity.class);
-                toolBarIntent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
-                NavUtils.startActivitySafely(context, toolBarIntent);
-                HSAnalytics.logEvent("Notification_Toolbar_Settings_Clicked");
-                HSAnalytics.logEvent("Notification_Toolbar_Icon_Clicked", "type", "ToolbarSettings");
-                break;
-            case ACTION_SET_AS_DEFAULT:
-                NotificationManager.getInstance().handleEvent(context, intent);
-                int type = intent.getIntExtra(NotificationManager.EXTRA_SET_AS_DEFAULT_TYPE,
-                        NotificationManager.EXTRA_VALUE_SET_AS_DEFAULT_SET);
-                if (type == NotificationManager.EXTRA_VALUE_SET_AS_DEFAULT_SET) {
-                    HSAnalytics.logEvent("Notification_Clicked", "Type", SET_AS_HOME, "notifyType", ScheduledNotificationReceiver.getFlurryNotificationType());
-                } else {
-//                    HSAnalytics.logEvent("Notification_ClearDefault_Clicked");
-                    logNotificationClicked(CLEAR_DEFAULT);
-                }
-
-                SetAsDefaultManager.Source setDefaultSource =
-                        type == NotificationManager.EXTRA_VALUE_SET_AS_DEFAULT_SET ?
-                                SetAsDefaultManager.Source.NOTIFICATION_SET :
-                                SetAsDefaultManager.Source.NOTIFICATION_CLEAR;
-                CommonUtils.startLauncherWithExtra(context, CommonUtils.INTENT_KEY_SHOW_SET_DEFAULT_SOURCE, setDefaultSource.ordinal());
-                break;
             case ACTION_BOOST_PLUS:
                 Intent boostPlusIntent = new Intent(context, BoostPlusActivity.class);
                 boostPlusIntent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
@@ -389,24 +268,9 @@ public class NotificationManager {
                 logNotificationClicked(boostType);
                 HSAnalytics.logEvent("BoostPlus_Open", "Type", "Notification");
                 break;
-            case ACTION_BATTERY_OPTIMIZE:
-                Intent batteryIntent = new Intent(context, BatteryActivity.class);
-                batteryIntent.putExtra(BatteryActivity.EXTRA_AUTO_RUN, true);
-                NavUtils.startActivitySafely(context, batteryIntent);
-                String batteryType = intent.getStringExtra(EXTRA_NOTIFICATION_TYPE);
-                logNotificationClicked(batteryType);
-                HSAnalytics.logEvent("Battery_OpenFrom", "type", "From Notifications");
-                break;
             case ACTION_CONTENT:
                 // Used for content intent. Do nothing
                 HSLog.d(TAG,"Click content");
-                break;
-            case ACTION_JUNK_CLEAN:
-                logNotificationClicked(ResultConstants.JUNK_CLEANER);
-                JunkCleanUtils.FlurryLogger.logOpen(JunkCleanConstant.NOTIFICATION);
-                Intent junkCleanAnimationIntent = new Intent(context, JunkCleanActivity.class);
-                junkCleanAnimationIntent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
-                NavUtils.startActivitySafely(context, junkCleanAnimationIntent);
                 break;
             default:
                 HSLog.w(TAG, "Unsupported action");
