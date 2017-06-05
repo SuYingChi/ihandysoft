@@ -21,15 +21,6 @@ import java.util.List;
 
 public class PermissionUtils {
 
-    private static PermissionUtils instance;
-
-    public synchronized static PermissionUtils getInstance() {
-        if (instance == null) {
-            instance = new PermissionUtils();
-        }
-        return instance;
-    }
-
     private PermissionUtils() {
     }
 
