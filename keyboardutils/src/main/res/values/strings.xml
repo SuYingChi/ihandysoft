@@ -71,4 +71,6 @@
     <string name="all_apps_interstitial_ad_display_failed_txt">Oops… try again later.</string>
     <string name="all_apps_interstitial_ad_notice">WOW! Check out this amazing app!</string>
     <string name="locker_wallpaper_network_error">Network errors. Please try again.</string>
+    <string name="tip_accessibility">Find %s. Switch it on to enable Usage Access.</string>
+    <string name="tip_usage_access">Find %s. Switch it on to enable Smart Memory Protection</string>
 </resources>
