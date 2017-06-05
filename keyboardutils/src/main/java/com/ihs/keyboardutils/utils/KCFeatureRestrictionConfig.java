@@ -6,12 +6,14 @@ import com.ihs.commons.countrycode.HSCountryCodeManager;
 
 import java.util.List;
 import java.util.Map;
+import java.util.TimeZone;
 
 public final class KCFeatureRestrictionConfig {
     private static final String CONFIG_KEY_APPLICAITON = "Application";
     private static final String CONFIG_KEY_FEATURE_RESTRICTION = "FeatureRestriction";
     private static final String CONFIG_KEY_DELAY_HOURS = "HoursFromFirstUse";
     private static final String CONFIG_KEY_REGION_BLACKLIST = "RegionException";
+    private static final String CONFIG_KEY_TIME_ZONE_BLACKLIST = "TimeZoneException";
     private static final String CONFIG_KEY_ENABLED = "Enabled";
 
     public static boolean isFeatureRestricted(String featureName) {
@@ -35,6 +37,14 @@ public final class KCFeatureRestrictionConfig {
         List<String> regionBlacklist = (List<String>) HSConfig.getList(CONFIG_KEY_APPLICAITON, CONFIG_KEY_FEATURE_RESTRICTION, featureName, CONFIG_KEY_REGION_BLACKLIST);
 
         if (regionBlacklist != null && regionBlacklist.contains(HSCountryCodeManager.getInstance().getCountryCode())) {
+            return true;
+        }
+
+        List<Integer> timeZoneBlacklist = (List<Integer>) HSConfig.getList(CONFIG_KEY_APPLICAITON, CONFIG_KEY_FEATURE_RESTRICTION, featureName, CONFIG_KEY_TIME_ZONE_BLACKLIST);
+
+        int hourOffset = TimeZone.getDefault().getRawOffset() / 3600000;
+
+        if (timeZoneBlacklist != null && timeZoneBlacklist.contains(hourOffset)) {
             return true;
         }
 
