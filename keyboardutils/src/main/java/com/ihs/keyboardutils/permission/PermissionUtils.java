@@ -1,4 +1,4 @@
-package com.ihs.permission;
+package com.ihs.keyboardutils.permission;
 
 /**
  * Created by liuzhongtao on 17/6/5.

@@ -1,4 +1,4 @@
-package com.ihs.permission;
+package com.ihs.keyboardutils.permission;
 
 import android.content.Context;
 import android.graphics.Color;
