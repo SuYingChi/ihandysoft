@@ -227,7 +227,11 @@ public class KCNotificationManager {
         Intent intent = new Intent(context,NotificationExecutionReceiver.class);
         PendingIntent pendingIntent = PendingIntent.getBroadcast(context,1,intent,PendingIntent.FLAG_UPDATE_CURRENT);
         AlarmManager alarmManager = (AlarmManager)context.getSystemService(ALARM_SERVICE);
-        alarmManager.setRepeating(AlarmManager.RTC_WAKEUP,System.currentTimeMillis()+intervalDuration,intervalDuration,pendingIntent);
+        try {
+            alarmManager.setRepeating(AlarmManager.RTC_WAKEUP,System.currentTimeMillis()+intervalDuration,intervalDuration,pendingIntent);
+        }catch (Exception e){
+            e.printStackTrace();
+        }
     }
 
     public static void setIntervalDuration(long intervalDuration) {

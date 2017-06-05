@@ -32,7 +32,6 @@ public class CustomUIRateAlert extends AlertDialog implements View.OnClickListen
 
     public CustomUIRateAlert(@NonNull Context context) {
         super(context, R.style.DesignDialog);
-        setCancelable(false);
     }
 
     @Override

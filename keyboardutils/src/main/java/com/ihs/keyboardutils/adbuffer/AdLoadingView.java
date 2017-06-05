@@ -10,6 +10,7 @@ import android.text.TextUtils;
 import android.util.AttributeSet;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.ViewTreeObserver;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
@@ -22,6 +23,7 @@ import com.ihs.keyboardutils.nativeads.NativeAdView;
 import com.ihs.keyboardutils.utils.KCAnalyticUtil;
 import com.ihs.keyboardutils.utils.RippleDrawableUtils;
 import com.ihs.keyboardutils.view.CustomProgressDrawable;
+import com.ihs.keyboardutils.view.FlashFrameLayout;
 
 /**
  * Created by Arthur on 17/4/12.
@@ -39,6 +41,8 @@ public class AdLoadingView extends RelativeLayout implements NativeAdView.OnAdLo
     //下载延迟常量
     private static final int DELAY_PERCENT_AFTER_DOWNLOAD_COMPLETE = 5;
     private boolean hasPurchaseNoAds = false;
+    private boolean isAdFlashAnimationPlayed = false;
+    private ViewTreeObserver.OnGlobalLayoutListener mGlobalLayoutListener;
 
     @Override
     public void onAdClicked(NativeAdView adView) {
@@ -53,6 +57,7 @@ public class AdLoadingView extends RelativeLayout implements NativeAdView.OnAdLo
 
     private String[] onLoadingText = {"Applying...", "Applying SuccessFully"};
     private NativeAdView nativeAdView;
+    private FlashFrameLayout flashAdContainer;
     private OnAdBufferingListener onAdBufferingListener;
 
     public AdLoadingView(Context context) {
@@ -102,15 +107,32 @@ public class AdLoadingView extends RelativeLayout implements NativeAdView.OnAdLo
         inflate.findViewById(R.id.ad_call_to_action)
                 .setBackgroundDrawable(
                         RippleDrawableUtils.getButtonRippleBackground(R.color.ad_button_blue));
+        flashAdContainer = (FlashFrameLayout) inflate.findViewById(R.id.ad_loading_flash_container);
 
 
         nativeAdView.setOnAdClickedListener(this);
+        if (mGlobalLayoutListener == null) {
+            mGlobalLayoutListener = getLayoutListener();
+        }
+        nativeAdView.getViewTreeObserver().addOnGlobalLayoutListener(mGlobalLayoutListener);
 
         ViewGroup adContainer = (ViewGroup) findViewById(R.id.fl_ad_container);
         if (nativeAdView.getParent() != null) {
             ((ViewGroup) nativeAdView.getParent()).removeView(nativeAdView);
         }
         adContainer.addView(nativeAdView);
+    }
+
+    private ViewTreeObserver.OnGlobalLayoutListener getLayoutListener() {
+        return new ViewTreeObserver.OnGlobalLayoutListener() {
+            @Override
+            public void onGlobalLayout() {
+                if (nativeAdView.isAdLoaded() && !isAdFlashAnimationPlayed) {
+                    flashAdContainer.startShimmerAnimation();
+                    isAdFlashAnimationPlayed = true;
+                }
+            }
+        };
     }
 
     private AdLoadingView setIcon(Drawable icon) {
@@ -230,6 +252,8 @@ public class AdLoadingView extends RelativeLayout implements NativeAdView.OnAdLo
     private void dismissSelf() {
         if (nativeAdView != null) {
             nativeAdView.release();
+            isAdFlashAnimationPlayed = false;
+            nativeAdView.getViewTreeObserver().removeGlobalOnLayoutListener(mGlobalLayoutListener);
         }
 
         if (dialog == null) {

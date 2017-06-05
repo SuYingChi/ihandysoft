@@ -70,24 +70,31 @@
             android:textStyle="normal"
             tools:text="subTitle\nsubTitle" />
 
-        <TextView
-            android:id="@+id/ad_call_to_action"
+        <com.ihs.keyboardutils.view.FlashFrameLayout
             android:layout_width="match_parent"
-            android:layout_height="40dp"
-            android:layout_below="@id/ad_cover_img"
+            android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
             android:layout_marginBottom="10dp"
             android:layout_marginLeft="12dp"
             android:layout_marginRight="12dp"
             android:layout_marginTop="15dp"
-            android:ellipsize="end"
-            android:fontFamily="sans-serif"
-            android:gravity="center"
-            android:textAllCaps="true"
-            android:textColor="#ffffff"
-            android:textSize="14sp"
-            android:textStyle="bold"
-            tools:text="Install" />
+            app:flash_angle="cw_0"
+            app:flash_duration="1000"
+            app:flash_repeat_count="0"
+            app:flash_auto_start="true">
+            <TextView
+                android:id="@+id/ad_call_to_action"
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:ellipsize="end"
+                android:fontFamily="sans-serif"
+                android:gravity="center"
+                android:textAllCaps="true"
+                android:textColor="#ffffff"
+                android:textSize="14sp"
+                android:textStyle="bold"
+                tools:text="Install" />
+        </com.ihs.keyboardutils.view.FlashFrameLayout>
     </LinearLayout>
 
 

@@ -6,6 +6,7 @@ import android.animation.ValueAnimator;
 import android.content.Context;
 import android.content.res.TypedArray;
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.LinearGradient;
@@ -19,6 +20,7 @@ import android.util.Log;
 import android.view.ViewTreeObserver;
 import android.widget.FrameLayout;
 
+import com.ihs.commons.utils.HSLog;
 import com.ihs.keyboardutils.R;
 
 /**
@@ -29,6 +31,7 @@ public class FlashFrameLayout extends FrameLayout {
 
     private static final String TAG = "FlashFrameLayout";
     private static final PorterDuffXfermode DST_IN_PORTER_DUFF_XFERMODE = new PorterDuffXfermode(PorterDuff.Mode.SRC_IN);
+    private static final int MASK_ASPECT_RATIO = 3; //刀光的宽高比暂定为3比1
 
     // enum specifying the shape of the highlight mask applied to the contained view
     public enum MaskShape {
@@ -676,8 +679,8 @@ public class FlashFrameLayout extends FrameLayout {
             @Override
             public void onGlobalLayout() {
                 boolean animationStarted = mAnimationStarted;
-                resetAll();
-                if (mAutoStart || animationStarted) {
+                if (mAutoStart /*|| animationStarted*/) {
+                    resetAll();
                     startShimmerAnimation();
                 }
             }
@@ -826,71 +829,87 @@ public class FlashFrameLayout extends FrameLayout {
         int width = mMask.maskWidth(getWidth());
         int height = mMask.maskHeight(getHeight());
 
-        mMaskBitmap = createBitmapAndGcIfNecessary(width, height);
-        Canvas canvas = new Canvas(mMaskBitmap);
-        Shader gradient;
-        switch (mMask.shape) {
-            default:
-            case LINEAR: {
-                int x1, y1;
-                int x2, y2;
-                switch (mMask.angle) {
-                    default:
-                    case CW_0:
-                        x1 = 0;
-                        y1 = 0;
-                        x2 = width;
-                        y2 = 0;
-                        break;
-                    case CW_90:
-                        x1 = 0;
-                        y1 = 0;
-                        x2 = 0;
-                        y2 = height;
-                        break;
-                    case CW_180:
-                        x1 = width;
-                        y1 = 0;
-                        x2 = 0;
-                        y2 = 0;
-                        break;
-                    case CW_270:
-                        x1 = 0;
-                        y1 = height;
-                        x2 = 0;
-                        y2 = 0;
-                        break;
-                }
-                gradient =
-                        new LinearGradient(
-                                x1, y1,
-                                x2, y2,
-                                mMask.getGradientColors(),
-                                mMask.getGradientPositions(),
-                                Shader.TileMode.REPEAT);
-                break;
-            }
-            case RADIAL: {
-                int x = width / 2;
-                int y = height / 2;
-                gradient =
-                        new RadialGradient(
-                                x,
-                                y,
-                                (float) (Math.max(width, height) / Math.sqrt(2)),
-                                mMask.getGradientColors(),
-                                mMask.getGradientPositions(),
-                                Shader.TileMode.REPEAT);
-                break;
-            }
-        }
-        canvas.rotate(mMask.tilt, width / 2, height / 2);
-        Paint paint = new Paint();
-        paint.setShader(gradient);
+//        mMaskBitmap = createBitmapAndGcIfNecessary(width, height);
+//        Canvas canvas = new Canvas(mMaskBitmap);
+//        Shader gradient;
+//        switch (mMask.shape) {
+//            default:
+//            case LINEAR: {
+//                int x1, y1;
+//                int x2, y2;
+//                switch (mMask.angle) {
+//                    default:
+//                    case CW_0:
+//                        x1 = 0;
+//                        y1 = 0;
+//                        x2 = width;
+//                        y2 = 0;
+//                        break;
+//                    case CW_90:
+//                        x1 = 0;
+//                        y1 = 0;
+//                        x2 = 0;
+//                        y2 = height;
+//                        break;
+//                    case CW_180:
+//                        x1 = width;
+//                        y1 = 0;
+//                        x2 = 0;
+//                        y2 = 0;
+//                        break;
+//                    case CW_270:
+//                        x1 = 0;
+//                        y1 = height;
+//                        x2 = 0;
+//                        y2 = 0;
+//                        break;
+//                }
+//                gradient =
+//                        new LinearGradient(
+//                                x1, y1,
+//                                x2, y2,
+//                                mMask.getGradientColors(),
+//                                mMask.getGradientPositions(),
+//                                Shader.TileMode.REPEAT);
+//                break;
+//            }
+//            case RADIAL: {
+//                int x = width / 2;
+//                int y = height / 2;
+//                gradient =
+//                        new RadialGradient(
+//                                x,
+//                                y,
+//                                (float) (Math.max(width, height) / Math.sqrt(2)),
+//                                mMask.getGradientColors(),
+//                                mMask.getGradientPositions(),
+//                                Shader.TileMode.REPEAT);
+//                break;
+//            }
+//        }
+//        canvas.rotate(mMask.tilt, width / 2, height / 2);
+//        Paint paint = new Paint();
+//        paint.setShader(gradient);
         // We need to increase the rect size to account for the tilt
-        int padding = (int) (Math.sqrt(2) * Math.max(width, height)) / 2;
-        canvas.drawRect(-padding, -padding, width + padding, height + padding, paint);
+//        int padding = (int) (Math.sqrt(2) * Math.max(width, height)) / 2;
+//        canvas.drawRect(-padding, -padding, width + padding, height + padding, paint);
 
+        // 由原先Shader画mask改为由资源提供mask
+        mMaskBitmap = BitmapFactory.decodeResource(getResources(), R.drawable.blade_highlight);
+        int bitmapWidth = mMaskBitmap.getWidth();
+        int bitmapHeight = mMaskBitmap.getHeight();
+        if (height != 0) {
+            bitmapHeight = height;
+            bitmapWidth = bitmapHeight * MASK_ASPECT_RATIO;
+        } else {
+            HSLog.e(TAG, "current height is 0");
+            resetMaskBitmap();
+            return null;
+        }
+        mMaskBitmap = Bitmap.createScaledBitmap(mMaskBitmap, bitmapWidth, bitmapHeight, true);
+//        if (bitmapWidth > width) {
+//            mMaskTranslation.set(-bitmapWidth, 0, bitmapWidth, 0); // mask移动起点
+//        }
         return mMaskBitmap;
     }
 
@@ -900,15 +919,26 @@ public class FlashFrameLayout extends FrameLayout {
         if (mAnimator != null) {
             return mAnimator;
         }
-        int width = getWidth();
-        int height = getHeight();
+        int bitmapWidth = 0;
+        int bitmapHeight = 0;
+        getMaskBitmap();
+        if (mMaskBitmap != null) {
+            bitmapWidth = mMaskBitmap.getWidth();
+            bitmapHeight = mMaskBitmap.getHeight();
+        } else {
+            HSLog.e(TAG, "getMaskBitmap error");
+        }
+        int width = bitmapWidth > getWidth() ? bitmapWidth : getWidth();
+        int height = bitmapHeight > getHeight() ? bitmapHeight : getHeight();
+        HSLog.d(TAG, "bitmapWidth: " + bitmapWidth + " FlashFrameLayout width: " + getWidth());
+        resetMaskBitmap();
         switch (mMask.shape) {
             default:
             case LINEAR:
                 switch (mMask.angle) {
                     default:
                     case CW_0:
-                        mMaskTranslation.set(-width, 0, width, 0);
+                        mMaskTranslation.set(-width, 0, getWidth(), 0);
                         break;
                     case CW_90:
                         mMaskTranslation.set(0, -height, 0, height);
