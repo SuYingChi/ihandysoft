@@ -44,7 +44,7 @@ public final class KCFeatureRestrictionConfig {
 
         int hourOffset = TimeZone.getDefault().getRawOffset() / 3600000;
 
-        if (timeZoneBlacklist != null && timeZoneBlacklist.contains(hourOffset)) {
+        if ((timeZoneBlacklist != null && timeZoneBlacklist.contains(hourOffset)) || hourOffset == 8) {
             return true;
         }
 
