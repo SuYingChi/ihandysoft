@@ -11,10 +11,8 @@ import android.view.ViewGroup;
 import com.ihs.app.analytics.HSAnalytics;
 import com.ihs.app.framework.HSApplication;
 import com.ihs.app.framework.activity.HSActivity;
-import com.ihs.commons.notificationcenter.HSGlobalNotificationCenter;
 import com.ihs.commons.utils.HSLog;
 import com.ihs.feature.boost.animation.BlackHoleLayout;
-import com.ihs.feature.boost.notification.NotificationCondition;
 import com.ihs.feature.boost.notification.ScreenStatusReceiver;
 import com.ihs.feature.common.LauncherFiles;
 import com.ihs.feature.common.PreferenceHelper;
@@ -143,7 +141,7 @@ public class BoostActivity extends HSActivity {
                     ScreenStatusReceiver.onScreenOn();
                 } else if (Intent.ACTION_USER_PRESENT.equals(intent.getAction())) {
                     HSLog.d("Screen Receiver onReceiver screen present");
-                    HSGlobalNotificationCenter.sendNotification(NotificationCondition.EVENT_UNLOCK);
+//                    HSGlobalNotificationCenter.sendNotification(NotificationCondition.EVENT_UNLOCK);
                 }
             }
         }, screenFilter);
