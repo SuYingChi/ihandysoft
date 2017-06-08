@@ -54,8 +54,12 @@ import com.ihs.chargingscreen.utils.CommonUtils;
 import com.ihs.chargingscreen.utils.DisplayUtils;
 import com.ihs.commons.config.HSConfig;
 import com.ihs.commons.notificationcenter.HSGlobalNotificationCenter;
+import com.ihs.commons.notificationcenter.INotificationObserver;
+import com.ihs.commons.utils.HSBundle;
 import com.ihs.commons.utils.HSLog;
 import com.ihs.keyboardutils.R;
+import com.ihs.keyboardutils.alerts.KCAlert;
+import com.ihs.keyboardutils.iap.IAPMgr;
 import com.ihs.keyboardutils.utils.KCAnalyticUtil;
 import com.ihs.keyboardutils.utils.RippleDrawableUtils;
 
@@ -74,6 +78,7 @@ import static android.view.WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS;
 import static android.view.WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN;
 import static com.ihs.chargingscreen.HSChargingScreenManager.getChargingState;
 import static com.ihs.chargingscreen.activity.DismissKeyguradActivity.isKeyguardSecure;
+import static com.ihs.keyboardutils.iap.IAPMgr.NOTIFICATION_REMOVEADS_PURCHASED;
 
 /**
  * Created by zhixiangxiao on 5/4/16.
@@ -312,7 +317,7 @@ public class ChargingScreenActivity extends Activity {
         } catch (Exception e) {
         }
 
-        FrameLayout adContainer = (FrameLayout) findViewById(R.id.ad_container);
+        final FrameLayout adContainer = (FrameLayout) findViewById(R.id.ad_container);
         txtBatteryLevelPercent = (TextView) findViewById(R.id.txt_battery_level);
         Typeface tf = Typeface.createFromAsset(getAssets(), "fonts/dincond_medium.otf");
         txtBatteryLevelPercent.setTypeface(tf);
@@ -348,6 +353,44 @@ public class ChargingScreenActivity extends Activity {
                 finish();
             }
         });
+
+        // 单次关闭广告或永久删除广告
+        final ImageView removeAds = (ImageView) findViewById(R.id.remove_ads);
+        if (!IAPMgr.getInstance().needRemoveAds()) {
+            removeAds.setVisibility(View.GONE);
+        } else {
+            removeAds.setOnClickListener(new OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    KCAlert.Builder builder = new KCAlert.Builder();
+                    builder.setTitle("Remove Ads")
+                            .setMessage("Remove all ads forever or just this time?")
+                            .setNegativeButton("Just once", new OnClickListener() {
+                                @Override
+                                public void onClick(View view) {
+                                    adContainer.removeView(acbExpressAdView);
+                                    removeAds.setVisibility(View.GONE);
+                                }
+                            })
+                            .setPositiveButton("Forever", new OnClickListener() {
+                                @Override
+                                public void onClick(View view) {
+                                    IAPMgr.getInstance().purchaseRemoveAds();
+
+                                    HSGlobalNotificationCenter.addObserver(NOTIFICATION_REMOVEADS_PURCHASED, new INotificationObserver() {
+                                        @Override
+                                        public void onReceive(String s, HSBundle hsBundle) {
+                                            HSGlobalNotificationCenter.removeObserver(this);
+                                            adContainer.removeView(acbExpressAdView);
+                                            removeAds.setVisibility(View.GONE);
+                                        }
+                                    });
+                                }
+                            })
+                            .show();
+                }
+            });
+        }
     }
 
     private void showChargingIndicatorText() {
