@@ -22,7 +22,7 @@ allprojects {
 
     //////////////////iHandy Maven configuration begin//////////////////
     ext {
-        frameworkVersion = "gm:4.2.0.gm"
+        frameworkVersion = "gm:4.2.4.gm"
         supportVersion = "25.2.0"
         facebookSdkVersion = "4.8.2"
         gmsVersion = "10.2.0"

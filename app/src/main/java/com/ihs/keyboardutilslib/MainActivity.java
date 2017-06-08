@@ -12,7 +12,6 @@ import android.widget.Toast;
 
 import com.ihs.app.framework.HSApplication;
 import com.ihs.app.framework.activity.HSActivity;
-import com.ihs.keyboardutils.ads.KCInterstitialAd;
 import com.ihs.keyboardutils.alerts.ExitAlert;
 import com.ihs.keyboardutils.utils.CustomShareUtils;
 import com.ihs.keyboardutilslib.adactivities.AdDemoActivity;
@@ -32,7 +31,8 @@ public class MainActivity extends HSActivity {
             "Custom Share Demo",
             "Exit Alert Demo",
             "Charging Locker Settings",
-            "Camera Utils"
+            "Camera Utils",
+            "Country Code Parser"
     };
 
     Class[] activityClassArray = {
@@ -43,7 +43,8 @@ public class MainActivity extends HSActivity {
             null,
             null,
             ChargingLockerSettingsActivity.class,
-            CameraUtilActivity.class
+            CameraUtilActivity.class,
+            CountryCodeUtil.class
     };
 
     @Override
