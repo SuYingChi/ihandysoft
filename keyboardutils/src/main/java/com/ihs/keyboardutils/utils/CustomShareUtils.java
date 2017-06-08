@@ -143,7 +143,13 @@ public class CustomShareUtils {
                 nativeAdView.release();
             }
         });
-        dialog.show();
+        if (context!=null && context instanceof Activity){
+            if (!((Activity) context).isFinishing()){
+                dialog.show();
+            }
+        }else {
+            dialog.show();
+        }
         return dialog;
     }
 
