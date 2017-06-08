@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-
+    <attr name="lengthWidthRatio" format="float" />
     <declare-styleable name="GifImageView">
         <attr name="corner_radius" format="dimension" />
     </declare-styleable>
@@ -11,7 +11,7 @@
 
     <!--All apps interstitial ad view.-->
     <declare-styleable name="AllAppsScaleLinearLayout">
-        <attr name="lengthWidthRatio" format="float"/>
+        <attr name="lengthWidthRatio"/>
     </declare-styleable>
     <declare-styleable name="FlashFrameLayout">
         <attr name="flash_auto_start" format="boolean" />
@@ -106,10 +106,9 @@
     <declare-styleable name="ShimmerView">
         <attr name="reflectionColor" format="color"/>
     </declare-styleable>
-
     <!--screenLocker-->
     <declare-styleable name="CustomFrameLayout">
-        <attr name="lengthWidthRatio" format="float" />
+        <attr name="lengthWidthRatio"/>
     </declare-styleable>
 
     <style name="ToolbarTextAppearance" parent="TextAppearance.AppCompat.Widget.ActionBar.Title" />
