@@ -43,4 +43,697 @@
     <string name="charging_screen_settings_description">Cihazı aşırı şarja karşı koru</string>
     <string name="charging_screen_settings_subtitle">(Reklam içerir)</string>
     <string formatted="false" name="charging_screen_time">%s:%s</string>
+
+    <string name="empty_folder_name">Yeni Klasör</string>
+    <string name="activity_not_found">Uygulama yüklü değil</string>
+    <string name="activity_not_available">Uygulama kullanılamıyor</string>
+    <string name="safe_mode_shortcut_error">İndirilen uygulama Güvenli modda devre dışı bırakıldı</string>
+    <string name="safe_mode_widget_error">Parçacıklar Güvenli modda devre dışı bırakıldı</string>
+    <string name="long_press_widget_to_add">Bir parçacık seçmek için dokunun &amp; tutun</string>
+    <string name="widget_dims_format">%1$d \u00d7 %2$d</string>
+    <string name="all_apps_search_bar_hint">" Uygulama Ara"</string>
+    <string name="all_apps_search_bar_empty">Sonuç bulunamadı</string>
+    <skip/>
+    <string name="out_of_space">Bu Ana Sayfa ekranında başka boş yer yok</string>
+    <string name="hotseat_out_of_space">Favoriler tepsisinde başka boş yer yok</string>
+    <string name="all_apps_button_label">Uygulamalar</string>
+    <string name="delete_target_label">Kaldır</string>
+    <string name="delete_target_uninstall_label">Kaldır</string>
+    <string name="info_target_label">Uygulama bilgileri</string>
+    <string name="desktop_target_label">Masaüstü</string>
+    <skip/>
+    <string name="permlab_read_settings">Ana Sayfa ayarları ve kısayollarını oku</string>
+    <string name="permdesc_read_settings">bir uygulamanın Ana Sayfada ayarları ve kısayolları okumasına izin verir</string>
+    <string name="permlab_write_settings">Ana Sayfa ayarları ve kısayollarını yaz</string>
+    <string name="permdesc_write_settings">bir uygulamanın Ana Sayfada ayarları ve kısayolları değiştirmesine izin verir</string>
+    <string name="msg_no_phone_permission">%1$s uygulamasına telefon araması yapma izni verilmedi</string>
+    <string name="failed_to_add_widget_text">Masaüstüne parçacık eklenemedi</string>
+    <skip/>
+    <string name="gadget_error_text">Parçacık yüklemesinde hata oluştu</string>
+    <string name="gadget_setup_text">Kurulum</string>
+    <string name="uninstall_system_app_text">Bu bir sistem uygulamasıdır ve kaldırılamaz</string>
+    <string name="folder_add_shortcuts_view_cancel_button">İptal</string>
+    <string name="folder_add_shortcuts_view_ok_button">Tamam</string>
+    <string name="app_store_category_name_favorite_tools">Araç Takımı</string>
+    <string name="app_store_category_name_tools">Araçlar</string>
+    <string name="app_store_category_name_social">Sosyal</string>
+    <string name="app_store_category_name_games">Oyunlar</string>
+    <string name="app_store_category_name_lifestyle">Yaşam tarzı</string>
+    <string name="app_store_category_name_photography">Fotoğraf</string>
+    <string name="app_store_category_name_media">Medya</string>
+    <string name="app_store_category_name_news">Haberler \u0026 Kitaplar</string>
+    <string name="app_store_others">Diğerleri</string>
+    <string name="folder_placeholder_text">Bu klasöre herhangi bir uygulama ekleyebilirsiniz.</string>
+    <string name="abandoned_clean_this">Kaldır</string>
+    <string name="abandoned_search">Ara</string>
+    <string name="abandoned_promises_title">Bu uygulama yüklü değil</string>
+    <string name="abandoned_promise_explanation">Bu simgenin uygulaması yüklü değil. \nBunu kaldırabilir veya uygulamayı arayıp manuel olarak yükleyebilirsiniz.</string>
+    <string name="weather_title">Hava Durumu</string>
+    <string name="weather_wind_speed">Rüzgar Hızı:</string>
+    <string name="weather_wind_direction">Rüzgar Yönü:</string>
+    <string name="weather_visibility">Görüş Uzaklığı:</string>
+    <string name="weather_humidity">Nemlilik:</string>
+    <string name="weather_sunrise">Gün Doğumu:</string>
+    <string name="weather_sunset">Gün Batımı:</string>
+    <string name="weather_last_update_today">Güncelleme saati: %1$s</string>
+    <string name="weather_last_update_before_today">Güncelleme tarihi: %1$s</string>
+    <string name="weather_no_info_placeholder">--</string>
+    <string name="weather_no_info_placeholder_time">--:--</string>
+    <string name="weather_high_low_temperature">%1$s\u00b0\u00a0/\u00a0%2$s\u00b0</string>
+    <string name="weather_kph">km/h</string>
+    <string name="weather_mph">mph</string>
+    <string name="weather_km">km</string>
+    <string name="weather_mi">mi</string>
+    <string name="weather_time">%1$s:%2$s</string>
+    <string name="weather_today">Bugün</string>
+    <string name="weather_settings_title">Hava Durumu Ayarları</string>
+    <string name="weather_settings_item_temperature_unit">Sıcaklık birimi</string>
+    <string name="weather_settings_item_distance_unit">Mesafe birimi</string>
+    <string name="weather_settings_item_add_new_city">Yeni şehir ekle</string>
+    <string name="weather_settings_celsius">\u00b0C</string>
+    <string name="weather_settings_fahrenheit">\u00b0F</string>
+    <string name="weather_settings_cf_slash">/</string>
+    <string name="weather_settings_cities_title">Şehir</string>
+    <string name="weather_city_add_new_btn">Yeni şehir ekle</string>
+    <string name="weather_city_more_than_limit">Sadece 12 şehir ekleyebilirsiniz</string>
+    <string name="weather_city_searching_prompt">Şehirler aranıyor…</string>
+    <string name="weather_city_empty_result_prompt">Eşleşen şehir yok</string>
+    <string name="weather_city_loading_message">Yükleniyor…</string>
+    <string name="weather_city_load_failed_message">Tüh, hava durumu yüklenemedi.</string>
+    <string name="weather_clock_widget_name">Hava Durumu &amp; Saat</string>
+    <string name="weather_clock_unknown_weather_message">Bilinmiyor</string>
+    <string name="sunny">Güneşli</string>
+    <string name="overcast">Kasvetli</string>
+    <string name="clear">Açık</string>
+    <string name="cloudy">Bulutlu</string>
+    <string name="rain">Yağmurlu</string>
+    <string name="drizzle">Çisentili</string>
+    <string name="rain_shower">Sağanak Yağmurlu</string>
+    <string name="snow">Karlı</string>
+    <string name="snow_shower">Kar Sağanağı</string>
+    <string name="sleet">Sulu Sepken</string>
+    <string name="hazy">Puslu</string>
+    <string name="dust">Tozlu</string>
+    <string name="thunderstorm">Gök Gürültülü Fırtına</string>
+    <string name="cold">Soğuk</string>
+    <string name="hot">Sıcak</string>
+    <string name="windy">Rüzgarlı</string>
+    <string name="menu_item_settings">Ayarlar</string>
+    <string name="setting_item_mobile">Mobile Data</string>
+    <string name="setting_item_wifi">Wi-Fi</string>
+    <string name="setting_item_airplane">Uçak Modu</string>
+    <string name="setting_item_auto_brightness">Otomatik Parlaklık</string>
+    <string name="setting_item_rotate">Otomatik Döndürme</string>
+    <string name="setting_item_silence">Sessiz</string>
+    <string name="setting_item_vibration">Titreşim</string>
+    <string name="setting_item_bluetooth">Bluetooth</string>
+    <string name="setting_item_flashlight">El feneri</string>
+    <string name="more_system_settings_button_title">Sistem Ayarları</string>
+    <string name="more_launcher_settings_button_title">Launcher Ayarları</string>
+    <string name="setting_device_not_support_message">Cihazınız bunu desteklemiyor.</string>
+    <string name="boost_tip_optimal">Cihazınız zaten en iyi durumda!</string>
+    <string name="boost_tip_detail_memory">Telefonunuz artık ışık hızında!</string>
+    <string name="customize_title">Kişiselleştir</string>
+    <string name="customize_wallpapers_title">Duvar Kağıtları</string>
+    <string name="customize_themes_title">Temalar</string>
+    <string name="wallpaper_toast_set_failed">Bu duvar kağıdı ile ilgili bir sorun oluştu, lütfen tekrar deneyin</string>
+    <string name="customize_local_title">Benimki</string>
+    <string name="wallpaper_setting_progress_dialog_text">Duvar kağıdı ayarlanıyor…</string>
+    <string name="icon_pack_name">Launcher Varsayılanı</string>
+    <string name="no_icon_pack_name">Sistem Varsayılanı</string>
+    <string name="theme_set_alert_title">Tema Ayarla</string>
+    <string name="theme_set_alert_set_system_theme_body">Sistem Varsayılanı temanız olarak ayarlansın mı？</string>
+    <string name="feedback_title">Geri Bildirim</string>
+    <string name="feedback_content_placeholder">" Geri bildiriminiz daha iyi hale gelmemize yardımcı olur"</string>
+    <string name="feedback_email_placeholder">" Lütfen e-posta adresinizi girin"</string>
+    <string name="feedback_submit_btn">Gönder</string>
+    <string name="feedback_toast_empty_content">Lütfen geri bildiriminizi yazın</string>
+    <string name="feedback_toast_invalid_email">Lütfen geçerli bir e-posta adresi girin</string>
+    <string name="feedback_toast_send_success">Geri bildiriminiz için teşekkürler!</string>
+    <string name="effect_classic">Klasik</string>
+    <string name="effect_cube">Küp</string>
+    <string name="effect_roll">Yuvarla</string>
+    <string name="effect_rotation">Döndür</string>
+    <string name="effect_stack">Yığ</string>
+    <string name="effect_windmill">Rüzgar gülü</string>
+    <string name="effect_flip">Ters çevir</string>
+    <string name="effect_page">Sayfa Çevir</string>
+    <string name="launcher_widget_time_title">Saat+Hava Durumu</string>
+    <string name="launcher_widget_widgets_title">Sistem Parçacıkları</string>
+    <string name="launcher_widget_boost_title">Yükselt</string>
+    <string name="launcher_widget_settings_title">Ayarlar</string>
+    <string name="launcher_widget_wallpaper_title">Duvar Kağıtları</string>
+    <string name="launcher_widget_flashlight_title">El feneri</string>
+    <string name="launcher_widget_data_usage_title">Veri Kullanımı</string>
+    <string name="launcher_widget_battery_title">Pil</string>
+    <string name="launcher_widget_app_mgr_title">Uygulama Yönetici</string>
+    <string name="launcher_widget_update_title">Güncelle</string>
+    <string name="launcher_widget_feedback_title">Geri Bildirim</string>
+    <string name="launcher_widget_effects_title">Efektler</string>
+    <string name="launcher_widget_theme_title">Temalar</string>
+    <string name="launcher_settings_title">Camera Pro Ayarları</string>
+    <string name="launcher_settings_section_default_launcher">Varsayılan başlatıcı olarak ayarla</string>
+    <string name="preferences">Tercihler</string>
+    <string name="launcher_settings_advanced_clean_detail">Telefonunuzun performansını daha etkili şekilde yükseltin</string>
+    <string name="launcher_settings_advanced_section_about">Hakkında</string>
+    <string name="launcher_settings_auto_boost_section">Otomatik Yükseltme</string>
+    <string name="launcher_settings_auto_boost_detail">Telefonunuzda gecikmeler başladığında performansı otomatik olarak yükseltin</string>
+    <string name="settings_auth_line1">Nasıl etkinleştirilir?</string>
+    <string name="settings_auth_line2">\"Camera Pro\"\'ı bulun ve açın.</string>
+    <string name="launcher_settings_five_star">5 Yıldızlı Puan</string>
+    <string name="launcher_settings_tell_my_friends">Arkadaşlarıma bahset</string>
+    <string name="launcher_settings_feedback">Geri Bildirim</string>
+    <string name="launcher_settings_update">Güncelle</string>
+    <string name="launcher_settings_current_version_detail">Geçerli sürüm: v%1$s</string>
+    <string name="privacy_policy">Gizlilik Politikası</string>
+    <string name="terms_of_service">Hizmet Şartları</string>
+    <string name="auto_category_title">Akıllı Sıralama</string>
+    <string name="auto_category_open_btn">Aç</string>
+    <string name="set_as_default_btn_text">Tamam</string>
+    <string name="resolver_wizard_select_launcher_1">Seçin</string>
+    <string name="resolver_wizard_select_launcher_2">\"Camera Pro\"</string>
+    <string name="resolver_wizard_click_always">\"HER ZAMAN\” tuşuna dokunun</string>
+    <string name="share_through">Paylaşın</string>
+    <string name="news_title">Başlıklar</string>
+    <string name="news_settings_item_show_on_home_des">Ana sayfa ekranında sağa çekin</string>
+
+    <string name="news_settings_title">Manşet ayarları</string>
+    <string name="news_refresh_success_news_updated">%1$s haber güncellendi</string>
+    <string name="news_refresh_success_no_news_updated">En yenisine güncelle</string>
+    <string name="news_settings_item_load_pictures_title">Veri kaydet</string>
+    <string name="news_settings_item_load_pictures_des">Mobil ağ altında resim yok</string>
+    <string name="news_detail_error_reload">Yeniden yükle</string>
+    <string name="pull_to_refresh">Yenilemek için çek</string>
+    <string name="release_to_refresh">Yenilemek için serbest bırak</string>
+    <string name="icon_size_title">Simge boyutu</string>
+    <string name="icon_size_settings_title">Simge boyutu</string>
+    <string name="icon_font_size_settings_title">Simge etiketi boyutu</string>
+    <string name="icon_font_color_settings_title">Simge etiketi rengi</string>
+    <string name="icon_preview_title">Önizleme</string>
+    <string name="icon_preview_messenger_title">Messenger</string>
+    <string name="icon_preview_phone_title">Telefon</string>
+    <string name="icon_preview_camera_title">Kamera</string>
+    <string name="icon_preview_browser_title">Tarayıcı</string>
+    <string name="folder_unpack_confirm_title">Klasörü Çıkart</string>
+    <string name="release_target_label">Çıkart</string>
+    <!-- %1$s is the version number which should be kept, for example “v1.0.0"" -->
+    <string name="launcher_settings_latest_version_detail">En son sürüm: v%1$s</string>
+
+    <!-- The following is an alert dialog which includes title, description and actions. Air is the name of the APP that needn’t to be translated.  -->
+    <string name="set_as_default_alert_title">Uyarı</string>
+    <string name="set_as_default_alert_detail"> Camera Pro varsayılan olarak atanamadı. Tekrar denensin mi?</string>
+    <string name="set_as_default_alert_ok_btn">Tekrar Dene</string>
+    <string name="set_as_default_alert_cancel_btn">Daha Sonra</string>
+
+    <!-- It’s the slogan of the app which can make your phone fast & stylish. &amp; stands for & in program. -->
+    <string name="welcome_description_text">Hızlı &amp; Şık</string>
+
+    <!-- It’s an action button, so it’s better to be short -->
+    <string name="welcome_start_btn">BAŞLAT</string>
+    <string name="welcome_select_wallpaper">En sevdiğiniz duvar kağıdını seçin </string>
+
+    <!-- It’s a prompt message that our app is preparing the desktop of the phone. -->
+    <string name="welcome_loading">Masaüstünüz hazırlanıyor …</string>
+
+
+    <string name="online_wallpaper_tab_title_categories">Kategoriler</string>
+    <string name="settings_auth_guide">\"Camera Pro\" \’ı açarak okunmamış posta, Facebook, WhatsApp, vb. mesajları hakkında uyarı alın.</string>
+    <string name="settings_badge_unread_msg">Okunmamış Mesajlar</string>
+    <string name="settings_badge_recommended_apps">Önerilen Uygulamalar</string>
+    <string name="settings_badge_switch_hint">Okunmamış mesaj rozeti</string>
+    <string name="auto_organize_desktop_title">Masaüstünü otomatik düzenle</string>
+    <string name="settings_auth_button_text">Aç</string>
+
+
+    <!-- Hide apps means apps invisible on desktop -->
+    <string name="hide_apps_bottom_button_hide">Gizle</string>
+    <string name="hide_apps_settings_title">Uygulama ayarlarını gizle</string>
+    <string name="hide_apps_empty_prompt">Bu klasöre herhangi bir uygulamayı ekleyebilirsiniz.</string>
+
+    <!-- It’s a gesture of swiping up on desktop with one finger -->
+    <string name="hide_apps_activation_method_one_finger">Tek parmağınızla yukarıya çekin</string>
+    <string name="hide_apps_activation_method_two_fingers">İki parmağınızla yukarıya çekin</string>
+
+    <!-- Unlock pattern is a kind of password, which has 9 dots on the screen organized in a 3×3 matrix. To unlock the phone the pattern has to be drawn on the screen, connecting certain points in a certain order. -->
+    <string name="hide_apps_password_toggle">Parola etkinleştir</string>
+    <string name="hide_apps_set_password_title">Parola ayarla</string>
+    <string name="set_passwd_reset">Parola Sıfırla</string>
+    <string name="change_gesture_passwd_info">Güvenliğiniz için lütfen bir kilit açma deseni çizin</string>
+    <string name="set_gesture_passwd_please">Lütfen bir desen çizin </string>
+    <string name="set_gesture_passwd_verify">Lütfen tekrar bir kilit açma deseni çizin</string>
+    <string name="set_gesture_passwd_least">En az 4 noktayı birleştirin, lütfen tekrar deneyin</string>
+    <string name="set_gesture_passwd_failed">Desen eşleşmiyor, lütfen tekrar deneyin</string>
+    <string name="set_gesture_passwd_success">Desen açıldı</string>
+
+    <string name="loading">Yükleniyor…</string>
+    <string name="customize_themes_title_local">Temalarım</string>
+    <string name="terms_of_service_settings_title">Hizmet Şartları</string>
+    <string name="privacy_policy_settings_title">Gizlilik Politikası</string>
+    <string name="customize_wallpapers_title_local">Duvar Kağıtlarım</string>
+    <string name="load_more">Yükleniyor…</string>
+
+
+    <!-- Please translate and replace the words in red color -->
+
+
+    <!--It guides users to enter password -->
+    <string name="input_passwd">Parola gir </string>
+
+
+    <!-- Notification toolbar is a bar with icons of Wi-Fi, Mobile Data, Flashlight and so on, which you can set your phone quickly by switching them On/Off. -->
+    <string name="notification_toolbar_title">Bildirim araç çubuğu </string>
+
+
+    <!-- It’s a switch to turn On/Off Mobile Data, better be short in one word or two -->
+    <string name="notification_toolbar_data">Veri</string>
+
+
+    <!-- A collection of all apps in your phone -->
+    <string name="notification_toolbar_all_apps">Tüm Uygulamalar</string>
+
+
+
+    <!-- It shows how much battery has been left. It will be used like “20% Battery Left” -->
+    <string name="boost_notification_low_battery_title">Kalan Pil</string>
+    <string name="boost_notification_low_battery_description">Daha uzun süre kullanmak için pilden tasarruf edin </string>
+
+
+    <!-- It’s a button for saving battery, better be short in one word or two -->
+    <string name="boost_notification_low_battery_btn">Tasarruf Et</string>
+
+    <!-- It shows how much battery has been save. It will be used like “Battery Life Extended 20 minutes” -->
+    <string name="boost_tip_title_battery">Pil Ömrü Uzatıldı </string>
+    <string name="boost_tip_detail_battery">Pil daha uzun süre kullanılabilir!</string>
+
+
+    <string name="daily_weather_notification">Günlük hava tahmini</string>
+
+
+    <!-- It’s a button for detail content, better be short in one word or two -->
+    <string name="weather_notification_btn">Detaylı</string>
+
+
+    <!-- It show how much memory has been used. It will be used like “200MB Memory Used” -->
+    <string name="boost_notification_low_ram_title">Kullanılan Bellek </string>
+    <string name="boost_notification_low_ram_description"> Bellekte yer açmak için hızlandırın </string>
+
+    <!-- It shows how much memory has been released. It will be used like “Memory Released 200MB” -->
+    <string name="boost_tip_title_memory">Boşaltılan Bellek </string>
+
+
+    <!-- The temperature of phone is too hot, better be short -->
+    <string name="boost_notification_hot_cpu_title">Telefon Aşırı Isındı </string>
+
+
+    <!-- It’s a button for cooling down temperature of phone, better be short in one word or two -->
+    <string name="boost_notification_hot_cpu_btn">Soğut</string>
+
+
+    <!-- It shows how much temperature has been cooled down. It will be used like “Cool Down 10 ℉／℃” -->
+    <string name="boost_tip_title_cpu_temperature">Soğut </string>
+    <string name="boost_notification_hot_cpu_description">CPU’yu Soğut </string>
+    <string name="boost_tip_detail_cpu_temperature">CPU soğutuldu.</string>
+
+
+    <!-- A new themes for phone including wallpapers and app icons. -->
+    <string name="theme_notification_title">Yeni Tema </string>
+    <string name="theme_notification_description">Telefonunuz için yeni bir stil deneyin!</string>
+
+    <string name="boost_notification_low_battery_title_figure">%1$s%%</string>
+    <string name="boost_notification_low_ram_title_figure">%1$s%%</string>
+    <string name="boost_notification_low_ram_btn">Yükselt</string>
+    <string name="boost_title">Yükselt</string>
+    <string name="notification_toolbar_wifi">Wi-Fi</string>
+    <string name="notification_toolbar_flash_light"> El feneri </string>
+
+    <!-- Please translate and replace the words in red color -->
+
+
+    <!-- Advanced cleaning is an operation that cleaning memory in an advanced way to stop apps and make apps can not restart, which can make phone run faster! -->
+    <string name="advanced_boost_title">Gelişmiş temizleme </string>
+    <!-- Accessibility Service is a settings option in phone! -->
+    <!-- It will be used like “Freed up 200MB” , which means memory released in phone-->
+
+    <!-- An operation to make a app visible on the screen, better be short in one word or two -->
+    <string name="unhide_label">Göster</string>
+
+    <!-- “Magic Locker” is an app name, don’t need to translate. Themes include images and app icons, which can make phone screen stylish. -->
+    <string name="locker_download_hint"> Bu harika temaları kullanmak için Sihirli Kilidi edinin. </string>
+    <!-- Locker can lock the screen of your phone. -->
+    <string name="online_theme_tab_title_locker">Kilit</string>
+    <!-- An operation to install an app, better be short in one word or two -->
+    <string name="locker_install_btn">Yükle</string>
+
+
+    <string name="online_theme_tab_title_launcher">launcher</string>
+
+    <!-- Icon pack is a collection of designed app icons that can replace the default ones of your phone. -->
+    <string name="icon_pack_settings_title">Simge paketi </string>
+    <!-- Memory has been released of the phone, which boosts your phone and makes it run faster. Better be short in one word or two.-->
+    <!-- Type the English name of the city and select the city from the search result. Only support English -->
+    <string name="weather_search_hint">"Şehri yazın ve seçin (sadece İngilizce)"</string>
+    <!-- Camera Pro is the name of App, which don’t need to translate. Themes can make your phone beautiful including wallpapers and app icons. The sentence below will be used in Applying theme like “ iOS 10 theme for Camera Pro has been installed. Apply it now?”-->
+    <string name="apply_theme_text">%1$s Camera Pro için yüklendi. Hemen uygulansın mı?</string>
+    <string name="apply_btn">Uygula</string>
+    <string name="welcome_apply_theme">Tema uygulanıyor </string>
+
+    <string name="app_store_name_system">Sistem</string>
+    <!-- A container with groups of apps, to keep and organize apps in phone. -->
+    <string name="auto_default_name_prefix">Klasör</string>
+
+
+    <!-- The following words are operations in Screen manager. -->
+    <!-- Screen Manager is a feature that you can manage your phone’s screens by ranking screens, increasing a new screen or deleting a screen . -->
+    <string name="launcher_widget_screen_manager_title">Ekran Yöneticisi </string>
+    <!-- You can drag one screen and move its position to rank screens. -->
+    <string name="screen_manager_hint_drag">Sıralamak için sayfayı sürükleyebilirsiniz </string>
+    <!-- Shake the phone to remove blanks between icons and make icons orderliness. -->
+    <string name="screen_manager_hint_shake">Simgeleri hizalamak için salla </string>
+
+
+    <!-- The following words are operations in editing pictures. -->
+    <!-- Crop, zoom in or zoom out a picture to suit your want.-->
+    <!-- You can move the picture to choose the most beautiful part and scale to make the picture big or small. -->
+    <!--Edit the picture over again without storing the changes you have edited. -->
+    <string name="online_wallpaper_edit_reset_btn">Sıfırla</string>
+    <!-- Exit the picture editing without storing the changes you have edited. -->
+    <string name="online_wallpaper_cancel_edit_dialog_content">Çıkmadan önce değişiklikler iptal edilsin mi?</string>
+
+    <!-- All of the content. Better be short in one word or two. -->
+    <string name="online_wallpaper_tab_title_all">Tümü</string>
+    <!-- A tag shows the content is used right now. Better be short in one word or two. -->
+
+
+    <string name="launcher_widget_icon_size_title">Simge boyutu</string>
+    <string name="online_wallpaper_edit_cancel_btn">İptal</string>
+    <string name="customize_my_wallpapers_remove_btn">Kaldır</string>
+    <string name="launcher_widget_system_settings_title">Sistem Ayarları</string>
+    <string name="network_error">Ağ hataları</string>
+    <string name="launcher_widget_launcher_settings_title">Launcher Ayarları</string>
+    <string name="online_wallpaper_apply_btn">Duvar kağıdı olarak ayarla</string>
+
+    <string name="set_as_default">Air Luncher’ı ana sayfa olarak ayarla. </string>
+    <string name="notification_default_cleared_title">Ana sayfa temizlendi.</string>
+    <string name="set_as_default_boost_battery_body">Camera Pro telefonunuzu destekler ve pilinizin daha uzun dayanmasını sağlar! Camera Pro ana sayfa olarak ayarlansın mı?</string>
+    <string name="set_as_default_boost_cool_body">Camera Pro telefonunuzun soğumasını destekleyerek aşırı ısınmasını engeller! Camera Pro ana sayfa olarak ayarlansın mı?</string>
+    <string name="set_as_default_boost_mem_body">Camera Pro telefonunuzu destekler ve asla hızı konusunda endişelenmezsiniz. Camera Pro ana sayfa olarak ayarlansın mı?</string>
+    <string name="set_as_default_info_2">Camera Pro telefonunuzun sizi ve tarzınızı yansıtmasını sağlar! Camera Pro ana sayfa olarak ayarlansın mı?</string>
+    <string name="set_as_default_info_3">Camera Pro telefonunuzun daha verimli hale getirir! Camera Pro ana sayfa olarak ayarlansın mı?</string>
+    <string name="notification_set_as_default_description_1">Telefonunuzu destekleyin ve hızlı olmasını sağlayın.</string>
+    <string name="notification_set_as_default_description_2">Telefonunuzu kişiselleştirin ve tarzınızı yansıtın.</string>
+    <string name="notification_set_as_default_description_3">Telefonunuzu daha verimli hale getirin.</string>
+    <string name="notification_set_as_default_title">Ana Sayfa olarak ayarla</string>
+    <string name="set_as_default_boost_battery_figure">%1$d dk.</string>
+    <string name="local_wallpaper_pick_error">Duvar kâğıdını seçerken bir hata oluştu.</string>
+    <string name="local_wallpaper_pick_error_gif_not_supported">GIF görseli desteklenmiyor</string>
+    <string name="nearby_title">Yakında</string>
+    <string name="launcher_widget_nearby_title">Yakında</string>
+    <string name="notification_set_as_default_btn">Ayarla</string>
+
+    <string name="update_toast_no_network">Lütfen bağlantıyı kontrol edin</string>
+    <string name="update_toast_already_latest">En son sürümü kullanıyorsun</string>
+    <string name="update_toast_downloading">Apk indirme işlemi hala devam ediyor</string>
+    <string name="update_dialog_title">En Son Sürümü İndir</string>
+    <string name="download_capital">İNDİR</string>
+    <string name="search_settings">Arama Ayarları</string>
+    <string name="search_settings_result_title">Sonuçlar</string>
+    <string name="search_widget">Arama Pencere Öğesi</string>
+    <string name="search_show_suggestions">Arama Önerilerini Göster</string>
+    <string name="search_show_history">Arama Geçmişini Göster</string>
+    <string name="search_show_local_apps">Uygulamalar</string>
+    <string name="search_show_contacts">Kişiler</string>
+    <string name="search_trending_words">Popüler Kelimeler</string>
+    <string name="search_history">Geçmişte Ara</string>
+    <string name="search_bar_remove_confirm_dialog_title">Bu arama çubuğu kaldırılsın mı?</string>
+    <string name="search_bar_remove_confirm_dialog_description">Aramaya hala şu şekilde erişebilirsin:\n1.Başlatıcı Ayarları-&gt;Arama Ayarlarından açın\n2.Menü-&gt;Pencere Öğesinden açın</string>
+    <string name="search_bar_widget">Arama çubuğu</string>
+    <string name="search_contacts">Kişiler</string>
+
+    <string name="wallpaper_network_error_reload">Yeniden yükle</string>
+    <string name="set_as_default_info_1">Camera Pro telefonunuzu destekler ve asla hızı konusunda endişelenmezsiniz. Camera Pro ana sayfa olarak ayarlansın mı?</string>
+    <string name="set_as_default_boost_battery_title">"Pil Ömrü Uzatıldı "</string>
+    <string name="set_as_default_boost_cool_title">"Soğut "</string>
+    <string name="set_as_default_boost_mem_title">"Boşaltılan Bellek "</string>
+    <string name="search_settings_category_title">Ayarlar</string>
+    <string name="search_more">Daha Fazla</string>
+    <string name="search_remove">Kaldır</string>
+    <string name="search_bar_default_text">Ara</string>
+    <string name="launcher_menu_panel_title_effects">Efektler</string>
+    <string name="launcher_menu_panel_title_widgets">Parçacıklar</string>
+    <string name="launcher_widget_menu_widgets_title">Parçacıklar</string>
+    <string name="search_apps">Uygulamalar</string>
+    <string name="battery_already_optimal">Cihazınız zaten en iyi şekilde çalışıyor.</string>
+    <string name="battery_auto">Otomatik</string>
+    <string name="battery_auto_sync">Otomatik Eşitleme</string>
+    <string name="battery_brightness">Parlaklık</string>
+    <string name="battery_careful">Dikkat</string>
+    <string name="battery_careful_content">Piliniz normalden daha hızlı azalıyor.</string>
+    <string name="battery_charging_completed">ŞARJ TAMAMLANDI</string>
+    <string name="battery_charging_completed_content">Telefonunuzun pilini korumak için lütfen fişten çıkarın.</string>
+    <string name="battery_charging_content">3 aşamalı regüle şarj pilinizin aşınmasını önler.</string>
+    <string name="battery_charging_left">ŞARJ ÇIKARILDI</string>
+    <string name="battery_clean_finished_line_o">Tebrikler!</string>
+    <string name="battery_clean_finished_line_i">Pil ömrünü uzattınız</string>
+    <string name="battery_cleaning">Temizleniyor…</string>
+    <string name="battery_continue">Devam</string>
+    <string name="battery_current_content">Mevcut ayarlarınız buraya kaydedilecektir.</string>
+    <string name="battery_excellent">Mükemmel</string>
+    <string name="battery_excellent_content">Piliniz iyi durumdadır.</string>
+    <string name="battery_haptic_feedback">Dokunsal Geri Bildirim</string>
+    <string name="battery_hide_system_apps">Sistem Uygulamalarını Sakla</string>
+    <string name="battery_low">Düşük pil</string>
+    <string name="battery_low_content">Telefonunuzun pil ömrünü en iyi şekilde uzatabilirsiniz.</string>
+    <string name="battery_max_saver">Maksimum Koruyucu</string>
+    <string name="battery_max_saver_content">WiFi, Bluetooth, titreşimi kapatın ve otomatik kilidi 15 sn. olarak ayarlayın.</string>
+    <string name="battery_mode">Mod</string>
+    <string name="battery_off">Kapalı</string>
+    <string name="battery_on">Açık</string>
+    <string name="battery_optimize">İYİLEŞTİR</string>
+    <string name="battery_power_remaining">KALAN GÜÇ</string>
+    <string name="battery_previous">Önceki</string>
+    <string name="battery_previous_content">En son ayarlarınıza geri dönün.</string>
+    <string name="battery_rank">Sırala</string>
+    <string name="battery_reapply">Yeniden uygula</string>
+    <string name="battery_screen_timeout">Otomatik Kilit</string>
+    <string name="battery_smart_saver">Akıllı Koruyucu</string>
+    <string name="battery_smart_saver_content">Bluetooth, titreşimi kapatın ve otomatik kilidi 30 sn. olarak ayarlayın.</string>
+    <string name="battery_speed">Hız</string>
+    <string name="battery_stop">DUR</string>
+    <string name="battery_trickle">Düşük oranda şarj</string>
+    <string name="battery_vibrate">Titreş</string>
+    <string name="battery_view">GÖRÜNTÜLE</string>
+    <string name="battery_wifi">WiFi </string>
+    <string name="customize_my_wallpapers_add_btn_text">Albümden seç</string>
+    <string name="downloading">İndiriliyor…</string>
+    <string name="effect_bounce">Sıçrama</string>
+    <string name="effect_extrusion">Kalıp</string>
+    <string name="effect_shrink">Küçült</string>
+    <string name="effect_wave">Dalga</string>
+    <string name="monday">Pazartesi</string>
+    <string name="tuesday">Salı</string>
+    <string name="wednesday">Çarşamba</string>
+    <string name="thursday">Perşembe</string>
+    <string name="friday">Cuma</string>
+    <string name="saturday">Cumartesi</string>
+    <string name="sunday">Pazar</string>
+    <string name="notification_toolbar_search">Ara</string>
+    <string name="refresh">Yenile</string>
+    <string name="resolver_wizard_choose_default">Seç \"VARSAYILAN\"</string>
+    <string name="search_guide_title">ŞUNA BENZEYEN ARAMALAR…</string>
+    <string name="search_guide_internet">İnternet</string>
+    <string name="search_guide_apps">Yerel Uygulamalar</string>
+    <string name="search_guide_location">Konum</string>
+    <string name="search_select_engine">Arama Motorunu Seç</string>
+    <string name="search_show_places">Harita</string>
+    <string name="wallpaper_edit_fixed">Sabit</string>
+    <string name="wallpaper_edit_scrollable">Kaydırılabilir</string>
+    <string name="hide_apps_guide_welcome_title">Özel Uygulamalara girdiniz</string>
+    <string name="hide_apps_guide_welcome_action">UYGULAMALARI SAKLA</string>
+    <string name="hide_apps_guide_success_title">Tebrikler!</string>
+    <string name="hide_apps_guide_success_content_one">%1$s sakladın.</string>
+    <string name="hide_apps_guide_success_content">%1$s özel uygulamayı sakladın.</string>
+    <string name="hide_apps_guide_recommend_hide_percent">Kullanıcıların %1$s%% bu uygulamayı sakladı</string>
+    <string name="hide_apps_guide_recommend_apps_size">%1$s uygulamayı tavsiye etti</string>
+    <string name="hide_apps_guide_recommend_other_apps_size"> %1$s diğer uygulamalar</string>
+    <string name="hide_apps_secret_folder">Özel Uygulamalar</string>
+    <string name="hide_apps_add_apps_title">Masaüstünden kaldırmak istediğiniz uygulamaları seçin</string>
+
+    <string name="folder_ad_title">Önerilen Uygulamalar</string>
+    <string name="search_guide_contacts">Kişiler</string>
+
+    <string name="launcher_widget_boost_plus_title">Yükselt+</string>
+    <string name="boost_plus_accessibility_service_label">☆Yükselt+☆</string>
+    <string name="advanced_boost_authorize_btn">Etkinleştir</string>
+    <string name="boost_plus_action_button_text">Yükselt (%1$s)</string>
+    <string name="boost_plus_cleaning_running_apps">Çalışan Uygulamalar Temizleniyor</string>
+    <string name="boost_plus_settings_auto_boost_description">Ekran kapandıktan sonra uykuya girme süresini otomatik hale getir. Ekranın ışığını azaltır, uykuya sokar ve daha sonra ekranı kapatır. </string>
+    <string name="boost_plus_settings_auto_boost_title">Otomatik uykuya girme</string>
+    <string name="boost_plus_dialog_accessibility">Camera Pro\'un düzgün olarak Otomatik Uykuya girmesi için erişilebilirlik gereklidir.</string>
+    <string name="boost_plus_dialog_device_admin">Camera Pro\'un düzgün olarak Otomatik Uykuya girmesi için cihaz yöneticisi gereklidir.Uyarı: Cihaz yöneticisi nedeniyle Camera Pro\'ı kaldıramayabilirsiniz. Cihaz yöneticisini devreden çıkarın ve sonra uygulamayı kaldırın.</string>
+    <string name="boost_plus_empty_view_text_line_2">Aferin!</string>
+    <string name="boost_plus_free_up">Boşaltıldı</string>
+    <string name="boost_plus_exiting">Çıkıyor</string>
+    <string name="boost_plus_running_time">Çalışma süresi: %1$s</string>
+    <string name="boost_plus_scanned_list_running_apps">Çalışan Uygulamalar</string>
+    <string name="boost_plus_scanned_list_select_all">Tümünü Seç</string>
+    <string name="boost_plus_selected_size_text">Seçili: %1$s</string>
+    <string name="boost_plus_settings_lock_delay">\'Otomatik kilit\'in gecikmeli (&gt;= 5 saniye) olarak ayarlandığından emin olun! Otomatik uykuya girme ekran kilitlenmeden önce kısa bir gecikmeye ihtiyaç duyar.</string>
+    <string name="boost_plus_settings_lock_instantly">\'Güç düğmesi anında kilitler\'in  seçili OLMADIĞINDAN emin olun! Otomatik uykuya girme ekran kilitlenmeden önce kısa bir gecikmeye ihtiyaç duyar.</string>
+    <string name="boost_plus_stop_clean_content">Durdurulduğunda Yükselt+ artık belleğinizde boş yer açamayacak. Durdurmak istediğinden emin misin?</string>
+    <string name="boost_plus_stop_clean_title">Temizlik dursun mu?</string>
+    <string name="boost_plus_stop_sure">EMİNİM</string>
+    <string name="boost_plus_tip_battery_desc">Pil ömrünü iki katına çıkarın.</string>
+    <string name="boost_plus_tip_battery_title">Pil ömrünü uzatmak için Yükselt+\'u deneyin!</string>
+    <string name="boost_plus_tip_memory_btn">Temizle</string>
+    <string name="boost_plus_tip_memory_desc">Bellekte daha fazla yer kazanmak için daha kapsamlı bir temizleyici kullanın!</string>
+    <string name="boost_plus_tip_memory_title">Telefonunu daha iyi temizlemek için Yükselt+\'i deneyin!</string>
+    <string name="boost_plus_tip_optimal_desc">Bazı uygulamalar sadece Yükselt+ ile kapatılabilir.</string>
+    <string name="boost_plus_tip_optimal_title">Hala yavaş mı? Yükselt+\'u dene!</string>
+    <string name="boost_plus_warning_toast">Bu uygulama size anlık iletiler gönderebilir. Seçerseniz anlık iletiler gönderilmez.</string>
+
+    <string name="device_admin_explanation">Camera Pro\'ın pili aşırı kullanan uygulamaları otomatik olarak kapatmasına izin verin.</string>
+    <string name="folder_remove_confirm_body">Klasör kaldırıldığında klasördeki tüm uygulamalar masaüstünde görünmez.</string>
+    <string name="folder_remove_confirm_title">Klasörü Kaldır</string>
+    <string name="folder_unpack_confirm_body">Klasör açıldığında, kısayolları masaüstüne taşınır.</string>
+    <string name="hide_apps_guide_welcome_content">Özel uygulamalarınızı buraya saklayabilirsiniz, \n ve iki parmağınızla yukarı kaydırarak açabilirsiniz.</string>
+
+    <string name="hide_apps_remove_password_title">Kilit desenini kaldır</string>
+    <string name="hide_apps_reset_password_title">Kilit desenini sıfırla</string>
+    <string name="install_dialog_title">Yeni Sürüm bulundu</string>
+    <string name="launcher_app_index_desc">Kişiselleştirilmiş harika bir uygulama</string>
+    <string name="launcher_app_index_title">Uygulamalarınızı düzenli tutun ve telefonunuzu hızlandırın.</string>
+    <string name="moment_good_afternoon">Tünaydın!</string>
+    <string name="moment_good_evening">İyi Akşamlar!</string>
+    <string name="moment_good_morning">Günaydın!</string>
+    <string name="moment_good_night">İyi Geceler!</string>
+
+    <string name="moment_nearby_title">Yakınındakilerin Kullandıkları</string>
+    <string name="moment_news_title">Haberler</string>
+
+    <string name="set_as_default_wizard_huawei_title">\"Camera Pro\" Seç</string>
+    <string name="set_up">ayarla</string>
+    <string name="storm">Fırtına</string>
+    <string name="update_toast_storage_not_ready">Harici depolama mevcut değil</string>
+
+    <string name="weather_tip_dust">İçeride kalmak daha iyi.</string>
+    <string name="weather_tip_hazy">Dikkat et ve dikkatli araba kullan</string>
+    <string name="weather_tip_sleet">Şemsiye al ve sıkı giyin.</string>
+    <string name="weather_tip_snow">Daha kalın giyin.</string>
+    <string name="weather_tip_storm">Yanına şemsiye al.</string>
+    <string name="all_apps_more_horizontal">Yatay</string>
+    <string name="all_apps_more_vertical">Dikey</string>
+
+
+    <string name="folder_remove_confirm_positive">Kaldır</string>
+    <string name="boost_plus_empty_view_text_line_1">Cihazınız zaten en iyi durumda!</string>
+    <string name="wind_chime_remove_btn">Kaldır</string>
+    <string name="battery_bluetooth">Bluetooth</string>
+    <string name="boost_plus_memory_used">Kullanılan Bellek </string>
+    <string name="folder_unpack_confirm_positive">Çıkart</string>
+    <string name="boost_plus_tip_battery_btn">Temizle</string>
+    <string name="battery_title">Pil</string>
+    <string name="weather_tip_thunderstorm">İçeride kalmak daha iyi.</string>
+    <string name="battery_mobile_data">Mobile Data</string>
+    <string name="battery_current">Mevcut</string>
+    <string name="boost_plus_settings_device_admin_title">Cihaz yöneticisi</string>
+    <string name="boost_plus_settings_device_admin_description">Camera Pro’ı kaldırmak isterseniz, önce cihaz yöneticisini etkisizleştirin.</string>
+    <string name="boost_plus_start_toast">Yükselt+’ı çalıştırmak için Yükselt’a çift tıklayın!</string>
+    <string name="launcher_shortcut_boost">1-Tap Yükselt</string>
+    <string name="notification_battery_consuming_title">%1$s uygulama güç tüketiyor</string>
+    <string name="notification_battery_consuming_description">Pil ömrünü uzatmak için optimize edin.</string>
+    <string name="notification_boost_plus_title">%1$s uygulama telefonu yavaşlatıyor</string>
+    <string name="notification_boost_plus_content">Hızlandırmak için Yükselt’u kullanın!</string>
+    <string name="battery_low_tip_title">Düşük Güç!</string>
+    <string name="battery_low_tip_desc">Güç tüketimini minimumda tutmak için pil tasarrufu uygulamasını deneyin.</string>
+    <string name="launcher_widget_moment_title">Air Moment</string>
+    <string name="wind_chime_remove_confirm_dialog_title"> “Air Moment” kaldırılsın mı?</string>
+    <string name="wind_chime_remove_confirm_dialog_description">Air Moment’e tekrar erişmek için onu :&lt;br /&gt;&lt;b&gt;Menü&lt;/b&gt; -&gt; &lt;b&gt;Pencere Ögeleri&lt;/b&gt;’nden açabilirsiniz</string>
+    <string name="gesture_guide_content_down">Air Moment’i hızlı açmak için aşağı kaydırın</string>
+    <string name="gesture_guide_content_up">Arama’yı hızlı açmak için aşağı kaydırın</string>
+    <string name="gesture_guide_got_it">TAMAM</string>
+    <string name="hide_apps_guide_new_install">Son kurulan uygulamalarınız</string>
+
+    <string name="battery_low_tip_btn_ok">HEMEN DENE</string>
+    <string name="weather_city_search_error_prompt">Ağ hataları</string>
+    <string name="battery_low_tip_btn_cancel">Daha Sonra</string>
+
+    <string name="moment_lucky_draw">Şanslı Hediyesini Al</string>
+    <string name="moment_lucky_draw_tip">Kutuda ne olduğunu tahmin et! Şanslı’den sürpriz hediyeyi al ve keyfini sür!</string>
+    <string name="moment_lucky_start">HEMEN AL</string>
+    <string name="accessibility_authorize_try_again_title">Tekrar dene?</string>
+    <string name="accessibility_authorize_try_again_description">Yükselt+ için erişilebilirlik açılamadı. Telefonunuzu daha da hızlandırmak için tekrar deneyin.</string>
+    <string name="accessibility_authorize_try_again_positive">HEMEN DENE</string>
+    <string name="news_load_more_re_try">Tekrar denemek için tıkla</string>
+    <string name="boost_plus_authorize_title">Erişilebilirlik açılsın mı?</string>
+    <string name="boost_plus_authorize_desc">Bu uygulamaları durdurmak için Yükselt+ erişilebilirliğe sahip olmalıdır. Telefonu \%%80 veya üzerinde hızlandırır ve pil ömrünü \%%200 uzatır! \n Kullanıcıların \%%93’ü erişilebilirliği açtılar.</string>
+    <string name="boost_plus_accessibility_service_description">Yukarıdaki seçeneğe dokunun ve sonra TAMAM’ı seçin. .\nŞunlar için etkinleştirin: \n1) Telefonu \%%80 hızlandırmak\n2) Pili tüketen uygulamaları sonlandırmak\nYükselt+ telefonunuzu daha da hızlandırır ve asla kişisel verilerinizi toplamaz.</string>
+    <string name="boost_plus_security_setting_for_samsung_device">\'Ekran Kilidi ve Güvenlik\' menüsünden ayarlayın!</string>
+    <string name="permission_guide_description">☆Yükselt+☆ bulun ve açın.</string>
+    <string name="boost_plus_freeable">Temizlenebilir</string>
+
+    <string name="accessibility_authorize_try_again_negative">Daha Sonra</string>
+    <string name="got_it">TAMAM</string>
+
+    <string name="boost_plus_clean_tip_prefix">İpuçları: </string>
+    <string-array name="boost_plus_clean_tips">
+        <item>İnatçı uygulamaları durdurmaya zorlamak bir süre alır. Lütfen sabırlı olun!</item>
+        <item>Pili tükenmesini azaltmak için uykuya geçmeden önce Yükselt+\’ı Kullanın. </item>
+        <item>Yükselt+\'yi kullandıktan sonra oyunlar daha iyi çalışır.</item>
+        <item>Telefonun aşırı ısınıyor mu? Yükselt+\'dan yardım isteyin!</item>
+        <item>Telefonunun her zaman hızlı kalması için sık sık Yükselt+\'yı kullan.</item>
+    </string-array>
+    <string name="boost_plus_optimal">ENİYİ</string>
+    <string name="five_star_hint_text">Bizden memnun kaldınız mı?</string>
+    <string name="five_star_five_text">Bayıldım</string>
+    <string name="five_star_four_text">Beğendim</string>
+    <string name="five_star_three_text">Eh işte</string>
+    <string name="five_star_two_text">Beğenmedim</string>
+    <string name="five_star_one_text">Nefret ettim</string>
+    <string name="five_star_positive_text">Gönder</string>
+    <string name="launcher_widget_market_title">Uygulama Seçimleri</string>
+    <string name="locker_2g">2G</string>
+    <string name="locker_3g">3G</string>
+    <string name="locker_4g">4G</string>
+    <string name="locker_disable_confirm">Kapatmak istediğinden emin misin?</string>
+    <string name="locker_disable_confirm_detail">Etkisizleştirilince kilit ekranındaki özellikler devre dışı kalır, devam etmek istediğinden emin misin?</string>
+    <string name="locker_diabled_success">Kilit kapatıldı</string>
+    <string name="locker_menu_disable">Kilidi etkisizleştir</string>
+    <string name="slide_to_unlock">Kilidi açmak için kaydır</string>
+    <string name="locker_settings">Kilit ayarları</string>
+    <string name="locker_settings_title">Ekran kilidi</string>
+    <string name="locker_slide_wallpaper_title">Kilit Duvar kağıdı</string>
+    <string name="locker_unkown">Unk</string>
+    <string name="locker_wallpaper_network_error">Ağ hatası, lütfen tekrar deneyin.</string>
+    <string name="moment_ad_title">AD</string>
+    <string name="moment_set_launcher">Telefonu hızlandırmak için Camera Pro\'ı varsayılan başlatma uygulaması olarak ayarlayın!</string>
+    <string name="moment_set_locker">Cihazı aşırı şarja karşı korumak için Pil Korumasını açın!</string>
+    <string name="moment_open_locker">Piliniz korunuyor!</string>
+    <string name="result_page_card_battery_protection_title">Pil Koruması</string>
+    <string name="result_page_card_battery_protection_description">Telefon şarjını 50\%% artırın(reklam içerebilir)</string>
+    <string name="result_page_card_battery_protection_toast">Pil Koruması Etkinleştirildi</string>
+    <string name="result_page_card_battery_saver_title">Pil Tasarrufu</string>
+    <string name="result_page_card_battery_saver_description_low_battery">Kalan güç %s. Pil ömrünü uzatmak için eniyileyin.</string>
+    <string name="result_page_card_battery_saver_description_normal">Telefonun gücü ciddi olarak tükeniyor. Pil ömrünü uzatmak için eniyileyin.</string>
+    <string name="result_page_card_boost_plus_description">Arka plan uygulamaları normal dışı güç tüketimine neden oluyor. Temizlemek için gelişmiş hızlandırmayı deneyin!</string>
+    <string name="result_page_card_boost_plus_promote_title">Neden Yükselt+ kullanmalıyım?</string>
+    <string name="result_page_card_boost_plus_promote_description">Çoğu uygulama sıradan hızlandırma ile durdurulamaz ve telefonunuz hep ağırlaşır. Şansımıza, Yükselt+ bunları durmaya zorlayabilir. \nYükselt+ temizleme yazılımlarının 90\%%\'ından çok daha etkilidir.</string>
+    <string name="search_show_trending_words">İlgi Gören Haberleri Göster</string>
+    <string name="search_trending_news">İlgi Gören Haberler</string>
+    <string name="search_trending_news_bottom">Daha fazla haber</string>
+    <string name="search_trending_news_latest">Son dakika haberleri için güncelle</string>
+    <string name="search_news_new_tag">YENİ</string>
+    <string name="settings_badge_recommended_apps_hint">Yapılandırma izin gerektirebilir</string>
+    <string name="settings_badge_common_apps">Ortak Uygulamalar</string>
+    <string name="settings_badge_common_apps_hint">Yapılandırma bildirim erişimi gerektirebilir</string>
+
+    <string name="result_page_card_boost_plus_btn">Yükselt</string>
+    <string name="moment_locker_contains_ads">(Reklam içerir)</string>
+    <string name="locker_settings_subtitle">(Reklam içerir)</string>
+    <string name="result_page_card_battery_protection_btn">Etkinleştir</string>
+    <string name="charging_screen_menu_item">KAPAT</string>
+    <string name="result_page_card_boost_plus_title">Yükselt+</string>
+
+    <string name="moment_try_it_now">HEMEN DENE</string>
+
+    <string name="news_network_error">Ağ hataları</string>
 </resources>

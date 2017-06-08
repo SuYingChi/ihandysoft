@@ -41,4 +41,698 @@
     <string name="charging_screen_settings_description">उपकरण को ओवरचार्जिंग से बचाएं</string>
     <string name="charging_screen_settings_subtitle">(विज्ञापन शामिल)</string>
     <string formatted="false" name="charging_screen_time">%s:%s</string>
+
+    <string name="empty_folder_name">नया फ़ोल्डर</string>
+    <string name="activity_not_found">ऐप स्थापित नहीं है</string>
+    <string name="activity_not_available">ऐप उपलब्ध नहीं है</string>
+    <string name="safe_mode_shortcut_error">सुरक्षित मोड में डाउनलोड किया गया ऐप अक्षम है</string>
+    <string name="safe_mode_widget_error">सुरक्षित मोड में विजेट अक्षम हैं</string>
+    <string name="long_press_widget_to_add">विजेट चुनने के लिए स्पर्श करके रखें</string>
+    <string name="widget_dims_format">%1$d \u00d7 %2$d</string>
+    <string name="all_apps_search_bar_hint">" ऐप खोजें"</string>
+    <string name="all_apps_search_bar_empty">कुछ नहीं मिला</string>
+    <skip/>
+    <string name="out_of_space">इस होम स्क्रीन पर अब और जगह नहीं है</string>
+    <string name="hotseat_out_of_space">पसंदीदा ट्रे में अब और जगह नहीं है</string>
+    <string name="all_apps_button_label">ऐप</string>
+    <string name="delete_target_label">निकालें</string>
+    <string name="delete_target_uninstall_label">स्थापना रद्द करें</string>
+    <string name="info_target_label">ऐप जानकारी</string>
+    <string name="desktop_target_label">डेस्कटॉप</string>
+    <skip/>
+    <string name="permlab_read_settings">होम सेटिंग और शॉर्टकट पढ़ें</string>
+    <string name="permdesc_read_settings">ऐप को होम में सेटिंग और शॉर्टकट पढ़ने की अनुमति देता है</string>
+    <string name="permlab_write_settings">होम सेटिंग और शॉर्टकट लिखता है</string>
+    <string name="permdesc_write_settings">एप्लिकेशन को होम में सेटिंग और शॉर्टकट बदलने की अनुमति देता है</string>
+    <string name="msg_no_phone_permission">%1$s को फ़ोन करने की अनुमति नहीं है</string>
+    <string name="failed_to_add_widget_text">डेस्कटॉप पर विजेट जोड़ने में विफल रहा</string>
+    <skip/>
+    <string name="gadget_error_text">विजेट लोड करने में समस्या</string>
+    <string name="gadget_setup_text">सेटअप</string>
+    <string name="uninstall_system_app_text">यह एक सिस्टम ऐप है औऱ इसकी स्थापना रद्द नहीं की जा सकती</string>
+    <string name="folder_add_shortcuts_view_cancel_button">रद्द करें</string>
+    <string name="folder_add_shortcuts_view_ok_button">ठीक</string>
+    <string name="app_store_category_name_favorite_tools">टूलकिट</string>
+    <string name="app_store_category_name_tools">उपकरण</string>
+    <string name="app_store_category_name_social">सामाजिक</string>
+    <string name="app_store_category_name_games">गेम</string>
+    <string name="app_store_category_name_lifestyle">जीवनशैली</string>
+    <string name="app_store_category_name_photography">फ़ोटोग्राफ़ी </string>
+    <string name="app_store_category_name_media">मीडिया</string>
+    <string name="app_store_category_name_news">समाचार &amp; पुस्‍तकें</string>
+    <string name="app_store_others">अन्य</string>
+    <string name="folder_placeholder_text">आप इस फ़ोल्डर में कोई भी ऐप जोड़ सकते हैं।</string>
+    <string name="abandoned_clean_this">निकालें</string>
+    <string name="abandoned_search">खोजें</string>
+    <string name="abandoned_promises_title">यह ऐप स्थापित नहीं है</string>
+    <string name="abandoned_promise_explanation">इस आइकन के लिए ऐप स्थापित नहीं है। \nआप इसे निकाल सकते हैं या ऐप की खोज करके इसे मैन्युअल रूप से स्थापित करें।</string>
+    <string name="weather_title">मौसम</string>
+    <string name="weather_wind_speed">हवा की गति:</string>
+    <string name="weather_wind_direction">हवा की दिशा:</string>
+    <string name="weather_visibility">दृश्यता:</string>
+    <string name="weather_humidity">आद्रता:</string>
+    <string name="weather_sunrise">सूर्योदय:</string>
+    <string name="weather_sunset">सूर्यास्त:</string>
+    <string name="weather_last_update_today">%1$s बजे अद्यतन किया गया</string>
+    <string name="weather_last_update_before_today">%1$s को अद्यतन किया गया</string>
+    <string name="weather_no_info_placeholder">--</string>
+    <string name="weather_no_info_placeholder_time">--:--</string>
+    <string name="weather_high_low_temperature">%1$s\u00b0\u00a0/\u00a0%2$s\u00b0</string>
+    <string name="weather_kph">km/h</string>
+    <string name="weather_mph">mph</string>
+    <string name="weather_km">km</string>
+    <string name="weather_mi">mi</string>
+    <string name="weather_time">%1$s:%2$s</string>
+    <string name="weather_today">आज</string>
+    <string name="weather_settings_title">मौसम सेटिंग</string>
+    <string name="weather_settings_item_temperature_unit">तापमान की इकाई</string>
+    <string name="weather_settings_item_distance_unit">दूरी की इकाई</string>
+    <string name="weather_settings_item_add_new_city">नया शहर जोड़ें</string>
+    <string name="weather_settings_celsius">\u00b0C</string>
+    <string name="weather_settings_fahrenheit">\u00b0F</string>
+    <string name="weather_settings_cf_slash">/</string>
+    <string name="weather_settings_cities_title">शहर</string>
+    <string name="weather_city_add_new_btn">नया शहर जोड़ें</string>
+    <string name="weather_city_more_than_limit">आप केवल 12 शहरों को जोड़ सकते हैं</string>
+    <string name="weather_city_searching_prompt">शहरों की खोज की जा रही है…</string>
+    <string name="weather_city_empty_result_prompt">किसी भी शहर का मेल नहीं मिला</string>
+    <string name="weather_city_loading_message">लोड हो रहा है…</string>
+    <string name="weather_city_load_failed_message">ओह, मौसम लोड नहीं कर सकते।</string>
+    <string name="weather_clock_widget_name">मौसम &amp; घड़ी</string>
+    <string name="weather_clock_unknown_weather_message">Tidak diketahui</string>
+    <string name="sunny">धूप</string>
+    <string name="overcast">आच्छन्न</string>
+    <string name="clear">साफ़</string>
+    <string name="cloudy">बादल से घिरा हुआ</string>
+    <string name="rain">वर्षा</string>
+    <string name="drizzle">बूंदाबांदी </string>
+    <string name="rain_shower">वर्षा की बौछार</string>
+    <string name="snow">हिमपात</string>
+    <string name="snow_shower">हिमपात वर्षा </string>
+    <string name="sleet">ओले के साथ वर्षा</string>
+    <string name="hazy">धुंधला</string>
+    <string name="dust">धूलि</string>
+    <string name="thunderstorm">आंधी</string>
+    <string name="cold">ठण्ड</string>
+    <string name="hot">गरम</string>
+    <string name="windy">तेज़ हवाओं वाला</string>
+    <string name="menu_item_settings">सेटिंग</string>
+    <string name="setting_item_mobile">मोबाइल डेटा</string>
+    <string name="setting_item_wifi">वाई-फ़ाई</string>
+    <string name="setting_item_airplane">विमान मोड</string>
+    <string name="setting_item_auto_brightness">स्वत: चमक</string>
+    <string name="setting_item_rotate">स्‍वत: घूमना</string>
+    <string name="setting_item_silence">आवाज बंद करना</string>
+    <string name="setting_item_vibration">कंपन</string>
+    <string name="setting_item_bluetooth">ब्लूटूथ</string>
+    <string name="setting_item_flashlight">फ़्लैशलाइट</string>
+    <string name="more_system_settings_button_title">सिस्टम सेटिंग</string>
+    <string name="more_launcher_settings_button_title">लॉन्चर सेटिंग</string>
+    <string name="setting_device_not_support_message">आपकी डिवाइस इसका समर्थन नहीं करती।</string>
+    <string name="boost_tip_optimal">आपकी डिवाइस पहले से ही इष्टतम है!</string>
+    <string name="boost_tip_detail_memory">आपका फ़ोन अब प्रकाश की तरह तेज़ है!</string>
+    <string name="customize_title">वैयक्तिकृत करें</string>
+    <string name="customize_wallpapers_title">वॉलपेपर्स</string>
+    <string name="customize_themes_title">विषयवस्तुएँ</string>
+    <string name="wallpaper_toast_set_failed">इस वॉलपेपर के साथ कोई समस्या हुई, कृपया पुनः प्रयास करें</string>
+    <string name="customize_local_title">मेरा</string>
+    <string name="wallpaper_setting_progress_dialog_text">वॉलपेपर सेट किया जा रहा है…</string>
+    <string name="icon_pack_name">लॉन्चर डिफ़ॉल्ट</string>
+    <string name="no_icon_pack_name">सिस्टम डिफ़ॉल्</string>
+    <string name="theme_set_alert_title">विषयवस्तु सेट करें</string>
+    <string name="theme_set_alert_set_system_theme_body">आपकी विषयवस्तु को सिस्टम डिफ़ॉल्ट के रूप में सेट करें?</string>
+    <string name="feedback_title">प्रतिक्रिया</string>
+    <string name="feedback_content_placeholder">" आपकी प्रतिक्रिया से हमें सुधार करने में सहायता मिलती है"</string>
+    <string name="feedback_email_placeholder">" कृपया अपना ईमेल का पता दर्ज करें"</string>
+    <string name="feedback_submit_btn">भेजें</string>
+    <string name="feedback_toast_empty_content">कृपया अपनी प्रतिक्रिया लिखें</string>
+    <string name="feedback_toast_invalid_email">कृपया एक मान्य ईमेल पता दर्ज करें</string>
+    <string name="feedback_toast_send_success">आपकी प्रतिक्रिया के लिए धन्यवाद!</string>
+    <string name="effect_classic">उत्कृष्ट</string>
+    <string name="effect_cube">क्यूब</string>
+    <string name="effect_roll">रोल</string>
+    <string name="effect_rotation">घुमाव</string>
+    <string name="effect_stack">स्टैक</string>
+    <string name="effect_windmill">पवनचक्की</string>
+    <string name="effect_flip">फ़्लिप</string>
+    <string name="effect_page">पृष्ठ घुमाव</string>
+    <string name="launcher_widget_time_title">घड़ी+मौसम</string>
+    <string name="launcher_widget_widgets_title">सिस्टम विजेट</string>
+    <string name="launcher_widget_boost_title">बूस्ट</string>
+    <string name="launcher_widget_settings_title">सेटिंग</string>
+    <string name="launcher_widget_wallpaper_title">वॉलपेपर्स</string>
+    <string name="launcher_widget_flashlight_title">फ़्लैशलाइट</string>
+    <string name="launcher_widget_data_usage_title">डेटा उपयोग</string>
+    <string name="launcher_widget_battery_title">बैटरी</string>
+    <string name="launcher_widget_app_mgr_title">ऐप प्रंबंधक</string>
+    <string name="launcher_widget_update_title">अद्यतन करें</string>
+    <string name="launcher_widget_feedback_title">प्रतिक्रिया</string>
+    <string name="launcher_widget_effects_title">प्रभाव</string>
+    <string name="launcher_widget_theme_title">विषयवस्तुएँ</string>
+    <string name="launcher_settings_title">Air लाॉन्चर सेटिंग</string>
+    <string name="launcher_settings_section_default_launcher">डिफ़ॉल्ट लॉन्चर के रूप में सेट करें</string>
+    <string name="preferences">प्राथमिकताएँ</string>
+    <string name="launcher_settings_advanced_clean_detail">बूस्ट करने से आपका फ़ोन अधिक प्रभावी हो जाता है</string>
+    <string name="launcher_settings_advanced_section_about">परिचय</string>
+    <string name="launcher_settings_auto_boost_section">स्वतः बूस्ट</string>
+    <string name="launcher_settings_auto_boost_detail">आपके फ़ोन के धीमा होने पर स्वतः बूस्ट करता है</string>
+    <string name="settings_auth_line1">कैसे सक्षम करें?</string>
+    <string name="settings_auth_line2">\"Air लॉन्चर\" ढूंढें और इसे चालू करें।</string>
+    <string name="launcher_settings_five_star">5 स्टार मूल्यांकन</string>
+    <string name="launcher_settings_tell_my_friends">मेरे मित्रों को बताएँ</string>
+    <string name="launcher_settings_feedback">प्रतिक्रिया</string>
+    <string name="launcher_settings_update">अद्यतन करें</string>
+    <string name="launcher_settings_current_version_detail">वर्तमान संस्करण: v%1$s</string>
+    <string name="privacy_policy">गोपनीयता नीति</string>
+    <string name="terms_of_service">सेवा की शर्तें</string>
+    <string name="auto_category_title">स्मार्ट क्रमबद्धन</string>
+    <string name="auto_category_open_btn">खोलें</string>
+
+    <string name="set_as_default_btn_text">ठीक</string>
+    <string name="resolver_wizard_select_launcher_1">चयन करें</string>
+    <string name="resolver_wizard_select_launcher_2">\"Camera Pro\"</string>
+    <string name="resolver_wizard_click_always">\"हमेशा\" टैप करें</string>
+    <string name="share_through">इसके द्वारा साझा करें</string>
+    <string name="news_title">मुख्य समाचार</string>
+    <string name="news_settings_item_show_on_home_des">होम स्क्रीन पर दाईं ओर स्वाइप करें</string>
+
+    <string name="news_settings_title">हेडलाइन्‍स सेटिंग्‍स </string>
+    <string name="news_refresh_success_news_updated">%1$s न्‍यूज़ अपडेट </string>
+    <string name="news_refresh_success_no_news_updated">नवीनतम के लिए अपडेट </string>
+    <string name="news_settings_item_load_pictures_title">डेटा सहेजें</string>
+    <string name="news_settings_item_load_pictures_des">मोबाइल नेटवर्क के तहत कोई तस्‍वीर नहीं </string>
+    <string name="news_detail_error_reload">पुन:लोड करें</string>
+    <string name="pull_to_refresh">रिफ्रेश करने के लिए खीचें </string>
+    <string name="release_to_refresh">रिफ्रेश करने के लिए छोड़ें  </string>
+    <string name="icon_size_title">आइकॉन आकार</string>
+    <string name="icon_size_settings_title">आइकॉन आकार</string>
+    <string name="icon_font_size_settings_title">आइकॉन लेबल आकार</string>
+    <string name="icon_font_color_settings_title">आइकॉन लेबल रंग</string>
+    <string name="icon_preview_title">प्रीव्‍यू</string>
+    <string name="icon_preview_messenger_title">मैसेंजर </string>
+    <string name="icon_preview_phone_title">फोन </string>
+    <string name="icon_preview_camera_title">कैमरा </string>
+    <string name="icon_preview_browser_title">ब्राउजर </string>
+    <string name="folder_unpack_confirm_title">फोल्डर को उन्मुक्त करें</string>
+    <string name="release_target_label">उन्मुक्त करें</string>
+
+    <!-- %1$s is the version number which should be kept, for example “v1.0.0"" -->
+    <string name="launcher_settings_latest_version_detail">नवीनतम संस्करण: v%1$s</string>
+
+    <!-- The following is an alert dialog which includes title, description and actions. Air is the name of the APP that needn’t to be translated.  -->
+    <string name="set_as_default_alert_title">चेतावनी</string>
+    <string name="set_as_default_alert_detail"> एयर लांचर को आपका डिफाल्ट सेट करने में विफल. पुन: प्रयास करें?</string>
+    <string name="set_as_default_alert_ok_btn">पुन: प्रयास करें</string>
+    <string name="set_as_default_alert_cancel_btn">बाद में</string>
+
+    <!-- It’s the slogan of the app which can make your phone fast & stylish. &amp; stands for & in program. -->
+    <string name="welcome_description_text">तेज और स्टाइलिश</string>
+
+    <!-- It’s an action button, so it’s better to be short -->
+    <string name="welcome_start_btn">आरंभ</string>
+    <string name="welcome_select_wallpaper">वॉलपेपर चुनें जो आपको सबसे अधिक पसंद है </string>
+
+    <!-- It’s a prompt message that our app is preparing the desktop of the phone. -->
+    <string name="welcome_loading">आपका डेस्कटॉप तैयार कर रहे हैं…</string>
+
+    <string name="online_wallpaper_tab_title_categories">श्रेणियां</string>
+    <string name="settings_auth_guide">आपके बिना पढ़े हुए संदेश, फेसबुक, वाट्सएप्प आदि के बारे में अलर्ट करने के लिए\" Camera Pro \" चालू करें</string>
+    <string name="settings_badge_unread_msg"> बिना पढ़े हुए संदेश</string>
+    <string name="settings_badge_recommended_apps">अनुशंसित एप्प</string>
+    <string name="settings_badge_switch_hint">बिना पढ़े हुए संदेश के लिए बैज</string>
+    <string name="auto_organize_desktop_title">स्‍व-व्‍यवस्थित डेस्‍कटॉप </string>
+    <string name="settings_auth_button_text">चालू करें</string>
+
+    <!-- Hide apps meansapps invisible on desktop -->
+    <string name="hide_apps_bottom_button_hide">छिपाएं </string>
+    <string name="hide_apps_settings_title">एप्लिकेशन्स की सेटिंग्स छिपाएं </string>
+    <string name="hide_apps_empty_prompt">इस फ़ोल्डर में आप कोई भी एप्लिकेशन्स शामिल कर सकते हैं।</string>
+
+    <!-- It’s a gesture of swiping up on desktopwith one finger-->
+    <string name="hide_apps_activation_method_one_finger">एक उंगली से ऊपर सरकाएं</string>
+    <string name="hide_apps_activation_method_two_fingers">दो उंगलियों से सरकाएं</string>
+
+    <!-- Unlock pattern is a kind of password, which has 9 dots on the screen organized in a 3×3 matrix. To unlock the phone the pattern has to be drawn on the screen, connecting certain points in a certain order. -->
+    <string name="hide_apps_password_toggle">पासवर्ड सक्षम करें </string>
+    <string name="hide_apps_set_password_title">पासवर्ड सेट करें</string>
+    <string name="set_passwd_reset">पासवर्ड रीसेट करें</string>
+    <string name="change_gesture_passwd_info">सुरक्षा की खातिर, कृपया अनलॉक पैटर्न बनाएं</string>
+    <string name="set_gesture_passwd_please">कृपया एक पैटर्न बनाएं </string>
+    <string name="set_gesture_passwd_verify">कृपया अनलॉक पैटर्न फिर से बनाएं</string>
+    <string name="set_gesture_passwd_least">कम से कम 4 डॉट्स जोड़ें, पुन: प्रयास करें</string>
+    <string name="set_gesture_passwd_failed">पैटर्न मेल नहीं करते, पुन: प्रयास करें</string>
+    <string name="set_gesture_passwd_success">पैटर्न बदल दिया </string>
+
+
+
+    <string name="loading">लोड हो रहा है…</string>
+    <string name="customize_themes_title_local">मेरी विषयवस्तुएँ</string>
+    <string name="terms_of_service_settings_title">सेवा की शर्तें</string>
+    <string name="privacy_policy_settings_title">गोपनीयता नीति</string>
+    <string name="customize_wallpapers_title_local">मेरे वॉलपेपर</string>
+    <string name="load_more">लोड हो रहा है…</string>
+
+
+    <!-- Please translate and replace the words in red color -->
+
+
+    <!--It guides users to enter password -->
+    <string name="input_passwd">पासवर्ड डालें </string>
+
+
+    <!-- Notification toolbar is a bar with icons of Wi-Fi, Mobile Data, Flashlight and so on, which you can set your phone quickly by switching them On/Off. -->
+    <string name="notification_toolbar_title">नोटिफिकेशन टूलबार</string>
+
+
+    <!-- It’s a switch to turn On/Off Mobile Data, better be short in one word or two -->
+    <string name="notification_toolbar_data">डाटा</string>
+
+
+    <!-- A collection of all apps in your phone -->
+    <string name="notification_toolbar_all_apps">सभी एप्प</string>
+
+
+
+    <!-- It shows how much battery has been left. It will be used like “20% Battery Left” -->
+    <string name="boost_notification_low_battery_title">शेष बैटरी</string>
+    <string name="boost_notification_low_battery_description">लम्बे समय तक उपयोग करने के लिए बैटरी सहेजें</string>
+
+
+    <!-- It’s a button for saving battery, better be short in one word or two -->
+    <string name="boost_notification_low_battery_btn">सहेजें</string>
+
+    <!-- It shows how much battery has been save. It will be used like “Battery Life Extended 20 minutes” -->
+    <string name="boost_tip_title_battery">बैटरी का जीवन बढ़ाया गया</string>
+    <string name="boost_tip_detail_battery">बैटरी का लम्बे समय तक उपयोग किया जा सकता है!</string>
+
+
+    <string name="daily_weather_notification"> मौसम की दैनिक भविष्यवाणी</string>
+
+
+    <!-- It’s a button for detail content, better be short in one word or two -->
+    <string name="weather_notification_btn">विवरण</string>
+
+
+    <!-- It show how much memory has been used. It will be used like “200MB Memory Used” -->
+    <string name="boost_notification_low_ram_title">उपयोग की गई मेमोरी</string>
+    <string name="boost_notification_low_ram_description">मेमोरी मुक्त करने के लिए प्रोत्साहित करें</string>
+
+    <!-- It shows how much memory has been released. It will be used like “Memory Released 200MB” -->
+    <string name="boost_tip_title_memory">निर्मुक्त की गई मेमोरी</string>
+
+
+    <!-- The temperature of phone is too hot, better be short -->
+    <string name="boost_notification_hot_cpu_title">फोन बहुत अधिक गर्म हो रहा है</string>
+
+
+    <!-- It’s a button for cooling down temperature of phone, better be short in one word or two -->
+    <string name="boost_notification_hot_cpu_btn">ठण्डा</string>
+
+
+    <!-- It shows how much temperature has been cooled down. It will be used like “Cool Down 10 ℉／℃” -->
+    <string name="boost_tip_title_cpu_temperature">ठण्डा करें</string>
+    <string name="boost_notification_hot_cpu_description">सीपीयू ठण्डा करें</string>
+    <string name="boost_tip_detail_cpu_temperature"> सीपीयू ठण्डा हो गया</string>
+
+
+    <!-- A new themes for phone including wallpapers and app icons. -->
+    <string name="theme_notification_title">नया थीम </string>
+    <string name="theme_notification_description">अपने फोन के लिए एक नए स्टाइल की कोशिश करें!</string>
+
+    <string name="boost_notification_low_battery_title_figure">%1$s%%</string>
+    <string name="boost_notification_low_ram_title_figure">%1$s%%</string>
+    <string name="boost_notification_low_ram_btn">बूस्ट</string>
+    <string name="boost_title">बूस्ट</string>
+    <string name="notification_toolbar_wifi"> वाई-फ़ाई </string>
+    <string name="notification_toolbar_flash_light"> फ़्लैशलाइट </string>
+
+
+    <!-- Please translate and replace the words in red color -->
+
+
+    <!-- Advanced cleaning is an operation that cleaning memory in an advanced way to stop apps and make apps can not restart, which can make phone run faster! -->
+    <string name="advanced_boost_title">उन्नत सफाई</string>
+    <!-- Accessibility Service is a settings option in phone! -->
+    <!-- It will be used like “Freed up 200MB” , which means memory released in phone-->
+
+    <!-- An operation to make a app visible on the screen, better be short in one word or two -->
+    <string name="unhide_label">सामने लाएँ</string>
+
+    <!-- “Magic Locker” is an app name, don’t need to translate. Themes include images and app icons, which can make phone screen stylish. -->
+    <string name="locker_download_hint">इन अद्भुत विषयों का उपयोग करने के लिए मैजिक लॉकर प्राप्त करें।</string>
+    <!-- Locker can lock the screen of your phone. -->
+    <string name="online_theme_tab_title_locker"> लॉकर</string>
+    <!-- An operation to install an app, better be short in one word or two -->
+    <string name="locker_install_btn">स्थापित करें</string>
+
+    <string name="online_theme_tab_title_launcher"> लॉन्चर </string>
+
+    <!-- Icon pack is a collection of designed app icons that can replace the default ones of your phone. -->
+    <string name="icon_pack_settings_title">ऑइकन पैक</string>
+    <!-- Memory has been released of the phone, which boosts your phone and makes it run faster. Better be short in one word or two.-->
+    <!-- Type the English name of the city and select the city from the search result. Only support English -->
+    <string name="weather_search_hint">" शहर टाइप करें और चुनें (केवल English)"</string>
+    <!-- Camera Pro is the name of App, which don’t need to translate. Themes can make your phone beautiful including wallpapers and app icons. The sentence below will be used in Applying theme like “ iOS 10 theme for Camera Pro has been installed. Apply it now?”-->
+    <string name="apply_theme_text">%1$s Camera Pro के लिए स्थापित किया गया. इसे अभी लागू करें?</string>
+    <string name="apply_btn">लागू करें</string>
+    <string name="welcome_apply_theme">थीम लागू कर रहे हैं</string>
+
+    <string name="app_store_name_system">सिस्टम</string>
+    <!-- A container with groups of apps, to keep and organize apps in phone. -->
+    <string name="auto_default_name_prefix"> फ़ोल्डर </string>
+
+
+    <!-- The following words are operations in Screen manager. -->
+    <!-- Screen Manager is a feature that you can manage your phone’s screens by ranking screens, increasing a new screen or deleting a screen . -->
+    <string name="launcher_widget_screen_manager_title"> स्क्रीन प्रबंधक </string>
+    <!-- You can drag one screen and move its position to rank screens. -->
+    <string name="screen_manager_hint_drag"> आप रैंक के लिए पेज को खींच सकते हैं </string>
+    <!-- Shake the phone to remove blanks between icons and make icons orderliness. -->
+    <string name="screen_manager_hint_shake"> आइकन संरेखित करने के लिए शैक करें </string>
+
+
+    <!-- The following words are operations in editing pictures. -->
+    <!-- Crop, zoom in or zoom out a picture to suit your want.-->
+    <!-- You can move the picture to choose the most beautiful part and scale to make the picture big or small. -->
+    <!--Edit the picture over again without storing the changes you have edited. -->
+    <string name="online_wallpaper_edit_reset_btn"> रीसेट करें </string>
+    <!-- Exit the picture editing without storing the changes you have edited. -->
+    <string name="online_wallpaper_cancel_edit_dialog_content"> बाहर निकलने के लिए परिवर्तनों को छोड़ें?</string>
+
+    <!-- All of the content. Better be short in one word or two. -->
+    <string name="online_wallpaper_tab_title_all"> समस्त </string>
+    <!-- A tag shows the content is used right now. Better be short in one word or two. -->
+
+
+    <string name="launcher_widget_icon_size_title">आइकॉन आकार</string>
+    <string name="online_wallpaper_edit_cancel_btn">रद्द करें</string>
+    <string name="customize_my_wallpapers_remove_btn">निकालें</string>
+    <string name="launcher_widget_system_settings_title">सिस्टम सेटिंग</string>
+    <string name="network_error">नेटवर्क त्रुटि </string>
+    <string name="launcher_widget_launcher_settings_title">लॉन्चर सेटिंग</string>
+    <string name="online_wallpaper_apply_btn">वॉलपेपर के रूप में सेट करें</string>
+
+    <string name="launcher_widget_lucky_title">भाग्‍यशाली </string>
+    <string name="set_as_default">एयर लांचर को होम के तौर पर सेट करें</string>
+    <string name="notification_default_cleared_title">होम साफ हो चुका है</string>
+    <string name="set_as_default_boost_battery_body">एयर लांचर आपके फोन को बूस्‍ट करता है और आपके फोन की बैटरी को लंबे समय तक बचाता है! एयर लांचर को होम के तौर पर सेट करना है? </string>
+    <string name="set_as_default_boost_cool_body">फोन के बहुत ज्‍यादा गर्म होने पर उसको ठंडा करने के लिए एयर लांचर बूस्‍ट करता है!एयर लांचर को होम के तौर पर सेट करना है? </string>
+    <string name="set_as_default_boost_mem_body">एयर लांच आपके फोन को बूस्‍ट करता है और स्‍पीड के बारे में चिंता करने की जरूरत नहीं है! एयर लांचर को होम के तौर पर सेट करना है?</string>
+    <string name="set_as_default_info_2">एयर लांचर आपके फोन को व्‍यक्तिगत और स्‍टाइलिश बनाता है! एयर लांचर को होम के तौर पर सेट करना है?</string>
+    <string name="set_as_default_info_3">एयर लांचर आपके फोन को ज्‍यादा प्रभावी बनाता है! एयर लांचर को होम के तौर पर सेट करना है?</string>
+    <string name="notification_set_as_default_description_1">अपने फोन को बूस्‍ट करें और तेज रखें।</string>
+    <string name="notification_set_as_default_description_2">अपने फोन को व्‍यक्तिगत और स्‍टाइलिश बनाएं।</string>
+    <string name="notification_set_as_default_description_3">अपने फोन को ज्‍यादा प्रभावी बनाएं।</string>
+    <string name="notification_set_as_default_title">होम के तौर पर सेट करें</string>
+    <string name="set_as_default_boost_battery_figure">%1$d  मिनिट </string>
+    <string name="local_wallpaper_pick_error">वॉलपेपर को पकड़ने के साथ कुछ गलत हुआ है</string>
+    <string name="local_wallpaper_pick_error_gif_not_supported">जिफ छवि समर्थ‍ित नहीं है</string>
+    <string name="nearby_title">समीप</string>
+    <string name="launcher_widget_nearby_title">समीप</string>
+    <string name="notification_set_as_default_btn">सेट</string>
+
+    <string name="update_toast_no_network">कृपया कनेक्शन की जांच करें</string>
+    <string name="update_toast_already_latest">आप नवीनतम संस्करण का प्रयोग कर रहे हो</string>
+    <string name="update_toast_downloading">इस समय एप डाउनलो हो रही है</string>
+    <string name="update_dialog_title">नवीनतम संस्करण डाउनलोड करें</string>
+    <string name="download_capital">डाउनलोड</string>
+    <string name="search_settings">सेटिंग खोजें</string>
+    <string name="search_settings_result_title">परिणाम</string>
+    <string name="search_widget">विजिट खोजे</string>
+    <string name="search_show_suggestions">खोज के सुझावों को दिखाएं</string>
+    <string name="search_show_history">खोज की हिस्टी दिखाए</string>
+    <string name="search_show_local_apps">एप्स</string>
+    <string name="search_show_contacts">संपर्कों</string>
+    <string name="search_trending_words">ट्रेंड में चल रहे शब्द</string>
+    <string name="search_history">खोज की हिस्टी</string>
+    <string name="search_bar_remove_confirm_dialog_title">इस खोज बार को हटाएं?</string>
+    <string name="search_bar_remove_confirm_dialog_description">आप अब भी खोज के द्वारा एक्सेस पा सकते हो:\n1.इसको लांचर सेटिंग से चालू करें-&gt;Search Settings\n2.इसको विकल्प सूची में चालू करें-&gt;विजिट</string>
+    <string name="search_bar_widget">खोज बार</string>
+    <string name="search_contacts">संपर्कों</string>
+
+    <string name="wallpaper_network_error_reload">पुन:लोड करें</string>
+    <string name="set_as_default_info_1">एयर लांच आपके फोन को बूस्‍ट करता है और स्‍पीड के बारे में चिंता करने की जरूरत नहीं है! एयर लांचर को होम के तौर पर सेट करना है?</string>
+    <string name="set_as_default_boost_battery_title">बैटरी का जीवन बढ़ाया गया</string>
+    <string name="set_as_default_boost_cool_title">ठण्डा करें</string>
+    <string name="set_as_default_boost_mem_title">निर्मुक्त की गई मेमोरी</string>
+    <string name="search_settings_category_title">सेटिंग</string>
+    <string name="search_more">और अधिक</string>
+    <string name="search_remove">निकालें</string>
+    <string name="search_bar_default_text">खोजें</string>
+    <string name="launcher_menu_panel_title_effects">प्रभाव</string>
+    <string name="launcher_menu_panel_title_widgets">विजेट</string>
+    <string name="launcher_widget_menu_widgets_title">विजेट</string>
+    <string name="search_apps">ऐप</string>
+    <string name="battery_already_optimal">आपका उपकरण पहले से ही अच्‍छी तरह चल रहा है।</string>
+    <string name="battery_auto">स्‍वत:</string>
+    <string name="battery_auto_sync">स्‍वत: सिंक</string>
+    <string name="battery_brightness">चमकीला</string>
+    <string name="battery_careful">सावधानी से</string>
+    <string name="battery_careful_content">आपकी बैटरी सामान्‍य से जल्‍दी खत्‍म हो रही है।</string>
+    <string name="battery_charging_completed">चार्ज हो गई</string>
+    <string name="battery_charging_completed_content">अपने फोन की बैटरी की रक्षा के लिए कृपया प्‍लग से हटाएं।</string>
+    <string name="battery_charging_content">3 चरण की विनियमित चार्जिंग आपकी बैटरी को घिसने से बचाएगी।</string>
+    <string name="battery_charging_left">चार्जिंग हटी</string>
+    <string name="battery_clean_finished_line_o">मुबारक हो!</string>
+    <string name="battery_clean_finished_line_i">आपने बैटरी की लाइव बढ़ा ली है।</string>
+    <string name="battery_cleaning">चार्ज हो रही है…</string>
+    <string name="battery_continue">जारी</string>
+    <string name="battery_current_content">आपकी वर्तमान सेटिंग यहां सहेज जी जाएगी।</string>
+    <string name="battery_excellent">श्रेष्‍ठ</string>
+    <string name="battery_excellent_content">आपकी बैटरी अच्‍छी स्थिति में है।</string>
+    <string name="battery_haptic_feedback">हैप्टिक प्रतिक्रिया</string>
+    <string name="battery_hide_system_apps">सिस्‍टम की एप्‍स को छिपाएं</string>
+    <string name="battery_low">बैटरी कम है</string>
+    <string name="battery_low_content">आप अपने फोन की बैटरी की लाइफ को बढ़ाने के लिए अनुकूलन कर सकते हो।</string>
+    <string name="battery_max_saver">अधिकतम बचत</string>
+    <string name="battery_max_saver_content">वाईफाई, ब्‍लूटूथ, वायब्रेट को बंद करें और और स्क्रिन टाइम आउट टाइम को 15 सेकंड का सेट करें</string>
+    <string name="battery_mode">मोड</string>
+    <string name="battery_off">बंद </string>
+    <string name="battery_on">चालू</string>
+    <string name="battery_optimize">अनुकूलन</string>
+    <string name="battery_power_remaining">बाकी बिजली</string>
+    <string name="battery_previous">पिछला</string>
+    <string name="battery_previous_content">अपनी आखिरी सेंटिंग पर वापस बदलें।</string>
+    <string name="battery_rank">रैंक</string>
+    <string name="battery_reapply">पुन: लागू</string>
+    <string name="battery_screen_timeout">स्‍क्रीन टाइम आउट</string>
+    <string name="battery_smart_saver">स्‍मार्ट सेवर</string>
+    <string name="battery_smart_saver_content">ब्‍लूटूथ, वायब्रेट को बंद करें और और स्क्रिन टाइम आउट टाइम को 30 सेकंड का सेट करें।</string>
+    <string name="battery_speed">गति</string>
+    <string name="battery_stop">बंद</string>
+    <string name="battery_trickle">रिसाव</string>
+    <string name="battery_vibrate">वायब्रेट</string>
+    <string name="battery_view">दृश्‍य</string>
+    <string name="battery_wifi">वाईफाई</string>
+    <string name="customize_my_wallpapers_add_btn_text">एलबम से चुनें</string>
+    <string name="downloading">डाउनलोड हो रहा है…</string>
+    <string name="effect_bounce">बाउंस</string>
+    <string name="effect_extrusion">निष्‍कासन</string>
+    <string name="effect_shrink">सिकुड़न</string>
+    <string name="effect_wave">तरंग</string>
+    <string name="monday">सोमवार</string>
+    <string name="tuesday">मंगलवार</string>
+    <string name="wednesday">बुधवार</string>
+    <string name="thursday">बृहस्‍पतिवार</string>
+    <string name="friday">शुक्रवार</string>
+    <string name="saturday">शनिवार</string>
+    <string name="sunday">रविवार</string>
+    <string name="notification_toolbar_search">ढूंढें</string>
+    <string name="refresh">रिफ्रेश</string>
+    <string name="resolver_wizard_choose_default">\"डिफॉल्‍ट\" चुनें</string>
+    <string name="search_guide_title">लाइक ढूंढने का प्रयास करै…</string>
+    <string name="search_guide_internet">इंटरनेट</string>
+    <string name="search_guide_apps">स्‍थानीय एप्‍स</string>
+    <string name="search_guide_location">स्‍थान</string>
+    <string name="search_select_engine">सर्च इंजिन को चुनें</string>
+    <string name="search_show_places">नक्‍शा</string>
+    <string name="wallpaper_edit_fixed">स्‍थायी</string>
+    <string name="wallpaper_edit_scrollable">स्‍क्रॉल करने योग्‍य</string>
+    <string name="hide_apps_guide_welcome_title">आपने निजी एप में प्रवेश किया है</string>
+    <string name="hide_apps_guide_welcome_action">एप्‍स हटाएं</string>
+    <string name="hide_apps_guide_success_title">मुबारक हो!</string>
+    <string name="hide_apps_guide_success_content_one">%1$s आपने छिपा दी है</string>
+    <string name="hide_apps_guide_success_content">आपने %1$s निजी एप्‍स छिपा दी है।</string>
+    <string name="hide_apps_guide_recommend_hide_percent">इस एप के %1$s%% प्रयोक्‍ता ने इसको छिपाया है</string>
+    <string name="hide_apps_guide_recommend_apps_size">%1$s ने एप अनुशंसित की है</string>
+    <string name="hide_apps_guide_recommend_other_apps_size">%1$s अन्‍य एप्‍स</string>
+    <string name="hide_apps_secret_folder">निजी एप्‍स</string>
+    <string name="hide_apps_add_apps_title">चुनें कि डेस्‍कटॉप की कौन सी एप आप बंद रखना चाहते हैं</string>
+
+
+    <string name="folder_ad_title">अनुशंसित एप्प</string>
+    <string name="search_guide_contacts">संपर्कों</string>
+
+    <string name="launcher_widget_boost_plus_title">बूस्ट+</string>
+    <string name="boost_plus_accessibility_service_label">☆बूस्ट+☆</string>
+    <string name="advanced_boost_authorize_btn">सक्षम</string>
+
+    <string name="boost_plus_action_button_text">बूस्‍ट (%1$s)</string>
+    <string name="boost_plus_cleaning_running_apps">चालू एप्‍स को साफ करें</string>
+    <string name="boost_plus_settings_auto_boost_description">स्वचालित हाइबरनेशन से मिनटों में स्क्रीन बंद हो जाती है। यह स्क्रीन मंद कर देगा, हाइबरनेशन को काम में लें और फिर स्क्रीन को बंद करें।</string>
+    <string name="boost_plus_settings_auto_boost_title">स्वचालित हाइबरनेशन </string>
+    <string name="boost_plus_dialog_accessibility">स्वचालित हाइबरनेशन में ठीक से प्रवेश करने के लिए एयर लांचर में पहुंच की आवश्यक है।</string>
+    <string name="boost_plus_dialog_device_admin">एयर लांचर को ठीक से स्वचालित हाइबरनेशन में लाने के लिए उपकरण व्यवस्थापक की जरूरत है।\nचेतावनी: उपकरण व्यवस्थापक के कारण आप एयर लांचर को इंस्टॉतल करने में विफल हो सकते हो। उपकरण व्यवस्थापक को निष्क्रिय करें और फिर एयर लांचर को अनइंस्टॉटल करें।</string>
+    <string name="boost_plus_empty_view_text_line_2">अच्‍छा काम!</string>
+    <string name="boost_plus_free_up">मुक्‍त करना</string>
+    <string name="boost_plus_exiting">निकालना</string>
+    <string name="boost_plus_running_time">चलने का समय: %1$s</string>
+    <string name="boost_plus_scanned_list_running_apps">चालू एप्‍स</string>
+    <string name="boost_plus_scanned_list_select_all">सभी चुनें</string>
+    <string name="boost_plus_selected_size_text">चयनित: %1$s</string>
+    <string name="boost_plus_settings_lock_delay">सुनिश्चित करे \'स्वचालित लॉक \' (&gt; = 5 सेकंड) देरी के साथ सेट किया है! स्क्रीन बंद करने से पहले स्वचालित हाइबरनेशन को एक छोटी सी देरी की आवश्यकता है।</string>
+    <string name="boost_plus_settings_lock_instantly">सुनिश्चित करं \'पावर बटन तुरंत लॉक\' की जाँच नहीं की! स्क्रीन बंद करने से पहले स्वचालित हाइबरनेशन को एक छोटी सी देरी की आवश्यकता है।</string>
+    <string name="boost_plus_stop_clean_content">एक बार बंद करने पर, बूस्ट+ अब आपकी मेमोरी को मुक्त करने में सक्षम नहीं रहेगा। आप पक्का  रोकना चाहते हैं?</string>
+    <string name="boost_plus_stop_clean_title">साफ करना बंद करें?</string>
+    <string name="boost_plus_stop_sure">पक्‍का</string>
+    <string name="boost_plus_tip_battery_desc">आपकी बैटरी की लाइफ दोगुनी</string>
+    <string name="boost_plus_tip_battery_title">बैटरी की लाइव को विस्ताeर देने के लिए बूस्ट+ ट्राई करें!</string>
+    <string name="boost_plus_tip_memory_btn">साफ </string>
+    <string name="boost_plus_tip_memory_desc">और अधिक मेमोरी को बचाने के लिए और अधिक गहन क्लीनर का प्रयोग करें!</string>
+    <string name="boost_plus_tip_memory_title">अपने फोन को बेहतर साफ करने के लिए बूस्ट+ ट्राई करें!</string>
+    <string name="boost_plus_tip_optimal_desc">कुछ एप्सn केवल बूस्ट+ से ही बंद की जा सकता है।</string>
+    <string name="boost_plus_tip_optimal_title">अभी भी धीमा है? बूस्ट+ ट्राई करें!</string>
+    <string name="boost_plus_warning_toast">यह एप्लिकेशन आपको पुश संदेश दे सकती है। यदि चुना नहीं तो यह पुश संदेश नहीं कर सकता है।</string>
+    <string name="device_admin_explanation">बैटरी खाली करने की एप्सइ को स्वaत: बंद करने के लिए एयर लांचर को अनुमति दें।</string>
+    <string name="folder_remove_confirm_body">एक बार फोल्ड र हटाने पर, इस फोल्डlर की सभी एप्सe डेस्केटॉप पर दिखाई नहीं देगी।</string>
+    <string name="folder_remove_confirm_title">फोल्‍डर हटाएं</string>
+    <string name="folder_unpack_confirm_body">एक बार फोल्डuर को नहीं खोला जाए तो, इसके शॉर्टकट डेस्कटटॉप से हट जाएंगे।</string>
+    <string name="hide_apps_guide_welcome_content">आप अपनी निजी एप्स  यहां छिपा सकते हैं, \n और इसको दो उंगलियों से उपर स्वा.इप करके खोलें।</string>
+    <string name="hide_apps_remove_password_title">अनलॉक पैटर्न को हटाएं</string>
+    <string name="hide_apps_reset_password_title">अनलॉक पैटर्न को दुबारा सेट करें</string>
+    <string name="install_dialog_title">एक नया संस्‍करण मिला</string>
+    <string name="launcher_app_index_desc">एक अद्भुत व्‍यक्तिगत एप्‍स</string>
+    <string name="launcher_app_index_title">अपनी एप्सp को अच्छी तरह से संगठित रखें और अपने फोन को तेजी बनाएं।</string>
+    <string name="moment_good_afternoon">दोपहर की नमस्‍कार!</string>
+    <string name="moment_good_evening">शाम की नमस्‍कार!</string>
+    <string name="moment_good_morning">सुबह की नमस्‍कार!</string>
+    <string name="moment_good_night">रात की नमस्‍कार!</string>
+    <string name="moment_nearby_title">आसपास के लोग प्रयोग कर रहे हैं</string>
+    <string name="moment_news_title">समाचार</string>
+    <string name="set_as_default_wizard_huawei_title">\"एयर लांचर\" चुनें</string>
+    <string name="set_up">सेट अप</string>
+    <string name="storm">आंधी</string>
+    <string name="update_toast_storage_not_ready">बाहरी संचयन उपलब्‍ध नहीं</string>
+    <string name="weather_tip_dust">घर के अंदर रहना बेहतर है।</string>
+    <string name="weather_tip_hazy">सावधानी रखें और धीरे चलाएं।</string>
+    <string name="weather_tip_sleet">एक छाता लें और गर्म रहें।</string>
+    <string name="weather_tip_snow">गर्म कपड़े पहनें</string>
+    <string name="weather_tip_storm">अपने साथ छाता रखें</string>
+    <string name="all_apps_more_horizontal">समस्‍तरीय</string>
+    <string name="all_apps_more_vertical">लंबरूप</string>
+
+    <string name="folder_remove_confirm_positive">निकालें</string>
+    <string name="boost_plus_empty_view_text_line_1">आपकी डिवाइस पहले से ही इष्टतम है!</string>
+    <string name="wind_chime_remove_btn">निकालें</string>
+    <string name="battery_bluetooth">ब्लूटूथ</string>
+    <string name="boost_plus_memory_used">उपयोग की गई मेमोरी</string>
+    <string name="folder_unpack_confirm_positive">उन्मुक्त करें</string>
+    <string name="boost_plus_tip_battery_btn">साफ </string>
+    <string name="battery_title">बैटरी</string>
+    <string name="weather_tip_thunderstorm">घर के अंदर रहना बेहतर है।</string>
+    <string name="battery_mobile_data">मोबाइल डेटा</string>
+
+    <string name="battery_current">मौजूदा</string>
+    <string name="boost_plus_settings_device_admin_title">उपकरण प्रबंधक</string>
+    <string name="boost_plus_settings_device_admin_description">यदि आप एयर लांचर को अनइंस्टॉल करना चाहते हो, पहले उपकरण प्रबंधक को निष्क्रिय करें।</string>
+    <string name="boost_plus_start_toast">बूस्ट+ को शुरु करने के लिए बूस्ट पर दो बार क्लिक करें!</string>
+    <string name="launcher_shortcut_boost">1-टैप बूस्ट</string>
+    <string name="notification_battery_consuming_title">%1$s एप पावर ले रही है। </string>
+    <string name="notification_battery_consuming_description">बैटरी लाइफ के विस्तार के लिए अनुकूलन करें।</string>
+    <string name="notification_boost_plus_title">%1$s एप फोन को धीमा कर रही है।</string>
+    <string name="notification_boost_plus_content">इसकी गति बढ़ाने के लिए बूस्ट करें!</string>
+    <string name="battery_low_tip_title">कम बिजली!</string>
+    <string name="battery_low_tip_desc">बिजली खपत को न्यूनतम करने के लिए बैटरी सेवर को ट्राई करें।</string>
+    <string name="launcher_widget_moment_title">एयर मोमेंट</string>
+    <string name="wind_chime_remove_confirm_dialog_title"> “एयर मोमेंट” को हटाना है?</string>
+    <string name="wind_chime_remove_confirm_dialog_description">के द्वारा आप अब भी एयर मोमेंट तक पहुंच बना सकते हैं:&lt;br /&gt;इसको इसमें चालू करें &lt;b&gt;Menu&lt;/b&gt; -&gt; &lt;b&gt;Widgets&lt;/b&gt;</string>
+    <string name="gesture_guide_content_down">एयर मोमेंट को जल्दी खोलने के लिए नीचे स्वाइप करें</string>
+    <string name="gesture_guide_content_up">सर्च को जल्दी खोलने के लिए उपर स्वाइप करें</string>
+    <string name="gesture_guide_got_it">समझ गए</string>
+    <string name="hide_apps_guide_new_install">आपकी हाल ही में इंस्टॉल की गई एप</string>
+
+    <string name="battery_low_tip_btn_ok">इसे अभी ट्राई करें</string>
+    <string name="weather_city_search_error_prompt">नेटवर्क त्रुटि </string>
+    <string name="battery_low_tip_btn_cancel">बाद में</string>
+
+    <string name="moment_lucky_draw">भाग्यशाली उपहार लो </string>
+    <string name="moment_lucky_draw_tip">अनुमान लगाए कि आप बॉक्स से क्या प्राप्त कर सकते हो! भाग्यशाली से लें और आनंद उठाएं!</string>
+    <string name="moment_lucky_start">अभी लें</string>
+    <string name="accessibility_authorize_try_again_title">दुबारा प्रयास करना है?</string>
+    <string name="accessibility_authorize_try_again_description">बूस्ट+ के लिए उपलब्धता खोलने में असफल। अपने फोन को तेज बनाने के लिए दुबारा प्रयास करें।</string>
+    <string name="accessibility_authorize_try_again_positive">अभी प्रयास करें</string>
+    <string name="news_load_more_re_try">दुबारा प्रयास के लिए क्लिक करें</string>
+    <string name="boost_plus_authorize_title">उपलब्धता का चालू करना है?</string>
+    <string name="boost_plus_authorize_desc">इन एप्स को रोकने के लिए बूस्ट+ को उपलब्धता की जरूरत है। यह फोन को 80\%% या ज्यादा बूस्ट करता है और बैटरी की लाइफ को बढ़ाता है 200\%%!\n93\%% प्रयोक्ताओं को इसको चालू करना होता है। </string>
+    <string name="boost_plus_accessibility_service_description">उपरोक्त स्विच को टैप करें, बाद में ओके टैप करें। \nको सक्षम करें:\n1) फोन को बूस्ट करें 80\%%\n2) बैटरी को खाली करने वाली एप्स को नष्ट करें \n बूस्ट+ आपके फोन को तेज करने के लिए समर्पित है और कोई व्यक्तिगत डाटा एकत्रित नहीं करती।</string>
+    <string name="boost_plus_security_setting_for_samsung_device">इसको सेट करें \'लॉक स्क्रिन और सुरक्षा\’!</string>
+    <string name="permission_guide_description">☆बूस्ट+☆ ढूंढें और इसके चालू करें। </string>
+    <string name="boost_plus_freeable">निशुल्क के लायक</string>
+
+    <string name="accessibility_authorize_try_again_negative">बाद में</string>
+    <string name="got_it">समझ गए</string>
+    <string name="boost_plus_clean_tip_prefix">सुझाव: </string>
+    <string-array name="boost_plus_clean_tips">
+        <item>जिद्दी`एप को जबर्दस्ती रोकने के लिए यह कुछ ही समय लेती है। कृपया धैर्य रखें!</item>
+        <item>बैटरी खाली होने को कम करने के लिए सोने से पहले बूस्ट+ का प्रयोग करें। </item>
+        <item>बूस्ट+ का प्रयोग करने के बाद गेम ज्यादा अच्छा काम करेगा। </item>
+        <item>फोन ज्यादा गर्म होता है? बूस्ट+ को सहायता के लिए कहें!</item>
+        <item>अपने फोन को हमेशा के लिए तेज बनाए रखने के लिए बूस्ट+ को लगातार प्रयोग करें। </item>
+    </string-array>
+    <string name="boost_plus_optimal">ऑप्टिमल</string>
+    <string name="charging_screen_guide_title">उपकरण को ओवरचार्जिंग से बचाने के लिए बैटरी सुरक्षा को चालू करें!</string>
+    <string name="five_star_hint_text">हमारे साथ आपका अनुभव कैसा रहा?</string>
+    <string name="five_star_five_text">प्यारा लगा </string>
+    <string name="five_star_four_text">पसंद आया </string>
+    <string name="five_star_three_text">यह ठीक था </string>
+    <string name="five_star_two_text">यह पसंद नहीं आया </string>
+    <string name="five_star_one_text">खराब लगा </string>
+    <string name="five_star_positive_text">दर्ज करें</string>
+    <string name="launcher_widget_market_title">एप की फोटो</string>
+    <string name="locker_2g">2G</string>
+    <string name="locker_3g">3G</string>
+    <string name="locker_4g">4G</string>
+    <string name="locker_disable_confirm">वास्तव में बंद करना चाहते हैं?</string>
+    <string name="locker_disable_confirm_detail">अक्षम करने के बाद, लॉक स्क्रीन में विशेषताएं निष्क्रिय हो जाएगी, क्या आप जारी रखना चाहते हैं?</string>
+    <string name="locker_diabled_success">लॉकर बंद हो चुका है</string>
+    <string name="locker_menu_disable">लॉकर अक्षम करें </string>
+    <string name="slide_to_unlock">अनलॉक के लिए स्लाइड करें</string>
+    <string name="locker_settings">लॉकर सेटिंग्स </string>
+    <string name="locker_settings_title">स्क्रीन लॉकर</string>
+    <string name="locker_slide_wallpaper_title">लॉकर वालपेपर</string>
+    <string name="locker_unkown">Unk</string>
+    <string name="locker_wallpaper_network_error">नेटवर्क त्रुटि, कृपया दुबारा प्रयास करें।</string>
+    <string name="moment_ad_title">AD</string>
+    <string name="moment_set_launcher">अपने फोन को बूस्ट करने के लिए एयर लांचन को डिफॉल्टर सेट करें!</string>
+    <string name="moment_set_locker">उपकरण को ओवरचार्जिंग से बचाने के लिए बैटरी सुरक्षा चालू करें!</string>
+    <string name="moment_open_locker">आपकी बैटरी सुरक्षा में है!</string>
+    <string name="result_page_card_battery_protection_title">बैटरी सुरक्षा </string>
+    <string name="result_page_card_battery_protection_description">फोन चार्जिंग को 50\%% तक तेज करें (विज्ञापन शामिल हो सकते हैं) </string>
+    <string name="result_page_card_battery_protection_toast">बैटरी सुरक्षा सक्षम है।</string>
+    <string name="result_page_card_battery_saver_title">बैटरी सेवर </string>
+    <string name="result_page_card_battery_saver_description_low_battery">%s पावर बाकी है। बैटरी लाइफ को बढ़ाने के लिए ऑप्टिमाइज करें। </string>
+    <string name="result_page_card_battery_saver_description_normal">फोन की पावर वास्तव में खाली हो रही है। बैटरी लाइफ को बढ़ाने के लिए ऑप्टिमाइज करें। बैकग्राउंड एप्स असामान्य पावर प्रयोग का कारण होंगी। उनको क्लीन करने के लिए अग्रिम बूस्ट का प्रयोग करें!</string>
+
+    <string name="result_page_card_boost_plus_promote_title">बूस्ट + क्यों प्रयोग करें?</string>
+    <string name="result_page_card_boost_plus_promote_description">साधारण बूस्ट से अधिकतर एप्स नहीं रोकी जा सकती और आपके फोन को हमेशा पीछे धकेलती है। सौभाग्य से, बूस्ट + उनको जर्बदस्ती रोक सकती है। \nबूस्ट+ ज्यादा प्रभावी है जो 90\%% सॉफ्टवेयर क्लीन कर देती है।</string>
+    <string name="search_show_trending_words">प्रचलित खबरें दिखाएं</string>
+    <string name="search_trending_news">प्रचलित खबरें</string>
+    <string name="search_trending_news_bottom">और कहानियां</string>
+    <string name="search_trending_news_latest">नवीनतम खबरों के लिए अपडेट करें</string>
+    <string name="search_news_new_tag">नई </string>
+    <string name="settings_badge_recommended_apps_hint">कनफिगरेशन को अनुमति की जरूरत हो सकती है</string>
+    <string name="settings_badge_common_apps">आम एप्स</string>
+    <string name="settings_badge_common_apps_hint">कनफिगरेशन को अधिसूचना एक्सेस की जरूरत हो सकती है</string>
+
+    <string name="result_page_card_boost_plus_btn">बूस्ट</string>
+    <string name="moment_locker_contains_ads">(विज्ञापन शामिल)</string>
+    <string name="locker_settings_subtitle">(विज्ञापन शामिल)</string>
+    <string name="result_page_card_battery_protection_btn">सक्षम</string>
+    <string name="charging_screen_menu_item">बंद करें </string>
+    <string name="result_page_card_boost_plus_title">बूस्ट+</string>
+
+    <string name="moment_try_it_now">इसे अभी ट्राई करें</string>
+
+    <string name="news_network_error">नेटवर्क त्रुटि </string>
+
 </resources>

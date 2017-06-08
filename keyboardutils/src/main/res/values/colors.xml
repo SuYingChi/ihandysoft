@@ -39,4 +39,34 @@
     <color name="battery_green">#4caf50</color>
     <color name="material_text_black_primary">#de000000</color>
     <color name="material_text_black_secondary">#8a000000</color>
+
+    <!-- Common -->
+    <color name="blue_action_bar_bg">#448aff</color>
+
+    <!-- Material Design -->
+    <color name="material_text_white_secondary">#8affffff</color>
+    <color name="material_text_button_positive">#ff000000</color> <!-- TODO de000000 87% alpha-->
+
+    <!-- Theme -->
+    <color name="theme_bottom_btn_bg_normal">#2975FF</color>
+    <color name="blue_btn_bg_pressed">#2569E5</color>
+    <color name="theme_bottom_btn_bg_disabled">#ADADAD</color>
+    <color name="transparent_progress_dialog">#05000000</color>
+    <color name="charging_screen_alert_negative_action">#999</color>
+    <color name="charging_screen_alert_positive_action">#336bf3</color>
+
+    <!-- General purpose -->
+    <color name="dark_translucent_bg">#66000000</color>
+    <color name="app_bar_activities_content_bg">#eaeaea</color>
+    <color name="blue">#448aff</color>
+
+    <!-- Material Design -->
+    <color name="material_text_black_hint">#61000000</color>
+    <color name="material_text_black_p70">#b2000000</color>
+    <color name="material_text_white_hint">#61ffffff</color>
+    <color name="material_color_accent">#448aff</color>
+    <color name="material_color_switch_thumb">#ffffff</color>
+    <color name="material_color_foreground">#cccccc</color>
+
+    <color name="wallpaper_activities_control_highlight">#dadada</color>
 </resources>

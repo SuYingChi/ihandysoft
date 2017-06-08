@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout android:id="@+id/grid_root"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:launcher="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    tools:ignore="UnusedAttribute"
+    tools:layout_width="200dp">
+
+    <com.artw.lockscreen.common.HorizontalBannerImageView
+        android:id="@+id/theme_thumbnail"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        launcher:aspectRatioOverride="0.5625"
+        tools:src="@drawable/wallpaper_thumbnail" />
+
+    <ImageView
+        android:id="@+id/theme_market_marker"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="top|end"
+        android:src="@drawable/locker_themes_google_play"
+        tools:ignore="ContentDescription" />
+</FrameLayout>

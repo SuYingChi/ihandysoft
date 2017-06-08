@@ -96,4 +96,16 @@
     <dimen name="dialog_margin">40dp</dimen>
     <dimen name="dialog_content_margin">24dp</dimen>
     <dimen name="dialog_button_padding">16dp</dimen>
+
+
+    <!-- Locker -->
+    <dimen name="air_launcher_settings_single_line_item_row_height">74dp</dimen>
+    <dimen name="settings_item_text_size">17sp</dimen>
+    <dimen name="settings_item_content_text_size">16sp</dimen>
+    <dimen name="locker_toggle_height">407dp</dimen>
+    <dimen name="app_bar_elevation">4dp</dimen>
+    <dimen name="charging_popmenu_margin_right">60dp</dimen>
+    <dimen name="charging_screen_menu_to_top_height">32dp</dimen>
+
+    <integer name="google_play_services_version">10298000</integer>
 </resources>

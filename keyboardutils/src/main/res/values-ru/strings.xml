@@ -40,4 +40,710 @@
     <string name="charging_screen_settings_description">Защитите устройство от перезарядки</string>
     <string name="charging_screen_settings_subtitle">(Содержит рекламу.)</string>
     <string formatted="false" name="charging_screen_time">%s:%s</string>
+    <string name="empty_folder_name">Новая папка</string>
+    <string name="activity_not_found">Приложение не установлено</string>
+    <string name="activity_not_available">Приложение недоступно</string>
+    <string name="safe_mode_shortcut_error">Скачивание приложения в безопасном режиме отключено</string>
+    <string name="safe_mode_widget_error">Виджеты в безопасном режиме отключены</string>
+    <string name="long_press_widget_to_add">Коснитесь и удерживайте для выбора виджета</string>
+    <string name="widget_dims_format">%1$d \u00d7 %2$d</string>
+    <string name="all_apps_search_bar_hint">" Поиск приложений"</string>
+    <string name="all_apps_search_bar_empty">Ничего не найдено</string>
+    <skip/>
+    <string name="out_of_space">На этом Главном экране больше нет места </string>
+    <string name="hotseat_out_of_space">В области Избранное больше нет места</string>
+    <string name="all_apps_button_label">Приложения</string>
+    <string name="delete_target_label">Удалить</string>
+    <string name="delete_target_uninstall_label">Деинсталлировать</string>
+    <string name="info_target_label">О приложении</string>
+    <string name="desktop_target_label">Рабочий стол</string>
+    <skip/>
+    <string name="permlab_read_settings">читать настройки и ярлыки на Главной</string>
+    <string name="permdesc_read_settings">позволяет приложению считывать настройки и ярлыки на Главной</string>
+    <string name="permlab_write_settings">писать настройки и ярлыки приложения</string>
+    <string name="permdesc_write_settings">позволяет приложению изменять настройки и ярлыки на Главной</string>
+    <string name="msg_no_phone_permission">%1$s не разрешается делать телефонные звонки</string>
+    <string name="failed_to_add_widget_text">Не удалось добавить виджет на рабочий стол</string>
+    <skip/>
+    <string name="gadget_error_text">Проблема при загрузке виджета</string>
+    <string name="gadget_setup_text">Настройка</string>
+    <string name="uninstall_system_app_text">Это системное приложение, и оно не может быть удалено</string>
+    <string name="folder_add_shortcuts_view_cancel_button">Отмена</string>
+    <string name="folder_add_shortcuts_view_ok_button">ОК</string>
+    <string name="app_store_category_name_favorite_tools">Инструментарий</string>
+    <string name="app_store_category_name_tools">Инструменты</string>
+    <string name="app_store_category_name_social">Соцсети</string>
+    <string name="app_store_category_name_games">Игры</string>
+    <string name="app_store_category_name_lifestyle">Стиль жизни</string>
+    <string name="app_store_category_name_photography">Фотографирование</string>
+    <string name="app_store_category_name_media">СМИ</string>
+    <string name="app_store_category_name_news">Новости \u0026 книги</string>
+    <string name="app_store_others">Другое</string>
+    <string name="folder_placeholder_text">Вы можете добавлять любые приложения в эту папку.</string>
+    <string name="abandoned_clean_this">Удалить</string>
+    <string name="abandoned_search">Поиск</string>
+    <string name="abandoned_promises_title">Это приложение не установлено</string>
+    <string name="abandoned_promise_explanation">Приложение для этого значка не установлено. \nВы можете удалить значок или искать приложение и установить его вручную.</string>
+    <string name="weather_title">Погода</string>
+    <string name="weather_wind_speed">Скорость ветра:</string>
+    <string name="weather_wind_direction">Направление ветра:</string>
+    <string name="weather_visibility">Видимость:</string>
+    <string name="weather_humidity">Влажность:</string>
+    <string name="weather_sunrise">Восход:</string>
+    <string name="weather_sunset">Закат:</string>
+    <string name="weather_last_update_today">Обновлено в %1$s</string>
+    <string name="weather_last_update_before_today">Обновлено %1$s</string>
+    <string name="weather_no_info_placeholder">--</string>
+    <string name="weather_no_info_placeholder_time">--:--</string>
+    <string name="weather_high_low_temperature">%1$s\u00b0\u00a0/\u00a0%2$s\u00b0</string>
+    <string name="weather_kph">km/h</string>
+    <string name="weather_mph">mph</string>
+    <string name="weather_km">km</string>
+    <string name="weather_mi">mi</string>
+    <string name="weather_time">%1$s:%2$s</string>
+    <string name="weather_today">Сегодня</string>
+    <string name="weather_settings_title">Погодные настройки</string>
+    <string name="weather_settings_item_temperature_unit">Единица измерения температуры</string>
+    <string name="weather_settings_item_distance_unit">Единица измерения расстояния</string>
+    <string name="weather_settings_item_add_new_city">Добавить новый город</string>
+    <string name="weather_settings_celsius">\u00b0C</string>
+    <string name="weather_settings_fahrenheit">\u00b0F</string>
+    <string name="weather_settings_cf_slash">/</string>
+    <string name="weather_settings_cities_title">Город</string>
+    <string name="weather_city_add_new_btn">Добавить новый город</string>
+    <string name="weather_city_more_than_limit">Можно добавить только 12 городов</string>
+    <string name="weather_city_searching_prompt">Поиск городов…</string>
+    <string name="weather_city_empty_result_prompt">Нет соответствующего города</string>
+    <string name="weather_city_loading_message">Загрузка…</string>
+    <string name="weather_city_load_failed_message">К сожалению, не удается загрузить данные о погоде.</string>
+    <string name="weather_clock_widget_name">Погода &amp; часы</string>
+    <string name="weather_clock_unknown_weather_message">Неизвестно</string>
+    <string name="sunny">Солнечно</string>
+    <string name="overcast">Пасмурно</string>
+    <string name="clear">Ясно</string>
+    <string name="cloudy">Облачно</string>
+    <string name="rain">Дождь</string>
+    <string name="drizzle">Изморось</string>
+    <string name="rain_shower">Ливень</string>
+    <string name="snow">Снег</string>
+    <string name="snow_shower">Сильный снегопад</string>
+    <string name="sleet">Мокрый снег</string>
+    <string name="hazy">Туман</string>
+    <string name="dust">Пыль</string>
+    <string name="thunderstorm">Гроза</string>
+    <string name="cold">Холодно</string>
+    <string name="hot">Жарко</string>
+    <string name="windy">Ветрено</string>
+    <string name="menu_item_settings">Настройки</string>
+    <string name="setting_item_mobile">Мобильные данные</string>
+    <string name="setting_item_wifi">Вай-фай</string>
+    <string name="setting_item_airplane">Самолетный режим</string>
+    <string name="setting_item_auto_brightness">Автояркость</string>
+    <string name="setting_item_rotate">Автоповорот</string>
+    <string name="setting_item_silence">Тишина</string>
+    <string name="setting_item_vibration">Вибрация</string>
+    <string name="setting_item_bluetooth">Блютус</string>
+    <string name="setting_item_flashlight">Фонарик</string>
+    <string name="more_system_settings_button_title">Настройки системы</string>
+    <string name="more_launcher_settings_button_title">Настройки средства запуска</string>
+    <string name="setting_device_not_support_message">Ваше устройство это не поддерживает.</string>
+    <string name="boost_tip_optimal">Устройство уже оптимизировано!</string>
+    <string name="boost_tip_detail_memory">Ваш телефон сейчас быстрый, как свет!</string>
+    <string name="customize_title">Настроить</string>
+    <string name="customize_wallpapers_title">Обои</string>
+    <string name="customize_themes_title">Темы</string>
+    <string name="wallpaper_toast_set_failed">Возникла проблема с этими обоями, пожалуйста, попробуйте еще раз</string>
+    <string name="customize_local_title">Мое</string>
+    <string name="wallpaper_setting_progress_dialog_text">Установка обоев…</string>
+    <string name="icon_pack_name">Средство запуска по умолчанию</string>
+    <string name="no_icon_pack_name">Системные установки по умолчанию</string>
+    <string name="theme_set_alert_title">Установить тему</string>
+    <string name="theme_set_alert_set_system_theme_body">Установить системные установки по умолчанию в качестве темы?</string>
+    <string name="feedback_title">Обратная связь</string>
+    <string name="feedback_content_placeholder">" Ваши отзывы помогают нам вносить улучшения"</string>
+    <string name="feedback_email_placeholder"> " Пожалуйста, введите ваш адрес электронной почты"</string>
+    <string name="feedback_submit_btn">Отправить</string>
+    <string name="feedback_toast_empty_content">Пожалуйста, напишите свой отзыв</string>
+    <string name="feedback_toast_invalid_email">Пожалуйста, введите действительный адрес электронной почты</string>
+    <string name="feedback_toast_send_success">Спасибо за ваш отзыв!</string>
+    <string name="effect_classic">Классика</string>
+    <string name="effect_cube">Куб</string>
+    <string name="effect_roll">Рулон</string>
+    <string name="effect_rotation">Вращение</string>
+    <string name="effect_stack">Тяга</string>
+    <string name="effect_windmill">Ветряная мельница</string>
+    <string name="effect_flip">Переворот</string>
+    <string name="effect_page">Листание страниц</string>
+    <string name="launcher_widget_time_title">Часы+погода</string>
+    <string name="launcher_widget_widgets_title">Системные виджеты</string>
+    <string name="launcher_widget_boost_title">Ускорени</string>
+    <string name="launcher_widget_settings_title">Настройки</string>
+    <string name="launcher_widget_wallpaper_title">Обои</string>
+    <string name="launcher_widget_flashlight_title">Фонарик</string>
+    <string name="launcher_widget_data_usage_title">Использование данных</string>
+    <string name="launcher_widget_battery_title">Аккумулятор</string>
+    <string name="launcher_widget_app_mgr_title">Управление приложением</string>
+    <string name="launcher_widget_update_title">Обновление</string>
+    <string name="launcher_widget_feedback_title">Обратная связь</string>
+    <string name="launcher_widget_effects_title">Эффекты</string>
+    <string name="launcher_widget_theme_title">Темы</string>
+    <string name="launcher_settings_title">Настройки Camera Pro</string>
+    <string name="launcher_settings_section_default_launcher">Установить по умолчанию как средство запуска</string>
+    <string name="preferences">Предпочтения</string>
+    <string name="launcher_settings_advanced_clean_detail">Ускорьте телефон эффективнее</string>
+    <string name="launcher_settings_advanced_section_about">О приложении</string>
+    <string name="launcher_settings_auto_boost_section">Автоускорение</string>
+    <string name="launcher_settings_auto_boost_detail">Укорять автоматически, когда телефон запаздывает</string>
+    <string name="settings_auth_line1">Как включить?</string>
+    <string name="settings_auth_line2">Найдите \"Camera Pro\" и включите его.</string>
+    <string name="launcher_settings_five_star">Рейтинг 5 звезд</string>
+    <string name="launcher_settings_tell_my_friends">Расскажите друзьям</string>
+    <string name="launcher_settings_feedback">Обратная связь</string>
+    <string name="launcher_settings_update">Обновление</string>
+    <string name="launcher_settings_current_version_detail">Текущая версия: v%1$s</string>
+    <string name="privacy_policy">Политика конфиденциальности</string>
+    <string name="terms_of_service">Условия использования</string>
+    <string name="auto_category_title">Умная сортировка</string>
+    <string name="auto_category_open_btn">Открыть</string>
+
+    <string name="set_as_default_btn_text">ОК</string>
+    <string name="resolver_wizard_select_launcher_1">Выберите</string>
+    <string name="resolver_wizard_select_launcher_2">\"Camera Pro\"</string>
+    <string name="resolver_wizard_click_always">Нажмите \"ВСЕГДА\"</string>
+    <string name="share_through">Поделиться через</string>
+    <string name="news_title">Заголовки</string>
+    <string name="news_settings_item_show_on_home_des">Смахнуть прямо на главном экране</string>
+
+    <string name="news_settings_title">Настройка заголовков</string>
+    <string name="news_refresh_success_news_updated">%1$s новостей обновлено</string>
+    <string name="news_refresh_success_no_news_updated">Обновить до позднейшей</string>
+    <string name="news_settings_item_load_pictures_title">Сохранение данных</string>
+    <string name="news_settings_item_load_pictures_des">Нет картинок в мобильной сети</string>
+    <string name="news_detail_error_reload">Перезагрузить</string>
+    <string name="pull_to_refresh">Потянуть, чтобы обновить…</string>
+    <string name="release_to_refresh">Отпустить, чтобы обновить</string>
+    <string name="icon_size_title">Размер значка</string>
+    <string name="icon_size_settings_title">Размер значка</string>
+    <string name="icon_font_size_settings_title">Размер метки значка</string>
+    <string name="icon_font_color_settings_title">Цвет метки значка</string>
+    <string name="icon_preview_title">Предпросмотр</string>
+    <string name="icon_preview_messenger_title">Служба сообщений</string>
+    <string name="icon_preview_phone_title">Телефон</string>
+    <string name="icon_preview_camera_title">Камера</string>
+    <string name="icon_preview_browser_title">Обозреватель</string>
+    <string name="folder_unpack_confirm_title">Отпустить папку</string>
+    <string name="release_target_label">Выпустить</string>
+
+    <!-- %1$s is the version number which should be kept, for example “v1.0.0"" -->
+    <string name="launcher_settings_latest_version_detail">Последняя версия: v%1$s</string>
+
+    <!-- The following is an alert dialog which includes title, description and actions. Air is the name of the APP that needn’t to be translated.  -->
+    <string name="set_as_default_alert_title">Предупреждение</string>
+    <string name="set_as_default_alert_detail">Отказ установить Camera Pro по умолчанию. Повторить попытку?</string>
+    <string name="set_as_default_alert_ok_btn">ПОВТОРИТЬ ПОПЫТКУ</string>
+    <string name="set_as_default_alert_cancel_btn">ПОЗЖЕ</string>
+
+    <!-- It’s the slogan of the app which can make your phone fast & stylish. &amp; stands for & in program. -->
+    <string name="welcome_description_text">Быстро и стильно</string>
+
+    <!-- It’s an action button, so it’s better to be short -->
+    <string name="welcome_start_btn">СТАРТ</string>
+    <string name="welcome_select_wallpaper">Выберите самые понравившиеся обои</string>
+
+    <!-- It’s a prompt message that our app is preparing the desktop of the phone. -->
+    <string name="welcome_loading">Подготовка рабочего стола…</string>
+
+    <string name="online_wallpaper_tab_title_categories">Категории</string>
+    <string name="settings_auth_guide">Включить \"Camera Pro\", чтобы предупреждать о непрочитанных сообщениях, Facebook, Whatsapp, и т.д.</string>
+    <string name="settings_badge_unread_msg">Непрочитанные сообщения </string>
+    <string name="settings_badge_recommended_apps">Рекомендованные приложения</string>
+    <string name="settings_badge_switch_hint">Значки для непрочитанных сообщений</string>
+    <string name="auto_organize_desktop_title">Авто-организация рабочего стола</string>
+    <string name="settings_auth_button_text">включить</string>
+
+
+    <!-- Please translate and replace the words in red color -->
+
+
+    <!-- Hide apps means apps invisible on desktop -->
+    <string name="hide_apps_bottom_button_hide">Скрыть</string>
+    <string name="hide_apps_settings_title">Настройки скрытых приложений</string>
+    <string name="hide_apps_empty_prompt">В эту папку вы можете добавить любые приложения.</string>
+
+    <!-- It’s a gesture of swiping up on desktop with one finger -->
+    <string name="hide_apps_activation_method_one_finger">Пролистнуть вверх одним пальцем</string>
+    <string name="hide_apps_activation_method_two_fingers">Пролистнуть вверх двумя пальцами</string>
+
+    <!-- Unlock pattern is a kind of password, which has 9 dots on the screen organized in a 3×3 matrix. To unlock the phone the pattern has to be drawn on the screen, connecting certain points in a certain order. -->
+    <string name="hide_apps_password_toggle">Включить пароль</string>
+    <string name="hide_apps_set_password_title">Установить пароль</string>
+    <string name="set_passwd_reset">Сброс пароля</string>
+    <string name="change_gesture_passwd_info">В целях безопасности, пожалуйста, нарисуйте графический ключ разблокировки</string>
+    <string name="set_gesture_passwd_please">Пожалуйста, нарисуйте графический ключ</string>
+    <string name="set_gesture_passwd_verify">Пожалуйста, нарисуйте графический ключ снова</string>
+    <string name="set_gesture_passwd_least">Соедините как минимум 4 точки, пожалуйста, попробуйте еще раз</string>
+    <string name="set_gesture_passwd_failed">Графические ключи не совпадают, попробуйте еще раз</string>
+    <string name="set_gesture_passwd_success">Блокировка графическим ключом включена</string>
+
+    <!-- No need to translate the word below -->
+    <string name="loading">Загрузка…</string>
+    <string name="customize_themes_title_local">Мои темы</string>
+    <string name="terms_of_service_settings_title">Условия использования</string>
+    <string name="privacy_policy_settings_title">Политика конфиденциальности</string>
+    <string name="customize_wallpapers_title_local">Мои обои</string>
+    <string name="load_more">Загрузка…</string>
+
+    <!-- Please translate and replace the words in red color -->
+
+
+    <!--It guides users to enter password -->
+    <string name="input_passwd">Введите пароль</string>
+
+
+    <!-- Notification toolbar is a bar with icons of Wi-Fi, Mobile Data, Flashlight and so on, which you can set your phone quickly by switching them On/Off. -->
+    <string name="notification_toolbar_title">Панель уведомлений</string>
+
+
+    <!-- It’s a switch to turn On/Off Mobile Data, better be short in one word or two -->
+    <string name="notification_toolbar_data">Сотовые данные</string>
+
+
+    <!-- A collection of all apps in your phone -->
+    <string name="notification_toolbar_all_apps">Все приложения</string>
+
+
+
+    <!-- It shows how much battery has been left. It will be used like “20% Battery Left” -->
+    <string name="boost_notification_low_battery_title">Батареи осталось</string>
+    <string name="boost_notification_low_battery_description">Экономия батареи для увеличения времени использования</string>
+
+
+    <!-- It’s a button for saving battery, better be short in one word or two -->
+    <string name="boost_notification_low_battery_btn">Сэкономить заряд</string>
+
+    <!-- It shows how much battery has been save. It will be used like “Battery Life Extended 20 minutes” -->
+    <string name="boost_tip_title_battery">Срок службы батареи увеличился на</string>
+    <string name="boost_tip_detail_battery">Батарея может быть использована дольше!</string>
+
+
+    <string name="daily_weather_notification">Ежедневный прогноз погоды</string>
+
+
+    <!-- It’s a button for detail content, better be short in one word or two -->
+    <string name="weather_notification_btn">Детали</string>
+
+
+    <!-- It show how much memory has been used. It will be used like “200MB Memory Used” -->
+    <string name="boost_notification_low_ram_title">Памяти использовано</string>
+    <string name="boost_notification_low_ram_description">Увеличить производительность для освобождения памяти</string>
+
+    <!-- It shows how much memory has been released. It will be used like “Memory Released 200MB” -->
+    <string name="boost_tip_title_memory">Память освобождена</string>
+
+
+    <!-- The temperature of phone is too hot, better be short -->
+    <string name="boost_notification_hot_cpu_title">Перегрев телефона</string>
+
+
+    <!-- It’s a button for cooling down temperature of phone, better be short in one word or two -->
+    <string name="boost_notification_hot_cpu_btn">Охладить</string>
+
+
+    <!-- It shows how much temperature has been cooled down. It will be used like “Cool Down 10 ℉／℃” -->
+    <string name="boost_tip_title_cpu_temperature">Охлаждено на </string>
+    <string name="boost_notification_hot_cpu_description">Охладить ЦП </string>
+    <string name="boost_tip_detail_cpu_temperature">ЦП был охлажден.</string>
+
+
+    <!-- A new themes for phone including wallpapers and app icons. -->
+    <string name="theme_notification_title">Новая Тема</string>
+    <string name="theme_notification_description">Попробуйте новый стиль для вашего телефона!</string>
+
+
+    <string name="boost_notification_low_battery_title_figure">%1$s%%</string>
+    <string name="boost_notification_low_ram_title_figure">%1$s%%</string>
+
+    <string name="boost_notification_low_ram_btn">Ускорени</string>
+    <string name="boost_title">Ускорени</string>
+    <string name="notification_toolbar_wifi">Вай-фай</string>
+    <string name="notification_toolbar_flash_light">Фонарик</string>
+
+
+    <!-- Please translate and replace the words in red color -->
+
+
+    <!-- Advanced cleaning is an operation that cleaning memory in an advanced way to stop apps and make apps can not restart, which can make phone run faster! -->
+    <string name="advanced_boost_title">Расширенная очистка</string>
+    <!-- Accessibility Service is a settings option in phone! -->
+    <!-- It will be used like “Freed up 200MB” , which means memory released in phone-->
+
+    <!-- An operation to make a app visible on the screen, better be short in one word or two -->
+    <string name="unhide_label">Развернуть</string>
+
+    <!-- “Magic Locker” is an app name, don’t need to translate. Themes include images and app icons, which can make phone screen stylish. -->
+    <string name="locker_download_hint">Получите Magic Locker, чтобы использовать эти прекрасные темы. </string>
+    <!-- Locker can lock the screen of your phone. -->
+    <string name="online_theme_tab_title_locker">Блокировка</string>
+    <!-- An operation to install an app, better be short in one word or two -->
+    <string name="locker_install_btn">Установить</string>
+
+    <string name="online_theme_tab_title_launcher">Средство запуска</string>
+
+    <!-- Please translate and replace the words in red color -->
+
+    <!-- Icon pack is a collection of designed app icons that can replace the default ones of your phone. -->
+    <string name="icon_pack_settings_title">Комплект значков</string>
+    <!-- Memory has been released of the phone, which boosts your phone and makes it run faster. Better be short in one word or two.-->
+    <!-- Type the English name of the city and select the city from the search result. Only support English -->
+    <string name="weather_search_hint">"Введите и выберите город (только англ.)"</string>
+    <!-- Camera Pro is the name of App, which don’t need to translate. Themes can make your phone beautiful including wallpapers and app icons. The sentence below will be used in Applying theme like “ iOS 10 theme for Camera Pro has been installed. Apply it now?”-->
+    <string name="apply_theme_text">%1$s для Camera Pro была установлена. Применить сейчас?</string>
+    <string name="apply_btn">Применить</string>
+    <string name="welcome_apply_theme">Тема применяется</string>
+
+    <string name="app_store_name_system">Система</string>
+    <!-- A container with groups of apps, to keep and organize apps in phone. -->
+    <string name="auto_default_name_prefix">Папка</string>
+
+
+    <!-- The following words are operations in Screen manager. -->
+    <!-- Screen Manager is a feature that you can manage your phone’s screens by ranking screens, increasing a new screen or deleting a screen . -->
+    <string name="launcher_widget_screen_manager_title">Диспетчер экрана</string>
+    <!-- You can drag one screen and move its position to rank screens. -->
+    <string name="screen_manager_hint_drag">Можно привести страницу в порядок перетаскиванием</string>
+    <!-- Shake the phone to remove blanks between icons and make icons orderliness. -->
+    <string name="screen_manager_hint_shake">Выровнять значки встряхиванием</string>
+
+
+    <!-- The following words are operations in editing pictures. -->
+    <!-- Crop, zoom in or zoom out a picture to suit your want.-->
+    <!-- You can move the picture to choose the most beautiful part and scale to make the picture big or small. -->
+    <!--Edit the picture over again without storing the changes you have edited. -->
+    <string name="online_wallpaper_edit_reset_btn">Сброс</string>
+    <!-- Exit the picture editing without storing the changes you have edited. -->
+    <string name="online_wallpaper_cancel_edit_dialog_content">Отбросить изменения и выйти?</string>
+
+    <!-- All of the content. Better be short in one word or two. -->
+    <string name="online_wallpaper_tab_title_all">Все</string>
+    <!-- A tag shows the content is used right now. Better be short in one word or two. -->
+
+
+    <string name="launcher_widget_icon_size_title">Размер значка</string>
+    <string name="online_wallpaper_edit_cancel_btn">Отмена</string>
+    <string name="customize_my_wallpapers_remove_btn">Удалить</string>
+    <string name="launcher_widget_system_settings_title">Настройки системы</string>
+    <string name="network_error">Ошибки сети</string>
+    <string name="launcher_widget_launcher_settings_title">Настройки средства запуска</string>
+    <string name="online_wallpaper_apply_btn">Установить в качестве обоев</string>
+
+    <string name="launcher_widget_lucky_title"> Повезло  </string>
+    <string name="set_as_default">Установить главный экран Camera Pro.</string>
+    <string name="notification_default_cleared_title"> Главный экран сброшен</string>
+    <string name="set_as_default_boost_battery_body">Camera Pro ускоряет работу смартфона и экономит заряд аккумулятора! Установить главный экран Camera Pro?</string>
+    <string name="set_as_default_boost_cool_body">Camera Pro ускоряет работу и предотвращает перегревание смартфона! Установить главный экран Camera Pro? </string>
+    <string name="set_as_default_boost_mem_body">Camera Pro ускоряет работу смартфона! Больше никаких торможений! Установить главный экран Camera Pro? </string>
+    <string name="set_as_default_info_2">Camera Pro персонализирует экран смартфона и делает его стильным! Установить главный экран Camera Pro? </string>
+    <string name="set_as_default_info_3">Camera Pro повышает производительность смартфона! Установить главный экран Camera Pro? </string>
+    <string name="notification_set_as_default_description_1">Ускорение и быстрая работа смартфона.</string>
+    <string name="notification_set_as_default_description_2">Персонализация смартфона и уникальный стиль.</string>
+    <string name="notification_set_as_default_description_3">Повышение производительности смартфона.</string>
+    <string name="notification_set_as_default_title">Установить как главный экран</string>
+    <string name="set_as_default_boost_battery_figure">%1$d мин</string>
+    <string name="local_wallpaper_pick_error"> Ошибка при выборе обоев</string>
+    <string name="local_wallpaper_pick_error_gif_not_supported"> Изображение GIF не поддерживается</string>
+    <string name="nearby_title"> Рядом</string>
+    <string name="launcher_widget_nearby_title"> Рядом</string>
+    <string name="notification_set_as_default_btn">Установить</string>
+
+    <string name="update_toast_no_network">Проверьте соединение</string>
+    <string name="update_toast_already_latest">Вы используете последнюю версию</string>
+    <string name="update_toast_downloading">Идет скачивание файла APK</string>
+    <string name="update_dialog_title">Скачать последнюю версию</string>
+    <string name="download_capital">СКАЧАТЬ</string>
+    <string name="search_settings">Настройки поиска</string>
+    <string name="search_settings_result_title">Результат</string>
+    <string name="search_widget">Виджет поиска</string>
+    <string name="search_show_suggestions">Показать варианты поиска</string>
+    <string name="search_show_history">Показать историю поиска</string>
+    <string name="search_show_local_apps">Приложения</string>
+    <string name="search_show_contacts">Контакты</string>
+    <string name="search_trending_words">Популярные слова</string>
+    <string name="search_history">История поиска</string>
+    <string name="search_bar_remove_confirm_dialog_title">Удалить эту строку поиска?</string>
+    <string name="search_bar_remove_confirm_dialog_description">Для доступа к поиску: \n 1. Включите его по пути: Настройки Camera Pro-&gt;Настройки поиска. \n 2. Включите его по пути: Меню-&gt;Виджеты.</string>
+    <string name="search_bar_widget">Строка поиска</string>
+    <string name="search_contacts">Контакты</string>
+
+
+    <string name="wallpaper_network_error_reload">Перезагрузить</string>
+    <string name="set_as_default_info_1">"Camera Pro ускоряет работу смартфона! Больше никаких торможений! Установить главный экран Camera Pro? "</string>
+    <string name="set_as_default_boost_battery_title">Срок службы батареи увеличился на</string>
+    <string name="set_as_default_boost_cool_title">Охлаждено на</string>
+    <string name="set_as_default_boost_mem_title">Память освобождена</string>
+    <string name="search_settings_category_title">Настройки</string>
+    <string name="search_more">Больше</string>
+    <string name="search_remove">Удалить</string>
+    <string name="search_bar_default_text">Поиск</string>
+    <string name="launcher_menu_panel_title_effects">Эффекты</string>
+    <string name="launcher_menu_panel_title_widgets">Виджеты</string>
+    <string name="launcher_widget_menu_widgets_title">Виджеты</string>
+    <string name="search_apps">Приложения</string>
+    <string name="battery_already_optimal">Ваше устройство уже оптимизировано.</string>
+    <string name="battery_auto">Автоматически</string>
+    <string name="battery_auto_sync">Автоматическая синхронизация</string>
+    <string name="battery_brightness">Яркость</string>
+    <string name="battery_careful">Внимание!</string>
+    <string name="battery_careful_content">Аккумулятор устройства разряжается слишком быстро.</string>
+    <string name="battery_charging_completed">ЗАРЯЖЕНО</string>
+    <string name="battery_charging_completed_content">Отключите устройство от сети для защиты аккумулятора.</string>
+    <string name="battery_charging_content">3-этапная управляемая зарядка защищает аккумулятор от износа.</string>
+    <string name="battery_charging_left">ОСТАЛОСЬ ЗАРЯДКИ</string>
+    <string name="battery_clean_finished_line_o">Поздравляем!</string>
+    <string name="battery_clean_finished_line_i">Вы продлили время работы аккумулятора.</string>
+    <string name="battery_cleaning">Очистка…</string>
+    <string name="battery_continue">Дальше</string>
+    <string name="battery_current_content">Текущие настройки будут сохранены здесь.</string>
+    <string name="battery_excellent">Отлично</string>
+    <string name="battery_excellent_content">Ваш аккумулятор в отличном состоянии. </string>
+    <string name="battery_haptic_feedback">Тактильная отдача</string>
+    <string name="battery_hide_system_apps">Скрыть системные приложения</string>
+    <string name="battery_low">Низкий уровень заряда</string>
+    <string name="battery_low_content">Можно оптимизировать для продления времени работы аккумулятора.</string>
+    <string name="battery_max_saver">Максимальная экономия</string>
+    <string name="battery_max_saver_content">Выключите WiFi, Bluetooth, вибрацию и установите тайм-аут экрана на 15 с.</string>
+    <string name="battery_mode">Режим</string>
+    <string name="battery_off">Вкл.</string>
+    <string name="battery_on">Выкл.</string>
+    <string name="battery_optimize">ОПТИМИЗИРОВАТЬ</string>
+    <string name="battery_power_remaining">ОСТАЛОСЬ ЗАРЯДА</string>
+    <string name="battery_previous">Назад</string>
+    <string name="battery_previous_content">Вернуться к последним настройкам.</string>
+    <string name="battery_rank">Оценить</string>
+    <string name="battery_reapply">Повторить</string>
+    <string name="battery_screen_timeout">Тайм-аут экрана</string>
+    <string name="battery_smart_saver">Умная экономия</string>
+    <string name="battery_smart_saver_content">Выключите Bluetooth, вибрацию и установите тайм-аут экрана на 30 с.</string>
+    <string name="battery_speed">Скорость</string>
+    <string name="battery_stop">ОСТАНОВИТЬ</string>
+    <string name="battery_trickle">Течение</string>
+    <string name="battery_vibrate">Вибрация</string>
+    <string name="battery_view">ВИД</string>
+    <string name="battery_wifi">WiFi</string>
+    <string name="customize_my_wallpapers_add_btn_text">Выбрать из галереи</string>
+    <string name="downloading">Скачивается…</string>
+    <string name="effect_bounce">Отскок</string>
+    <string name="effect_extrusion">Вытеснение</string>
+    <string name="effect_shrink">Сжатие</string>
+    <string name="effect_wave">Волна</string>
+    <string name="monday">Понедельник</string>
+    <string name="tuesday">Вторник</string>
+    <string name="wednesday">Среда</string>
+    <string name="thursday">Четверг</string>
+    <string name="friday">Пятница</string>
+    <string name="saturday">Суббота</string>
+    <string name="sunday">Воскресенье</string>
+    <string name="notification_toolbar_search">Поиск</string>
+    <string name="refresh">Обновить</string>
+    <string name="resolver_wizard_choose_default">Выбрать \"ПО УМОЛЧАНИЮ\"</string>
+    <string name="search_guide_title">ПОПРОБУЙТЕ ПОИСК…</string>
+    <string name="search_guide_internet">Интернет</string>
+    <string name="search_guide_apps">Локальные приложения</string>
+    <string name="search_guide_location">Местоположение</string>
+    <string name="search_select_engine">Выберите поисковую машину</string>
+    <string name="search_show_places">Карта</string>
+    <string name="wallpaper_edit_fixed">Закрепить</string>
+    <string name="wallpaper_edit_scrollable">Прокрутка</string>
+    <string name="hide_apps_guide_welcome_title">Вы перешли к личным приложениям</string>
+    <string name="hide_apps_guide_welcome_action">СКРЫТЬ ПРИЛОЖЕНИЯ</string>
+    <string name="hide_apps_guide_success_title">Поздравляем!</string>
+    <string name="hide_apps_guide_success_content_one">Вы скрыли %1$s.</string>
+    <string name="hide_apps_guide_success_content">Вы скрыли личных приложений: %1$s.</string>
+    <string name="hide_apps_guide_recommend_hide_percent">Это приложение скрыло пользователей: %1$s%% </string>
+    <string name="hide_apps_guide_recommend_apps_size">Рекомендуемых приложений: %1$s</string>
+    <string name="hide_apps_guide_recommend_other_apps_size">Других приложений: %1$s</string>
+    <string name="hide_apps_secret_folder">Личные приложения</string>
+    <string name="hide_apps_add_apps_title">Выберите приложения для скрытия на главном экране</string>
+
+
+
+
+    <string name="folder_ad_title">Рекомендованные приложения</string>
+    <string name="search_guide_contacts">Контакты</string>
+
+    <string name="launcher_widget_boost_plus_title">Ускорени+</string>
+    <string name="boost_plus_accessibility_service_label">☆Ускорени+☆</string>
+    <string name="advanced_boost_authorize_btn">Включить </string>
+    <string name="boost_plus_action_button_text">Ускорение (%1$s)</string>
+    <string name="boost_plus_cleaning_running_apps">Очистка запущенных приложений</string>
+    <string name="boost_plus_settings_auto_boost_description">Автоматически определять минуты до перехода в спящий режим после отключения дисплея. Яркость экрана будет уменьшена, устройство перейдет в спящий режим, и дисплей будет отключен.</string>
+    <string name="boost_plus_settings_auto_boost_title">Автоматический спящий режим</string>
+    <string name="boost_plus_dialog_accessibility">Для правильного автоматического перехода в спящий режим Camera Pro требуются разрешения на доступ.</string>
+    <string name="boost_plus_dialog_device_admin">Для правильного автоматического перехода в спящий режим Camera Pro требуется администратор устройства.\nПредупреждение: возможен сбой удаления Camera Pro из-за администратора устройства. Деактивируйте администратор устройства перед удалением Camera Pro.</string>
+    <string name="boost_plus_empty_view_text_line_2">Отличная работа!</string>
+    <string name="boost_plus_free_up">освобождено</string>
+    <string name="boost_plus_exiting">Завершение работы</string>
+    <string name="boost_plus_running_time">Время работы: %1$s</string>
+    <string name="boost_plus_scanned_list_running_apps">Запущенные приложения</string>
+    <string name="boost_plus_scanned_list_select_all">Выбрать все</string>
+    <string name="boost_plus_selected_size_text">Выбрано: %1$s</string>
+    <string name="boost_plus_settings_lock_delay">Убедитесь, что \'Автоматическая блокировка\' установлена с задержкой (&gt;= 5 секунд)! Автоматический переход в спящий режим требует небольшой задержки перед блокировкой экрана</string>
+    <string name="boost_plus_settings_lock_instantly">Убедитесь, что опция \'Кнопка включения мгновенно блокируется\' НЕ выбрана! Автоматический переход в спящий режим требует небольшой задержки перед блокировкой экрана</string>
+    <string name="boost_plus_stop_clean_content">После остановки Ускорени+ больше не сможет освобождать память устройства. Остановить?</string>
+    <string name="boost_plus_stop_clean_title">Остановить очистку?</string>
+    <string name="boost_plus_stop_sure">ДА</string>
+    <string name="boost_plus_tip_battery_desc">Увеличьте время работы аккумулятора вдвое.</string>
+    <string name="boost_plus_tip_battery_title">Используйте Ускорени+ для продления времени работы аккумулятора.</string>
+    <string name="boost_plus_tip_memory_btn">Очистить</string>
+    <string name="boost_plus_tip_memory_desc">Используйте улучшенное средство очистки для освобождения памяти!</string>
+    <string name="boost_plus_tip_memory_title">Используйте Ускорени+ для улучшенной очистки телефона!</string>
+    <string name="boost_plus_tip_optimal_desc">Некоторые приложения можно закрыть только через Ускорени+.</string>
+    <string name="boost_plus_tip_optimal_title">Все равно медленно? Попробуйте Ускорени+!</string>
+    <string name="boost_plus_warning_toast">Это приложение может выводить push-уведомления. Вывод push-уведомлений можно отключить.</string>
+
+    <string name="device_admin_explanation">Разрешите Camera Pro автоматическую остановку приложений, разряжающих аккумулятор.</string>
+    <string name="folder_remove_confirm_body">После удаления папки все приложения из этой папки исчезнут с главного экрана.</string>
+    <string name="folder_remove_confirm_title">Удалить папку</string>
+    <string name="folder_unpack_confirm_body">После распаковки папки ярлыки из нее будут перенесены на главный экран.</string>
+    <string name="hide_apps_guide_welcome_content">Здесь можно скрыть личные приложений\n и открывать их, проводя двумя пальцами вверх.</string>
+
+    <string name="hide_apps_remove_password_title">Удалить графический ключ</string>
+    <string name="hide_apps_reset_password_title">Сбросить графический ключ</string>
+    <string name="install_dialog_title">Найдена новая версия</string>
+    <string name="launcher_app_index_desc">Отличное персонализированное приложение</string>
+    <string name="launcher_app_index_title">Организуйте свои приложения и ускорьте работу телефона.</string>
+    <string name="moment_good_afternoon">Добрый день!</string>
+    <string name="moment_good_evening">Добрый вечер!</string>
+    <string name="moment_good_morning">Доброе утро!</string>
+    <string name="moment_good_night">Доброй ночи!</string>
+
+    <string name="moment_nearby_title">Люди рядом используют</string>
+    <string name="moment_news_title">Новости</string>
+
+    <string name="set_as_default_wizard_huawei_title">Выберите \"Camera Pro\"</string>
+    <string name="set_up">Настройка</string>
+    <string name="storm">Storm</string>
+    <string name="update_toast_storage_not_ready">Внешнее устройство хранения недоступно</string>
+
+    <string name="weather_tip_dust">Лучше оставайтесь дома.</string>
+    <string name="weather_tip_hazy">Будьте аккуратны за рулем.</string>
+    <string name="weather_tip_sleet">Не забудьте зонтик и оденьтесь потеплее.</string>
+    <string name="weather_tip_snow">Оденьтесь потеплее.</string>
+    <string name="weather_tip_storm">Не забудьте зонтик.</string>
+    <string name="all_apps_more_horizontal">По горизонтали</string>
+    <string name="all_apps_more_vertical">По вертикали</string>
+
+
+    <string name="folder_remove_confirm_positive">Удалить</string>
+    <string name="boost_plus_empty_view_text_line_1">Устройство уже оптимизировано!</string>
+    <string name="wind_chime_remove_btn">Удалить</string>
+    <string name="battery_bluetooth">Блютус</string>
+    <string name="boost_plus_memory_used">Памяти использовано</string>
+    <string name="folder_unpack_confirm_positive">Выпустить</string>
+    <string name="boost_plus_tip_battery_btn">Очистить</string>
+    <string name="battery_title">Аккумулятор</string>
+    <string name="weather_tip_thunderstorm">Лучше оставайтесь дома.</string>
+    <string name="battery_mobile_data">Мобильные данные</string>
+    <string name="battery_current">Текущие настройки</string>
+    <string name="boost_plus_settings_device_admin_title">Администратор устройства</string>
+    <string name="boost_plus_settings_device_admin_description">Чтобы удалить Camera Pro, сначала деактивируйте администратор устройства.</string>
+    <string name="boost_plus_start_toast">Дважды щелкните Ускорени для запуска Ускорени+!</string>
+    <string name="launcher_shortcut_boost">1-Tap Ускорени</string>
+    <string name="notification_battery_consuming_title">%1$s расходуют заряд аккумулятора</string>
+    <string name="notification_battery_consuming_description">Оптимизируйте для продления времени работы аккумулятора.</string>
+    <string name="notification_boost_plus_title">%1$s замедляют работу устройства</string>
+    <string name="notification_boost_plus_content">Ускорьте работу!</string>
+    <string name="battery_low_tip_title">Низкий уровень заряда!</string>
+    <string name="battery_low_tip_desc">Включите энергосбережение для экономии заряда аккумулятора.</string>
+    <string name="launcher_widget_moment_title">Air Moment</string>
+    <string name="wind_chime_remove_confirm_dialog_title">Удалить Air Moment?</string>
+    <string name="wind_chime_remove_confirm_dialog_description">Для доступа к Air Moment:&lt;br /&gt;Включите его по пути &lt;b&gt;Меню&lt;/b&gt; -&gt; &lt;b&gt;Виджеты&lt;/b&gt;</string>
+    <string name="gesture_guide_content_down">Проведите вниз, чтобы быстро открыть Air Moment</string>
+    <string name="gesture_guide_content_up">Проведите вверх, чтобы быстро открыть поиск</string>
+    <string name="gesture_guide_got_it">ПОНЯТНО</string>
+    <string name="hide_apps_guide_new_install">Последнее установленное приложение</string>
+
+    <string name="battery_low_tip_btn_ok">ПОПРОБУЙТЕ СЕЙЧАС</string>
+    <string name="weather_city_search_error_prompt">Ошибки сети</string>
+    <string name="battery_low_tip_btn_cancel">ПОЗЖЕ</string>
+
+    <string name="moment_lucky_draw">Лотерея подарков Повезло</string>
+    <string name="moment_lucky_draw_tip">Угадайте, что в коробке! Тяните и получайте подарки от Повезло!</string>
+    <string name="moment_lucky_start">ТЯНУТЬ</string>
+    <string name="accessibility_authorize_try_again_title">Попытаться еще раз?</string>
+    <string name="accessibility_authorize_try_again_description">Не удалось предоставить доступ Ускорени+. Повторите попытку ускорения работы смартфона.</string>
+    <string name="accessibility_authorize_try_again_positive">ПОВТОРИТЬ</string>
+    <string name="news_load_more_re_try">Нажмите, чтобы повторить</string>
+    <string name="boost_plus_authorize_title">Предоставить доступ?</string>
+    <string name="boost_plus_authorize_desc">Ускорени+ требуется разрешение на доступ для остановки этих приложений. Работа смартфона будет ускорена на 80\%% или больше; заряда аккумулятора хватит на 200\%% дольше!\n93\%% пользователей уже включили приложение.</string>
+    <string name="boost_plus_accessibility_service_description">Коснитесь переключателя выше, затем нажмите OK.\nВключение приложения:\n1) ускорит работу смартфона на 80\%%;\n2) остановит разряжающие аккумулятор приложения.\nУскорени+ только ускоряет работу смартфона, не собирая никакие персональные данные.</string>
+    <string name="boost_plus_security_setting_for_samsung_device">Настройте в разделе \'Экран блокировки и безопасность\'!</string>
+    <string name="permission_guide_description">Найдите и включите ☆Ускорени+☆.</string>
+    <string name="boost_plus_freeable">можно освободить</string>
+
+    <string name="accessibility_authorize_try_again_negative">ПОЗЖЕ</string>
+    <string name="got_it">ПОНЯТНО</string>
+
+    <string name="boost_plus_clean_tip_prefix">Советы: </string>
+    <string-array name="boost_plus_clean_tips">
+        <item>Остановка упрямых приложений может занять некоторое время. Наберитесь терпения!</item>
+        <item>Включите Boost+ перед сном, чтобы уменьшить разрядку аккумулятора.</item>
+        <item>Используйте Boost+ для быстрой игры.</item>
+        <item>Перегревается смартфон? Воспользуйтесь Boost+!</item>
+        <item>Часто запускайте Boost+, чтобы смартфон всегда работал быстро.</item>
+    </string-array>
+    <string name="boost_plus_optimal">ОПТИМАЛЬНО</string>
+    <string name="five_star_hint_text">Вам понравилось наше приложение?</string>
+    <string name="five_star_five_text">Очень понравилось</string>
+    <string name="five_star_four_text">Понравилось</string>
+    <string name="five_star_three_text">Нормально</string>
+    <string name="five_star_two_text">Не понравилось</string>
+    <string name="five_star_one_text">Совсем не понравилось</string>
+    <string name="five_star_positive_text">Отправить</string>
+    <string name="launcher_widget_market_title">Рекомендации</string>
+    <string name="locker_2g">2G</string>
+    <string name="locker_3g">3G</string>
+    <string name="locker_4g">4G</string>
+    <string name="locker_disable_confirm">Отключить?</string>
+    <string name="locker_disable_confirm_detail">При отключении функции на экране блокировки будут деактивированы. Продолжить?</string>
+    <string name="locker_diabled_success">Блокировка отключена</string>
+    <string name="locker_menu_disable">Отключить блокировку</string>
+    <string name="slide_to_unlock">Проведите пальцем для разблокировки</string>
+    <string name="locker_settings">Настройки блокировки</string>
+    <string name="locker_settings_title">Блокировка экрана</string>
+    <string name="locker_slide_wallpaper_title">Обои экрана блокировки</string>
+    <string name="locker_unkown">Unk</string>
+    <string name="locker_wallpaper_network_error">Ошибка сети, повторите попытку.</string>
+    <string name="moment_ad_title">AD</string>
+    <string name="moment_set_launcher">Установите Camera Pro как средство запуска по умолчанию для ускорения работы смартфона!</string>
+    <string name="moment_set_locker">Включите защиту аккумулятора для предотвращения перезарядки устройства!</string>
+    <string name="moment_open_locker">Ваш аккумулятор защищен!</string>
+    <string name="result_page_card_battery_protection_title">Защита аккумулятора</string>
+    <string name="result_page_card_battery_protection_description">Ускорьте зарядку аккумулятора на 50\%% (может содержать рекламу)</string>
+    <string name="result_page_card_battery_protection_toast">Защита аккумулятора включена.</string>
+    <string name="result_page_card_battery_saver_title">Экономия заряда</string>
+    <string name="result_page_card_battery_saver_description_low_battery">Осталось %s заряда. Оптимизируйте для продления времени работы аккумулятора.</string>
+    <string name="result_page_card_battery_saver_description_normal">Смартфон быстро разряжается. Оптимизируйте для продления времени работы аккумулятора.</string>
+    <string name="result_page_card_boost_plus_description">Фоновые приложения могут сильно разряжать аккумулятор. Используйте дополнительное ускорение для их остановки!</string>
+    <string name="result_page_card_boost_plus_promote_title">Зачем мне Boost+?</string>
+    <string name="result_page_card_boost_plus_promote_description">Обычное ускорение не может остановить \многие приложения, замедляющие работу смартфона. Но с ними может справиться Boost+.\nBoost+ эффективнее 90\%% подобных утилит.</string>
+    <string name="search_show_trending_words">Показывать актуальные новости</string>
+    <string name="search_trending_news">Актуальные новости</string>
+    <string name="search_trending_news_bottom">Больше историй</string>
+    <string name="search_trending_news_latest">Обновите для получения актуальных новостей</string>
+    <string name="search_news_new_tag">НОВОЕ</string>
+    <string name="settings_badge_recommended_apps_hint">Для конфигурации могут требоваться разрешения</string>
+    <string name="settings_badge_common_apps">Общие приложения</string>
+    <string name="settings_badge_common_apps_hint">Для конфигурации может требоваться доступ к уведомлениям</string>
+
+    <string name="result_page_card_boost_plus_btn">Ускорени</string>
+    <string name="moment_locker_contains_ads">(Содержит рекламу.)</string>
+    <string name="locker_settings_subtitle">(Содержит рекламу.)</string>
+    <string name="result_page_card_battery_protection_btn">Включить </string>
+    <string name="charging_screen_menu_item">ОТКЛЮЧИТЬ</string>
+    <string name="result_page_card_boost_plus_title">Ускорени+</string>
+
+    <string name="moment_try_it_now">ПОПРОБУЙТЕ СЕЙЧАС</string>
+
+    <string name="news_network_error">Ошибки сети</string>
+
 </resources>

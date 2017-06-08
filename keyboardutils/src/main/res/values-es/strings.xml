@@ -79,4 +79,705 @@
     <string name="lucky_game_chance_counter"> Intento: %1$s</string>
     <string name="lucky_game_award_ad_related_title">¡Has ganado un premio!</string>
     <string name="lucky_game_chance_restore_timer">Más oportunidades en %1$s</string>
+
+    <string name="empty_folder_name">Carpeta nueva</string>
+    <string name="activity_not_found">La app no está instalada</string>
+    <string name="activity_not_available">La app no está disponible</string>
+    <string name="safe_mode_shortcut_error">La app descargada no puede usarse en modo seguro</string>
+    <string name="safe_mode_widget_error">Los widgets no pueden usarse en modo seguro</string>
+    <string name="long_press_widget_to_add">Mantén pulsado para seleccionar un widget</string>
+    <string name="widget_dims_format">%1$d \u00d7 %2$d</string>
+    <string name="all_apps_search_bar_hint">" Buscar apps"</string>
+    <string name="all_apps_search_bar_empty">Ningún resultado</string>
+    <skip/>
+    <string name="out_of_space">Ya no queda espacio en esta pantalla de Inicio</string>
+    <string name="hotseat_out_of_space">Ya no queda espacio en la carpeta Favoritos</string>
+    <string name="delete_target_label">Eliminar</string>
+    <string name="delete_target_uninstall_label">Desinstalar</string>
+    <string name="info_target_label">Datos de la app</string>
+    <string name="desktop_target_label">Escritorio</string>
+    <skip/>
+    <string name="permlab_read_settings">Leer ajustes de Inicio y accesos directos</string>
+    <string name="permdesc_read_settings">allows the app to read the settings and shortcuts in Home</string>
+    <string name="permlab_write_settings">Escribir ajustes de Inicio y accesos directos</string>
+    <string name="permdesc_write_settings">allows the app to change the settings and shortcuts in Home</string>
+    <string name="msg_no_phone_permission">%1$s no puede realizar llamadas teléfonicas</string>
+    <string name="failed_to_add_widget_text">Error al agregar el widget al escritorio</string>
+    <skip/>
+    <string name="gadget_error_text">Error al cargar el widget</string>
+    <string name="gadget_setup_text">Configuración</string>
+    <string name="uninstall_system_app_text">Esta es un app del sistema y no puede desinstalarse</string>
+    <string name="folder_add_shortcuts_view_cancel_button">Cancelar</string>
+    <string name="folder_add_shortcuts_view_ok_button">ACEPTAR</string>
+    <string name="app_store_category_name_favorite_tools">Kit de herramientas</string>
+    <string name="app_store_category_name_tools">Herramientas</string>
+    <string name="app_store_category_name_social">Redes sociales</string>
+    <string name="app_store_category_name_games">Juegos</string>
+    <string name="app_store_category_name_lifestyle">Estilo de vida</string>
+    <string name="app_store_category_name_photography">Fotografía</string>
+    <string name="app_store_category_name_media">Medios</string>
+    <string name="app_store_category_name_news">Noticias \u0026 Libros</string>
+    <string name="app_store_others">Otros</string>
+    <string name="folder_placeholder_text">Puedes agregar cualquier app a esta carpeta.</string>
+    <string name="abandoned_clean_this">Eliminar</string>
+    <string name="abandoned_search">Buscar</string>
+    <string name="abandoned_promises_title">Esta app no está instalada</string>
+    <string name="abandoned_promise_explanation">La app de este icono no está instalada. \nPuedes eliminarlo o buscar la app e instalarla manualmente.</string>
+    <string name="weather_title">Tiempo</string>
+    <string name="weather_wind_speed">Velocidad del viento:</string>
+    <string name="weather_wind_direction">Dirección del viento:</string>
+    <string name="weather_visibility">Visibilidad:</string>
+    <string name="weather_humidity">Humedad:</string>
+    <string name="weather_sunrise">Salida del sol:</string>
+    <string name="weather_sunset">Puesta del sol:</string>
+    <string name="weather_last_update_today">Actualizado a las %1$s</string>
+    <string name="weather_last_update_before_today">Actualizado el %1$s</string>
+    <string name="weather_no_info_placeholder">--</string>
+    <string name="weather_no_info_placeholder_time">--:--</string>
+    <string name="weather_high_low_temperature">%1$s\u00b0\u00a0/\u00a0%2$s\u00b0</string>
+    <string name="weather_kph">km/h</string>
+    <string name="weather_mph">mph</string>
+    <string name="weather_km">km</string>
+    <string name="weather_mi">mi</string>
+    <string name="weather_time">%1$s:%2$s</string>
+    <string name="weather_today">Hoy</string>
+    <string name="weather_settings_title">Ajustes del tiempo</string>
+    <string name="weather_settings_item_temperature_unit">Unidad de temperatura</string>
+    <string name="weather_settings_item_distance_unit">Unidad de distancia</string>
+    <string name="weather_settings_item_add_new_city">Agregar ciudad nueva</string>
+    <string name="weather_settings_celsius">\u00b0C</string>
+    <string name="weather_settings_fahrenheit">\u00b0F</string>
+    <string name="weather_settings_cf_slash">/</string>
+    <string name="weather_settings_cities_title">Ciudad</string>
+    <string name="weather_city_add_new_btn">Agregar ciudad nueva</string>
+    <string name="weather_city_more_than_limit">Solo puedes agregar 12 ciudades</string>
+    <string name="weather_city_searching_prompt">Buscando ciudades…</string>
+    <string name="weather_city_empty_result_prompt">Ninguna ciudad coincidente</string>
+    <string name="weather_city_loading_message">Cargando…</string>
+    <string name="weather_city_load_failed_message">Lo sentimos. No se puede cargar el tiempo.</string>
+    <string name="weather_clock_widget_name">Tiempo &amp; reloj&gt;</string>
+    <string name="weather_clock_unknown_weather_message">Desconocido</string>
+    <string name="sunny">Soleado</string>
+    <string name="overcast">Cubierto</string>
+    <string name="clear">Despejado</string>
+    <string name="cloudy">Nublado</string>
+    <string name="rain">Lluvia</string>
+    <string name="drizzle">Llovizna</string>
+    <string name="rain_shower">Lluvia torrencial</string>
+    <string name="snow">Nieve</string>
+    <string name="snow_shower">Tormenta de nieve</string>
+    <string name="sleet">Aguanieve</string>
+    <string name="hazy">Brumoso</string>
+    <string name="dust">Tormenta de polvo</string>
+    <string name="thunderstorm">Tormenta</string>
+    <string name="cold">Frío</string>
+    <string name="hot">Calor</string>
+    <string name="windy">Viento</string>
+    <string name="menu_item_settings">Ajustes</string>
+    <string name="setting_item_mobile">Datos móviles</string>
+    <string name="setting_item_wifi">Wi-Fi</string>
+    <string name="setting_item_airplane">Modo avión</string>
+    <string name="setting_item_auto_brightness">Brillo automático</string>
+    <string name="setting_item_rotate">Giro automático</string>
+    <string name="setting_item_silence">Silencio</string>
+    <string name="setting_item_vibration">Vibración</string>
+    <string name="setting_item_bluetooth">Bluetooth</string>
+    <string name="setting_item_flashlight">Linterna</string>
+    <string name="more_system_settings_button_title">Ajustes del sistema</string>
+    <string name="more_launcher_settings_button_title">Ajustes del launcher</string>
+    <string name="setting_device_not_support_message">Tu dispositivo no es compatible con esto.</string>
+    <string name="boost_tip_optimal">¡Tu teléfono ya está optimizado!</string>
+    <string name="boost_tip_detail_memory">¡Ahora tu teléfono es rápido y ligero!</string>
+    <string name="customize_title">Personalizar</string>
+    <string name="customize_wallpapers_title">Fondos de pantalla</string>
+    <string name="customize_themes_title">Temas</string>
+    <string name="wallpaper_toast_set_failed">Se ha producido un error con este fondo de pantalla. Inténtalo de nuevo.</string>
+    <string name="customize_local_title">Mis cosas</string>
+    <string name="wallpaper_setting_progress_dialog_text">Estableciendo fondo de pantalla…</string>
+    <string name="icon_pack_name">Launcher predeterminado</string>
+    <string name="no_icon_pack_name">Predeterminado por el sistema</string>
+    <string name="theme_set_alert_title">Establecer tema</string>
+    <string name="theme_set_alert_set_system_theme_body">¿Deseas establecer el fondo predeterminado por el sistema como tema?</string>
+    <string name="feedback_title">Comentarios</string>
+    <string name="feedback_content_placeholder">" Tus comentarios nos ayudan a mejorar"</string>
+    <string name="feedback_email_placeholder">" Escribe tu dirección de email"</string>
+    <string name="feedback_submit_btn">Enviar</string>
+    <string name="feedback_toast_empty_content">Escribe tu comentario</string>
+    <string name="feedback_toast_invalid_email">Introduce una dirección de email válida</string>
+    <string name="feedback_toast_send_success">¡Gracias por tu comentario!</string>
+    <string name="effect_classic">Clásico</string>
+    <string name="effect_cube">Cubo</string>
+    <string name="effect_roll">Rodillo</string>
+    <string name="effect_rotation">Rotación</string>
+    <string name="effect_stack">Acumulación</string>
+    <string name="effect_windmill">Molino</string>
+    <string name="effect_flip">Trompo</string>
+    <string name="effect_page">Cambio de página</string>
+    <string name="launcher_widget_time_title">Reloj+Tiempo</string>
+    <string name="launcher_widget_widgets_title">Widgets del sistema</string>
+    <string name="launcher_widget_boost_title">Acelerar</string>
+    <string name="launcher_widget_settings_title">Ajustes</string>
+    <string name="launcher_widget_wallpaper_title">Fondos de pantalla</string>
+    <string name="launcher_widget_flashlight_title">Linterna</string>
+    <string name="launcher_widget_data_usage_title">Uso de datos</string>
+    <string name="launcher_widget_battery_title">Batería</string>
+    <string name="launcher_widget_app_mgr_title">Admin. apps</string>
+    <string name="launcher_widget_update_title">Actualizar</string>
+    <string name="launcher_widget_feedback_title">Comentarios</string>
+    <string name="launcher_widget_effects_title">Efectos</string>
+    <string name="launcher_widget_theme_title">Temas</string>
+    <string name="launcher_settings_title">Ajustes Camera Pro</string>
+    <string name="launcher_settings_section_default_launcher">Establecer como launcher predeterminado</string>
+    <string name="preferences">Preferencias</string>
+    <string name="launcher_settings_advanced_clean_detail">Aumenta el rendimiento de tu teléfono</string>
+    <string name="launcher_settings_advanced_section_about">Acerca de</string>
+    <string name="launcher_settings_auto_boost_section">Optimización automática</string>
+    <string name="launcher_settings_auto_boost_detail">Se optimiza automáticamente cuando el telefono está en reposo</string>
+    <string name="settings_auth_line1">¿Cómo se activa?</string>
+    <string name="settings_auth_line2">Busca \"Camera Pro\" y actívalo.</string>
+    <string name="launcher_settings_five_star">Puntuación de 5 estrellas</string>
+    <string name="launcher_settings_tell_my_friends">Contárselo a mis amigos</string>
+    <string name="launcher_settings_feedback">Comentarios</string>
+    <string name="launcher_settings_update">Actualizar</string>
+    <string name="launcher_settings_current_version_detail">Versión actual: v%1$s</string>
+    <string name="privacy_policy">Política de privacidad</string>
+    <string name="terms_of_service">Términos de servicio</string>
+    <string name="auto_category_title">Orden inteligente</string>
+    <string name="auto_category_open_btn">Abrir</string>
+
+    <string name="set_as_default_btn_text">ACEPTAR</string>
+    <string name="resolver_wizard_select_launcher_1">Seleccionar</string>
+    <string name="resolver_wizard_select_launcher_2">\"Camera Pro\"</string>
+    <string name="resolver_wizard_click_always">Toca \"SIEMPRE\"</string>
+    <string name="share_through">Compartir por</string>
+    <string name="news_title">Titulares</string>
+    <string name="news_settings_item_show_on_home_des">Arrastra hacia la derecha en la pantalla de inicio</string>
+
+    <string name="news_settings_title">Ajustes de titulares</string>
+    <string name="news_refresh_success_news_updated">%1$s noticias actualizadas</string>
+    <string name="news_refresh_success_no_news_updated">Actualizar hasta la más reciente</string>
+    <string name="news_settings_item_load_pictures_title">Guardar datos</string>
+    <string name="news_settings_item_load_pictures_des">Sin imágenes en red móvil</string>
+    <string name="news_detail_error_reload">Recargar</string>
+    <string name="pull_to_refresh">Arrastra para recargar</string>
+    <string name="release_to_refresh">Suelta para recargar</string>
+    <string name="icon_size_title">Tamaño de icono</string>
+    <string name="icon_size_settings_title">Tamaño de icono</string>
+    <string name="icon_font_size_settings_title">Tamaño de etiqueta de icono</string>
+    <string name="icon_font_color_settings_title">Color de etiqueta de icono</string>
+    <string name="icon_preview_title">Vista previa</string>
+    <string name="icon_preview_messenger_title">Mensajes</string>
+    <string name="icon_preview_phone_title">Teléfono</string>
+    <string name="icon_preview_camera_title">Cámara</string>
+    <string name="icon_preview_browser_title">Navegador</string>
+    <string name="folder_unpack_confirm_title">Publicar carpeta</string>
+    <string name="release_target_label">Publicar</string>
+
+    <!-- %1$s is the version number which should be kept, for example “v1.0.0"" -->
+    <string name="launcher_settings_latest_version_detail">Última versión: v%1$s</string>
+
+    <!-- The following is an alert dialog which includes title, description and actions. Air is the name of the APP that needn’t to be translated.  -->
+    <string name="set_as_default_alert_title">Advertencia</string>
+    <string name="set_as_default_alert_detail">Falla al configurar el lanzador de Air como predeterminado. ¿Intento nuevamente?</string>
+    <string name="set_as_default_alert_ok_btn">Intentar Nuevamente</string>
+    <string name="set_as_default_alert_cancel_btn">Más Tarde</string>
+
+    <!-- It’s the slogan of the app which can make your phone fast & stylish. &amp; stands for & in program. -->
+    <string name="welcome_description_text">Rápido &amp; elegante</string>
+
+    <!-- It’s an action button, so it’s better to be short -->
+    <string name="welcome_start_btn">INICIO</string>
+    <string name="welcome_select_wallpaper">Elige el fondo que más te guste.</string>
+
+    <!-- It’s a prompt message that our app is preparing the desktop of the phone. -->
+    <string name="welcome_loading">Preparando tu escritorio…</string>
+
+
+    <string name="online_wallpaper_tab_title_categories">Categorías</string>
+    <string name="settings_auth_guide">Activa  \"Camera Pro\" para recibir notificaciones de mensajes no leídos, Facebook, Whatsapp, etc.</string>
+    <string name="settings_badge_unread_msg">Mensajes no leídos</string>
+    <string name="settings_badge_recommended_apps">Apps recomendadas</string>
+    <string name="settings_badge_switch_hint">Insignias para mensajes no leídos</string>
+    <string name="auto_organize_desktop_title">Auto organización de escritorio</string>
+    <string name="settings_auth_button_text">Activar</string>
+
+
+    <!-- Hide apps means apps invisible on desktop -->
+
+    <string name="hide_apps_bottom_button_hide">Ocultar</string>
+    <string name="hide_apps_settings_title">Ocultar ajustes de apps</string>
+    <string name="hide_apps_empty_prompt">Puedes agregar cualquier app a esta carpeta.</string>
+
+    <!-- It’s a gesture of swiping up on desktop with one finger -->
+    <string name="hide_apps_activation_method_one_finger">Desliza hacia arriba con un dedo</string>
+    <string name="hide_apps_activation_method_two_fingers">Desliza hacia arriba con dos dedo</string>
+
+    <!-- Unlock pattern is a kind of password, which has 9 dots on the screen organized in a 3×3 matrix. To unlock the phone the pattern has to be drawn on the screen, connecting certain points in a certain order. -->
+    <string name="hide_apps_password_toggle">Activar contraseña</string>
+    <string name="hide_apps_set_password_title">Definir contraseña</string>
+    <string name="set_passwd_reset">Restaurar contraseña</string>
+    <string name="change_gesture_passwd_info">Por motivos de seguridad, dibuja un patrón de desbloqueo</string>
+    <string name="set_gesture_passwd_please">Dibuja un patrón</string>
+    <string name="set_gesture_passwd_verify">Vuelve a dibujar el patrón de desbloqueo</string>
+    <string name="set_gesture_passwd_least">Une 4 puntos como mínimo. Inténtalo de nuevo</string>
+    <string name="set_gesture_passwd_failed">El patrón no coincide. Inténtalo de nuevo</string>
+    <string name="set_gesture_passwd_success">Patrón activado</string>
+
+    <string name="loading">Cargando…</string>
+    <string name="customize_themes_title_local">Mis temas</string>
+    <string name="terms_of_service_settings_title">Términos de servicio </string>
+    <string name="privacy_policy_settings_title">Política de privacidad</string>
+    <string name="customize_wallpapers_title_local">Mis fondos de pantalla</string>
+    <string name="load_more">Cargando…</string>
+
+    <!-- Please translate and replace the words in red color -->
+
+
+    <!--It guides users to enter password -->
+    <string name="input_passwd">Introducir contraseña</string>
+
+
+    <!-- Notification toolbar is a bar with icons of Wi-Fi, Mobile Data, Flashlight and so on, which you can set your phone quickly by switching them On/Off. -->
+    <string name="notification_toolbar_title">Barra de herramientas de notificaciones</string>
+
+
+    <!-- It’s a switch to turn On/Off Mobile Data, better be short in one word or two -->
+    <string name="notification_toolbar_data">Datos</string>
+
+
+    <!-- A collection of all apps in your phone -->
+    <string name="notification_toolbar_all_apps">Todas las apps</string>
+
+
+
+    <!-- It shows how much battery has been left. It will be used like “20% Battery Left” -->
+    <string name="boost_notification_low_battery_title">Batería restante</string>
+    <string name="boost_notification_low_battery_description">Ahorre batería para usarla durante más tiempo</string>
+
+
+    <!-- It’s a button for saving battery, better be short in one word or two -->
+    <string name="boost_notification_low_battery_btn">Ahorrar</string>
+
+    <!-- It shows how much battery has been save. It will be used like “Battery Life Extended 20 minutes” -->
+    <string name="boost_tip_title_battery">Se ha ampliado la duración de la batería</string>
+    <string name="boost_tip_detail_battery">¡La batería puede utilizarse durante más tiempo!</string>
+
+
+    <string name="daily_weather_notification">Pronóstico del tiempo diario</string>
+
+
+    <!-- It’s a button for detail content, better be short in one word or two -->
+    <string name="weather_notification_btn">Detalles</string>
+
+
+    <!-- It show how much memory has been used. It will be used like “200MB Memory Used” -->
+    <string name="boost_notification_low_ram_title">Memoria usada</string>
+    <string name="boost_notification_low_ram_description">Ayuda para liberar memoria</string>
+
+    <!-- It shows how much memory has been released. It will be used like “Memory Released 200MB” -->
+    <string name="boost_tip_title_memory">Memoria liberada</string>
+
+
+    <!-- The temperature of phone is too hot, better be short -->
+    <string name="boost_notification_hot_cpu_title">Sobrecalentamiento del teléfono</string>
+
+
+    <!-- It’s a button for cooling down temperature of phone, better be short in one word or two -->
+    <string name="boost_notification_hot_cpu_btn">Refrigeración</string>
+
+
+    <!-- It shows how much temperature has been cooled down. It will be used like “Cool Down 10 ℉／℃” -->
+    <string name="boost_tip_title_cpu_temperature">Refrigerar</string>
+    <string name="boost_notification_hot_cpu_description">Refrigerar CPU </string>
+    <string name="boost_tip_detail_cpu_temperature">La CPU se ha refrigerado.</string>
+
+
+    <!-- A new themes for phone including wallpapers and app icons. -->
+    <string name="theme_notification_title">Tema nuevo</string>
+    <string name="theme_notification_description">¡Prueba un estilo nuevo para tu teléfono!</string>
+
+    <string name="boost_notification_low_battery_title_figure">%1$s%%</string>
+    <string name="boost_notification_low_ram_title_figure">%1$s%%</string>
+    <string name="boost_notification_low_ram_btn">Acelerar</string>
+    <string name="boost_title">Acelerar</string>
+    <string name="notification_toolbar_wifi">Wi-Fi</string>
+    <string name="notification_toolbar_flash_light">Linterna</string>
+
+
+    <!-- Please translate and replace the words in red color -->
+
+
+    <!-- Advanced cleaning is an operation that cleaning memory in an advanced way to stop apps and make apps can not restart, which can make phone run faster! -->
+    <string name="advanced_boost_title">Limpieza avanzada</string>
+    <!-- Accessibility Service is a settings option in phone! -->
+
+    <!-- An operation to make a app visible on the screen, better be short in one word or two -->
+    <string name="unhide_label">Mostrar</string>
+
+    <!-- “Magic Locker” is an app name, don’t need to translate. Themes include images and app icons, which can make phone screen stylish. -->
+    <string name="locker_download_hint">Obtén Magic Locker para usar estos increíbles temas.</string>
+    <!-- Locker can lock the screen of your phone. -->
+    <string name="online_theme_tab_title_locker">Bloqueo de pantalla</string>
+    <!-- An operation to install an app, better be short in one word or two -->
+    <string name="locker_install_btn">Instalar</string>
+
+    <string name="online_theme_tab_title_launcher">Launcher</string>
+
+    <!-- Icon pack is a collection of designed app icons that can replace the default ones of your phone. -->
+    <string name="icon_pack_settings_title">Paquete de iconos</string>
+    <!-- Memory has been released of the phone, which boosts your phone and makes it run faster. Better be short in one word or two.-->
+    <!-- Type the English name of the city and select the city from the search result. Only support English -->
+    <string name="weather_search_hint">" Escribe y selecciona una ciudad (solo ciudades en inglés)"</string>
+    <!-- Camera Pro is the name of App, which don’t need to translate. Themes can make your phone beautiful including wallpapers and app icons. The sentence below will be used in Applying theme like “ iOS 10 theme for Camera Pro has been installed. Apply it now?”-->
+    <string name="apply_theme_text">%1$s para Camera Pro se ha instalado. ¿Aplicarlo ahora?</string>
+    <string name="apply_btn">Aplicar</string>
+    <string name="welcome_apply_theme">Aplicando tema</string>
+
+    <string name="app_store_name_system">Sistema</string>
+    <!-- A container with groups of apps, to keep and organize apps in phone. -->
+    <string name="auto_default_name_prefix">Carpeta</string>
+
+
+    <!-- The following words are operations in Screen manager. -->
+    <!-- Screen Manager is a feature that you can manage your phone’s screens by ranking screens, increasing a new screen or deleting a screen . -->
+    <string name="launcher_widget_screen_manager_title">Administrador de pantalla</string>
+    <!-- You can drag one screen and move its position to rank screens. -->
+    <string name="screen_manager_hint_drag">Puedes arrastrar la página para ordenarla</string>
+    <!-- Shake the phone to remove blanks between icons and make icons orderliness. -->
+    <string name="screen_manager_hint_shake">Agita el teléfono para alinear los iconos</string>
+
+
+    <!-- The following words are operations in editing pictures. -->
+    <!-- Crop, zoom in or zoom out a picture to suit your want.-->
+    <!-- You can move the picture to choose the most beautiful part and scale to make the picture big or small. -->
+    <!--Edit the picture over again without storing the changes you have edited. -->
+    <string name="online_wallpaper_edit_reset_btn">Restablecer</string>
+    <!-- Exit the picture editing without storing the changes you have edited. -->
+    <string name="online_wallpaper_cancel_edit_dialog_content">¿Descartar cambios para salir?</string>
+
+    <!-- All of the content. Better be short in one word or two. -->
+    <string name="online_wallpaper_tab_title_all">Todo</string>
+    <!-- A tag shows the content is used right now. Better be short in one word or two. -->
+
+
+    <string name="launcher_widget_icon_size_title">Tamaño de icono</string>
+    <string name="online_wallpaper_edit_cancel_btn">Cancelar</string>
+    <string name="customize_my_wallpapers_remove_btn">Eliminar</string>
+    <string name="launcher_widget_system_settings_title">Ajustes del sistema</string>
+    <string name="network_error">Errores de red</string>
+    <string name="launcher_widget_launcher_settings_title">Ajustes del launcher</string>
+    <string name="online_wallpaper_apply_btn">Establecer como fondo de pantalla</string>
+
+    <string name="set_as_default"> Fijar Camera Pro como casa.</string>
+    <string name="notification_default_cleared_title"> Casa se ha limpado</string>
+    <string name="set_as_default_boost_battery_body"> Camera Pro mejora tu teléfono y ahorra bacteria para que funcione durante más tiempo. ¿Quieres fijar Camera Pro como casa?</string>
+    <string name="set_as_default_boost_cool_body"> Camera Pro mejora tu teléfono para prevenir el sobrecalentamiento. ¿Quieres fijar Camera Pro como casa?</string>
+    <string name="set_as_default_boost_mem_body"> Camera Pro mejora tu teléfono para que nunca vaya lento. ¿Quieres fijar Camera Pro como casa?</string>
+    <string name="set_as_default_info_2"> Camera Pro mejora el diseño y la apariencia de tu teléfono. ¿Quieres fijar Camera Pro como casa?</string>
+    <string name="set_as_default_info_3"> Camera Pro hace que tu teléfono sea más eficiente. ¿Quieres fijar Camera Pro como casa?</string>
+    <string name="notification_set_as_default_description_1"> Mejora tu teléfono para que siga siendo rápido.</string>
+    <string name="notification_set_as_default_description_2"> Personaliza y estiliza tu teléfono.</string>
+    <string name="notification_set_as_default_description_3"> Haz que tu teléfono sea más eficiente.</string>
+    <string name="notification_set_as_default_title"> Fijar como casa</string>
+    <string name="set_as_default_boost_battery_figure">%1$d min. </string>
+    <string name="local_wallpaper_pick_error"> Algo ha ido mal al seleccionar el fondo de pantalla</string>
+    <string name="local_wallpaper_pick_error_gif_not_supported"> Imagen GIF no compatible</string>
+    <string name="nearby_title"> Cerca</string>
+    <string name="launcher_widget_nearby_title"> Cerca</string>
+    <string name="notification_set_as_default_btn">" Fijar"</string>
+
+    <string name="update_toast_no_network">Comprueba la conexión</string>
+    <string name="update_toast_already_latest">Tienes instalada la última versión</string>
+    <string name="update_toast_downloading">La descarga de la APK está en proceso</string>
+    <string name="update_dialog_title">Descarga la última versión</string>
+    <string name="download_capital">DESCARGAR</string>
+    <string name="search_settings">Ajustes de búsqueda</string>
+    <string name="search_settings_result_title">Resultados</string>
+    <string name="search_widget">Widget de búsqueda</string>
+    <string name="search_show_suggestions">Mostrar sugerencias de búsqueda</string>
+    <string name="search_show_history">Mostrar historial de búsqueda</string>
+    <string name="search_show_local_apps">Apps</string>
+    <string name="search_show_contacts">Contactos</string>
+    <string name="search_trending_words">Palabras más usadas</string>
+    <string name="search_history">Historial de búsqueda</string>
+    <string name="search_bar_remove_confirm_dialog_title">¿Eliminar la barra de búsqueda?</string>
+    <string name="search_bar_remove_confirm_dialog_description">Aún puede acceder a las búsquedas:\n1. Actívelas desde los ajustes de Launcher-&gt;Ajustes de búsqueda \n2. Actívelas en Menú-&gt;Widgets</string>
+    <string name="search_bar_widget">Barra de búsqueda</string>
+    <string name="search_contacts">Contactos</string>
+
+    <string name="set_as_default_boost_battery_title">Se ha ampliado la duración de la batería</string>
+    <string name="wallpaper_network_error_reload">Recargar</string>
+    <string name="set_as_default_info_1">" Camera Pro mejora tu teléfono para que nunca vaya lento. ¿Quieres fijar Camera Pro como casa?"</string>
+    <string name="set_as_default_boost_cool_title">Refrigerar</string>
+    <string name="set_as_default_boost_mem_title">Memoria liberada</string>
+    <string name="search_settings_category_title">Ajustes</string>
+    <string name="search_more">Más</string>
+    <string name="search_remove">Eliminar</string>
+    <string name="search_bar_default_text">Buscar</string>
+    <string name="launcher_menu_panel_title_effects">Efectos</string>
+    <string name="launcher_menu_panel_title_widgets">Widgets</string>
+    <string name="all_apps_button_label">Apps</string>
+    <string name="launcher_widget_menu_widgets_title">Widgets</string>
+    <string name="search_apps">Apps</string>
+
+
+
+
+    <string name="folder_ad_title">Apps recomendadas</string>
+    <string name="search_guide_contacts">Contactos</string>
+
+    <string name="battery_already_optimal">Tu dispositivo ya está funcionando de forma óptima.</string>
+    <string name="battery_auto">Autom.</string>
+    <string name="battery_auto_sync">Autosinc.</string>
+    <string name="battery_brightness">Brillo</string>
+    <string name="battery_careful">Cuidado</string>
+    <string name="battery_careful_content">Tu batería se está descargando más rápido de lo habitual.</string>
+    <string name="battery_charging_completed">CARGA COMPELTA</string>
+    <string name="battery_charging_completed_content">Desenchufa para proteger la batería de tu teléfono.</string>
+    <string name="battery_charging_content">La carga controlada en tres pasos evitará que tu batería se deteriore.</string>
+    <string name="battery_charging_left">CARGA RESTANTE</string>
+    <string name="battery_clean_finished_line_o">¡Enhorabuena!</string>
+    <string name="battery_clean_finished_line_i">Has extendido la vida de tu batería</string>
+    <string name="battery_cleaning">Limpiando…</string>
+    <string name="battery_continue">Continuar</string>
+    <string name="battery_current_content">Tus ajustes actuales se guardarán aquí.</string>
+    <string name="battery_excellent">Genial</string>
+    <string name="battery_excellent_content">Tu batería está en buenas condiciones.</string>
+    <string name="battery_haptic_feedback">Retroalimentación táctil </string>
+    <string name="battery_hide_system_apps">Ocultar las aplicaciones del sistema</string>
+    <string name="battery_low">Batería baja</string>
+    <string name="battery_low_content">Puedes usar la optimización para prolongar la vida de tu batería.</string>
+    <string name="battery_max_saver">Max Saver</string>
+    <string name="battery_max_saver_content">Desactivar wifi, Bluetooth, vibración y fijar el apagado de la pantalla en 15 s.</string>
+    <string name="battery_mode">Modo</string>
+    <string name="battery_off">Activado</string>
+    <string name="battery_on">Desactivado</string>
+    <string name="battery_optimize">OPTIMIZAR</string>
+    <string name="battery_power_remaining">BATERÍA RESTANTE</string>
+    <string name="battery_previous">Anterior</string>
+    <string name="battery_previous_content">Volver a los ajustes anteriores.</string>
+    <string name="battery_rank">Clasificación</string>
+    <string name="battery_reapply">Volver a aplicar</string>
+    <string name="battery_screen_timeout">Apagado de la pantalla</string>
+    <string name="battery_smart_saver">Smart Saver</string>
+    <string name="battery_smart_saver_content">Desactivar Bluetooth, vibración y fijar el apagado de la pantalla en 30 s.</string>
+    <string name="battery_speed">Velocidad</string>
+    <string name="battery_stop">PARAR</string>
+    <string name="battery_trickle">Goteo</string>
+    <string name="battery_vibrate">Vibración</string>
+    <string name="battery_view">VER</string>
+    <string name="battery_wifi">Wifi</string>
+    <string name="customize_my_wallpapers_add_btn_text">Seleccionar de álbum</string>
+    <string name="downloading">Descargando…</string>
+    <string name="effect_bounce">Bounce</string>
+    <string name="effect_extrusion">Extrusion</string>
+    <string name="effect_shrink">Shrink</string>
+    <string name="effect_wave">Onda</string>
+    <string name="monday">Lunes</string>
+    <string name="tuesday">Martes</string>
+    <string name="wednesday">Miércoles</string>
+    <string name="thursday">Jueves</string>
+    <string name="friday">Viernes</string>
+    <string name="saturday">Sábado</string>
+    <string name="sunday">Domingo</string>
+    <string name="notification_toolbar_search">Buscar</string>
+    <string name="refresh">Actualizar</string>
+    <string name="resolver_wizard_choose_default">Elegir \"DEFAULT\"</string>
+    <string name="search_guide_title">PRUEBA A BUSCAR…</string>
+    <string name="search_guide_internet">Internet</string>
+    <string name="search_guide_apps">Aplicaciones locales</string>
+    <string name="search_guide_location">Ubicación</string>
+    <string name="search_select_engine">Seleccionar motor de búsqueda</string>
+    <string name="search_show_places">Mapa</string>
+    <string name="wallpaper_edit_fixed">Fijo</string>
+    <string name="wallpaper_edit_scrollable">Desplegable</string>
+    <string name="hide_apps_guide_welcome_title">Has accedido a Aplicaciones privadas</string>
+    <string name="hide_apps_guide_welcome_action">OCULTAR APLICACIONES</string>
+    <string name="hide_apps_guide_success_title">¡Enhorabuena!</string>
+    <string name="hide_apps_guide_success_content_one">Has ocultado %1$s.</string>
+    <string name="hide_apps_guide_success_content">Has ocultado %1$s aplicaciones privadas.</string>
+    <string name="hide_apps_guide_recommend_hide_percent">%1$s%% de los usuarios ocultaron esta aplicación</string>
+    <string name="hide_apps_guide_recommend_apps_size">%1$s aplicaciones recomendadas</string>
+    <string name="hide_apps_guide_recommend_other_apps_size">%1$s otras aplicaciones</string>
+
+    <string name="hide_apps_secret_folder">Aplicaciones privadas</string>
+
+    <string name="hide_apps_add_apps_title">Elige qué aplicaciones quieres ocultar del escritorio</string>
+
+
+
+    <string name="launcher_widget_boost_plus_title">Acelerar+</string>
+    <string name="boost_plus_accessibility_service_label">☆Acelerar+☆</string>
+    <string name="advanced_boost_authorize_btn">Activar</string>
+    <string name="boost_plus_action_button_text">Acelerar (%1$s)</string>
+    <string name="boost_plus_cleaning_running_apps">Limpiando las aplicaciones activas</string>
+    <string name="boost_plus_settings_auto_boost_description">El teléfono entrará en modo hibernación automáticamente unos minutos después de que la pantalla se apague. La pantalla se oscurecerá, se activará la hibernación y la pantalla se apagará.</string>
+    <string name="boost_plus_settings_auto_boost_title">Hibernación automática</string>
+    <string name="boost_plus_dialog_accessibility">Es necesario activar la accesibilidad para que Camera Pro entre en modo de hibernación automática.</string>
+    <string name="boost_plus_dialog_device_admin">Es necesario activar el Administrador de dispositivos para que Camera Pro entre en modo de hibernación automática.\nAviso: es posible que no pueda desactivar Camera Pro si el Administrador de dispositivos está activado. Desactive el Administrador de dispositivos y después desinstale Camera Pro.</string>
+    <string name="boost_plus_empty_view_text_line_2">¡Buen trabajo!</string>
+    <string name="boost_plus_free_up">liberados</string>
+    <string name="boost_plus_exiting">Cerrando</string>
+    <string name="boost_plus_running_time">Tiempo en funcionamiento: %1$s</string>
+    <string name="boost_plus_scanned_list_running_apps">Aplicaciones activas</string>
+    <string name="boost_plus_scanned_list_select_all">Seleccionar todas</string>
+    <string name="boost_plus_selected_size_text">Seleccionadas: %1$s</string>
+    <string name="boost_plus_settings_lock_delay">Asegúrate de que el \'Bloqueo automático\' tiene un retraso de (&gt;= 5 segundos). Para que la hibernación automática funcione la pantalla debe tardar unos segundos en bloquearse.</string>
+    <string name="boost_plus_settings_lock_instantly">Asegúrate de que la opción \'Botón de encendido bloquea al instante\' no está activado. Para que la hibernación automática funcione la pantalla debe tardar unos segundos en bloquearse.</string>
+    <string name="boost_plus_stop_clean_content">Una vez se haya cerrado, Acelerar+ no podrá seguir liberando memoria. ¿Seguro que quieres cerrar la aplicación?</string>
+    <string name="boost_plus_stop_clean_title">¿Parar la limpieza?</string>
+    <string name="boost_plus_stop_sure">SÍ</string>
+    <string name="boost_plus_tip_battery_desc">Duplica la vida de tu batería.</string>
+    <string name="boost_plus_tip_battery_title">¡Prueba Acelerar+ para extender la vida de tu batería!</string>
+    <string name="boost_plus_tip_memory_btn">Limpiar</string>
+    <string name="boost_plus_tip_memory_desc">¡Haz una limpieza exhaustiva para aumentar la memoria del teléfono!</string>
+    <string name="boost_plus_tip_memory_title">¡Prueba Acelerar+ para limpiar tu teléfono!</string>
+    <string name="boost_plus_tip_optimal_desc">Algunas aplicaciones solo pueden cerrarse con Acelerar+</string>
+    <string name="boost_plus_tip_optimal_title">¿Tu teléfono va lento? ¡Prueba Acelerar+!</string>
+    <string name="boost_plus_warning_toast">Puede que esta aplicación te envíe notificaciones push. Puede que no envíe notificaciones push si está abierta y activa.</string>
+    <string name="device_admin_explanation">Permite que Camera Pro cierre automáticamente las aplicaciones que consumen mucha batería.</string>
+    <string name="folder_remove_confirm_body">Cuando se elimine la carpeta, todas las aplicaciones de esta carpeta dejarán de aparecer en el escritorio.</string>
+    <string name="folder_remove_confirm_title">Eliminar carpeta</string>
+    <string name="folder_unpack_confirm_body">Una vez que la carpeta se haya descomprimido, los accesos directos se moverán al escritorio.</string>
+    <string name="hide_apps_guide_welcome_content">Aquí podrás ocultar las aplicaciones privadas\n y abrirlas al deslizar dos dedos hacia arriba.</string>
+    <string name="hide_apps_remove_password_title">Eliminar el patrón de desbloqueo</string>
+    <string name="hide_apps_reset_password_title">Restablecer el patrón de desbloqueo</string>
+    <string name="install_dialog_title">Se ha encontrado una nueva versión</string>
+    <string name="launcher_app_index_desc">Una nueva aplicación hecha a tu medida</string>
+    <string name="launcher_app_index_title">Organiza tus aplicaciones y aumenta la velocidad de tu teléfono</string>
+    <string name="moment_good_afternoon">¡Buenas tardes!</string>
+    <string name="moment_good_evening">¡Buenas noches!</string>
+    <string name="moment_good_morning">¡Buenos días!</string>
+    <string name="moment_good_night">¡Buenas noches!</string>
+    <string name="moment_nearby_title">La gente cercana está usando</string>
+    <string name="moment_news_title">Noticias</string>
+    <string name="set_as_default_wizard_huawei_title">Seleccionar \"Camera Pro\"</string>
+    <string name="set_up">configurar</string>
+    <string name="storm">Tormenta</string>
+    <string name="update_toast_storage_not_ready">El almacenamiento externo no está disponible</string>
+    <string name="weather_tip_dust">Mejor quedarse en casa.</string>
+    <string name="weather_tip_hazy">Mantente alerta y conduce con cuidado.</string>
+    <string name="weather_tip_sleet">Coge un paraguas y abrígate.</string>
+    <string name="weather_tip_snow">Ponte ropa de abrigo.</string>
+    <string name="weather_tip_storm">Coge un paraguas.</string>
+    <string name="all_apps_more_horizontal">Horizontal</string>
+    <string name="all_apps_more_vertical">Vertical</string>
+
+
+
+
+    <string name="folder_remove_confirm_positive">Eliminar</string>
+    <string name="boost_plus_empty_view_text_line_1">¡Tu teléfono ya está optimizado!</string>
+    <string name="battery_bluetooth">Bluetooth</string>
+    <string name="boost_plus_memory_used">Memoria usada</string>
+    <string name="folder_unpack_confirm_positive">Publicar</string>
+    <string name="boost_plus_tip_battery_btn">Limpiar</string>
+    <string name="battery_title">Batería</string>
+    <string name="weather_tip_thunderstorm">Mejor quedarse en casa.</string>
+    <string name="battery_mobile_data">Datos móviles</string>
+
+    <string name="wind_chime_remove_btn">Eliminar</string>
+    <string name="battery_current">Actuales</string>
+    <string name="boost_plus_settings_device_admin_title">Administrador de dispositivos</string>
+    <string name="boost_plus_settings_device_admin_description">Si quieres desinstalar Camera Pro, desactiva primero el administrador de dispositivos.</string>
+    <string name="boost_plus_start_toast">Haz doble clic en Acelerar para abrir Acelerar+</string>
+    <string name="launcher_shortcut_boost">1-Tap Acelerar</string>
+    <string name="notification_battery_consuming_title">%1$s apps gastan bacteria</string>
+    <string name="notification_battery_consuming_description">Optimiza para alargar la batería.</string>
+    <string name="notification_boost_plus_title">%1$s apps ralentizan el teléfono</string>
+    <string name="notification_boost_plus_content">Haz clic en Boost para darle velocidad</string>
+    <string name="battery_low_tip_title">¡Batería baja!</string>
+    <string name="battery_low_tip_desc">Prueba el ahorro de batería para mantener el consumo de batería al mínimo.</string>
+    <string name="launcher_widget_moment_title">Air Moment</string>
+    <string name="wind_chime_remove_confirm_dialog_title">¿Quieres eliminar “Air Moment”?</string>
+    <string name="wind_chime_remove_confirm_dialog_description">Para seguir accediendo a Air Moment:&lt;br /&gt; pulsa en la  &lt;b&gt;pantalla de inicio&lt;/b&gt;-&gt;&lt;b&gt;Widgets&lt;/b&gt;</string>
+    <string name="gesture_guide_content_down">Desliza el dedo hacia abajo para abrir Air Moment rápidamente</string>
+    <string name="gesture_guide_content_up">Desliza el dedo hacia arriba para abrir la búsqueda</string>
+    <string name="gesture_guide_got_it">ENTENDIDO</string>
+    <string name="hide_apps_guide_new_install">App instalada recientemente</string>
+
+    <string name="battery_low_tip_btn_ok">PRUEBA AHORA</string>
+    <string name="weather_city_search_error_prompt">Errores de red</string>
+    <string name="battery_low_tip_btn_cancel">Más Tarde</string>
+
+    <string name="moment_lucky_draw">Consigue un regalo sorpresa</string>
+    <string name="moment_lucky_draw_tip">¡Adivina lo que va a salir en la caja! Consigue una caja y disfruta de un regalo Afortunado.</string>
+    <string name="moment_lucky_start">CONSEGUIR AHORA</string>
+    <string name="accessibility_authorize_try_again_title">¿Quieres volver a intentarlo?</string>
+    <string name="accessibility_authorize_try_again_description">No se ha podido iniciar la accesibilidad de Acelerar+. Reinténtalo para que tu teléfono vaya más rápido.</string>
+    <string name="accessibility_authorize_try_again_positive">AHORA</string>
+    <string name="news_load_more_re_try">Clic para reintentarlo</string>
+    <string name="boost_plus_authorize_title">¿Quieres activar la accesibilidad?</string>
+    <string name="boost_plus_authorize_desc">Acelerar+ necesita accesibilidad para parar estas apps. Acelerará el teléfono un 80 \%% o más y mejora la duración de la batería en un 200 \%%.\n El 93 \%% de los usuarios la han activado.</string>
+    <string name="boost_plus_accessibility_service_description">Pulsa el botón de arriba y después pulsa en OK.\n Actívala para:\n1) Acelerar el teléfono un 80 \%%\n2) Cerrar las apps que más batería gastan\nAcelerar+ tiene como objetivo que tu teléfono vaya más rápido y nunca almacenará datos personales.</string>
+    <string name="boost_plus_security_setting_for_samsung_device">Configura en \'Seguridad y bloqueo de pantalla\'</string>
+    <string name="permission_guide_description">Busca ☆Acelerar+☆ y actívala.</string>
+    <string name="boost_plus_freeable">para liberar</string>
+
+    <string name="accessibility_authorize_try_again_negative">Más Tarde</string>
+    <string name="got_it">ENTENDIDO</string>
+
+    <string name="boost_plus_clean_tip_prefix">Consejos: </string>
+    <string-array name="boost_plus_clean_tips">
+        <item>Lleva un tiempo cerrar las aplicaciones persistentes. ¡Ten paciencia!</item>
+        <item>Usa Boost+ antes de dormir para reducir el consumo de batería.</item>
+        <item>Los juegos funcionan mejor después de usar Boost+.</item>
+        <item>¿El teléfono se sobrecalienta? ¡Pide ayuda a Boost+!</item>
+        <item>Usa Boost+ con frecuencia para garantizar que el teléfono funciona siempre con rapidez.</item>
+    </string-array>
+    <string name="boost_plus_optimal">ÓPTIMO</string>
+    <string name="charging_screen_guide_title">¡Activa la protección de la batería para impedir que el dispositivo se sobrecargue!</string>
+    <string name="five_star_hint_text">¿Cómo valoras tu experiencia con nosotros?</string>
+    <string name="five_star_five_text">Me encantó</string>
+    <string name="five_star_four_text">Me gustó</string>
+    <string name="five_star_three_text">Estuvo bien</string>
+    <string name="five_star_two_text">No me gustó</string>
+    <string name="five_star_one_text">Horrible</string>
+    <string name="five_star_positive_text">Enviar</string>
+    <string name="launcher_widget_market_title">Selecciones de aplicaciones</string>
+    <string name="locker_2g">2G</string>
+    <string name="locker_3g">3G</string>
+    <string name="locker_4g">4G</string>
+    <string name="locker_disable_confirm">¿Seguro que quieres desactivar?</string>
+    <string name="locker_disable_confirm_detail">Si la desactivas, las características de la pantalla de bloqueo se desactivarán. ¿Seguro que quieres continuar?</string>
+    <string name="locker_diabled_success">El bloqueo se ha desactivado</string>
+    <string name="locker_menu_disable">Desactivar bloqueo</string>
+    <string name="slide_to_unlock">Desliza para desbloquear</string>
+    <string name="locker_settings">Ajustes del bloqueo</string>
+    <string name="locker_settings_title">Bloqueo de pantalla</string>
+    <string name="locker_slide_wallpaper_title">Fondo de bloqueo</string>
+    <string name="locker_unkown">Unk</string>
+    <string name="locker_wallpaper_network_error">Error de red. Vuelve a intentarlo más tarde.</string>
+    <string name="moment_ad_title">AD</string>
+    <string name="moment_set_launcher">¡Establece Camera Pro como programa de inicio para acelerar el teléfono!</string>
+    <string name="moment_set_locker">¡Activa la protección de la batería para impedir que el dispositivo se sobrecargue!</string>
+    <string name="moment_open_locker">¡La batería está protegida!</string>
+    <string name="result_page_card_battery_protection_title">Protección de la batería</string>
+    <string name="result_page_card_battery_protection_description">Acelera la carga del teléfono en un 50\%% (puede contener publicidad)</string>
+    <string name="result_page_card_battery_protection_toast">Protección de la batería activada.</string>
+    <string name="result_page_card_battery_saver_title">Ahorro de batería</string>
+    <string name="result_page_card_battery_saver_description_low_battery">%s de energía restante. Optimiza para ampliar la duración de la batería.</string>
+    <string name="result_page_card_battery_saver_description_normal">La energía del teléfono se agota con rapidez. Optimiza para ampliar la duración de la batería.</string>
+    <string name="result_page_card_boost_plus_description">Las aplicaciones en segundo plano provocan un uso indebido de la batería. ¡Prueba con la aceleración avanzada para cerrarlas!</string>
+    <string name="result_page_card_boost_plus_promote_title">¿Por qué utilizar Boost+?</string>
+    <string name="result_page_card_boost_plus_promote_description">La mayoría de aplicaciones no se cierran con los aceleradores normales y ralentizan el teléfono Por suerte, Boost+ puede forzar su cierre.\nBoost+ es más eficaz que el 90\%% de los software de limpieza.</string>
+    <string name="search_show_trending_words">Mostrar tendencias</string>
+    <string name="search_trending_news">Tendencias</string>
+    <string name="search_trending_news_bottom">Más relatos</string>
+    <string name="search_trending_news_latest">Actualiza para recibir las noticias más recientes</string>
+    <string name="search_news_new_tag">NUEVO</string>
+    <string name="settings_badge_recommended_apps_hint">La configuración puede necesitar permisos</string>
+    <string name="settings_badge_common_apps">Aplicaciones comunes</string>
+    <string name="settings_badge_common_apps_hint">La configuración puede requerir acceso de notificaciones</string>
+
+    <string name="result_page_card_boost_plus_btn">Acelerar</string>
+    <string name="moment_locker_contains_ads">(Contiene publicidad)</string>
+    <string name="locker_settings_subtitle">(Contiene publicidad)</string>
+    <string name="result_page_card_battery_protection_btn">Activar</string>
+    <string name="charging_screen_menu_item">APAGAR</string>
+    <string name="result_page_card_boost_plus_title">Acelerar+</string>
+
+    <string name="moment_try_it_now">PRUEBA AHORA</string>
+
+    <string name="news_network_error">Errores de red</string>
 </resources>

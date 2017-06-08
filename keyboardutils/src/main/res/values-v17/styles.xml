@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <style name="SettingsItem">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_marginStart">20dp</item>
+        <item name="android:layout_alignParentStart">true</item>
+        <item name="android:layout_marginEnd">20dp</item>
+        <item name="android:textSize">@dimen/settings_item_text_size</item>
+    </style>
+
+    <style name="SettingsToggleButton">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_alignParentEnd">true</item>
+        <item name="android:layout_centerVertical">true</item>
+        <item name="android:layout_marginEnd">20dp</item>
+        <item name="android:clickable">false</item>
+        <item name="android:background">@null</item>
+    </style>
+</resources>

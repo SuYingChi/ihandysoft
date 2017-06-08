@@ -1,0 +1,249 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.artw.lockscreen.LockerGuideView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#cc000000">
+
+    <RelativeLayout
+        android:id="@+id/guide_camera"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:visibility="visible"
+        android:clipChildren="false"
+        android:clipToPadding="false">
+
+        <RelativeLayout
+            android:id="@+id/camera_container"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentBottom="true"
+            android:layout_width="60dp"
+            android:layout_height="60dp"
+            android:clipChildren="false"
+            android:clipToPadding="false">
+
+            <View
+                android:id="@+id/camera_highlight_bg"
+                android:layout_width="60dp"
+                android:layout_height="60dp"
+                android:visibility="invisible"
+                android:background="@drawable/guide_camera_bg"/>
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:scaleType="center"
+                android:layout_centerInParent="true"
+                android:src="@drawable/main_camera"/>
+
+            <ImageView
+                android:id="@+id/camera_hand"
+                android:layout_width="23dp"
+                android:layout_height="27dp"
+                android:scaleType="center"
+                android:layout_marginLeft="26dp"
+                android:layout_marginTop="30dp"
+                android:visibility="invisible"
+                android:src="@drawable/guide_hand"/>
+        </RelativeLayout>
+
+        <ImageView
+            android:id="@+id/iv_camera_arrow"
+            android:layout_width="60dp"
+            android:layout_height="70dp"
+            android:scaleType="center"
+            android:layout_alignParentRight="true"
+            android:layout_above="@id/camera_container"
+            android:visibility="invisible"
+            android:src="@drawable/guide_arraw"/>
+
+        <!--<LinearLayout-->
+            <!--android:id="@+id/camera_text_and_arrow_container"-->
+            <!--android:layout_width="wrap_content"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:orientation="horizontal"-->
+            <!--android:layout_alignParentRight="true"-->
+            <!--android:layout_above="@id/camera_container"-->
+            <!--android:visibility="invisible"-->
+            <!--android:gravity="center_vertical">-->
+
+            <!--<TextView-->
+                <!--android:textSize="18sp"-->
+                <!--android:text="@string/guide_open_camera"-->
+                <!--android:textColor="#ffffff"-->
+                <!--android:gravity="right"-->
+                <!--android:layout_width="wrap_content"-->
+                <!--android:layout_height="wrap_content"-->
+                <!--android:visibility="gone"/>-->
+
+            <!--<ImageView-->
+                <!--android:id="@+id/arrow"-->
+                <!--android:layout_width="60dp"-->
+                <!--android:layout_height="70dp"-->
+                <!--android:scaleType="center"-->
+                <!--android:src="@drawable/guide_arraw"/>-->
+
+        <!--</LinearLayout>-->
+
+        <LinearLayout
+            android:id="@+id/camera_tips_container"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:layout_centerInParent="true"
+            android:visibility="invisible">
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="10dp"
+                android:src="@drawable/ic_locker_guide_view_tips"/>
+
+            <TextView
+                android:textSize="18sp"
+                android:text="@string/guide_open_camera"
+                android:textColor="#ffffff"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+
+            <TextView
+                android:id="@+id/tv_camera_confirm_btn"
+                android:textSize="18sp"
+                android:text="NEXT"
+                android:gravity="center"
+                android:background="@drawable/locker_guide_view_button_bg"
+                android:textColor="#ffffff"
+                android:layout_marginTop="40dp"
+                android:layout_gravity="center_horizontal"
+                android:layout_width="120dp"
+                android:layout_height="40dp"/>
+
+        </LinearLayout>
+
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/guide_control_center"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:visibility="invisible">
+
+        <LinearLayout
+            android:id="@+id/function_container"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="80dp"
+            android:layout_alignParentBottom="true"
+            android:layout_centerHorizontal="true">
+
+            <ImageView
+                android:id="@+id/function1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:scaleType="center"
+                android:layout_marginTop="16dp"
+                android:layout_marginRight="20dp"
+                android:src="@drawable/guide_locker_calculator"/>
+
+            <ImageView
+                android:id="@+id/function2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:scaleType="center"
+                android:src="@drawable/guide_locker_flashlight_on"/>
+
+            <ImageView
+                android:id="@+id/function3"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:scaleType="center"
+                android:layout_marginTop="16dp"
+                android:layout_marginLeft="20dp"
+                android:src="@drawable/guide_locker_wifi_on"/>
+        </LinearLayout>
+
+        <!--<LinearLayout-->
+            <!--android:id="@+id/control_center_text"-->
+            <!--android:layout_width="wrap_content"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:orientation="vertical"-->
+            <!--android:gravity="center"-->
+            <!--android:layout_alignParentBottom="true"-->
+            <!--android:layout_centerHorizontal="true">-->
+
+            <!--&lt;!&ndash;<ImageView&ndash;&gt;-->
+                <!--&lt;!&ndash;android:layout_width="60dp"&ndash;&gt;-->
+                <!--&lt;!&ndash;android:layout_height="70dp"&ndash;&gt;-->
+                <!--&lt;!&ndash;android:scaleType="center"&ndash;&gt;-->
+                <!--&lt;!&ndash;android:src="@drawable/guide_arraw"/>&ndash;&gt;-->
+
+            <!--<TextView-->
+                <!--android:textSize="18sp"-->
+                <!--android:text="@string/guide_open_control_centre"-->
+                <!--android:textColor="#ffffff"-->
+                <!--android:gravity="right"-->
+                <!--android:layout_width="wrap_content"-->
+                <!--android:layout_height="wrap_content" />-->
+
+        <!--</LinearLayout>-->
+
+        <LinearLayout
+            android:id="@+id/control_center_tips_container"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:layout_centerInParent="true">
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="10dp"
+                android:src="@drawable/ic_locker_guide_view_tips"/>
+
+            <TextView
+                android:textSize="18sp"
+                android:text="@string/guide_open_control_centre"
+                android:textColor="#ffffff"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+
+            <TextView
+                android:id="@+id/tv_control_center_confirm_btn"
+                android:textSize="18sp"
+                android:text="GOT IT"
+                android:gravity="center"
+                android:background="@drawable/locker_guide_view_button_bg"
+                android:textColor="#ffffff"
+                android:layout_marginTop="40dp"
+                android:layout_gravity="center_horizontal"
+                android:layout_width="120dp"
+                android:layout_height="40dp"/>
+
+        </LinearLayout>
+
+        <ImageView
+            android:id="@+id/iv_control_center_arrow"
+            android:layout_alignParentBottom="true"
+            android:layout_width="60dp"
+            android:layout_height="70dp"
+            android:scaleType="center"
+            android:layout_centerHorizontal="true"
+            android:layout_marginBottom="25dp"
+            android:src="@drawable/guide_arraw"/>
+
+        <ImageView
+            android:id="@+id/iv_control_center_hand"
+            android:layout_width="23dp"
+            android:layout_height="27dp"
+            android:scaleType="center"
+            android:layout_alignParentBottom="true"
+            android:layout_marginLeft="26dp"
+            android:layout_alignLeft="@id/iv_control_center_arrow"
+            android:visibility="invisible"
+            android:src="@drawable/guide_hand"/>
+
+    </RelativeLayout>
+
+</com.artw.lockscreen.LockerGuideView>
