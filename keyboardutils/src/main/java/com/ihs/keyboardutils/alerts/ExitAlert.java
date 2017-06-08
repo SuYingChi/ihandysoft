@@ -92,7 +92,7 @@ public class ExitAlert {
 
     public boolean show() {
         if (enableAlert && alertDialog != null) {
-            if (showAd && nativeAdView.isAdLoaded()) {
+            if (showAd && nativeAdView != null && nativeAdView.isAdLoaded()) {
                 alertDialog.setSponsorView(nativeAdView);
             }
             alertDialog.setCancelable(true);
