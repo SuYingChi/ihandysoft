@@ -48,15 +48,15 @@ public class IAPMgr {
         HSIAPManager.getInstance().init(null, inAppNonConsumableSkuList);
     }
 
-    public boolean needRemoveAds() {
+    public boolean needShowAds() {
         if (isDebugMode) {
             return true;
         }
-        return HSIAPManager.getInstance().hasOwnedSku(getRemoveAdsIapId());
+        return !HSIAPManager.getInstance().hasOwnedSku(getRemoveAdsIapId());
     }
 
     public void purchaseRemoveAds() {
-        if (!needRemoveAds()) {
+        if (!needShowAds()) {
             return;
         }
 
