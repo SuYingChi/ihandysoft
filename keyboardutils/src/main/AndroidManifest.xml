@@ -29,7 +29,7 @@
             android:theme="@style/custom_titlebar_with_transparent_bg" />
 
         <service
-            android:name="com.ihs.chargingscreen.KeepAliveService"
+            android:name="com.ihs.chargingscreen.AgentService"
             android:enabled="true" />
 
         <receiver android:name="com.ihs.chargingscreen.ChargingBroadcastReceiver">
