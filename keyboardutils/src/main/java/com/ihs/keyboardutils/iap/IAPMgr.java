@@ -1,6 +1,5 @@
 package com.ihs.keyboardutils.iap;
 
-import android.os.Handler;
 import android.text.TextUtils;
 
 import com.ihs.commons.config.HSConfig;
@@ -22,7 +21,6 @@ public class IAPMgr {
     public static final String NOTIFICATION_REMOVEADS_PURCHASED = "NOTIFICATION_REMOVEADS_PURCHASED";
 
     private static final String TAG = "Cam_IAP_Tag";
-    public static final boolean isDebugMode = true;
 
     private static volatile IAPMgr instance;
 
@@ -49,26 +47,12 @@ public class IAPMgr {
     }
 
     public boolean needShowAds() {
-        if (isDebugMode) {
-            return true;
-        }
         return !HSIAPManager.getInstance().hasOwnedSku(getRemoveAdsIapId());
     }
 
     public void purchaseRemoveAds() {
         if (!needShowAds()) {
             return;
-        }
-
-        if (isDebugMode) {
-            new Handler().postDelayed(new Runnable() {
-                @Override
-                public void run() {
-                    HSLog.e(TAG, "Test Purchase success");
-                    HSGlobalNotificationCenter.sendNotification(NOTIFICATION_REMOVEADS_PURCHASED);
-                    isPurchasingRemoveAds = false;
-                }
-            }, 3000);
         }
 
         if (isPurchasingRemoveAds) {
