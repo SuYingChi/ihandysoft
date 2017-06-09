@@ -21,7 +21,7 @@ public class CountryCodeUtil extends Activity {
         BufferedReader reader = null;
         try {
             reader = new BufferedReader(
-                    new InputStreamReader(getAssets().open("country.txt")));
+                    new InputStreamReader(getAssets().open("country_our")));
 
             // do reading, usually loop until end of file reading
             String mLine;
@@ -35,7 +35,7 @@ public class CountryCodeUtil extends Activity {
                     loc = new Locale(split[0]);
                 }
 //                loc = new Locale(split[0]);
-                HSLog.e(loc.getDisplayLanguage() + "(" + loc.getDisplayCountry() + ")");
+                HSLog.e(mLine + " " + loc.getDisplayLanguage() + "(" + loc.getDisplayCountry() + ")");
             }
         } catch (IOException e) {
             //log the exception
