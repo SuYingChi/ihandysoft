@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout android:id="@+id/locker_theme_gallery_banner"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:launcher="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="64dp"
+    android:background="@drawable/locker_themes_locker_bg"
+    tools:ignore="UnusedAttribute">
+
+    <ImageView
+        android:id="@+id/locker_icon"
+        android:layout_width="44dp"
+        android:layout_height="44dp"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_centerVertical="true"
+        android:layout_marginLeft="12dp"
+        android:layout_marginRight="12dp"
+        android:src="@drawable/ic_locker"
+        tools:ignore="ContentDescription" />
+
+    <com.artw.lockscreen.common.TypefacedTextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_centerVertical="true"
+        android:layout_toEndOf="@id/locker_icon"
+        android:layout_toLeftOf="@+id/locker_install_btn"
+        android:layout_toRightOf="@id/locker_icon"
+        android:layout_toStartOf="@+id/locker_install_btn"
+        android:maxLines="2"
+        android:text="@string/locker_download_hint"
+        android:textColor="@android:color/white"
+        launcher:typeface="@string/roboto_regular" />
+
+    <Button
+        android:id="@+id/locker_install_btn"
+        android:layout_width="68dp"
+        android:layout_height="35dp"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentRight="true"
+        android:layout_centerVertical="true"
+        android:layout_marginEnd="16dp"
+        android:layout_marginLeft="12dp"
+        android:layout_marginRight="16dp"
+        android:layout_marginStart="12dp"
+        android:background="@drawable/selector_locker_theme_banner_btn"
+        android:gravity="center"
+        android:text="@string/locker_install_btn"
+        android:textAllCaps="false"
+        android:textColor="@android:color/white"
+        android:textSize="12sp" />
+</RelativeLayout>

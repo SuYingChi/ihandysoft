@@ -11,6 +11,14 @@
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="com.android.launcher.permission.INSTALL_SHORTCUT" />
+
+
+    <uses-permission android:name="android.permission.BLUETOOTH" />
+    <uses-permission android:name="android.permission.BLUETOOTH_ADMIN" />
+    <uses-permission android:name="android.permission.CHANGE_WIFI_STATE" />
+    <uses-permission android:name="android.permission.READ_SYNC_SETTINGS" />
+    <uses-permission android:name="android.permission.WRITE_SYNC_SETTINGS" />
 
     <application>
         <meta-data
@@ -60,6 +68,54 @@
             android:screenOrientation="portrait"
             android:taskAffinity="com.ihs.keyboardutils.giftad.InterstitialGiftActivity"
             android:theme="@style/FullScreenAnimationAd" />
+
+        <activity
+            android:name="com.ihs.feature.boost.BoostActivity"
+            android:excludeFromRecents="true"
+            android:icon="@drawable/boost_icon"
+            android:label="@string/launcher_widget_boost_title"
+            android:launchMode="singleTask"
+            android:noHistory="true"
+            android:screenOrientation="portrait"
+            android:taskAffinity=".lucky.boost"
+            android:theme="@android:style/Theme.Translucent.NoTitleBar.Fullscreen">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <action android:name="android.intent.category.HOME" />
+            </intent-filter>
+        </activity>
+
+
+        <receiver android:name="com.artw.lockscreen.common.NetworkChangeReceiver">
+            <intent-filter>
+                <action android:name="android.net.conn.CONNECTIVITY_CHANGE" />
+            </intent-filter>
+        </receiver>
+
+        <activity
+            android:name="com.artw.lockscreen.LockerSettingsActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/ThemeAppBarActivity.White" />
+
+        <activity
+            android:name="com.artw.lockscreen.LockerActivity"
+            android:configChanges="keyboardHidden|orientation|screenSize"
+            android:excludeFromRecents="true"
+            android:exported="false"
+            android:launchMode="singleTop"
+            android:screenOrientation="portrait"
+            android:taskAffinity=".air_locker"
+            android:theme="@style/ChargingScreenTransparentTheme" />
+
+        <activity
+            android:name="com.artw.lockscreen.DismissKeyguradActivity"
+            android:configChanges="keyboard|keyboardHidden|orientation"
+            android:excludeFromRecents="true"
+            android:launchMode="singleTop"
+            android:screenOrientation="portrait"
+            android:taskAffinity=".air_locker"
+            android:theme="@style/ChargingScreenTransparentTheme" />
+
     </application>
 
 </manifest>

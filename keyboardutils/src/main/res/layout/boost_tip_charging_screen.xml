@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="#4ac47a">
+
+    <android.support.v7.widget.AppCompatImageView
+        android:id="@+id/boost_tip_charging_screen_icon"
+        android:layout_width="48dp"
+        android:layout_height="51dp"
+        android:layout_centerVertical="true"
+        android:layout_marginLeft="14dp"
+        android:layout_marginStart="14dp"
+        android:layout_marginRight="14dp"
+        android:layout_marginEnd="14dp"
+        app:srcCompat="@drawable/charging_screen_boost_tip_icon"
+        tools:ignore="ContentDescription"/>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_toEndOf="@id/boost_tip_charging_screen_icon"
+        android:layout_toRightOf="@id/boost_tip_charging_screen_icon"
+        android:background="#3db16b"
+        android:orientation="vertical">
+
+        <com.ihs.feature.common.TypefacedTextView
+            android:id="@+id/boost_tip_charging_screen_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="16dp"
+            android:layout_marginRight="16dp"
+            android:layout_marginTop="16dp"
+            android:maxLines="2"
+            android:textColor="@android:color/white"
+            android:textSize="16sp"
+            app:typeface="@string/proxima_nova_semibold"
+            tools:text="@string/charging_screen_guide_battery_title"/>
+
+        <com.ihs.feature.common.TypefacedTextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="16dp"
+            android:layout_marginRight="16dp"
+            android:layout_marginTop="3dp"
+            android:maxLines="2"
+            android:textColor="@color/material_text_white_primary"
+            android:textSize="13sp"
+            app:typeface="@string/proxima_nova_regular"
+            android:text="@string/charging_screen_guide_subtitle"/>
+
+        <TextView
+            android:id="@+id/boost_tip_charging_screen_btn"
+            android:layout_width="100dp"
+            android:layout_height="34dp"
+            android:layout_gravity="right|end"
+            android:layout_marginBottom="10dp"
+            android:layout_marginEnd="18dp"
+            android:layout_marginRight="18dp"
+            android:layout_marginTop="10dp"
+            android:background="@drawable/boost_tip_boost_plus_button_selector"
+            android:gravity="center"
+            android:textAllCaps="true"
+            android:textColor="#3db16b"
+            android:textSize="13sp"
+            android:textStyle="bold"
+            android:text="@string/settings_auth_button_text"/>
+    </LinearLayout>
+</RelativeLayout>

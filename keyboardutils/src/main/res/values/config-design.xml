@@ -20,5 +20,5 @@
     <color name="design_dialog_action_button_highlight_text_color">#ffffff</color>
 
     <fraction name="design_dialog_width">90%</fraction>
-
+    <integer name="config_luckyGoButtonDownUpDuration">100</integer>
 </resources>

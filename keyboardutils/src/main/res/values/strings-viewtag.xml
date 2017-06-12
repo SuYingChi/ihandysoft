@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="tag_iv_refresh">tag_iv_refresh</string>
+    <string name="tag_iv_img1">tag_iv_img1</string>
+    <string name="tag_iv_img1_refresh">tag_iv_img1_refresh</string>
+    <string name="tag_iv_img2">tag_iv_img2</string>
+    <string name="tag_iv_img2_refresh">tag_iv_img2_refresh</string>
+    <string name="tag_iv_img3">tag_iv_img3</string>
+    <string name="tag_iv_img3_refresh">tag_iv_img3_refresh</string>
+    <string name="tag_iv_img4">tag_iv_img4</string>
+    <string name="tag_iv_img4_refresh">tag_iv_img4_refresh</string>
+</resources>

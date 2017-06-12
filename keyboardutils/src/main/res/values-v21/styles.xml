@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <style name="SettingsToggleButton">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_alignParentEnd">true</item>
+        <item name="android:layout_centerVertical">true</item>
+        <item name="android:layout_marginEnd">20dp</item>
+        <item name="android:clickable">false</item>
+    </style>
+
+
+    <style name="ThemeAppBarActivity.White" parent="ThemeAppBarActivity">
+        <item name="android:windowBackground">@android:color/white</item>
+    </style>
+
+    <style name="ThemeAppBarActivity" parent="Theme.AppCompat.NoActionBar">
+        <item name="android:windowBackground">@color/app_bar_activities_content_bg</item>
+        <item name="android:colorControlHighlight">@color/wallpaper_activities_control_highlight</item>
+        <item name="colorSwitchThumbNormal">@color/material_color_switch_thumb</item>
+        <item name="android:colorForeground">@color/material_color_foreground</item>
+        <item name="colorAccent">@color/material_color_accent</item>
+    </style>
+</resources>

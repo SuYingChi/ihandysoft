@@ -1,0 +1,731 @@
+<?xml version="1.0" encoding="utf-8" standalone="no"?>
+<resources xmlns:tools="http://schemas.android.com/tools">
+    <string name="launcher_widget_lucky_title">Beruntung </string>
+    <string name="lucky_game_award_boom_description">kali </string>
+    <string name="lucky_game_award_chances_description">ucapan selamat +3 kali </string>
+    <string name="lucky_game_award_chances_receive_btn">Terima</string>
+    <string name="lucky_game_award_empty_action">COBA LAGI</string>
+    <string name="lucky_game_award_no_network_description">Tidak ada koneksi jaringan! </string>
+    <string name="no_network_connection">Tidak ada koneksi jaringan! </string>
+    <string name="lucky_game_award_theme_action">PASANG</string>
+    <string name="lucky_game_award_theme_description">Ditemukan tema baru! </string>
+    <string name="lucky_game_award_wallpaper_description">Wallpaper Luar Biasa!</string>
+    <string name="lucky_game_award_wallpaper_action">ATUR SEBAGAI WALLPAPER</string>
+    <string name="lucky_game_chance_counter">Kesempatan: %1$s</string>
+    <string name="lucky_game_award_ad_related_title">Anda sudah memenangkan hadiah!</string>
+    <string name="lucky_game_chance_restore_timer">Dapatkan lainnya di %1$s</string>
+
+    <string name="charging_screen_charged_full">Berdaya penuh</string>
+    <string formatted="false" name="charging_screen_charged_left_describe">Daya penuh kurang %s</string>
+    <string name="charging_screen_charging_continue_charging_state_tip_view">Ponsel tidak diisi, aman\ untuk mencabut charger</string>
+    <string name="charging_screen_charging_speed_charging_state_tip_view">Mencabut charger dapat membahayakan baterai Anda</string>
+    <string name="charging_screen_unlock_describe">Usap-buka</string>
+    <string name="charging_screen_charging_state_des">...........</string>
+    <string name="charging_screen_charging_tip1">Menghentikan aplikasi latar belakang dapat mempercepat pengisian.</string>
+    <string name="charging_screen_charging_tip2">Mencapai temperatur 40\u2103 dapat membahayakan baterai Anda.</string>
+    <string name="charging_screen_charging_tip3">Pengisian Daya Pintar akan memonitor status pengisian guna memastikan baterai Anda dalam kondisi bagus.</string>
+    <string name="charging_screen_charging_tip4">Mencabut charger dapat membahayakan baterai Anda ketika berada dalam mode pengisian baterai.</string>
+    <string name="charging_screen_charging_tip5">Meskipun ponsel tidak diisi, kondisi\ ini aman untuk mencabut charger ketika berada dalam mode berdaya hampir penuh.</string>
+    <string formatted="false" name="charging_screen_charging_tip6">%s akan mengurangi pengisian daya untuk melindungi baterai selama berada dalam mode berdaya penuh.</string>
+    <string name="charging_screen_charging_trickle_charging_state_tip_view">Air Launcher akan mengurangi pengisian daya untuk melindungi baterai</string>
+    <string name="charging_screen_close_dialog_title">Matikan Pengisian Daya Pintar?</string>
+    <string name="charging_screen_close_dialog_content">Jika Anda mematikan pengisian daya pintar, Anda tidak akan\ dapat melindungi baterai lagi. Yakin ingin mematikannya?</string>
+    <string name="charging_screen_close_dialog_negative_action">MATIKAN</string>
+    <string name="charging_screen_close_dialog_positive_action">TIDAK SEKARANG</string>
+    <string formatted="false" name="charging_screen_date">%s %s %s</string>
+    <string name="charging_screen_guide_battery_title">Nyalakan Perlindungan Baterai untuk memperpanjang umur baterai!</string>
+    <string name="charging_screen_guide_subtitle">Lindungi perangkat dari pengisian daya yang berlebih!</string>
+    <string name="charging_screen_guide_temperature_title">Nyalakan Perlindungan Baterai untuk mendinginkan perangkat!</string>
+    <string name="charging_screen_guide_turn_on">Baterai Anda dalam perlindungan!</string>
+    <string name="charging_screen_settings_title">Perlindungan baterai</string>
+    <string name="charging_screen_settings_description">Lindungi perangkat dari pengisian daya berlebih</string>
+    <string name="charging_screen_settings_subtitle">(Mengandung iklan)</string>
+    <string formatted="false" name="charging_screen_time">%s:%s</string>
+
+    <string name="empty_folder_name">Folder Baru</string>
+    <string name="activity_not_found">Aplikasi belum terpasang</string>
+    <string name="activity_not_available">Aplikasi tidak tersedia</string>
+    <string name="safe_mode_shortcut_error">Aplikasi yang diunduh dinonaktifkan dalam kondisi Safe mode</string>
+    <string name="safe_mode_widget_error">Widget dinonaktifkan dalam Safe mode</string>
+    <string name="long_press_widget_to_add">Sentuh &amp; tahan untuk memilih widget</string>
+    <string name="widget_dims_format">%1$d \u00d7 %2$d</string>
+    <string name="all_apps_search_bar_hint">" Cari Aplikasi"</string>
+    <string name="all_apps_search_bar_empty">Tidak ditemukan</string>
+    <skip/>
+    <string name="out_of_space">Tidak ada ruang lagi di layar Beranda ini</string>
+    <string name="hotseat_out_of_space">Tidak ada ruang lagi di tray Favorit</string>
+    <string name="all_apps_button_label">Aplikasi</string>
+    <string name="delete_target_label">Hapus</string>
+    <string name="delete_target_uninstall_label">Lepas pemasangan</string>
+    <string name="info_target_label">Info aplikasi</string>
+    <string name="desktop_target_label">Desktop</string>
+    <skip/>
+    <string name="permlab_read_settings">baca pengaturan Beranda dan pintasan</string>
+    <string name="permdesc_read_settings">izinkan aplikasi untuk membaca pengaturan dan pintasan di Beranda</string>
+    <string name="permlab_write_settings">tulis pengaturan Beranda dan pintasan</string>
+    <string name="permdesc_write_settings">izinkan aplikasi untuk mengubah pengaturan dan pintasan di Beranda</string>
+    <string name="msg_no_phone_permission">%1$s tidak diizinkan melakukan panggilan</string>
+    <string name="failed_to_add_widget_text">Gagal menambahkan widget ke desktop</string>
+    <skip/>
+    <string name="gadget_error_text">Masalah dalam memuat widget</string>
+    <string name="gadget_setup_text">Penyetelan</string>
+    <string name="uninstall_system_app_text">Ini adalah aplikasi sistem dan tidak dapat dilepas pemasangannya</string>
+    <string name="folder_add_shortcuts_view_cancel_button">Batal</string>
+    <string name="folder_add_shortcuts_view_ok_button">OK</string>
+    <string name="app_store_category_name_favorite_tools">Perkakas</string>
+    <string name="app_store_category_name_tools">Perkakas</string>
+    <string name="app_store_category_name_social">Sosial</string>
+    <string name="app_store_category_name_games">Permainan</string>
+    <string name="app_store_category_name_lifestyle">Gaya hidup</string>
+    <string name="app_store_category_name_photography">Fotografi</string>
+    <string name="app_store_category_name_media">Media</string>
+    <string name="app_store_category_name_news">Berita \u0026 Buku</string>
+    <string name="app_store_others">Lainnya</string>
+    <string name="folder_placeholder_text">Anda dapat menambahkan aplikasi dalam folder ini.</string>
+    <string name="abandoned_clean_this">Hapus</string>
+    <string name="abandoned_search">Cari </string>
+    <string name="abandoned_promises_title">Aplikasi belum dipasang</string>
+    <string name="abandoned_promise_explanation">Aplikasi untuk ikon ini belum terpasang. \nAnda dapat menghapusnya, atau mencari aplikasi dan memasangnya secara manual.</string>
+    <string name="weather_title">Cuaca</string>
+    <string name="weather_wind_speed">Kecepatan Angin:</string>
+    <string name="weather_wind_direction">Arah Angin:</string>
+    <string name="weather_visibility">Visibilitas:</string>
+    <string name="weather_humidity">Kelembaban:</string>
+    <string name="weather_sunrise">Matahari Terbit:</string>
+    <string name="weather_sunset">Matahari Terbenam:</string>
+    <string name="weather_last_update_today">Diperbarui pada %1$s</string>
+    <string name="weather_last_update_before_today">Diperbarui pada %1$s</string>
+    <string name="weather_no_info_placeholder">--</string>
+    <string name="weather_no_info_placeholder_time">--:--</string>
+    <string name="weather_high_low_temperature">%1$s\u00b0\u00a0/\u00a0%2$s\u00b0</string>
+    <string name="weather_kph">km/h</string>
+    <string name="weather_mph">mph</string>
+    <string name="weather_km">km</string>
+    <string name="weather_mi">mi</string>
+    <string name="weather_time">%1$s:%2$s</string>
+    <string name="weather_today">Hari Ini</string>
+    <string name="weather_settings_title">Pengaturan Cuaca</string>
+    <string name="weather_settings_item_temperature_unit">Unit temperatur</string>
+    <string name="weather_settings_item_distance_unit">Unit jarak</string>
+    <string name="weather_settings_item_add_new_city">Tambahkan kota baru</string>
+    <string name="weather_settings_celsius">\u00b0C</string>
+    <string name="weather_settings_fahrenheit">\u00b0F</string>
+    <string name="weather_settings_cf_slash">/</string>
+    <string name="weather_settings_cities_title">Kota</string>
+    <string name="weather_city_add_new_btn">Tambahkan kota baru</string>
+    <string name="weather_city_more_than_limit">Anda hanya dapat menambahkan 12 kota</string>
+    <string name="weather_city_searching_prompt">Cari kota…</string>
+    <string name="weather_city_empty_result_prompt">Tidak ada kota yang sama</string>
+    <string name="weather_city_loading_message">Memuat…</string>
+    <string name="weather_city_load_failed_message">Ups, tidak dapat memuat cuaca.</string>
+    <string name="weather_clock_widget_name">Cuaca &amp; Jam</string>
+    <string name="weather_clock_unknown_weather_message">Tidak diketahui</string>
+    <string name="sunny">Terik</string>
+    <string name="overcast">Mendung</string>
+    <string name="clear">Cerah</string>
+    <string name="cloudy">Berawan</string>
+    <string name="rain">Hujan</string>
+    <string name="drizzle">Gerimis</string>
+    <string name="rain_shower">Hujan Rintik</string>
+    <string name="snow">Salju</string>
+    <string name="snow_shower">Hujan Salju</string>
+    <string name="sleet">Hujan Bersalju</string>
+    <string name="hazy">Berkabut</string>
+    <string name="dust">Debu</string>
+    <string name="thunderstorm">Petir</string>
+    <string name="cold">Dingin</string>
+    <string name="hot">Panas</string>
+    <string name="windy">Berangin</string>
+    <string name="menu_item_settings">Pengaturan</string>
+    <string name="setting_item_mobile">Data Ponsel</string>
+    <string name="setting_item_wifi">Wi-Fi</string>
+    <string name="setting_item_airplane">Mode Pesawat Terbang</string>
+    <string name="setting_item_auto_brightness">Kecerahan Otomatis</string>
+    <string name="setting_item_rotate">Rotasi Otomatis</string>
+    <string name="setting_item_silence">Diam</string>
+    <string name="setting_item_vibration">Getar</string>
+    <string name="setting_item_bluetooth">Bluetooth</string>
+    <string name="setting_item_flashlight">Flashlight</string>
+    <string name="more_system_settings_button_title">Pengaturan Sistem Telepon</string>
+    <string name="more_launcher_settings_button_title">Pengaturan Peluncur</string>
+    <string name="setting_device_not_support_message">Perangkat Anda tidak mendukung.</string>
+    <string name="boost_tip_optimal">Perangkat Anda sudah optimal!</string>
+    <string name="boost_tip_detail_memory">Telepon Anda kini secepat kilat!</string>
+    <string name="customize_title">Personalisasi</string>
+    <string name="customize_wallpapers_title">Gambar Latar</string>
+    <string name="customize_themes_title">Tema </string>
+    <string name="wallpaper_toast_set_failed">Terjadi masalah dengan gambar latar ini. Silakan coba lagi</string>
+    <string name="customize_local_title">Milik Saya</string>
+    <string name="wallpaper_setting_progress_dialog_text">Mengatur gambar latar…</string>
+    <string name="icon_pack_name">Peluncur Baku</string>
+    <string name="no_icon_pack_name">Sistem Baku</string>
+    <string name="theme_set_alert_title">Mengatur Tema</string>
+    <string name="theme_set_alert_set_system_theme_body">Atur Sistem Baku sebagai tema Anda?</string>
+    <string name="feedback_title">Tanggapan</string>
+    <string name="feedback_content_placeholder">" Tanggapan Anda membantu kami melakukan perbaikan"</string>
+    <string name="feedback_email_placeholder">" Silakan masukkan alamat email Anda"</string>
+    <string name="feedback_submit_btn">Kirim</string>
+    <string name="feedback_toast_empty_content">Silakan tulis tanggapan Anda </string>
+    <string name="feedback_toast_invalid_email">Silakan masukkan alamat email yang valid</string>
+    <string name="feedback_toast_send_success">Terima kasih untuk tanggapan Anda!</string>
+    <string name="effect_classic">Klasik</string>
+    <string name="effect_cube">Kubus</string>
+    <string name="effect_roll">Gulung</string>
+    <string name="effect_rotation">Rotasi</string>
+    <string name="effect_stack">Tumpuk</string>
+    <string name="effect_windmill">Putar</string>
+    <string name="effect_flip">Jentik</string>
+    <string name="effect_page">Balik</string>
+    <string name="launcher_widget_time_title">Jam+Cuaca</string>
+    <string name="launcher_widget_widgets_title">Widget Sistem</string>
+    <string name="launcher_widget_boost_title">Percepat</string>
+    <string name="launcher_widget_settings_title">Pengaturan</string>
+    <string name="launcher_widget_wallpaper_title">Gambar Latar </string>
+    <string name="launcher_widget_flashlight_title">Flashlight</string>
+    <string name="launcher_widget_data_usage_title">Penggunaan Data</string>
+    <string name="launcher_widget_battery_title">Baterai</string>
+    <string name="launcher_widget_app_mgr_title">Kelola Aplikasi</string>
+    <string name="launcher_widget_update_title">Perbarui</string>
+    <string name="launcher_widget_feedback_title">Tanggapan</string>
+    <string name="launcher_widget_effects_title">Efek</string>
+    <string name="launcher_widget_theme_title">Tema </string>
+    <string name="launcher_settings_title">Pengaturan Camera Pro</string>
+    <string name="launcher_settings_section_default_launcher">Atur sebagai peluncur baku</string>
+    <string name="preferences">Pilihan</string>
+    <string name="launcher_settings_advanced_clean_detail">Percepat telepon Anda dengan lebih efektif</string>
+    <string name="launcher_settings_advanced_section_about">Tentang</string>
+    <string name="launcher_settings_auto_boost_section">Percepat Otomatis</string>
+    <string name="launcher_settings_auto_boost_detail">Percepat otomatis saat telepon Anda lambat</string>
+    <string name="settings_auth_line1">Bagaimana cara mengaktifkan?</string>
+    <string name="settings_auth_line2">Temukan \"Camera Pro\" dan nyalakan.</string>
+    <string name="launcher_settings_five_star">5 Bintang</string>
+    <string name="launcher_settings_tell_my_friends">Beri tahu teman saya</string>
+    <string name="launcher_settings_feedback">Tanggapan</string>
+    <string name="launcher_settings_update">Perbarui</string>
+    <string name="launcher_settings_current_version_detail">Versi sekarang: v%1$s</string>
+    <string name="privacy_policy">Kebijakan Privasi</string>
+    <string name="terms_of_service">Ketentuan Layanan</string>
+    <string name="auto_category_title">Pengurutan Pintar</string>
+    <string name="auto_category_open_btn">Buka</string>
+    <string name="set_as_default_btn_text">OK</string>
+    <string name="resolver_wizard_select_launcher_1">Pilih</string>
+    <string name="resolver_wizard_select_launcher_2">\"Camera Pro\"</string>
+    <string name="resolver_wizard_click_always">Ketuk \"SELALU\"</string>
+    <string name="share_through">Bagi dengan</string>
+    <string name="news_title">Tajuk</string>
+    <string name="news_settings_item_show_on_home_des">Geser ke kanan pada layar beranda</string>
+
+    <string name="news_settings_title">Pengaturan berita utama</string>
+    <string name="news_refresh_success_news_updated">%1$s berita terbaru</string>
+    <string name="news_refresh_success_no_news_updated">Pembaruan terakhir</string>
+    <string name="news_settings_item_load_pictures_title">Simpan data</string>
+    <string name="news_settings_item_load_pictures_des">Tanpa gambar dalam jaringan seluler</string>
+    <string name="news_detail_error_reload">Muat ulang</string>
+    <string name="pull_to_refresh">Tarik untuk menyegarkan</string>
+    <string name="release_to_refresh">Lepas untuk menyegarkan</string>
+    <string name="icon_size_title">Ukuran Ikon</string>
+    <string name="icon_size_settings_title">Ukuran Ikon</string>
+    <string name="icon_font_size_settings_title">Ukuran label ikon</string>
+    <string name="icon_font_color_settings_title">Warna label ikon</string>
+    <string name="icon_preview_title">Pratinjau</string>
+    <string name="icon_preview_messenger_title">Messenger</string>
+    <string name="icon_preview_phone_title">Phone</string>
+    <string name="icon_preview_camera_title">Camera</string>
+    <string name="icon_preview_browser_title">Browser</string>
+    <string name="folder_unpack_confirm_title">Rilis Folder</string>
+    <string name="release_target_label">Rilis</string>
+
+    <!-- %1$s is the version number which should be kept, for example “v1.0.0"" -->
+    <string name="launcher_settings_latest_version_detail">Versi terbaru: v%1$s</string>
+
+    <!-- The following is an alert dialog which includes title, description and actions. Air is the name of the APP that needn’t to be translated.  -->
+    <string name="set_as_default_alert_title">Peringatan</string>
+    <string name="set_as_default_alert_detail">Gagal mengatur Peluncur Air sebagai default. Coba lagi?</string>
+    <string name="set_as_default_alert_ok_btn">Coba Lagi</string>
+    <string name="set_as_default_alert_cancel_btn">Nanti</string>
+
+    <!-- It’s the slogan of the app which can make your phone fast & stylish. &amp; stands for & in program. -->
+    <string name="welcome_description_text">Cepat &amp; Bergaya</string>
+
+    <!-- It’s an action button, so it’s better to be short -->
+    <string name="welcome_start_btn">MULAI</string>
+    <string name="welcome_select_wallpaper">Pilih wallpaper yang paling Anda suka</string>
+
+    <!-- It’s a prompt message that our app is preparing the desktop of the phone. -->
+    <string name="welcome_loading">Menyiapkan desktop Anda…</string>
+
+
+    <string name="online_wallpaper_tab_title_categories">Kategori</string>
+    <string name="settings_auth_guide">Aktifkan  \"Camera Pro\" untuk memberitahu pesan, Facebook, Whatsapp, dll yang belum dibaca.</string>
+    <string name="settings_badge_unread_msg">Pesan Belum Dibaca</string>
+    <string name="settings_badge_recommended_apps">Aplikasi yang diberi komentar ulang</string>
+    <string name="settings_badge_switch_hint">Lencana untuk pesan belum dibaca</string>
+    <string name="auto_organize_desktop_title">Mengelola otomatis desktop</string>
+    <string name="settings_auth_button_text">Aktifkan</string>
+
+
+    <!-- Hide apps means apps invisible on desktop -->
+    <string name="hide_apps_bottom_button_hide">Sembunyikan</string>
+    <string name="hide_apps_settings_title">Sembunyikan setelan apl</string>
+    <string name="hide_apps_empty_prompt">Anda dapat menambah apl apa saja ke dalam map ini.</string>
+
+    <!-- It’s a gesture of swiping up on desktop with one finger -->
+    <string name="hide_apps_activation_method_one_finger">Geser naik dengan satu jari</string>
+    <string name="hide_apps_activation_method_two_fingers">Geser naik dengan dua jari</string>
+
+    <!-- Unlock pattern is a kind of password, which has 9 dots on the screen organized in a 3×3 matrix. To unlock the phone the pattern has to be drawn on the screen, connecting certain points in a certain order. -->
+    <string name="hide_apps_password_toggle">Aktifkan kata sandi</string>
+    <string name="hide_apps_set_password_title">Setel kata sandi</string>
+    <string name="set_passwd_reset">Setel Ulang Kata Sandi</string>
+    <string name="change_gesture_passwd_info">Demi kepentingan keamanan, harap buat pola buka kunci</string>
+    <string name="set_gesture_passwd_please">Harap buat pola</string>
+    <string name="set_gesture_passwd_verify">Harap buat lagi pola buka kunci</string>
+    <string name="set_gesture_passwd_least">Hubungkan sedikitnya 4 titik, harap coba lagi</string>
+    <string name="set_gesture_passwd_failed">Pola tidak sesuai, harap coba lagi</string>
+    <string name="set_gesture_passwd_success">Pola aktif </string>
+
+    <string name="loading">Memuat…</string>
+    <string name="customize_themes_title_local">Tema Saya</string>
+    <string name="terms_of_service_settings_title">Ketentuan Layanan </string>
+    <string name="privacy_policy_settings_title">Kebijakan Privasi </string>
+    <string name="customize_wallpapers_title_local">Gambar Latar Saya </string>
+    <string name="load_more">Memuat…</string>
+
+    <!-- Please translate and replace the words in red color -->
+    <!--It guides users to enter password -->
+    <string name="input_passwd">Masukkan kata sandi</string>
+
+    <!-- Notification toolbar is a bar with icons of Wi-Fi, Mobile Data, Flashlight and so on, which you can set your phone quickly by switching them On/Off. -->
+    <string name="notification_toolbar_title">Bilah alat pemberitahuan</string>
+
+
+    <!-- It’s a switch to turn On/Off Mobile Data, better be short in one word or two -->
+    <string name="notification_toolbar_data">Data</string>
+
+
+    <!-- A collection of all apps in your phone -->
+    <string name="notification_toolbar_all_apps">Semua Aplikasi</string>
+
+
+
+    <!-- It shows how much battery has been left. It will be used like “20% Battery Left” -->
+    <string name="boost_notification_low_battery_title">Sisa Daya Baterai</string>
+    <string name="boost_notification_low_battery_description">Simpan baterai untuk digunakan dalam waktu lama</string>
+
+
+    <!-- It’s a button for saving battery, better be short in one word or two -->
+    <string name="boost_notification_low_battery_btn">Simpan</string>
+
+    <!-- It shows how much battery has been save. It will be used like “Battery Life Extended 20 minutes” -->
+    <string name="boost_tip_title_battery">Masa Pakai Baterai Diperpanjang</string>
+    <string name="boost_tip_detail_battery">Baterai dapat digunakan dalam waktu lama!</string>
+
+
+    <string name="daily_weather_notification">Perkiraan cuaca harian</string>
+
+
+    <!-- It’s a button for detail content, better be short in one word or two -->
+    <string name="weather_notification_btn">Rincian</string>
+
+
+    <!-- It show how much memory has been used. It will be used like “200MB Memory Used” -->
+    <string name="boost_notification_low_ram_title">Memori Yang Digunakan</string>
+    <string name="boost_notification_low_ram_description">Tingkatkan untuk melepas memori</string>
+
+    <!-- It shows how much memory has been released. It will be used like “Memory Released 200MB” -->
+    <string name="boost_tip_title_memory">Memori Yang Dilepaskan</string>
+
+
+    <!-- The temperature of phone is too hot, better be short -->
+    <string name="boost_notification_hot_cpu_title">Telepon Terlalu Panas</string>
+
+
+    <!-- It’s a button for cooling down temperature of phone, better be short in one word or two -->
+    <string name="boost_notification_hot_cpu_btn">Sejuk</string>
+
+
+    <!-- It shows how much temperature has been cooled down. It will be used like “Cool Down 10 ℉／℃” -->
+    <string name="boost_tip_title_cpu_temperature">Mendingin</string>
+    <string name="boost_notification_hot_cpu_description">Mendinginkan CPU</string>
+    <string name="boost_tip_detail_cpu_temperature">CPU sudah dingin.</string>
+
+
+    <!-- A new themes for phone including wallpapers and app icons. -->
+    <string name="theme_notification_title">Tema Baru</string>
+    <string name="theme_notification_description">Cobalah gaya baru untuk telepon Anda!</string>
+
+    <string name="boost_notification_low_battery_title_figure">%1$s%%</string>
+    <string name="boost_notification_low_ram_title_figure">%1$s%%</string>
+    <string name="boost_notification_low_ram_btn">Percepat</string>
+    <string name="boost_title">Percepat</string>
+    <string name="notification_toolbar_wifi">Wi-Fi</string>
+    <string name="notification_toolbar_flash_light">Flashlight</string>
+
+    <!-- Please translate and replace the words in red color -->
+
+
+    <!-- Advanced cleaning is an operation that cleaning memory in an advanced way to stop apps and make apps can not restart, which can make phone run faster! -->
+    <string name="advanced_boost_title">Pembersihan lanjutan</string>
+    <!-- Accessibility Service is a settings option in phone! -->
+    <!-- It will be used like “Freed up 200MB” , which means memory released in phone-->
+
+    <!-- An operation to make a app visible on the screen, better be short in one word or two -->
+    <string name="unhide_label">Tampilkan</string>
+
+    <!-- “Magic Locker” is an app name, don’t need to translate. Themes include images and app icons, which can make phone screen stylish. -->
+    <string name="locker_download_hint">Dapatkan Magic Locker untuk menggunakan tema yang mengagumkan ini. </string>
+    <!-- Locker can lock the screen of your phone. -->
+    <string name="online_theme_tab_title_locker">Pengunci (Locker)</string>
+    <!-- An operation to install an app, better be short in one word or two -->
+    <string name="locker_install_btn">Instal</string>
+
+    <string name="online_theme_tab_title_launcher">Peluncur</string>
+
+    <!-- Icon pack is a collection of designed app icons that can replace the default ones of your phone. -->
+    <string name="icon_pack_settings_title">Paket ikon</string>
+    <!-- Memory has been released of the phone, which boosts your phone and makes it run faster. Better be short in one word or two.-->
+    <!-- Type the English name of the city and select the city from the search result. Only support English -->
+    <string name="weather_search_hint">" Jenis dan kota pilihan (hanya bahasa Inggris)"</string>
+    <!-- Camera Pro is the name of App, which don’t need to translate. Themes can make your phone beautiful including wallpapers and app icons. The sentence below will be used in Applying theme like “ iOS 10 theme for Camera Pro has been installed. Apply it now?”-->
+    <string name="apply_theme_text">%1$s untuk Camera Pro yang sudah terpasang. Terapkan sekarang?</string>
+    <string name="apply_btn">Terapkan</string>
+    <string name="welcome_apply_theme">Menerapkan tema</string>
+
+    <string name="app_store_name_system">Sistem</string>
+    <!--A container with groups of apps,to keep and organize apps in phone. -->
+    <string name="auto_default_name_prefix">Folder</string>
+
+
+    <!--The following words are operations in Screen manager.-->
+    <!-- Screen Manager is a feature that you can manage your phone’s screens by ranking screens, increasinga new screen or deleting a screen . -->
+    <string name="launcher_widget_screen_manager_title">Manajer Layar</string>
+    <!--You can drag one screen and move its position to rank screens. -->
+    <string name="screen_manager_hint_drag">Anda dapat dragpage untuk memberi peringkat</string>
+    <!--Shake the phone to remove blanksbetween icons and make icons orderliness. -->
+    <string name="screen_manager_hint_shake">Goyang untuk meluruskan ikon</string>
+
+
+    <!--The following words are operations inediting pictures. -->
+    <!--Crop, zoom in or zoom out a picture to suit your want.-->
+    <!--You can move the picture to choose the most beautiful part and scale to make the picture big or small. -->
+    <!--Edit the picture over again without storing the changes you have edited. -->
+    <string name="online_wallpaper_edit_reset_btn">Setel ulang</string>
+    <!--Exitthe picture editing without storing the changes you have edited. -->
+    <string name="online_wallpaper_cancel_edit_dialog_content">Buang perubahan untuk keluar?</string>
+
+    <!--All of the content. Better be short in one word or two. -->
+    <string name="online_wallpaper_tab_title_all">Semua</string>
+    <!--A tag shows the content is used right now. Better be short in one word or two. -->
+
+
+    <string name="launcher_widget_icon_size_title">Ukuran Ikon</string>
+    <string name="online_wallpaper_edit_cancel_btn">Batal</string>
+    <string name="customize_my_wallpapers_remove_btn">Hapus</string>
+    <string name="launcher_widget_system_settings_title">Pengaturan Sistem Telepon</string>
+    <string name="network_error">Jaringan galat</string>
+    <string name="launcher_widget_launcher_settings_title">Pengaturan Peluncur</string>
+    <string name="online_wallpaper_apply_btn">Atur sebagai gambar latar</string>
+
+    <string name="set_as_default">Atur Camera Pro sebagai beranda. </string>
+    <string name="notification_default_cleared_title">Beranda sudah dibersihkan</string>
+    <string name="set_as_default_boost_battery_body">Camera Pro memacu ponsel Anda dan menghemat baterai untuk masa pakai yang lebih lama! Atur Camera Pro sebagai beranda? </string>
+    <string name="set_as_default_boost_cool_body">Camera Pro mendinginkan ponsel Anda agar tidak terjadi panas berlebihan! Atur Camera Pro sebagai beranda?</string>
+    <string name="set_as_default_boost_mem_body">Camera Pro memacu ponsel Anda dan tidak perlu khawatir dengan kecepatannya! Atur Camera Pro sebagai beranda?</string>
+    <string name="set_as_default_info_2">Camera Pro membuat ponsel Anda menjadi personal dan berkelas! Atur Camera Pro sebagai beranda?</string>
+    <string name="set_as_default_info_3">Camera Pro membuat ponsel Anda menjadi personal dan berkelas! Atur Camera Pro sebagai halaman utama?</string>
+    <string name="notification_set_as_default_description_1">Pacu ponsel Anda dan jaga kecepatannya.</string>
+    <string name="notification_set_as_default_description_2">Personalkan dan beri sentuhan gaya pada ponsel Anda.</string>
+    <string name="notification_set_as_default_description_3">Buat ponsel Anda lebih efisien.</string>
+    <string name="notification_set_as_default_title">Atur sebagai Halaman Awal</string>
+    <string name="set_as_default_boost_battery_figure">%1$d mnt</string>
+    <string name="local_wallpaper_pick_error">Terjadi masalah saat memilih wallpaper</string>
+    <string name="local_wallpaper_pick_error_gif_not_supported">Gambar GIF tidak didukung</string>
+    <string name="nearby_title">Di Sekitar</string>
+    <string name="launcher_widget_nearby_title">Di Sekitar</string>
+    <string name="notification_set_as_default_btn">Atur</string>
+
+    <string name="update_toast_no_network">Periksa koneksi Anda</string>
+    <string name="update_toast_already_latest">Anda menggunakan versi terbaru</string>
+    <string name="update_toast_downloading">Unduhan Apk saat ini sedang berjalan</string>
+    <string name="update_dialog_title">Unduh Versi Terbaru</string>
+    <string name="download_capital">UNDUH</string>
+    <string name="search_settings">Pengaturan Pencarian</string>
+    <string name="search_settings_result_title">Hasil</string>
+    <string name="search_widget">Cari Widget</string>
+    <string name="search_show_suggestions">Perlihatkan Saran Pencarian</string>
+    <string name="search_show_history">Perlihatkan Riwayat Pencarian</string>
+    <string name="search_show_local_apps">Aplikasi</string>
+    <string name="search_show_contacts">Kontak</string>
+    <string name="search_trending_words">Kata-Kata Sedang Tren</string>
+    <string name="search_history">Riwayat Pencarian</string>
+    <string name="search_bar_remove_confirm_dialog_title">Hapus bilah pencarian ini?</string>
+    <string name="search_bar_remove_confirm_dialog_description">Anda masih dapat mengakses pencarian dengan:\n1.Mengaktifkannya dari Pengaturan Launcher-&gt;Pengaturan Pencarian\n2.Mengaktifkannya di Menu-&gt;Widget</string>
+    <string name="search_bar_widget">Bilah Pencarian</string>
+    <string name="search_contacts">Kontak</string>
+
+    <string name="wallpaper_network_error_reload">Muat ulang</string>
+    <string name="set_as_default_info_1">Camera Pro memacu ponsel Anda dan tidak perlu khawatir dengan kecepatannya! Atur Camera Pro sebagai beranda?</string>
+    <string name="set_as_default_boost_battery_title">Se ha ampliado la duración de la batería</string>
+    <string name="set_as_default_boost_cool_title">Mendingin</string>
+    <string name="set_as_default_boost_mem_title">Memori Yang Dilepaskan</string>
+    <string name="search_settings_category_title">Pengaturan</string>
+    <string name="search_more">Lainnya</string>
+    <string name="search_remove">Hapus</string>
+    <string name="search_bar_default_text">"Cari "</string>
+    <string name="launcher_menu_panel_title_effects">Efek</string>
+    <string name="launcher_menu_panel_title_widgets">Widget</string>
+    <string name="launcher_widget_menu_widgets_title">Widget</string>
+    <string name="search_apps">Aplikasi</string>
+    <string name="battery_already_optimal">Perangkat Anda sudah berjalan dengan optimal.</string>
+    <string name="battery_auto">Otomatis</string>
+    <string name="battery_auto_sync">Penyelarasan Otomatis</string>
+    <string name="battery_brightness">Kecerahan</string>
+    <string name="battery_careful">Hati-hati</string>
+    <string name="battery_careful_content">Baterai Anda terkuras lebih cepat dari biasanya.</string>
+    <string name="battery_charging_completed">PENGISIAN DAYA SELESAI</string>
+    <string name="battery_charging_completed_content">Harap lepas untuk melindungi baterai telepon Anda.</string>
+    <string name="battery_charging_content">3 tahap pengisian yang teratur akan melindungi baterai Anda dari kerusakan.</string>
+    <string name="battery_charging_left">PENGISIAN TERSISA</string>
+    <string name="battery_clean_finished_line_o">Selamat!</string>
+    <string name="battery_clean_finished_line_i">Anda telah memperpanjang masa baterai</string>
+    <string name="battery_cleaning">Membersihkan…</string>
+    <string name="battery_continue">Lanjutkan</string>
+    <string name="battery_current_content">Pengaturan Anda saat ini akan disimpan di sini.</string>
+    <string name="battery_excellent">Sangat baik</string>
+    <string name="battery_excellent_content">Baterai Anda dalam kondisi yang bagus. </string>
+    <string name="battery_haptic_feedback">Umpan balik Haptic</string>
+    <string name="battery_hide_system_apps">Sembunyikan Sistem Aplikasi</string>
+    <string name="battery_low">Baterai lemah</string>
+    <string name="battery_low_content">Anda dapat mengoptimalkan perpanjangan masa baterai telepon Anda.</string>
+    <string name="battery_max_saver">Saver Maks.</string>
+    <string name="battery_max_saver_content">Matikan WiFi, Bluetooth, getarkan dan atur waktu mati layar ke 15d.</string>
+    <string name="battery_mode">Mode</string>
+    <string name="battery_off">Mati</string>
+    <string name="battery_on">Nyala</string>
+    <string name="battery_optimize">OPTIMALKAN</string>
+    <string name="battery_power_remaining">SISA DAYA</string>
+    <string name="battery_previous">Sebelumnya</string>
+    <string name="battery_previous_content">Ubah kembali ke pengaturan terakhir Anda</string>
+    <string name="battery_rank">Peringkat</string>
+    <string name="battery_reapply">Daftar ulang</string>
+    <string name="battery_screen_timeout">Waktu Mati Layar</string>
+    <string name="battery_smart_saver">Saver Pintar</string>
+    <string name="battery_smart_saver_content">Matikan Bluetooh, getarkan dan atur waktu mati layar ke 30d.</string>
+    <string name="battery_speed">Kecepatan</string>
+    <string name="battery_stop">BERHENTI</string>
+    <string name="battery_trickle">Menetes</string>
+    <string name="battery_vibrate">Bergetar</string>
+    <string name="battery_view">LIHAT</string>
+    <string name="battery_wifi">Wifi</string>
+    <string name="customize_my_wallpapers_add_btn_text">Pilih dari Album</string>
+    <string name="downloading">Mengunduh…</string>
+    <string name="effect_bounce">Memantul</string>
+    <string name="effect_extrusion">Tekanan</string>
+    <string name="effect_shrink">Menyusut</string>
+    <string name="effect_wave">Gelombang</string>
+    <string name="monday">Senin</string>
+    <string name="tuesday">Selasa</string>
+    <string name="wednesday">Rabu</string>
+    <string name="thursday">Kamis</string>
+    <string name="friday">Jumat</string>
+    <string name="saturday">Sabtu</string>
+    <string name="sunday">Minggu</string>
+    <string name="notification_toolbar_search">Pencarian</string>
+    <string name="refresh">Menyegarkan</string>
+    <string name="resolver_wizard_choose_default">Pilih \”DEFAULT\”</string>
+    <string name="search_guide_title">COBA PENCARIAN SEPERTI…</string>
+    <string name="search_guide_internet">Internet</string>
+    <string name="search_guide_apps">Aplikasi Lokal</string>
+    <string name="search_guide_location">Lokasi</string>
+    <string name="search_select_engine">Pilih Mesin Pencari</string>
+    <string name="search_show_places">Peta</string>
+    <string name="wallpaper_edit_fixed">Tetap</string>
+    <string name="wallpaper_edit_scrollable">Dapat digulir</string>
+    <string name="hide_apps_guide_welcome_title"> Anda masukkan AplikasiPribadi</string>
+    <string name="hide_apps_guide_welcome_action">SEMBUNYIKAN APLIKASI</string>
+    <string name="hide_apps_guide_success_title">Selamat!</string>
+    <string name="hide_apps_guide_success_content_one">Anda menyembunyikan %1$s.</string>
+    <string name="hide_apps_guide_success_content">Anda menyembunyikan %1$s aplikasi pribadi.</string>
+    <string name="hide_apps_guide_recommend_hide_percent">%1$s%% pengguna menyembunyikan aplikasi ini</string>
+    <string name="hide_apps_guide_recommend_apps_size">%1$s aplikasi direkomendasikan</string>
+    <string name="hide_apps_guide_recommend_other_apps_size">%1$s aplikasi lain</string>
+    <string name="hide_apps_secret_folder">Aplikasi Pribadi</string>
+    <string name="hide_apps_add_apps_title">Pilih aplikasi mana yang ingin Anda hindari pada desktop</string>
+
+
+
+
+    <string name="folder_ad_title">Aplikasi yang diberi komentar ulang</string>
+    <string name="search_guide_contacts">Kontak</string>
+
+    <string name="launcher_widget_boost_plus_title">Percepat+</string>
+    <string name="boost_plus_accessibility_service_label">☆Percepat+☆</string>
+    <string name="advanced_boost_authorize_btn">Aktifkan </string>
+    <string name="boost_plus_action_button_text">Percepat (%1$s)</string>
+    <string name="boost_plus_cleaning_running_apps">Bersihkan Aplikasi Berjalan</string>
+    <string name="boost_plus_settings_auto_boost_description">Otomatiskan menit hibernasi setelah layar mati. Langkah ini akan meredupkan layar, menjalankan hibernasi dan lalu mematikan layar.</string>
+    <string name="boost_plus_settings_auto_boost_title">Hibernasi Otomatis</string>
+    <string name="boost_plus_dialog_accessibility">Dibutuhkan aksesibilitas bagi Camera Pro supaya memasuki Hibernasi otomatis dengan benar.</string>
+    <string name="boost_plus_dialog_device_admin">Dibutuhkan Device administrator bagi Camera Pro supaya memasuki Hibernasi otomatis dengan benar.\nPeringatan: Anda bisa gagal membatalkan pemasangan Camera Pro karena Device administrator. Nonaktifkan Device administrator dan lalu batalkan pemasangan Camera Pro.</string>
+    <string name="boost_plus_empty_view_text_line_2">Bagus!</string>
+    <string name="boost_plus_free_up">Dibebaskan</string>
+    <string name="boost_plus_exiting">Keluar</string>
+    <string name="boost_plus_running_time">Waktu berjalan: %1$s</string>
+    <string name="boost_plus_scanned_list_running_apps">Aplikasi Berjalan</string>
+    <string name="boost_plus_scanned_list_select_all">Pilih Semua</string>
+    <string name="boost_plus_selected_size_text">Terpilih: %1$s</string>
+    <string name="boost_plus_settings_lock_delay">Pastikan \'Automatically lock\' diatur dengan waktu tunda (&gt;= 5 detik)! Hibernasi otomatis membutuhkan sedikit waktu tunda sebelum layar terkunci</string>
+    <string name="boost_plus_settings_lock_instantly">Pastikan \'Power button instant locks\' TIDAK dicentang! Hibernasi otomatis membutuhkan sedikit waktu tunda sebelum layar terkunci</string>
+    <string name="boost_plus_stop_clean_content">Segera setelah dihentikan, Percepat+ tidak akan bisa membebaskan memori Anda. Anda yakin mau menghentikan?</string>
+    <string name="boost_plus_stop_clean_title">Berhenti membersihkan?</string>
+    <string name="boost_plus_stop_sure">YAKIN</string>
+    <string name="boost_plus_tip_battery_desc">Menggandakan usia baterai Anda.</string>
+    <string name="boost_plus_tip_battery_title">Cobalah Percepat+ untuk memperpanjang usia baterai!</string>
+    <string name="boost_plus_tip_memory_btn">Bersihkan</string>
+    <string name="boost_plus_tip_memory_desc">Gunakan pembersih yang lebih menyeluruh untuk menghemat lebih banyak memori!</string>
+    <string name="boost_plus_tip_memory_title">Cobalah Percepat+ untuk membersihkan ponsel Anda dengan lebih baik!</string>
+    <string name="boost_plus_tip_optimal_desc">Beberapa aplikasi hanya bisa ditutup oleh Percepat+.</string>
+    <string name="boost_plus_tip_optimal_title">Masih lambat? Cobalah Percepat+!</string>
+    <string name="boost_plus_warning_toast">Aplikasi ini bisa mendorong pesan untuk Anda. Aplikasi bisa tidak mendorong pesan jika dicentang.</string>
+    <string name="device_admin_explanation">Izinkan Camera Pro untuk menutup aplikasi penghabis baterai secara otomatis.</string>
+    <string name="folder_remove_confirm_body">Segera setelah folder dihapus, semua aplikasi dalam folder ini tidak akan muncul di desktop.</string>
+    <string name="folder_remove_confirm_title">Hapus Folder</string>
+    <string name="folder_unpack_confirm_body">Segera setelah folder dibongkar, pintasannya akan dipindahkan ke desktop.</string>
+    <string name="hide_apps_guide_welcome_content">Anda bisa menyembunyikan aplikasi pribadi di sini,\n lalu membukanya dengan dua jari menggeser ke atas.</string>
+    <string name="hide_apps_remove_password_title">Hapus pola buka kunci</string>
+    <string name="hide_apps_reset_password_title">Atur ulang pola buka kunci</string>
+    <string name="install_dialog_title">Temukan Versi baru</string>
+    <string name="launcher_app_index_desc">Aplikasi luar biasa yang bisa diatur sendiri</string>
+    <string name="launcher_app_index_title">Menjaga aplikasi Anda supaya teratur rapi dan membuat ponsel Anda lebih cepat.</string>
+    <string name="moment_good_afternoon">Selamat Siang/Sore!</string>
+    <string name="moment_good_evening">Selamat Malam!</string>
+    <string name="moment_good_morning">Selamat Pagi!</string>
+    <string name="moment_good_night">Selamat Beristirahat!</string>
+    <string name="moment_nearby_title">Orang Di Sekitar Menggunakan</string>
+    <string name="moment_news_title">Berita</string>
+    <string name="set_as_default_wizard_huawei_title">Pilih \"Camera Pro\"</string>
+    <string name="set_up">atur</string>
+    <string name="storm">Badai</string>
+    <string name="update_toast_storage_not_ready">Penyimpanan eksternal tidak tersedia</string>
+    <string name="weather_tip_dust">Lebih baik tinggal dalam ruangan.</string>
+    <string name="weather_tip_hazy">Perhatikan dan berkemudi dengan aman.</string>
+    <string name="weather_tip_sleet">Bawa payung dan jaga diri supaya tetap hangat.</string>
+    <string name="weather_tip_snow">Pakai pakaian yang lebih hangat.</string>
+    <string name="weather_tip_storm">Bawa payung bersama Anda.</string>
+    <string name="all_apps_more_horizontal">Horizontal</string>
+    <string name="all_apps_more_vertical">Vertikal</string>
+
+    <string name="folder_remove_confirm_positive">Hapus</string>
+    <string name="boost_plus_empty_view_text_line_1">Perangkat Anda sudah optimal!</string>
+    <string name="wind_chime_remove_btn">Hapus</string>
+    <string name="battery_bluetooth">Bluetooth</string>
+    <string name="boost_plus_memory_used">Memori Yang Digunakan</string>
+    <string name="folder_unpack_confirm_positive">Rilis</string>
+    <string name="boost_plus_tip_battery_btn">Bersihkan</string>
+    <string name="battery_title">Baterai</string>
+    <string name="weather_tip_thunderstorm">Lebih baik tinggal dalam ruangan.</string>
+    <string name="battery_mobile_data">Data Ponsel</string>
+
+    <string name="battery_current">Saat Ini</string>
+    <string name="boost_plus_settings_device_admin_title">Administrator peranti</string>
+    <string name="boost_plus_settings_device_admin_description">Jika Anda ingin menghapus instalasi Camera Pro, nonaktifkan administrator peranti terlebih dahulu.</string>
+    <string name="boost_plus_start_toast">Klik ganda Percepat untuk memulai Percepat+!</string>
+    <string name="launcher_shortcut_boost">1-Tap Percepat</string>
+    <string name="notification_battery_consuming_title">%1$s aplikasi menggunakan daya</string>
+    <string name="notification_battery_consuming_description">Optimalkan untuk memperpanjang daya tahan baterai.</string>
+    <string name="notification_boost_plus_title">%1$s aplikasi memperlambat ponsel</string>
+    <string name="notification_boost_plus_content">Pacu untuk meningkatkan kecepatan!</string>
+    <string name="battery_low_tip_title">Daya Lemah!</string>
+    <string name="battery_low_tip_desc">Cobalah penghemat baterai untuk membuat konsumsi daya tetap minimum.</string>
+    <string name="launcher_widget_moment_title">Momen Air</string>
+    <string name="wind_chime_remove_confirm_dialog_title">Hapus “Momen Air”?</string>
+    <string name="wind_chime_remove_confirm_dialog_description">Anda tetap bisa mendapatkan akses ke Momen Air dengan:&lt;br /&gt;Menyalakannya di &lt;b&gt;Menu&lt;/b&gt; -&gt; &lt;b&gt;Widget&lt;/b&gt;</string>
+    <string name="gesture_guide_content_down">Geser ke bawah untuk membuka cepat Momen Air </string>
+    <string name="gesture_guide_content_up">Geser ke atas untuk membuka cepat Pencarian</string>
+    <string name="gesture_guide_got_it">PAHAM </string>
+    <string name="hide_apps_guide_new_install">Aplikasi yang baru terinstal</string>
+
+    <string name="battery_low_tip_btn_ok">COBA SEKARANG JUGA!</string>
+    <string name="weather_city_search_error_prompt">Jaringan galat</string>
+    <string name="battery_low_tip_btn_cancel">Nanti</string>
+
+    <string name="moment_lucky_draw">Hadiah Keberuntungan</string>
+    <string name="moment_lucky_draw_tip">Tebak, apa yang bisa Anda dapatkan dari kotak ini! Dapatkan dan nikmati kejutan dari Beruntung!</string>
+    <string name="moment_lucky_start">DAPATKAN SEKARANG</string>
+    <string name="accessibility_authorize_try_again_title">Coba lagi?</string>
+    <string name="accessibility_authorize_try_again_description">Gagal membuka aksesibilitas untuk Percepat+. Coba lagi untuk mempercepat ponsel Anda.</string>
+    <string name="accessibility_authorize_try_again_positive">COBA SEKARANG</string>
+    <string name="news_load_more_re_try">Klik untuk mencoba</string>
+    <string name="boost_plus_authorize_title">Nyalakan aksesibilitas?</string>
+    <string name="boost_plus_authorize_desc">Percepat+ memerlukan aksesibiltas untuk menghentikan aplikasi-aplikasi ini. Ponsel Anda akan melesat 80\%% lebih cepat, dan memperlama masa pakai baterai 200\%%!\n93\%% pengguna sudah mengaktifkannya.</string>
+    <string name="boost_plus_accessibility_service_description">Ketuk tombol alih di atas, lalu ketuk OK.\nAktifkan untuk:\n1) Mempercepat ponsel 80\%%\n2) Mematikan aplikasi penguras baterai \nPercepat+ akan membuat ponsel Anda lebih cepat dan tidak mengambil data pribadi.</string>
+    <string name="boost_plus_security_setting_for_samsung_device">Siapkan di \'Layar Terkunci dan Keamanan\’!</string>
+    <string name="permission_guide_description">Cari ☆Percepat+☆ dan nyalakan.</string>
+    <string name="boost_plus_freeable">Bisa dikosongkan</string>
+
+    <string name="accessibility_authorize_try_again_negative">Nanti</string>
+    <string name="got_it">PAHAM </string>
+
+    <string name="boost_plus_clean_tip_prefix">Tips: </string>
+    <string-array name="boost_plus_clean_tips">
+        <item>Tindakan ini sementara akan memaksa menghentikan aplikasi yang bandel. Mohon sabar!</item>
+        <item>Gunakan Boost+ sebelum Anda tidur agar mengurangi penggunaan daya baterai.</item>
+        <item>Game akan bekerja lebih baik setelah menggunakan Boost+.</item>
+        <item>Ponsel menjadi terlalu panas? Minta bantuan Boost+!</item>
+        <item>Sering gunakan Boost+ untuk menjaga performa ponsel tetap prima sepanjang waktu.</item>
+    </string-array>
+    <string name="boost_plus_optimal">OPTIMAL</string>
+    <string name="five_star_hint_text">Bagaimana pengalaman Anda dengan aplikasi kami?</string>
+    <string name="five_star_five_text">Sangat suka</string>
+    <string name="five_star_four_text">Suka</string>
+    <string name="five_star_three_text">OKE</string>
+    <string name="five_star_two_text">Tidak suka</string>
+    <string name="five_star_one_text">Benci</string>
+    <string name="five_star_positive_text">Kirim</string>
+    <string name="launcher_widget_market_title">App Picks</string>
+    <string name="locker_2g">2G</string>
+    <string name="locker_3g">3G</string>
+    <string name="locker_4g">4G</string>
+    <string name="locker_disable_confirm">Yakin untuk matikan?</string>
+    <string name="locker_disable_confirm_detail">Setelah dinonaktifkan, fitur-fitur di pengunci layar akan dinonaktifkan, yakin ingin melanjutkan?</string>
+    <string name="locker_diabled_success">Pengunci sudah dimatikan</string>
+    <string name="locker_menu_disable">Nonaktifkan pengunci</string>
+    <string name="slide_to_unlock">Geser-buka</string>
+    <string name="locker_settings">Pengaturan pengunci</string>
+    <string name="locker_settings_title">Pengunci layar</string>
+    <string name="locker_slide_wallpaper_title">Pengunci Wallpaper</string>
+    <string name="locker_unkown">Unk</string>
+    <string name="locker_wallpaper_network_error">Kesalahan jaringan, silakan coba lagi.</string>
+    <string name="moment_ad_title">AD</string>
+    <string name="moment_set_launcher">Atur Camera Pro sebagai peluncur default untuk meningkatkan ponsel Anda!</string>
+    <string name="moment_set_locker">Nyalakan Perlindungan Baterai untuk melindungi perangkat dari pengisian daya yang berlebih!</string>
+    <string name="moment_open_locker">Baterai Anda dalam perlindungan!</string>
+    <string name="result_page_card_battery_protection_title">Battery Protection</string>
+    <string name="result_page_card_battery_protection_description">Tingkatkan pengisian daya baterai sebanyak 50\%% (mungkin mengandung iklan)</string>
+    <string name="result_page_card_battery_protection_toast">Perlindungan Baterai Diaktifkan.</string>
+    <string name="result_page_card_battery_saver_title">Penyimpan Baterai</string>
+    <string name="result_page_card_battery_saver_description_low_battery">%s daya yang tersisa. Optimalkan untuk memperpanjang umur baterai.</string>
+    <string name="result_page_card_battery_saver_description_normal">Daya baterai terkuras parah. Optimalkan untuk memperpanjang umur baterai.</string>
+    <string name="result_page_card_boost_plus_description">Aplikasi Latar Belakang akan menyebabkan penggunaan daya yang luar biasa. Coba gunakan boost yang canggih untuk membersihkan aplikasi!</string>
+    <string name="result_page_card_boost_plus_promote_title">Mengapa menggunakan Boost+?</string>
+    <string name="result_page_card_boost_plus_promote_description">Kebanyakan aplikasi tidak dapat\ diberhentikan dengan cara boost biasa dan selalu membuat lambat ponsel Anda. Untungnya, Boost+ dapat memaksa menghentikan aplikasi. \nBoost+ lebih efektif 90\%% daripada membersihkan perangkat lunak.</string>
+    <string name="search_show_trending_words">Tampilkan Berita yang Sedang Tren</string>
+    <string name="search_trending_news">Berita yang Sedang Tren</string>
+    <string name="search_trending_news_bottom">Kisah lainnya</string>
+    <string name="search_trending_news_latest">Perbarui agar mendapatkan berita terbaru</string>
+    <string name="search_news_new_tag">BARU</string>
+    <string name="settings_badge_recommended_apps_hint">Konfigurasi mungkin memerlukan izin</string>
+    <string name="settings_badge_common_apps">Aplikasi Umum</string>
+    <string name="settings_badge_common_apps_hint">Konfigurasi mungkin memerlukan akses pemberitahuan</string>
+
+    <string name="result_page_card_boost_plus_btn">Percepat</string>
+    <string name="moment_locker_contains_ads">(Mengandung iklan)</string>
+    <string name="locker_settings_subtitle">(Mengandung iklan)</string>
+    <string name="result_page_card_battery_protection_btn">Aktifkan </string>
+    <string name="charging_screen_menu_item">MATIKAN</string>
+    <string name="result_page_card_boost_plus_title">Percepat+</string>
+
+    <string name="moment_try_it_now">COBA SEKARANG JUGA!</string>
+
+    <string name="news_network_error">Jaringan galat</string>
+</resources>

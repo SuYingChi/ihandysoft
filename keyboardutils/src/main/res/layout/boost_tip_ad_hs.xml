@@ -1,0 +1,127 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <!-- ad Image holder -->
+    <FrameLayout
+        android:id="@+id/boost_ad_image_holder"
+        android:layout_width="match_parent"
+        android:layout_height="163dp"
+        android:layout_alignParentTop="true"
+        android:background="@color/quantum_panel_bg_color">
+
+        <com.acb.adadapter.ContainerView.AcbNativeAdPrimaryView
+            android:id="@+id/boost_ad_image_container"
+            android:layout_width="match_parent"
+            android:layout_height="163dp"
+            android:layout_marginEnd="-4dp"
+            android:layout_marginLeft="-4dp"
+            android:layout_marginRight="-4dp"
+            android:layout_marginStart="-4dp"
+            android:scaleType="centerCrop" />
+
+        <FrameLayout
+            android:id="@+id/boost_ad_choice"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+    </FrameLayout>
+
+    <!-- ad info holder -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="101dp"
+        android:layout_below="@+id/boost_ad_image_holder"
+        android:background="@drawable/dialog_boost_with_ad_bottom_bg"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:gravity="center_vertical"
+            android:orientation="horizontal">
+            <!-- ad icon Image -->
+            <com.acb.adadapter.ContainerView.AcbNativeAdIconView
+                android:id="@+id/boost_ad_icon"
+                android:layout_width="31dp"
+                android:layout_height="31dp"
+                android:layout_marginLeft="10dp"
+                android:layout_marginStart="10dp"
+                android:background="@android:color/transparent" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:layout_marginLeft="13dp"
+                android:layout_marginStart="13dp"
+                android:gravity="center_vertical"
+                android:orientation="vertical">
+                <!-- ad title Text-->
+                <com.ihs.feature.ui.AdsTitleTextView
+                    android:id="@+id/boost_ad_title"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="10dp"
+                    android:layout_marginRight="10dp"
+                    android:ellipsize="end"
+                    android:gravity="left"
+                    android:maxLines="1"
+                    android:textColor="#de000000"
+                    android:textSize="14sp"
+                    app:typeface="@string/proxima_nova_semibold"
+                    tools:text="temp text for tttttttttttttttttttt" />
+
+                <!-- ad description Text-->
+                <com.ihs.feature.ui.AdsTitleTextView
+                    android:id="@+id/boost_ad_description"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="10dp"
+                    android:layout_marginRight="10dp"
+                    android:ellipsize="end"
+                    android:maxLines="1"
+                    android:gravity="left"
+                    android:textColor="#8a000000"
+                    android:textSize="11sp"
+                    app:typeface="@string/proxima_nova_semibold"
+                    tools:text="temp text for tttttttttttttttttttt" />
+            </LinearLayout>
+
+        </LinearLayout>
+
+        <!-- ad download button -->
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:clipChildren="true"
+            android:layout_marginEnd="10dp"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            android:layout_marginStart="10dp">
+
+            <com.ihs.feature.common.TypefacedTextView
+                android:id="@+id/boost_ad_action"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@drawable/boost_tip_ad_button_selector"
+                android:gravity="center"
+                android:textColor="@android:color/white"
+                android:textSize="13sp"
+                app:typeface="@string/proxima_nova_semibold"
+                tools:text="DOWNLOAD" />
+
+            <ImageView
+                android:id="@+id/boost_ad_action_flash"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:visibility="invisible"
+                android:background="@drawable/boost_ad_action_button_flash" />
+        </FrameLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="11dp" />
+    </LinearLayout>
+</RelativeLayout>
