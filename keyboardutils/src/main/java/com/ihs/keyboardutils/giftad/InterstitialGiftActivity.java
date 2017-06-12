@@ -380,8 +380,6 @@ public class InterstitialGiftActivity extends Activity {
                         if (mAd != null) {
                             setInterstitialAdViewVisibility(TYPE_DISPLAY_AD);
                             doInterstitialAdDisplayAnimation(TYPE_DISPLAY_AD, true);
-                            AcbNativeAdLoader loader = new AcbNativeAdLoader(HSApplication.getContext(), placementName);
-                            loader.load(1, null);
                         } else {
                             setInterstitialAdViewVisibility(TYPE_REFRESH_AD);
                             doInterstitialAdDisplayAnimation(TYPE_REFRESH_AD, true);
