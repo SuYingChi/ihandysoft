@@ -44,7 +44,7 @@ public class LockerChargingScreenUtils {
     }
 
     public static void onScreenOff() {
-        if (HSChargingManager.getInstance().isCharging() && ChargingPrefsUtil.getInstance().getChargingEnableStates() == ChargingPrefsUtil.CHARGING_DEFAULT_ACTIVE) {
+        if (HSChargingManager.getInstance().isCharging() && ChargingPrefsUtil.getChargingEnableStates() == ChargingPrefsUtil.CHARGING_DEFAULT_ACTIVE) {
             finishLockerActivity();
         } else if (LockerSettings.isLockerEnabled() && !shouldBlockLockerForNewUser()) {
             startLockerActivity();

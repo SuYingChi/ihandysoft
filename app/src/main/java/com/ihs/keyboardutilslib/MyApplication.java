@@ -1,6 +1,9 @@
 package com.ihs.keyboardutilslib;
 
+import android.content.Context;
 import android.content.Intent;
+import android.support.multidex.MultiDex;
+import android.text.TextUtils;
 
 import com.artw.lockscreen.ScreenLockerManager;
 import com.ihs.app.alerts.HSAlertMgr;
@@ -27,10 +30,28 @@ import java.util.ArrayList;
  */
 
 public class MyApplication extends HSApplication {
+    public static final String REMOTE_PROCESS_CLEAN = "clean";
 
     @Override
     public void onCreate() {
         super.onCreate();
+
+
+        String packageName = getPackageName();
+        String processName = getProcessName();
+        if (TextUtils.equals(processName, packageName)) {
+            onMainProcessApplicationCreate();
+        } else {
+            String processSuffix = processName.replace(packageName + ":", "");
+            onRemoteProcessApplicationCreate(processSuffix);
+        }
+
+    }
+
+    private void onRemoteProcessApplicationCreate(String processSuffix) {
+    }
+
+    private void onMainProcessApplicationCreate() {
         if (LeakCanary.isInAnalyzerProcess(this)) {
             // This process is dedicated to LeakCanary for heap analysis.
             // You should not init your app in this process.
@@ -76,6 +97,7 @@ public class MyApplication extends HSApplication {
         initImageLoader();
     }
 
+
     private INotificationObserver sessionEventObserver = new INotificationObserver() {
 
         @Override
@@ -107,5 +129,11 @@ public class MyApplication extends HSApplication {
         config.tasksProcessingOrder(QueueProcessingType.LIFO);
 
         ImageLoader.getInstance().init(config.build());
+    }
+
+    @Override
+    protected void attachBaseContext(Context base) {
+        MultiDex.install(base);
+        super.attachBaseContext(base);
     }
 }

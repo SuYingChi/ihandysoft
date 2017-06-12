@@ -99,7 +99,9 @@ public class ChargeNotifyManager {
     private BroadcastReceiver receiver = new BroadcastReceiver() {
         @Override
         public void onReceive(Context context, Intent intent) {
-            if (!HSChargingScreenManager.getInstance().isChargingModuleOpened()) {
+            if (!HSChargingScreenManager.getInstance().isChargingModuleOpened() ||
+                    ChargingPrefsUtil.getChargingEnableStates() != ChargingPrefsUtil.CHARGING_DEFAULT_ACTIVE
+                    ) {
                 return;
             }
 

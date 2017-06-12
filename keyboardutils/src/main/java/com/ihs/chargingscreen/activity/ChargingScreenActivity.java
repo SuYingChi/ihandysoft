@@ -426,23 +426,21 @@ public class ChargingScreenActivity extends Activity {
             acbExpressAdView.destroy();
         }
         acbExpressAdView = null;
-
-        super.onDestroy();
-        ChargingPrefsUtil.getInstance().setChargingForFirstSession();
-
-        HSChargingManager.getInstance().removeChargingListener(chargingListener);
-
-        cancelAllAnimators();
-
         if (telephonyManager != null) {
             telephonyManager.listen(phoneStateListener, PhoneStateListener.LISTEN_NONE);
+            telephonyManager = null;
         }
-
+        HSChargingManager.getInstance().removeChargingListener(chargingListener);
+        cancelAllAnimators();
         handler.removeCallbacksAndMessages(null);
-
         if (null != closeDialog) {
             closeDialog.dismiss();
         }
+        super.onDestroy();
+        ChargingPrefsUtil.getInstance().setChargingForFirstSession();
+
+
+
 
     }
 
