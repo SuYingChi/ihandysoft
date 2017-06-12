@@ -86,19 +86,19 @@
         </activity>
 
 
-        <receiver android:name=".common.NetworkChangeReceiver">
+        <receiver android:name="com.artw.lockscreen.common.NetworkChangeReceiver">
             <intent-filter>
                 <action android:name="android.net.conn.CONNECTIVITY_CHANGE" />
             </intent-filter>
         </receiver>
 
         <activity
-            android:name=".LockerSettingsActivity"
+            android:name="com.artw.lockscreen.LockerSettingsActivity"
             android:screenOrientation="portrait"
             android:theme="@style/ThemeAppBarActivity.White" />
 
         <activity
-            android:name=".LockerActivity"
+            android:name="com.artw.lockscreen.LockerActivity"
             android:configChanges="keyboardHidden|orientation|screenSize"
             android:excludeFromRecents="true"
             android:exported="false"
@@ -108,7 +108,7 @@
             android:theme="@style/ChargingScreenTransparentTheme" />
 
         <activity
-            android:name=".DismissKeyguradActivity"
+            android:name="com.artw.lockscreen.DismissKeyguradActivity"
             android:configChanges="keyboard|keyboardHidden|orientation"
             android:excludeFromRecents="true"
             android:launchMode="singleTop"

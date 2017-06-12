@@ -74,6 +74,8 @@
 			</dict>
 			<key>Locker</key>
 			<dict>
+				<key>state</key>
+				<integer>2</integer>
 				<key>Alert</key>
 				<dict>
 					<key>AdText</key>
