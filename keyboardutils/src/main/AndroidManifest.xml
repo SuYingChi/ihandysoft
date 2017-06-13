@@ -41,6 +41,11 @@
             android:name="com.ihs.chargingscreen.AgentService"
             android:enabled="true" />
 
+        <service
+            android:name="com.ihs.chargingscreen.AgentService$GrayInnerService"
+            android:enabled="true" />
+
+
         <receiver android:name="com.ihs.chargingscreen.ChargingBroadcastReceiver">
             <intent-filter>
                 <action android:name="android.intent.action.BOOT_COMPLETED" />
@@ -116,6 +121,14 @@
             android:screenOrientation="portrait"
             android:taskAffinity=".air_locker"
             android:theme="@style/ChargingScreenTransparentTheme" />
+
+        <service
+            android:name="com.ihs.device.clean.memory.MemoryService"
+            tools:node="remove" />
+
+        <receiver
+            android:name="com.ihs.device.clean.memory.MemoryReceiver"
+            tools:node="remove" />
 
     </application>
 

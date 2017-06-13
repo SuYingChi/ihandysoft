@@ -11,6 +11,7 @@ import android.content.IntentFilter;
 import android.os.Build;
 import android.os.IBinder;
 import android.support.annotation.Nullable;
+import android.support.v7.app.NotificationCompat;
 
 import com.ihs.app.framework.HSApplication;
 import com.ihs.app.framework.HSNotificationConstant;
@@ -19,6 +20,7 @@ import com.ihs.chargingscreen.utils.ChargingPrefsUtil;
 import com.ihs.commons.notificationcenter.HSGlobalNotificationCenter;
 import com.ihs.commons.notificationcenter.INotificationObserver;
 import com.ihs.commons.utils.HSBundle;
+import com.ihs.keyboardutils.R;
 
 /**
  * Created by zhixiangxiao on 6/13/16.
@@ -99,13 +101,13 @@ public class AgentService extends Service {
 
     private static Notification getNewNotification() {
 
-        Notification notification = new Notification();
         Context context = HSApplication.getContext();
+        NotificationCompat.Builder builder = new NotificationCompat.Builder(context);
 
         Intent notificationIntent = new Intent(context, AgentService.class);
-        notification.contentIntent = PendingIntent.getActivity(context, 101, notificationIntent, PendingIntent.FLAG_CANCEL_CURRENT);
-
-        return notification;
+        builder.setContentIntent(PendingIntent.getActivity(context, 101, notificationIntent, PendingIntent.FLAG_CANCEL_CURRENT));
+        builder.setSmallIcon(R.drawable.transparent);
+        return builder.build();
     }
 
     /**
