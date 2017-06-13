@@ -30,7 +30,7 @@ import com.ihs.app.framework.HSApplication;
 import com.ihs.commons.utils.HSError;
 import com.ihs.commons.utils.HSLog;
 import com.ihs.keyboardutils.R;
-import com.ihs.keyboardutils.iap.IAPMgr;
+import com.ihs.keyboardutils.iap.RemoveAdsManager;
 
 import java.util.List;
 
@@ -340,7 +340,7 @@ public class NativeAdView extends FrameLayout {
     }
 
     private void refresh() {
-        if (!IAPMgr.getInstance().needShowAds()) {
+        if (!RemoveAdsManager.getInstance().isRemoveAdsPurchased()) {
             return;
         }
 
@@ -356,7 +356,7 @@ public class NativeAdView extends FrameLayout {
 
             @Override
             public void onAdReceived(AcbNativeAdLoader acbNativeAdLoader, List<AcbNativeAd> list) {
-                if (IAPMgr.getInstance().needShowAds()) {
+                if (RemoveAdsManager.getInstance().isRemoveAdsPurchased()) {
                     return;
                 }
 

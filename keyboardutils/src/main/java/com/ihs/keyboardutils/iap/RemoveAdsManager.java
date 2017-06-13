@@ -1,7 +1,5 @@
 package com.ihs.keyboardutils.iap;
 
-import android.text.TextUtils;
-
 import com.ihs.commons.config.HSConfig;
 import com.ihs.commons.notificationcenter.HSGlobalNotificationCenter;
 import com.ihs.commons.utils.HSLog;
@@ -9,49 +7,51 @@ import com.ihs.iap.HSIAPManager;
 
 import org.json.JSONObject;
 
-import java.util.Collections;
-import java.util.List;
-
 /**
  * Created by liuzhongtao on 17/6/6.
  *
  */
 
-public class IAPMgr {
+public class RemoveAdsManager {
     public static final String NOTIFICATION_REMOVEADS_PURCHASED = "NOTIFICATION_REMOVEADS_PURCHASED";
 
-    private static final String TAG = "Cam_IAP_Tag";
+    private static final String TAG = "RemoveAdsManager";
 
-    private static volatile IAPMgr instance;
+    private static volatile RemoveAdsManager instance;
 
     private boolean isPurchasingRemoveAds = false;
+    private boolean needsServerVerification = false;
 
-    public static IAPMgr getInstance() {
+    public static RemoveAdsManager getInstance() {
 		if(instance == null) {
-			synchronized(IAPMgr.class) {
+			synchronized(RemoveAdsManager.class) {
 				if (instance == null) {
-					instance = new IAPMgr();
+					instance = new RemoveAdsManager();
 				}
 			}
 		}
 		return instance;
     }
 
-	public void init() {
-        List<String>  inAppNonConsumableSkuList = null;
-        String removeAdsId = getRemoveAdsIapId();
-        if (!TextUtils.isEmpty(removeAdsId)) {
-            inAppNonConsumableSkuList = Collections.singletonList(removeAdsId);
-        }
-        HSIAPManager.getInstance().init(null, inAppNonConsumableSkuList);
+    /**
+     * 设置去广告购买是否需要服务器验证， 默认不需要
+     * @param needsServerVerification bool
+     */
+    public void setNeedsServerVerification(boolean needsServerVerification) {
+        this.needsServerVerification = needsServerVerification;
     }
 
-    public boolean needShowAds() {
+    public boolean isRemoveAdsPurchased() {
+        if (HSLog.isDebugging()) {
+            if (debugAlreadyPurchase) {
+                return false;
+            }
+        }
         return !HSIAPManager.getInstance().hasOwnedSku(getRemoveAdsIapId());
     }
 
     public void purchaseRemoveAds() {
-        if (!needShowAds()) {
+        if (!isRemoveAdsPurchased()) {
             return;
         }
 
@@ -65,30 +65,51 @@ public class IAPMgr {
             @Override
             public void onPurchaseSucceeded(String s) {
                 HSLog.d("onPurchaseSucceeded: " + s);
+
+                if (!needsServerVerification) {
+                    HSGlobalNotificationCenter.sendNotification(NOTIFICATION_REMOVEADS_PURCHASED);
+                    isPurchasingRemoveAds = false;
+                }
             }
 
             @Override
             public void onPurchaseFailed(String s, int i, String s1) {
                 HSLog.d(TAG, "onPurchaseFailed: " + s + " Error: " + s1 + " (" + i + ")");
                 isPurchasingRemoveAds = false;
+                debugPurchaseSuccess();
             }
 
             @Override
             public void onVerifySucceeded(String s, JSONObject jsonObject) {
                 HSLog.d(TAG, "onVerifySucceeded: " + s + "json: " + jsonObject.toString());
-                HSGlobalNotificationCenter.sendNotification(NOTIFICATION_REMOVEADS_PURCHASED);
-                isPurchasingRemoveAds = false;
+
+                if (needsServerVerification) {
+                    HSGlobalNotificationCenter.sendNotification(NOTIFICATION_REMOVEADS_PURCHASED);
+                    isPurchasingRemoveAds = false;
+                }
             }
 
             @Override
             public void onVerifyFailed(String s, int i, String s1) {
                 HSLog.d(TAG, "onVerifyFailed: " + s + " Error: " + s1 + " (" + i + ")");
-                isPurchasingRemoveAds = false;
+
+                if (needsServerVerification) {
+                    isPurchasingRemoveAds = false;
+                }
             }
         });
     }
 
     private String getRemoveAdsIapId() {
          return HSConfig.optString("", "Application", "RemoveAds", "iapID");
+    }
+
+    private boolean debugAlreadyPurchase = false;
+    public void debugPurchaseSuccess() {
+        if (HSLog.isDebugging()) {
+            HSLog.d(TAG, "debugPurchaseSuccess");
+            debugAlreadyPurchase = true;
+            HSGlobalNotificationCenter.sendNotification(NOTIFICATION_REMOVEADS_PURCHASED);
+        }
     }
 }
