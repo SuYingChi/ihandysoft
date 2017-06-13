@@ -42,12 +42,7 @@ public class RemoveAdsManager {
     }
 
     public boolean isRemoveAdsPurchased() {
-        if (HSLog.isDebugging()) {
-            if (debugAlreadyPurchase) {
-                return false;
-            }
-        }
-        return !HSIAPManager.getInstance().hasOwnedSku(getRemoveAdsIapId());
+        return HSIAPManager.getInstance().hasOwnedSku(getRemoveAdsIapId());
     }
 
     public void purchaseRemoveAds() {
@@ -76,7 +71,6 @@ public class RemoveAdsManager {
             public void onPurchaseFailed(String s, int i, String s1) {
                 HSLog.d(TAG, "onPurchaseFailed: " + s + " Error: " + s1 + " (" + i + ")");
                 isPurchasingRemoveAds = false;
-                debugPurchaseSuccess();
             }
 
             @Override
@@ -100,16 +94,7 @@ public class RemoveAdsManager {
         });
     }
 
-    private String getRemoveAdsIapId() {
+    public String getRemoveAdsIapId() {
          return HSConfig.optString("", "Application", "RemoveAds", "iapID");
-    }
-
-    private boolean debugAlreadyPurchase = false;
-    public void debugPurchaseSuccess() {
-        if (HSLog.isDebugging()) {
-            HSLog.d(TAG, "debugPurchaseSuccess");
-            debugAlreadyPurchase = true;
-            HSGlobalNotificationCenter.sendNotification(NOTIFICATION_REMOVEADS_PURCHASED);
-        }
     }
 }
