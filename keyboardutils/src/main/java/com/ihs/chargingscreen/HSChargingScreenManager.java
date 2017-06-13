@@ -238,7 +238,7 @@ public class HSChargingScreenManager {
 
 
     public static void registerChargingService() {
-        HSApplication.getContext().startService(new Intent(HSApplication.getContext(), KeepAliveService.class));
+        HSApplication.getContext().startService(new Intent(HSApplication.getContext(), AgentService.class));
         int chargingEnabled = ChargingPrefsUtil.getInstance().getChargingEnableStates();
         switch (chargingEnabled) {
             case CHARGING_MUTED:

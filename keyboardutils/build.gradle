@@ -22,10 +22,14 @@ android {
         abortOnError false
     }
 }
+final LIB_DEVICE_VERSION = '.gm:4.1.+'
+
 dependencies {
     compile "com.ihandy.nativeads:libNativeAds.gm:4.1.7.gm"
     compile ("com.ihandy.interstitialads:InterstitialAds.gm:4.1.4.gm")
     compile "com.ihandy.iap:iap.gm:4.0.+"
+
+    compile "com.ihandy.device:device-clean-memory$LIB_DEVICE_VERSION"
 
     compile "com.ihandy.appframework:libAppframework.${rootProject.ext.frameworkVersion}"
     compile 'com.airbnb.android:lottie:1.5.3'
@@ -33,6 +37,7 @@ dependencies {
     compile "com.android.support:recyclerview-v7:${rootProject.ext.supportVersion}"
     compile "com.android.support:cardview-v7:${rootProject.ext.supportVersion}"
     compile "com.android.support:percent:${rootProject.ext.supportVersion}"
+    compile "com.android.support:design:${rootProject.ext.supportVersion}"
 
     compile "com.google.android.gms:play-services-analytics:${rootProject.ext.gmsVersion}"
     compile "com.google.android.gms:play-services-gcm:${rootProject.ext.gmsVersion}"
@@ -43,6 +48,17 @@ dependencies {
     compile "com.facebook.android:audience-network-sdk:${rootProject.ext.facebookSdkVersion}"
     compile "com.facebook.android:facebook-android-sdk:${rootProject.ext.facebookSdkVersion}"
     compile(name: 'ihs/libCharging/libcharging', ext: 'aar')
+    compile 'com.nostra13.universalimageloader:universal-image-loader:1.9.5'
 
     compile 'pl.droidsonroids.gif:android-gif-drawable:1.2.2'
+
+    //flurry
+    compile ('com.flurry.android:ads:6.2.0') {
+        transitive = false //由于AppFramework中也包含Flurry, 所以需要在这里去除引用传递
+    }
+
+    compile files('../libs/ihs/libFlashlight/libFlashlight.jar')
+    compile("com.android.support:support-v4:${rootProject.ext.supportVersion}")
+    compile("com.android.support:gridlayout-v7:${rootProject.ext.supportVersion}")
+    compile("com.android.support:support-vector-drawable:${rootProject.ext.supportVersion}")
 }

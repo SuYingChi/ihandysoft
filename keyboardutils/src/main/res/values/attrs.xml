@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-
+    <attr name="lengthWidthRatio" format="float" />
     <declare-styleable name="GifImageView">
         <attr name="corner_radius" format="dimension" />
     </declare-styleable>
@@ -11,7 +11,7 @@
 
     <!--All apps interstitial ad view.-->
     <declare-styleable name="AllAppsScaleLinearLayout">
-        <attr name="lengthWidthRatio" format="float"/>
+        <attr name="lengthWidthRatio"/>
     </declare-styleable>
     <declare-styleable name="FlashFrameLayout">
         <attr name="flash_auto_start" format="boolean" />
@@ -41,5 +41,78 @@
         </attr>
         <attr name="flash_tilt" format="float" />
     </declare-styleable>
+
+    <declare-styleable name="InsettableFrameLayout_Layout">
+        <attr name="layout_ignoreInsets" format="boolean" />
+    </declare-styleable>
+
+
+    <declare-styleable name="HorizontalBannerImageView">
+        <attr name="aspectRatioOverride" format="float" />
+        <attr name="scaleType" format="integer" />
+    </declare-styleable>
+
+    <declare-styleable name="RoundCornerImageView">
+        <attr name="round_left_top_corner_radius" format="dimension" />
+        <attr name="round_right_top_corner_radius" format="dimension" />
+        <attr name="round_left_bottom_corner_radius" format="dimension" />
+        <attr name="round_right_bottom_corner_radius" format="dimension" />
+        <attr name="round_border_width" format="dimension" />
+        <attr name="round_border_color" format="color" />
+        <attr name="round_oval" format="boolean" />
+        <attr name="android:scaleType" />
+    </declare-styleable>
+
+    <declare-styleable name="TypefacedTextView">
+        <attr name="typeface" format="reference" />
+        <attr name="font_style" format="enum">
+            <enum name="normal" value="0" />
+            <enum name="bold" value="1" />
+            <enum name="italic" value="2" />
+            <enum name="bold_italic" value="3" />
+        </attr>
+
+        <attr name="drawable_width" format="dimension" />
+        <attr name="drawable_height" format="dimension" />
+    </declare-styleable>
+
+
+    <declare-styleable name="SlidingDrawer">
+        <!-- Identifier for the child that represents the drawer's handle. -->
+        <attr name="handle" format="reference" />
+        <!-- Identifier for the child that represents the drawer's content. -->
+        <attr name="content" format="reference" />
+        <!-- Orientation of the SlidingDrawer. -->
+        <attr name="sdorientation" format="enum">
+            <enum name="topDown" value="1" />
+            <enum name="bottomUp" value="2" />
+            <enum name="leftToRight" value="4" />
+            <enum name="rightToLeft" value="8" />
+        </attr>
+        <!--
+             Indicates whether the drawer can be opened/closed by a single tap
+             on the handle.  (If false, the user must drag or fling, or click
+             using the trackball, to open/close the drawer.)  Default is true.
+        -->
+        <attr name="allowSingleTap" format="boolean" />
+        <!--
+             Indicates whether the drawer should be opened/closed with an animation
+             when the user clicks the handle. Default is true.
+        -->
+        <attr name="animateOnClick" format="boolean" />
+        <attr name="tensionTween" format="reference|color" />
+    </declare-styleable>
+
+    <declare-styleable name="ShimmerView">
+        <attr name="reflectionColor" format="color"/>
+    </declare-styleable>
+    <!--screenLocker-->
+    <declare-styleable name="CustomFrameLayout">
+        <attr name="lengthWidthRatio"/>
+    </declare-styleable>
+
+    <style name="ToolbarTextAppearance" parent="TextAppearance.AppCompat.Widget.ActionBar.Title" />
+    <!---->
+
 
 </resources>

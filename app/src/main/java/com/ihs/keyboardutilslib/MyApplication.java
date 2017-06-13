@@ -1,7 +1,11 @@
 package com.ihs.keyboardutilslib;
 
+import android.content.Context;
 import android.content.Intent;
+import android.support.multidex.MultiDex;
+import android.text.TextUtils;
 
+import com.artw.lockscreen.ScreenLockerManager;
 import com.ihs.app.alerts.HSAlertMgr;
 import com.ihs.app.framework.HSApplication;
 import com.ihs.app.framework.HSNotificationConstant;
@@ -11,7 +15,11 @@ import com.ihs.commons.notificationcenter.HSGlobalNotificationCenter;
 import com.ihs.commons.notificationcenter.INotificationObserver;
 import com.ihs.commons.utils.HSBundle;
 import com.ihs.commons.utils.HSLog;
+import com.ihs.feature.boost.BoostActivity;
 import com.ihs.keyboardutils.notification.KCNotificationManager;
+import com.nostra13.universalimageloader.core.ImageLoader;
+import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
+import com.nostra13.universalimageloader.core.assist.QueueProcessingType;
 import com.squareup.leakcanary.LeakCanary;
 
 import java.util.ArrayList;
@@ -22,10 +30,28 @@ import java.util.ArrayList;
  */
 
 public class MyApplication extends HSApplication {
+    public static final String REMOTE_PROCESS_CLEAN = "clean";
 
     @Override
     public void onCreate() {
         super.onCreate();
+
+
+        String packageName = getPackageName();
+        String processName = getProcessName();
+        if (TextUtils.equals(processName, packageName)) {
+            onMainProcessApplicationCreate();
+        } else {
+            String processSuffix = processName.replace(packageName + ":", "");
+            onRemoteProcessApplicationCreate(processSuffix);
+        }
+
+    }
+
+    private void onRemoteProcessApplicationCreate(String processSuffix) {
+    }
+
+    private void onMainProcessApplicationCreate() {
         if (LeakCanary.isInAnalyzerProcess(this)) {
             // This process is dedicated to LeakCanary for heap analysis.
             // You should not init your app in this process.
@@ -66,7 +92,11 @@ public class MyApplication extends HSApplication {
             resultIntent.putExtra("reqCode", reqCode);
             KCNotificationManager.getInstance().addNotificationEvent(event, resultIntent);
         }
+        BoostActivity.initBoost();
+        ScreenLockerManager.init();
+        initImageLoader();
     }
+
 
     private INotificationObserver sessionEventObserver = new INotificationObserver() {
 
@@ -90,5 +120,20 @@ public class MyApplication extends HSApplication {
 
     private void onSessionStart() {
         HSLog.e("onSessionStart");
+    }
+
+    private void initImageLoader() {
+        ImageLoaderConfiguration.Builder config = new ImageLoaderConfiguration.Builder(this);
+        config.threadPriority(Thread.NORM_PRIORITY - 2);
+        config.denyCacheImageMultipleSizesInMemory();
+        config.tasksProcessingOrder(QueueProcessingType.LIFO);
+
+        ImageLoader.getInstance().init(config.build());
+    }
+
+    @Override
+    protected void attachBaseContext(Context base) {
+        MultiDex.install(base);
+        super.attachBaseContext(base);
     }
 }

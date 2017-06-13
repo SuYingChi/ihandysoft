@@ -1,7 +1,6 @@
 package com.ihs.keyboardutils.ads;
 
 import android.content.Context;
-import android.graphics.PixelFormat;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.Handler;

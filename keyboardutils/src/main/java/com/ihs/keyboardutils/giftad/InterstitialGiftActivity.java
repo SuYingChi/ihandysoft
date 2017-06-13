@@ -7,9 +7,9 @@ import android.animation.ValueAnimator;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Build;
+import android.os.Bundle;
 import android.os.Handler;
 import android.support.annotation.NonNull;
-import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -380,8 +380,6 @@ public class InterstitialGiftActivity extends Activity {
                         if (mAd != null) {
                             setInterstitialAdViewVisibility(TYPE_DISPLAY_AD);
                             doInterstitialAdDisplayAnimation(TYPE_DISPLAY_AD, true);
-                            AcbNativeAdLoader loader = new AcbNativeAdLoader(HSApplication.getContext(), placementName);
-                            loader.load(1, null);
                         } else {
                             setInterstitialAdViewVisibility(TYPE_REFRESH_AD);
                             doInterstitialAdDisplayAnimation(TYPE_REFRESH_AD, true);

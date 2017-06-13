@@ -3,6 +3,7 @@
     <string name="english_ime_name">KeyboardTemplate</string>
 
     <string name="facebook_app_id">1493491937637672</string>
+    <string name="menu_item_settings">Settings</string>
 
     <!-- charging boost -->
     <string name="charging_module_charging_state_unknown">Unplugged from charger</string>
@@ -73,4 +74,832 @@
     <string name="locker_wallpaper_network_error">Network errors. Please try again.</string>
     <string name="tip_accessibility">Find %s. Switch it on to enable Usage Access.</string>
     <string name="tip_usage_access">Find %s. Switch it on to enable Smart Memory Protection</string>
+
+    <string name="ad_placement_lucky" translatable="false">Master_A((NativeAds)Lucky</string>
+    <string name="ad_placement_boost_tip" translatable="false">500_A(NativeAds)SevenInOne</string>
+
+    <string name="lucky_game_award_no_network_description">No network connection!</string>
+    <string name="lucky_game_award_chances_receive_btn">ACCEPT</string>
+    <string name="lucky_game_award_theme_action">DOWNLOAD</string>
+    <string name="lucky_game_chance_restore_timer">More grabs in %1$s</string>
+    <string name="lucky_game_award_wallpaper_description">Wonderful Wallpaper!</string>
+    <string name="lucky_game_award_wallpaper_action">SET AS WALLPAPER</string>
+    <string name="lucky_game_award_chances_description">Congratulations! +3 grabs!</string>
+    <string name="lucky_game_award_theme_description">Found a new theme!</string>
+    <string name="lucky_game_chance_counter">Grabs: %1$s</string>
+    <string name="lucky_game_award_boom_description">"GRABS: "</string>
+    <string name="lucky_game_award_ad_related_title">You’ve won a prize!</string>
+    <string name="launcher_widget_lucky_title">Lucky</string>
+    <string name="lucky_game_award_empty_action">TRY AGAIN</string>
+
+    <!-- Boost tip -->
+    <string name="boost_tip_title_memory">Memory Freed Up</string>
+    <string name="boost_tip_title_cpu_temperature">Phone Cooled Down</string>
+    <string name="boost_tip_title_battery">Battery Life Extended</string>
+    <string name="boost_tip_optimal">Your phone is optimal now!</string>
+
+    <string name="charging_screen_guide_subtitle">Protect device from overcharging!</string>
+    <string name="settings_auth_button_text">OK</string>
+
+
+    <!-- Suffix added to a number to signify size in bytes. -->
+    <string name="byte_abbr" translatable="false">B</string>
+    <!-- Suffix added to a number to signify size in kilobytes. -->
+    <string name="kilobyte_abbr" translatable="false">KB</string>
+    <!-- Suffix added to a number to signify size in megabytes. -->
+    <string name="megabyte_abbr" translatable="false">MB</string>
+    <!-- Suffix added to a number to signify size in gigabytes. -->
+    <string name="gigabyte_abbr" translatable="false">GB</string>
+    <!-- Suffix added to a number to signify size in terabytes. -->
+    <string name="terabyte_abbr" translatable="false">TB</string>
+    <!-- Suffix added to a number to signify size in petabytes. -->
+    <string name="petabyte_abbr" translatable="false">PB</string>
+    <!-- Delete after boost alert completed -->
+    <string name="set_as_default_boost_battery_figure">%1$dmin</string>
+    <string name="set_as_default_boost_cool_figure_celsius" translatable="false">%1$d\u00b0C</string>
+    <string name="set_as_default_boost_cool_figure_fahrenheit" translatable="false">%1$d\u00b0F</string>
+
+    <!-- Charging Screen -->
+    <string name="charging_screen_time" formatted="false">%s:%s</string>
+    <string name="charging_screen_date" formatted="false">%s %s %s</string>
+    <string name="charging_screen_charged_left_describe" formatted="false">Full charge left %s</string>
+    <string name="charging_screen_charged_full">Fully charged</string>
+    <string name="charging_screen_menu_item">Turn off</string>
+    <string name="charging_screen_unlock_describe">Swipe to unlock</string>
+    <string name="charging_screen_charging_tip1">Stop background apps to accelerate charge speed.</string>
+    <string name="charging_screen_charging_tip2">Reaching a temperature of 40\u2103 can be harmful for your battery.</string>
+    <string name="charging_screen_charging_tip3">Smart Charging monitors your charge status to ensure your battery is in a good state.</string>
+    <string name="charging_screen_charging_tip4">Removing your charger could harm your battery while in the charging battery mode.</string>
+    <string name="charging_screen_charging_tip5">Even though the phone is not charged, it\’s safe to remove charger while in the almost charged mode.</string>
+    <string name="charging_screen_charging_tip6" formatted="false">%s will reduce the charge to protect your battery during the fully charged mode.</string>
+    <string name="charging_screen_charging_speed_charging_state_tip_view">Removing charger would be harmful to your battery</string>
+    <string name="charging_screen_charging_continue_charging_state_tip_view">Phone is not charged, and it\’s safe to remove charger</string>
+    <string name="charging_screen_charging_trickle_charging_state_tip_view">Air Launcher is reducing the charge to protect your battery</string>
+    <string name="charging_screen_close_dialog_title">Turn Off Smart Charging?</string>
+    <string name="charging_screen_close_dialog_content">If you turn off smart charging, you\'ll not be able to protect your battery anymore. Are you sure to turn it off?</string>
+    <string name="charging_screen_close_dialog_negative_action">TURN OFF</string>
+    <string name="charging_screen_close_dialog_positive_action">NOT NOW</string>
+    <string name="charging_screen_charging_state_des">...........</string>
+    <string name="charging_screen_guide_turn_on">Your battery is under protection!</string>
+    <string name="charging_screen_settings_title">Battery protection</string>
+    <string name="charging_screen_settings_subtitle">(Contains ads)</string>
+    <string name="charging_screen_settings_description">Protect device from overcharging</string>
+    <string name="charging_screen_guide_battery_title">Turn on Battery Protection to extend battery life!</string>
+    <string name="charging_screen_guide_temperature_title">Turn on Battery Protection to cool down device!</string>
+
+    <string name="launcher_widget_boost_title">Boost</string>
+
+    <string name="notification_boost_plus_title_ram">%1$s%% Memory Used!</string>
+    <string name="notification_boost_plus_content_ram">One-tap boost now!</string>
+    <string name="notification_boost_plus_title">%1$s Apps Slowing Down Phone!</string>
+    <string name="notification_boost_plus_content">Boost to speed up your phone!</string>
+
+
+    <!-- Permission to receive the com.android.launcher3.action.LAUNCH intent. [DO NOT TRANSLATE] -->
+    <string name="receive_launch_broadcasts_permission" translatable="false">com.artw.lockscreen.permission.RECEIVE_LAUNCH_BROADCASTS</string>
+
+    <!-- General -->
+    <string name="network_error">Network error.</string>
+
+    <!-- Application name -->
+    <!-- Welcome -->
+    <string name="welcome_description_text">Fast &amp; Customizable</string>
+    <string name="welcome_start_btn">START</string>
+    <string name="welcome_select_wallpaper">Choose the wallpaper you like best</string>
+    <string name="welcome_apply_theme">Applying theme</string>
+    <string name="welcome_loading">Loading your desktop…</string>
+
+    <!-- Default folder name -->
+    <string name="empty_folder_name">New Folder</string>
+    <!-- Displayed when user selects a shortcut for an app that was uninstalled [CHAR_LIMIT=none]-->
+    <string name="activity_not_found">App installation failed</string>
+    <!-- Displayed when user selects a shortcut for an app that is current not available [CHAR_LIMIT=none]-->
+    <string name="activity_not_available">Shortcuts to app not created outside Camera Pro</string>
+    <!-- SafeMode shortcut error string -->
+    <string name="safe_mode_shortcut_error">This app is disabled in Safe mode</string>
+    <!-- SafeMode widget error string -->
+    <string name="safe_mode_widget_error">Widgets are disabled in Safe mode</string>
+
+    <!-- Widgets -->
+    <!-- Message to tell the user to press and hold on a widget to add it [CHAR_LIMIT=50] -->
+    <string name="long_press_widget_to_add">Touch &amp; drag a widget to move it.</string>
+    <!-- The format string for the dimensions of a widget in the drawer -->
+    <!-- There is a special version of this format string for Farsi -->
+    <string name="widget_dims_format">%1$d \u00d7 %2$d</string>
+
+    <!-- All Apps -->
+    <!-- Search bar text in the apps view. [CHAR_LIMIT=50] -->
+    <string name="all_apps_search_bar_hint">" Search Apps"</string>
+    <string name="all_apps_search_bar_empty">Nothing found</string>
+    <string name="all_apps_more_vertical">Vertical</string>
+    <string name="all_apps_more_horizontal">Horizontal</string>
+
+    <!-- Drag and drop -->
+    <skip />
+    <!-- Error message when user has filled a home screen -->
+    <string name="out_of_space">No more room on this page</string>
+    <!-- Error message when user has filled the hotseat -->
+    <string name="hotseat_out_of_space">No more room in your  apps dock</string>
+
+    <!-- All applications label -->
+    <string name="all_apps_button_label">All Apps</string>
+
+    <!-- Label for delete drop target. [CHAR_LIMIT=20] -->
+    <string name="delete_target_label">Remove</string>
+    <!-- Label for release drop target. [CHAR_LIMIT=20] -->
+    <string name="release_target_label">Unpack</string>
+    <!-- Label for uninstall drop target. [CHAR_LIMIT=20]-->
+    <string name="delete_target_uninstall_label">Uninstall</string>
+    <!-- Label for the info icon. [CHAR_LIMIT=20] -->
+    <string name="info_target_label">App info</string>
+    <!-- Label for desktop drop target. [CHAR_LIMIT=20] -->
+    <string name="desktop_target_label">Desktop</string>
+
+    <!-- Permissions: -->
+    <skip />
+    <!-- Permission short label -->
+    <string name="permlab_read_settings">read Home settings page and shortcuts</string>
+    <!-- Permission description -->
+    <string name="permdesc_read_settings">allows the app to read the Home Page settings and shortcuts</string>
+    <!-- Permission short label -->
+    <string name="permlab_write_settings">write Home settings and shortcuts</string>
+    <!-- Permission description -->
+    <string name="permdesc_write_settings">allows the app to change the Home page settings and shortcuts</string>
+
+    <!-- Toast shown on clicking a direct call shortcut. [CHAR_LIMIT=80] -->
+    <string name="msg_no_phone_permission">%1$s is not permitted to make phone calls</string>
+
+    <!-- Widgets: -->
+    <string name="failed_to_add_widget_text">Failed to add widget to desktop</string>
+    <skip />
+
+    <!-- Text to show user in place of a gadget when we can't display it properly -->
+    <string name="gadget_error_text">Failed to load widget</string>
+
+    <!-- Text to show user in place of a gadget when it is not yet initialized. -->
+    <string name="gadget_setup_text">Setup</string>
+
+    <!-- Text to inform the user that they can't uninstall a system application -->
+    <string name="uninstall_system_app_text">This is a system app and can\'t be uninstalled</string>
+
+    <!-- Folder add shortcuts view -->
+    <string name="folder_add_shortcuts_view_cancel_button">Cancel</string>
+    <string name="folder_add_shortcuts_view_ok_button">OK</string>
+
+    <!-- Folders -->
+    <string name="app_store_category_name_favorite_tools">Toolkit</string>
+    <string name="app_store_category_name_tools">Tools</string>
+    <string name="app_store_category_name_social">Social</string>
+    <string name="app_store_category_name_games">Games</string>
+    <string name="app_store_category_name_lifestyle">Lifestyle</string>
+    <string name="app_store_category_name_photography">Photography</string>
+    <string name="app_store_category_name_media">Media</string>
+    <string name="app_store_category_name_news">News \u0026 Books</string>
+    <string name="app_store_name_system">System</string>
+    <string name="app_store_others">Others</string>
+    <string name="auto_default_name_prefix">Folder</string>
+
+    <!-- Folder ad [CHAR_LIMIT=20] -->
+    <string name="folder_ad_title">Recommended Apps</string>
+
+    <!-- Placeholder text for empty folder -->
+    <string name="folder_placeholder_text">You can add any app into this folder.</string>
+
+    <!-- Button for abandoned promises dialog, to removes this abandoned promise icon. -->
+    <string name="abandoned_clean_this">Remove</string>
+    <!-- Button for abandoned promise dialog, to search in the market for the missing package. -->
+    <string name="abandoned_search">Search</string>
+    <!-- Title for abandoned promise dialog. -->
+    <string name="abandoned_promises_title">App installation has failed</string>
+    <!-- Explanation for abandoned promise dialog. "The first 'it' refers to the shortcut icon.
+    The second "it" refers to the app. -->
+    <string name="abandoned_promise_explanation">
+        You can remove this icon, or search for the app and install it manually.
+    </string>
+
+    <!--Update Apk Toast-->
+    <string name="update_toast_no_network">Please check connection</string>
+    <string name="update_toast_already_latest">You are using the latest version</string>
+    <string name="update_toast_downloading">Apk download is currently underway</string>
+    <string name="update_dialog_title">Download Latest Version</string>
+    <string name="download_capital">DOWNLOAD</string>
+    <string name="downloading">Downloading&#8230;</string>
+    <!-- Weather -->
+    <string name="weather_title">Weather</string>
+    <string name="weather_wind_speed">Wind Speed:</string>
+    <string name="weather_wind_direction">Wind Direction:</string>
+    <string name="weather_visibility">Visibility:</string>
+    <string name="weather_humidity">Humidity:</string>
+    <string name="weather_sunrise">Sunrise:</string>
+    <string name="weather_sunset">Sunset:</string>
+    <string name="weather_last_update_today">Updated at %1$s</string>
+    <string name="weather_last_update_before_today">Updated on %1$s</string>
+    <string name="weather_no_info_placeholder">--</string>
+    <string name="weather_no_info_placeholder_time">--:--</string>
+    <string name="weather_high_low_temperature">%1$s\u00b0\u00a0/\u00a0%2$s\u00b0</string>
+    <string name="weather_kph">km/h</string>
+    <string name="weather_mph">mph</string>
+    <string name="weather_km">km</string>
+    <string name="weather_mi">mi</string>
+    <string name="weather_time">%1$s:%2$s</string>
+    <string name="weather_today">Today</string>
+    <string name="weather_settings_title">Weather settings</string>
+    <string name="weather_settings_item_temperature_unit">Temperature unit</string>
+    <string name="weather_settings_item_distance_unit">Distance unit</string>
+    <string name="weather_settings_item_add_new_city">Add new city</string>
+    <string name="weather_settings_celsius">\u00b0C</string>
+    <string name="weather_settings_fahrenheit">\u00b0F</string>
+    <string name="weather_settings_cf_slash">/</string>
+    <string name="weather_settings_cities_title">City</string>
+
+    <!-- [CHAR_LIMIT=30] -->
+    <string name="weather_city_add_new_btn">Add new city</string>
+
+    <string name="weather_city_more_than_limit">You can add up to 12 cities</string>
+    <string name="refresh">Refresh</string>
+    <string name="weather_city_searching_prompt">Searching…</string>
+    <string name="weather_city_empty_result_prompt">No matches found</string>
+    <string name="weather_city_search_error_prompt">Network error.</string>
+    <string name="weather_city_loading_message">Loading…</string>
+    <string name="weather_city_load_failed_message">Oops, couldn\'t load the weather.</string>
+    <string name="weather_clock_widget_name">Time &amp; Weather </string>
+    <string name="weather_clock_unknown_weather_message">Unknown</string>
+    <string name="sunny">Sunny</string>
+    <string name="overcast">Overcast</string>
+    <string name="clear">Clear</string>
+    <string name="cloudy">Cloudy</string>
+    <string name="rain">Rain</string>
+    <string name="drizzle">Drizzle</string>
+    <string name="rain_shower">Heavy Rain</string>
+    <string name="snow">Snow</string>
+    <string name="storm">Storm</string>
+    <string name="snow_shower">Heavy Snow</string>
+    <string name="sleet">Sleet</string>
+    <string name="hazy">Hazy</string>
+    <string name="dust">Dust</string>
+    <string name="thunderstorm">Thunderstorm</string>
+    <string name="cold">Cold</string>
+    <string name="hot">Hot</string>
+    <string name="windy">Windy</string>
+
+    <string name="sunday">Sunday</string>
+    <string name="monday">Monday</string>
+    <string name="tuesday">Tuesday</string>
+    <string name="wednesday">Wednesday</string>
+    <string name="thursday">Thursday</string>
+    <string name="friday">Friday</string>
+    <string name="saturday">Saturday</string>
+
+    <!-- Quick Settings feature -->
+    <string name="setting_item_mobile">Mobile Data</string>
+    <string name="setting_item_wifi">Wi-Fi</string>
+    <string name="setting_item_airplane">Airplane Mode</string>
+    <string name="setting_item_auto_brightness">Auto Brightness</string>
+    <string name="setting_item_rotate">Auto Rotate</string>
+    <string name="setting_item_silence">Silence</string>
+    <string name="setting_item_vibration">Vibration</string>
+    <string name="setting_item_bluetooth">Bluetooth</string>
+    <string name="setting_item_flashlight">Flashlight</string>
+    <string name="more_system_settings_button_title">System Settings</string>
+    <string name="more_launcher_settings_button_title">Launcher Settings</string>
+    <string name="setting_device_not_support_message">Your device does not support this.</string>
+
+    <!-- Boost tip -->
+    <string name="boost_tip_detail_memory">Your phone is running at the speed of light now!</string>
+    <string name="boost_tip_detail_cpu_temperature">CPU has cooled down.</string>
+    <string name="boost_tip_detail_battery">Battery life has been extended!</string>
+
+    <!-- Customize center (wallpapers & themes) -->
+    <string name="customize_title">Personalize</string>
+    <string name="customize_wallpapers_title">Wallpapers</string>
+    <string name="customize_themes_title">Themes</string>
+    <string name="online_theme_tab_title_launcher">Launcher</string>
+    <string name="online_theme_tab_title_locker">Locker</string>
+    <string name="customize_wallpapers_title_local">My Wallpapers</string>
+    <string name="customize_themes_title_local">My Themes</string>
+    <string name="customize_local_title">Me</string>
+    <string name="online_wallpaper_tab_title_categories">CATEGORIES</string>
+
+    <string name="online_wallpaper_tab_title_all">All</string>
+    <string name="online_wallpaper_apply_btn">SET AS WALLPAPER</string>
+    <string name="online_wallpaper_edit_reset_btn">RESET</string>
+    <string name="online_wallpaper_edit_cancel_btn">CANCEL</string>
+    <string name="online_wallpaper_cancel_edit_dialog_content">Discard changes to exit?</string>
+    <string name="customize_my_wallpapers_remove_btn">REMOVE</string>
+    <string name="customize_my_wallpapers_add_btn_text">Choose from Album</string>
+    <string name="wallpaper_edit_fixed">Fixed</string>
+    <string name="wallpaper_edit_scrollable">Scrollable</string>
+
+    <string name="wallpaper_toast_set_failed">A problem occurred setting this as your wallpaper, please try again</string>
+    <string name="wallpaper_setting_progress_dialog_text">Setting wallpaper…</string>
+    <string name="local_wallpaper_pick_error">The select picture cannot be turned into a wallpaper.</string>
+    <string name="local_wallpaper_pick_error_gif_not_supported">GIF images are not supported</string>
+
+    <!-- Theme -->
+    <string name="theme_set_alert_title">Set as Theme</string>
+    <string name="theme_set_alert_set_system_theme_body">Do you wish to set the Default Theme as your theme?</string>
+
+    <!-- Custom Alert -->
+
+    <!-- Feedback -->
+    <string name="feedback_title">Feedback</string>
+    <string name="feedback_content_placeholder">" Your feedback helps us make improvements"</string>
+    <string name="feedback_email_placeholder">" Please enter your email address"</string>
+    <string name="feedback_submit_btn">SEND</string>
+    <string name="feedback_toast_empty_content">Please write your feedback</string>
+    <string name="feedback_toast_invalid_email">Please enter a valid email address</string>
+    <string name="feedback_toast_send_success">Thanks for your feedback!</string>
+
+    <!-- Menu panel -->
+    <string name="launcher_menu_panel_title_effects">Effects</string>
+    <string name="launcher_menu_panel_title_widgets">Widgets</string>
+
+    <!-- Overview panel -->
+    <string name="effect_classic">Classic</string>
+    <string name="effect_cube">Cube</string>
+    <string name="effect_roll">Roll</string>
+    <string name="effect_rotation">Rotation</string>
+    <string name="effect_stack">Stack</string>
+    <string name="effect_windmill">Windmill</string>
+    <string name="effect_flip">Flip</string>
+    <string name="effect_page">Page Turn</string>
+    <string name="effect_wave">Wave</string>
+    <string name="effect_bounce">Bounce</string>
+    <string name="effect_extrusion">Extrusion</string>
+    <string name="effect_shrink">Shrink</string>
+
+    <!-- Launcher widgets -->
+    <string name="launcher_widget_time_title">Time+Weather</string>
+    <string name="launcher_widget_settings_title">Settings</string>
+    <string name="launcher_widget_wallpaper_title">Wallpapers</string>
+    <string name="launcher_widget_flashlight_title">Flashlight</string>
+    <string name="launcher_widget_data_usage_title">Data Usage</string>
+    <string name="launcher_widget_battery_title">Battery</string>
+    <string name="launcher_widget_app_mgr_title">App Mgr</string>
+    <string name="launcher_widget_update_title">Update</string>
+    <string name="launcher_widget_feedback_title">Feedback</string>
+    <string name="launcher_widget_effects_title">Effects</string>
+    <string name="launcher_widget_theme_title">Themes</string>
+
+    <string name="launcher_widget_screen_manager_title">Screen Manager</string>
+    <string name="launcher_widget_icon_size_title">Icon Size</string>
+    <string name="launcher_widget_widgets_title">System Widgets</string>
+    <string name="launcher_widget_moment_title">Air Moment</string>
+    <string name="launcher_widget_menu_widgets_title">Widgets</string>
+    <string name="launcher_widget_system_settings_title">System Settings</string>
+    <string name="launcher_widget_launcher_settings_title">Launcher Settings</string>
+    <string name="launcher_widget_boost_plus_title">Boost+</string>
+    <string name="launcher_shortcut_boost">1-Tap Boost</string>
+    <string name="launcher_widget_market_title">App Picks</string>
+
+    <!-- Launcher Settings -->
+    <string name="launcher_settings_title">Camera Pro settings</string>
+    <string name="launcher_settings_section_default_launcher">Set as home</string>
+    <string name="preferences">Preferences</string>
+    <string name="launcher_settings_advanced_clean_detail">Boost your phone more effectivly</string>
+    <string name="launcher_settings_advanced_section_about">About</string>
+    <string name="launcher_settings_auto_boost_section">Auto Boost</string>
+    <string name="launcher_settings_auto_boost_detail">Boost automatically when your phone lags</string>
+    <string name="settings_auth_guide">Show Badges for unread message on Messages and Phone. Configuration may require permissions.</string>
+    <string name="settings_auth_line1">How to enable?</string>
+    <string name="settings_auth_line2">Find \"Camera Pro\" and switch it on.</string>
+    <string name="launcher_settings_five_star">5 star rating</string>
+    <string name="launcher_settings_tell_my_friends">Tell my friends</string>
+    <string name="launcher_settings_feedback">Feedback</string>
+    <string name="launcher_settings_update">Update</string>
+    <string name="launcher_settings_current_version_detail">Current version: v%1$s</string>
+    <string name="launcher_settings_latest_version_detail">Latest version: v%1$s</string>
+
+    <!-- Legal -->
+    <string name="privacy_policy">Privacy Policy</string>
+    <string name="privacy_policy_settings_title">Privacy policy</string>
+    <string name="terms_of_service">Terms of Service</string>
+    <string name="terms_of_service_settings_title">Terms of service</string>
+
+    <!-- Auto category tip -->
+    <string name="auto_category_title">Smart Sort</string>
+    <string name="auto_category_open_btn">OPEN</string>
+
+    <!-- 5-star rating -->
+    <string name="five_star_hint_text">How was your experience with us?</string>
+    <string name="five_star_positive_text">Submit</string>
+    <string name="five_star_one_text">Hated it</string>
+    <string name="five_star_two_text">Disliked it</string>
+    <string name="five_star_three_text">It was OK</string>
+    <string name="five_star_four_text">Liked it</string>
+    <string name="five_star_five_text">Loved it</string>
+
+    <!-- Set as default tip -->
+    <string name="set_as_default">Set Camera Pro as Home.</string>
+    <string name="set_as_default_btn_text">OK</string>
+    <string name="set_as_default_info_1">Camera Pro boosts your phone, so you never have to worry about speed! Set Camera Pro as home!</string>
+    <string name="set_as_default_info_2">Camera Pro lets you personalize and stylize your phone! Set Camera Pro as Home!</string>
+    <string name="set_as_default_info_3">Camera Pro makes your phone run more efficiently! Set Camera Pro as Home!</string>
+    <string name="resolver_wizard_choose_default">Choose \"DEFAULT\"</string>
+    <string name="resolver_wizard_select_launcher_1">Select</string>
+    <string name="resolver_wizard_select_launcher_2">\"Camera Pro\"</string>
+    <string name="resolver_wizard_click_always">Tap \"ALWAYS\"</string>
+    <string name="set_as_default_alert_title">Set as home</string>
+    <string name="set_as_default_alert_detail">The attempt to set Camera Pro as home failed. Try again?</string>
+    <string name="set_as_default_alert_ok_btn">TRY AGAIN</string>
+    <string name="set_as_default_alert_cancel_btn">LATER</string>
+    <string name="set_as_default_boost_mem_title">Memory Freed Up</string>
+    <string name="set_as_default_boost_mem_body">Camera Pro boosts your phone, so you never have to worry about speed! Set Camera Pro as home!</string>
+    <string name="set_as_default_boost_battery_title">Battery Life Extended</string>
+    <string name="set_as_default_boost_battery_body">Camera Pro boosts your phone and extends battery life! Set Camera Pro as home!</string>
+    <string name="set_as_default_boost_cool_title">Cool Phone Down</string>
+    <string name="set_as_default_boost_cool_body">Camera Pro boosts efficiency to keep your phone from overheating! Set Camera Pro as home!</string>
+
+    <!-- Share to friends -->
+    <string name="share_through">Share by</string>
+
+    <!-- News -->
+    <string name="news_title">Headlines</string>
+    <string name="news_settings_title">Headlines settings</string>
+    <string name="news_refresh_success_news_updated">%1$s news updated</string>
+    <string name="news_refresh_success_no_news_updated">Update for the latest news</string>
+    <string name="news_settings_item_show_on_home_des">Swipe right on home screen</string>
+    <string name="news_settings_item_load_pictures_title">Save data</string>
+    <string name="news_settings_item_load_pictures_des">Disable pictures under mobile data</string>
+    <string name="news_detail_error_reload">Reload</string>
+    <string name="news_load_more_re_try">Click To Retry</string>
+    <string name="news_network_error">Network error.</string>
+
+    <!-- Pull to refresh RecyclerView -->
+    <string name="pull_to_refresh">Drag to refresh</string>
+    <string name="release_to_refresh">Release to refresh</string>
+    <string name="loading">Loading…</string>
+    <string name="load_more">Loading…</string>
+
+    <!-- Icon settings -->
+    <string name="icon_size_title">Icon size</string>
+    <string name="icon_size_settings_title">Icon size</string>
+    <string name="icon_font_size_settings_title">Icon label size</string>
+    <string name="icon_font_color_settings_title">Icon label color</string>
+    <string name="icon_preview_title">Preview</string>
+    <string name="icon_preview_messenger_title">Messenger</string>
+    <string name="icon_preview_phone_title">Phone</string>
+    <string name="icon_preview_camera_title">Camera</string>
+    <string name="icon_preview_browser_title">Browser</string>
+
+    <!-- Desktop -->
+    <string name="folder_unpack_confirm_title">Unpack Folder</string>
+    <string name="folder_unpack_confirm_body">Once folder is unpacked, its shortcuts will be moved to desktop.</string>
+    <string name="folder_unpack_confirm_positive">Unpack</string>
+    <string name="folder_remove_confirm_title">Remove Folder</string>
+    <string name="folder_remove_confirm_body">Once folder is removed, all the apps in this folder will not appear on the desktop.</string>
+    <string name="folder_remove_confirm_positive">Remove</string>
+
+    <!-- Notification -->
+    <string name="settings_badge_unread_msg">Unread messages</string>
+    <string name="settings_badge_recommended_apps">Recommended Apps</string>
+    <string name="settings_badge_recommended_apps_hint">Configuration may require permissions</string>
+    <string name="settings_badge_common_apps">Common Apps</string>
+    <string name="settings_badge_common_apps_hint">Configuration may require notification access</string>
+
+    <string name="settings_badge_switch_hint">Badges for unread messages</string>
+    <string name="notification_toast_access_failed">Failed to gain notification access</string>
+    <string name="notification_toast_badge_on">Badges turned on.</string>
+    <string name="notification_toast_badge_on_failed">Failed to turn on Badges.</string>
+
+    <string name="auto_organize_desktop_title">Auto-organize apps</string>
+    <string name="notification_download_apk_title" translatable="false">Camera Pro </string>
+
+    <!-- Hide apps -->
+    <string name="hide_apps_empty_prompt">You can add any app to this folder.</string>
+    <string name="hide_apps_bottom_button_hide">Hide</string>
+
+    <string name="hide_apps_settings_title">Private apps settings</string>
+    <string name="hide_apps_password_toggle">Enable lock</string>
+    <string name="hide_apps_set_password_title">Set lock</string>
+    <string name="hide_apps_activation_method_one_finger">Swipe up with one finger</string>
+    <string name="hide_apps_activation_method_two_fingers">Swipe up with two fingers</string>
+    <string name="set_gesture_passwd_please">Please draw a pattern</string>
+    <string name="set_gesture_passwd_verify">Please draw the pattern again</string>
+    <string name="set_gesture_passwd_success">Pattern turned on</string>
+    <string name="set_gesture_passwd_failed">The pattern wasn\'t correct, please try again</string>
+    <string name="set_gesture_passwd_least">Connect at least 4 dots, please try again</string>
+    <string name="set_passwd_reset">Reset Unlock Pattern</string>
+    <string name="change_gesture_passwd_info">For the sake of security, please draw the original unlock pattern</string>
+    <string name="unhide_label">Unhide</string>
+    <string name="input_passwd">Please input your unlock pattern</string>
+
+    <!-- Notification toolbar -->
+    <string name="notification_toolbar_title">Notification toolbar</string>
+    <string name="daily_weather_notification">Daily weather forecast</string>
+
+    <string name="boost_notification_low_battery_title_figure">%1$s%%</string>
+    <string name="boost_notification_low_battery_title">Battery Left</string>
+    <string name="boost_notification_low_battery_description">Preserve battery for longer battery life</string>
+    <string name="boost_notification_low_battery_btn">SAVE</string>
+
+    <string name="boost_notification_hot_cpu_title_figure_celsius" translatable="false">%1$s\u00b0C</string>
+    <string name="boost_notification_hot_cpu_title_figure_fahrenheit" translatable="false">%1$s\u00b0F</string>
+    <string name="boost_notification_hot_cpu_title">Phone is Overheating</string>
+    <string name="boost_notification_hot_cpu_description">Cool Phone Down</string>
+    <string name="boost_notification_hot_cpu_btn">COOL</string>
+
+    <string name="boost_notification_low_ram_title_figure">%1$s%%</string>
+    <string name="boost_notification_low_ram_title">Memory Used</string>
+    <string name="boost_notification_low_ram_description">Boost to free up memory</string>
+    <string name="boost_notification_low_ram_btn">BOOST</string>
+
+    <string name="weather_notification_btn">DETAILS</string>
+
+    <string name="boost_title">Boost</string>
+    <string name="notification_toolbar_wifi">Wifi</string>
+    <string name="notification_toolbar_data">Data</string>
+    <string name="notification_toolbar_flash_light">Flashlight</string>
+    <string name="notification_toolbar_search">Search</string>
+    <string name="notification_toolbar_all_apps">All Apps</string>
+
+    <string name="theme_notification_title">New Theme</string>
+    <string name="theme_notification_description">Try a new style for your phone!</string>
+
+    <string name="notification_set_as_default_title">Set as Home</string>
+    <string name="notification_set_as_default_description_1">Boost your phone and keep fast.</string>
+    <string name="notification_set_as_default_description_2">Personalize your phone.</string>
+    <string name="notification_set_as_default_description_3">Make your phone run efficiently.</string>
+    <string name="notification_set_as_default_btn">SET</string>
+
+    <string name="notification_default_cleared_title">Home has been cleared</string>
+
+    <string name="notification_battery_consuming_title">%1$s Apps Consuming Power</string>
+    <string name="notification_battery_consuming_description">Optimize to extend battery life.</string>
+
+    <!-- Locker theme promotion -->
+    <string name="locker_download_hint">Get Magic Locker to use these amazing themes.</string>
+    <string name="locker_install_btn">INSTALL</string>
+
+    <!-- Advanced boost -->
+    <string name="advanced_boost_title">Advanced Cleaning</string>
+    <string name="advanced_boost_authorize_btn">OK</string>
+
+
+    <!-- Apply theme dialog -->
+    <string name="apply_theme_text">The %1$s theme has been successfully installed. Apply it now?</string>
+    <string name="apply_btn">APPLY</string>
+
+    <!-- Icon pack -->
+    <string name="icon_pack_settings_title">Icon pack</string>
+    <string name="icon_pack_name">Launcher Icons</string>
+    <string name="no_icon_pack_name">System Icons</string>
+    <string name="weather_search_hint">" Type and select your city in English"</string>
+
+    <!-- Screen manager -->
+    <string name="screen_manager_hint_shake">Shake to sort icons</string>
+    <string name="screen_manager_hint_drag">You could press and drag pages to change order.</string>
+
+    <string name="nearby_title">NEARBY</string>
+    <string name="ruler_top" translatable="false">— 0.9km</string>
+    <string name="launcher_widget_nearby_title">Nearby</string>
+    <string name="ruler_bottom" translatable="false">— 0.3km</string>
+    <string name="no_network_connection">NO NETWORK CONNECTION…</string>
+    <string name="ruler_center" translatable="false">— 0.6km</string>
+    <string name="wallpaper_network_error_reload">Reload</string>
+
+    <!-- Search -->
+    <string name="search_settings">Search Settings</string>
+    <string name="search_settings_category_title">Settings</string>
+    <string name="search_settings_result_title">Results</string>
+    <string name="search_widget">Search Widget</string>
+    <string name="search_show_suggestions">Show Search Suggestions</string>
+    <string name="search_show_history">Show Search History</string>
+    <string name="search_show_trending_words">Show Trending Words</string>
+    <string name="search_show_news">Show Trending News</string>
+    <string name="search_show_local_apps">Apps</string>
+    <string name="search_show_contacts">Contacts</string>
+    <string name="search_show_places">Places</string>
+    <string name="search_contacts">Contacts</string>
+    <string name="search_more">More</string>
+    <string name="search_apps">Apps</string>
+    <string name="search_trending_words">Trending Words</string>
+    <string name="search_trending_news">Trending News</string>
+    <string name="search_trending_news_bottom">More stories</string>
+    <string name="search_trending_news_latest">Update for the latest news</string>
+    <string name="search_history">Search History</string>
+    <string name="search_remove">Remove</string>
+    <string name="search_bar_remove_confirm_dialog_title">Remove this search bar?</string>
+    <string name="search_bar_remove_confirm_dialog_description">You can still access this search by:&lt;br />1.Turning it on in &lt;b>Launcher Settings&lt;/b>->&lt;b>Search Settings&lt;/b>&lt;br />2.Turning it on in &lt;b>Menu&lt;/b>->&lt;b>Widgets&lt;/b></string>
+    <string name="search_bar_default_text">Search</string>
+    <string name="search_bar_widget">Search Bar</string>
+    <string name="search_guide_title">TRY SEARCHES LIKE…</string>
+    <string name="search_guide_internet">Internet</string>
+    <string name="search_guide_apps">Local Apps</string>
+    <string name="search_guide_contacts">Contacts</string>
+    <string name="search_guide_location">Location</string>
+    <string name="search_select_engine">Select Search Engine</string>
+    <string name="search_news_new_tag">NEW</string>
+
+    <!-- Battery Main-->
+    <string name="battery_title">Battery</string>
+    <string name="battery_bluetooth">Bluetooth</string>
+    <string name="battery_mobile_data">Mobile Data</string>
+    <string name="battery_current">Current</string>
+    <string name="battery_time_hour" translatable="false">H</string>
+    <string name="battery_time_minute" translatable="false">M</string>
+    <string name="battery_time_hour_lowercase" translatable="false">h</string>
+    <string name="battery_time_minute_lowercase" translatable="false">m</string>
+    <string name="battery_time_default" translatable="false">00</string>
+    <string name="battery_progress_default" translatable="false">0%</string>
+    <string name="battery_progress_sign" translatable="false">%</string>
+    <string name="battery_already_optimal">Your device is already running optimally.</string>
+    <string name="battery_auto">Auto</string>
+    <string name="battery_auto_sync">Auto Sync</string>
+    <string name="battery_brightness">Brightness</string>
+    <string name="battery_careful">Careful</string>
+    <string name="battery_careful_content">Your battery is draining faster than usual.</string>
+    <string name="battery_charging_completed">CHARGING COMPLETED</string>
+    <string name="battery_charging_completed_content">Please unplug to protect your phone\'s battery.</string>
+    <string name="battery_charging_content">3 stage regulated charging will protect your battery from wear.</string>
+    <string name="battery_charging_left">CHARGING LEFT</string>
+    <string name="battery_clean_finished_line_o">Congratulations!</string>
+    <string name="battery_clean_finished_line_i">You have extended battery life</string>
+    <string name="battery_cleaning">Cleaning…</string>
+    <string name="battery_continue">Continuous</string>
+    <string name="battery_current_content">Your current settings will be saved here.</string>
+    <string name="battery_excellent">Excellent</string>
+    <string name="battery_excellent_content">Your battery is in good condition. </string>
+    <string name="battery_haptic_feedback">Haptic Feedback</string>
+    <string name="battery_hide_system_apps">Hide System Apps</string>
+    <string name="battery_low">Low battery</string>
+    <string name="battery_low_content">You can optimize to extend the battery life of your phone.</string>
+    <string name="battery_max_saver">Max Saver</string>
+    <string name="battery_max_saver_content">Turn off WiFi, Bluetooth, vibrate and set screen timeout to 15s.</string>
+    <string name="battery_mode">Mode</string>
+    <string name="battery_off">Off</string>
+    <string name="battery_on">On</string>
+    <string name="battery_optimize">OPTIMIZE</string>
+    <string name="battery_power_remaining">POWER REMAINING</string>
+    <string name="battery_previous">Previous</string>
+    <string name="battery_previous_content">Change back to your last settings.</string>
+    <string name="battery_rank">Rank</string>
+    <string name="battery_reapply">Reapply</string>
+    <string name="battery_screen_timeout">Screen Timeout</string>
+    <string name="battery_smart_saver">Smart Saver</string>
+    <string name="battery_smart_saver_content">Turn off Bluetooth, vibrate and set screen timeout to 30s.</string>
+    <string name="battery_speed">Speed</string>
+    <string name="battery_stop">STOP</string>
+    <string name="battery_trickle">Trickle</string>
+    <string name="battery_vibrate">Vibrate</string>
+    <string name="battery_view">VIEW</string>
+    <string name="battery_wifi">Wifi</string>
+    <string name="battery_low_tip_title">Low Battery!</string>
+    <string name="battery_low_tip_desc">Try battery saver to keep power consumption to a minimum.</string>
+    <string name="battery_low_tip_btn_cancel">LATER</string>
+    <string name="battery_low_tip_btn_ok">TRY IT NOW</string>
+    <!-- Hide Apps -->
+    <string name="hide_apps_guide_welcome_title">Welcome to Private Apps</string>
+    <string name="hide_apps_guide_welcome_action">HIDE APPS</string>
+    <string name="hide_apps_guide_success_title">Congratulations!</string>
+    <string name="hide_apps_guide_success_content_one">You\'ve hidden %1$s.</string>
+    <string name="hide_apps_guide_success_content">You\'ve hidden %1$s private apps.</string>
+    <string name="hide_apps_guide_recommend_hide_percent">%1$s%% of users hide this app</string>
+    <string name="hide_apps_guide_new_install">Your recently installed app</string>
+    <string name="hide_apps_guide_recommend_apps_size">recommended apps</string>
+    <string name="hide_apps_guide_recommend_other_apps_size">other apps</string>
+    <string name="hide_apps_secret_folder">Private Apps</string>
+    <string name="hide_apps_add_apps_title">Choose the apps you want to keep off of desktop</string>
+
+    <!-- Boost+ -->
+    <string name="boost_plus_settings_device_admin_title">Device administrator</string>
+    <string name="boost_plus_settings_device_admin_description">If you wish to uninstall Camera Pro, you are first required to deactivate device administrator.</string>
+    <string name="boost_plus_memory_used">Memory Used</string>
+    <string name="boost_plus_optimal">OPTIMAL</string>
+    <string name="boost_plus_freeable">Cleanable</string>
+    <string name="boost_plus_empty_view_text_line_1">Your phone is already optimized!</string>
+    <string name="boost_plus_tip_battery_btn">Clean</string>
+    <string name="boost_plus_accessibility_service_label">☆Boost+☆</string>
+
+    <string name="gesture_guide_content_up">Swipe up to instantly open Search</string>
+    <string name="gesture_guide_content_down">Swipe down to instantly open Air Moment</string>
+
+    <string name="gesture_guide_got_it">GOT IT!</string>
+
+    <string name="boost_plus_accessibility_service_description">Turn on the switch above, then tap OK.\n\nEnable to:\n1) Boost phone 80\%%\n2) Kill battery draining apps\n\nThe Boost+ team is devoted to make your phone faster and will never collect any personal data.</string>
+
+    <string name="boost_plus_authorize_title">Turn On Accessibility</string>
+    <string name="boost_plus_authorize_desc">Boost+ needs accessibility to stop these apps. It boosts phone speed by 80\%% or more and extends battery life by 200\%%!\n\n93\%% of users have turned it on.</string>
+    <string name="boost_plus_action_button_text">Boost (%1$s)</string>
+    <string name="boost_plus_cleaning_running_apps">Cleaning Running Apps</string>
+    <string name="boost_plus_settings_auto_boost_description">Automate the hibernation minutes after screen goes off. It will dim the screen, perform the hibernation and then turn off the screen.</string>
+    <string name="boost_plus_settings_auto_boost_title">Automated hibernation</string>
+    <string name="boost_plus_dialog_accessibility">Accessibility is needed for Camera Pro to properly enter Automated hibernation.</string>
+    <string name="boost_plus_dialog_device_admin">Device administrator is needed for Camera Pro to properly enter Automated hibernation.\nWarning: You may fail to uninstall Camera Pro because of device administrator. Deactivate device administrator and then uninstall Camera Pro.</string>
+    <string name="boost_plus_empty_view_text_line_2">Good Work!</string>
+    <string name="boost_plus_free_up">Freed Up</string>
+    <string name="boost_plus_exiting">Exiting</string>
+    <string name="boost_plus_running_time">Running time: %1$s</string>
+    <string name="boost_plus_scanned_list_running_apps">Running Apps</string>
+    <string name="boost_plus_scanned_list_select_all">Select All</string>
+    <string name="boost_plus_selected_size_text">Selected: %1$s</string>
+    <string name="boost_plus_settings_lock_delay">Ensure \'Automatically lock\' is set with delay (>= 5 seconds)! Automated hibernation requires a small delay before screen is locked.</string>
+    <string name="boost_plus_settings_lock_instantly">Ensure \'Power button instantly locks\' is NOT checked! Automated hibernation requires a small delay before screen is locked.</string>
+    <string name="boost_plus_stop_clean_content">Once stopped, Boost+ will no longer be able to free up your memory. Are you sure to stop?</string>
+    <string name="boost_plus_stop_clean_title">Stop cleaning?</string>
+    <string name="boost_plus_stop_sure">STOP</string>
+    <string name="boost_plus_tip_battery_desc">Double your battery life.</string>
+    <string name="boost_plus_tip_battery_title">Try Boost+ to extend battery life!</string>
+    <string name="boost_plus_tip_memory_btn">Clean</string>
+    <string name="boost_plus_tip_memory_desc">Use a more thorough cleaner to save more memory!</string>
+    <string name="boost_plus_tip_memory_title">Try Boost+ to better clean your phone!</string>
+    <string name="boost_plus_tip_optimal_desc">Some apps can only be closed by Boost+.</string>
+    <string name="boost_plus_tip_optimal_title">Still slow? Try Boost+!</string>
+    <string name="boost_plus_warning_toast">This app may push messages to you. It won\'t work any more if selected.</string>
+    <string name="accessibility_authorize_try_again_title">Try again?</string>
+    <string name="accessibility_authorize_try_again_description">Failed to gain accessibility for Boost+. Try again to improve phone speed.</string>
+    <string name="accessibility_authorize_try_again_positive">TRY NOW</string>
+    <string name="accessibility_authorize_try_again_negative">LATER</string>
+    <string name="boost_plus_clean_tip_prefix">"Tips: "</string>
+    <string-array name="boost_plus_clean_tips">
+        <item>It takes a while to force stop stubborn apps. Please be patient!</item>
+        <item>Boost+ before you sleep to reduce battery draining.</item>
+        <item>Games will work better after using Boost+.</item>
+        <item>Phone overheating? Ask Boost+ for help!</item>
+        <item>Use Boost+ frequently to keep your phone fast all the time.</item>
+    </string-array>
+
+    <string name="device_admin_explanation">Allow Camera Pro to close battery-draining apps automatically.</string>
+    <string name="hide_apps_guide_welcome_content">You can hide your private apps here. \nSwipe up with two fingers to find them.</string>
+    <string name="hide_apps_remove_password_title">Remove unlock pattern</string>
+    <string name="hide_apps_reset_password_title">Reset unlock pattern</string>
+    <string name="install_dialog_title">Found a new version</string>
+    <string name="launcher_app_index_desc">An amazing personalized app</string>
+    <string name="launcher_app_index_title">Keep your apps well organized and make your phone faster.</string>
+    <string name="moment_good_afternoon">Good Afternoon!</string>
+    <string name="moment_good_evening">Good Evening!</string>
+    <string name="moment_good_morning">Good Morning!</string>
+    <string name="moment_good_night">Good Night!</string>
+    <string name="moment_lucky_draw">Lucky Gift Grab</string>
+    <string name="moment_lucky_draw_tip">Find out what\'s in the box! Grab and enjoy free prizes on LUCKY!</string>
+    <string name="moment_lucky_start">GRAB NOW!</string>
+    <string name="moment_nearby_title">People Nearby Are Using</string>
+    <string name="moment_news_title">News</string>
+    <string name="moment_ad_title">AD</string>
+    <string name="moment_set_launcher">Set Camera Pro as default launcher to boost your phone!</string>
+    <string name="moment_set_locker">Turn on Battery Protection to protect device from overcharging!</string>
+    <string name="moment_try_it_now">TRY IT NOW</string>
+    <string name="moment_open_locker">Your battery is in protection!</string>
+    <string name="moment_locker_contains_ads">(Contains sponsored contents)</string>
+
+    <string name="set_as_default_wizard_huawei_title">Select \"Camera Pro\"</string>
+    <string name="set_up">set up</string>
+    <string name="update_toast_storage_not_ready">External storage is not available</string>
+    <string name="weather_tip_dust">Better to stay indoors.</string>
+    <string name="weather_tip_hazy">Pay attention and drive safely.</string>
+    <string name="weather_tip_sleet">Take an umbrella and keep warm.</string>
+    <string name="weather_tip_snow">Put on warmer clothes.</string>
+    <string name="weather_tip_storm">Take an umbrella with you.</string>
+    <string name="weather_tip_thunderstorm">Better to stay indoors.</string>
+
+    <string name="wind_chime_remove_confirm_dialog_title">Remove \"Air Moment\"?</string>
+    <string name="wind_chime_remove_confirm_dialog_description">You can still get access to Air Moment by:&lt;br />Turn it on in &lt;b>Menu&lt;/b>->&lt;b>Widgets&lt;/b></string>
+    <string name="wind_chime_remove_btn">Remove</string>
+
+    <string name="boost_plus_start_toast">Double-click Boost to start Boost+!</string>
+    <string name="boost_plus_security_setting_for_samsung_device">Set up Screen Lock in \'Lock Screen and Security\’!</string>
+
+    <!-- Permission Guide -->
+    <string name="permission_guide_description">Find ☆Boost+☆ and turn it on.</string>
+    <string name="got_it">GOT IT</string>
+
+    <!-- Locker -->
+    <string name="locker_menu_disable">Disable locker</string>
+    <string name="locker_disable_confirm">Sure to turn off?</string>
+    <string name="locker_disable_confirm_detail">After disabled, features in locker screen will be deactivated, are you sure proceed?</string>
+    <string name="locker_diabled_success">The locker has been turned off</string>
+    <string name="slide_to_unlock">Slide to unlock ></string>
+    <string name="locker_slide_wallpaper_title">Locker Wallpaper</string>
+    <string name="locker_2g">2G</string>
+    <string name="locker_3g">3G</string>
+    <string name="locker_4g">4G</string>
+    <string name="locker_unkown">Unk</string>
+    <string name="locker_settings">Locker settings</string>
+    <string name="locker_settings_title">Screen locker</string>
+    <string name="locker_settings_subtitle">(Contains sponsored contents)</string>
+
+    <!-- Result Page -->
+    <string name="result_page_battery_you_have_extend">You have extended</string>
+    <string name="result_page_card_battery_protection_title">Battery Protection</string>
+    <string name="result_page_card_battery_protection_description">Speed up the phone charging by 50\%%\n(Contains sponsored contents)</string>
+    <string name="result_page_card_battery_protection_btn">OK</string>
+    <string name="result_page_card_battery_protection_toast">Battery Protection Enabled</string>
+    <string name="result_page_card_battery_saver_title">Battery Saver</string>
+    <string name="result_page_card_battery_saver_description_normal">Phone power is draining seriously. Optimize to extend battery life.</string>
+    <string name="result_page_card_battery_saver_description_low_battery">%s power is remaining. Optimize to extend battery life.</string>
+    <string name="result_page_card_boost_plus_title">Boost+</string>
+    <string name="result_page_card_boost_plus_description">Background Apps will cause unusual power usage. Try advanced boost to clean them up!</string>
+    <string name="result_page_card_boost_plus_btn">BOOST</string>
+    <string name="result_page_card_boost_plus_promote_title">Why use Boost+?</string>
+    <string name="result_page_card_boost_plus_promote_description">Most apps can\'t be stopped by ordinary boost and always lag your phone. Luckily, Boost+ can force stop them.\nBoost+ is more effective than 90\%% clean softwares.</string>
+
+    <string name="locker_switcher">locker_screen_enabled</string>
+    <string name="enable_locker_detail">Open camera directly from lock screen and never miss a shot again. Contains sponsored contents.</string>
+    <string name="ad_placement_locker">ColorCam_A(NativeAds)ScreenLocker</string>
+    <string name="screen_locker_enable_alert_toast">Screen Locker Enabled</string>
+
+    <!--guide-->
+    <string name="guide_open_camera">Slide to open camera quickly</string>
+    <string name="guide_open_control_centre">Slide to open Control Centre</string>
+>>>>>>> luckyboost
 </resources>

@@ -1,0 +1,743 @@
+<?xml version="1.0" encoding="utf-8" standalone="no"?>
+<resources xmlns:tools="http://schemas.android.com/tools">
+    <string name="launcher_widget_lucky_title">โชคดี</string>
+    <string name="lucky_game_award_boom_description"> ครั้ง</string>
+    <string name="lucky_game_award_chances_description"> ยินดีด้วย +3 ครั้ง</string>
+    <string name="lucky_game_award_chances_receive_btn"> รับ</string>
+    <string name="lucky_game_award_empty_action"> ลองอีกครั้ง</string>
+    <string name="lucky_game_award_no_network_description"> ไม่มีการเชื่อมต่อเครือข่าย!</string>
+    <string name="no_network_connection"> ไม่มีการเชื่อมต่อเครือข่าย!</string>
+    <string name="lucky_game_award_theme_action"> ติดตั้ง</string>
+    <string name="lucky_game_award_theme_description"> พบธีมใหม่!</string>
+    <string name="lucky_game_award_wallpaper_description">ภาพพื้นหลังแสนสวย!</string>
+    <string name="lucky_game_award_wallpaper_action"> ตั้งเป็นภาพพื้นหลัง</string>
+    <string name="lucky_game_chance_counter"> สิทธิ: %1$s</string>
+    <string name="lucky_game_award_ad_related_title">คุณได้รับรางวัล!</string>
+    <string name="lucky_game_chance_restore_timer">มีให้รับอีกใน %1$s</string>
+
+    <string name="charging_screen_charged_full">ชาร์จเต็มที่แล้ว</string>
+    <string formatted="false" name="charging_screen_charged_left_describe">ชาร์จเต็มที่ในอีก %s</string>
+    <string name="charging_screen_charging_continue_charging_state_tip_view">โทรศัพท์ไม่ได้ชาร์จ แต่สามารถถอดปลั๊กได้อย่างปลอดภัย</string>
+    <string name="charging_screen_charging_speed_charging_state_tip_view">การถอดปลั๊กอาจส่งผลเสียต่อแบตเตอรีคุณ</string>
+    <string name="charging_screen_unlock_describe">เลื่อนเพื่อปลดล็อก</string>
+    <string name="charging_screen_charging_state_des">...........</string>
+    <string name="charging_screen_charging_tip1">การปิดแอปในเบื้องหลังสามารถช่วยเพิ่มความเร็วการชาร์จได้</string>
+    <string name="charging_screen_charging_tip2">อุณหภูมิสูงถึง 40\u2103 อาจเป็นอันตรายต่อแบตเตอรีของคุณ</string>
+    <string name="charging_screen_charging_tip3">การชาร์จอัจฉริยะจะติดตามสถานะการชาร์จเพื่อให้แน่ใจว่าแบตเตอรีของคุณอยู่ในสถานะที่ดี</string>
+    <string name="charging_screen_charging_tip4">การถอดปลั๊กในขณะอยู่ในโหมดชาร์จแบตเตอรีอาจส่งผลเสียต่อแบตเตอรีได้</string>
+    <string name="charging_screen_charging_tip5">แม้ว่าโทรศัพท์ไม่ได้กำลังชาร์จ ก็สามารถถอดปลั๊กได้อย่างปลอดภัยในขณะอยู่ในโหมดใกล้ชาร์จ</string>
+    <string formatted="false" name="charging_screen_charging_tip6">%s จะลดประจุลงเพื่อปกป้องแบตเตอรีของคุณขณะอยู่ในโหมดชาร์เต็มที่</string>
+    <string name="charging_screen_charging_trickle_charging_state_tip_view">Air Launcher กำลังลดประจุลงเพื่อปกป้องแบตเตอรีของคุณ</string>
+    <string name="charging_screen_close_dialog_title">ปิดการชาร์จอัจฉริยะหรือไม่</string>
+    <string name="charging_screen_close_dialog_content">หากคุณปิดการชาร์จอัจฉริยะ คุณจะไม่สามารถปกป้องแบตเตอรีได้อีกต่อไป คุณแน่ใจหรือไม่ว่าต้องการปิด</string>
+    <string name="charging_screen_close_dialog_negative_action">ปิด</string>
+    <string name="charging_screen_close_dialog_positive_action">ไม่ใช่ตอนนี้</string>
+    <string formatted="false" name="charging_screen_date">%s %s %s</string>
+    <string name="charging_screen_guide_battery_title">เปิดการปกป้องแบตเตอรีเพื่อยืดเวลาใช้งานแบตเตอรี!</string>
+    <string name="charging_screen_guide_subtitle">ปกป้องเครื่องจากการชาร์จมากเกินไป!</string>
+    <string name="charging_screen_guide_temperature_title">เปิดการปกป้องแบตเตอรีเพื่อลดความร้อนอุปกรณ์!</string>
+    <string name="charging_screen_guide_turn_on">แบตเตอรีของคุณอยู่ในการปกป้อง!</string>
+    <string name="charging_screen_settings_title">การปกป้องแบตเตอรี</string>
+    <string name="charging_screen_settings_description">ปกป้องเครื่องจากการชาร์จมากเกินไป</string>
+    <string name="charging_screen_settings_subtitle">(มีโฆษณา)</string>
+    <string formatted="false" name="charging_screen_time">%s:%s</string>
+
+    <string name="empty_folder_name">โฟลเดอร์ใหม่</string>
+    <string name="activity_not_found">ยังไม่ได้ติดตั้งแอป</string>
+    <string name="activity_not_available">ไม่มีแอป</string>
+    <string name="safe_mode_shortcut_error">ไม่สามารถใช้แอปที่ดาวน์โหลดได้ในเซฟโหมด</string>
+    <string name="safe_mode_widget_error">ไม่สามารถใช้วิดเจ็ตได้ในเซฟโหมด</string>
+    <string name="long_press_widget_to_add">แตะ &amp; ค้างไว้เพื่อเลือกวิดเจ็ต</string>
+    <string name="widget_dims_format">%1$d \u00d7 %2$d</string>
+    <string name="all_apps_search_bar_hint">" ค้นหาแอป "</string>
+    <string name="all_apps_search_bar_empty">ไม่พบอะไรเลย</string>
+    <skip/>
+    <string name="out_of_space">ไม่มีพื้นที่ว่างบนหน้าจอหลักนี้</string>
+    <string name="hotseat_out_of_space">ไม่มีพื้นที่ว่างบนถาดแอปโปรด</string>
+    <string name="all_apps_button_label">แอป</string>
+    <string name="delete_target_label">ลบ</string>
+    <string name="delete_target_uninstall_label">ถอนการติดตั้ง</string>
+    <string name="info_target_label">ข้อมูลแอป</string>
+    <string name="desktop_target_label">เดสก์ทอป</string>
+    <skip/>
+    <string name="permlab_read_settings">อ่านการตั้งค่าและทางลัดของหน้าหลัก</string>
+    <string name="permdesc_read_settings">อนุญาตแอปให้อ่านการตั้งค่าและทางลัดในหน้าหลัก</string>
+    <string name="permlab_write_settings">เขียนการตั้งค่าและทางลัดบนหน้าหลัก</string>
+    <string name="permdesc_write_settings">อนุญาตแอปให้เปลี่ยนแปลงการตั้งค่าและทางลัดในหน้าหลัก</string>
+    <string name="msg_no_phone_permission">%1$s ไม่อนุญาตให้โทรออก</string>
+    <string name="failed_to_add_widget_text">ไม่สามารถเพิ่มวิดเจ็ตบนเดสก์ทอปได้</string>
+    <skip/>
+    <string name="gadget_error_text">พบปัญหาในการโหลดวิดเจ็ต</string>
+    <string name="gadget_setup_text">ติดตั้ง</string>
+    <string name="uninstall_system_app_text">นี่คือแอประบบและไม่สามารถถอนติดตั้งได้</string>
+    <string name="folder_add_shortcuts_view_cancel_button">ยกเลิก</string>
+    <string name="folder_add_shortcuts_view_ok_button">ตกลง</string>
+    <string name="app_store_category_name_favorite_tools">ชุดเครื่องมือ</string>
+    <string name="app_store_category_name_tools">เครื่องมือ</string>
+    <string name="app_store_category_name_social">สังคม</string>
+    <string name="app_store_category_name_games">เกม</string>
+    <string name="app_store_category_name_lifestyle">ไลฟ์สไตล์</string>
+    <string name="app_store_category_name_photography">รูปภาพ</string>
+    <string name="app_store_category_name_media">สื่อ</string>
+    <string name="app_store_category_name_news">ข่าว \u0026 หนังสือ</string>
+    <string name="app_store_others">อื่นๆ</string>
+    <string name="folder_placeholder_text">คุณสามารถเพิ่มแอปอื่นๆ ได้ในโฟลเดอร์นี้</string>
+    <string name="abandoned_clean_this">ลบ</string>
+    <string name="abandoned_search">ค้นหา</string>
+    <string name="abandoned_promises_title">ยังไม่ได้ติดตั้งแอปนี้</string>
+    <string name="abandoned_promise_explanation">แอปสำหรับไอคอนนี้ยังไม่ถูกติดตั้ง คุณสามารถลบออก หรือค้นหาแอปแล้วติดตั้งด้วยตัวเองได้</string>
+    <string name="weather_title">สภาพอากาศ</string>
+    <string name="weather_wind_speed">ความเร็วลม:</string>
+    <string name="weather_wind_direction">ทิศทางลม:</string>
+    <string name="weather_visibility">การมองเห็น:</string>
+    <string name="weather_humidity">ความชื้น:</string>
+    <string name="weather_sunrise">อาทิตย์ขึ้น:</string>
+    <string name="weather_sunset">อาทิตย์ตก:</string>
+    <string name="weather_last_update_today">อัปเดตเวลา %1$s</string>
+    <string name="weather_last_update_before_today">อัปเดตวันที่ %1$s</string>
+    <string name="weather_no_info_placeholder">--</string>
+    <string name="weather_no_info_placeholder_time">--:--</string>
+    <string name="weather_high_low_temperature">%1$s\u00b0\u00a0/\u00a0%2$s\u00b0</string>
+    <string name="weather_kph">km/h</string>
+    <string name="weather_mph">mph</string>
+    <string name="weather_km">km</string>
+    <string name="weather_mi">mi</string>
+    <string name="weather_time">%1$s:%2$s</string>
+    <string name="weather_today">วันนี้</string>
+    <string name="weather_settings_title">การตั้งค่าสภาพอากาศ</string>
+    <string name="weather_settings_item_temperature_unit">หน่วยอุณหภูมิ</string>
+    <string name="weather_settings_item_distance_unit">หน่วยระยะทาง</string>
+    <string name="weather_settings_item_add_new_city">เพิ่มเมืองใหม่</string>
+    <string name="weather_settings_celsius">\u00b0C</string>
+    <string name="weather_settings_fahrenheit">\u00b0F</string>
+    <string name="weather_settings_cf_slash">/</string>
+    <string name="weather_settings_cities_title">เมือง</string>
+    <string name="weather_city_add_new_btn">เพิ่มเมืองใหม่</string>
+    <string name="weather_city_more_than_limit">คุณสามารถเพิ่มได้เพียง 12 เมืองเท่านั้น</string>
+    <string name="weather_city_searching_prompt">กำลังค้นหาเมือง…</string>
+    <string name="weather_city_empty_result_prompt">ไม่พบเมืองที่ตรงกัน</string>
+    <string name="weather_city_loading_message">กำลังโหลด…</string>
+    <string name="weather_city_load_failed_message">อุ๊ย โหลดสภาพอากาศไม่ได้</string>
+    <string name="weather_clock_widget_name">สภาพอากาศ &amp; เวลา</string>
+    <string name="weather_clock_unknown_weather_message">ไม่ทราบ</string>
+    <string name="sunny">มีแดด</string>
+    <string name="overcast">มืดครึ้ม</string>
+    <string name="clear">ฟ้าใส</string>
+    <string name="cloudy">มีเมฆมาก</string>
+    <string name="rain">ฝนตก</string>
+    <string name="drizzle">ครึ้มฟ้าครึ้มฝน</string>
+    <string name="rain_shower">ฝนตกหนัก</string>
+    <string name="snow">หิมะ</string>
+    <string name="snow_shower">หิมะตกหนัก</string>
+    <string name="sleet">ฝนหิมะ</string>
+    <string name="hazy">หมอก</string>
+    <string name="dust">ฝุ่น</string>
+    <string name="thunderstorm">พายุฝนฟ้าคะนอง</string>
+    <string name="cold">หนาว</string>
+    <string name="hot">ร้อน</string>
+    <string name="windy">ลมแรง</string>
+    <string name="menu_item_settings">การตั้งค่า</string>
+    <string name="setting_item_mobile">ข้อมูลมือถือ</string>
+    <string name="setting_item_wifi">Wi-Fi</string>
+    <string name="setting_item_airplane">โหมดเครื่องบิน</string>
+    <string name="setting_item_auto_brightness">ความสว่างอัตโนมัติ</string>
+    <string name="setting_item_rotate">หมุนอัตโนมัติ</string>
+    <string name="setting_item_silence">เงียบ</string>
+    <string name="setting_item_vibration">สั่น</string>
+    <string name="setting_item_bluetooth">บลูทูธ</string>
+    <string name="setting_item_flashlight">ไฟฉาย</string>
+    <string name="more_system_settings_button_title">การตั้งค่าระบบ</string>
+    <string name="more_launcher_settings_button_title">การตั้งค่า Launcher</string>
+    <string name="setting_device_not_support_message">อุปกรณ์ของคุณไม่รองรับ</string>
+    <string name="boost_tip_optimal">อุปกรณ์ของคุณใช้ได้เต็มประสิทธิภาพแล้ว!</string>
+    <string name="boost_tip_detail_memory">อุปกรณ์ของคุณรวดเร็วปานสายฟ้าแล้ว!</string>
+    <string name="customize_title">ปรับแต่งในแบบของตัวเอง</string>
+    <string name="customize_wallpapers_title">วอลเปเปอร์</string>
+    <string name="customize_themes_title">ธีม</string>
+    <string name="wallpaper_toast_set_failed">เกิดปัญหากับวอลเปเปอร์นี้ โปรดลองอีกครั้ง</string>
+    <string name="customize_local_title">ของฉัน</string>
+    <string name="wallpaper_setting_progress_dialog_text">กำลังตั้งค่าวอลเปเปอร์…</string>
+    <string name="icon_pack_name">ค่าเริ่มต้นของ Launcher</string>
+    <string name="no_icon_pack_name">ค่าเริ่มต้นของระบบ</string>
+    <string name="theme_set_alert_title">กำหนดธีม</string>
+    <string name="theme_set_alert_set_system_theme_body">ตั้งค่าเริ่มต้นของระบบเป็นธีมของคุณ?</string>
+    <string name="feedback_title">ข้อเสนอแนะ</string>
+    <string name="feedback_content_placeholder">" ข้อเสนอแนะของคุณช่วยเราปรับปรุงแอปได้ "</string>
+    <string name="feedback_email_placeholder">" โปรดใส่ที่อยู่อีเมลของคุณ "</string>
+    <string name="feedback_submit_btn">ส่ง</string>
+    <string name="feedback_toast_empty_content">โปรดเขียนข้อเสนอแนะของคุณ</string>
+    <string name="feedback_toast_invalid_email">โปรดใส่ที่อยู่อีเมลที่ถูกต้อง</string>
+    <string name="feedback_toast_send_success">ขอบคุณสำหรับข้อเสนอแนะ!</string>
+    <string name="effect_classic">คลาสสิค</string>
+    <string name="effect_cube">ลูกบาศก์</string>
+    <string name="effect_roll">ม้วน</string>
+    <string name="effect_rotation">หมุน</string>
+    <string name="effect_stack">วางซ้อน</string>
+    <string name="effect_windmill">กังหันลม</string>
+    <string name="effect_flip">พลิก</string>
+    <string name="effect_page">เปลี่ยนหน้า</string>
+    <string name="launcher_widget_time_title">เวลา+สภาพอากาศ</string>
+    <string name="launcher_widget_widgets_title">วิดเจ็ตของระบบ</string>
+    <string name="launcher_widget_boost_title">เร่งเครื่อง</string>
+    <string name="launcher_widget_settings_title">การตั้งค่า</string>
+    <string name="launcher_widget_wallpaper_title">วอลเปเปอร์</string>
+    <string name="launcher_widget_flashlight_title">ไฟฉาย</string>
+    <string name="launcher_widget_data_usage_title">การใช้ข้อมูล</string>
+    <string name="launcher_widget_battery_title">แบตเตอรี</string>
+    <string name="launcher_widget_app_mgr_title">จัดการแอป</string>
+    <string name="launcher_widget_update_title">อัปเดต</string>
+    <string name="launcher_widget_feedback_title">ข้อเสนอแนะ</string>
+    <string name="launcher_widget_effects_title">เอฟเฟ็ค</string>
+    <string name="launcher_widget_theme_title">ธีม</string>
+    <string name="launcher_settings_title">การตั้งค่า Camera Pro</string>
+    <string name="launcher_settings_section_default_launcher">ตั้งค่าเป็น Launcher เริ่มต้น</string>
+    <string name="preferences">กำหนดลักษณะ</string>
+    <string name="launcher_settings_advanced_clean_detail">เร่งเครื่องโทรศัพท์ของคุณให้มีประสิทธิภาพยิ่งขึ้น</string>
+    <string name="launcher_settings_advanced_section_about">เกี่ยวกับ</string>
+    <string name="launcher_settings_auto_boost_section">เร่งเครื่องอัตโนมัติ</string>
+    <string name="launcher_settings_auto_boost_detail">เร่งเครื่องอัตโนมัติเมื่อโทรศัพท์ของคุณอืด</string>
+    <string name="settings_auth_line1">ใช้งานอย่างไร?</string>
+    <string name="settings_auth_line2">ค้นหา \"Camera Pro\" แล้วเปิด</string>
+    <string name="launcher_settings_five_star">ให้คะแนน 5 ดาว</string>
+    <string name="launcher_settings_tell_my_friends">บอกต่อ</string>
+    <string name="launcher_settings_feedback">ข้อเสนอแนะ</string>
+    <string name="launcher_settings_update">อัปเดต</string>
+    <string name="launcher_settings_current_version_detail">รุ่นปัจจุบัน: v%1$s</string>
+    <string name="privacy_policy">นโยบายความเป็นส่วนตัว</string>
+    <string name="terms_of_service">เงื่อนไขการให้บริการ</string>
+    <string name="auto_category_title">จัดเรียงอย่างชาญฉลาด</string>
+    <string name="auto_category_open_btn">เปิด</string>
+    <string name="set_as_default_btn_text">ตกลง</string>
+    <string name="resolver_wizard_select_launcher_1">เลือก</string>
+    <string name="resolver_wizard_select_launcher_2">\"Camera Pro\"</string>
+    <string name="resolver_wizard_click_always">แตะ \"ตลอด\"</string>
+    <string name="share_through">แชร์โดย</string>
+    <string name="news_title">หัวข้อ</string>
+    <string name="news_settings_item_show_on_home_des">กวาดนิ้วไปทางขวาของหน้าจอหลัก</string>
+
+    <string name="news_settings_title">การตั้งค่าหัวเรื่อง</string>
+    <string name="news_refresh_success_news_updated">อัปเดตข่าวแล้ว %1$s ข่าว</string>
+    <string name="news_refresh_success_no_news_updated">อัปเดตเป็นล่าสุด</string>
+    <string name="news_settings_item_load_pictures_title">บันทึกข้อมูล</string>
+    <string name="news_settings_item_load_pictures_des">ไม่แสดงภาพบนเครือข่ายมือถือ</string>
+    <string name="news_detail_error_reload">รีโหลด</string>
+    <string name="pull_to_refresh">ดึงเพื่อรีเฟรช</string>
+    <string name="release_to_refresh">ปล่อยเพื่อรีเฟรช</string>
+    <string name="icon_size_title">ขนาดไอคอน</string>
+    <string name="icon_size_settings_title">ขนาดไอคอน</string>
+    <string name="icon_font_size_settings_title">ขนาดป้ายไอคอน</string>
+    <string name="icon_font_color_settings_title">สีป้ายไอคอน</string>
+    <string name="icon_preview_title">แสดงตัวอย่าง</string>
+    <string name="icon_preview_messenger_title">ข้อความ</string>
+    <string name="icon_preview_phone_title">โทร</string>
+    <string name="icon_preview_camera_title">กล้อง</string>
+    <string name="icon_preview_browser_title">เบราว์เซอร์</string>
+    <string name="folder_unpack_confirm_title">ออกโฟลเดอร์</string>
+    <string name="release_target_label">ปล่อย</string>
+
+    <!-- %1$s is the version number which should be kept, for example “v1.0.0"" -->
+    <string name="launcher_settings_latest_version_detail">เวอร์ชั่นล่าสุด: v%1$s</string>
+
+    <!-- The following is an alert dialog which includes title, description and actions. Air is the name of the APP that needn’t to be translated.  -->
+    <string name="set_as_default_alert_title">คำเตือน</string>
+    <string name="set_as_default_alert_detail">ตั้ง Camera Pro เป็นค่าเริ่มต้นไม่สำเร็จ ลองอีกครั้งไหม?</string>
+    <string name="set_as_default_alert_ok_btn">ลองอีกครั้ง</string>
+    <string name="set_as_default_alert_cancel_btn">ภายหลัง</string>
+
+    <!-- It’s the slogan of the app which can make your phone fast & stylish. &amp; stands for & in program. -->
+    <string name="welcome_description_text">รวดเร็วและมีสไตล์</string>
+
+    <!-- It’s an action button, so it’s better to be short -->
+    <string name="welcome_start_btn">เริ่ม</string>
+    <string name="welcome_select_wallpaper">เลือกวอลล์เปเปอร์ที่คุณชอบมากที่สุด</string>
+
+    <!-- It’s a prompt message that our app is preparing the desktop of the phone. -->
+    <string name="welcome_loading">กำลังเตรียมเดสก์ท็อปของคุณ…</string>
+
+
+    <string name="online_wallpaper_tab_title_categories">หมวดหมู่</string>
+    <string name="settings_auth_guide">เปิด  \"Camera Pro\" เพื่อแจ้งเตือนข้อความ, Facebook, Whatsapp และอื่นๆ ที่คุณยังไม่ได้อ่าน.</string>
+    <string name="settings_badge_unread_msg">ข้อความที่ยังไม่ได้อ่าน</string>
+    <string name="settings_badge_recommended_apps">แอปที่ได้รับการแนะนำ</string>
+    <string name="settings_badge_switch_hint">ติดป้ายสำหรับข้อความที่ยังไม่ได้อ่าน</string>
+    <string name="auto_organize_desktop_title">จัดการเดสก์ทอปอัตโนมัติ</string>
+    <string name="settings_auth_button_text">เปิด</string>
+
+
+    <!-- Hide apps meansapps invisible on desktop -->
+    <string name="hide_apps_bottom_button_hide">ซ่อน</string>
+    <string name="hide_apps_settings_title">การตั้งค่าซ่อนแอป</string>
+    <string name="hide_apps_empty_prompt">คุณสามารถเพิ่มแอปลงในโฟลเดอร์นี้ได้ </string>
+
+    <!-- It’s a gesture of swiping up on desktopwith one finger-->
+    <string name="hide_apps_activation_method_one_finger">กวาดขึ้นด้วยนิ้วเดียว</string>
+    <string name="hide_apps_activation_method_two_fingers">กวาดขึ้นด้วยสองนิ้ว</string>
+
+
+    <string name="hide_apps_password_toggle">เปิดใช้รหัสผ่าน</string>
+    <string name="hide_apps_set_password_title">ตั้งรหัสผ่าน</string>
+    <string name="set_passwd_reset">รีเซ็ตรหัสผ่าน</string>
+    <string name="change_gesture_passwd_info">โปรดใช้นิ้ววาดแพทเทิร์นเพื่อปลดล็อค</string>
+    <string name="set_gesture_passwd_please">โปรดใช้นิ้ววาดแพทเทิร์น</string>
+    <string name="set_gesture_passwd_verify">โปรดใช้นิ้ววาดแพทเทิร์นเพื่อปลดล็อคอีกครั้ง </string>
+    <string name="set_gesture_passwd_least">ต้องลากเส้นเชื่อมต่ออย่างน้อย 4 จุด โปรดลองอีกครั้ง </string>
+    <string name="set_gesture_passwd_failed">แพทเทิร์นไม่ตรง โปรดลองอีกครั้ง </string>
+    <string name="set_gesture_passwd_success">เปิดแพทเทิร์นแล้ว</string>
+
+
+    <string name="loading">กำลังโหลด…</string>
+    <string name="customize_themes_title_local">ธีมของฉัน</string>
+    <string name="terms_of_service_settings_title">เงื่อนไขการให้บริการ</string>
+    <string name="privacy_policy_settings_title">นโยบายความเป็นส่วนตัว</string>
+    <string name="customize_wallpapers_title_local">วอลเปเปอร์ของฉัน</string>
+    <string name="load_more">กำลังโหลด…</string>
+
+
+    <!-- Please translate and replace the words in red color -->
+
+
+    <!--It guides users to enter password -->
+    <string name="input_passwd">ใส่รหัสผ่าน</string>
+
+
+    <!-- Notification toolbar is a bar with icons of Wi-Fi, Mobile Data, Flashlight and so on, which you can set your phone quickly by switching them On/Off. -->
+    <string name="notification_toolbar_title">แถบเครื่องมือการแจ้งเตือน</string>
+
+
+    <!-- It’s a switch to turn On/Off Mobile Data, better be short in one word or two -->
+    <string name="notification_toolbar_data">ข้อมูล</string>
+
+
+    <!-- A collection of all apps in your phone -->
+    <string name="notification_toolbar_all_apps">ทุกแอป</string>
+
+
+
+    <!-- It shows how much battery has been left. It will be used like “20% Battery Left” -->
+    <string name="boost_notification_low_battery_title">แบตเตอรี่เหลือ</string>
+    <string name="boost_notification_low_battery_description">ประหยัดแบตเตอรี่เพื่อการใช้งานที่ยาวนาน</string>
+
+
+    <!-- It’s a button for saving battery, better be short in one word or two -->
+    <string name="boost_notification_low_battery_btn">ประหยัด</string>
+
+    <!-- It shows how much battery has been save. It will be used like “Battery Life Extended 20 minutes” -->
+    <string name="boost_tip_title_battery">ยืดเวลาการใช้แบตเตอรี่ได้</string>
+    <string name="boost_tip_detail_battery">สามารถใช้แบตเตอรี่ได้นานขึ้น!</string>
+
+
+    <string name="daily_weather_notification">พยากรณ์อากาศรายวัน</string>
+
+
+    <!-- It’s a button for detail content, better be short in one word or two -->
+    <string name="weather_notification_btn">รายละเอียด</string>
+
+
+    <!-- It show how much memory has been used. It will be used like “200MB Memory Used” -->
+    <string name="boost_notification_low_ram_title">หน่วยความจำที่ใช้</string>
+    <string name="boost_notification_low_ram_description">จัดการข้อมูลเพิ่มหน่วยความจำ</string>
+
+    <!-- It shows how much memory has been released. It will be used like “Memory Released 200MB” -->
+    <string name="boost_tip_title_memory">เพิ่มหน่วยความจำได้</string>
+
+
+    <!-- The temperature of phone is too hot, better be short -->
+    <string name="boost_notification_hot_cpu_title">โทรศัพท์ร้อนจัด</string>
+
+
+    <!-- It’s a button for cooling down temperature of phone, better be short in one word or two -->
+    <string name="boost_notification_hot_cpu_btn">ลดความร้อน</string>
+
+
+    <!-- It shows how much temperature has been cooled down. It will be used like “Cool Down 10 ℉／℃” -->
+    <string name="boost_tip_title_cpu_temperature">ลดความร้อนได้</string>
+    <string name="boost_notification_hot_cpu_description">ลดความร้อน CPU </string>
+    <string name="boost_tip_detail_cpu_temperature">CPU เย็นลงแล้ว</string>
+
+
+    <!-- A new themes for phone including wallpapers and app icons. -->
+    <string name="theme_notification_title">ธีมใหม่</string>
+    <string name="theme_notification_description">ลองสไตล์ใหม่สำหรับโทรศัพท์ของคุณ!</string>
+
+
+    <string name="boost_notification_low_battery_title_figure">%1$s%%</string>
+    <string name="boost_notification_low_ram_title_figure">%1$s%%</string>
+    <string name="boost_notification_low_ram_btn"> เร่งเครื่อง</string>
+    <string name="boost_title">เร่งเครื่อง</string>
+    <string name="notification_toolbar_wifi">Wi-Fi</string>
+    <string name="notification_toolbar_flash_light">ไฟฉาย</string>
+
+    <!-- Please translate and replace the words in red color -->
+
+
+    <!-- Advanced cleaning is an operation that cleaning memory in an advanced way to stop apps and make apps can not restart, which can make phone run faster! -->
+    <string name="advanced_boost_title">การทำความสะอาดขั้นสูง</string>
+    <!-- Accessibility Service is a settings option in phone! -->
+    <!-- It will be used like “Freed up 200MB” , which means memory released in phone-->
+
+    <!-- An operation to make a app visible on the screen, better be short in one word or two -->
+    <string name="unhide_label">ยกเลิกการซ่อน</string>
+
+    <!-- “Magic Locker” is an app name, don’t need to translate. Themes include images and app icons, which can make phone screen stylish. -->
+    <string name="locker_download_hint">รับ Magic Locker เพื่อใช้ธีมอันสุดมหัศจรรย์เหล่านี้</string>
+    <!-- Locker can lock the screen of your phone. -->
+    <string name="online_theme_tab_title_locker">Locker</string>
+    <!-- An operation to install an app, better be short in one word or two -->
+    <string name="locker_install_btn">ติดตั้ง</string>
+
+    <string name="online_theme_tab_title_launcher">Launcher</string>
+
+    <!-- Icon pack is a collection of designed app icons that can replace the default ones of your phone. -->
+    <string name="icon_pack_settings_title">ชุดไอคอน</string>
+    <!-- Memory has been released of the phone, which boosts your phone and makes it run faster. Better be short in one word or two.-->
+    <!-- Type the English name of the city and select the city from the search result. Only support English -->
+    <string name="weather_search_hint">“พิมพ์และเลือกเมือง (ภาษาอังกฤษเท่านั้น)”</string>
+    <!-- Camera Pro is the name of App, which don’t need to translate. Themes can make your phone beautiful including wallpapers and app icons. The sentence below will be used in Applying theme like “ iOS 10 theme for Camera Pro has been installed. Apply it now?”-->
+    <string name="apply_theme_text">%1$s เพราะติดตั้งแอร์ลอนเชอร์แล้ว ต้องการให้ใช้เดี๋ยวนี้หรือไม่</string>
+    <string name="apply_btn">ใช้</string>
+    <string name="welcome_apply_theme">ธีมที่ให้ใช้</string>
+
+    <string name="app_store_name_system">ระบบ</string>
+    <!-- A container with groups of apps, to keep and organize apps in phone. -->
+    <string name="auto_default_name_prefix">โฟลเดอร์</string>
+
+
+    <!-- The following words are operations in Screen manager. -->
+    <!-- Screen Manager is a feature that you can manage your phone’s screens by ranking screens, increasing a new screen or deleting a screen . -->
+    <string name="launcher_widget_screen_manager_title">จัดการหน้าจอ</string>
+    <!-- You can drag one screen and move its position to rank screens. -->
+    <string name="screen_manager_hint_drag">คุณสามารถลากหน้าในการจัดอันดับ </string>
+    <!-- Shake the phone to remove blanks between icons and make icons orderliness. -->
+    <string name="screen_manager_hint_shake">เขย่าเพื่อจัดไอคอน</string>
+
+
+    <!-- The following words are operations in editing pictures. -->
+    <!-- Crop, zoom in or zoom out a picture to suit your want.-->
+    <!-- You can move the picture to choose the most beautiful part and scale to make the picture big or small. -->
+    <!--Edit the picture over again without storing the changes you have edited. -->
+    <string name="online_wallpaper_edit_reset_btn">ตั้งค่าใหม่</string>
+    <!-- Exit the picture editing without storing the changes you have edited. -->
+    <string name="online_wallpaper_cancel_edit_dialog_content">ยกเลิกการเปลี่ยนแปลงเพื่อจบการทำงาน?</string>
+
+    <!-- All of the content. Better be short in one word or two. -->
+    <string name="online_wallpaper_tab_title_all">ทั้งหมด</string>
+    <!-- A tag shows the content is used right now. Better be short in one word or two. -->
+
+
+    <string name="launcher_widget_icon_size_title">ขนาดไอคอน</string>
+    <string name="online_wallpaper_edit_cancel_btn">ยกเลิก</string>
+    <string name="customize_my_wallpapers_remove_btn">ลบ</string>
+    <string name="launcher_widget_system_settings_title">การตั้งค่าระบบ</string>
+    <string name="network_error">เครือข่ายขัดข้อง</string>
+    <string name="launcher_widget_launcher_settings_title">การตั้งค่า Launcher</string>
+    <string name="online_wallpaper_apply_btn">ตั้งเป็นวอลเปเปอร์</string>
+
+    <string name="set_as_default"> ตั้ง Camera Pro เป็นหน้าหลัก</string>
+    <string name="notification_default_cleared_title"> ล้างหน้าหลักแล้ว</string>
+    <string name="set_as_default_boost_battery_body"> Camera Pro เร่งความเร็วโทรศัพท์ของคุณและช่วยประหยัดแบตเตอรีให้ใช้ได้นานขึ้น! ต้องการตั้ง Camera Pro เป็นหน้าหลักหรือไม่</string>
+    <string name="set_as_default_boost_cool_body">Camera Pro เร่งความเร็วเพื่อลดความร้อนเวลาโทรศัพท์ร้อนเกินไป! ต้องการตั้ง Camera Pro เป็นหน้าหลักหรือไม่</string>
+    <string name="set_as_default_boost_mem_body"> Camera Pro เร่งความเร็วโทรศัพท์ของคุณ ไม่ต้องกังวลเรื่องความเร็วอีกต่อไป! ต้องการตั้ง Camera Pro เป็นหน้าหลักหรือไม่</string>
+    <string name="set_as_default_info_2">Camera Pro ปรับแต่งโทรศัพท์ให้เป็นตัวคุณและดูมีสไตล์! ต้องการตั้ง Camera Pro เป็นหน้าหลักหรือไม่</string>
+    <string name="set_as_default_info_3">Camera Pro ทำให้โทรศัพท์ของคุณมีประสิทธิภาพมากขึ้น! ต้องการตั้ง Camera Pro เป็นหน้าหลักหรือไม่</string>
+    <string name="notification_set_as_default_description_1">เร่งความเร็วโทรศัพท์ให้เร็วต่อเนื่อง</string>
+    <string name="notification_set_as_default_description_2">ปรับแต่งและออกแบบโทรศัพท์ของคุณ</string>
+    <string name="notification_set_as_default_description_3">ทำให้โทรศัพท์ของคุณมีประสิทธิภาพมากขึ้น</string>
+    <string name="notification_set_as_default_title">ตั้งเป็นหน้าหลัก</string>
+    <string name="set_as_default_boost_battery_figure">%1$d นาที</string>
+    <string name="local_wallpaper_pick_error">มีบางสิ่งผิดพลาดในการเลือกภาพพื้นหลัง</string>
+    <string name="local_wallpaper_pick_error_gif_not_supported"> ไม่รองรับภาพ GIF</string>
+    <string name="nearby_title"> ใกล้เคียง</string>
+    <string name="launcher_widget_nearby_title"> ใกล้เคียง</string>
+    <string name="notification_set_as_default_btn">" ตั้ง"</string>
+
+    <string name="update_toast_no_network">กรุณาตรวจสอบการเชื่อมต่อ</string>
+    <string name="update_toast_already_latest">คุณกำลังใช้เวอร์ชันล่าสุด</string>
+    <string name="update_toast_downloading">กำลังดำเนินการดาวน์โหลด Apk</string>
+    <string name="update_dialog_title">ดาวน์โหลดเวอร์ชันล่าสุด</string>
+    <string name="download_capital">ดาวน์โหลด</string>
+    <string name="search_settings">ตั้งค่าการค้นหา</string>
+    <string name="search_settings_result_title">ผลลัพธ์</string>
+    <string name="search_widget">วิดเจ็ตค้นหา</string>
+    <string name="search_show_suggestions">แสดงคำแนะนำการค้นหา</string>
+    <string name="search_show_history">แสดงประวัติการค้นหา</string>
+    <string name="search_show_local_apps">แอป</string>
+    <string name="search_show_contacts">รายชื่อติดต่อ</string>
+    <string name="search_trending_words">คำที่กำลังฮิต</string>
+    <string name="search_history">แสดงประวัติ</string>
+    <string name="search_bar_remove_confirm_dialog_title">ลบแถบค้นหานี้หรือไม่</string>
+    <string name="search_bar_remove_confirm_dialog_description">คุณยังคงสามารถค้นหาได้โดย:\n1.เปิดจากการตั้งค่า Launcher-&gt;ตั้งค่าการค้นหา\n2.เปิดจากในเมนู-&gt;วิดเจ็ต</string>
+    <string name="search_bar_widget">แถบค้นหา</string>
+    <string name="search_contacts">รายชื่อติดต่อ</string>
+
+    <string name="wallpaper_network_error_reload">รีโหลด</string>
+    <string name="set_as_default_info_1">" Camera Pro เร่งความเร็วโทรศัพท์ของคุณ ไม่ต้องกังวลเรื่องความเร็วอีกต่อไป! ต้องการตั้ง Camera Pro เป็นหน้าหลักหรือไม่"</string>
+    <string name="set_as_default_boost_battery_title">ยืดเวลาการใช้แบตเตอรี่ได้</string>
+    <string name="set_as_default_boost_cool_title">ลดความร้อนได้</string>
+    <string name="set_as_default_boost_mem_title">เพิ่มหน่วยความจำได้</string>
+    <string name="search_settings_category_title">การตั้งค่า</string>
+    <string name="search_more">เพิ่มเติม</string>
+    <string name="search_remove">ลบ</string>
+    <string name="search_bar_default_text">ค้นหา</string>
+    <string name="launcher_menu_panel_title_effects">เอฟเฟ็ค</string>
+    <string name="launcher_menu_panel_title_widgets">วิดเจ็ต</string>
+    <string name="launcher_widget_menu_widgets_title">วิดเจ็ต</string>
+    <string name="search_apps">แอป</string>
+    <string name="battery_already_optimal">เครื่องของคุณทำงานอย่างเหมาะสมแล้ว</string>
+    <string name="battery_auto">อัตโนมัติ</string>
+    <string name="battery_auto_sync">ซิงค์อัตโนมัติ</string>
+    <string name="battery_brightness">ความสว่าง</string>
+    <string name="battery_careful">ระมัดระวัง</string>
+    <string name="battery_careful_content">แบตเตอรีของคุณกำลังหมดเร็วกว่าปกติ</string>
+    <string name="battery_charging_completed">ชาร์จเสร็จสมบูรณ์</string>
+    <string name="battery_charging_completed_content">กรุณาถอดปลั๊กเพื่อปกป้องแบตเตอรีของโทรศัพท์</string>
+    <string name="battery_charging_content">การชาร์จโดยควบคุม 3 ขั้นตอนจะป้องกันไม่ให้แบตเตอรีเสื่อม</string>
+    <string name="battery_charging_left">ชาร์จเหลืออีก</string>
+    <string name="battery_clean_finished_line_o">ยินดีด้วย!้</string>
+    <string name="battery_clean_finished_line_i">คุณยืดอายุแบตเตอรีได้</string>
+    <string name="battery_cleaning">กำลังทำความสะอาด…</string>
+    <string name="battery_continue">ดำเนินการต่อ</string>
+    <string name="battery_current_content">การตั้งค่าปัจจุบันของคุณจะบันทึกที่นี่</string>
+    <string name="battery_excellent">ยอดเยี่ยม</string>
+    <string name="battery_excellent_content">แบตเตอรีของคุณอยู่ในสภาพดี</string>
+    <string name="battery_haptic_feedback">ตอบสนองการสัมผัส</string>
+    <string name="battery_hide_system_apps">ซ่อนแอปของระบบ</string>
+    <string name="battery_low">แบตเตอรีต่ำ</string>
+    <string name="battery_low_content">คุณสามารถปรับแต่งเพื่อยืดอายุแบตเตอรีโทรศัพท์ของคุณได้</string>
+    <string name="battery_max_saver">ประหยัดสูงสุด</string>
+    <string name="battery_max_saver_content">ปิด WiFi บลูทูธ การสั่น และตั้งเวลาปิดหน้าจอเป็น 15 วินาที</string>
+    <string name="battery_mode">โหมด</string>
+    <string name="battery_off">ปิด</string>
+    <string name="battery_on">เปิด</string>
+    <string name="battery_optimize">ปรับแต่ง</string>
+    <string name="battery_power_remaining">พลังงานที่เหลืออยู่</string>
+    <string name="battery_previous">ก่อนหน้า</string>
+    <string name="battery_previous_content">เปลี่ยนกลับไปเป็นการตั้งค่าล่าสุด</string>
+    <string name="battery_rank">อันดับ</string>
+    <string name="battery_reapply">นำไปใช้อีกครั้ง</string>
+    <string name="battery_screen_timeout">เวลาปิดหน้าจอ</string>
+    <string name="battery_smart_saver">ประหยัดอัจฉริยะ</string>
+    <string name="battery_smart_saver_content">ปิด WiFi บลูทูธ การสั่น และตั้งเวลาปิดหน้าจอเป็น 30 วินาที</string>
+    <string name="battery_speed">ความเร็ว</string>
+    <string name="battery_stop">หยุด</string>
+    <string name="battery_trickle">ชาร์จทีละน้อย</string>
+    <string name="battery_vibrate">สั่น</string>
+    <string name="battery_view">ดู</string>
+    <string name="battery_wifi">Wifi</string>
+    <string name="customize_my_wallpapers_add_btn_text">เลือกจากอัลบั้ม</string>
+    <string name="downloading">กำลังดาวน์โหลด…</string>
+    <string name="effect_bounce">เด้ง</string>
+    <string name="effect_extrusion">ยื่น</string>
+    <string name="effect_shrink">หด</string>
+    <string name="effect_wave">คลื่น</string>
+    <string name="monday">วันจันทร์</string>
+    <string name="tuesday">วันอังคาร</string>
+    <string name="wednesday">วันพุธ</string>
+    <string name="thursday">วันพฤหัสบดี</string>
+    <string name="friday">วันศุกร์</string>
+    <string name="saturday">วันเสาร์</string>
+    <string name="sunday">วันอาทิตย์</string>
+    <string name="notification_toolbar_search">ค้นหา</string>
+    <string name="refresh">เรียกใหม่</string>
+    <string name="resolver_wizard_choose_default">เลือก \"ค่าเริ่มต้น\"</string>
+    <string name="search_guide_title">ลองค้นหา…</string>
+    <string name="search_guide_internet">อันเทอร์เน็ต</string>
+    <string name="search_guide_apps">แอปในเครื่อง</string>
+    <string name="search_guide_location">ตำแหน่ง</string>
+    <string name="search_select_engine">เลือกเครื่องมือค้นหา</string>
+    <string name="search_show_places">แผนที่</string>
+    <string name="wallpaper_edit_fixed">แก้ไขแล้ว</string>
+    <string name="wallpaper_edit_scrollable">เลื่อนได้</string>
+    <string name="hide_apps_guide_welcome_title">คุณได้เข้าสู่แอปส่วนตัว</string>
+    <string name="hide_apps_guide_welcome_action">ซ่อนแอป</string>
+    <string name="hide_apps_guide_success_title">ขอแสดงความยินดี!</string>
+    <string name="hide_apps_guide_success_content_one">คุณซ่อน %1$s</string>
+    <string name="hide_apps_guide_success_content">คุณซ่อนแอปส่วนตัว %1$s แอป</string>
+    <string name="hide_apps_guide_recommend_hide_percent">%1$s%% ของผู้ใช้ซ่อนแอปนี้</string>
+    <string name="hide_apps_guide_recommend_apps_size">%1$s แอปที่แนะนำ</string>
+    <string name="hide_apps_guide_recommend_other_apps_size">%1$s แอปอื่น ๆ</string>
+    <string name="hide_apps_secret_folder">แอปส่วนตัว</string>
+    <string name="hide_apps_add_apps_title">เลือกแอปที่ไม่ต้องการให้แสดงในหน้าเดสก์ท็อป</string>
+
+
+
+
+
+    <string name="folder_ad_title">แอปที่ได้รับการแนะนำ</string>
+    <string name="search_guide_contacts">รายชื่อติดต่อ</string>
+
+    <string name="launcher_widget_boost_plus_title">เร่งเครื่อง+</string>
+    <string name="boost_plus_accessibility_service_label">☆เร่งเครื่อง+☆</string>
+    <string name="advanced_boost_authorize_btn">เปิดใช้งาน</string>
+    <string name="boost_plus_action_button_text">เร่งความเร็ว (%1$s)</string>
+    <string name="boost_plus_cleaning_running_apps">กำลังล้างแอปที่เปิดอยู่</string>
+    <string name="boost_plus_settings_auto_boost_description">เปิดไฮเบอร์เนตอัตโนมัติหลังจากที่หน้าจอดับลง เป็นการหรี่ความสว่างหน้าจอ เข้าสู่การไฮเบอร์เนต แล้วปิดหน้าจอ</string>
+    <string name="boost_plus_settings_auto_boost_title">ไฮเบอร์เนตอัตโนมัติ</string>
+    <string name="boost_plus_dialog_accessibility">จำเป็นต้องได้รับการเข้าถึงเพื่อให้ Camera Pro เข้าสู่การไฮเบอร์เนตอัตโนมัติอย่างเหมาะสม</string>
+    <string name="boost_plus_dialog_device_admin">ผู้ดูแลอุปกรณ์จำเป็นสำหรับการให้ Camera Pro เข้าสู่การไฮเบอร์เนตอย่างเหมาะสม\nคำเตือน: คุณอาจไม่สามารถถอนการติดตั้ง Camera Pro ได้เนื่องจากผู้ดูแลอุปกรณ์ ปิดผู้ดูแลอุปกรณ์แล้วจึงถอนการติดตั้ง Camera Pro</string>
+    <string name="boost_plus_empty_view_text_line_2">ทำได้ดี!</string>
+    <string name="boost_plus_free_up">พื้นที่ว่างเพิ่ม</string>
+    <string name="boost_plus_exiting">กำลังออก</string>
+    <string name="boost_plus_running_time">เวลาทำงาน: %1$s</string>
+    <string name="boost_plus_scanned_list_running_apps">แอปที่กำลังทำงาน</string>
+    <string name="boost_plus_scanned_list_select_all">เลือกทั้งหมด</string>
+    <string name="boost_plus_selected_size_text">เลือก: %1$s</string>
+    <string name="boost_plus_settings_lock_delay">ขอให้แน่ใจว่า \"ตั้งล็อกอัตโนมัติ\" มีเวลาหน่วง (&gt;= 5 วินาที)! การไฮเบอร์เนตอัตโนมัติต้องการเวลาหน่วงเล็กน้อยก่อนล็อกหน้าจย</string>
+    <string name="boost_plus_settings_lock_instantly">ขอให้แน่ใจว่าไม่ได้เลือก \"ล็อกทันทีด้วยปุ่มเปิดปิดเครื่อง\"! การไฮเบอร์เนตอัตโนมัติต้องการเวลาหน่วงเล็กน้อยก่อนล็อกหน้าจย</string>
+    <string name="boost_plus_stop_clean_content">เมื่อหยุดใช้งาน เร่งเครื่อง+ จะไม่สามารถเพิ่มพื้นที่ว่างหน่วยความจำของคุณได้อีกต่อไป คุณแน่ใจหรือไม่ว่าต้องการหยุด</string>
+    <string name="boost_plus_stop_clean_title">หยุดการล้างหรือไม่</string>
+    <string name="boost_plus_stop_sure">แน่นอน</string>
+    <string name="boost_plus_tip_battery_desc">ยืดอายุแบตเตอรี่เป็นสองเท่า</string>
+    <string name="boost_plus_tip_battery_title">ลองใช้ เร่งเครื่อง+ ยืดอายุแบตเตอรี่!</string>
+    <string name="boost_plus_tip_memory_btn">ล้าง</string>
+    <string name="boost_plus_tip_memory_desc">ใช้แอปทำความสะอาดที่หมดจดกว่าเพื่อประหยัดหน่วยความจำได้มากกว่า!</string>
+    <string name="boost_plus_tip_memory_title">ลองใช้ เร่งเครื่อง+ เพื่อทำความสะอาดโทรศัพท์ให้ดีขึ้น!</string>
+    <string name="boost_plus_tip_optimal_desc">บางแอปต้องใช้ เร่งเครื่อง+ ปิดเท่านั้น</string>
+    <string name="boost_plus_tip_optimal_title">ยังช้าอยู่ใช่หรือไม่ ลองใช้ เร่งเครื่อง+ สิ!</string>
+    <string name="boost_plus_warning_toast">แอปนี้อาจส่งข้อความแบบพุชให้คุณ จะหยุดส่งข้อความหากเลือกช่องนี้</string>
+
+    <string name="device_admin_explanation">อนุญาตให้ Camera Pro ปิดแอปที่สูบแบตเตอรี่โดยอัตโนมัติ</string>
+    <string name="folder_remove_confirm_body">เมี่อลบโฟลเดอร์แล้ว ทุกแอปในโฟลเดอร์นี้จะไม่ปรากฏในเดสก์ท็อป</string>
+    <string name="folder_remove_confirm_title">ลบโฟลเดอร์</string>
+    <string name="folder_unpack_confirm_body">เมื่อปลดแพ็กโฟลเดอร์ ทางลัดจะย้ายไปยังเดสก์ท็อป</string>
+    <string name="hide_apps_guide_welcome_content">คุณสามารถซ่อนแอปส่วนตัวได้ที่นี่\n และเปิดโดยการใช้สองนิ้วปัดขึ้น</string>
+
+    <string name="hide_apps_remove_password_title">ลบรูปแบบการปลดล็อก</string>
+    <string name="hide_apps_reset_password_title">รีเซ็ตรูปแบบการปลดล็อก</string>
+    <string name="install_dialog_title">พบเวอร์ชันใหม่</string>
+    <string name="launcher_app_index_desc">สุดยอดแอปที่เป็นตัวคุณ</string>
+    <string name="launcher_app_index_title">จัดการแอปของคุณให้เป็นระเบียงและทำให้โทรศัพท์ของคุณเร็วขึ้น</string>
+    <string name="moment_good_afternoon">สวัสดีตอนบ่าย!</string>
+    <string name="moment_good_evening">สวัสดีตอนเย็น!</string>
+    <string name="moment_good_morning">สวัสดีตอนเช้า!</string>
+    <string name="moment_good_night">สวัสดีตอนกลางคืน!</string>
+
+    <string name="moment_nearby_title">ผู้คนใกล้เคียงกำลังใช้</string>
+    <string name="moment_news_title">ข่าว</string>
+
+    <string name="set_as_default_wizard_huawei_title">เลือก \"Camera Pro\"</string>
+    <string name="set_up">ติดตั้ง</string>
+    <string name="storm">พายุ</string>
+    <string name="update_toast_storage_not_ready">พื้นที่เก็บข้อมูลภายนอกไม่มีให้ใช้</string>
+
+    <string name="weather_tip_dust">อยู่ในที่ร่มดีกว่า</string>
+    <string name="weather_tip_hazy">มีสมาธิและขับรถอย่างปลอดภัย</string>
+    <string name="weather_tip_sleet">นำร่มไปด้วยและใส่เสื้อผ้าอุ่น ๆ</string>
+    <string name="weather_tip_snow">ใส่เสื้อผ้าอุ่น ๆ</string>
+    <string name="weather_tip_storm">นำร่มไปด้วย</string>
+    <string name="all_apps_more_horizontal">แนวนอน</string>
+    <string name="all_apps_more_vertical">แนวตั้ง</string>
+
+
+    <string name="folder_remove_confirm_positive">ลบ</string>
+    <string name="boost_plus_empty_view_text_line_1">อุปกรณ์ของคุณใช้ได้เต็มประสิทธิภาพแล้ว!</string>
+    <string name="wind_chime_remove_btn">ลบ</string>
+    <string name="battery_bluetooth">บลูทูธ</string>
+    <string name="boost_plus_memory_used">หน่วยความจำที่ใช้</string>
+    <string name="folder_unpack_confirm_positive">ปล่อย</string>
+    <string name="boost_plus_tip_battery_btn">ล้าง</string>
+    <string name="battery_title">แบตเตอรี</string>
+    <string name="weather_tip_thunderstorm">อยู่ในที่ร่มดีกว่า</string>
+    <string name="battery_mobile_data">ข้อมูลมือถือ</string>
+    <string name="battery_current">ปัจจุบัน</string>
+    <string name="boost_plus_settings_device_admin_title">เครื่องมือจัดการอุปกรณ์</string>
+    <string name="boost_plus_settings_device_admin_description">หากคุณต้องการที่จะยกเลิกการติดตั้ง Camera Proกรุณาปิดการทำงานเครื่องมือจัดการอุปกรณ์ก่อน </string>
+    <string name="boost_plus_start_toast">คลิ๊กที่บูสต์สองครั้งเพื่อเริ่มใช้งานบูสต์+!</string>
+    <string name="launcher_shortcut_boost">บูสต์ใน 1 แตะ </string>
+    <string name="notification_battery_consuming_title">%1$s แอพพลิเคชั่นที่กำลังใช้พลังงานอยู่ </string>
+    <string name="notification_battery_consuming_description">ปรับแต่งเพื่อยืดอายุการใช้งานแบตเตอรี่</string>
+    <string name="notification_boost_plus_title">%1$s แอพพลิเคชั่นที่ทำให้โทรศัพท์ทำงานช้าลง</string>
+    <string name="notification_boost_plus_content">บูสต์เครื่องเพื่อเร่งความเร็ว!</string>
+    <string name="battery_low_tip_title">พลังงานต่ำ!</string>
+    <string name="battery_low_tip_desc">ลองใช้งานเครื่องมือประหยัดแบตเตอรี่เพื่อลดการใช้พลังงานให้อยู่ในระดับต่ำที่สุด  </string>
+    <string name="launcher_widget_moment_title">แอร์ โมเมนต์</string>
+    <string name="wind_chime_remove_confirm_dialog_title">ต้องการลบ “แอร์ โมเมนต์” หรือไม่</string>
+    <string name="wind_chime_remove_confirm_dialog_description">คุณยังสามารถเข้าถึงแอร์ โมเมนต์ได้ด้วยการเข้าไปที่:&lt;br /&gt;เปิดใช้งานใน&lt;b&gt;เมนู&lt;/b&gt;-&gt;&lt;b&gt;วิดเจ็ตส์&lt;/b&gt;</string>
+    <string name="gesture_guide_content_down">เลื่อนลงเพื่อเปิดแอร์ โมเมนต์ อย่างรวดเร็ว </string>
+    <string name="gesture_guide_content_up">เลื่อนขึ้นเพื่อเปิดการค้นหาอย่างรวดเร็ว </string>
+    <string name="gesture_guide_got_it">เข้าใจแล้ว</string>
+    <string name="hide_apps_guide_new_install">แอพลิเคชั่นที่ติดตั้งเอาไว้ในปัจจุบันของคุณ</string>
+
+    <string name="battery_low_tip_btn_ok">ลองเลย</string>
+    <string name="weather_city_search_error_prompt">เครือข่ายขัดข้อง</string>
+    <string name="battery_low_tip_btn_cancel">ภายหลัง</string>
+
+    <string name="moment_lucky_draw">โชคดี Gift Grab</string>
+    <string name="moment_lucky_draw_tip">ทายดูสิว่าคุณจะได้อะไรจากในกล่อง จับให้ได้แล้วเพลิดเพลินไปกับเซอร์ไพรส์ต่างๆ จาก โชคดี!</string>
+    <string name="moment_lucky_start">จับเลย</string>
+    <string name="accessibility_authorize_try_again_title">ต้องการลองใหม่อีกครั้งหรือไม่</string>
+    <string name="accessibility_authorize_try_again_description">การเปิดการเข้าถึงสำหรับบูสต์+ ล้มเหลว ลองใหม่อีกครั้งเพื่อทำให้โทรศัพท์ของคุณทำงานได้เร็วขึ้น   </string>
+    <string name="accessibility_authorize_try_again_positive">ลองเลย</string>
+    <string name="news_load_more_re_try">คลิ๊กเพื่อลองใหม่อีกครั้ง</string>
+    <string name="boost_plus_authorize_title">ต้องการเปิดการเข้าถึงหรือไม่</string>
+    <string name="boost_plus_authorize_desc">บูสต์+ ต้องการการเข้าถึงเพื่อหยุดการทำงานของแอพพลิเคชั่นเหล่านี้ มันจะช่วยบูสต์โทรศัพท์ถึง 80\%% หรือมากกว่านั้น และยืดอายุแบตเตอรี่ ผู้ใช้ 200\%%!\n93\%% คนได้เปิดใช้งานแล้ว</string>
+    <string name="boost_plus_accessibility_service_description">แตะที่สวิตช์ด้านบน จากนั้นแตะที่ปุ่ม โอเค \nEnable to:\n1) Boost phone 80\%%\n2) จัดการแอพพลิเคชั่นที่กินแบตเตอรี่\nบูสต์+ ลงมือทำให้โทรศัพท์ของคุณทำงานได้เร็วขึ้น และจะไม่เก็บข้อมูลส่วนตัวใดๆ  </string>
+    <string name="boost_plus_security_setting_for_samsung_device">ตั้งค่ามันไว้ใน \'ล็อคสกรีน และความปลอดภัย\’!</string>
+    <string name="permission_guide_description">ค้นหา☆บูสต์+☆ แล้วเปิดใช้งาน </string>
+    <string name="boost_plus_freeable">ที่สามารถเคลียร์ได้</string>
+
+    <string name="accessibility_authorize_try_again_negative">ภายหลัง</string>
+    <string name="got_it">เข้าใจแล้ว</string>
+
+    <string name="boost_plus_clean_tip_prefix">Tips: </string>
+    <string-array name="boost_plus_clean_tips">
+        <item>ต้องใช้เวลาสักพักหนึ่งในการบังคับปิดแอปที่ดื้อรั้น กรุณารอ!</item>
+        <item>ใช้ เร่งเครื่อง+ ก่อนนอนเพื่อลดการสูบแบตเตอรี</item>
+        <item>เกมจะทำงานได้ดีขึ้นหลังจากที่ใช้ เร่งเครื่อง+</item>
+        <item>โทรศัพท์ร้อนเกินไปใช่ไหม? ขอความช่วยเหลือจาก เร่งเครื่อง+ สิ!</item>
+        <item>ใช่ เร่งเครื่อง+ บ่อย ๆ เพื่อให้โทรศัพท์ของคุณทำงานเร็วอยู่เสมอ</item>
+    </string-array>
+    <string name="boost_plus_optimal">เหมาะสม</string>
+    <string name="five_star_hint_text">คุณได้รับประสบการณ์จากเราอย่างไรบ้าง</string>
+    <string name="five_star_five_text">รัก</string>
+    <string name="five_star_four_text">ชอบ</string>
+    <string name="five_star_three_text">ก็ดี</string>
+    <string name="five_star_two_text">ไม่ชอบ</string>
+    <string name="five_star_one_text">เกลียด</string>
+    <string name="five_star_positive_text">ส่ง</string>
+    <string name="launcher_widget_market_title">App Picks</string>
+    <string name="locker_2g">2G</string>
+    <string name="locker_3g">3G</string>
+    <string name="locker_4g">4G</string>
+    <string name="locker_disable_confirm">แน่ใจหรือไม่ว่าต้องการปิด</string>
+    <string name="locker_disable_confirm_detail">หลังจากที่ปิด คุณสมบัติในหน้าจอล็อกเกอร์จะปิดลง คุณแน่ใจหรือไม่ว่าต้องการดำเนินการต่อ</string>
+    <string name="locker_diabled_success">ล็อกเกอร์ถูกปิด</string>
+    <string name="locker_menu_disable">ปิดใช้ล็อกเกอร์</string>
+    <string name="slide_to_unlock">เลื่อนเพื่อปลดล็อก</string>
+    <string name="locker_settings">ตั้งค่าล็อกเกอร์</string>
+    <string name="locker_settings_title">ล็อกเกอร์หน้าจอ</string>
+    <string name="locker_slide_wallpaper_title">ภาพพื้นหลังล็อกเกอร์</string>
+    <string name="locker_unkown">Unk</string>
+    <string name="locker_wallpaper_network_error">เครือข่ายผิดพลาด กรุณาลองอีกครั้ง</string>
+    <string name="moment_ad_title">AD</string>
+    <string name="moment_set_launcher">ตั้ง Camera Pro เป็น launcher เริ่มต้นเพื่อเร่งความเร็วโทรศัพท์คุณ!</string>
+    <string name="moment_set_locker">เปิดใช้การปกป้องแบตเตอรีเพื่อปกป้องอุปกรณ์จากการชาร์จมากเกินไป!</string>
+    <string name="moment_open_locker">แบตเตอรีของคุณอยู่ในการปกป้อง!</string>
+    <string name="result_page_card_battery_protection_title">การปกป้องแบตเตอรี</string>
+    <string name="result_page_card_battery_protection_description">เพิ่มความเร็วในการชาร์จแบตเตอรี 50\%% (อาจมีโฆษณา)</string>
+    <string name="result_page_card_battery_protection_toast">การปกป้องแบตเตอรีเปิดใช้งาน</string>
+    <string name="result_page_card_battery_saver_title">ประหยัดแบตเตอรี</string>
+    <string name="result_page_card_battery_saver_description_low_battery">เหลือพลังงาน %s ปรับแต่งเพื่อยืดเวลาใช้งานแบตเตอรี</string>
+    <string name="result_page_card_battery_saver_description_normal">พลังงานโทรศัพท์กำลังลดลงอย่างน่าใจหาย ปรับแต่งเพื่อยืดเวลาใช้งานแบตเตอรี</string>
+    <string name="result_page_card_boost_plus_description">แอปในเบื้องหลังจะทำให้เกิดการใช้พลังงานที่ไม่ปกติ ลองเร่งความเร็วขั้นสูงเพื่อปิดแอปเหล่านั้นเลย!</string>
+    <string name="result_page_card_boost_plus_promote_title">เหตุใดจึงต้องใช้ เร่งเครี่อง+?</string>
+    <string name="result_page_card_boost_plus_promote_description">แอปส่วนใหญ่ไม่สามารถปิดได้โดยการเร่งความเร็วแบบธรรมดา และทำให้โทรศัพท์คุณกระตุกอยู่เสมอ โชคดีที่ เร่งเครื่อง+ สามารถบังคับปิดแอปเหล่านั้นได้\nเร่งเครื่อง+ มีประสิทธิภาพในการทำความสะอาดซอฟต์แวร์มากกว่า 90\%%</string>
+    <string name="search_show_trending_words">แสดงข่าวที่กำลังมาแรง</string>
+    <string name="search_trending_news">ข่าวมาแรง</string>
+    <string name="search_trending_news_bottom">เรื่องราวเพิ่มเติม</string>
+    <string name="search_trending_news_latest">อัปเดตข่าวล่าสุด</string>
+    <string name="search_news_new_tag">ใหม่</string>
+    <string name="settings_badge_recommended_apps_hint">การกำหนดค่าอาจต้องได้รับการอนุญาต</string>
+    <string name="settings_badge_common_apps">แอปส่วนรวม</string>
+    <string name="settings_badge_common_apps_hint">การกำหนดค่าอาจต้องการเข้าถึงการแจ้งเตือน</string>
+
+    <string name="result_page_card_boost_plus_btn"> เร่งเครื่อง</string>
+    <string name="moment_locker_contains_ads">(มีโฆษณา)</string>
+    <string name="locker_settings_subtitle">(มีโฆษณา)</string>
+    <string name="result_page_card_battery_protection_btn">เปิดใช้งาน</string>
+    <string name="charging_screen_menu_item">ปิด</string>
+    <string name="result_page_card_boost_plus_title">เร่งเครื่อง+</string>
+
+    <string name="moment_try_it_now">ลองเลย</string>
+
+    <string name="news_network_error">เครือข่ายขัดข้อง</string>
+</resources>

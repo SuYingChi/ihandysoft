@@ -59,7 +59,7 @@ public class BubbleView extends View {
         bubbleList = new ArrayList<Bubble>(bubbles);
         //依次绘制气泡
         for (Bubble bubble : bubbleList) {
-            if(bubble == null){
+            if (bubble == null) {
                 continue;
             }
 
@@ -94,6 +94,10 @@ public class BubbleView extends View {
     }
 
     private void addBubble() {
+        if (bubbles.size() > 10) {
+            return;
+        }
+
         Bubble bubble = new Bubble();
         float speedY = 0;
         while (speedY < 1) {

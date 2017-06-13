@@ -50,7 +50,7 @@ import com.ihs.chargingscreen.ui.BubbleView;
 import com.ihs.chargingscreen.utils.ChargingAnalytics;
 import com.ihs.chargingscreen.utils.ChargingManagerUtil;
 import com.ihs.chargingscreen.utils.ChargingPrefsUtil;
-import com.ihs.chargingscreen.utils.CommonUtils;
+import com.ihs.chargingscreen.utils.ClickUtils;
 import com.ihs.chargingscreen.utils.DisplayUtils;
 import com.ihs.commons.config.HSConfig;
 import com.ihs.commons.notificationcenter.HSGlobalNotificationCenter;
@@ -296,7 +296,7 @@ public class ChargingScreenActivity extends Activity {
         imgSetting.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (CommonUtils.isFastDoubleClick()) {
+                if (ClickUtils.isFastDoubleClick()) {
                     return;
                 }
                 showPopupWindow(ChargingScreenActivity.this, imgSetting);
@@ -469,23 +469,21 @@ public class ChargingScreenActivity extends Activity {
             acbExpressAdView.destroy();
         }
         acbExpressAdView = null;
-
-        super.onDestroy();
-        ChargingPrefsUtil.getInstance().setChargingForFirstSession();
-
-        HSChargingManager.getInstance().removeChargingListener(chargingListener);
-
-        cancelAllAnimators();
-
         if (telephonyManager != null) {
             telephonyManager.listen(phoneStateListener, PhoneStateListener.LISTEN_NONE);
+            telephonyManager = null;
         }
-
+        HSChargingManager.getInstance().removeChargingListener(chargingListener);
+        cancelAllAnimators();
         handler.removeCallbacksAndMessages(null);
-
         if (null != closeDialog) {
             closeDialog.dismiss();
         }
+        super.onDestroy();
+        ChargingPrefsUtil.getInstance().setChargingForFirstSession();
+
+
+
 
     }
 
@@ -608,7 +606,7 @@ public class ChargingScreenActivity extends Activity {
             txtCloseChargingBoost.setOnClickListener(new OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    if (CommonUtils.isFastDoubleClick()) {
+                    if (ClickUtils.isFastDoubleClick()) {
                         return;
                     }
 

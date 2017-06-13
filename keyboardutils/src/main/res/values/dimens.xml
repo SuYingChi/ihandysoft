@@ -26,4 +26,86 @@
     <dimen name="result_page_action_button_light_width">20dp</dimen>
     <integer name="config_resultPageActionButtonRevealDuration">420</integer>
     <integer name="config_resultPageActionButtonFlashDuration">600</integer>
+
+    <!-- ========================== Lucky game  start ========================== -->
+    <dimen name="lucky_game_belt_divider_width">4dp</dimen>
+    <dimen name="lucky_game_large_box_width">95dp</dimen>
+    <dimen name="lucky_game_small_box_width">79dp</dimen>
+    <dimen name="lucky_game_bomb_width">68dp</dimen>
+
+    <!-- Offset from top edge of active zone, to bottom of arm body (not including arm hands) -->
+    <dimen name="lucky_game_arm_bottom_offset_up">-40dp</dimen>
+
+    <!-- Pivot for rotation on resource R.drawable.lucky_arm_hand, with left-top origin -->
+    <dimen name="lucky_game_arm_hand_pivot_y">5dp</dimen>
+
+    <!-- Hand (left / right) installation points (by hands rotation pivots) on resource R.drawable.lucky_arm_body,
+         with left-bottom origin and reversed Y axis -->
+    <dimen name="lucky_game_arm_left_hand_install_x">5.7dp</dimen>
+    <dimen name="lucky_game_arm_right_hand_install_x">67dp</dimen>
+    <dimen name="lucky_game_arm_hands_install_y">8.3dp</dimen>
+    <dimen name="lucky_game_go_button_pressed_translation_y">10dp</dimen>
+    <dimen name="lucky_game_go_button_bottom_clip_radius">10dp</dimen>
+    <dimen name="lucky_game_border_line_width">1.7dp</dimen>
+    <dimen name="lucky_game_border_outer_line_width">1dp</dimen>
+    <dimen name="lucky_game_border_line_offset_inner">9dp</dimen>
+    <dimen name="lucky_game_border_line_offset_outer">18dp</dimen>
+    <dimen name="lucky_game_empty_catch_arm_anim_translation_y">30dp</dimen>
+
+    <dimen name="lucky_game_award_chances_fragment_translation_y">50dp</dimen>
+    <dimen name="lucky_game_award_chances_initial_arm_offset_below_receive_btn">30dp</dimen>
+
+    <!-- Assumed award view dimensions in design documents. This is used for calculating size to adapt
+         screen sizes by scaling the whole view. -->
+    <dimen name="lucky_award_view_design_width">411dp</dimen>
+    <dimen name="lucky_award_view_design_height">677dp</dimen>
+    <dimen name="lucky_award_ad_view_container_top_margin">80dp</dimen>
+    <!--  ========================== Lucky game  end ==========================  -->
+
+    <!-- Boost+ -->
+    <dimen name="boost_icon_size">80dp</dimen>
+    <dimen name="boost_plus_action_btn_anim_translation">72dp</dimen>
+    <dimen name="boost_plus_optimal">23sp</dimen>
+    <dimen name="boost_plus_percent">48sp</dimen>
+    <dimen name="boost_plus_clean_boosted">23sp</dimen>
+    <dimen name="boost_plus_ring_size">219dp</dimen>
+
+
+    <!-- Shadows and outlines -->
+    <dimen name="blur_size_thin_outline">1dp</dimen>
+    <dimen name="blur_size_medium_outline">2dp</dimen>
+    <dimen name="blur_size_click_shadow">4dp</dimen>
+    <dimen name="click_shadow_high_shift">2dp</dimen>
+
+
+    <dimen name="container_fastscroll_thumb_min_width">6dp</dimen>
+    <dimen name="container_fastscroll_thumb_max_width">9dp</dimen>
+    <dimen name="container_fastscroll_thumb_height">72dp</dimen>
+    <dimen name="container_fastscroll_thumb_touch_inset">-24dp</dimen>
+    <dimen name="container_fastscroll_popup_size">72dp</dimen>
+    <dimen name="container_fastscroll_popup_text_size">48dp</dimen>
+    <dimen name="container_fastscroll_thumb_margin_height">2dp</dimen>
+
+
+    <!-- Dialog -->
+    <dimen name="dialog_elevation">24dp</dimen>
+    <dimen name="dialog_rounded_corner_radius">2.3dp</dimen>
+    <dimen name="dialog_button_rounded_corner_radius">3dp</dimen>
+    <dimen name="dialog_content_text_margin">16dp</dimen>
+    <dimen name="dialog_button_margin">16dp</dimen>
+    <dimen name="dialog_margin">40dp</dimen>
+    <dimen name="dialog_content_margin">24dp</dimen>
+    <dimen name="dialog_button_padding">16dp</dimen>
+
+
+    <!-- Locker -->
+    <dimen name="air_launcher_settings_single_line_item_row_height">74dp</dimen>
+    <dimen name="settings_item_text_size">17sp</dimen>
+    <dimen name="settings_item_content_text_size">16sp</dimen>
+    <dimen name="locker_toggle_height">407dp</dimen>
+    <dimen name="app_bar_elevation">4dp</dimen>
+    <dimen name="charging_popmenu_margin_right">60dp</dimen>
+    <dimen name="charging_screen_menu_to_top_height">32dp</dimen>
+
+    <integer name="google_play_services_version">10298000</integer>
 </resources>

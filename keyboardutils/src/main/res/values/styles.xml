@@ -52,4 +52,92 @@
         <item name="android:windowBackground">@color/interstitial_gift_ad_background</item>
         <item name="android:windowIsTranslucent">true</item>
     </style>
+
+    <style name="LuckyBannerImage">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_marginLeft">12dp</item>
+        <item name="android:layout_marginRight">12dp</item>
+    </style>
+
+    <style name="BaseWallpaperTheme" parent="@style/Theme.AppCompat.NoActionBar">
+        <item name="android:colorBackgroundCacheHint">@null</item>
+        <item name="android:windowShowWallpaper">true</item>
+        <item name="android:windowNoTitle">true</item>
+    </style>
+
+
+    <style name="Theme.TransparentWithNoTitle" parent="android:Theme">
+        <item name="android:windowIsTranslucent">true</item>
+        <item name="android:windowBackground">@android:color/transparent</item>
+        <item name="android:windowContentOverlay">@null</item>
+        <item name="android:windowNoTitle">true</item>
+        <item name="android:backgroundDimEnabled">false</item>
+        <item name="android:windowAnimationStyle">@null</item>
+    </style>
+
+    <style name="Icon">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">match_parent</item>
+        <item name="android:layout_gravity">center</item>
+        <item name="android:gravity">center_horizontal</item>
+        <item name="android:singleLine">true</item>
+        <item name="android:ellipsize">end</item>
+        <item name="android:lineSpacingMultiplier">0.8</item>
+        <item name="android:textColor">@color/workspace_icon_text_color</item>
+        <item name="android:shadowRadius">1.0</item>
+        <item name="android:shadowColor">@color/text_shadow</item>
+        <item name="android:fontFamily">sans-serif-condensed</item>
+        <item name="iconTextSizeOverride">13sp</item>
+    </style>
+
+    <attr name="iconTextSizeOverride" format="dimension" />
+
+
+    <style name="SettingsItem.SingleLine">
+        <item name="android:textColor">@color/material_text_black_primary</item>
+        <item name="android:lines">1</item>
+        <item name="android:textSize">@dimen/settings_item_content_text_size</item>
+        <item name="android:layout_centerVertical">true</item>
+        <item name="android:ellipsize">end</item>
+    </style>
+
+    <style name="SettingsItem">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_marginLeft">16dp</item>
+        <item name="android:layout_marginRight">16dp</item>
+        <item name="android:layout_alignParentLeft">true</item>
+        <item name="android:textSize">@dimen/settings_item_text_size</item>
+    </style>
+
+    <style name="SettingsToggleButton">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_alignParentRight">true</item>
+        <item name="android:layout_centerVertical">true</item>
+        <item name="android:layout_marginRight">20dp</item>
+        <item name="android:clickable">false</item>
+        <item name="android:background">@null</item>
+    </style>
+
+    <style name="ThemeAppBarActivity" parent="Theme.AppCompat.NoActionBar">
+        <item name="android:windowBackground">@color/app_bar_activities_content_bg</item>
+        <item name="colorSwitchThumbNormal">@color/material_color_switch_thumb</item>
+        <item name="android:colorForeground">@color/material_color_foreground</item>
+        <item name="colorAccent">@color/material_color_accent</item>
+    </style>
+    <style name="ThemeAppBarActivity.White" parent="ThemeAppBarActivity">
+        <item name="android:windowBackground">@android:color/white</item>
+    </style>
+
+    <!-- Charging Screen -->
+    <style name="ChargingScreenTransparentTheme" parent="Theme.AppCompat.Light.NoActionBar">
+        <item name="android:windowBackground">@android:color/transparent</item>
+        <item name="android:windowContentOverlay">@null</item>
+        <item name="android:windowIsTranslucent">true</item>
+        <item name="android:windowAnimationStyle">@null</item>
+        <item name="android:windowEnterAnimation">@null</item>
+        <item name="android:windowExitAnimation">@null</item>
+    </style>
 </resources>
