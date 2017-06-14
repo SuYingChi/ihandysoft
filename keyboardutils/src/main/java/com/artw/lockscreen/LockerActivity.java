@@ -79,7 +79,7 @@ public class LockerActivity extends AppCompatActivity implements INotificationOb
         }
         window.addFlags(FLAG_SHOW_WHEN_LOCKED);
         window.setSoftInputMode(SOFT_INPUT_STATE_ALWAYS_HIDDEN);
-        if (!LockerUtils.isKeyguardSecure(LockerActivity.this, false)) {
+        if (!LockerUtils.isKeyguardSecure(this)) {
             window.addFlags(FLAG_DISMISS_KEYGUARD);
         }
 
