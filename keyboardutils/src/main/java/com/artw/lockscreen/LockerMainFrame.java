@@ -56,7 +56,6 @@ public class LockerMainFrame extends RelativeLayout implements INotificationObse
 
     public static final String EVENT_SLIDING_DRAWER_OPENED = "EVENT_SLIDING_DRAWER_OPENED";
     public static final String EVENT_SLIDING_DRAWER_CLOSED = "EVENT_SLIDING_DRAWER_CLOSED";
-    public static final String LOCKER_NATIVE_AD_PLACEMENT_NAME = "ColorCam_A(NativeAds)ScreenLocker";
     private AcbExpressAdView acbExpressAdView;
 
     private boolean mIsSlidingDrawerOpened = false;
@@ -174,7 +173,7 @@ public class LockerMainFrame extends RelativeLayout implements INotificationObse
     protected void onAttachedToWindow() {
         super.onAttachedToWindow();
 
-        acbExpressAdView = new AcbExpressAdView(HSApplication.getContext(),LOCKER_NATIVE_AD_PLACEMENT_NAME);
+        acbExpressAdView = new AcbExpressAdView(HSApplication.getContext(),getContext().getString(R.string.ad_placement_locker));
         acbExpressAdView.setExpressAdViewListener(new AcbExpressAdView.AcbExpressAdViewListener() {
             @Override
             public void onAdClicked(AcbExpressAdView acbExpressAdView) {
