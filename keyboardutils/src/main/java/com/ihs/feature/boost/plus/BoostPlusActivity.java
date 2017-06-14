@@ -28,7 +28,6 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.ihs.app.analytics.HSAnalytics;
-import com.ihs.app.framework.activity.HSAppCompatActivity;
 import com.ihs.commons.config.HSConfig;
 import com.ihs.commons.notificationcenter.HSGlobalNotificationCenter;
 import com.ihs.commons.notificationcenter.INotificationObserver;
@@ -37,6 +36,8 @@ import com.ihs.commons.utils.HSLog;
 import com.ihs.device.clean.memory.HSAppMemory;
 import com.ihs.device.clean.memory.HSAppMemoryManager;
 import com.ihs.feature.boost.BoostTipUtils;
+import com.ihs.feature.common.ActivityUtils;
+import com.ihs.feature.common.BasePermissionActivity;
 import com.ihs.feature.common.FormatSizeBuilder;
 import com.ihs.feature.common.LauncherAnimUtils;
 import com.ihs.feature.common.LauncherTipManager;
@@ -61,7 +62,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Queue;
 
-public class BoostPlusActivity extends HSAppCompatActivity
+public class BoostPlusActivity extends BasePermissionActivity
         implements BoostPlusContracts.HomePage, BoostPlusContracts.View,
         View.OnClickListener, View.OnLongClickListener, CompoundButton.OnCheckedChangeListener, INotificationObserver {
 
@@ -201,16 +202,6 @@ public class BoostPlusActivity extends HSAppCompatActivity
     @Override
     protected void onResume() {
         super.onResume();
-        HSLog.d(TAG, "onResume mIsAccessibilitySettingsOpened = " + mIsAccessibilitySettingsOpened
-                + " mIsAccessibilityOpenSuccess = " + mIsAccessibilityOpenSuccess + " mIsCleanFinishedNeedReScan = " + mIsCleanFinishedNeedReScan);
-        if (mIsAccessibilitySettingsOpened && !mIsAccessibilityOpenSuccess) {
-            if (mIsHomeKeyClicked) {
-                mIsCleanFinishedNeedReScan = true;
-            } else {
-                showCleanAnimationDialog(BoostPlusCleanDialog.CLEAN_TYPE_NORMAL);
-            }
-            mIsAccessibilitySettingsOpened = false;
-        }
 
         HSLog.d(TAG, "onResume mIsHomeKeyClicked = " + mIsHomeKeyClicked + " mIsCleanFinishedNeedReScan = " + mIsCleanFinishedNeedReScan);
         if (mIsHomeKeyClicked && mIsCleanFinishedNeedReScan) {
@@ -273,7 +264,7 @@ public class BoostPlusActivity extends HSAppCompatActivity
 
         CommonUtils.setupTransparentSystemBarsForLmp(this);
         ActivityUtils.setNavigationBarColor(this, Color.BLACK);
-        LauncherActivityUtils.configSimpleAppBar(this, getString(R.string.launcher_widget_boost_plus_title), Color.TRANSPARENT, false);
+        ActivityUtils.configSimpleAppBar(this, getString(R.string.launcher_widget_boost_plus_title), Color.TRANSPARENT, false);
     }
 
     @Override
@@ -284,8 +275,6 @@ public class BoostPlusActivity extends HSAppCompatActivity
         HSGlobalNotificationCenter.removeObserver(this);
         mAnimationThrottler.removeCallbacksAndMessages(null);
         sDestroyed = true;
-        mIsAccessibilityOpenSuccess = false;
-        mIsAccessibilitySettingsOpened = false;
     }
 
     //endregion

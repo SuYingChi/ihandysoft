@@ -26,10 +26,8 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.acb.expressads.AcbExpressAdView;
-import com.artw.lockscreen.common.CommonUtils;
 import com.artw.lockscreen.common.LockerChargingScreenUtils;
 import com.artw.lockscreen.common.ScreenStatusReceiver;
-import com.artw.lockscreen.common.ViewUtils;
 import com.artw.lockscreen.shimmer.Shimmer;
 import com.artw.lockscreen.shimmer.ShimmerTextView;
 import com.artw.lockscreen.slidingdrawer.SlidingDrawer;
@@ -41,8 +39,10 @@ import com.ihs.app.framework.HSApplication;
 import com.ihs.commons.notificationcenter.HSGlobalNotificationCenter;
 import com.ihs.commons.notificationcenter.INotificationObserver;
 import com.ihs.commons.utils.HSBundle;
+import com.ihs.feature.common.ViewUtils;
 import com.ihs.flashlight.FlashlightManager;
 import com.ihs.keyboardutils.R;
+import com.ihs.keyboardutils.utils.CommonUtils;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;

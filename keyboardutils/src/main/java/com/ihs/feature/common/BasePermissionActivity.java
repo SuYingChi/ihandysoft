@@ -7,10 +7,9 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.os.Bundle;
 
-import com.honeycomb.launcher.dialog.LauncherFloatWindowManager;
-import com.honeycomb.launcher.util.CommonUtils;
 import com.ihs.app.framework.activity.HSAppCompatActivity;
 import com.ihs.commons.utils.HSLog;
+import com.ihs.keyboardutils.utils.CommonUtils;
 
 public abstract class BasePermissionActivity extends HSAppCompatActivity {
 
@@ -45,7 +44,7 @@ public abstract class BasePermissionActivity extends HSAppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
-        LauncherFloatWindowManager.getInstance().removeFloatButton();
+//        LauncherFloatWindowManager.getInstance().removeFloatButton();
     }
 
     @Override
