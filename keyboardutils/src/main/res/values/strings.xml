@@ -1,4 +1,4 @@
-<resources>
+<resources xmlns:tools="http://schemas.android.com/tools">
     <string name="app_name">keyboardutils</string>
     <string name="english_ime_name">KeyboardTemplate</string>
 
@@ -134,7 +134,7 @@
     <string name="charging_screen_charging_tip6" formatted="false">%s will reduce the charge to protect your battery during the fully charged mode.</string>
     <string name="charging_screen_charging_speed_charging_state_tip_view">Removing charger would be harmful to your battery</string>
     <string name="charging_screen_charging_continue_charging_state_tip_view">Phone is not charged, and it\’s safe to remove charger</string>
-    <string name="charging_screen_charging_trickle_charging_state_tip_view">Air Launcher is reducing the charge to protect your battery</string>
+    <string name="charging_screen_charging_trickle_charging_state_tip_view">App is reducing the charge to protect your battery</string>
     <string name="charging_screen_close_dialog_title">Turn Off Smart Charging?</string>
     <string name="charging_screen_close_dialog_content">If you turn off smart charging, you\'ll not be able to protect your battery anymore. Are you sure to turn it off?</string>
     <string name="charging_screen_close_dialog_negative_action">TURN OFF</string>
@@ -902,4 +902,245 @@
     <string name="guide_open_camera">Slide to open camera quickly</string>
     <string name="guide_open_control_centre">Slide to open Control Centre</string>
 >>>>>>> luckyboost
+
+
+    <!-- For libDevice:permanent -->
+    <string name="sync_account_type" translatable="false">com.honeycomb.launcher.sync_account</string>
+
+    <string name="install_btn">INSTALL</string>
+    <string name="popular_hot_text">HOT</string>
+
+    <string name="workspace_loading">Loading your desktop…</string>
+    <string-array name="workspace_loading_array">
+        <item>Loading your desktop</item>
+        <item>Loading your desktop.</item>
+        <item>Loading your desktop..</item>
+        <item tools:ignore="TypographyEllipsis">Loading your desktop...</item>
+    </string-array>
+
+    <string name="welcome_start_button">Get Started</string>
+    <string name="welcome_privacy_policy">Privacy Policy</string>
+    <string name="welcome_terms_of_service">Terms of Service</string>
+    <string name="welcome_viewpager_item_title_0">App</string>
+    <string name="welcome_viewpager_item_title_1">Fast</string>
+    <string name="welcome_viewpager_item_title_2">Save Battery</string>
+    <string name="welcome_viewpager_item_title_3">Cleaning</string>
+    <string name="welcome_viewpager_item_title_4">Themes</string>
+    <string name="welcome_viewpager_item_body_0">The world\'s fastest launcher app.\nIt is simple and beautiful.</string>
+    <string name="welcome_viewpager_item_body_1">App boosts your phone \n80% faster than ever.</string>
+    <string name="welcome_viewpager_item_body_2">App optimizes your phone\n power by 20%.</string>
+    <string name="welcome_viewpager_item_body_3">App cleans your phone\n as a new one.</string>
+    <string name="welcome_viewpager_item_body_4">Classic and trendy themes enrich your phone\n with unique style.</string>
+    <string name="welcome_wallpaper_title">Choose your wallpaper</string>
+    <string name="welcome_wallpaper_current">Current</string>
+    <string name="welcome_wallpaper_recommended">Recommended</string>
+
+    <!-- Default folder name -->
+
+    <string name="desktop_settings_title">Desktop settings</string>
+    <string name="hotseat_label_settings_title">Dock label</string>
+
+    <string name="customize_keyboard_title">Keyboard</string>
+    <string name="customize_locker_title">Locker</string>
+    <string name="online_theme_tab_title_hot">Hot</string>
+    <string name="online_theme_tab_title_new">New</string>
+    <string name="online_theme_tab_title_category">Categories</string>
+
+
+    <string name="online_wallpaper_tab_title_hot">Hot</string>
+
+
+    <string name="add_wallpaper">Add Wallpaper</string>
+    <string name="upload_wallpaper">Upload Wallpaper</string>
+    <string name="upload_wallpaper_button_text">Upload</string>
+    <string name="upload_wallpaper_tip">Tips：\n1. Image will be automatically scaled to optimum size\n2. Your image will be shown in \"Me\"\n3. High quality images are more possible to be collected by App\n4. Your image will show up in the feed after it\'s been reviewed</string>
+    <string name="upload_wallpaper_declaration">By uploading, you agree App\'s</string>
+    <string name="upload_wallpaper_success">Upload successfully</string>
+
+
+    <!-- Custom Alert -->
+
+    <string name="launcher_widget_desktop_ad_title">Air Board</string>
+
+    <string name="launcher_widget_desktop_settings_title">Desktop Settings</string>
+    <string name="launcher_widget_flashlight_promotion_title">Flashlight</string>
+    <string name="launcher_widget_one_tap_wallpaper_title">Shuffle</string>
+
+
+    <string name="set_as_default_boost_mem_body_1">Set App as home\nto make your phone run faster!</string>
+    <string name="set_as_default_boost_mem_body_2">Set App as home\nto enjoy a longer battery life!</string>
+    <string name="set_as_default_boost_mem_body_3">Set App as home\nto clean your phone completely!</string>
+
+    <!-- Desktop grid -->
+    <string name="desktop_grid_dialog_title">Desktop grid (Column × Row)</string>
+    <string-array name="desktop_grid_dialog_choices" translatable="false">
+        <item>4 × 4</item>
+        <item>4 × 5</item>
+        <item>4 × 6</item>
+        <item>5 × 4</item>
+        <item>5 × 5</item>
+        <item>5 × 6</item>
+        <item>6 × 4</item>
+        <item>6 × 5</item>
+        <item>6 × 6</item>
+    </string-array>
+    <string name="desktop_grid_separator" translatable="false">×</string>
+
+
+    <string name="notification_cpu_cooler_title">%1$s°C Phone Overheating!</string>
+    <string name="notification_cpu_cooler_content">Tap to cool down your phone!</string>
+
+
+    <!-- Device admin -->
+
+    <string name="search_bar_ad_content" translatable="false">AD</string>
+
+    <!-- Battery Main-->
+
+    <string name="gesture_guide_content_folder_down">Swipe down to start one-handed operation</string>
+    <string name="gesture_guide_content_two_up">Two fingers swipe up to open Hide Apps</string>
+
+    <string name="accessibility_service_label">☆App☆</string>
+
+    <string name="result_page_card_default_boost_plus_title">Why use Boost+?</string>
+    <string name="result_page_card_default_boost_plus_description">Auto-started apps can\'t be stopped by normal boost and always lag your phone. Use Boost+ to force stop them.\nBoost+ is more effective than 90\%% cleaner software.</string>
+    <string name="result_page_card_default_junk_cleaner_title">Use Junk Cleaner often</string>
+    <string name="result_page_card_default_junk_cleaner_description">Useless cache &amp; junk files always take up large phone space and lag your phone. Use Junk Cleaner to clean them completely.</string>
+    <string name="result_page_card_default_cpu_cooler_title">Why use CPU Cooler?</string>
+    <string name="result_page_card_default_cpu_cooler_description">CPU overheating will lag your phone, consume power and even cause phone explosion. Use CPU cooler to cool your phone down!</string>
+    <string name="result_page_card_default_battery_title">Battery life saver</string>
+    <string name="result_page_card_default_battery_description">Apps running in the background consume power all the time. Using Battery to extend battery life by 50\%% or more.</string>
+    <string name="result_page_card_default_notification_center_title">Why use Notification Cleaner?</string>
+    <string name="result_page_card_default_notification_center_description">Notification cleaner helps you hide unwanted notifications and clean them by 1 tap. Use it often to keep your phone clean!</string>
+
+    <!-- Junk Clean -->
+    <string name="accessibility_service_description" tools:ignore="UnusedResources">Turn on the switch above, then tap OK.\n\nEnable to:\n1) Boost phone 80\%%\n2) Clean junk files\n3) Kill battery draining apps\n\nBoost+ team is devoted to speed up your phone and never collects any personal data.</string>
+    <string name="notification_junk_clean_title">%1$s junk files found!</string>
+    <string name="notification_junk_clean_content">Clean to save phone space</string>
+    <string name="clean_title">Junk Cleaner</string>
+    <string name="clean_title_capital">JUNK CLEANER</string>
+    <string name="clean_capital">CLEAN</string>
+
+    <string name="clean_junk_found_title_case">Junk Found</string>
+    <string name="clean_junk_selected">Junk Selected</string>
+    <string name="clean_obsolete_apk">Obsolete Apk</string>
+    <string name="clean_system_junk">System Junk</string>
+    <string name="clean_hidden_cache_junk">Hidden Cache Junk</string>
+    <string name="clean_residual_files">Residual Files</string>
+    <string name="clean_app_junk">App Junk</string>
+    <string name="clean_ad_junk">Ad Junk</string>
+    <string name="clean_memory_cache">Memory Cache</string>
+    <string name="clean_powerful_clean">Powerful Clean</string>
+    <string name="clean_powerful_clean_description">%1$s more junk files to be cleaned! %2$s users have tried it.</string>
+    <string name="clean_need_authorization">%1$s stubborn junk files will be cleaned after accessibility enabled. Enable or not?</string>
+    <string name="clean_hidden_junk_dialog_message">%1$s stubborn junk files will be cleaned after accessibility enabled. Enable or not?</string>
+    <string name="clean_scanning">Scanning: %1$s</string>
+    <string name="clean_action_button_text">CLEAN (%1$s)</string>
+    <string name="clean_uninstall_dialog_content">%1$s left %2$s residual files. Clean up now!</string>
+    <string name="clean_install_dialog_content">%1$s APK(%2$s) is not deleted after installed. Clean up now!</string>
+    <string name="clean_stop_content">This may lead to unexpected residues. Proceed?</string>
+    <string name="clean_stop_title">Stop cleaning</string>
+    <string name="clean_card_content">Too many junk files found. Clean to boost your phone.</string>
+    <string name="installed">Installed</string>
+    <string name="uninstalled">Uninstalled</string>
+    <string name="skip">SKIP</string>
+
+    <!-- App promotions -->
+    <string name="promotion_security_title">Super Security</string>
+    <string name="promotion_security_banner_description">Scan and remove apps with malware or viruses that crash or slow your device.</string>
+    <string name="promotion_security_alert_title">Find 1 Suspect File</string>
+    <string name="promotion_security_alert_description">Install Super Security to clean this suspect file and protect your phone from malware and viruses.</string>
+    <string name="promotion_security_card_description">Your phone is being threatened by hidden risks, activate Super Security to protect your phone.</string>
+    <string name="promotion_max_card_title_cpu_cooler">CPU Cooler</string>
+    <string name="promotion_max_card_title_game_booster">Game Booster</string>
+    <string name="promotion_max_card_description_game_booster">Can\'t run games smoothly? Game booster boosts games at least by 30% automatically.</string>
+    <string name="promotion_max_card_title_app_locker">App Locker</string>
+    <string name="promotion_max_card_description_app_locker">Keep snoopers away from apps with private information.</string>
+    <string name="promotion_max_card_title_data_thieves">Data Thieves</string>
+    <string name="promotion_max_card_title_accessibility">Power Boost</string>
+    <string name="promotion_max_card_description_data_thieves">Check which apps are still using data while your screen is locked!</string>
+    <string name="promotion_max_card_description_accessibility">Many apps always start automatically. Stop them after accessibility enabled.</string>
+
+    <string name="promotion_set_now_btn">SET NOW</string>
+    <string name="promotion_enable_btn">ENABLE</string>
+    <string name="promotion_ignore_btn">IGNORE</string>
+    <string name="promotion_activate_btn">ACTIVATE</string>
+
+    <!-- TODO 1.4.0 new below -->
+    <string name="clean_ad_cache">AD Cache</string>
+    <string name="clean_app_cache">%1$s Cache</string>
+    <string name="boost_plus_normal_toast">Normal Boost!</string>
+    <string name="enable_now">ENABLE NOW</string>
+    <string name="notice">Notice</string>
+    <string name="accessibility_dialog_description">Detected: %1$s apps always auto start automatically. Stop them after accessibility enabled!</string>
+
+    <!-- Cpu Cooler -->
+    <string name="cpu_cooler_notification_title">CPU</string>
+    <string name="cpu_cooler_scanning_cpu">Scanning CPU…</string>
+    <string name="cpu_cooler_list_head_title">CPU-heating Apps</string>
+    <string name="cpu_cooler_button_title">COOL DOWN</string>
+    <string name="cpu_cooler_temperature_quantifier_celsius">℃</string>
+    <string name="cpu_cooler_state_hint">CPU is %s</string>
+    <string name="cpu_cooler_state_cool">cool</string>
+    <string name="cpu_cooler_state_overheated">overheated</string>
+    <string name="cpu_cooler_state_extremely_heated">Heated</string>
+    <string name="cpu_cooler_cleaning_hint">Closing CPU consumers…</string>
+    <string name="cpu_cooler_temperature_dropped">%1$s℃</string>
+    <string name="cpu_cooler_dropped_down">Dropped Down</string>
+    <string name="cpu_cooler_card_description">%1$s CPU temperature, cool your phone down now!</string>
+    <string name="cool_capital">COOL</string>
+
+    <string name="promotion_max_optimizer_title">Max Optimizer</string>
+    <string name="promotion_rainbow_key_title">RainbowKey</string>
+    <string name="promotion_camera_pro_title">Camera Pro</string>
+
+    <string name="promotion_security_description">Fast and secure, Super Security is the most reliable mobile security app for your phone.</string>
+    <string name="promotion_flashlight_description">Flashlight - the tiny, powerful, long-lasting free flashlight app. Brighten up your world unconsciously with simple one tap!</string>
+    <string name="promotion_max_description">MAX is an All-in-One phone optimizer with phone booster, junk cleaner &amp; security guard.</string>
+    <string name="promotion_rainbow_keyboard_description">Fancy Emojis &amp; Gifs, customizable stickers, flash swipe input are rolled into one colorful keyboard - RainbowKey.</string>
+    <string name="promotion_camera_description">Camera pro, the beauty selfie cam and FREE photo editor.</string>
+
+    <string name="promotion_dialog_action_btn">GET IT NOW</string>
+
+    <!-- folder add button -->
+    <string name="folder_add_button_title">Add Apps</string>
+
+    <!-- One tap wallpaper -->
+    <string name="wallpaper_change_revert">Revert</string>
+    <string name="wallpaper_change_retry">Try again</string>
+    <string name="wallpaper_change_more">More</string>
+    <string name="wallpaper_change_network_error">Oops! Something went wrong, please try again.</string>
+
+    <!--Notification Cleaner-->
+    <string name="notification_cleaner_title">Notification Cleaner</string>
+    <string name="notification_cleaner_clean_all">CLEAN ALL</string>
+    <string name="notification_cleaner_settings_description">Select apps to block notifications</string>
+    <string name="notification_cleaner_hidden_description">No Notifications</string>
+    <string name="notification_cleaner_intercepted" formatted="false">%s junk notifications</string>
+    <string name="notification_cleaner_clean_now">CLEAN NOW</string>
+    <string name="notification_cleaner_clean_now_tip">Hide unwanted notifications!\nKeep notification bar clean!</string>
+    <string name="notification_cleaner_accessibility_description">Permit access to clean junk notifications!</string>
+    <string name="notification_cleaner_guide_white_list">Settings for whitelist</string>
+    <string name="notification_cleaner_guide_details">Click notification for details</string>
+    <string name="notification_cleaner_cleared_up">%s notifications cleared up!</string>
+    <string name="notification_cleaner_block_closed">%1$s notifications will not be blocked.</string>
+    <string name="notification_cleaner_block_opened">%1$s notifications will be blocked.</string>
+    <string name="notification_cleaner_deleted">DELETED</string>
+    <string name="yesterday">Yesterday</string>
+    <string name="result_page_card_notification_cleaner_open_now">OPEN NOW</string>
+    <string name="theme_category_foot_text">- We are constantly making more beautiful themes. -</string>
+
+    <string name="all_apps_set_as_default">Set App as Home for an efficient home screen.</string>
+
+    <string name="smart_charging_spread_bottom_content_title">Smart Charging</string>
+    <string name="smart_charging_spread_bottom_content_des1">Auto close background apps</string>
+    <string name="smart_charging_spread_bottom_content_des2">Monitor charging status</string>
+    <string name="smart_charging_spread_bottom_content_des3">Full charge and overcharge alerts</string>
+    <string name="smart_charging_spread_tip">May contain ads.</string>
+    <string name="smart_charging_spread_button">OPEN NOW</string>
+    <string name="charging_screen_guide_title">Turn on Battery Protection to protect device from overcharging!\n(It may contain ads.)</string>
+    <string name="desktop_grid_settings_title">Desktop grid</string>
+    <string name="notification_battery_consuming_title_level">%1$s%% Battery Left!</string>
+    <string name="notification_clear_default_title">Home has been cleared</string>
+
 </resources>
