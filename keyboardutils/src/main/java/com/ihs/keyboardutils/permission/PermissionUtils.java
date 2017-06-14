@@ -55,7 +55,7 @@ public class PermissionUtils {
                 intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
             }
             HSApplication.getContext().startActivity(intent);
-            FloatWindowManager.getInstance().createPermissionTip(PermissionTip.TYPE_TEXT_USAGE);
+            PermissionFloatWindow.getInstance().createPermissionTip(PermissionTip.TYPE_TEXT_USAGE);
         }
     }
 }

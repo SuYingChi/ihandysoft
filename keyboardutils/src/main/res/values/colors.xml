@@ -25,6 +25,14 @@
     <color name="boost_result_text_cpu_temperature">#49c3fb</color>
     <color name="boost_result_text_battery">#46c096</color>
 
+    <!-- Boost plus -->
+    <color name="boost_plus_red">#ff4f3d</color>
+    <color name="boost_plus_yellow">#ffbe00</color>
+    <color name="boost_plus_blue">#2471E2</color>
+    <color name="boost_plus_clean_bg">#2572E3</color>
+    <color name="boost_plus_clean_green">#26DA45</color>
+    <color name="boost_plus_exiting_progressbar">#448aff</color>
+
 
     <!-- Containers -->
     <color name="container_fastscroll_thumb_inactive_color">#009688</color>

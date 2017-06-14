@@ -1,0 +1,288 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.honeycomb.launcher.view.CustomRootView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/view_container"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/boost_plus_red"
+    android:orientation="vertical">
+
+    <!-- 1. Animation container (not including overlay dialogs) -->
+    <RelativeLayout
+        android:id="@+id/clean_main_rl"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:clipChildren="false">
+
+        <!-- 1.1 Toolbar on top -->
+        <include
+            android:id="@+id/action_bar"
+            layout="@layout/white_toolbar"/>
+
+        <!-- 1.2 Most contents except fly-in icons -->
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:clipChildren="false"
+            android:gravity="center_horizontal">
+
+            <!-- 1.2.1 Center circle related items (not including bottom text display) -->
+            <RelativeLayout
+                android:id="@+id/cleaning_top_rl"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:clipChildren="false"
+                android:orientation="vertical">
+
+                <RelativeLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerInParent="true"
+                    android:visibility="visible">
+
+                    <android.support.v7.widget.AppCompatImageView
+                        android:id="@+id/dot_anchor_tag_iv"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerInParent="true"
+                        android:contentDescription="@string/app_name"
+                        android:visibility="invisible"
+                        app:srcCompat="@drawable/boost_plus_light_dot_svg"/>
+
+                    <ImageView
+                        android:id="@+id/circle_out_iv"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerInParent="true"
+                        android:alpha="0"
+                        android:contentDescription="@string/app_name"
+                        android:src="@drawable/boost_plus_circle_out"
+                        android:visibility="invisible"/>
+
+                    <ImageView
+                        android:id="@+id/circle_middle_iv"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerInParent="true"
+                        android:alpha="0"
+                        android:contentDescription="@string/app_name"
+                        android:rotation="90"
+                        android:scaleX="0.9"
+                        android:scaleY="0.9"
+                        android:src="@drawable/boost_plus_circle_out"
+                        android:visibility="invisible"/>
+
+                    <ImageView
+                        android:id="@+id/circle_in_iv"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerInParent="true"
+                        android:alpha="0"
+                        android:contentDescription="@string/app_name"
+                        android:rotation="-90"
+                        android:scaleX="0.78"
+                        android:scaleY="0.78"
+                        android:src="@drawable/boost_plus_circle_out"
+                        android:visibility="invisible"/>
+
+                    <LinearLayout
+                        android:id="@+id/boosting_text_ll"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerInParent="true"
+                        android:orientation="vertical"
+                        android:visibility="invisible">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/boost_plus_memory_used"
+                            android:textColor="@android:color/white"
+                            android:textSize="18sp"/>
+
+                        <LinearLayout
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center"
+                            android:layout_marginTop="10dp"
+                            android:orientation="horizontal">
+
+                            <com.honeycomb.launcher.boost.plus.BoostTextView
+                                android:id="@+id/memory_used_number_tv"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text=""
+                                android:textColor="@android:color/white"
+                                android:textSize="40sp"/>
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="@string/megabyte_abbr"
+                                android:textColor="@android:color/white"
+                                android:textSize="20sp"/>
+                        </LinearLayout>
+                    </LinearLayout>
+                </RelativeLayout>
+
+                <ImageView
+                    android:id="@+id/boost_center_iv"
+                    android:layout_width="@dimen/boost_icon_size"
+                    android:layout_height="@dimen/boost_icon_size"
+                    android:layout_centerInParent="true"
+                    android:contentDescription="@string/app_name"
+                    android:visibility="invisible"/>
+            </RelativeLayout>
+
+            <!-- 1.2.2 Bottom text display -->
+            <RelativeLayout
+                android:id="@+id/cleaning_bottom_rl"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/cleaning_top_rl"
+                android:layout_marginTop="28dp"
+                android:clipChildren="false">
+
+                <TextView
+                    android:id="@+id/cleaning_running_apps_number_tv"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerHorizontal="true"
+                    android:text=""
+                    android:textColor="@android:color/white"
+                    android:textSize="19sp"
+                    android:visibility="visible"/>
+
+                <TextView
+                    android:id="@+id/cleaning_running_apps_tv"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/cleaning_running_apps_number_tv"
+                    android:layout_centerHorizontal="true"
+                    android:layout_marginTop="10dp"
+                    android:text="@string/boost_plus_cleaning_running_apps"
+                    android:textColor="@android:color/white"
+                    android:textSize="19sp"
+                    android:visibility="visible"/>
+
+                <LinearLayout
+                    android:id="@+id/tip_container"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/cleaning_running_apps_tv"
+                    android:layout_centerHorizontal="true"
+                    android:layout_marginLeft="50dp"
+                    android:layout_marginRight="50dp"
+                    android:layout_marginTop="25dp"
+                    android:orientation="horizontal">
+
+                    <com.honeycomb.launcher.view.TypefacedTextView
+                        android:id="@+id/tip_title_tv"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="top"
+                        android:layout_marginEnd="4dp"
+                        android:layout_marginRight="4dp"
+                        android:maxLines="3"
+                        android:text="@string/boost_plus_clean_tip_prefix"
+                        android:textColor="@android:color/white"
+                        android:textSize="16sp"
+                        android:visibility="visible"
+                        app:typeface="@string/roboto_medium"/>
+
+                    <com.honeycomb.launcher.view.TypefacedTextView
+                        android:id="@+id/tip_tv"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_vertical"
+                        android:layout_marginTop="1.5dp"
+                        android:maxLines="3"
+                        android:textColor="@color/material_text_white_secondary"
+                        android:textSize="14sp"
+                        android:visibility="visible"
+                        app:typeface="@string/roboto_regular"
+                        tools:text="It takes a while to force stop stubborn apps. Please be patient."/>
+                </LinearLayout>
+            </RelativeLayout>
+
+            <!-- 1.2.3 Space -->
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="20dp"
+                android:layout_below="@+id/cleaning_bottom_rl"
+                android:visibility="invisible"/>
+
+            <!-- 1.2.4 Rocket -->
+            <ImageView
+                android:id="@+id/rocket_iv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_above="@+id/cleaning_bottom_rl"
+                android:layout_centerHorizontal="true"
+                android:contentDescription="@string/app_name"
+                android:src="@drawable/boost_plus_rocket"
+                android:visibility="invisible"/>
+
+            <!-- 1.2.5 Rocket trail -->
+            <ImageView
+                android:id="@+id/smoke_iv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/rocket_iv"
+                android:layout_centerHorizontal="true"
+                android:contentDescription="@string/app_name"
+                android:src="@drawable/boost_plus_smoke"
+                android:visibility="invisible"/>
+        </RelativeLayout>
+
+        <!-- 1.3 Fly-in icons -->
+        <include
+            android:id="@+id/boost_icon"
+            layout="@layout/boost_black_hole_icons"/>
+    </RelativeLayout>
+
+    <!-- 2. Stop-cleaning confirmation dialog -->
+    <include
+        android:id="@+id/stop_dialog_view"
+        layout="@layout/activity_custom_alert"
+        android:visibility="gone"/>
+
+    <!-- 3. Exiting progress dialog -->
+    <RelativeLayout
+        android:id="@+id/exiting_rl"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/dark_translucent_bg"
+        android:visibility="gone">
+
+        <LinearLayout
+            android:layout_width="260dp"
+            android:layout_height="170dp"
+            android:layout_centerInParent="true"
+            android:background="@drawable/card_rounded_corner_bg"
+            android:gravity="center"
+            android:orientation="vertical">
+
+            <com.honeycomb.launcher.customize.view.ProgressWheel
+                android:id="@+id/exiting_progress_wheel"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                app:barColor="@color/boost_plus_exiting_progressbar"
+                app:barWidth="3dp"
+                app:circleRadius="52dp"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="12dp"
+                android:fontFamily="sans-serif"
+                android:text="@string/boost_plus_exiting"
+                android:textColor="@android:color/black"
+                android:textSize="18sp"/>
+        </LinearLayout>
+    </RelativeLayout>
+</com.honeycomb.launcher.view.CustomRootView>

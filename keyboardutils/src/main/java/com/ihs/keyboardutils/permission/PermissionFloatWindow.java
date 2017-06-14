@@ -13,15 +13,15 @@ import com.ihs.app.analytics.HSAnalytics;
 import com.ihs.app.framework.HSApplication;
 
 
-public class FloatWindowManager {
-    private static FloatWindowManager instance;
+public class PermissionFloatWindow {
+    private static PermissionFloatWindow instance;
 
     private PermissionTip permissionTip;
     private LayoutParams permissionTipWindowParams;
 
-    public synchronized static FloatWindowManager getInstance() {
+    public synchronized static PermissionFloatWindow getInstance() {
         if (null == instance) {
-            instance = new FloatWindowManager();
+            instance = new PermissionFloatWindow();
         }
         return instance;
     }
