@@ -356,7 +356,7 @@ public class ChargingScreenActivity extends Activity {
 
         // 单次关闭广告或永久删除广告
         final ImageView removeAds = (ImageView) findViewById(R.id.remove_ads);
-        if (!RemoveAdsManager.getInstance().isRemoveAdsPurchased()) {
+        if (RemoveAdsManager.getInstance().isRemoveAdsPurchased()) {
             removeAds.setVisibility(View.GONE);
         } else {
             removeAds.setOnClickListener(new OnClickListener() {

@@ -340,7 +340,7 @@ public class NativeAdView extends FrameLayout {
     }
 
     private void refresh() {
-        if (!RemoveAdsManager.getInstance().isRemoveAdsPurchased()) {
+        if (RemoveAdsManager.getInstance().isRemoveAdsPurchased()) {
             return;
         }
 

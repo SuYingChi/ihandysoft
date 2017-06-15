@@ -46,7 +46,7 @@ public class RemoveAdsManager {
     }
 
     public void purchaseRemoveAds() {
-        if (!isRemoveAdsPurchased()) {
+        if (isRemoveAdsPurchased()) {
             return;
         }
 
