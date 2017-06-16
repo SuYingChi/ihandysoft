@@ -144,8 +144,8 @@ public class LockerSlidingUpCallback implements SlidingUpCallback {
                 } else {
                     if (NavUtils.startCamera(HSApplication.getContext())) {
                         HSAnalytics.logEvent("Locker_Camera_Opened", "install_type", PublisherUtils.getInstallType());
-                        HSGlobalNotificationCenter.sendNotification(LockerActivity.EVENT_FINISH_SELF);
                     }
+                    HSGlobalNotificationCenter.sendNotification(LockerActivity.EVENT_FINISH_SELF);
                 }
             }
         });
