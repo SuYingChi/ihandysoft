@@ -100,7 +100,8 @@ public class LockerActivity extends AppCompatActivity implements INotificationOb
         HSGlobalNotificationCenter.addObserver(EVENT_FINISH_SELF, this);
 
         // Add guide view
-        if (LockerSettings.getLockerShowCount() == 0) {
+        boolean isLockerGuideEnabled = getResources().getBoolean(R.bool.locker_guide_enabled);
+        if (isLockerGuideEnabled && LockerSettings.getLockerShowCount() == 0) {
             final LockerGuideView guideView = (LockerGuideView) getLayoutInflater().inflate(R.layout.locker_guide_view, container, false);
             guideView.setPadding(0, 0, 0, CommonUtils.getNavigationBarHeightUnconcerned(this));
             guideView.setOnFinishListener(new LockerGuideView.OnFinishListener() {
