@@ -52,6 +52,7 @@ import com.ihs.feature.ui.SafeLinearLayoutManager;
 import com.ihs.keyboardutils.BuildConfig;
 import com.ihs.keyboardutils.R;
 import com.ihs.keyboardutils.utils.CommonUtils;
+import com.ihs.keyboardutils.utils.ToastUtils;
 
 import java.util.ArrayDeque;
 import java.util.ArrayList;
@@ -371,8 +372,6 @@ public class BoostPlusActivity extends BasePermissionActivity
 
     @Override
     public void onBackPressed() {
-        boolean isPermissionGuideVisible = LauncherFloatWindowManager.getInstance().isPermissionGuideShowing();
-        boolean isFloatButtonVisible = LauncherFloatWindowManager.getInstance().isFloatButtonShowing();
         boolean isBoostCleanVisible = FloatWindowManager.getInstance().isDialogShowing(FloatWindowManager.Type.BOOST_PLUS_CLEAN);
         boolean isCleaning = HSAccTaskManager.getInstance().isRunning();
 
