@@ -58,13 +58,15 @@ public class ScreenLockerManager {
                     enableLockerFromAlert();
                 }else if(s.equals(HSNotificationConstant.HS_CONFIG_CHANGED)){
                     LockerSettings.setLockerEnabled(LockerSettings.isLockerEnabled(),"plist");
+                }else if(s.equals(HSNotificationConstant.HS_SESSION_END)){
+                    LockerSettings.setLockerForFirstSession();
                 }
             }
         };
         HSGlobalNotificationCenter.addObserver(ChargingScreenActivity.NOTIFICATION_CHARGING_ACTIVITY_STARTED, observer);
         HSGlobalNotificationCenter.addObserver(ChargingFullScreenAlertDialogActivity.NOTIFICATION_LOCKER_ENABLED, observer);
-
-
+        HSGlobalNotificationCenter.addObserver(HSNotificationConstant.HS_CONFIG_CHANGED, observer);
+        HSGlobalNotificationCenter.addObserver(HSNotificationConstant.HS_SESSION_END, observer);
     }
 
     public static void enableLockerFromAlert() {

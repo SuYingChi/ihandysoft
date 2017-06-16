@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Rect;
 import android.graphics.RectF;
+import android.os.Build;
 import android.support.v4.content.ContextCompat;
 import android.text.TextUtils;
 import android.view.MotionEvent;
@@ -71,20 +72,20 @@ public class LockerUtils {
         return defaultValue;
     }
 
-    public static boolean isKeyguardSecure(Context context, boolean defaultValue) {
-        KeyguardManager keyguardManager = (KeyguardManager) context.getSystemService(Context.KEYGUARD_SERVICE);
-        try {
-            Method declaredMethod = KeyguardManager.class.getDeclaredMethod("isKeyguardSecure", new Class[0]);
-            declaredMethod.setAccessible(true);
-            defaultValue = ((Boolean) declaredMethod.invoke(keyguardManager, new Object[0])).booleanValue();
-        } catch (NoSuchMethodException e) {
-            e.printStackTrace();
-        } catch (InvocationTargetException e2) {
-            e2.printStackTrace();
-        } catch (IllegalAccessException e3) {
-            e3.printStackTrace();
+    public static boolean isKeyguardSecure(Context context) {
+        boolean keyguardSecure;
+        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.JELLY_BEAN) {
+            keyguardSecure = false;
+        } else {
+            KeyguardManager keyguardManager = (KeyguardManager) context.getSystemService(Context.KEYGUARD_SERVICE);
+
+            if (keyguardManager == null) {
+                keyguardSecure = false;
+            } else {
+                keyguardSecure = keyguardManager.isKeyguardSecure();
+            }
         }
-        return defaultValue;
+        return keyguardSecure;
     }
 
 }

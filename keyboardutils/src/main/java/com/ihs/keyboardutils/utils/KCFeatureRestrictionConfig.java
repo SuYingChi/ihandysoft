@@ -14,7 +14,7 @@ public final class KCFeatureRestrictionConfig {
     private static final String CONFIG_KEY_DELAY_HOURS = "HoursFromFirstUse";
     private static final String CONFIG_KEY_REGION_BLACKLIST = "RegionException";
     private static final String CONFIG_KEY_TIME_ZONE_BLACKLIST = "TimeZoneException";
-    private static final String CONFIG_KEY_ENABLED = "Enabled";
+    private static final String CONFIG_KEY_ALWAYS = "Always";
 
     public static boolean isFeatureRestricted(String featureName) {
         Map<String, ?> featureRestrictionConfig = HSConfig.getMap(CONFIG_KEY_APPLICAITON, CONFIG_KEY_FEATURE_RESTRICTION, featureName);
@@ -22,8 +22,8 @@ public final class KCFeatureRestrictionConfig {
             return false;
         }
 
-        boolean enabled = HSConfig.optBoolean(true, CONFIG_KEY_APPLICAITON, CONFIG_KEY_FEATURE_RESTRICTION, featureName, CONFIG_KEY_ENABLED);
-        if (!enabled) {
+        boolean always = HSConfig.optBoolean(false, CONFIG_KEY_APPLICAITON, CONFIG_KEY_FEATURE_RESTRICTION, featureName, CONFIG_KEY_ALWAYS);
+        if (always) {
             return true;
         }
 

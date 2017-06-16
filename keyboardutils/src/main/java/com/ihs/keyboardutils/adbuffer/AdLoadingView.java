@@ -37,12 +37,14 @@ public class AdLoadingView extends RelativeLayout implements NativeAdView.OnAdLo
     private int delayAfterDownloadComplete;
     private ImageView progressBar;
     private boolean progressComplete;
+    private boolean showCloseButtonWhenFinish;
 
     //下载延迟常量
     private static final int DELAY_PERCENT_AFTER_DOWNLOAD_COMPLETE = 5;
     private boolean hasPurchaseNoAds = false;
     private boolean isAdFlashAnimationPlayed = false;
     private ViewTreeObserver.OnGlobalLayoutListener mGlobalLayoutListener;
+    private View closeButton;
 
     @Override
     public void onAdClicked(NativeAdView adView) {
@@ -84,14 +86,15 @@ public class AdLoadingView extends RelativeLayout implements NativeAdView.OnAdLo
             initAdView();
         }
 
-        findViewById(R.id.iv_close).setOnClickListener(new OnClickListener() {
+        closeButton = findViewById(R.id.iv_close);
+        closeButton.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
                 dismissSelf();
             }
         });
 
-        findViewById(R.id.iv_close).setBackgroundDrawable(
+        closeButton.setBackgroundDrawable(
                 RippleDrawableUtils.getTransparentRippleBackground());
 
         progressBar = (ImageView) findViewById(R.id.iv_pb);
@@ -202,11 +205,11 @@ public class AdLoadingView extends RelativeLayout implements NativeAdView.OnAdLo
 
             @Override
             public void onAnimationEnd(Animator animation) {
-
+                closeButton.setVisibility(VISIBLE);
                 tvApply.setText(onLoadingText[1]);
 
                 progressBar.setVisibility(INVISIBLE);
-                findViewById(R.id.iv_close).setVisibility(VISIBLE);
+                closeButton.setVisibility(VISIBLE);
                 progressComplete = true;
             }
 
@@ -231,6 +234,21 @@ public class AdLoadingView extends RelativeLayout implements NativeAdView.OnAdLo
         this.hasPurchaseNoAds = hasPurchaseNoAds;
     }
 
+    public void setIconImageVisibility(int visibility){
+        findViewById(R.id.iv_icon).setVisibility(visibility);
+    }
+
+    public void setLoadingTextSize(float size){
+        tvApply.setTextSize(size);
+    }
+
+    public void hideCloseButtonUntilSuccess(boolean showCloseButtonWhenFinish){
+        this.showCloseButtonWhenFinish = showCloseButtonWhenFinish;
+        if (showCloseButtonWhenFinish){
+            closeButton.setVisibility(INVISIBLE);
+        }
+    }
+
     public void showInDialog() {
         KCAnalyticUtil.logEvent("app_alert_applyingItem_show");
         dialog = new AdLoadingDialog(getContext());
@@ -249,7 +267,7 @@ public class AdLoadingView extends RelativeLayout implements NativeAdView.OnAdLo
         KCAnalyticUtil.logEvent("NativeAds_A(NativeAds)ApplyingItem_Show");
     }
 
-    private void dismissSelf() {
+    public void dismissSelf() {
         if (nativeAdView != null) {
             nativeAdView.release();
             isAdFlashAnimationPlayed = false;

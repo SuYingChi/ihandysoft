@@ -55,14 +55,6 @@
         </receiver>
 
         <activity
-            android:name="com.ihs.chargingscreen.activity.DismissKeyguradActivity"
-            android:configChanges="keyboard|keyboardHidden|orientation"
-            android:excludeFromRecents="true"
-            android:launchMode="singleTop"
-            android:screenOrientation="portrait"
-            android:taskAffinity="com.ihs.chargingScreen"
-            android:theme="@style/custom_titlebar_with_transparent_bg" />
-        <activity
             android:name="com.ihs.chargingscreen.activity.ChargingFullScreenAlertDialogActivity"
             android:theme="@style/Transparent" />
 
