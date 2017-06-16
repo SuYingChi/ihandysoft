@@ -8,7 +8,6 @@ import android.support.annotation.Nullable;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
-import android.widget.Toast;
 
 import com.ihs.app.framework.HSApplication;
 import com.ihs.chargingscreen.utils.ChargingManagerUtil;
@@ -84,7 +83,6 @@ public class ChargingFullScreenAlertDialogActivity extends Activity {
                     @Override
                     public void onClick(View view) {
                         ChargingManagerUtil.enableCharging(false,"alert");
-                        Toast.makeText(HSApplication.getContext(), HSApplication.getContext().getString(R.string.charging_enable_alert_toast), Toast.LENGTH_SHORT).show();
                         KCAnalyticUtil.logEvent("alert_charging_click");
                     }
                 })
