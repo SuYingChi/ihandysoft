@@ -7,21 +7,17 @@ import android.view.View;
 import android.widget.CompoundButton;
 import android.widget.RelativeLayout;
 
-import com.honeycomb.launcher.BuildConfig;
-import com.honeycomb.launcher.R;
-import com.honeycomb.launcher.boost.auto.AutoCleanService;
-import com.honeycomb.launcher.boost.auto.LockHelper;
-import com.honeycomb.launcher.debug.Profiler;
-import com.honeycomb.launcher.dialog.BoostPlusAutoCleanTip;
-import com.honeycomb.launcher.dialog.LauncherTipManager;
-import com.honeycomb.launcher.receiver.AdminReceiver;
-import com.honeycomb.launcher.settings.BaseSettingsActivity;
-import com.honeycomb.launcher.util.PermissionUtils;
-import com.honeycomb.launcher.util.ViewUtils;
+import com.artw.lockscreen.common.BaseSettingsActivity;
 import com.ihs.app.analytics.HSAnalytics;
 import com.ihs.commons.utils.HSPreferenceHelper;
+import com.ihs.feature.common.AdminReceiver;
+import com.ihs.feature.common.LauncherTipManager;
+import com.ihs.feature.common.Profiler;
+import com.ihs.feature.common.ViewUtils;
+import com.ihs.keyboardutils.BuildConfig;
+import com.ihs.keyboardutils.R;
+import com.ihs.keyboardutils.permission.PermissionUtils;
 
-import hugo.weaving.DebugLog;
 
 public class BoostPlusSettingsActivity extends BaseSettingsActivity implements
         View.OnClickListener, SwitchCompat.OnCheckedChangeListener {
@@ -45,7 +41,7 @@ public class BoostPlusSettingsActivity extends BaseSettingsActivity implements
         return R.string.launcher_widget_boost_plus_title;
     }
 
-    @DebugLog
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         if (BuildConfig.DEBUG) {
@@ -102,30 +98,29 @@ public class BoostPlusSettingsActivity extends BaseSettingsActivity implements
 
     @Override
     public void onClick(View v) {
-        switch (v.getId()) {
-            case R.id.boost_plus_settings_auto_boost_cell:
-                if (mAutoBoostToggle.isChecked() || checkDeviceEnvironment(true)) {
-                    mAutoBoostToggle.performClick();
+        int i = v.getId();
+        if (i == R.id.boost_plus_settings_auto_boost_cell) {
+            if (mAutoBoostToggle.isChecked() || checkDeviceEnvironment(true)) {
+                mAutoBoostToggle.performClick();
+            }
+
+        } else if (i == R.id.boost_plus_settings_device_admin_cell) {
+            if (mDeviceAdminToggle.isChecked()) {
+                HSAnalytics.logEvent("BoostPlus_DeviceAdmin_Close");
+                mInObserverMode = true;
+                // deativeAdmin is async
+                boolean deactived = AdminReceiver.deactiveAdmin(this);
+                if (deactived) {
+                    v.postDelayed(new Runnable() {
+                        @Override
+                        public void run() {
+                            refresh();
+                        }
+                    }, 200);
                 }
-                break;
-            case R.id.boost_plus_settings_device_admin_cell:
-                if (mDeviceAdminToggle.isChecked()) {
-                    HSAnalytics.logEvent("BoostPlus_DeviceAdmin_Close");
-                    mInObserverMode = true;
-                    // deativeAdmin is async
-                    boolean deactived = AdminReceiver.deactiveAdmin(this);
-                    if (deactived) {
-                        v.postDelayed(new Runnable() {
-                            @Override
-                            public void run() {
-                                refresh();
-                            }
-                        }, 200);
-                    }
-                }
-                break;
-            default:
-                break;
+            }
+
+        } else {
         }
     }
 

@@ -39,22 +39,32 @@ import com.ihs.commons.notificationcenter.INotificationObserver;
 import com.ihs.commons.utils.HSBundle;
 import com.ihs.commons.utils.HSLog;
 import com.ihs.commons.utils.HSPreferenceHelper;
+import com.ihs.device.clean.accessibility.HSAccTaskManager;
 import com.ihs.device.clean.memory.HSAppMemory;
 import com.ihs.device.clean.memory.HSAppMemoryManager;
 import com.ihs.feature.boost.animation.BoostAnimationManager;
 import com.ihs.feature.boost.animation.DynamicRotateAnimation;
 import com.ihs.feature.common.LauncherAnimUtils;
 import com.ihs.feature.common.LauncherFiles;
+import com.ihs.feature.common.NotificationCenter;
 import com.ihs.feature.common.PreferenceHelper;
 import com.ihs.feature.common.Thunk;
 import com.ihs.feature.common.Utils;
 import com.ihs.feature.common.VectorCompat;
 import com.ihs.feature.common.ViewUtils;
+import com.ihs.feature.resultpage.ResultPageActivity;
 import com.ihs.feature.ui.FloatWindowManager;
 import com.ihs.feature.ui.FullScreenDialog;
+import com.ihs.feature.ui.LauncherFloatWindowManager;
+import com.ihs.feature.ui.ProgressWheel;
 import com.ihs.feature.ui.SafeWindowManager;
+import com.ihs.keyboardutils.BuildConfig;
+import com.ihs.keyboardutils.R;
 import com.ihs.keyboardutils.utils.CommonUtils;
 import com.ihs.keyboardutils.utils.LauncherAnimationUtils;
+import com.ihs.permission.HSPermissionRequestCallback;
+import com.ihs.permission.HSPermissionRequestMgr;
+import com.ihs.permission.HSPermissionType;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -63,7 +73,6 @@ import java.util.EnumSet;
 import java.util.List;
 import java.util.Random;
 
-import static com.flurry.sdk.bb.R;
 
 public class BoostPlusCleanDialog extends FullScreenDialog {
 
@@ -218,8 +227,8 @@ public class BoostPlusCleanDialog extends FullScreenDialog {
             Toast.makeText(context, context.getString(R.string.boost_plus_normal_toast), Toast.LENGTH_LONG).show();
             BoostPlusUtils.setNormalCleanToasted();
         }
-        com.honeycomb.launcher.dialog.LauncherFloatWindowManager.getInstance().showDialog(context,
-                com.honeycomb.launcher.dialog.LauncherFloatWindowManager.Type.BOOST_PLUS_CLEAN, type);
+        LauncherFloatWindowManager.getInstance().showDialog(context,
+                LauncherFloatWindowManager.Type.BOOST_PLUS_CLEAN, type);
     }
 
     public BoostPlusCleanDialog(Context context, int type) {
@@ -659,7 +668,7 @@ public class BoostPlusCleanDialog extends FullScreenDialog {
             cleanFinished();
         }
         mIsResultViewShow = true;
-        com.honeycomb.launcher.dialog.LauncherFloatWindowManager.isRemoveDialogFrozen = false;
+        LauncherFloatWindowManager.isRemoveDialogFrozen = false;
     }
 
     private void cleanFinished() {

@@ -25,7 +25,6 @@ import com.artw.lockscreen.LockerMainFrame;
 import com.ihs.keyboardutils.R;
 import com.artw.lockscreen.common.NetworkChangeReceiver;
 import com.artw.lockscreen.common.ToastUtils;
-import com.artw.lockscreen.common.Utils;
 import com.artw.lockscreen.slidingdrawer.SlidingDrawerContent;
 import com.ihs.app.analytics.HSAnalytics;
 import com.ihs.app.framework.HSApplication;

@@ -26,7 +26,7 @@
         android:orientation="vertical"
         tools:ignore="RelativeOverlap">
 
-        <com.honeycomb.launcher.view.TypefacedTextView
+        <com.ihs.feature.common.TypefacedTextView
             android:id="@+id/boost_plus_item_title"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -38,7 +38,7 @@
             android:textSize="16sp"
             tools:text="Air Launcher"/>
 
-        <com.honeycomb.launcher.view.TypefacedTextView
+        <com.ihs.feature.common.TypefacedTextView
             android:id="@+id/boost_plus_item_running_time"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -64,7 +64,7 @@
         android:layout_toStartOf="@+id/boost_plus_item_memory_size"
         app:srcCompat="@drawable/boost_plus_exclamation"/>
 
-    <com.honeycomb.launcher.view.TypefacedTextView
+    <com.ihs.feature.common.TypefacedTextView
         android:id="@+id/boost_plus_item_memory_size"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"

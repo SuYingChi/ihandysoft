@@ -179,7 +179,7 @@
                     android:layout_marginTop="25dp"
                     android:orientation="horizontal">
 
-                    <com.honeycomb.launcher.view.TypefacedTextView
+                    <com.ihs.feature.common.TypefacedTextView
                         android:id="@+id/tip_title_tv"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
@@ -193,7 +193,7 @@
                         android:visibility="visible"
                         app:typeface="@string/roboto_medium"/>
 
-                    <com.honeycomb.launcher.view.TypefacedTextView
+                    <com.ihs.feature.common.TypefacedTextView
                         android:id="@+id/tip_tv"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"

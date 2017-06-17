@@ -15,7 +15,7 @@
         android:src="@drawable/boost_plus_empty_view_icon"
         tools:ignore="ContentDescription"/>
 
-    <com.honeycomb.launcher.view.TypefacedTextView
+    <com.ihs.feature.common.TypefacedTextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
@@ -24,7 +24,7 @@
         android:textColor="@color/material_text_black_primary"
         android:textSize="18sp"/>
 
-    <com.honeycomb.launcher.view.TypefacedTextView
+    <com.ihs.feature.common.TypefacedTextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center"

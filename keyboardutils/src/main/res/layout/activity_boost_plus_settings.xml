@@ -31,14 +31,14 @@
                 android:clickable="true"
                 android:paddingBottom="16dp">
 
-                <com.honeycomb.launcher.view.TypefacedTextView
+                <com.ihs.feature.common.TypefacedTextView
                     android:id="@+id/auto_boost_title"
                     style="@style/SettingsItem.MultiLineTitle"
                     android:layout_marginTop="16dp"
                     android:text="@string/boost_plus_settings_auto_boost_title"
                     app:typeface="@string/proxima_nova_regular" />
 
-                <com.honeycomb.launcher.view.TypefacedTextView
+                <com.ihs.feature.common.TypefacedTextView
                     style="@style/SettingsItem.MultiLineDescription"
                     android:layout_below="@id/auto_boost_title"
                     android:layout_marginEnd="80dp"
@@ -64,14 +64,14 @@
                 android:paddingBottom="16dp"
                 android:visibility="gone">
 
-                <com.honeycomb.launcher.view.TypefacedTextView
+                <com.ihs.feature.common.TypefacedTextView
                     android:id="@+id/device_admin_title"
                     style="@style/SettingsItem.MultiLineTitle"
                     android:layout_marginTop="16dp"
                     android:text="@string/boost_plus_settings_device_admin_title"
                     app:typeface="@string/proxima_nova_regular" />
 
-                <com.honeycomb.launcher.view.TypefacedTextView
+                <com.ihs.feature.common.TypefacedTextView
                     style="@style/SettingsItem.MultiLineDescription"
                     android:layout_below="@id/device_admin_title"
                     android:layout_marginEnd="80dp"

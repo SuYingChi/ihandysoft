@@ -30,7 +30,6 @@ import com.artw.lockscreen.common.ConcurrentUtils;
 import com.artw.lockscreen.common.ConfigConstants;
 import com.artw.lockscreen.common.NavUtils;
 import com.artw.lockscreen.common.SystemSettingsManager;
-import com.artw.lockscreen.common.Utils;
 import com.artw.lockscreen.slidingdrawer.wallpaper.WallpaperBlurUtils;
 import com.ihs.app.analytics.HSAnalytics;
 import com.ihs.app.framework.HSApplication;

@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<com.honeycomb.launcher.view.CustomRootView xmlns:android="http://schemas.android.com/apk/res/android"
+ <com.honeycomb.launcher.view.CustomRootView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -56,7 +56,7 @@
                     android:layout_marginStart="24dp"
                     android:orientation="horizontal">
 
-                    <com.honeycomb.launcher.view.TypefacedTextView
+                    <com.ihs.feature.common.TypefacedTextView
                         android:id="@+id/total_size_text"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
@@ -75,7 +75,7 @@
                         android:layout_gravity="center_vertical"
                         android:orientation="vertical">
 
-                        <com.honeycomb.launcher.view.TypefacedTextView
+                        <com.ihs.feature.common.TypefacedTextView
                             android:id="@+id/total_size_unit_text"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
@@ -86,7 +86,7 @@
                             android:textSize="24sp"
                             app:typeface="@string/roboto_regular" />
 
-                        <com.honeycomb.launcher.view.TypefacedTextView
+                        <com.ihs.feature.common.TypefacedTextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginTop="-1dp"
@@ -99,7 +99,7 @@
                     </LinearLayout>
                 </LinearLayout>
 
-                <com.honeycomb.launcher.view.TypefacedTextView
+                <com.ihs.feature.common.TypefacedTextView
                     android:id="@+id/selected_size_text"
                     android:layout_width="match_parent"
                     android:layout_height="30dp"
@@ -139,7 +139,7 @@
                     android:visibility="invisible"
                     tools:visibility="visible">
 
-                    <com.honeycomb.launcher.view.TypefacedTextView
+                    <com.ihs.feature.common.TypefacedTextView
                         android:id="@+id/running_apps_title"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
@@ -152,7 +152,7 @@
                         android:textColor="@color/material_text_black_secondary"
                         android:textSize="14sp" />
 
-                    <com.honeycomb.launcher.view.TypefacedTextView
+                    <com.ihs.feature.common.TypefacedTextView
                         android:id="@+id/running_apps_count"
                         android:layout_width="19dp"
                         android:layout_height="19dp"
@@ -168,7 +168,7 @@
                         android:textSize="12sp"
                         tools:text="6" />
 
-                    <com.honeycomb.launcher.view.TypefacedTextView
+                    <com.ihs.feature.common.TypefacedTextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_centerVertical="true"

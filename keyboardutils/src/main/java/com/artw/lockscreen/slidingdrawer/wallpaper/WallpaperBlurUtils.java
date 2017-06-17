@@ -8,7 +8,6 @@ import android.util.Log;
 
 import com.ihs.keyboardutils.R;
 import com.artw.lockscreen.common.CommonUtils;
-import com.artw.lockscreen.common.Utils;
 
 
 /**

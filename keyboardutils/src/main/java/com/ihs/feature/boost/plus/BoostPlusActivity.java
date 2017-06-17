@@ -33,19 +33,24 @@ import com.ihs.commons.notificationcenter.HSGlobalNotificationCenter;
 import com.ihs.commons.notificationcenter.INotificationObserver;
 import com.ihs.commons.utils.HSBundle;
 import com.ihs.commons.utils.HSLog;
+import com.ihs.device.clean.accessibility.HSAccTaskManager;
 import com.ihs.device.clean.memory.HSAppMemory;
 import com.ihs.device.clean.memory.HSAppMemoryManager;
 import com.ihs.feature.boost.BoostTipUtils;
 import com.ihs.feature.common.ActivityUtils;
+import com.ihs.feature.common.AnimatorListenerAdapter;
 import com.ihs.feature.common.BasePermissionActivity;
+import com.ihs.feature.common.DeviceManager;
 import com.ihs.feature.common.FormatSizeBuilder;
 import com.ihs.feature.common.LauncherAnimUtils;
+import com.ihs.feature.common.LauncherPackageManager;
 import com.ihs.feature.common.LauncherTipManager;
+import com.ihs.feature.common.SpringInterpolator;
+import com.ihs.feature.common.StringUtils;
 import com.ihs.feature.common.Thunk;
 import com.ihs.feature.common.ViewUtils;
 import com.ihs.feature.ui.FloatWindowDialog;
 import com.ihs.feature.ui.FloatWindowManager;
-import com.ihs.feature.ui.LauncherFloatWindowManager;
 import com.ihs.feature.ui.ProgressFrameLayout;
 import com.ihs.feature.ui.RecyclerViewAnimator;
 import com.ihs.feature.ui.SafeLinearLayoutManager;
@@ -136,6 +141,7 @@ public class BoostPlusActivity extends BasePermissionActivity
     private static boolean sDestroyed;
     private boolean mIsCleanFinishedNeedReScan;
     public static boolean mScanFinished;
+    private boolean mIsAccessibilityGranted;
 
     //region Activity Lifecycle
 
@@ -375,9 +381,6 @@ public class BoostPlusActivity extends BasePermissionActivity
         boolean isBoostCleanVisible = FloatWindowManager.getInstance().isDialogShowing(FloatWindowManager.Type.BOOST_PLUS_CLEAN);
         boolean isCleaning = HSAccTaskManager.getInstance().isRunning();
 
-        HSLog.d(BoostPlusCleanDialog.TAG, "BoostPlusActivity onBackPressed isPermissionGuideVisible = " + isPermissionGuideVisible + " isFloatButtonVisible = " + isFloatButtonVisible
-            + " isBoostCleanVisible = " + isBoostCleanVisible + " isCleaning = " + isCleaning);
-
         if (isBoostCleanVisible) {
             FloatWindowDialog floatWindowDialog  = FloatWindowManager.getInstance().getDialog(FloatWindowManager.Type.BOOST_PLUS_CLEAN);
             boolean isCleanResultViewShow = true;
@@ -391,25 +394,6 @@ public class BoostPlusActivity extends BasePermissionActivity
                 dismissBoostPlusCleanDialog();
             }
 
-            if (isPermissionGuideVisible) {
-                LauncherFloatWindowManager.getInstance().removePermissionGuide(false);
-            }
-            if (isFloatButtonVisible) {
-                LauncherFloatWindowManager.getInstance().removeFloatButton();
-            }
-        } else {
-            boolean isRemoveDialog = false;
-            if (isPermissionGuideVisible) {
-                LauncherFloatWindowManager.getInstance().removePermissionGuide(false);
-                isRemoveDialog = true;
-            }
-            if (isFloatButtonVisible) {
-                LauncherFloatWindowManager.getInstance().removeFloatButton();
-                isRemoveDialog = true;
-            }
-            if (!isRemoveDialog) {
-                super.onBackPressed();
-            }
         }
     }
 
@@ -651,13 +635,13 @@ public class BoostPlusActivity extends BasePermissionActivity
                     mScanning = false;
                 }
             });
-            mHandler.postDelayed(new Runnable() {
-                @Override
-                public void run() {
-                    refreshTextAndBannerColor(true);
-                    showAccessibilityDialog();
-                }
-            }, 500);
+//            mHandler.postDelayed(new Runnable() {
+//                @Override
+//                public void run() {
+//                    refreshTextAndBannerColor(true);
+//                    showAccessibilityDialog();
+//                }
+//            }, 500);
         }
 
         if (!mScanAfterClean) {
@@ -785,7 +769,6 @@ public class BoostPlusActivity extends BasePermissionActivity
             HSLog.d(TAG, "prepare for opt page junk clean size = " + (mScanListener.mCurrentMemoryCache / 1024 / 1024) + "MB");
             HSLog.d(TAG, "prepare for opt page battery level = " + DeviceManager.getInstance().getBatteryLevel());
             HSLog.d(TAG, "prepare for opt page CPU temperature = " + DeviceManager.getInstance().getCpuTemperatureCelsius());
-            HSLog.d(TAG, "prepare for opt page notification clean number = " + NotificationCleanerProvider.fetchBlockedAndTimeValidNotificationCount(false));
         } else {
             mProgressBanner.setVisibility(View.VISIBLE);
             divider.setVisibility(View.VISIBLE);
@@ -1117,21 +1100,6 @@ public class BoostPlusActivity extends BasePermissionActivity
     @Override
     protected boolean registerCloseSystemDialogsReceiver() {
         return true;
-    }
-
-    private void showAccessibilityDialog() {
-        if (mScanAfterClean) {
-            return;
-        }
-        int runningAppSize = mRunningApps.size();
-        HSLog.d(TAG, "showAccessibilityDialog *** runningAppSize = " + runningAppSize);
-        if (BoostPlusUtils.shouldShowAccessibilityNoticeDialog(runningAppSize)) {
-            BoostPlusAccessibilityDialog.Data data = new BoostPlusAccessibilityDialog.Data();
-            data.selectNumber = runningAppSize;
-            LauncherTipManager.getInstance().showTip(this, LauncherTipManager.TipType.BOOST_PLUS_ACCESSIBILITY_TIP, data);
-            BoostPlusUtils.setAccessibilityNoticeDialogShowed();
-            HSAnalytics.logEvent("BoostPlus_DetectedAlert_Show");
-        }
     }
 
 }

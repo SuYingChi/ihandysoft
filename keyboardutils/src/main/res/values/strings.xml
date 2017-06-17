@@ -901,5 +901,6 @@
     <!--guide-->
     <string name="guide_open_camera">Slide to open camera quickly</string>
     <string name="guide_open_control_centre">Slide to open Control Centre</string>
->>>>>>> luckyboost
+    <string name="ok">OK</string>
+    >>>>>>> luckyboost
 </resources>
