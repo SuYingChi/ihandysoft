@@ -12,13 +12,13 @@
         android:layout_height="wrap_content"
         android:orientation="vertical">
 
-        <com.honeycomb.launcher.view.TypefacedTextView
+        <com.ihs.feature.common.TypefacedTextView
             android:id="@+id/dialog_title"
             style="@style/DialogTitleText"
             android:layout_marginBottom="@dimen/dialog_content_text_margin"
             tools:text="Boost+"/>
 
-        <com.honeycomb.launcher.view.TypefacedTextView
+        <com.ihs.feature.common.TypefacedTextView
             android:id="@+id/dialog_desc"
             style="@style/DialogDescText"
             tools:text="Open Accessibility by one step, Boost+ will be activated."/>

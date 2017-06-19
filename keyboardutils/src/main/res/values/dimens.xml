@@ -112,4 +112,56 @@
     <dimen name="activity_horizontal_margin">16dp</dimen>
 
     <integer name="google_play_services_version">10298000</integer>
+
+
+    <!-- Battery -->
+    <dimen name="battery_bottom_height">82dp</dimen>
+    <dimen name="battery_status_title_padding">3dp</dimen>
+    <dimen name="battery_menu_button_icon">28dp</dimen>
+    <dimen name="battery_optimize_btn_width">280dp</dimen>
+    <dimen name="battery_optimize_btn_height">48dp</dimen>
+    <dimen name="toolbar_title_padding">16dp</dimen>
+    <dimen name="battery_charging_line_width">60dp</dimen>
+    <dimen name="battery_charging_line_height">2dp</dimen>
+    <dimen name="battery_content_padding_horizontal">10dp</dimen>
+    <dimen name="battery_content_margin_top">5dp</dimen>
+    <dimen name="battery_content_margin_bottom">5dp</dimen>
+    <dimen name="battery_charging_content_item">28dp</dimen>
+    <dimen name="battery_charging_text_min_width">46dp</dimen>
+    <dimen name="battery_charging_item_speed_width">54dp</dimen>
+    <dimen name="battery_charging_item_continue_width">70dp</dimen>
+    <dimen name="battery_charging_item_trickle_width">54dp</dimen>
+    <dimen name="battery_scan_circle_bg">200dp</dimen>
+    <dimen name="battery_scan_circle_animate_bg">225dp</dimen>
+    <dimen name="battery_mode_icon">36dp</dimen>
+    <dimen name="battery_mode_item_padding">12dp</dimen>
+    <dimen name="battery_mode_item_center_margin">10dp</dimen>
+    <dimen name="battery_app_icon">45dp</dimen>
+    <dimen name="battery_save_time_padding">5dp</dimen>
+    <dimen name="battery_charging_padding_horizontal">10dp</dimen>
+    <dimen name="battery_button_margin">26dp</dimen>
+
+    <dimen name="battery_status_title_size">24sp</dimen>
+    <dimen name="battery_status_content_size">14sp</dimen>
+    <dimen name="battery_clean_finished_content_size">16sp</dimen>
+    <dimen name="battery_charging_content_size">12sp</dimen>
+    <dimen name="battery_cleaning">22sp</dimen>
+    <dimen name="battery_cleaning_number">66sp</dimen>
+    <dimen name="battery_clean_extend_time">36sp</dimen>
+    <dimen name="battery_clean_extend_time_unit">21sp</dimen>
+    <dimen name="battery_power_remaining_time">57sp</dimen>
+    <dimen name="battery_power_remaining_time_unit">20sp</dimen>
+    <dimen name="battery_mode_title_size">16sp</dimen>
+    <dimen name="battery_rank_content_size">14sp</dimen>
+    <dimen name="battery_mode_content_size">12sp</dimen>
+    <dimen name="battery_alert_padding_vertical">8dp</dimen>
+    <dimen name="battery_seek_progress_time_padding">7dp</dimen>
+    <dimen name="title_size">20sp</dimen>
+
+    <!-- Result Page -->
+    <dimen name="result_page_header_height">90dp</dimen>
+    <dimen name="result_page_card_margin">8dp</dimen>
+    <dimen name="result_page_image_frame_height">146dp</dimen>
+    <dimen name="result_page_image_frame_horizontal_margin">27dp</dimen>
+    <dimen name="result_page_header_tag_margin">-14dp</dimen>
 </resources>

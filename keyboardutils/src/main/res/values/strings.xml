@@ -902,5 +902,36 @@
     <string name="guide_open_camera">Slide to open camera quickly</string>
     <string name="guide_open_control_centre">Slide to open Control Centre</string>
     <string name="ok">OK</string>
-    >>>>>>> luckyboost
+    <string name="battery_air_title">Air Battery</string>
+
+
+    <!-- Cpu Cooler -->
+    <string name="cpu_cooler_notification_title" translatable="false">CPU</string>
+    <string name="cpu_cooler_scanning_cpu">Scanning CPU…</string>
+    <string name="cpu_cooler_list_head_title">CPU-heating Apps</string>
+    <string name="cpu_cooler_button_title">COOL DOWN</string>
+    <string name="cpu_cooler_temperature_quantifier_celsius" translatable="false">℃</string>
+    <string name="cpu_cooler_state_hint">CPU is %s</string>
+    <string name="cpu_cooler_state_cool">cool</string>
+    <string name="cpu_cooler_state_overheated">overheated</string>
+    <string name="cpu_cooler_state_extremely_heated">Heated</string>
+    <string name="cpu_cooler_cleaning_hint">Closing CPU consumers…</string>
+    <string name="cpu_cooler_temperature_dropped" translatable="false">%1$s℃</string>
+    <string name="cpu_cooler_dropped_down">Dropped Down</string>
+    <string name="cpu_cooler_card_description">%1$s CPU temperature, cool your phone down now!</string>
+    <string name="cool_capital">COOL</string>
+
+    <string name="promotion_max_optimizer_title" translatable="false">Max Optimizer</string>
+    <string name="promotion_key_board_title" translatable="false">Emoji Keyboard</string>
+    <string name="promotion_camera_pro_title" translatable="false">Camera Pro</string>
+
+    <string name="promotion_security_description">Fast and secure, Super Security is the most reliable mobile security app for your phone.</string>
+    <string name="promotion_flashlight_description">Flashlight - the tiny, powerful, long-lasting free flashlight app. Brighten up your world unconsciously with simple one tap!</string>
+    <string name="promotion_max_description">MAX is an All-in-One phone optimizer with phone booster, junk cleaner &amp; security guard.</string>
+    <string name="promotion_rainbow_keyboard_description">Download Emoji keyboard and stand out among your social group!</string> <!-- TODO string modify, need to translate -->
+    <string name="promotion_camera_description">Camera pro, the beauty selfie cam and FREE photo editor.</string>
+
+    <string name="promotion_dialog_action_btn">GET IT NOW</string>
+    <string name="result_page_card_notification_cleaner_open_now">OPEN NOW</string>
+
 </resources>

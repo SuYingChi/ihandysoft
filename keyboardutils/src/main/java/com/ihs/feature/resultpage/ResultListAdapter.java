@@ -19,32 +19,29 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-import com.honeycomb.launcher.R;
-import com.honeycomb.launcher.battery.BatteryActivity;
-import com.honeycomb.launcher.boost.DeviceManager;
-import com.honeycomb.launcher.boost.plus.BoostPlusActivity;
-import com.honeycomb.launcher.cpucooler.CpuCoolerManager;
-import com.honeycomb.launcher.cpucooler.CpuCoolerScanActivity;
-import com.honeycomb.launcher.junkclean.JunkCleanActivity;
-import com.honeycomb.launcher.junkclean.util.JunkCleanConstant;
-import com.honeycomb.launcher.junkclean.util.JunkCleanUtils;
-import com.honeycomb.launcher.resultpage.data.CardData;
-import com.honeycomb.launcher.resultpage.data.ResultConstants;
-import com.honeycomb.launcher.util.CommonUtils;
-import com.honeycomb.launcher.util.NavUtils;
-import com.honeycomb.launcher.util.PermissionUtils;
-import com.honeycomb.launcher.util.PromotionTracker;
-import com.honeycomb.launcher.util.Thunk;
-import com.honeycomb.launcher.util.VectorCompat;
-import com.honeycomb.launcher.util.ViewUtils;
+import com.artw.lockscreen.common.NavUtils;
 import com.ihs.app.analytics.HSAnalytics;
-import com.ihs.commons.config.HSConfig;
+import com.ihs.feature.battery.BatteryActivity;
+import com.ihs.feature.boost.plus.BoostPlusActivity;
+import com.ihs.feature.common.DeviceManager;
+import com.ihs.feature.common.Thunk;
+import com.ihs.feature.common.VectorCompat;
+import com.ihs.feature.common.ViewUtils;
+import com.ihs.feature.cpucooler.CpuCoolerManager;
+import com.ihs.feature.cpucooler.CpuCoolerScanActivity;
+import com.ihs.feature.junkclean.JunkCleanActivity;
+import com.ihs.feature.junkclean.util.JunkCleanConstant;
+import com.ihs.feature.junkclean.util.JunkCleanUtils;
+import com.ihs.feature.resultpage.data.CardData;
+import com.ihs.feature.resultpage.data.ResultConstants;
+import com.ihs.keyboardutils.R;
+import com.ihs.keyboardutils.utils.CommonUtils;
+import com.ihs.keyboardutils.utils.ToastUtils;
 
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
-import static com.flurry.sdk.bb.R;
 
 public class ResultListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
@@ -156,13 +153,6 @@ public class ResultListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
                     HSAnalytics.logEvent("ResultPage_Cards_Show", "type", ResultConstants.JUNK_CLEANER);
                 });
                 break;
-            case ResultConstants.CARD_VIEW_TYPE_SECURITY:
-                bindFeatureCardViewHolder((FeatureCardViewHolder) holder, R.drawable.result_page_security,
-                        R.color.result_card_security_bg,
-                        R.string.promotion_security_title, context.getString(R.string.promotion_security_card_description),
-                        R.string.promotion_activate_btn, v -> onClickSecurityView());
-                doOnce(position, () -> HSAnalytics.logEvent("Promotion_Viewed", "Type", "SecurityCard"));
-                break;
             case ResultConstants.CARD_VIEW_TYPE_CPU_COOLER:
                 int temperature  = CpuCoolerManager.getInstance().fetchCpuTemperature();
                 String temperatureText = String.valueOf(temperature + " " + context.getString(R.string.cpu_cooler_temperature_quantifier_celsius));
@@ -175,30 +165,6 @@ public class ResultListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
                         R.string.promotion_max_card_title_cpu_cooler, contentSpannableString,
                         R.string.cool_capital, v -> onClickCpuCoolerView());
                 doOnce(position, () -> HSAnalytics.logEvent("ResultPage_Cards_Show", "type", ResultConstants.CPU_COOLER));
-                break;
-            case ResultConstants.CARD_VIEW_TYPE_MAX_GAME_BOOSTER:
-                bindFeatureCardViewHolder((FeatureCardViewHolder) holder, R.drawable.result_page_max_game_booster,
-                        R.color.result_card_max_game_booster_bg,
-                        R.string.promotion_max_card_title_game_booster,
-                        context.getString(R.string.promotion_max_card_description_game_booster),
-                        R.string.promotion_enable_btn, v -> onClickMaxView("MaxCardGame"));
-                doOnce(position, () -> HSAnalytics.logEvent("Promotion_Viewed", "Type", "MaxCardGame"));
-                break;
-            case ResultConstants.CARD_VIEW_TYPE_MAX_APP_LOCKER:
-                bindFeatureCardViewHolder((FeatureCardViewHolder) holder, R.drawable.result_page_max_app_locker,
-                        R.color.result_card_max_app_locker_bg,
-                        R.string.promotion_max_card_title_app_locker,
-                        context.getString(R.string.promotion_max_card_description_app_locker),
-                        R.string.promotion_set_now_btn, v -> onClickMaxView("MaxCardLocker"));
-                doOnce(position, () -> HSAnalytics.logEvent("Promotion_Viewed", "Type", "MaxCardLocker"));
-                break;
-            case ResultConstants.CARD_VIEW_TYPE_MAX_DATA_THIEVES:
-                bindFeatureCardViewHolder((FeatureCardViewHolder) holder, R.drawable.result_page_max_data_thieves,
-                        R.color.result_card_max_data_thieves_bg,
-                        R.string.promotion_max_card_title_data_thieves,
-                        context.getString(R.string.promotion_max_card_description_data_thieves),
-                        R.string.promotion_set_now_btn, v -> onClickMaxView("MaxCardDataThieves"));
-                doOnce(position, () -> HSAnalytics.logEvent("Promotion_Viewed", "Type", "MaxCardLocker"));
                 break;
             case ResultConstants.CARD_VIEW_TYPE_ACCESSIBILITY:
                 bindFeatureCardViewHolder((FeatureCardViewHolder) holder, R.drawable.result_page_accessibility,
@@ -304,25 +270,27 @@ public class ResultListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
         HSAnalytics.logEvent("ResultPage_Cards_Click", "Type", ResultConstants.CPU_COOLER);
     }
 
-    private void onClickSecurityView() {
-        HSAnalytics.logEvent("Promotion_Clicked", "Type", "SecurityCard");
-        PromotionTracker.startTracking(HSConfig.getString("Application", "Promotions", "SecurityPackage"),
-                PromotionTracker.EVENT_LOG_APP_NAME_SECURITY, true);
-    }
-
-    private void onClickMaxView(String eventLogParam) {
-        HSAnalytics.logEvent("Promotion_Clicked", "Type", eventLogParam);
-        PromotionTracker.startTracking(HSConfig.getString("Application", "Promotions", "MaxPackage"),
-                PromotionTracker.EVENT_LOG_APP_NAME_MAX, true);
-    }
+//    private void onClickSecurityView() {
+//        HSAnalytics.logEvent("Promotion_Clicked", "Type", "SecurityCard");
+//        PromotionTracker.startTracking(HSConfig.getString("Application", "Promotions", "SecurityPackage"),
+//                PromotionTracker.EVENT_LOG_APP_NAME_SECURITY, true);
+//    }
+//
+//    private void onClickMaxView(String eventLogParam) {
+//        HSAnalytics.logEvent("Promotion_Clicked", "Type", eventLogParam);
+//        PromotionTracker.startTracking(HSConfig.getString("Application", "Promotions", "MaxPackage"),
+//                PromotionTracker.EVENT_LOG_APP_NAME_MAX, true);
+//    }
 
     private void onClickAccessibilityView() {
         HSAnalytics.logEvent("ResultPage_Cards_Click", "Type", ResultConstants.ACCESSIBILITY);
-        PermissionUtils.requestAccessibilityPermission(mResultPageActivity, () -> HSAnalytics.logEvent("BoostPlus_Accessibility_OpenSuccess", "Type", "ResultPageCard"));
+        ToastUtils.showToast("这里请求Accessbility");
+       // PermissionUtils.requestAccessibilityPermission(mResultPageActivity, () -> HSAnalytics.logEvent("BoostPlus_Accessibility_OpenSuccess", "Type", "ResultPageCard"));
     }
 
     private class BaseCardViewHolder extends RecyclerView.ViewHolder {
-        @Thunk View cardItemView;
+        @Thunk
+        View cardItemView;
 
         BaseCardViewHolder(View itemView) {
             super(itemView);

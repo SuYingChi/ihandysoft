@@ -1,20 +1,17 @@
 package com.ihs.feature.battery;
 
-import android.view.View;
+import android.content.Context;
 
-import com.honeycomb.launcher.BuildConfig;
-import com.honeycomb.launcher.R;
-import com.honeycomb.launcher.boost.DeviceManager;
-import com.honeycomb.launcher.desktop.Launcher;
-import com.honeycomb.launcher.desktop.util.IconAnimUtils;
-import com.honeycomb.launcher.dialog.LauncherTipManager;
-import com.honeycomb.launcher.model.LauncherFiles;
-import com.honeycomb.launcher.resultpage.data.ResultConstants;
-import com.honeycomb.launcher.util.NavUtils;
-import com.honeycomb.launcher.util.PreferenceHelper;
-import com.honeycomb.launcher.util.Utils;
+import com.artw.lockscreen.common.NavUtils;
 import com.ihs.app.analytics.HSAnalytics;
 import com.ihs.commons.utils.HSLog;
+import com.ihs.feature.common.DeviceManager;
+import com.ihs.feature.common.LauncherFiles;
+import com.ihs.feature.common.LauncherTipManager;
+import com.ihs.feature.common.PreferenceHelper;
+import com.ihs.feature.resultpage.data.ResultConstants;
+import com.ihs.keyboardutils.BuildConfig;
+import com.ihs.keyboardutils.R;
 
 import java.util.Calendar;
 
@@ -285,14 +282,8 @@ public class BatteryUtils {
         return true;
     }
 
-    public static void startIconAnimIfNeeded(View batteryIcon) {
-        if (!needShowIconAnim()) {
-            return;
-        }
-        IconAnimUtils.startHintAnimation(batteryIcon);
-    }
 
-    public static void showBatteryLowDialogIfNeeded(final Launcher launcher, int batteryLevel, boolean isBatteryCharging) {
+    public static void showBatteryLowDialogIfNeeded(final Context launcher, int batteryLevel, boolean isBatteryCharging) {
 
         // Charging
         if (isBatteryCharging) {
@@ -311,10 +302,6 @@ public class BatteryUtils {
             sBatteryLowTipShowTime = PreferenceHelper.get(LauncherFiles.BATTERY_PREFS).getLong(PREF_KEY_BATTERY_TIP_SHOW_TIME, 0);
         }
         if ((System.currentTimeMillis() - sBatteryLowTipShowTime) < BATTERY_TIP_SHOW_INTERVAL_MILLS) {
-            return;
-        }
-
-        if (Utils.isNewUserInDNDStatus()) {
             return;
         }
 

@@ -2,7 +2,7 @@ package com.ihs.feature.battery;
 
 import android.graphics.drawable.Drawable;
 
-import com.honeycomb.launcher.util.Utils;
+import com.ihs.feature.common.Utils;
 
 import java.io.Serializable;
 

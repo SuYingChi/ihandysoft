@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- com.honeycomb.launcher.view.CustomRootView -->
+<com.honeycomb.launcher.view.CustomRootView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/view_container"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/launcher_settings_light_gray_bg"
+    android:clipChildren="false"
+    android:fitsSystemWindows="false">
+
+    <!-- Do not change container_view id -->
+    <LinearLayout
+        android:id="@+id/container_view"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <include
+            android:id="@+id/action_bar"
+            layout="@layout/black_toolbar_container" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@android:color/white"
+            android:orientation="vertical">
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:background="@drawable/material_compat_bg"
+                android:clickable="true">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="22dp"
+                    android:layout_marginStart="22dp"
+                    android:layout_centerVertical="true"
+                    android:layout_toLeftOf="@+id/hide_system_apps_cb"
+                    android:layout_toStartOf="@+id/hide_system_apps_cb"
+                    android:gravity="start"
+                    android:fontFamily="sans-serif-medium"
+                    android:text="@string/battery_hide_system_apps"
+                    android:textColor="@color/battery_system_hide"
+                    android:textSize="@dimen/battery_mode_title_size" />
+
+                <android.support.v7.widget.AppCompatCheckBox
+                    android:id="@+id/hide_system_apps_cb"
+                    android:layout_width="50dp"
+                    android:layout_height="50dp"
+                    android:layout_alignParentRight="true"
+                    android:layout_alignParentEnd="true"
+                    android:checked="true"
+                    android:layout_centerVertical="true"/>
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:layout_marginLeft="15dp"
+                    android:layout_marginStart="15dp"
+                    android:layout_marginRight="15dp"
+                    android:layout_marginEnd="15dp"
+                    android:layout_alignParentBottom="true"
+                    android:background="@color/battery_system_hide_divider" />
+            </RelativeLayout>
+
+            <com.honeycomb.launcher.battery.BatteryAppsRecyclerView
+                android:id="@+id/rank_apps_rv"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:overScrollMode="always"
+                android:background="@android:color/white"
+                android:theme="@style/Theme.CustomOverScroll" />
+        </LinearLayout>
+
+    </LinearLayout>
+
+    <include layout="@layout/navigation_bar_bg" />
+</com.honeycomb.launcher.view.CustomRootView>

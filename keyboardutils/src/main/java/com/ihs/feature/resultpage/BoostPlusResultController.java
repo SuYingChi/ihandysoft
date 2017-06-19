@@ -15,24 +15,24 @@ import android.widget.TextView;
 
 import com.acb.adadapter.AcbAd;
 import com.acb.adadapter.AcbNativeAd;
-import com.honeycomb.launcher.R;
-import com.honeycomb.launcher.ad.AdPlacements;
-import com.honeycomb.launcher.animation.AnimatorListenerAdapter;
-import com.honeycomb.launcher.animation.LauncherAnimUtils;
-import com.honeycomb.launcher.animation.LauncherAnimationUtils;
-import com.honeycomb.launcher.boost.DeviceManager;
-import com.honeycomb.launcher.boost.plus.BoostBgImageView;
-import com.honeycomb.launcher.resultpage.data.CardData;
-import com.honeycomb.launcher.resultpage.data.ResultConstants;
-import com.honeycomb.launcher.util.Thunk;
-import com.honeycomb.launcher.util.ViewUtils;
 import com.ihs.app.analytics.HSAnalytics;
 import com.ihs.commons.utils.HSLog;
+import com.ihs.feature.boost.plus.BoostBgImageView;
+import com.ihs.feature.common.AdPlacements;
+import com.ihs.feature.common.AnimatorListenerAdapter;
+import com.ihs.feature.common.DeviceManager;
+import com.ihs.feature.common.LauncherAnimUtils;
+import com.ihs.feature.common.Thunk;
+import com.ihs.feature.common.ViewUtils;
+import com.ihs.feature.resultpage.data.CardData;
+import com.ihs.feature.resultpage.data.ResultConstants;
+import com.ihs.keyboardutils.R;
+import com.ihs.keyboardutils.utils.LauncherAnimationUtils;
 
 import java.util.List;
 
-import static com.honeycomb.launcher.boost.plus.BoostPlusCleanDialog.DEVICE_SCREEN_HEIGHT_TAG;
-import static com.honeycomb.launcher.boost.plus.BoostPlusCleanDialog.START_OFF_CIRCLE_ROTATE_MAIN;
+import static com.ihs.feature.boost.plus.BoostPlusCleanDialog.DEVICE_SCREEN_HEIGHT_TAG;
+import static com.ihs.feature.boost.plus.BoostPlusCleanDialog.START_OFF_CIRCLE_ROTATE_MAIN;
 
 @SuppressWarnings("WeakerAccess")
 class BoostPlusResultController extends ResultController {
@@ -74,8 +74,10 @@ class BoostPlusResultController extends ResultController {
 
     private View mTitleAnchor;
     @Thunk RelativeLayout mTickRl;
-    @Thunk BoostBgImageView mTickBgIv;
-    @Thunk ImageView mTickIv;
+    @Thunk
+    BoostBgImageView mTickBgIv;
+    @Thunk
+    ImageView mTickIv;
     @Thunk TextView mOptimalTv;
     @Thunk TextView mFreedUpNumberTv;
     private TextView mFreedUpTv;

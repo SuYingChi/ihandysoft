@@ -37,37 +37,35 @@ import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
-import com.honeycomb.launcher.ISubAdService;
-import com.honeycomb.launcher.R;
-import com.honeycomb.launcher.ad.SubAdService;
-import com.honeycomb.launcher.animation.AnimatorListenerAdapter;
-import com.honeycomb.launcher.animation.HeuristicAnimator;
-import com.honeycomb.launcher.animation.LauncherAnimUtils;
-import com.honeycomb.launcher.animation.LauncherAnimationUtils;
-import com.honeycomb.launcher.boost.BoostTipUtils;
-import com.honeycomb.launcher.boost.DeviceManager;
-import com.honeycomb.launcher.boost.animation.DynamicRotateAnimation;
-import com.honeycomb.launcher.chargingscreen.ChargingScreenSettings;
-import com.honeycomb.launcher.ihs.BaseCenterActivity;
-import com.honeycomb.launcher.notification.NotificationManager;
-import com.honeycomb.launcher.resultpage.ResultPageActivity;
-import com.honeycomb.launcher.util.ActivityUtils;
-import com.honeycomb.launcher.util.CommonUtils;
-import com.honeycomb.launcher.util.LauncherActivityUtils;
-import com.honeycomb.launcher.util.NavUtils;
-import com.honeycomb.launcher.util.Utils;
-import com.honeycomb.launcher.util.VectorCompat;
-import com.honeycomb.launcher.util.ViewUtils;
-import com.honeycomb.launcher.view.CustomRootView;
-import com.honeycomb.launcher.view.SeekCircleProgressBar;
+import com.artw.lockscreen.common.NavUtils;
+import com.ihs.aidl.ISubAdService;
 import com.ihs.app.analytics.HSAnalytics;
 import com.ihs.charging.HSChargingManager;
+import com.ihs.chargingscreen.utils.ChargingPrefsUtil;
 import com.ihs.commons.utils.HSLog;
 import com.ihs.device.clean.memory.HSAppMemoryManager;
+import com.ihs.feature.boost.BoostTipUtils;
+import com.ihs.feature.boost.animation.DynamicRotateAnimation;
+import com.ihs.feature.common.ActivityUtils;
+import com.ihs.feature.common.AnimatorListenerAdapter;
+import com.ihs.feature.common.BaseCenterActivity;
+import com.ihs.feature.common.CustomRootView;
+import com.ihs.feature.common.DeviceManager;
+import com.ihs.feature.common.LauncherAnimUtils;
+import com.ihs.feature.common.SubAdService;
+import com.ihs.feature.common.Utils;
+import com.ihs.feature.common.VectorCompat;
+import com.ihs.feature.common.ViewUtils;
+import com.ihs.feature.resultpage.ResultPageActivity;
+import com.ihs.feature.ui.HeuristicAnimator;
+import com.ihs.feature.ui.SeekCircleProgressBar;
+import com.ihs.keyboardutils.R;
+import com.ihs.keyboardutils.utils.CommonUtils;
+import com.ihs.keyboardutils.utils.LauncherAnimationUtils;
 
 import java.util.List;
 
-import hugo.weaving.DebugLog;
+
 
 public class BatteryActivity extends BaseCenterActivity implements View.OnClickListener {
 
@@ -260,7 +258,6 @@ public class BatteryActivity extends BaseCenterActivity implements View.OnClickL
         return true;
     }
 
-    @DebugLog
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -380,7 +377,7 @@ public class BatteryActivity extends BaseCenterActivity implements View.OnClickL
         mManualToolBarLl = ViewUtils.findViewById(this, R.id.manual_action_bar);
         mToolBarView = ViewUtils.findViewById(this, R.id.action_bar);
 
-        LauncherActivityUtils.configSimpleAppBar(this, getString(R.string.battery_title), Color.TRANSPARENT);
+        ActivityUtils.configSimpleAppBar(this, getString(R.string.battery_title), Color.TRANSPARENT);
 
         // Title text bold
         TextView titleTv = ViewUtils.findViewById(this, R.id.battery_title_tv);
@@ -389,8 +386,8 @@ public class BatteryActivity extends BaseCenterActivity implements View.OnClickL
         contentSpannableString.setSpan(new StyleSpan(Typeface.BOLD), 0, 3, Spanned.SPAN_INCLUSIVE_EXCLUSIVE);
         titleTv.setText(contentSpannableString);
 
-        if (!ChargingScreenSettings.isChargingScreenEverEnabled()
-                && !ChargingScreenSettings.isBatteryTipShown()) {
+        if (!ChargingPrefsUtil.getInstance().isChargingEnabledBefore()
+                && !ChargingPrefsUtil.isBatteryTipShown()) {
             mMenuIv.setImageResource(R.drawable.ic_battery_menu_tip);
         }
 
@@ -632,7 +629,7 @@ public class BatteryActivity extends BaseCenterActivity implements View.OnClickL
                 startChargingSpeedAnimation();
                 break;
             case STATE_CHARGING_CONTINUOUS:
-                mChargingLeftLineV.setBackgroundColor(ContextCompat.getColor(this, R.color.white));
+                mChargingLeftLineV.setBackgroundColor(Color.WHITE);
                 mChargingRightLineV.setBackgroundColor(ContextCompat.getColor(this, android.R.color.white));
                 mChargingSpeedTv.setTextColor(ContextCompat.getColor(this, android.R.color.white));
                 mChargingContinueTv.setTextColor(ContextCompat.getColor(this, android.R.color.white));
@@ -642,7 +639,7 @@ public class BatteryActivity extends BaseCenterActivity implements View.OnClickL
                 startChargingContinueAnimation();
                 break;
             case STATE_CHARGING_TRICKLE:
-                mChargingLeftLineV.setBackgroundColor(ContextCompat.getColor(this, R.color.white));
+                mChargingLeftLineV.setBackgroundColor(Color.WHITE);
                 mChargingRightLineV.setBackgroundColor(ContextCompat.getColor(this, android.R.color.white));
                 mChargingSpeedTv.setTextColor(ContextCompat.getColor(this, android.R.color.white));
                 mChargingContinueTv.setTextColor(ContextCompat.getColor(this, android.R.color.white));
@@ -653,7 +650,7 @@ public class BatteryActivity extends BaseCenterActivity implements View.OnClickL
                 startChargingTrickleAnimation();
                 break;
             case STATE_CHARGING_FULL:
-                mChargingLeftLineV.setBackgroundColor(ContextCompat.getColor(this, R.color.white));
+                mChargingLeftLineV.setBackgroundColor(Color.WHITE);
                 mChargingRightLineV.setBackgroundColor(ContextCompat.getColor(this, android.R.color.white));
                 mChargingSpeedTv.setTextColor(ContextCompat.getColor(this, android.R.color.white));
                 mChargingContinueTv.setTextColor(ContextCompat.getColor(this, android.R.color.white));
@@ -964,7 +961,6 @@ public class BatteryActivity extends BaseCenterActivity implements View.OnClickL
             @Override
             public void onAnimationEnd(Animator animation) {
                 // update Toolbar status
-                NotificationManager.getInstance().updateBattery();
 
                 // Ring rotate
                 mDynamicRotateAnimation = new DynamicRotateAnimation(0.6f);
@@ -1278,53 +1274,52 @@ public class BatteryActivity extends BaseCenterActivity implements View.OnClickL
 
     @Override
     public void onClick(View v) {
-        switch (v.getId()) {
-            case R.id.mode_menu_iv:
-                HSAnalytics.logEvent("Battery_HomePage_Mode_Clicked");
-                NavUtils.startActivitySafely(this, new Intent(BatteryActivity.this, BatteryModeActivity.class));
-                break;
-            case R.id.rank_menu_iv:
-                HSAnalytics.logEvent("Battery_HomePage_Rank_Clicked");
-                NavUtils.startActivitySafely(this, new Intent(BatteryActivity.this, BatteryRankingActivity.class));
-                break;
-            case R.id.optimize_btn:
-                if (Utils.checkDoubleClickGlobal()) {
-                    return;
-                }
+        int i = v.getId();
+        if (i == R.id.mode_menu_iv) {
+            HSAnalytics.logEvent("Battery_HomePage_Mode_Clicked");
+            NavUtils.startActivitySafely(this, new Intent(BatteryActivity.this, BatteryModeActivity.class));
 
-                final ServiceConnection connection = new ServiceConnection() {
-                    @Override
-                    public void onServiceConnected(ComponentName name, IBinder service) {
-                        ISubAdService adService = ISubAdService.Stub.asInterface(service);
-                        if (adService != null) {
-                            try {
-                                adService.requestBatteryAd();
-                            } catch (RemoteException e) {
-                                e.printStackTrace();
-                                HSLog.e(TAG, "battery request ad failed, remote exception");
-                            } finally {
-                                unbindService(this);
-                            }
+        } else if (i == R.id.rank_menu_iv) {
+            HSAnalytics.logEvent("Battery_HomePage_Rank_Clicked");
+            NavUtils.startActivitySafely(this, new Intent(BatteryActivity.this, BatteryRankingActivity.class));
+
+        } else if (i == R.id.optimize_btn) {
+            if (Utils.checkDoubleClickGlobal()) {
+                return;
+            }
+
+            final ServiceConnection connection = new ServiceConnection() {
+                @Override
+                public void onServiceConnected(ComponentName name, IBinder service) {
+                    ISubAdService adService = ISubAdService.Stub.asInterface(service);
+                    if (adService != null) {
+                        try {
+                            adService.requestBatteryAd();
+                        } catch (RemoteException e) {
+                            e.printStackTrace();
+                            HSLog.e(TAG, "battery request ad failed, remote exception");
+                        } finally {
+                            unbindService(this);
                         }
                     }
+                }
 
-                    @Override
-                    public void onServiceDisconnected(ComponentName name) {
+                @Override
+                public void onServiceDisconnected(ComponentName name) {
 
-                    }
-                };
-                Intent intent = new Intent(this, SubAdService.class);
-                bindService(intent, connection, Context.BIND_AUTO_CREATE);
+                }
+            };
+            Intent intent = new Intent(this, SubAdService.class);
+            bindService(intent, connection, Context.BIND_AUTO_CREATE);
 
-                onOptimizeButtonClicked();
-                break;
-            case R.id.battery_menu:
-                NavUtils.startActivitySafely(this, new Intent(BatteryActivity.this, BatterySettingsActivity.class));
-                mMenuIv.setImageResource(R.drawable.ic_battery_menu);
-                ChargingScreenSettings.setBatteryTipShown();
-                break;
-            default:
-                break;
+            onOptimizeButtonClicked();
+
+        } else if (i == R.id.battery_menu) {
+            NavUtils.startActivitySafely(this, new Intent(BatteryActivity.this, BatterySettingsActivity.class));
+            mMenuIv.setImageResource(R.drawable.ic_battery_menu);
+            ChargingPrefsUtil.setBatteryTipShown();
+
+        } else {
         }
     }
 

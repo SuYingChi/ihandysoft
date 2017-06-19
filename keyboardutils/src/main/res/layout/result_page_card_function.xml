@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/result_card_item_view"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginTop="4dp"
+    android:layout_marginBottom="4dp"
+    android:background="@drawable/material_compat_bg_white"
+    android:orientation="horizontal"
+    tools:ignore="ContentDescription">
+
+    <LinearLayout
+        android:id="@+id/result_image_container"
+        android:layout_width="100dp"
+        android:layout_height="match_parent"
+        android:layout_alignBottom="@+id/result_description_view"
+        android:layout_alignTop="@+id/result_description_view"
+        android:background="@color/result_card_battery_bg"
+        android:gravity="center">
+
+        <android.support.v7.widget.AppCompatImageView
+            android:id="@+id/function_icon_iv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:srcCompat="@drawable/result_page_battery_high"/>
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/result_description_view"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_toEndOf="@+id/result_image_container"
+        android:layout_toRightOf="@+id/result_image_container"
+        android:orientation="vertical">
+
+        <com.honeycomb.launcher.view.TypefacedTextView
+            android:id="@+id/title_tv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="15dp"
+            android:layout_marginRight="15dp"
+            android:layout_marginTop="20dp"
+            android:text="@string/result_page_card_battery_saver_title"
+            android:textColor="@color/result_card_title"
+            android:textSize="20sp"
+            app:typeface="@string/roboto_medium"/>
+
+        <com.honeycomb.launcher.view.TypefacedTextView
+            android:id="@+id/content_tv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="9dp"
+            android:layout_marginLeft="15dp"
+            android:layout_marginRight="9dp"
+            android:layout_marginStart="15dp"
+            android:layout_marginTop="6dp"
+            android:textColor="@color/result_card_content"
+            android:textSize="16sp"
+            app:typeface="@string/roboto_regular"
+            tools:text="@string/result_page_card_battery_saver_description_low_battery"/>
+
+        <com.honeycomb.launcher.view.TypefacedTextView
+            android:id="@+id/function_tv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="end"
+            android:layout_marginBottom="4dp"
+            android:layout_marginLeft="4dp"
+            android:layout_marginRight="4dp"
+            android:background="@drawable/material_compat_button_bg"
+            android:clickable="true"
+            android:paddingBottom="12dp"
+            android:paddingLeft="12dp"
+            android:paddingRight="12dp"
+            android:paddingTop="12dp"
+            android:text="@string/battery_optimize"
+            android:textAllCaps="true"
+            android:textSize="14sp"
+            app:typeface="@string/roboto_regular"
+            tools:textColor="@color/result_function_card_button"/>
+    </LinearLayout>
+</RelativeLayout>

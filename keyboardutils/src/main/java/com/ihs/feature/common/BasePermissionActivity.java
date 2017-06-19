@@ -7,11 +7,10 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.os.Bundle;
 
-import com.ihs.app.framework.activity.HSAppCompatActivity;
 import com.ihs.commons.utils.HSLog;
 import com.ihs.keyboardutils.utils.CommonUtils;
 
-public abstract class BasePermissionActivity extends HSAppCompatActivity {
+public abstract class BasePermissionActivity extends BaseCenterActivity {
 
     private static final String TAG = "BasePermissionActivity";
     private BroadcastReceiver mCloseSystemDialogsReceiver;

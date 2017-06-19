@@ -126,6 +126,14 @@
         <attr name="barWidth" format="dimension" />
         <attr name="linearProgress" format="boolean" />
     </declare-styleable>
+    <declare-styleable name="SeekCircleProgressBar">
+        <attr name="seekBarMaxProgress" format="integer" />
+        <attr name="seekBarLineWidth" format="dimension" />
+        <attr name="seekBarLineHeight" format="dimension" />
+        <attr name="seekBarBackColor" format="color" />
+        <attr name="seekBarForeColor" format="color" />
+        <attr name="seekBarTriangleEnable" format="boolean" />
+    </declare-styleable>
 
 
 </resources>

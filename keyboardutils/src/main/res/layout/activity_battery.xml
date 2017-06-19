@@ -1,0 +1,333 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- com.honeycomb.launcher.view.CustomRootView -->
+<com.honeycomb.launcher.view.CustomRootView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/view_container"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/battery_green"
+    android:clipChildren="false"
+    android:fitsSystemWindows="false">
+
+    <!-- Do not change container_view id -->
+    <RelativeLayout
+        android:id="@+id/container_view"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_above="@+id/optimize_btn_ll"
+            android:layout_below="@+id/battery_tool_bar"
+            android:layout_marginBottom="@dimen/battery_content_margin_bottom"
+            android:layout_marginTop="@dimen/battery_content_margin_top"
+            android:visibility="visible">
+
+            <LinearLayout
+                android:id="@+id/battery_content_ll"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_centerInParent="true"
+                android:layout_marginEnd="@dimen/battery_content_padding_horizontal"
+                android:layout_marginLeft="@dimen/battery_content_padding_horizontal"
+                android:layout_marginRight="@dimen/battery_content_padding_horizontal"
+                android:layout_marginStart="@dimen/battery_content_padding_horizontal"
+                android:gravity="center_horizontal"
+                android:orientation="vertical">
+                <!-- This layout bind with code LayoutParams.If change it, need to change it in code. -->
+                <RelativeLayout
+                    android:id="@+id/power_remaining_rl"
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:layout_weight="2.6">
+
+                    <com.honeycomb.launcher.view.SeekCircleProgressBar
+                        android:id="@+id/seek_circle_progressbar"
+                        android:layout_width="@dimen/battery_optimize_btn_width"
+                        android:layout_height="match_parent"
+                        android:layout_centerInParent="true"
+                        app:seekBarBackColor="@color/seek_bar_bg"
+                        app:seekBarForeColor="@android:color/white"
+                        app:seekBarLineHeight="16dp"
+                        app:seekBarLineWidth="1dp"
+                        app:seekBarMaxProgress="200"
+                        app:seekBarTriangleEnable="true" />
+
+                    <TextView
+                        android:id="@+id/power_remaining_tv"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_above="@+id/power_remaining_time_ll"
+                        android:layout_centerHorizontal="true"
+                        android:layout_marginBottom="3dp"
+                        android:fontFamily="sans-serif-condensed"
+                        android:text="@string/battery_power_remaining"
+                        android:textColor="@android:color/white"
+                        android:textSize="14sp" />
+
+                    <LinearLayout
+                        android:id="@+id/power_remaining_time_ll"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerInParent="true"
+                        android:gravity="bottom"
+                        android:orientation="horizontal">
+
+                        <TextView
+                            android:id="@+id/remain_hour_time_tv"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:fontFamily="sans-serif-condensed"
+                            android:text="@string/battery_time_default"
+                            android:textColor="@android:color/white"
+                            android:textSize="@dimen/battery_power_remaining_time"
+                            android:textStyle="bold" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:fontFamily="sans-serif"
+                            android:paddingEnd="@dimen/battery_seek_progress_time_padding"
+                            android:paddingLeft="@dimen/battery_seek_progress_time_padding"
+                            android:paddingRight="@dimen/battery_seek_progress_time_padding"
+                            android:paddingStart="@dimen/battery_seek_progress_time_padding"
+                            android:text="@string/battery_time_hour_lowercase"
+                            android:textColor="@android:color/white"
+                            android:textSize="@dimen/battery_power_remaining_time_unit" />
+
+                        <TextView
+                            android:id="@+id/remain_minute_time_tv"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:fontFamily="sans-serif-condensed"
+                            android:text="@string/battery_time_default"
+                            android:textColor="@android:color/white"
+                            android:textSize="@dimen/battery_power_remaining_time"
+                            android:textStyle="bold" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:fontFamily="sans-serif"
+                            android:paddingEnd="0dp"
+                            android:paddingLeft="@dimen/battery_seek_progress_time_padding"
+                            android:paddingRight="0dp"
+                            android:paddingStart="@dimen/battery_seek_progress_time_padding"
+                            android:text="@string/battery_time_minute_lowercase"
+                            android:textColor="@android:color/white"
+                            android:textSize="@dimen/battery_power_remaining_time_unit" />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@+id/power_remaining_time_ll"
+                        android:layout_centerHorizontal="true"
+                        android:layout_marginTop="16dp"
+                        android:gravity="center_vertical"
+                        android:orientation="horizontal">
+
+                        <android.support.v7.widget.AppCompatImageView
+                            android:id="@+id/power_remaining_percent_iv"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:visibility="gone" />
+
+                        <TextView
+                            android:id="@+id/power_remaining_percent_tv"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="2.6dp"
+                            android:layout_marginStart="2.6dp"
+                            android:fontFamily="sans-serif-condensed"
+                            android:gravity="center"
+                            android:text="@string/battery_progress_default"
+                            android:textColor="@android:color/white"
+                            android:textSize="@dimen/battery_power_remaining_time_unit" />
+                    </LinearLayout>
+
+                </RelativeLayout>
+
+                <LinearLayout
+                    android:id="@+id/status_content_ll"
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:orientation="vertical"
+                    android:visibility="invisible">
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:gravity="center_vertical"
+                        android:orientation="horizontal">
+
+                        <android.support.v7.widget.AppCompatImageView
+                            android:id="@+id/normal_status_title_iv"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            app:srcCompat="@drawable/battery_excellent_svg" />
+
+                        <android.support.v7.widget.AppCompatTextView
+                            android:id="@+id/normal_status_title_tv"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="@dimen/battery_status_title_padding"
+                            android:layout_marginStart="@dimen/battery_status_title_padding"
+                            android:fontFamily="sans-serif-medium"
+                            android:gravity="center"
+                            android:maxLines="1"
+                            android:text=""
+                            android:textColor="@android:color/white"
+                            android:textSize="@dimen/battery_status_title_size"
+                            tools:text="Low batter" />
+                    </LinearLayout>
+
+                    <android.support.v7.widget.AppCompatTextView
+                        android:id="@+id/normal_status_content_tv"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="3dp"
+                        android:fontFamily="sans-serif-medium"
+                        android:gravity="center"
+                        android:maxLines="2"
+                        android:text=""
+                        android:textColor="@android:color/white"
+                        android:textSize="@dimen/battery_status_content_size"
+                        tools:text="You can optimize to extend the battery life of your phone." />
+                </LinearLayout>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/battery_charging_ll"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_centerInParent="true"
+                android:layout_marginEnd="@dimen/battery_content_padding_horizontal"
+                android:layout_marginLeft="@dimen/battery_content_padding_horizontal"
+                android:layout_marginRight="@dimen/battery_content_padding_horizontal"
+                android:layout_marginStart="@dimen/battery_content_padding_horizontal"
+                android:gravity="center_horizontal"
+                android:orientation="vertical"
+                android:visibility="gone">
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:layout_weight="2.6" />
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:layout_weight="1">
+
+                    <include layout="@layout/battery_charging_item" />
+                </RelativeLayout>
+            </LinearLayout>
+
+            <include layout="@layout/battery_cleaning_item" />
+
+        </RelativeLayout>
+
+        <LinearLayout
+            android:id="@+id/optimize_btn_ll"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/battery_bottom_height"
+            android:layout_alignParentBottom="true"
+            android:gravity="top|center_horizontal"
+            android:orientation="vertical"
+            android:paddingLeft="@dimen/battery_button_margin"
+            android:paddingRight="@dimen/battery_button_margin">
+
+            <android.support.v7.widget.AppCompatButton
+                android:id="@+id/optimize_btn"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/battery_optimize_btn_height"
+                android:layout_marginTop="8dp"
+                android:background="@drawable/material_battery_button_bg_white"
+                android:fontFamily="sans-serif-medium"
+                android:gravity="center"
+                android:text="@string/battery_optimize"
+                android:textColor="@color/battery_green"
+                android:textSize="18sp" />
+
+        </LinearLayout>
+
+        <RelativeLayout
+            android:id="@+id/battery_tool_bar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <LinearLayout
+                android:id="@+id/manual_action_bar"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/abc_action_bar_default_height_material"
+                android:gravity="center_vertical"
+                android:orientation="horizontal"
+                android:paddingEnd="0dp"
+                android:paddingLeft="@dimen/toolbar_title_padding"
+                android:paddingRight="0dp"
+                android:paddingStart="@dimen/toolbar_title_padding"
+                android:visibility="visible">
+
+                <com.ihs.feature.common.TypefacedTextView
+                    android:id="@+id/battery_title_tv"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="@string/battery_air_title"
+                    android:textColor="@android:color/white"
+                    android:textSize="@dimen/title_size"
+                    app:typeface="@string/roboto_light" />
+
+                <LinearLayout
+                    android:id="@+id/menu_ll"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:orientation="horizontal">
+
+                    <android.support.v7.widget.AppCompatImageView
+                        android:id="@+id/mode_menu_iv"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:background="?attr/selectableItemBackground"
+                        android:paddingLeft="10dp"
+                        android:paddingRight="10dp"
+                        app:srcCompat="@drawable/battery_mode_svg" />
+
+                    <android.support.v7.widget.AppCompatImageView
+                        android:id="@+id/rank_menu_iv"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:background="?attr/selectableItemBackground"
+                        android:paddingLeft="10dp"
+                        android:paddingRight="10dp"
+                        app:srcCompat="@drawable/battery_rank_svg" />
+
+                    <android.support.v7.widget.AppCompatImageView
+                        android:id="@+id/battery_menu"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:background="?attr/selectableItemBackground"
+                        android:paddingLeft="12dp"
+                        android:paddingRight="12dp"
+                        android:scaleType="center"
+                        app:srcCompat="@drawable/ic_battery_menu" />
+                </LinearLayout>
+            </LinearLayout>
+
+            <include
+                android:id="@+id/action_bar"
+                layout="@layout/white_toolbar"
+                android:visibility="gone"/>
+        </RelativeLayout>
+
+    </RelativeLayout>
+
+    <include layout="@layout/navigation_bar_bg" />
+</com.honeycomb.launcher.view.CustomRootView>

@@ -214,5 +214,30 @@
     </style>
 
     <style name="DefaultCompatDialog" parent="Theme.AppCompat.Light.Dialog.Alert"/>
+    <style name="BatteryRadioButton" parent="Theme.AppCompat.Light">
+        <item name="colorControlActivated">@color/battery_green</item>
+    </style>
 
+    <!-- Dialog Style-->
+
+    <style name="DialogTitleText">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="typeface">@string/proxima_nova_semibold</item>
+        <item name="android:textSize">18sp</item>
+        <item name="android:textColor">@color/material_text_black_primary</item>
+    </style>
+
+    <style name="DialogDescText">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:textSize">16sp</item>
+        <item name="typeface">@string/proxima_nova_regular</item>
+        <item name="android:textColor">@color/material_text_black_secondary</item>
+    </style>
+
+    <style name="result_page_charging_content">
+        <item name="android:textSize">12sp</item>
+        <item name="android:textColor">@color/result_page_charging_description</item>
+    </style>
 </resources>

@@ -12,34 +12,30 @@ import android.view.MenuItem;
 import android.view.View;
 
 import com.acb.adadapter.AcbNativeAd;
-import com.honeycomb.launcher.R;
-import com.honeycomb.launcher.ad.ResultPageAdsManager;
-import com.honeycomb.launcher.battery.BatteryActivity;
-import com.honeycomb.launcher.boost.plus.BoostPlusActivity;
-import com.honeycomb.launcher.chargingscreen.ChargingScreenSettings;
-import com.honeycomb.launcher.ihs.BaseCenterActivity;
-import com.honeycomb.launcher.junkclean.util.JunkCleanConstant;
-import com.honeycomb.launcher.model.LauncherFiles;
-import com.honeycomb.launcher.resultpage.data.CardData;
-import com.honeycomb.launcher.resultpage.data.ResultConstants;
-import com.honeycomb.launcher.util.ActivityUtils;
-import com.honeycomb.launcher.util.CommonUtils;
-import com.honeycomb.launcher.util.ConcurrentUtils;
-import com.honeycomb.launcher.util.LauncherActivityUtils;
-import com.honeycomb.launcher.util.NotificationCenter;
-import com.honeycomb.launcher.util.PreferenceHelper;
-import com.honeycomb.launcher.util.Thunk;
-import com.honeycomb.launcher.util.ViewUtils;
 import com.ihs.app.analytics.HSAnalytics;
 import com.ihs.app.framework.activity.HSAppCompatActivity;
 import com.ihs.commons.notificationcenter.HSGlobalNotificationCenter;
 import com.ihs.commons.notificationcenter.INotificationObserver;
 import com.ihs.commons.utils.HSBundle;
 import com.ihs.commons.utils.HSLog;
+import com.ihs.feature.battery.BatteryActivity;
+import com.ihs.feature.boost.plus.BoostPlusActivity;
+import com.ihs.feature.common.ActivityUtils;
+import com.ihs.feature.common.BaseCenterActivity;
+import com.ihs.feature.common.ConcurrentUtils;
+import com.ihs.feature.common.LauncherFiles;
+import com.ihs.feature.common.NotificationCenter;
+import com.ihs.feature.common.PreferenceHelper;
+import com.ihs.feature.common.Thunk;
+import com.ihs.feature.common.ViewUtils;
+import com.ihs.feature.junkclean.util.JunkCleanConstant;
+import com.ihs.feature.resultpage.data.CardData;
+import com.ihs.feature.resultpage.data.ResultConstants;
+import com.ihs.keyboardutils.R;
+import com.ihs.keyboardutils.utils.CommonUtils;
 
 import java.util.List;
 
-import hugo.weaving.DebugLog;
 
 public class ResultPageActivity extends HSAppCompatActivity
         implements ResultPageContracts.View, INotificationObserver {
@@ -296,7 +292,7 @@ public class ResultPageActivity extends HSAppCompatActivity
                 throw new IllegalArgumentException("Unsupported result type.");
         }
         mAd = ad;
-        LauncherActivityUtils.configSimpleAppBar(this, titleText, Color.TRANSPARENT);
+        ActivityUtils.configSimpleAppBar(this, titleText, Color.TRANSPARENT);
         startTransitionAnimation();
         if (null != sRefreshListener) {
             sRefreshListener.onResultViewFinished();
@@ -345,7 +341,8 @@ public class ResultPageActivity extends HSAppCompatActivity
         HSGlobalNotificationCenter.removeObserver(this);
     }
 
-    @Thunk void releaseCurrentAd() {
+    @Thunk
+    void releaseCurrentAd() {
         if (mAd != null) {
             mAd.release();
         }

@@ -1,8 +1,8 @@
 package com.ihs.feature.boost.plus;
 
-import com.honeycomb.launcher.model.LauncherFiles;
-import com.honeycomb.launcher.util.PreferenceHelper;
 import com.ihs.commons.utils.HSLog;
+import com.ihs.feature.common.LauncherFiles;
+import com.ihs.feature.common.PreferenceHelper;
 
 import java.util.Map;
 

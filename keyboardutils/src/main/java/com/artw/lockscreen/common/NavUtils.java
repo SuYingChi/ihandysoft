@@ -14,10 +14,12 @@ import android.os.Looper;
 import android.provider.Settings;
 import android.text.TextUtils;
 
-import com.ihs.keyboardutils.R;
 import com.ihs.app.analytics.HSAnalytics;
 import com.ihs.app.framework.HSApplication;
+import com.ihs.app.utils.HSMarketUtils;
 import com.ihs.commons.utils.HSLog;
+import com.ihs.keyboardutils.R;
+import com.ihs.keyboardutils.utils.CommonUtils;
 
 import java.util.List;
 
@@ -217,6 +219,17 @@ public class NavUtils {
                 mIntent.addFlags(Intent.FLAG_ACTIVITY_BROUGHT_TO_FRONT);
                 HSApplication.getContext().startActivity(mIntent);
             }
+        }
+    }
+
+    /**
+     * Browse market app if not installed. Launch the app if installed.
+     */
+    public static void browseApp(String packageName) {
+        if (CommonUtils.isPackageInstalled(packageName)) {
+            NavUtils.openApplication(packageName);
+        } else {
+            HSMarketUtils.browseAPP(packageName);
         }
     }
 }

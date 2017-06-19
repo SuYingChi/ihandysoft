@@ -1,0 +1,268 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@drawable/material_compat_bg"
+    android:gravity="center_vertical"
+    android:orientation="vertical"
+    android:paddingLeft="25dp"
+    android:paddingRight="25dp"
+    android:paddingTop="15dp">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        android:paddingBottom="@dimen/battery_alert_padding_vertical"
+        android:paddingTop="@dimen/battery_alert_padding_vertical">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_toLeftOf="@+id/brightness_switch_tv"
+            android:layout_toStartOf="@+id/brightness_switch_tv"
+            android:gravity="start"
+            android:text="@string/battery_brightness"
+            android:textColor="@color/battery_alert_content"
+            android:textSize="@dimen/battery_mode_title_size" />
+
+        <TextView
+            android:id="@+id/brightness_switch_tv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:fontFamily="sans-serif-medium"
+            android:text="@string/battery_auto"
+            android:textColor="@color/battery_mode_title"
+            android:textSize="@dimen/battery_mode_title_size" />
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        android:paddingBottom="@dimen/battery_alert_padding_vertical"
+        android:paddingTop="@dimen/battery_alert_padding_vertical">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_toLeftOf="@+id/screen_timeout_switch_tv"
+            android:layout_toStartOf="@+id/screen_timeout_switch_tv"
+            android:gravity="start"
+            android:text="@string/battery_screen_timeout"
+            android:textColor="@color/battery_alert_content"
+            android:textSize="@dimen/battery_mode_title_size" />
+
+        <TextView
+            android:id="@+id/screen_timeout_switch_tv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:fontFamily="sans-serif-medium"
+            android:text="30s"
+            android:textColor="@color/battery_mode_title"
+            android:textSize="@dimen/battery_mode_title_size" />
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        android:paddingBottom="@dimen/battery_alert_padding_vertical"
+        android:paddingTop="@dimen/battery_alert_padding_vertical">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_toLeftOf="@+id/vibrate_switch_tv"
+            android:layout_toStartOf="@+id/vibrate_switch_tv"
+            android:gravity="start"
+            android:text="@string/battery_vibrate"
+            android:textColor="@color/battery_alert_content"
+            android:textSize="@dimen/battery_mode_title_size" />
+
+        <TextView
+            android:id="@+id/vibrate_switch_tv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:fontFamily="sans-serif-medium"
+            android:text="@string/battery_off"
+            android:textColor="@color/battery_mode_title"
+            android:textSize="@dimen/battery_mode_title_size" />
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        android:paddingBottom="@dimen/battery_alert_padding_vertical"
+        android:paddingTop="@dimen/battery_alert_padding_vertical">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_toLeftOf="@+id/wifi_switch_tv"
+            android:layout_toStartOf="@+id/wifi_switch_tv"
+            android:gravity="start"
+            android:text="@string/battery_wifi"
+            android:textColor="@color/battery_alert_content"
+            android:textSize="@dimen/battery_mode_title_size" />
+
+        <TextView
+            android:id="@+id/wifi_switch_tv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:fontFamily="sans-serif-medium"
+            android:text="@string/battery_on"
+            android:textColor="@color/battery_mode_title"
+            android:textSize="@dimen/battery_mode_title_size" />
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        android:paddingBottom="@dimen/battery_alert_padding_vertical"
+        android:paddingTop="@dimen/battery_alert_padding_vertical">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_toLeftOf="@+id/bluetooth_switch_tv"
+            android:layout_toStartOf="@+id/bluetooth_switch_tv"
+            android:gravity="start"
+            android:text="@string/battery_bluetooth"
+            android:textColor="@color/battery_alert_content"
+            android:textSize="@dimen/battery_mode_title_size" />
+
+        <TextView
+            android:id="@+id/bluetooth_switch_tv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:fontFamily="sans-serif-medium"
+            android:text="@string/battery_off"
+            android:textColor="@color/battery_mode_title"
+            android:textSize="@dimen/battery_mode_title_size" />
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        android:paddingBottom="@dimen/battery_alert_padding_vertical"
+        android:paddingTop="@dimen/battery_alert_padding_vertical">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_toLeftOf="@+id/auto_sync_switch_tv"
+            android:layout_toStartOf="@+id/auto_sync_switch_tv"
+            android:gravity="start"
+            android:text="@string/battery_auto_sync"
+            android:textColor="@color/battery_alert_content"
+            android:textSize="@dimen/battery_mode_title_size" />
+
+        <TextView
+            android:id="@+id/auto_sync_switch_tv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:fontFamily="sans-serif-medium"
+            android:text="@string/battery_off"
+            android:textColor="@color/battery_mode_title"
+            android:textSize="@dimen/battery_mode_title_size" />
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/mobile_data_rl"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        android:paddingBottom="@dimen/battery_alert_padding_vertical"
+        android:paddingTop="@dimen/battery_alert_padding_vertical">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_toLeftOf="@+id/mobile_data_switch_tv"
+            android:layout_toStartOf="@+id/mobile_data_switch_tv"
+            android:gravity="start"
+            android:text="@string/battery_mobile_data"
+            android:textColor="@color/battery_alert_content"
+            android:textSize="@dimen/battery_mode_title_size" />
+
+        <TextView
+            android:id="@+id/mobile_data_switch_tv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:fontFamily="sans-serif-medium"
+            android:text="@string/battery_off"
+            android:textColor="@color/battery_mode_title"
+            android:textSize="@dimen/battery_mode_title_size" />
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        android:paddingBottom="@dimen/battery_alert_padding_vertical"
+        android:paddingTop="@dimen/battery_alert_padding_vertical">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_toLeftOf="@+id/haptic_feedback_switch_tv"
+            android:layout_toStartOf="@+id/haptic_feedback_switch_tv"
+            android:gravity="start"
+            android:text="@string/battery_haptic_feedback"
+            android:textColor="@color/battery_alert_content"
+            android:textSize="@dimen/battery_mode_title_size" />
+
+        <TextView
+            android:id="@+id/haptic_feedback_switch_tv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:fontFamily="sans-serif-medium"
+            android:text="@string/battery_off"
+            android:textColor="@color/battery_mode_title"
+            android:textSize="@dimen/battery_mode_title_size" />
+    </RelativeLayout>
+</LinearLayout>

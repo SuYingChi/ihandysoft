@@ -5,9 +5,10 @@ import android.support.annotation.LayoutRes;
 import android.support.annotation.StringRes;
 import android.view.MenuItem;
 
-import com.ihs.app.framework.activity.HSAppCompatActivity;
+import com.ihs.feature.common.ActivityUtils;
+import com.ihs.feature.common.BasePermissionActivity;
 
-public abstract class BaseSettingsActivity extends HSAppCompatActivity {
+public abstract class BaseSettingsActivity extends BasePermissionActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

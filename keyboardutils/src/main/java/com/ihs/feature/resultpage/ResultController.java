@@ -25,22 +25,20 @@ import com.acb.adadapter.AcbNativeAd;
 import com.acb.adadapter.ContainerView.AcbNativeAdContainerView;
 import com.acb.adadapter.ContainerView.AcbNativeAdIconView;
 import com.acb.adadapter.ContainerView.AcbNativeAdPrimaryView;
-import com.honeycomb.launcher.R;
-import com.honeycomb.launcher.animation.LauncherAnimUtils;
-import com.honeycomb.launcher.animation.LauncherAnimationUtils;
-import com.honeycomb.launcher.chargingscreen.ChargingScreenSettings;
-import com.honeycomb.launcher.locker.LockerSettings;
-import com.honeycomb.launcher.notificationcleaner.NotificationCleanerConstants;
-import com.honeycomb.launcher.notificationcleaner.NotificationCleanerUtil;
-import com.honeycomb.launcher.resultpage.data.CardData;
-import com.honeycomb.launcher.resultpage.data.ResultConstants;
-import com.honeycomb.launcher.util.CommonUtils;
-import com.honeycomb.launcher.util.Thunk;
-import com.honeycomb.launcher.util.ToastUtils;
-import com.honeycomb.launcher.util.ViewUtils;
-import com.honeycomb.launcher.view.RevealFlashButton;
+import com.artw.lockscreen.LockerSettings;
 import com.ihs.app.analytics.HSAnalytics;
+import com.ihs.chargingscreen.utils.ChargingManagerUtil;
 import com.ihs.commons.utils.HSLog;
+import com.ihs.feature.common.LauncherAnimUtils;
+import com.ihs.feature.common.Thunk;
+import com.ihs.feature.common.ViewUtils;
+import com.ihs.feature.resultpage.data.CardData;
+import com.ihs.feature.resultpage.data.ResultConstants;
+import com.ihs.keyboardutils.R;
+import com.ihs.keyboardutils.giftad.RevealFlashButton;
+import com.ihs.keyboardutils.utils.CommonUtils;
+import com.ihs.keyboardutils.utils.LauncherAnimationUtils;
+import com.ihs.keyboardutils.utils.ToastUtils;
 
 import java.util.List;
 
@@ -53,7 +51,8 @@ abstract class ResultController implements View.OnClickListener {
 
     static final long DURATION_BALL_TRANSLATE = 7 * FRAME_HALF;
     private static final long START_DELAY_CARDS = FRAME / 10 * 86;
-    @Thunk static final long DURATION_CARD_TRANSLATE = 8 * FRAME;
+    @Thunk
+    static final long DURATION_CARD_TRANSLATE = 8 * FRAME;
     @Thunk static final long DURATION_BG_TRANSLATE = 7 * FRAME;
 
     // Ad / charging screen
@@ -420,28 +419,29 @@ abstract class ResultController implements View.OnClickListener {
 
     @Override
     public void onClick(View v) {
-        switch (v.getId()) {
-            case R.id.result_action_btn:
-                switch (mType) {
-                    case CHARGE_SCREEN:
-                        ChargingScreenSettings.setChargingScreenEnabled(true);
-                        if (!LockerSettings.isLockerEverEnabled()) {
-                            LockerSettings.setLockerEnabled(true);
-                        }
-                        ToastUtils.showToast(R.string.result_page_card_battery_protection_toast);
-                        mActivity.finishAndNotify();
-                        break;
-                    case NOTIFICATION_CLEANER:
-                        HSAnalytics.logEvent("NotificationCleaner_Enterance_Click", "type", NotificationCleanerConstants.RESULT_PAGE);
-                        NotificationCleanerUtil.checkToStartNotificationOrganizerActivity(v.getContext(), NotificationCleanerConstants.RESULT_PAGE);
-                        mActivity.finishSelfAndParentActivity();
-                        break;
-                }
-                break;
-            case R.id.cleaning_ball_iv:
-                mActivity.finish();
-            default:
-                break;
+        int i = v.getId();
+        if (i == R.id.result_action_btn) {
+            switch (mType) {
+                case CHARGE_SCREEN:
+                    ChargingManagerUtil.enableCharging(false,"ResultPage");
+                    if (!LockerSettings.isLockerEnabledBefore()) {
+                        LockerSettings.setLockerEnabled(true,"ResultPage");
+                    }
+                    ToastUtils.showToast(R.string.result_page_card_battery_protection_toast);
+                    mActivity.finishAndNotify();
+                    break;
+                case NOTIFICATION_CLEANER:
+                    HSAnalytics.logEvent("NotificationCleaner_Enterance_Click", "type", NotificationCleanerConstants.RESULT_PAGE);
+                    NotificationCleanerUtil.checkToStartNotificationOrganizerActivity(v.getContext(), NotificationCleanerConstants.RESULT_PAGE);
+                    mActivity.finishSelfAndParentActivity();
+                    break;
+            }
+
+        } else if (i == R.id.cleaning_ball_iv) {
+            mActivity.finish();
+
+
+        } else {
         }
     }
 

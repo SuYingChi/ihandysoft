@@ -2,12 +2,12 @@ package com.ihs.feature.boost.plus;
 
 import android.os.SystemClock;
 
-import com.honeycomb.launcher.model.LauncherFiles;
-import com.honeycomb.launcher.util.ConcurrentUtils;
-import com.honeycomb.launcher.util.PreferenceHelper;
 import com.ihs.commons.config.HSConfig;
 import com.ihs.commons.utils.HSLog;
 import com.ihs.device.clean.memory.utils.HSRootUtils;
+import com.ihs.feature.common.ConcurrentUtils;
+import com.ihs.feature.common.LauncherFiles;
+import com.ihs.feature.common.PreferenceHelper;
 
 import java.util.concurrent.Callable;
 import java.util.concurrent.TimeUnit;

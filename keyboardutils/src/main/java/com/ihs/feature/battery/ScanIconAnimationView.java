@@ -16,8 +16,8 @@ import android.view.animation.TranslateAnimation;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 
-import com.honeycomb.launcher.R;
-import com.honeycomb.launcher.util.CommonUtils;
+import com.ihs.keyboardutils.R;
+import com.ihs.keyboardutils.utils.CommonUtils;
 
 import java.util.ArrayList;
 import java.util.Arrays;
