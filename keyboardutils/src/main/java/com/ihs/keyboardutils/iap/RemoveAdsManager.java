@@ -56,15 +56,10 @@ public class RemoveAdsManager {
         }
         isPurchasingRemoveAds = true;
 
-        HSIAPManager.getInstance().purchase(getRemoveAdsIapId(), new HSIAPManager.HSPurchaseListener() {
+        HSIAPManager.getInstance().purchase(needsServerVerification ? HSIAPManager.VERIFICATION_ON_SERVER : HSIAPManager.VERIFICATION_ON_DEVICE, getRemoveAdsIapId(), new HSIAPManager.HSPurchaseListener() {
             @Override
             public void onPurchaseSucceeded(String s) {
                 HSLog.d("onPurchaseSucceeded: " + s);
-
-                if (!needsServerVerification) {
-                    HSGlobalNotificationCenter.sendNotification(NOTIFICATION_REMOVEADS_PURCHASED);
-                    isPurchasingRemoveAds = false;
-                }
             }
 
             @Override
@@ -77,19 +72,15 @@ public class RemoveAdsManager {
             public void onVerifySucceeded(String s, JSONObject jsonObject) {
                 HSLog.d(TAG, "onVerifySucceeded: " + s + "json: " + jsonObject.toString());
 
-                if (needsServerVerification) {
-                    HSGlobalNotificationCenter.sendNotification(NOTIFICATION_REMOVEADS_PURCHASED);
-                    isPurchasingRemoveAds = false;
-                }
+                HSGlobalNotificationCenter.sendNotification(NOTIFICATION_REMOVEADS_PURCHASED);
+                isPurchasingRemoveAds = false;
             }
 
             @Override
             public void onVerifyFailed(String s, int i, String s1) {
                 HSLog.d(TAG, "onVerifyFailed: " + s + " Error: " + s1 + " (" + i + ")");
 
-                if (needsServerVerification) {
-                    isPurchasingRemoveAds = false;
-                }
+                isPurchasingRemoveAds = false;
             }
         });
     }
