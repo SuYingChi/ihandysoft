@@ -11,15 +11,17 @@ import android.content.pm.ResolveInfo;
 import android.net.Uri;
 import android.os.Handler;
 import android.os.Looper;
+import android.provider.MediaStore;
 import android.provider.Settings;
 import android.text.TextUtils;
 
-import com.ihs.keyboardutils.R;
 import com.ihs.app.analytics.HSAnalytics;
 import com.ihs.app.framework.HSApplication;
 import com.ihs.commons.utils.HSLog;
+import com.ihs.keyboardutils.R;
 
 import java.util.List;
+import java.util.NoSuchElementException;
 
 import static android.content.pm.PackageManager.COMPONENT_ENABLED_STATE_DEFAULT;
 
@@ -186,7 +188,19 @@ public class NavUtils {
             HSAnalytics.logEvent("app_screen_locker_cam_shortcut_entry_successful");
             return true;
         } catch (Exception e) {
-            e.printStackTrace();
+            Intent infoIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+            List<ResolveInfo> resolveInfos = context.getPackageManager().queryIntentActivities(infoIntent, COMPONENT_ENABLED_STATE_DEFAULT);
+            for (ResolveInfo resolveInfo : resolveInfos) {
+                try {
+                    String cameraPackageName = resolveInfo.activityInfo.packageName;
+                    openApplication(cameraPackageName);
+                    return true;
+                } catch (NoSuchElementException ecc) {
+                    //to continue the looper when find incorrect camera packageName for certain type phone.
+                } catch (Exception ec) {
+//                LockToast.makeText(HSApplication.getContext(), R.string.lock_camera_no_access, Toast.LENGTH_SHORT).show();
+                }
+            }
         }
         return false;
     }

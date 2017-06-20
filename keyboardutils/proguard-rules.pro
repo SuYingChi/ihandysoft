@@ -15,3 +15,20 @@
 #-keepclassmembers class fqcn.of.javascript.interface.for.webview {
 #   public *;
 #}
+
+-dontwarn com.ihs.feature.**
+
+# Lucky
+-keep class com.ihs.inputmethod.feature.lucky.view.ChancesAnimationAdapter {
+  public void set*(***);
+}
+
+-keep class com.ihs.inputmethod.feature.lucky.MusicPlayer {
+  public void setVolume(float);
+}
+
+-keep class com.ihs.inputmethod.feature.lucky.view.FlyAwardBaseView {
+  protected void setTranslationYProgress(float);
+  protected void setFlipTranslationYProgress(float);
+  protected void setFlipTranslationXProgress(float);
+}

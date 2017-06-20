@@ -33,7 +33,6 @@ public class ScreenLockerManager {
         final IntentFilter screenFilter = new IntentFilter();
         screenFilter.addAction(Intent.ACTION_SCREEN_OFF);
         screenFilter.addAction(Intent.ACTION_SCREEN_ON);
-        screenFilter.setPriority(SYSTEM_HIGH_PRIORITY);
 
         HSApplication.getContext().registerReceiver(new BroadcastReceiver() {
             @Override
