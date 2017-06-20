@@ -259,11 +259,15 @@ public class LockerMainFrame extends RelativeLayout implements INotificationObse
     @Override
     protected void onDetachedFromWindow() {
         super.onDetachedFromWindow();
-        acbExpressAdView.destroy();
+        if (acbExpressAdView != null) {
+            acbExpressAdView.destroy();
+        }
 
 
         HSGlobalNotificationCenter.removeObserver(this);
-        mShimmer.cancel();
+        if(mShimmer!=null){
+            mShimmer.cancel();
+        }
     }
 
     @Override

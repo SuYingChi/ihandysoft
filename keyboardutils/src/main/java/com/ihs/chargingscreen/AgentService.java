@@ -42,7 +42,7 @@ public class AgentService extends Service {
             if (HSNotificationConstant.HS_CONFIG_CHANGED.equals(notificationName)) {
                 if (ChargingPrefsUtil.getChargingEnableStates() == ChargingPrefsUtil.CHARGING_MUTED) {
                     HSChargingManager.getInstance().stop();
-                } else {
+                } else if (ChargingPrefsUtil.getChargingEnableStates() == ChargingPrefsUtil.CHARGING_DEFAULT_ACTIVE || ChargingPrefsUtil.getChargingEnableStates() == ChargingPrefsUtil.CHARGING_DEFAULT_DISABLED) {
                     HSChargingManager.getInstance().start();
                 }
             }
@@ -66,7 +66,7 @@ public class AgentService extends Service {
 
         try {
             startForeground(GRAY_SERVICE_ID, getNewNotification());
-        }catch (Exception e){
+        } catch (Exception e) {
             e.printStackTrace();
         }
         if (Build.VERSION.SDK_INT >= 18) {
