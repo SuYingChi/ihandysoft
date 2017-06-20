@@ -9,9 +9,8 @@ import android.graphics.Paint;
 import android.util.AttributeSet;
 import android.view.View;
 
-import com.honeycomb.launcher.R;
+import com.ihs.keyboardutils.R;
 
-import static com.flurry.sdk.bb.R;
 
 public class SnowView extends View {
 

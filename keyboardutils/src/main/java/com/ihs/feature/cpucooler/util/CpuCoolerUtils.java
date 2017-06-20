@@ -7,16 +7,16 @@ import android.content.pm.ResolveInfo;
 import android.view.inputmethod.InputMethodInfo;
 import android.view.inputmethod.InputMethodManager;
 
-import com.honeycomb.launcher.LauncherApplication;
-import com.honeycomb.launcher.R;
-import com.honeycomb.launcher.cpucooler.CpuCoolerManager;
-import com.honeycomb.launcher.cpucooler.CpuCoolerScanActivity;
 import com.ihs.app.framework.HSApplication;
 import com.ihs.commons.utils.HSLog;
 import com.ihs.commons.utils.HSPreferenceHelper;
+import com.ihs.feature.cpucooler.CpuCoolerManager;
+import com.ihs.feature.cpucooler.CpuCoolerScanActivity;
+import com.ihs.keyboardutils.R;
 
 import java.util.ArrayList;
 import java.util.List;
+
 
 public class CpuCoolerUtils {
 
@@ -54,7 +54,7 @@ public class CpuCoolerUtils {
     private static final int[] CPU_STATE_COLORS = {0xFF4285F4, 0xFFFFBE00, 0xFFF44336};
 
     public static HSPreferenceHelper preferenceHelper() {
-        return HSPreferenceHelper.create(LauncherApplication.getContext(), MODULE_NAME);
+        return HSPreferenceHelper.create(HSApplication.getContext(), MODULE_NAME);
     }
 
 

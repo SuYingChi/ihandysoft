@@ -16,21 +16,20 @@ import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
-import com.honeycomb.launcher.R;
-import com.honeycomb.launcher.cpucooler.util.CpuCoolerUtils;
-import com.honeycomb.launcher.cpucooler.util.CpuPreferenceHelper;
-import com.honeycomb.launcher.cpucooler.view.CpuScanTwinkleView;
-import com.honeycomb.launcher.ihs.BaseCenterActivity;
-import com.honeycomb.launcher.notification.NotificationManager;
-import com.honeycomb.launcher.resultpage.ResultPageActivity;
-import com.honeycomb.launcher.util.ActivityUtils;
-import com.honeycomb.launcher.util.CommonUtils;
-import com.honeycomb.launcher.util.LauncherPackageManager;
-import com.honeycomb.launcher.util.ViewUtils;
 import com.ihs.app.framework.HSApplication;
 import com.ihs.commons.utils.HSLog;
 import com.ihs.device.clean.memory.HSAppMemory;
 import com.ihs.device.clean.memory.HSAppMemoryManager;
+import com.ihs.feature.common.ActivityUtils;
+import com.ihs.feature.common.BaseCenterActivity;
+import com.ihs.feature.common.LauncherPackageManager;
+import com.ihs.feature.common.ViewUtils;
+import com.ihs.feature.cpucooler.util.CpuCoolerUtils;
+import com.ihs.feature.cpucooler.util.CpuPreferenceHelper;
+import com.ihs.feature.cpucooler.view.CpuScanTwinkleView;
+import com.ihs.feature.resultpage.ResultPageActivity;
+import com.ihs.keyboardutils.R;
+import com.ihs.keyboardutils.utils.CommonUtils;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -304,7 +303,6 @@ public class CpuCoolerScanActivity extends BaseCenterActivity {
                         mAppPackageNameList.add(packageName);
                     }
                 }
-                NotificationManager.getInstance().autoUpdateCpuCoolerTemperature();
             }
 
             @Override

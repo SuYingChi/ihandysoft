@@ -2,6 +2,7 @@ package com.ihs.feature.resultpage;
 
 import android.animation.Animator;
 import android.animation.ValueAnimator;
+import android.annotation.SuppressLint;
 import android.support.annotation.Nullable;
 import android.text.TextUtils;
 import android.view.View;
@@ -15,18 +16,18 @@ import android.widget.TextView;
 
 import com.acb.adadapter.AcbAd;
 import com.acb.adadapter.AcbNativeAd;
-import com.honeycomb.launcher.R;
-import com.honeycomb.launcher.ad.AdPlacements;
-import com.honeycomb.launcher.animation.AnimatorListenerAdapter;
-import com.honeycomb.launcher.animation.LauncherAnimationUtils;
-import com.honeycomb.launcher.resultpage.data.CardData;
-import com.honeycomb.launcher.resultpage.data.ResultConstants;
-import com.honeycomb.launcher.util.CommonUtils;
-import com.honeycomb.launcher.util.ViewUtils;
 import com.ihs.app.analytics.HSAnalytics;
+import com.ihs.feature.common.AdPlacements;
+import com.ihs.feature.common.AnimatorListenerAdapter;
+import com.ihs.feature.common.ViewUtils;
+import com.ihs.feature.resultpage.data.CardData;
+import com.ihs.feature.resultpage.data.ResultConstants;
+import com.ihs.keyboardutils.R;
+import com.ihs.keyboardutils.utils.CommonUtils;
+import com.ihs.keyboardutils.utils.LauncherAnimationUtils;
 
 import java.util.List;
-
+@SuppressLint("NewApi")
 class BatteryResultController extends ResultController {
 
     private boolean mIsOptimal;

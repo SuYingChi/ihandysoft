@@ -20,27 +20,26 @@ import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
-import com.honeycomb.launcher.R;
-import com.honeycomb.launcher.ad.ResultPageAdsManager;
-import com.honeycomb.launcher.boost.animation.BoostAnimationManager;
-import com.honeycomb.launcher.cpucooler.util.CpuCoolerConstant;
-import com.honeycomb.launcher.cpucooler.util.CpuCoolerUtils;
-import com.honeycomb.launcher.cpucooler.util.CpuPreferenceHelper;
-import com.honeycomb.launcher.cpucooler.view.CircleView;
-import com.honeycomb.launcher.cpucooler.view.SnowView;
-import com.honeycomb.launcher.ihs.BaseCenterActivity;
-import com.honeycomb.launcher.notification.NotificationManager;
-import com.honeycomb.launcher.resultpage.ResultPageActivity;
-import com.honeycomb.launcher.util.ActivityUtils;
-import com.honeycomb.launcher.util.CommonUtils;
-import com.honeycomb.launcher.util.DeviceInfoUtils;
-import com.honeycomb.launcher.util.LauncherPackageManager;
-import com.honeycomb.launcher.util.Utils;
 import com.ihs.app.analytics.HSAnalytics;
 import com.ihs.app.framework.HSApplication;
+import com.ihs.chargingscreen.utils.DisplayUtils;
 import com.ihs.commons.utils.HSLog;
 import com.ihs.device.clean.memory.HSAppMemory;
 import com.ihs.device.clean.memory.HSAppMemoryManager;
+import com.ihs.feature.boost.animation.BoostAnimationManager;
+import com.ihs.feature.common.ActivityUtils;
+import com.ihs.feature.common.BaseCenterActivity;
+import com.ihs.feature.common.LauncherPackageManager;
+import com.ihs.feature.common.Utils;
+import com.ihs.feature.cpucooler.util.CpuCoolerConstant;
+import com.ihs.feature.cpucooler.util.CpuCoolerUtils;
+import com.ihs.feature.cpucooler.util.CpuPreferenceHelper;
+import com.ihs.feature.cpucooler.view.CircleView;
+import com.ihs.feature.cpucooler.view.SnowView;
+import com.ihs.feature.resultpage.ResultPageActivity;
+import com.ihs.feature.resultpage.ResultPageAdsManager;
+import com.ihs.keyboardutils.R;
+import com.ihs.keyboardutils.utils.CommonUtils;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -403,7 +402,7 @@ public class CpuCoolDownActivity extends BaseCenterActivity {
     }
 
     private void startPopBallAnimation() {
-        float ballMaxRadius = (float) Math.hypot(DeviceInfoUtils.getScreenHeightPixels(), DeviceInfoUtils.getScreenWidthPixels());
+        float ballMaxRadius = (float) Math.hypot(DisplayUtils.getScreenHeightPixels(), DisplayUtils.getScreenWidthPixels());
         float ballDisplayRadius = getResources().getFraction(R.fraction.cpu_circle_bound, mScreenWidth, 1) / 2;
 
         if (Build.VERSION.SDK_INT < Build.VERSION_CODES.JELLY_BEAN_MR2) {
@@ -463,8 +462,6 @@ public class CpuCoolDownActivity extends BaseCenterActivity {
     private void startResultActivity() {
         mIsStartToResultPage = true;
         HSLog.d(CpuCoolerScanActivity.TAG, "Cpu cool down startResultActivity mRandomCoolDownInCelsius = " + mRandomCoolDownInCelsius);
-        NotificationManager.getInstance().updateCpuCoolerCoolDown(mRandomCoolDownInCelsius);
-        NotificationManager.getInstance().autoUpdateCpuCoolerTemperature();
         CpuPreferenceHelper.setLastCpuCoolerFinishTime();
         ResultPageActivity.startForCpuCooler(CpuCoolDownActivity.this);
         finish();

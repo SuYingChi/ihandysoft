@@ -6,6 +6,8 @@ import com.acb.nativeads.AcbNativeAdLoader;
 import com.ihs.app.framework.HSApplication;
 import com.ihs.commons.utils.HSError;
 import com.ihs.commons.utils.HSLog;
+import com.ihs.feature.common.AdAnalytics;
+import com.ihs.feature.common.AdPlacements;
 
 import java.util.List;
 

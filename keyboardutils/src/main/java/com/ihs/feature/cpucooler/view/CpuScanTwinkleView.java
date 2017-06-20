@@ -8,7 +8,8 @@ import android.graphics.Paint;
 import android.util.AttributeSet;
 import android.view.View;
 
-import com.honeycomb.launcher.R;
+import com.ihs.keyboardutils.R;
+
 
 public class CpuScanTwinkleView extends View{
 

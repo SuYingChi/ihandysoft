@@ -17,13 +17,13 @@ import android.widget.Button;
 import android.widget.RadioButton;
 import android.widget.TextView;
 
-import com.honeycomb.launcher.R;
-import com.honeycomb.launcher.settings.BaseSettingsActivity;
-import com.honeycomb.launcher.util.ActivityUtils;
-import com.honeycomb.launcher.util.CommonUtils;
-import com.honeycomb.launcher.util.SystemSettingsManager;
-import com.honeycomb.launcher.util.VectorCompat;
-import com.honeycomb.launcher.util.ViewUtils;
+import com.artw.lockscreen.common.BaseSettingsActivity;
+import com.artw.lockscreen.common.SystemSettingsManager;
+import com.ihs.feature.common.ActivityUtils;
+import com.ihs.feature.common.VectorCompat;
+import com.ihs.feature.common.ViewUtils;
+import com.ihs.keyboardutils.R;
+import com.ihs.keyboardutils.utils.CommonUtils;
 
 import java.util.HashMap;
 
@@ -160,19 +160,16 @@ public class BatteryModeActivity extends BaseSettingsActivity implements View.On
 
     @Override
     public void onClick(View v) {
-        switch (v.getId()) {
-            case R.id.smart_saver_rl:
-            case R.id.smart_saver_rb:
-                showSaverDialog(ModeType.SMART_SAVER);
-                break;
-            case R.id.max_saver_rl:
-            case R.id.max_saver_rb:
-                showSaverDialog(ModeType.MAX_SAVER);
-                break;
-            case R.id.current_rl:
-            case R.id.current_rb:
-                showSaverDialog(ModeType.CURRENT_SAVER);
-                break;
+        int i = v.getId();
+        if (i == R.id.smart_saver_rl || i == R.id.smart_saver_rb) {
+            showSaverDialog(ModeType.SMART_SAVER);
+
+        } else if (i == R.id.max_saver_rl || i == R.id.max_saver_rb) {
+            showSaverDialog(ModeType.MAX_SAVER);
+
+        } else if (i == R.id.current_rl || i == R.id.current_rb) {
+            showSaverDialog(ModeType.CURRENT_SAVER);
+
         }
     }
 

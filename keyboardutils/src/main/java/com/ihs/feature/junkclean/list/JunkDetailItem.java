@@ -12,15 +12,15 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-import com.honeycomb.launcher.R;
-import com.honeycomb.launcher.junkclean.model.ApkJunkWrapper;
-import com.honeycomb.launcher.junkclean.model.AppJunkWrapper;
-import com.honeycomb.launcher.junkclean.model.JunkWrapper;
-import com.honeycomb.launcher.junkclean.model.SystemJunkWrapper;
-import com.honeycomb.launcher.util.FormatSizeBuilder;
-import com.honeycomb.launcher.util.LauncherPackageManager;
-import com.honeycomb.launcher.view.ThreeStatesCheckBox;
 import com.ihs.app.framework.HSApplication;
+import com.ihs.feature.common.FormatSizeBuilder;
+import com.ihs.feature.common.LauncherPackageManager;
+import com.ihs.feature.junkclean.model.ApkJunkWrapper;
+import com.ihs.feature.junkclean.model.AppJunkWrapper;
+import com.ihs.feature.junkclean.model.JunkWrapper;
+import com.ihs.feature.junkclean.model.SystemJunkWrapper;
+import com.ihs.feature.ui.ThreeStatesCheckBox;
+import com.ihs.keyboardutils.R;
 import com.nostra13.universalimageloader.core.ImageLoader;
 
 import java.util.List;

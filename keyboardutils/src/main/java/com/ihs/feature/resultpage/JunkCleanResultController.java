@@ -8,13 +8,13 @@ import android.widget.TextView;
 
 import com.acb.adadapter.AcbAd;
 import com.acb.adadapter.AcbNativeAd;
-import com.honeycomb.launcher.R;
-import com.honeycomb.launcher.ad.AdPlacements;
-import com.honeycomb.launcher.resultpage.data.CardData;
-import com.honeycomb.launcher.resultpage.data.ResultConstants;
-import com.honeycomb.launcher.util.ViewUtils;
-import com.honeycomb.launcher.view.FlashCircleView;
 import com.ihs.app.analytics.HSAnalytics;
+import com.ihs.feature.common.AdPlacements;
+import com.ihs.feature.common.ViewUtils;
+import com.ihs.feature.resultpage.data.CardData;
+import com.ihs.feature.resultpage.data.ResultConstants;
+import com.ihs.feature.ui.FlashCircleView;
+import com.ihs.keyboardutils.R;
 
 import java.util.List;
 

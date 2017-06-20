@@ -12,16 +12,11 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.text.TextUtils;
 
-import com.honeycomb.launcher.BuildConfig;
-import com.honeycomb.launcher.compat.LauncherActivityInfoCompat;
-import com.honeycomb.launcher.compat.LauncherAppsCompat;
-import com.honeycomb.launcher.compat.UserHandleCompat;
-import com.honeycomb.launcher.model.LauncherSettings;
-import com.honeycomb.launcher.model.Stats;
-import com.honeycomb.launcher.util.ConcurrentUtils;
-import com.honeycomb.launcher.util.LauncherPackageManager;
-import com.honeycomb.launcher.util.Utils;
 import com.ihs.app.framework.HSApplication;
+import com.ihs.feature.common.ConcurrentUtils;
+import com.ihs.feature.common.LauncherPackageManager;
+import com.ihs.feature.common.UserHandleCompat;
+import com.ihs.feature.common.Utils;
 
 import java.net.URISyntaxException;
 import java.util.ArrayList;

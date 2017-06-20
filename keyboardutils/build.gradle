@@ -66,4 +66,6 @@ dependencies {
     compile("com.android.support:support-v4:${rootProject.ext.supportVersion}")
     compile("com.android.support:gridlayout-v7:${rootProject.ext.supportVersion}")
     compile("com.android.support:support-vector-drawable:${rootProject.ext.supportVersion}")
+    compile 'com.annimon:stream:1.1.7'
+    compile 'eu.davidea:flexible-adapter:5.0.0-rc1'
 }

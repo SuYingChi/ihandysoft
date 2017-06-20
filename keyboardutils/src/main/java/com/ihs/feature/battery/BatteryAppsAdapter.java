@@ -12,9 +12,9 @@ import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
-import com.honeycomb.launcher.R;
-import com.honeycomb.launcher.util.NavUtils;
-import com.honeycomb.launcher.util.Utils;
+import com.artw.lockscreen.common.NavUtils;
+import com.ihs.feature.common.Utils;
+import com.ihs.keyboardutils.R;
 
 import java.util.ArrayList;
 import java.util.List;

@@ -30,36 +30,33 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
-import com.honeycomb.launcher.R;
-import com.honeycomb.launcher.dialog.LauncherFloatWindowManager;
-import com.honeycomb.launcher.ihs.BasePermissionActivity;
-import com.honeycomb.launcher.ihs.SettingLauncherPadActivity;
-import com.honeycomb.launcher.junkclean.data.JunkManager;
-import com.honeycomb.launcher.junkclean.list.JunkDetailItem;
-import com.honeycomb.launcher.junkclean.list.JunkHeadCategoryItem;
-import com.honeycomb.launcher.junkclean.list.JunkSubCategoryItem;
-import com.honeycomb.launcher.junkclean.model.ApkJunkWrapper;
-import com.honeycomb.launcher.junkclean.model.AppJunkWrapper;
-import com.honeycomb.launcher.junkclean.model.JunkWrapper;
-import com.honeycomb.launcher.junkclean.model.MemoryJunkWrapper;
-import com.honeycomb.launcher.junkclean.model.PathRuleJunkWrapper;
-import com.honeycomb.launcher.junkclean.model.SystemJunkWrapper;
-import com.honeycomb.launcher.junkclean.util.JunkCleanConstant;
-import com.honeycomb.launcher.junkclean.util.JunkCleanUtils;
-import com.honeycomb.launcher.resultpage.ResultPageActivity;
-import com.honeycomb.launcher.util.ActivityUtils;
-import com.honeycomb.launcher.util.CommonUtils;
-import com.honeycomb.launcher.util.FormatSizeBuilder;
-import com.honeycomb.launcher.util.LauncherActivityUtils;
-import com.honeycomb.launcher.util.PermissionUtils;
-import com.honeycomb.launcher.util.PromotionTracker;
-import com.honeycomb.launcher.util.Utils;
-import com.honeycomb.launcher.util.VectorCompat;
-import com.honeycomb.launcher.util.ViewUtils;
-import com.honeycomb.launcher.view.recyclerview.TouchableRecycleView;
 import com.ihs.app.analytics.HSAnalytics;
 import com.ihs.commons.config.HSConfig;
 import com.ihs.commons.utils.HSLog;
+import com.ihs.feature.common.ActivityUtils;
+import com.ihs.feature.common.BasePermissionActivity;
+import com.ihs.feature.common.FormatSizeBuilder;
+import com.ihs.feature.common.PromotionTracker;
+import com.ihs.feature.common.Utils;
+import com.ihs.feature.common.VectorCompat;
+import com.ihs.feature.common.ViewUtils;
+import com.ihs.feature.junkclean.data.JunkManager;
+import com.ihs.feature.junkclean.list.JunkDetailItem;
+import com.ihs.feature.junkclean.list.JunkHeadCategoryItem;
+import com.ihs.feature.junkclean.list.JunkSubCategoryItem;
+import com.ihs.feature.junkclean.model.ApkJunkWrapper;
+import com.ihs.feature.junkclean.model.AppJunkWrapper;
+import com.ihs.feature.junkclean.model.JunkWrapper;
+import com.ihs.feature.junkclean.model.MemoryJunkWrapper;
+import com.ihs.feature.junkclean.model.PathRuleJunkWrapper;
+import com.ihs.feature.junkclean.model.SystemJunkWrapper;
+import com.ihs.feature.junkclean.util.JunkCleanConstant;
+import com.ihs.feature.junkclean.util.JunkCleanUtils;
+import com.ihs.feature.resultpage.ResultPageActivity;
+import com.ihs.feature.ui.TouchableRecycleView;
+import com.ihs.keyboardutils.R;
+import com.ihs.keyboardutils.permission.PermissionUtils;
+import com.ihs.keyboardutils.utils.CommonUtils;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -67,6 +64,7 @@ import java.util.List;
 import eu.davidea.flexibleadapter.FlexibleAdapter;
 import eu.davidea.flexibleadapter.common.SmoothScrollLinearLayoutManager;
 import eu.davidea.flexibleadapter.items.AbstractFlexibleItem;
+
 
 public class JunkCleanAnimationActivity extends BasePermissionActivity {
 
@@ -188,9 +186,9 @@ public class JunkCleanAnimationActivity extends BasePermissionActivity {
     @Override
     public void onAttachedToWindow() {
         super.onAttachedToWindow();
-        com.honeycomb.launcher.util.CommonUtils.setupTransparentSystemBarsForLmp(this);
+        CommonUtils.setupTransparentSystemBarsForLmp(this);
         ActivityUtils.setNavigationBarColor(this, ContextCompat.getColor(this, android.R.color.black));
-        LauncherActivityUtils.configSimpleAppBar(this, getString(R.string.clean_title), Color.TRANSPARENT, true);
+        ActivityUtils.configSimpleAppBar(this, getString(R.string.clean_title), Color.TRANSPARENT, true);
     }
 
     @Override
@@ -324,13 +322,15 @@ public class JunkCleanAnimationActivity extends BasePermissionActivity {
         actionBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(final View v) {
+                HSLog.e("这里请求Accessibility");
+
                 mIsBottomActionButtonClicked = true;
-                PermissionUtils.requestAccessibilityPermission(JunkCleanAnimationActivity.this, new Runnable() {
-                    @Override
-                    public void run() {
-                        onBottomDialogCallBack(mBottomSheetDialog);
-                    }
-                });
+//                PermissionUtils.requestAccessibilityPermission(JunkCleanAnimationActivity.this, new Runnable() {
+//                    @Override
+//                    public void run() {
+//                        onBottomDialogCallBack(mBottomSheetDialog);
+//                    }
+//                });
             }
         });
 
@@ -409,24 +409,24 @@ public class JunkCleanAnimationActivity extends BasePermissionActivity {
         startToResultPageActivity();
     }
 
-    private void onBottomDialogCallBack(BottomSheetDialog bottomSheetDialog) {
-        mJunkManager.selectSystemJunk();
-        mJunkManager.startJunkClean();
-
-        LauncherFloatWindowManager.getInstance().removeFloatButton();
-        SettingLauncherPadActivity.closeSettingsActivity(JunkCleanAnimationActivity.this);
-
-        if (bottomSheetDialog != null && bottomSheetDialog.isShowing()) {
-            bottomSheetDialog.dismiss();
-        }
-
-        new Handler().postDelayed(new Runnable() {
-            @Override
-            public void run() {
-                startToResultPageActivity();
-            }
-        }, 300);
-    }
+//    private void onBottomDialogCallBack(BottomSheetDialog bottomSheetDialog) {
+//        mJunkManager.selectSystemJunk();
+//        mJunkManager.startJunkClean();
+//
+//        LauncherFloatWindowManager.getInstance().removeFloatButton();
+//        SettingLauncherPadActivity.closeSettingsActivity(JunkCleanAnimationActivity.this);
+//
+//        if (bottomSheetDialog != null && bottomSheetDialog.isShowing()) {
+//            bottomSheetDialog.dismiss();
+//        }
+//
+//        new Handler().postDelayed(new Runnable() {
+//            @Override
+//            public void run() {
+//                startToResultPageActivity();
+//            }
+//        }, 300);
+//    }
 
     private void startToResultPageActivity() {
         HSLog.d(JunkCleanActivity.TAG, "JunkCleanAnimationActivity startToResultPageActivity mIsBottomSkipButtonClicked = " + mIsBottomSkipButtonClicked);
@@ -470,7 +470,7 @@ public class JunkCleanAnimationActivity extends BasePermissionActivity {
                 }
             });
             mJunkSizeAnimator.setDuration(DURATION_ITEM_REMOVE_ANIMATION / 2);
-            mJunkSizeAnimator.addListener(new com.honeycomb.launcher.animation.AnimatorListenerAdapter() {
+            mJunkSizeAnimator.addListener(new AnimatorListenerAdapter() {
                 @Override
                 public void onAnimationEnd(Animator animation) {
                     super.onAnimationEnd(animation);

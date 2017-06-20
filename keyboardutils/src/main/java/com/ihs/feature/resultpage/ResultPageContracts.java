@@ -3,7 +3,7 @@ package com.ihs.feature.resultpage;
 import android.support.annotation.Nullable;
 
 import com.acb.adadapter.AcbNativeAd;
-import com.honeycomb.launcher.resultpage.data.CardData;
+import com.ihs.feature.resultpage.data.CardData;
 
 import java.util.List;
 

@@ -4,9 +4,9 @@ import android.content.Context;
 import android.os.Build;
 import android.text.TextUtils;
 
-import com.honeycomb.launcher.model.LauncherFiles;
-import com.honeycomb.launcher.util.PreferenceHelper;
-import com.honeycomb.launcher.util.SystemSettingsManager;
+import com.artw.lockscreen.common.SystemSettingsManager;
+import com.ihs.feature.common.LauncherFiles;
+import com.ihs.feature.common.PreferenceHelper;
 
 import java.util.HashMap;
 

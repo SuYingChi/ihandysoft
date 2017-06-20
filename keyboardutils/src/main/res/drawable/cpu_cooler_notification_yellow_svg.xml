@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:viewportWidth="43.6"
+    android:viewportHeight="69.6"
+    android:width="43.6dp"
+    android:height="69.6dp">
+    <path
+        android:pathData="M15.8 37.6l0 -14.8 12 0 0 14.8C33.3 40.9 35 48 31.7 53.5 28.4 59 21.3 60.7 15.8 57.4 10.3 54.1 8.6 47 11.9 41.5c1 -1.6 2.3 -2.9 3.9 -3.9z"
+        android:fillColor="@color/cpu_cooler_notification_yellow" />
+    <path
+        android:pathData="M21.8 69.3c0 0 -0.1 0 -0.1 0C9.7 69.2 -0.1 59.4 0 47.3 0 42 2 37 5.5 33l0 -16.6c0 -9 7.3 -16.3 16.3 -16.3 9 0 16.3 7.3 16.3 16.3l0 16.6c3.6 4 5.5 9.2 5.5 14.6l0 0c0 5.8 -2.3 11.3 -6.5 15.4 -4.1 4.1 -9.5 6.3 -15.3 6.3zm0 -64.2c-6.2 0 -11.3 5.1 -11.3 11.3l0 18.6 -0.7 0.7C6.7 38.9 5 43 5 47.4c-0.1 9.3 7.5 16.9 16.7 16.9 0 0 0.1 0 0.1 0 4.5 0 8.7 -1.7 11.8 -4.9 3.2 -3.2 5 -7.4 5 -11.9 0 -4.5 -1.7 -8.7 -4.8 -11.9L33.1 35 33.1 16.4C33.1 10.2 28 5.1 21.8 5.1Z"
+        android:fillColor="#606261" />
+</vector>

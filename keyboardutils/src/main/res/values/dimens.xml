@@ -1,4 +1,4 @@
-<resources>
+<resources xmlns:tools="http://schemas.android.com/tools">
 
     <!-- charging-->
     <dimen name="charging_module_current_time_text_size">24sp</dimen>
@@ -164,4 +164,90 @@
     <dimen name="result_page_image_frame_height">146dp</dimen>
     <dimen name="result_page_image_frame_horizontal_margin">27dp</dimen>
     <dimen name="result_page_header_tag_margin">-14dp</dimen>
+    <dimen name="icon_padding">5dp</dimen>
+
+    <!-- Junk Clean -->
+    <dimen name="clean_height_junk_app_bar">206dp</dimen>
+    <dimen name="clean_elevation_app_bar">4dp</dimen>
+    <dimen name="clean_checkbox_width">28dp</dimen>
+    <dimen name="clean_loading_icon_width">18dp</dimen>
+    <dimen name="clean_height_header_item">56dp</dimen>
+    <dimen name="clean_height_list_item">72dp</dimen>
+    <dimen name="clean_done_circle_margin_top">102dp</dimen>
+    <dimen name="clean_done_circle_width">264dp</dimen>
+    <dimen name="clean_done_desc_margin_top_title">190dp</dimen>
+    <dimen name="clean_loading_line_height">35dp</dimen>
+    <dimen name="clean_size_margin_bottom">45dp</dimen> <!-- related with clean_loading_line_height + margin dp -->
+    <dimen name="clean_size_margin_horizontal">24dp</dimen>
+
+    <dimen name="design_bottom_navigation_text_size" tools:override="true" tools:ignore="UnusedResources">10sp</dimen>
+    <dimen name="design_bottom_navigation_active_text_size" tools:override="true" tools:ignore="UnusedResources">10sp</dimen>
+
+
+    <!-- CpuDetail -->
+    <dimen name="cpu_appbar_height">200dp</dimen>
+    <dimen name="cpu_appbar_content_layout_height">124dp</dimen>
+    <dimen name="cpu_temperature_text_size">70sp</dimen>
+    <dimen name="cpu_temperature_quantifier_text_size">21sp</dimen>
+    <dimen name="cpu_temperature_state_text_size">14sp</dimen>
+    <dimen name="cpu_head_title_text_size">14sp</dimen>
+    <dimen name="cpu_head_title_margin_left">16dp</dimen>
+    <dimen name="cpu_list_item_min_height">72dp</dimen>
+    <dimen name="cpu_app_icon_bound">40dp</dimen>
+    <dimen name="cpu_app_icon_margin_left">16dp</dimen>
+    <dimen name="cpu_app_name_margin_left">16dp</dimen>
+    <dimen name="cpu_app_count_text_size">100sp</dimen>
+    <dimen name="cpu_app_stop_hint_margin_top">-4dp</dimen>
+    <dimen name="cpu_app_stop_hint_text_size">16sp</dimen>
+    <dimen name="cpu_circle_stroke_width">7dp</dimen>
+    <dimen name="cpu_app_icon_margin_side">30dp</dimen>
+    <dimen name="cpu_checkbox_bound">28dp</dimen>
+    <dimen name="cpu_scan_app_name_text_size">16sp</dimen>
+    <dimen name="cpu_notification_toggle_icon_width">21dp</dimen>
+    <dimen name="cpu_notification_toggle_icon_height">30dp</dimen>
+
+    <fraction name="cpu_growing_snow_bound">42.32%</fraction>
+    <fraction name="cpu_left_falling_snow_bound">7.5%</fraction>
+    <fraction name="cpu_left_falling_snow_start_y">13.2%</fraction>
+    <fraction name="cpu_left_falling_snow_end_y">30.99%</fraction>
+    <fraction name="cpu_left_falling_snow_margin_left">11.11%</fraction>
+    <fraction name="cpu_middle_falling_snow_bound">10.83%</fraction>
+    <fraction name="cpu_middle_falling_snow_start_y">26.94%</fraction>
+    <fraction name="cpu_middle_falling_snow_end_y">51.06%</fraction>
+    <fraction name="cpu_middle_falling_snow_margin_left">22.22%</fraction>
+    <fraction name="cpu_right_falling_snow_bound">17.5%</fraction>
+    <fraction name="cpu_right_falling_snow_start_y">13.73%</fraction>
+    <fraction name="cpu_right_falling_snow_end_y">38.03%</fraction>
+    <fraction name="cpu_right_falling_snow_margin_left">83.33%</fraction>
+    <fraction name="cpu_falling_app_icon_bound">10.65%</fraction>
+    <fraction name="cpu_circle_view_margin_top">21.13%</fraction>
+    <fraction name="cpu_circle_bound">66.94%</fraction>
+    <fraction name="cpu_clean_hint_margin_top">6.2%</fraction>
+
+
+    <!-- Cpu Cooler -->
+    <dimen name="cpu_mask_rise_height">20dp</dimen>
+    <dimen name="cpu_line_alpha_height">50dp</dimen>
+    <dimen name="cpu_square_margin">4dp</dimen>
+
+    <fraction name="cpu_width">55.83%</fraction>
+    <fraction name="cpu_with_feet_width_divide_height">70%</fraction>
+    <fraction name="cpu_without_feet_width_divide_height">90.57%</fraction>
+    <fraction name="cpu_twinkle_view_width">89.88%</fraction>
+    <fraction name="cpu_thermometer_outer_width">87.37%</fraction>
+    <fraction name="cpu_thermometer_bottom_bound">10.25%</fraction>
+    <fraction name="cpu_thermometer_top_bound">2.98%</fraction>
+    <fraction name="cpu_with_feet_margin_top">8.33%</fraction>
+    <fraction name="cpu_without_feet_margin_top">16.4%</fraction>
+    <fraction name="cpu_thermometer_bottom_margin_top">60.91%</fraction>
+    <fraction name="cpu_thermometer_body_margin_top">32.73%</fraction>
+    <fraction name="cpu_thermometer_top_margin_top">31.82%</fraction>
+    <fraction name="cpu_scan_area_height">67.7%</fraction>
+    <fraction name="cpu_scan_area_margin_top">12.5%</fraction>
+    <fraction name="thermometer_max_height">29.64%</fraction>
+    <fraction name="thermometer_stretch_height">21.79%</fraction>
+    <fraction name="cpu_scanning_hint_margin_top">1.09%</fraction>
+
+    <dimen name="notification_cleaner_block_btn_height">48dp</dimen>
+    <dimen name="notification_cleaner_block_btn_text_size">16sp</dimen>
 </resources>

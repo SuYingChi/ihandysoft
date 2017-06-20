@@ -14,13 +14,12 @@ import android.support.annotation.ColorInt;
 import android.support.annotation.NonNull;
 import android.support.v4.content.ContextCompat;
 
-import com.honeycomb.launcher.R;
-import com.honeycomb.launcher.boost.DeviceManager;
-import com.honeycomb.launcher.settings.icon.IconSize;
-import com.honeycomb.launcher.util.FontUtils;
-import com.honeycomb.launcher.util.ViewUtils;
 import com.ihs.app.framework.HSApplication;
 import com.ihs.commons.utils.HSLog;
+import com.ihs.feature.common.DeviceManager;
+import com.ihs.feature.common.ViewUtils;
+import com.ihs.keyboardutils.R;
+import com.ihs.keyboardutils.utils.FontUtils;
 
 /**
  * Drawable for animated battery icon.

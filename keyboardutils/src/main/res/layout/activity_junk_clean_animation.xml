@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.honeycomb.launcher.view.CustomRootView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/view_container"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/window_background"
+    android:clipChildren="false"
+    android:fitsSystemWindows="false">
+
+    <RelativeLayout
+        android:id="@+id/container_view"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:fitsSystemWindows="false"
+        android:orientation="vertical">
+
+        <RelativeLayout
+            android:id="@+id/junk_size_layout"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/clean_height_junk_app_bar"
+            android:gravity="bottom">
+
+            <include layout="@layout/clean_app_bar_size_item" />
+
+        </RelativeLayout>
+
+        <com.honeycomb.launcher.view.recyclerview.TouchableRecycleView
+            android:id="@+id/recycler_view"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_below="@+id/junk_size_layout"
+            app:layout_behavior="@string/appbar_scrolling_view_behavior" />
+
+        <android.support.v7.widget.Toolbar
+            android:id="@+id/action_bar"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/abc_action_bar_default_height_material"
+            android:layout_marginTop="@dimen/status_bar_default_height" />
+    </RelativeLayout>
+
+    <include
+        android:id="@+id/stop_dialog_view"
+        layout="@layout/activity_custom_alert"
+        android:visibility="gone" />
+
+    <include layout="@layout/navigation_bar_bg" />
+
+</com.honeycomb.launcher.view.CustomRootView>

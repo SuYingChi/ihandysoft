@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="horizontal"
+    android:id="@+id/root_view"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@drawable/material_compat_bg_white"
+    android:minHeight="72dp"
+    android:paddingTop="20dp"
+    android:paddingBottom="20dp">
+
+    <android.support.v7.widget.AppCompatImageView
+        android:id="@+id/icon_iv"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:layout_centerVertical="true"
+        android:layout_marginLeft="16dp"
+        android:layout_marginStart="16dp"
+        app:srcCompat="@drawable/clean_power_clean_icon_svg"/>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_centerVertical="true"
+        android:layout_toRightOf="@+id/icon_iv"
+        android:layout_toEndOf="@+id/icon_iv"
+        android:layout_toLeftOf="@+id/arrow_iv"
+        android:layout_toStartOf="@+id/arrow_iv"
+        android:orientation="vertical"
+        android:layout_marginLeft="16dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginRight="10dp"
+        android:layout_marginEnd="10dp" >
+
+        <TextView
+            android:id="@+id/title_tv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/clean_powerful_clean"
+            android:textColor="@android:color/black"
+            android:textSize="16sp"
+            android:typeface="sans"/>
+
+        <TextView
+            android:id="@+id/content_tv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/clean_powerful_clean_description"
+            android:textColor="@color/permission_guide_text_gray"
+            android:textSize="14sp"
+            android:layout_marginTop="5dp"/>
+    </LinearLayout>
+
+    <android.support.v7.widget.AppCompatImageView
+        android:id="@+id/arrow_iv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentRight="true"
+        android:layout_centerVertical="true"
+        android:layout_marginRight="16dp"
+        android:layout_marginEnd="16dp"
+        app:srcCompat="@drawable/clean_arrow_right"/>
+
+</RelativeLayout>

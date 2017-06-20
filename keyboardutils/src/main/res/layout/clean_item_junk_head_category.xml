@@ -1,0 +1,118 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@drawable/material_compat_bg_white"
+    android:orientation="vertical">
+
+    <View
+        android:id="@+id/divide"
+        android:layout_width="match_parent"
+        android:layout_height="8dp"
+        android:background="@color/window_background" />
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/clean_height_header_item">
+
+        <android.support.v7.widget.AppCompatImageView
+            android:id="@+id/category_icon_view"
+            android:layout_width="22dp"
+            android:layout_height="22dp"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="16dp"
+            android:layout_marginStart="16dp"
+            app:srcCompat="@drawable/clean_ad_junk_icon_svg" />
+
+        <TextView
+            android:id="@+id/category_junk_size"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginEnd="12dp"
+            android:layout_marginRight="12dp"
+            android:layout_toLeftOf="@+id/category_junk_check_rl"
+            android:layout_toStartOf="@+id/category_junk_check_rl"
+            android:text=""
+            android:textColor="@color/black_secondary"
+            android:textSize="16sp"
+            android:typeface="sans"
+            tools:text="316MB" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_toEndOf="@+id/category_icon_view"
+            android:layout_toRightOf="@+id/category_icon_view"
+            android:layout_toLeftOf="@+id/category_junk_size"
+            android:layout_toStartOf="@+id/category_junk_size"
+            android:layout_marginLeft="20dp"
+            android:layout_marginStart="20dp"
+            android:layout_marginRight="8dp"
+            android:layout_marginEnd="8dp"
+            android:orientation="horizontal">
+
+            <com.ihs.feature.common.TypefacedTextView
+                android:id="@+id/category"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:maxWidth="160dp"
+                android:layout_gravity="center_vertical"
+                android:gravity="center_vertical"
+                android:text=""
+                android:textColor="@color/black_primary"
+                android:textSize="16sp"
+                android:maxLines="2"
+                app:typeface="@string/roboto_regular"
+                android:ellipsize="end"
+                tools:text="System Junk"/>
+
+            <android.support.v7.widget.AppCompatImageView
+                android:id="@+id/indicator"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:layout_marginLeft="8dp"
+                android:layout_marginStart="8dp"
+                app:srcCompat="@drawable/clean_expand_arrow_top_svg" />
+        </LinearLayout>
+
+        <RelativeLayout
+            android:id="@+id/category_junk_check_rl"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentEnd="true"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="16dp"
+            android:layout_marginEnd="16dp">
+
+            <com.honeycomb.launcher.view.ThreeStatesCheckBox
+                android:id="@+id/category_junk_check"
+                android:layout_width="@dimen/clean_checkbox_width"
+                android:layout_height="@dimen/clean_checkbox_width"
+                android:checked="true"
+                android:visibility="visible"/>
+
+            <com.honeycomb.launcher.customize.view.ProgressWheel
+                android:id="@+id/category_progress_wheel"
+                android:layout_width="@dimen/clean_loading_icon_width"
+                android:layout_height="@dimen/clean_loading_icon_width"
+                app:barColor="@color/clean_primary_blue"
+                app:barWidth="2.7dp"
+                app:circleRadius="18dp"
+                android:visibility="gone"/>
+
+            <android.support.v7.widget.AppCompatImageView
+                android:id="@+id/category_load_tick_view"
+                android:layout_width="@dimen/clean_loading_icon_width"
+                android:layout_height="@dimen/clean_loading_icon_width"
+                android:layout_centerVertical="true"
+                android:visibility="gone"
+                app:srcCompat="@drawable/clean_right_tick_svg" />
+        </RelativeLayout>
+    </RelativeLayout>
+
+</LinearLayout>

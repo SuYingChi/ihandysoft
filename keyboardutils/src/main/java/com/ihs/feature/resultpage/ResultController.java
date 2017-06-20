@@ -1,5 +1,6 @@
 package com.ihs.feature.resultpage;
 
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Context;
 import android.support.annotation.Nullable;
@@ -181,9 +182,7 @@ abstract class ResultController implements View.OnClickListener {
                 mActionBtn.setTextColor(ContextCompat.getColor(context, R.color.battery_green));
             } else if (this instanceof CpuCoolerResultController) {
                 mActionBtn.setTextColor(ContextCompat.getColor(context, R.color.cpu_cooler_primary_blue));
-            } else if (this instanceof NotificationCleanerResultController) {
-                mActionBtn.setTextColor(ContextCompat.getColor(context, R.color.notification_cleaner_green));
-            } else if (this instanceof JunkCleanResultController) {
+            }  else if (this instanceof JunkCleanResultController) {
                 mActionBtn.setTextColor(ContextCompat.getColor(context, R.color.clean_primary_blue));
             }
         }
@@ -193,6 +192,7 @@ abstract class ResultController implements View.OnClickListener {
 
     protected abstract void onFinishInflateTransitionView(View transitionView);
 
+    @SuppressLint("NewApi")
     protected void onFinishInflateResultView(View resultView) {
         HSLog.d(TAG, "onFinishInflateResultView mType = " + mType);
         Context context = getContext();
@@ -429,11 +429,6 @@ abstract class ResultController implements View.OnClickListener {
                     }
                     ToastUtils.showToast(R.string.result_page_card_battery_protection_toast);
                     mActivity.finishAndNotify();
-                    break;
-                case NOTIFICATION_CLEANER:
-                    HSAnalytics.logEvent("NotificationCleaner_Enterance_Click", "type", NotificationCleanerConstants.RESULT_PAGE);
-                    NotificationCleanerUtil.checkToStartNotificationOrganizerActivity(v.getContext(), NotificationCleanerConstants.RESULT_PAGE);
-                    mActivity.finishSelfAndParentActivity();
                     break;
             }
 

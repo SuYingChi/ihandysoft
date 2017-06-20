@@ -13,15 +13,15 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-import com.honeycomb.launcher.R;
-import com.honeycomb.launcher.junkclean.data.JunkManager;
-import com.honeycomb.launcher.junkclean.model.JunkWrapper;
-import com.honeycomb.launcher.junkclean.util.JunkCleanConstant;
-import com.honeycomb.launcher.util.CommonUtils;
-import com.honeycomb.launcher.util.FormatSizeBuilder;
-import com.honeycomb.launcher.util.LauncherPackageManager;
-import com.honeycomb.launcher.view.ThreeStatesCheckBox;
 import com.ihs.app.framework.HSApplication;
+import com.ihs.feature.common.FormatSizeBuilder;
+import com.ihs.feature.common.LauncherPackageManager;
+import com.ihs.feature.junkclean.data.JunkManager;
+import com.ihs.feature.junkclean.model.JunkWrapper;
+import com.ihs.feature.junkclean.util.JunkCleanConstant;
+import com.ihs.feature.ui.ThreeStatesCheckBox;
+import com.ihs.keyboardutils.R;
+import com.ihs.keyboardutils.utils.CommonUtils;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -33,7 +33,7 @@ import eu.davidea.flexibleadapter.items.IExpandable;
 import eu.davidea.viewholders.ExpandableViewHolder;
 
 public class JunkSubCategoryItem extends AbstractFlexibleItem<JunkSubCategoryItem.JunkSubCategoryViewHolder>
-    implements IExpandable<JunkSubCategoryItem.JunkSubCategoryViewHolder, com.honeycomb.launcher.junkclean.list.JunkDetailItem> {
+    implements IExpandable<JunkSubCategoryItem.JunkSubCategoryViewHolder, JunkDetailItem> {
 
     private List<JunkDetailItem> junkDetailItems = new ArrayList<>();
     private JunkHeadCategoryItem parentCategory;

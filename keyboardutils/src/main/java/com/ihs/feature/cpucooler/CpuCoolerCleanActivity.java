@@ -22,20 +22,18 @@ import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
-import com.honeycomb.launcher.R;
-import com.honeycomb.launcher.cpucooler.recycleitem.CpuListHeadItem;
-import com.honeycomb.launcher.cpucooler.recycleitem.CpuListSubItem;
-import com.honeycomb.launcher.cpucooler.util.CpuCoolerConstant;
-import com.honeycomb.launcher.cpucooler.util.CpuCoolerUtils;
-import com.honeycomb.launcher.notification.NotificationManager;
-import com.honeycomb.launcher.util.ActivityUtils;
-import com.honeycomb.launcher.util.DeviceInfoUtils;
-import com.honeycomb.launcher.util.LauncherActivityUtils;
-import com.honeycomb.launcher.util.LauncherPackageManager;
-import com.honeycomb.launcher.util.Utils;
 import com.ihs.app.analytics.HSAnalytics;
 import com.ihs.app.framework.activity.HSAppCompatActivity;
+import com.ihs.chargingscreen.utils.DisplayUtils;
 import com.ihs.commons.utils.HSLog;
+import com.ihs.feature.common.ActivityUtils;
+import com.ihs.feature.common.LauncherPackageManager;
+import com.ihs.feature.common.Utils;
+import com.ihs.feature.cpucooler.recycleitem.CpuListHeadItem;
+import com.ihs.feature.cpucooler.recycleitem.CpuListSubItem;
+import com.ihs.feature.cpucooler.util.CpuCoolerConstant;
+import com.ihs.feature.cpucooler.util.CpuCoolerUtils;
+import com.ihs.keyboardutils.R;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -119,10 +117,9 @@ public class CpuCoolerCleanActivity extends HSAppCompatActivity {
 
     private void startFadeInAnimation() {
         mAppBarLayoutContentLayout.postDelayed(() -> {
-            final int height = DeviceInfoUtils.getScreenHeightPixels() - getResources().getDimensionPixelSize(R.dimen.cpu_appbar_height);
+            final int height = DisplayUtils.getScreenHeightPixels() - getResources().getDimensionPixelSize(R.dimen.cpu_appbar_height);
             int temperature = CpuCoolerManager.getInstance().fetchCpuTemperature();
             mCurrentColor = CpuCoolerUtils.getCpuTemperatureColor();
-            NotificationManager.getInstance().updateCpuCooler(temperature);
 
             ValueAnimator colorAnimator = ValueAnimator.ofObject(new ArgbEvaluator(), ContextCompat.getColor(CpuCoolerCleanActivity.this, R.color.cpu_cooler_primary_blue), mCurrentColor);
             colorAnimator.addListener(new AnimatorListenerAdapter() {
@@ -199,7 +196,7 @@ public class CpuCoolerCleanActivity extends HSAppCompatActivity {
         mOptimizeButtonTv = (TextView) findViewById(R.id.optimize_button_tv);
 
         mToolbar = (Toolbar) findViewById(R.id.action_bar);
-        LauncherActivityUtils.configSimpleAppBar(this, getString(R.string.promotion_max_card_title_cpu_cooler), Color.TRANSPARENT);
+        ActivityUtils.configSimpleAppBar(this, getString(R.string.promotion_max_card_title_cpu_cooler), Color.TRANSPARENT);
 
         Utils.setupTransparentSystemBarsForLmpNoNavigation(this);
         ActivityUtils.setNavigationBarColor(this, ContextCompat.getColor(this, android.R.color.black));

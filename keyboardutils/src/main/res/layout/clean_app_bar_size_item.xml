@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_gravity="bottom"
+    android:layout_marginLeft="@dimen/clean_size_margin_horizontal"
+    android:layout_marginStart="@dimen/clean_size_margin_horizontal"
+    android:layout_marginRight="@dimen/clean_size_margin_horizontal"
+    android:layout_marginEnd="@dimen/clean_size_margin_horizontal"
+    android:layout_marginBottom="@dimen/clean_size_margin_bottom"
+    android:orientation="horizontal">
+
+    <com.ihs.feature.common.TypefacedTextView
+        android:id="@+id/pop_junk_size"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:lines="1"
+        android:maxLength="8"
+        android:textColor="@android:color/white"
+        android:textSize="56sp"
+        app:typeface="@string/roboto_regular"
+        tools:text="154.12" />
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="20dp"
+        android:layout_marginStart="20dp"
+        android:layout_gravity="center_vertical"
+        android:paddingBottom="3dp"
+        android:orientation="vertical">
+
+        <com.ihs.feature.common.TypefacedTextView
+            android:id="@+id/pop_junk_unit"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:lines="1"
+            android:maxLength="5"
+            android:text="@string/megabyte_abbr"
+            android:textColor="@android:color/white"
+            android:textSize="24sp"
+            app:typeface="@string/roboto_regular" />
+
+        <com.ihs.feature.common.TypefacedTextView
+            android:id="@+id/pop_junk_label"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="-1dp"
+            android:lines="1"
+            android:text="@string/clean_junk_found_title_case"
+            android:textColor="@android:color/white"
+            android:textSize="16sp"
+            app:typeface="@string/roboto_regular" />
+    </LinearLayout>
+</LinearLayout>

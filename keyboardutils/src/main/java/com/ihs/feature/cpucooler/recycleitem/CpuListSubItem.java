@@ -9,8 +9,8 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.honeycomb.launcher.R;
-import com.honeycomb.launcher.view.ThreeStatesCheckBox;
+import com.ihs.feature.ui.ThreeStatesCheckBox;
+import com.ihs.keyboardutils.R;
 
 import java.util.List;
 

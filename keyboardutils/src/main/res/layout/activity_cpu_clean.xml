@@ -1,0 +1,131 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.honeycomb.launcher.view.CustomRootView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/view_container"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/cpu_cooler_primary_blue"
+    android:clipChildren="false"
+    android:fitsSystemWindows="false">
+
+    <RelativeLayout
+        android:id="@+id/container_view"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <android.support.design.widget.CoordinatorLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:fitsSystemWindows="false">
+
+            <android.support.design.widget.AppBarLayout
+                android:id="@+id/app_bar"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/cpu_appbar_height"
+                android:background="@android:color/transparent"
+                android:paddingTop="@dimen/status_bar_default_height"
+                app:elevation="4dp">
+
+                <android.support.design.widget.CollapsingToolbarLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    app:layout_scrollFlags="scroll|exitUntilCollapsed"
+                    app:titleEnabled="false">
+
+                    <android.support.v7.widget.Toolbar
+                        android:id="@+id/action_bar"
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/abc_action_bar_default_height_material"
+                        app:layout_collapseMode="pin"
+                        android:visibility="visible"/>
+
+                    <LinearLayout
+                        android:id="@+id/app_bar_content_layout"
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/cpu_appbar_content_layout_height"
+                        android:gravity="center"
+                        android:layout_gravity="bottom|center_horizontal"
+                        android:orientation="horizontal"
+                        android:visibility="invisible">
+
+                        <RelativeLayout
+                            android:id="@+id/temperature_layout"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content">
+
+                            <com.ihs.feature.common.TypefacedTextView
+                                android:id="@+id/tv_temperature"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:textColor="@android:color/white"
+                                android:textSize="@dimen/cpu_temperature_text_size"
+                                app:typeface="@string/proxima_nova_regular"
+                                tools:text="49"/>
+
+                            <TextView
+                                android:id="@+id/tv_temperature_quantifier"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginLeft="3dp"
+                                android:layout_marginStart="3dp"
+                                android:paddingTop="8dp"
+                                android:layout_alignTop="@+id/tv_temperature"
+                                android:layout_toRightOf="@+id/tv_temperature"
+                                android:layout_toEndOf="@+id/tv_temperature"
+                                android:text="@string/cpu_cooler_temperature_quantifier_celsius"
+                                android:textColor="@android:color/white"
+                                android:textSize="@dimen/cpu_temperature_quantifier_text_size" />
+
+                            <TextView
+                                android:id="@+id/tv_cpu_state_hint"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginLeft="3dp"
+                                android:layout_marginStart="3dp"
+                                android:layout_toRightOf="@+id/tv_temperature"
+                                android:layout_toEndOf="@+id/tv_temperature"
+                                android:layout_alignBottom="@+id/tv_temperature"
+                                android:paddingBottom="13dp"
+                                android:text="@string/cpu_cooler_state_hint"
+                                android:textColor="@color/cpu_cooler_white_secondary"
+                                android:textSize="@dimen/cpu_temperature_state_text_size" />
+
+                        </RelativeLayout>
+
+                    </LinearLayout>
+                </android.support.design.widget.CollapsingToolbarLayout>
+
+            </android.support.design.widget.AppBarLayout>
+
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/recycle_view"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginBottom="48dp"
+                android:background="@color/window_background"
+                android:visibility="gone"
+                app:layout_behavior="@string/appbar_scrolling_view_behavior"
+                android:theme="@style/Theme.CustomOverScroll" />
+
+            <com.ihs.feature.common.TypefacedTextView
+                android:id="@+id/optimize_button_tv"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/notification_cleaner_block_btn_height"
+                android:layout_gravity="bottom"
+                android:background="@drawable/material_compat_button_bg_blue"
+                android:layout_margin="10dp"
+                android:gravity="center"
+                android:text="@string/cpu_cooler_button_title"
+                android:textColor="@android:color/white"
+                android:textSize="@dimen/notification_cleaner_block_btn_text_size"
+                app:typeface="@string/proxima_nova_regular"
+                android:visibility="visible"/>
+
+        </android.support.design.widget.CoordinatorLayout>
+
+    </RelativeLayout>
+
+    <include layout="@layout/navigation_bar_bg" />
+
+</com.honeycomb.launcher.view.CustomRootView>

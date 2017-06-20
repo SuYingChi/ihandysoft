@@ -7,8 +7,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-import com.honeycomb.launcher.R;
-import com.honeycomb.launcher.view.ThreeStatesCheckBox;
+import com.ihs.feature.ui.ThreeStatesCheckBox;
+import com.ihs.keyboardutils.R;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -19,6 +19,7 @@ import eu.davidea.flexibleadapter.items.AbstractFlexibleItem;
 import eu.davidea.flexibleadapter.items.IExpandable;
 import eu.davidea.flexibleadapter.items.IHeader;
 import eu.davidea.viewholders.ExpandableViewHolder;
+
 
 public class CpuListHeadItem extends AbstractFlexibleItem<CpuListHeadItem.HeadViewHolder>
         implements IExpandable<CpuListHeadItem.HeadViewHolder, CpuListSubItem>,

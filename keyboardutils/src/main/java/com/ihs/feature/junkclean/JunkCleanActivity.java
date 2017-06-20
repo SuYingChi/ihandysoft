@@ -5,6 +5,7 @@ import android.animation.ArgbEvaluator;
 import android.animation.TypeEvaluator;
 import android.animation.ValueAnimator;
 import android.annotation.SuppressLint;
+import android.app.NotificationManager;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Build;
@@ -31,51 +32,47 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.honeycomb.launcher.R;
-import com.honeycomb.launcher.ad.ResultPageAdsManager;
-import com.honeycomb.launcher.animation.AnimatorListenerAdapter;
-import com.honeycomb.launcher.animation.HeuristicAnimator;
-import com.honeycomb.launcher.animation.LauncherAnimUtils;
-import com.honeycomb.launcher.animation.SpringInterpolator;
-import com.honeycomb.launcher.boost.plus.BannerBackground;
-import com.honeycomb.launcher.customize.view.ProgressWheel;
-import com.honeycomb.launcher.dialog.LauncherFloatWindowManager;
-import com.honeycomb.launcher.ihs.BasePermissionActivity;
-import com.honeycomb.launcher.ihs.SettingLauncherPadActivity;
-import com.honeycomb.launcher.junkclean.data.JunkManager;
-import com.honeycomb.launcher.junkclean.list.JunkDetailItem;
-import com.honeycomb.launcher.junkclean.list.JunkHeadCategoryItem;
-import com.honeycomb.launcher.junkclean.list.JunkSubCategoryItem;
-import com.honeycomb.launcher.junkclean.list.PowerfulCleanItem;
-import com.honeycomb.launcher.junkclean.list.SecurityItem;
-import com.honeycomb.launcher.junkclean.list.TopBannerBaseItem;
-import com.honeycomb.launcher.junkclean.model.ApkJunkWrapper;
-import com.honeycomb.launcher.junkclean.model.AppJunkWrapper;
-import com.honeycomb.launcher.junkclean.model.JunkInfo;
-import com.honeycomb.launcher.junkclean.model.JunkWrapper;
-import com.honeycomb.launcher.junkclean.model.MemoryJunkWrapper;
-import com.honeycomb.launcher.junkclean.model.PathRuleJunkWrapper;
-import com.honeycomb.launcher.junkclean.model.SystemJunkWrapper;
-import com.honeycomb.launcher.junkclean.util.JunkCleanConstant;
-import com.honeycomb.launcher.junkclean.util.JunkCleanUtils;
-import com.honeycomb.launcher.junkclean.view.PermissionDialog;
-import com.honeycomb.launcher.notification.NotificationManager;
-import com.honeycomb.launcher.notificationcleaner.NotificationCleanerUtil;
-import com.honeycomb.launcher.resultpage.ResultEmptyView;
-import com.honeycomb.launcher.util.ActivityUtils;
-import com.honeycomb.launcher.util.CommonUtils;
-import com.honeycomb.launcher.util.FormatSizeBuilder;
-import com.honeycomb.launcher.util.LauncherActivityUtils;
-import com.honeycomb.launcher.util.NavUtils;
-import com.honeycomb.launcher.util.PermissionUtils;
-import com.honeycomb.launcher.util.PromotionTracker;
-import com.honeycomb.launcher.util.Thunk;
-import com.honeycomb.launcher.util.Utils;
-import com.honeycomb.launcher.util.ViewUtils;
-import com.honeycomb.launcher.view.recyclerview.TouchableRecycleView;
+import com.artw.lockscreen.common.NavUtils;
 import com.ihs.app.analytics.HSAnalytics;
 import com.ihs.commons.config.HSConfig;
 import com.ihs.commons.utils.HSLog;
+import com.ihs.feature.boost.plus.BannerBackground;
+import com.ihs.feature.common.ActivityUtils;
+import com.ihs.feature.common.AnimatorListenerAdapter;
+import com.ihs.feature.common.BasePermissionActivity;
+import com.ihs.feature.common.FormatSizeBuilder;
+import com.ihs.feature.common.LauncherAnimUtils;
+import com.ihs.feature.common.PromotionTracker;
+import com.ihs.feature.common.SpringInterpolator;
+import com.ihs.feature.common.Thunk;
+import com.ihs.feature.common.Utils;
+import com.ihs.feature.common.ViewUtils;
+import com.ihs.feature.junkclean.data.JunkManager;
+import com.ihs.feature.junkclean.list.JunkDetailItem;
+import com.ihs.feature.junkclean.list.JunkHeadCategoryItem;
+import com.ihs.feature.junkclean.list.JunkSubCategoryItem;
+import com.ihs.feature.junkclean.list.PowerfulCleanItem;
+import com.ihs.feature.junkclean.list.SecurityItem;
+import com.ihs.feature.junkclean.list.TopBannerBaseItem;
+import com.ihs.feature.junkclean.model.ApkJunkWrapper;
+import com.ihs.feature.junkclean.model.AppJunkWrapper;
+import com.ihs.feature.junkclean.model.JunkInfo;
+import com.ihs.feature.junkclean.model.JunkWrapper;
+import com.ihs.feature.junkclean.model.MemoryJunkWrapper;
+import com.ihs.feature.junkclean.model.PathRuleJunkWrapper;
+import com.ihs.feature.junkclean.model.SystemJunkWrapper;
+import com.ihs.feature.junkclean.util.JunkCleanConstant;
+import com.ihs.feature.junkclean.util.JunkCleanUtils;
+import com.ihs.feature.junkclean.view.PermissionDialog;
+import com.ihs.feature.resultpage.ResultEmptyView;
+import com.ihs.feature.resultpage.ResultPageAdsManager;
+import com.ihs.feature.ui.HeuristicAnimator;
+import com.ihs.feature.ui.LauncherFloatWindowManager;
+import com.ihs.feature.ui.ProgressWheel;
+import com.ihs.feature.ui.TouchableRecycleView;
+import com.ihs.keyboardutils.R;
+import com.ihs.keyboardutils.permission.PermissionUtils;
+import com.ihs.keyboardutils.utils.CommonUtils;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -96,7 +93,8 @@ public class JunkCleanActivity extends BasePermissionActivity {
     private String mSecurityPackage;
 
     private RecyclerView.AdapterDataObserver mAdapterDataObserver;
-    @Thunk TouchableRecycleView mRecyclerView;
+    @Thunk
+    TouchableRecycleView mRecyclerView;
     @Thunk FlexibleAdapter mFlexibleAdapter;
     @Thunk AppBarLayout mAppBarLayout;
     @Thunk CollapsingToolbarLayout mCollapsingToolbarLayout;
@@ -111,7 +109,8 @@ public class JunkCleanActivity extends BasePermissionActivity {
     @Thunk TextView mMemoryJunkSizeTv;
     @Thunk TextView mScanningSelectedTextTv;
 
-    @Thunk ProgressWheel mSystemProgressWheel;
+    @Thunk
+    ProgressWheel mSystemProgressWheel;
     @Thunk ProgressWheel mAdProgressWheel;
     @Thunk ProgressWheel mAppProgressWheel;
     @Thunk ProgressWheel mMemoryProgressWheel;
@@ -124,9 +123,11 @@ public class JunkCleanActivity extends BasePermissionActivity {
     @Thunk Button mCleanButtonTv;
 
     private ViewPropertyAnimator mActionBtnAnimator;
-    @Thunk HeuristicAnimator mProgressAnimator;
+    @Thunk
+    HeuristicAnimator mProgressAnimator;
 
-    @Thunk JunkManager mJunkManager = JunkManager.getInstance();
+    @Thunk
+    JunkManager mJunkManager = JunkManager.getInstance();
 
     @Thunk ValueAnimator mTotalJunkSizeAnimator;
     @Thunk ValueAnimator mSystemJunkSizeAnimator;
@@ -280,15 +281,15 @@ public class JunkCleanActivity extends BasePermissionActivity {
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId()) {
-            case android.R.id.home:
-                finish();
-                break;
-            case R.id.action_bar_refresh:
-                NavUtils.startActivitySafely(this, new Intent(JunkCleanActivity.this, JunkCleanerSettingsActivity.class));
-                NotificationCleanerUtil.setJunkCleanerSettingsNotificationOpened(true);
-                invalidateOptionsMenu();
-                break;
+        int i = item.getItemId();
+        if (i == android.R.id.home) {
+            finish();
+
+        } else if (i == R.id.action_bar_refresh) {
+            NavUtils.startActivitySafely(this, new Intent(JunkCleanActivity.this, JunkCleanerSettingsActivity.class));
+            NotificationCleanerUtil.setJunkCleanerSettingsNotificationOpened(true);
+            invalidateOptionsMenu();
+
         }
         return super.onOptionsItemSelected(item);
     }
@@ -413,9 +414,9 @@ public class JunkCleanActivity extends BasePermissionActivity {
     @Override
     public void onAttachedToWindow() {
         super.onAttachedToWindow();
-        com.honeycomb.launcher.util.CommonUtils.setupTransparentSystemBarsForLmp(this);
+        CommonUtils.setupTransparentSystemBarsForLmp(this);
         ActivityUtils.setNavigationBarColor(this, ContextCompat.getColor(this, android.R.color.black));
-        LauncherActivityUtils.configSimpleAppBar(this, getString(R.string.clean_title), Color.TRANSPARENT, false);
+        ActivityUtils.configSimpleAppBar(this, getString(R.string.clean_title), Color.TRANSPARENT, false);
     }
 
     @Override
@@ -1229,7 +1230,7 @@ public class JunkCleanActivity extends BasePermissionActivity {
                     .translationY(toTranslation)
                     .setDuration(LauncherAnimUtils.getShortAnimDuration() * (downward ? 1 : 6))
                     .setInterpolator(downward ? LauncherAnimUtils.ACCELERATE_QUAD : new SpringInterpolator(0.3f))
-                    .setListener(new com.honeycomb.launcher.animation.AnimatorListenerAdapter() {
+                    .setListener(new AnimatorListenerAdapter() {
                         @Override
                         public void onAnimationStart(Animator animation) {
                             mIsActionBtnAnimating = true;

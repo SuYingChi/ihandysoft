@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.honeycomb.launcher.view.CustomRootView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/view_container"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/window_background"
+    android:clipChildren="false"
+    android:fitsSystemWindows="false">
+
+    <android.support.design.widget.CoordinatorLayout
+        android:id="@+id/container_view"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:fitsSystemWindows="false">
+
+        <android.support.design.widget.AppBarLayout
+            android:id="@+id/app_bar"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/clean_height_junk_app_bar"
+            android:background="@color/boost_plus_blue"
+            android:paddingTop="@dimen/status_bar_default_height"
+            android:elevation="0dp"
+            tools:ignore="UnusedAttribute">
+
+            <android.support.design.widget.CollapsingToolbarLayout
+                android:id="@+id/collapsing_tool_bar"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:clickable="false"
+                app:titleEnabled="false">
+
+                <android.support.v7.widget.Toolbar
+                    android:id="@+id/action_bar"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/abc_action_bar_default_height_material"
+                    app:layout_collapseMode="pin" />
+
+                <include layout="@layout/clean_app_bar_size_item" />
+
+                <com.ihs.feature.common.TypefacedTextView
+                    android:id="@+id/scanning_selected_text_tv"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/clean_loading_line_height"
+                    android:layout_gravity="bottom"
+                    android:background="#22000000"
+                    android:gravity="start|center_vertical"
+                    android:lines="1"
+                    android:maxLength="35"
+                    android:paddingLeft="@dimen/activity_horizontal_margin"
+                    android:paddingRight="@dimen/activity_horizontal_margin"
+                    android:textAlignment="textStart"
+                    android:textColor="@android:color/white"
+                    android:textSize="14sp"
+                    app:typeface="@string/roboto_regular" />
+
+                <android.support.v7.widget.AppCompatImageView
+                    android:id="@+id/loading_progress_bar_iv"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/clean_loading_line_height"
+                    android:layout_marginRight="-40dp"
+                    android:layout_marginEnd="-40dp"
+                    android:contentDescription="@string/app_name"
+                    android:layout_gravity="bottom"
+                    android:scaleType="fitXY"
+                    app:srcCompat="@drawable/clean_animate_progress_bar"
+                    android:visibility="gone" />
+
+            </android.support.design.widget.CollapsingToolbarLayout>
+
+        </android.support.design.widget.AppBarLayout>
+
+        <com.honeycomb.launcher.view.recyclerview.TouchableRecycleView
+            android:id="@+id/recycler_view"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:paddingBottom="72dp"
+            android:clipToPadding="false"
+            app:layout_behavior="@string/appbar_scrolling_view_behavior" />
+
+        <Button
+            android:id="@+id/clean_button"
+            android:layout_width="match_parent"
+            android:layout_height="48dp"
+            android:layout_gravity="bottom|center_horizontal"
+            android:layout_marginBottom="12dp"
+            android:layout_marginLeft="16dp"
+            android:layout_marginRight="16dp"
+            android:background="@drawable/clean_button_custom"
+            android:gravity="center"
+            android:text="@string/clean_capital"
+            android:textAllCaps="true"
+            android:textColor="@color/selector_theme_btn_text_color"
+            android:textSize="17sp"
+            android:translationY="@dimen/boost_plus_action_btn_anim_translation"
+            android:visibility="gone"/>
+
+        <ViewStub
+            android:id="@+id/empty_view_stub"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginTop="@dimen/clean_height_junk_app_bar"
+            android:inflatedId="@+id/empty_view"
+            android:layout="@layout/boost_plus_empty_view" />
+
+    </android.support.design.widget.CoordinatorLayout>
+
+    <include layout="@layout/navigation_bar_bg" />
+</com.honeycomb.launcher.view.CustomRootView>

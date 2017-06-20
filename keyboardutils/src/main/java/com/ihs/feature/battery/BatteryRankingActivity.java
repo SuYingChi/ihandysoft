@@ -8,15 +8,15 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.CompoundButton;
 
-import com.honeycomb.launcher.R;
-import com.honeycomb.launcher.settings.BaseSettingsActivity;
-import com.honeycomb.launcher.util.ActivityUtils;
-import com.honeycomb.launcher.util.CommonUtils;
-import com.honeycomb.launcher.util.ViewUtils;
+import com.artw.lockscreen.common.BaseSettingsActivity;
 import com.ihs.commons.notificationcenter.HSGlobalNotificationCenter;
 import com.ihs.commons.notificationcenter.INotificationObserver;
 import com.ihs.commons.utils.HSBundle;
 import com.ihs.commons.utils.HSLog;
+import com.ihs.feature.common.ActivityUtils;
+import com.ihs.feature.common.ViewUtils;
+import com.ihs.keyboardutils.R;
+import com.ihs.keyboardutils.utils.CommonUtils;
 
 public class BatteryRankingActivity extends BaseSettingsActivity implements View.OnClickListener, INotificationObserver {
 

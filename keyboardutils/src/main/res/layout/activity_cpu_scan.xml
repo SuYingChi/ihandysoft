@@ -1,0 +1,177 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.honeycomb.launcher.view.CustomRootView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/view_container"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/cpu_cooler_primary_blue"
+    android:clipChildren="false"
+    android:fitsSystemWindows="false">
+
+    <android.support.percent.PercentRelativeLayout
+        android:id="@+id/container_view"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <android.support.percent.PercentRelativeLayout
+            android:id="@+id/scan_animation_layout"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="0dp"
+            android:clipChildren="true"
+            app:layout_heightPercent="@fraction/cpu_scan_area_height"
+            app:layout_marginTopPercent="@fraction/cpu_scan_area_margin_top">
+
+            <ImageView
+                android:id="@+id/iv_cpu_shadow"
+                android:layout_width="270dp"
+                android:layout_height="270dp"
+                android:layout_alignBottom="@+id/layout_cpu_without_feet"
+                android:layout_alignLeft="@+id/layout_cpu_without_feet"
+                android:layout_alignStart="@+id/layout_cpu_without_feet"
+                android:src="@drawable/cpu_cooler_scan_shadow"
+                tools:ignore="ContentDescription" />
+
+            <ImageView
+                android:id="@+id/iv_shadow_mask_blue"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:layout_alignBottom="@+id/layout_cpu_without_feet"
+                android:layout_alignLeft="@+id/layout_cpu_without_feet"
+                android:layout_alignStart="@+id/layout_cpu_without_feet"
+                android:background="@color/cpu_cooler_primary_blue"
+                app:layout_aspectRatio="@fraction/cpu_without_feet_width_divide_height"
+                app:layout_widthPercent="@fraction/cpu_width"
+                tools:ignore="ContentDescription" />
+
+            <android.support.percent.PercentRelativeLayout
+                android:id="@+id/layout_cpu_without_feet"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:layout_centerHorizontal="true"
+                app:layout_aspectRatio="@fraction/cpu_without_feet_width_divide_height"
+                app:layout_marginTopPercent="@fraction/cpu_without_feet_margin_top"
+                app:layout_widthPercent="@fraction/cpu_width">
+
+                <ImageView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:scaleType="fitXY"
+                    app:srcCompat="@drawable/cpu_cooler_without_feet"
+                    tools:ignore="ContentDescription" />
+
+                <ImageView
+                    android:layout_width="0dp"
+                    android:layout_height="0dp"
+                    android:layout_centerInParent="true"
+                    android:scaleType="fitXY"
+                    app:layout_aspectRatio="100%"
+                    app:layout_widthPercent="@fraction/cpu_thermometer_outer_width"
+                    app:srcCompat="@drawable/cpu_cooler_thermometer_outer"
+                    tools:ignore="ContentDescription" />
+
+                <ImageView
+                    android:layout_width="0dp"
+                    android:layout_height="0dp"
+                    android:layout_centerHorizontal="true"
+                    android:src="@drawable/cpu_cooler_thermometer_inner_bottom"
+                    app:layout_aspectRatio="100%"
+                    app:layout_marginTopPercent="@fraction/cpu_thermometer_bottom_margin_top"
+                    app:layout_widthPercent="@fraction/cpu_thermometer_bottom_bound"
+                    tools:ignore="ContentDescription" />
+
+                <ImageView
+                    android:id="@+id/iv_thermometer_inner_body"
+                    android:layout_width="0dp"
+                    android:layout_height="0dp"
+                    android:layout_centerHorizontal="true"
+                    android:src="@drawable/cpu_cooler_thermometer_inner_body"
+                    app:layout_heightPercent="@fraction/thermometer_max_height"
+                    app:layout_marginTopPercent="@fraction/cpu_thermometer_body_margin_top"
+                    app:layout_widthPercent="@fraction/cpu_thermometer_top_bound"
+                    tools:ignore="ContentDescription" />
+
+                <ImageView
+                    android:id="@+id/iv_thermometer_inner_top"
+                    android:layout_width="0dp"
+                    android:layout_height="0dp"
+                    android:layout_centerHorizontal="true"
+                    android:src="@drawable/cpu_cooler_thermometer_inner_bottom"
+                    app:layout_aspectRatio="100%"
+                    app:layout_marginTopPercent="@fraction/cpu_thermometer_top_margin_top"
+                    app:layout_widthPercent="@fraction/cpu_thermometer_top_bound"
+                    tools:ignore="ContentDescription" />
+
+            </android.support.percent.PercentRelativeLayout>
+
+            <android.support.percent.PercentRelativeLayout
+                android:id="@+id/layout_top_layer"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@color/cpu_cooler_primary_blue"
+                android:visibility="invisible">
+
+                <android.support.percent.PercentRelativeLayout
+                    android:id="@+id/layout_cpu_with_feet"
+                    android:layout_width="0dp"
+                    android:layout_height="0dp"
+                    android:layout_centerHorizontal="true"
+                    app:layout_aspectRatio="@fraction/cpu_with_feet_width_divide_height"
+                    app:layout_marginTopPercent="@fraction/cpu_with_feet_margin_top"
+                    app:layout_widthPercent="@fraction/cpu_width">
+
+                    <ImageView
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:scaleType="fitXY"
+                        app:srcCompat="@drawable/cpu_cooler_with_feet"
+                        tools:ignore="ContentDescription" />
+
+                    <com.honeycomb.launcher.cpucooler.view.CpuScanTwinkleView
+                        android:id="@+id/cpu_scan_view"
+                        android:layout_width="0dp"
+                        android:layout_height="0dp"
+                        android:layout_centerInParent="true"
+                        app:layout_aspectRatio="100%"
+                        app:layout_widthPercent="@fraction/cpu_twinkle_view_width" />
+
+                </android.support.percent.PercentRelativeLayout>
+
+                <ImageView
+                    android:id="@+id/iv_scan_mask_white"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:background="@color/cpu_scan_mask_white"
+                    tools:ignore="ContentDescription" />
+
+            </android.support.percent.PercentRelativeLayout>
+
+            <ImageView
+                android:id="@+id/iv_scan_line"
+                android:layout_width="match_parent"
+                android:layout_height="2dp"
+                android:layout_alignParentTop="true"
+                android:background="@android:color/white"
+                android:visibility="invisible"
+                tools:ignore="ContentDescription" />
+
+        </android.support.percent.PercentRelativeLayout>
+
+        <TextView
+            android:id="@+id/scanning_hint_tv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/scan_animation_layout"
+            android:layout_centerHorizontal="true"
+            android:text="@string/cpu_cooler_scanning_cpu"
+            android:textColor="@color/cpu_cooler_white_secondary"
+            android:textSize="14sp"
+            app:layout_marginTopPercent="@fraction/cpu_scanning_hint_margin_top" />
+
+    </android.support.percent.PercentRelativeLayout>
+
+    <include layout="@layout/navigation_bar_bg" />
+
+</com.honeycomb.launcher.view.CustomRootView>

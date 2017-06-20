@@ -12,8 +12,6 @@ import android.support.v4.content.ContextCompat;
 import android.util.AttributeSet;
 import android.view.View;
 
-import com.honeycomb.launcher.R;
-
 import static android.os.Build.VERSION.SDK_INT;
 import static android.os.Build.VERSION_CODES.KITKAT;
 
@@ -37,8 +35,8 @@ public class CircleView extends View {
     public CircleView(Context context, AttributeSet attrs) {
         super(context, attrs);
 
-        mDefaultRingWidth = getResources().getDimensionPixelSize(R.dimen.cpu_circle_stroke_width);
-        int color = ContextCompat.getColor(context, R.color.cpu_cooler_primary_blue);
+        mDefaultRingWidth = getResources().getDimensionPixelSize(com.ihs.keyboardutils.R.dimen.cpu_circle_stroke_width);
+        int color = ContextCompat.getColor(context, com.ihs.keyboardutils.R.color.cpu_cooler_primary_blue);
 
         mGaryRingPaint = new Paint();
         mGaryRingPaint.setStyle(Paint.Style.STROKE);

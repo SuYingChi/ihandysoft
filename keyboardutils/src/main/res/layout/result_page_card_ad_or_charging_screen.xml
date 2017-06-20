@@ -96,7 +96,7 @@
         android:gravity="center"
         android:orientation="vertical">
 
-        <com.honeycomb.launcher.view.TypefacedTextView
+        <com.ihs.feature.common.TypefacedTextView
             android:id="@+id/description_title_tv"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -111,7 +111,7 @@
             app:typeface="@string/roboto_regular"
             tools:text="N Launcher"/>
 
-        <com.honeycomb.launcher.view.TypefacedTextView
+        <com.ihs.feature.common.TypefacedTextView
             android:id="@+id/description_content_tv"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -137,7 +137,7 @@
         android:layout_centerHorizontal="true"
         android:paddingBottom="30dp">
 
-        <com.honeycomb.launcher.view.RevealFlashButton
+        <com.ihs.keyboardutils.giftad.RevealFlashButton
             android:id="@+id/result_action_btn"
             android:layout_width="match_parent"
             android:layout_height="48dp"

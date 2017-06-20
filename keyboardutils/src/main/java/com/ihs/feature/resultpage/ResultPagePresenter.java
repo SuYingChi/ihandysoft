@@ -92,7 +92,7 @@ public class ResultPagePresenter implements ResultPageContracts.Presenter {
     }
 
     private boolean determineWhetherToShowChargeScreen() {
-        boolean isChargingScreenEverEnabled = ChargingScreenSettings.isChargingScreenEverEnabled();
+        boolean isChargingScreenEverEnabled = ChargingPrefsUtil.getInstance().isChargingEnabledBefore();
         int intoCount = PreferenceHelper.get(LauncherFiles.BOOST_PREFS).getInt(ResultPageActivity.PREF_KEY_INTO_BATTERY_PROTECTION_COUNT, ResultPageActivity.INTO_RESULT_PAGE_COUNT_NULL);
         HSLog.d(TAG, "ResultPage show determineWhetherToShowChargeScreen mResultType = " + mResultType + " intoCount = " + intoCount + " isChargingScreenEverEnabled = " + isChargingScreenEverEnabled);
         if (intoCount != ResultPageActivity.INTO_RESULT_PAGE_COUNT_NULL && intoCount <= ResultPageActivity.BATTERY_PROTECTION_LIMIT_COUNT
@@ -255,7 +255,7 @@ public class ResultPagePresenter implements ResultPageContracts.Presenter {
             HSLog.d(TAG, "Charging screen card NOT showing as result page has been visited for more than 3 times");
             return true;
         }
-        if (ChargingScreenSettings.isChargingScreenEverEnabled()) {
+        if (ChargingPrefsUtil.getInstance().isChargingEnabledBefore()) {
             HSLog.d(TAG, "Charging screen card NOT showing as charging screen feature has been enabled at least once");
             return true;
         }

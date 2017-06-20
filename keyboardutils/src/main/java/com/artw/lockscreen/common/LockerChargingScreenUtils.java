@@ -84,7 +84,7 @@ public class LockerChargingScreenUtils {
             return;
         }
 
-//        LifeCycleCallbacks lifeCycleCallbacks = ((LauncherApplication) HSApplication.getContext().getApplicationContext()).getActivityLifecycleCallbacks();
+//        LifeCycleCallbacks lifeCycleCallbacks = ((HSApplication) HSApplication.getContext().getApplicationContext()).getActivityLifecycleCallbacks();
 //        if (lifeCycleCallbacks.isChargingScreenActive()) {
 //            return;
 //        }

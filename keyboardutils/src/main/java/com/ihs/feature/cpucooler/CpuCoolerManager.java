@@ -3,10 +3,10 @@ package com.ihs.feature.cpucooler;
 import android.content.Context;
 import android.support.v4.content.ContextCompat;
 
-import com.honeycomb.launcher.R;
-import com.honeycomb.launcher.boost.DeviceManager;
-import com.honeycomb.launcher.cpucooler.util.CpuCoolerConstant;
 import com.ihs.app.framework.HSApplication;
+import com.ihs.feature.common.DeviceManager;
+import com.ihs.feature.cpucooler.util.CpuCoolerConstant;
+import com.ihs.keyboardutils.R;
 
 import java.util.ArrayList;
 import java.util.List;

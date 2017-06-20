@@ -12,11 +12,12 @@ import android.text.style.StyleSpan;
 import android.view.View;
 import android.widget.TextView;
 
-import com.honeycomb.launcher.R;
-import com.honeycomb.launcher.junkclean.JunkCleanActivity;
-import com.honeycomb.launcher.junkclean.data.JunkManager;
-import com.honeycomb.launcher.util.FormatSizeBuilder;
-import com.honeycomb.launcher.util.PermissionUtils;
+import com.ihs.feature.common.FormatSizeBuilder;
+import com.ihs.feature.junkclean.JunkCleanActivity;
+import com.ihs.feature.junkclean.data.JunkManager;
+import com.ihs.keyboardutils.R;
+import com.ihs.keyboardutils.utils.ToastUtils;
+
 
 public class PermissionDialog extends AlertDialog {
 
@@ -52,12 +53,14 @@ public class PermissionDialog extends AlertDialog {
         findViewById(R.id.clean_btn).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                PermissionUtils.requestAccessibilityPermission(mJunkCleanActivity, new Runnable() {
-                    @Override
-                    public void run() {
-                        mJunkCleanActivity.onAccessibilityPermissionOpenSuccess();
-                    }
-                });
+                ToastUtils.showToast("这里请求 Accessibility");
+
+//                PermissionUtils.requestAccessibilityPermission(mJunkCleanActivity, new Runnable() {
+//                    @Override
+//                    public void run() {
+//                        mJunkCleanActivity.onAccessibilityPermissionOpenSuccess();
+//                    }
+//                });
 
                 dismiss();
             }

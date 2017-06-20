@@ -1,11 +1,11 @@
 package com.ihs.feature.cpucooler.util;
 
-import com.honeycomb.launcher.BuildConfig;
-import com.honeycomb.launcher.cpucooler.CpuCoolerScanActivity;
-import com.honeycomb.launcher.model.LauncherFiles;
-import com.honeycomb.launcher.resultpage.data.ResultConstants;
-import com.honeycomb.launcher.util.PreferenceHelper;
 import com.ihs.commons.utils.HSLog;
+import com.ihs.feature.common.LauncherFiles;
+import com.ihs.feature.common.PreferenceHelper;
+import com.ihs.feature.cpucooler.CpuCoolerScanActivity;
+import com.ihs.feature.resultpage.data.ResultConstants;
+import com.ihs.keyboardutils.BuildConfig;
 
 import java.util.Calendar;
 

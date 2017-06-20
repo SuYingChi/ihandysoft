@@ -14,6 +14,7 @@ import android.view.View;
 import com.acb.adadapter.AcbNativeAd;
 import com.ihs.app.analytics.HSAnalytics;
 import com.ihs.app.framework.activity.HSAppCompatActivity;
+import com.ihs.chargingscreen.utils.ChargingPrefsUtil;
 import com.ihs.commons.notificationcenter.HSGlobalNotificationCenter;
 import com.ihs.commons.notificationcenter.INotificationObserver;
 import com.ihs.commons.utils.HSBundle;
@@ -170,7 +171,8 @@ public class ResultPageActivity extends HSAppCompatActivity
     private boolean recordIntoBpCardTimes() {
         PreferenceHelper prefBoost = PreferenceHelper.get(LauncherFiles.BOOST_PREFS);
         int lastBpCount = prefBoost.getInt(PREF_KEY_INTO_BATTERY_PROTECTION_COUNT, 0);
-        boolean isBpExpired = (lastBpCount >= BATTERY_PROTECTION_LIMIT_COUNT || lastBpCount == INTO_RESULT_PAGE_COUNT_NULL || ChargingScreenSettings.isChargingScreenEverEnabled());
+
+        boolean isBpExpired = (lastBpCount >= BATTERY_PROTECTION_LIMIT_COUNT || lastBpCount == INTO_RESULT_PAGE_COUNT_NULL || ChargingPrefsUtil.getInstance().isChargingEnabledBefore());
         int savedBpCount = isBpExpired ? INTO_RESULT_PAGE_COUNT_NULL : lastBpCount + 1;
 
         HSLog.d(TAG, "recordIntoBpCardTimes lastBpCount = " + lastBpCount + " savedBpCount = " + savedBpCount);
@@ -178,7 +180,7 @@ public class ResultPageActivity extends HSAppCompatActivity
         return isBpExpired;
     }
 
-    @DebugLog
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         HSLog.d(TAG, "onCreate");
@@ -253,8 +255,6 @@ public class ResultPageActivity extends HSAppCompatActivity
                 return ContextCompat.getColor(this, R.color.clean_primary_blue);
             case ResultConstants.RESULT_TYPE_CPU_COOLER:
                 return ContextCompat.getColor(this, R.color.cpu_cooler_primary_blue);
-            case ResultConstants.RESULT_TYPE_NOTIFICATION_CLEANER:
-                return ContextCompat.getColor(this, R.color.notification_cleaner_green);
         }
         return ContextCompat.getColor(this, R.color.boost_plus_clean_bg);
     }
@@ -283,10 +283,6 @@ public class ResultPageActivity extends HSAppCompatActivity
             case ResultConstants.RESULT_TYPE_CPU_COOLER:
                 mResultController = new CpuCoolerResultController(this, type, ad, cards);
                 titleText = getString(R.string.promotion_max_card_title_cpu_cooler);
-                break;
-            case ResultConstants.RESULT_TYPE_NOTIFICATION_CLEANER:
-                mResultController = new NotificationCleanerResultController(this, type, ad, cards, mClearNotificationsCount);
-                titleText = getString(R.string.notification_cleaner_title);
                 break;
             default:
                 throw new IllegalArgumentException("Unsupported result type.");
