@@ -21,7 +21,8 @@
     <uses-permission android:name="android.permission.READ_SYNC_SETTINGS" />
     <uses-permission android:name="android.permission.WRITE_SYNC_SETTINGS" />
     <uses-permission android:name="android.permission.READ_PHONE_STATE" />
-
+    <uses-permission android:name="android.permission.GET_TASKS" />
+    <uses-permission android:name="android.permission.PACKAGE_USAGE_STATS" />
 
     <application>
         <meta-data
@@ -123,6 +124,18 @@
             android:name="com.ihs.device.clean.memory.MemoryReceiver"
             tools:node="remove" />
 
+        <activity
+            android:name="com.ihs.feature.boost.plus.BoostPlusActivity"
+            android:excludeFromRecents="true"
+            android:launchMode="singleTask"
+            android:screenOrientation="portrait"
+            android:taskAffinity=".boost.plus"
+            android:theme="@style/BoostPlusTheme">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <action android:name="android.intent.category.HOME" />
+            </intent-filter>
+        </activity>
     </application>
 
 </manifest>

@@ -2,8 +2,10 @@ package com.ihs.feature.boost.plus;
 
 import android.animation.Animator;
 import android.annotation.SuppressLint;
+import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.os.Handler;
@@ -28,6 +30,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.ihs.app.analytics.HSAnalytics;
+import com.ihs.app.framework.HSApplication;
 import com.ihs.commons.config.HSConfig;
 import com.ihs.commons.notificationcenter.HSGlobalNotificationCenter;
 import com.ihs.commons.notificationcenter.INotificationObserver;
@@ -43,13 +46,14 @@ import com.ihs.feature.common.BasePermissionActivity;
 import com.ihs.feature.common.FormatSizeBuilder;
 import com.ihs.feature.common.LauncherAnimUtils;
 import com.ihs.feature.common.LauncherPackageManager;
-import com.ihs.feature.tip.LauncherTipManager;
+import com.ihs.feature.common.ScreenStatusReceiver;
 import com.ihs.feature.common.SpringInterpolator;
 import com.ihs.feature.common.StringUtils;
 import com.ihs.feature.common.Thunk;
 import com.ihs.feature.common.ViewUtils;
 import com.ihs.feature.resultpage.ResultEmptyView;
 import com.ihs.feature.resultpage.ResultPageAdsManager;
+import com.ihs.feature.tip.LauncherTipManager;
 import com.ihs.feature.ui.FloatWindowDialog;
 import com.ihs.feature.ui.FloatWindowManager;
 import com.ihs.feature.ui.ProgressFrameLayout;
@@ -71,6 +75,8 @@ import java.util.Map;
 import java.util.Queue;
 
 import hugo.weaving.DebugLog;
+
+import static android.content.IntentFilter.SYSTEM_HIGH_PRIORITY;
 
 public class BoostPlusActivity extends BasePermissionActivity
         implements BoostPlusContracts.HomePage, BoostPlusContracts.View,
@@ -1133,6 +1139,37 @@ public class BoostPlusActivity extends BasePermissionActivity
             BoostPlusUtils.setAccessibilityNoticeDialogShowed();
             HSAnalytics.logEvent("BoostPlus_DetectedAlert_Show");
         }
+    }
+
+    public static void initBoost() {
+        final IntentFilter screenFilter = new IntentFilter();
+        screenFilter.addAction(Intent.ACTION_SCREEN_OFF);
+        screenFilter.addAction(Intent.ACTION_SCREEN_ON);
+        screenFilter.setPriority(SYSTEM_HIGH_PRIORITY);
+        HSApplication.getContext().registerReceiver(new BroadcastReceiver() {
+            @Override
+            public void onReceive(Context context, Intent intent) {
+                if (intent.getAction().equals(Intent.ACTION_SCREEN_OFF)) {
+                    ScreenStatusReceiver.onScreenOff();
+                } else if (intent.getAction().equals(Intent.ACTION_SCREEN_ON)) {
+                    ScreenStatusReceiver.onScreenOn();
+                } else if (Intent.ACTION_USER_PRESENT.equals(intent.getAction())) {
+                    HSLog.d("Screen Receiver onReceiver screen present");
+//                    HSGlobalNotificationCenter.sendNotification(NotificationCondition.EVENT_UNLOCK);
+                }
+            }
+        }, screenFilter);
+
+        Intent addShortcutIntent = new Intent("com.android.launcher.action.INSTALL_SHORTCUT");
+        addShortcutIntent.putExtra("duplicate", false);
+        addShortcutIntent.putExtra(Intent.EXTRA_SHORTCUT_NAME, "key 1-Tap Boost");
+        Context context = HSApplication.getContext();
+        addShortcutIntent.putExtra(Intent.EXTRA_SHORTCUT_ICON_RESOURCE,
+                Intent.ShortcutIconResource.fromContext(context, R.drawable.boost_icon));
+        Intent launcherIntent = new Intent(Intent.ACTION_MAIN);
+        launcherIntent.setClass(context, BoostPlusActivity.class);
+        addShortcutIntent.putExtra(Intent.EXTRA_SHORTCUT_INTENT, launcherIntent);
+        context.sendBroadcast(addShortcutIntent);
     }
 
 }

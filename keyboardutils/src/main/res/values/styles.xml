@@ -276,4 +276,27 @@
         <item name="android:singleLine">true</item>
         <item name="android:ellipsize">end</item>
     </style>
+
+    <!-- Boost+ -->
+    <style name="BoostPlusTheme" parent="AppCompatTheme">
+        <item name="colorAccent">@color/blue</item>
+    </style>
+
+    <!-- Result Page -->
+    <style name="ResultPageTheme" parent="AppCompatTheme">
+        <item name="android:windowBackground">@null</item>
+        <item name="android:windowDisablePreview">true</item>
+    </style>
+
+
+    <!-- Battery Style-->
+    <style name="BatteryTheme" parent="AppCompatTheme">
+        <item name="colorAccent">@color/battery_green</item>
+        <item name="android:windowDisablePreview">true</item>
+    </style>
+
+    <style name="AppCompatTheme" parent="@style/Theme.AppCompat.Light.NoActionBar">
+        <item name="android:colorBackgroundCacheHint">@null</item>
+        <item name="android:windowNoTitle">true</item>
+    </style>
 </resources>
