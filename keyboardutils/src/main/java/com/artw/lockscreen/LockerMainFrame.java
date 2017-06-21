@@ -44,6 +44,8 @@ import com.ihs.commons.notificationcenter.INotificationObserver;
 import com.ihs.commons.utils.HSBundle;
 import com.ihs.flashlight.FlashlightManager;
 import com.ihs.keyboardutils.R;
+import com.ihs.keyboardutils.alerts.KCAlert;
+import com.ihs.keyboardutils.iap.RemoveAdsManager;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
@@ -52,6 +54,7 @@ import java.util.Date;
 import java.util.Locale;
 
 import static com.artw.lockscreen.common.TimeTickReceiver.NOTIFICATION_CLOCK_TIME_CHANGED;
+import static com.ihs.keyboardutils.iap.RemoveAdsManager.NOTIFICATION_REMOVEADS_PURCHASED;
 
 public class LockerMainFrame extends RelativeLayout implements INotificationObserver, SlidingDrawer.SlidingDrawerListener {
 
@@ -176,54 +179,54 @@ public class LockerMainFrame extends RelativeLayout implements INotificationObse
 
         // 单次关闭广告或永久删除广告
         final ImageView removeAds = (ImageView) findViewById(R.id.remove_ads);
+        if (RemoveAdsManager.getInstance().isRemoveAdsPurchased()) {
+            removeAds.setVisibility(GONE);
+        } else {
+            acbExpressAdView = new AcbExpressAdView(HSApplication.getContext(),getContext().getString(R.string.ad_placement_locker));
+            acbExpressAdView.setExpressAdViewListener(new AcbExpressAdView.AcbExpressAdViewListener() {
+                @Override
+                public void onAdClicked(AcbExpressAdView acbExpressAdView) {
+                    HSAnalytics.logEvent("NativeAd_ColorCam_A(NativeAds)ScreenLocker_Click");
+                    HSGlobalNotificationCenter.sendNotification(LockerActivity.EVENT_FINISH_SELF);
+                }
+            });
+            mAdContainer.addView(acbExpressAdView);
+            mAdContainer.setVisibility(VISIBLE);
+
+            removeAds.setVisibility(VISIBLE);
+            removeAds.setOnClickListener(new OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    KCAlert.Builder builder = new KCAlert.Builder();
+                    builder.setTitle("Remove Ads")
+                            .setMessage("Remove all ads forever or just this time?")
+                            .setNegativeButton("Just once", new OnClickListener() {
+                                @Override
+                                public void onClick(View view) {
+                                    mAdContainer.removeView(acbExpressAdView);
+                                    removeAds.setVisibility(GONE);
+                                }
+                            })
+                            .setPositiveButton("Forever", new OnClickListener() {
+                                @Override
+                                public void onClick(View view) {
+                                    RemoveAdsManager.getInstance().purchaseRemoveAds();
+
+                                    HSGlobalNotificationCenter.addObserver(NOTIFICATION_REMOVEADS_PURCHASED, new INotificationObserver() {
+                                        @Override
+                                        public void onReceive(String s, HSBundle hsBundle) {
+                                            HSGlobalNotificationCenter.removeObserver(this);
+                                            mAdContainer.removeView(acbExpressAdView);
+                                            removeAds.setVisibility(GONE);
+                                        }
+                                    });
+                                }
+                            })
+                            .show();
+                }
+            });
+        }
         removeAds.setVisibility(GONE);
-//        if (RemoveAdsManager.getInstance().isRemoveAdsPurchased()) {
-//            removeAds.setVisibility(GONE);
-//        } else {
-//            acbExpressAdView = new AcbExpressAdView(HSApplication.getContext(),getContext().getString(R.string.ad_placement_locker));
-//            acbExpressAdView.setExpressAdViewListener(new AcbExpressAdView.AcbExpressAdViewListener() {
-//                @Override
-//                public void onAdClicked(AcbExpressAdView acbExpressAdView) {
-//                    HSAnalytics.logEvent("NativeAd_ColorCam_A(NativeAds)ScreenLocker_Click");
-//                    HSGlobalNotificationCenter.sendNotification(LockerActivity.EVENT_FINISH_SELF);
-//                }
-//            });
-//            mAdContainer.addView(acbExpressAdView);
-//            mAdContainer.setVisibility(VISIBLE);
-//
-//            removeAds.setVisibility(VISIBLE);
-//            removeAds.setOnClickListener(new OnClickListener() {
-//                @Override
-//                public void onClick(View view) {
-//                    KCAlert.Builder builder = new KCAlert.Builder();
-//                    builder.setTitle("Remove Ads")
-//                            .setMessage("Remove all ads forever or just this time?")
-//                            .setNegativeButton("Just once", new OnClickListener() {
-//                                @Override
-//                                public void onClick(View view) {
-//                                    mAdContainer.removeView(acbExpressAdView);
-//                                    removeAds.setVisibility(GONE);
-//                                }
-//                            })
-//                            .setPositiveButton("Forever", new OnClickListener() {
-//                                @Override
-//                                public void onClick(View view) {
-//                                    RemoveAdsManager.getInstance().purchaseRemoveAds();
-//
-//                                    HSGlobalNotificationCenter.addObserver(NOTIFICATION_REMOVEADS_PURCHASED, new INotificationObserver() {
-//                                        @Override
-//                                        public void onReceive(String s, HSBundle hsBundle) {
-//                                            HSGlobalNotificationCenter.removeObserver(this);
-//                                            mAdContainer.removeView(acbExpressAdView);
-//                                            removeAds.setVisibility(GONE);
-//                                        }
-//                                    });
-//                                }
-//                            })
-//                            .show();
-//                }
-//            });
-//        }
 
         ViewTreeObserver viewTreeObserver = getViewTreeObserver();
         viewTreeObserver.addOnGlobalLayoutListener(new OnGlobalLayoutListener() {
