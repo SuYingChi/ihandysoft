@@ -8,7 +8,6 @@ import android.animation.ValueAnimator;
 import android.animation.ValueAnimator.AnimatorUpdateListener;
 import android.app.Activity;
 import android.app.Dialog;
-import android.app.KeyguardManager;
 import android.content.ContentResolver;
 import android.content.Context;
 import android.content.pm.PackageManager;
@@ -56,12 +55,8 @@ import com.ihs.chargingscreen.utils.ClickUtils;
 import com.ihs.chargingscreen.utils.DisplayUtils;
 import com.ihs.commons.config.HSConfig;
 import com.ihs.commons.notificationcenter.HSGlobalNotificationCenter;
-import com.ihs.commons.notificationcenter.INotificationObserver;
-import com.ihs.commons.utils.HSBundle;
 import com.ihs.commons.utils.HSLog;
 import com.ihs.keyboardutils.R;
-import com.ihs.keyboardutils.alerts.KCAlert;
-import com.ihs.keyboardutils.iap.RemoveAdsManager;
 import com.ihs.keyboardutils.utils.KCAnalyticUtil;
 import com.ihs.keyboardutils.utils.RippleDrawableUtils;
 
@@ -79,7 +74,6 @@ import static android.view.WindowManager.LayoutParams.FLAG_TRANSLUCENT_NAVIGATIO
 import static android.view.WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS;
 import static android.view.WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN;
 import static com.ihs.chargingscreen.HSChargingScreenManager.getChargingState;
-import static com.ihs.keyboardutils.iap.RemoveAdsManager.NOTIFICATION_REMOVEADS_PURCHASED;
 
 /**
  * Created by zhixiangxiao on 5/4/16.
@@ -361,41 +355,42 @@ public class ChargingScreenActivity extends Activity {
 
         // 单次关闭广告或永久删除广告
         final ImageView removeAds = (ImageView) findViewById(R.id.remove_ads);
-        if (RemoveAdsManager.getInstance().isRemoveAdsPurchased()) {
-            removeAds.setVisibility(View.GONE);
-        } else {
-            removeAds.setOnClickListener(new OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    KCAlert.Builder builder = new KCAlert.Builder();
-                    builder.setTitle("Remove Ads")
-                            .setMessage("Remove all ads forever or just this time?")
-                            .setNegativeButton("Just once", new OnClickListener() {
-                                @Override
-                                public void onClick(View view) {
-                                    adContainer.removeView(acbExpressAdView);
-                                    removeAds.setVisibility(View.GONE);
-                                }
-                            })
-                            .setPositiveButton("Forever", new OnClickListener() {
-                                @Override
-                                public void onClick(View view) {
-                                    RemoveAdsManager.getInstance().purchaseRemoveAds();
-
-                                    HSGlobalNotificationCenter.addObserver(NOTIFICATION_REMOVEADS_PURCHASED, new INotificationObserver() {
-                                        @Override
-                                        public void onReceive(String s, HSBundle hsBundle) {
-                                            HSGlobalNotificationCenter.removeObserver(this);
-                                            adContainer.removeView(acbExpressAdView);
-                                            removeAds.setVisibility(View.GONE);
-                                        }
-                                    });
-                                }
-                            })
-                            .show();
-                }
-            });
-        }
+        removeAds.setVisibility(View.GONE);
+//        if (RemoveAdsManager.getInstance().isRemoveAdsPurchased()) {
+//            removeAds.setVisibility(View.GONE);
+//        } else {
+//            removeAds.setOnClickListener(new OnClickListener() {
+//                @Override
+//                public void onClick(View view) {
+//                    KCAlert.Builder builder = new KCAlert.Builder();
+//                    builder.setTitle("Remove Ads")
+//                            .setMessage("Remove all ads forever or just this time?")
+//                            .setNegativeButton("Just once", new OnClickListener() {
+//                                @Override
+//                                public void onClick(View view) {
+//                                    adContainer.removeView(acbExpressAdView);
+//                                    removeAds.setVisibility(View.GONE);
+//                                }
+//                            })
+//                            .setPositiveButton("Forever", new OnClickListener() {
+//                                @Override
+//                                public void onClick(View view) {
+//                                    RemoveAdsManager.getInstance().purchaseRemoveAds();
+//
+//                                    HSGlobalNotificationCenter.addObserver(NOTIFICATION_REMOVEADS_PURCHASED, new INotificationObserver() {
+//                                        @Override
+//                                        public void onReceive(String s, HSBundle hsBundle) {
+//                                            HSGlobalNotificationCenter.removeObserver(this);
+//                                            adContainer.removeView(acbExpressAdView);
+//                                            removeAds.setVisibility(View.GONE);
+//                                        }
+//                                    });
+//                                }
+//                            })
+//                            .show();
+//                }
+//            });
+//        }
     }
 
     private void showChargingIndicatorText() {
