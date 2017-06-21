@@ -38,7 +38,7 @@
             android:layout_height="match_parent"
             android:layout_weight="1" />
 
-        <com.honeycomb.launcher.view.ThreeStatesCheckBox
+        <com.ihs.feature.ui.ThreeStatesCheckBox
             android:id="@+id/head_checkbox"
             android:layout_width="@dimen/cpu_checkbox_bound"
             android:layout_height="@dimen/cpu_checkbox_bound"

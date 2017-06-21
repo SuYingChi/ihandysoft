@@ -68,7 +68,7 @@
         android:textSize="16sp"
         app:typeface="@string/roboto_regular" />
 
-    <com.honeycomb.launcher.view.ThreeStatesCheckBox
+    <com.ihs.feature.ui.ThreeStatesCheckBox
         android:id="@+id/junk_check"
         android:layout_width="@dimen/clean_checkbox_width"
         android:layout_height="@dimen/clean_checkbox_width"

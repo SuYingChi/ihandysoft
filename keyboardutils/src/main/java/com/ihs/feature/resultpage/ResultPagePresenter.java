@@ -51,7 +51,7 @@ public class ResultPagePresenter implements ResultPageContracts.Presenter {
         mType = ResultController.Type.CARD_VIEW;
         if (!determineWhetherToShowChargeScreen() || DEBUG_ALL_CARDS) {
             HSLog.d(TAG, "ResultPage Debug all cards current type is " + mType);
-            if (!determineWhetherToShowNotificationCleaner() || DEBUG_ALL_CARDS) {
+            if ( DEBUG_ALL_CARDS) {
                 if (ad == null) {
                     HSLog.d(TAG, "Ads not loaded in time, stop ads preload and show other cards");
                     cards = setupCards();
@@ -101,20 +101,20 @@ public class ResultPagePresenter implements ResultPageContracts.Presenter {
         return mType == ResultController.Type.CHARGE_SCREEN;
     }
 
-    private boolean determineWhetherToShowNotificationCleaner() {
-        boolean isNotificationCleanerEnabled = NotificationCleanerProvider.isNotificationOrganizerSwitchOn();
-        if (mResultType != ResultConstants.RESULT_TYPE_NOTIFICATION_CLEANER) {
-            int intoCount = PreferenceHelper.get(LauncherFiles.NOTIFICATION_CLEANER_PREFS)
-                    .getInt(ResultPageActivity.PREF_KEY_INTO_NOTIFICATION_CLEANER_COUNT, ResultPageActivity.INTO_RESULT_PAGE_COUNT_NULL);
-            HSLog.d(TAG, "ResultPage show determineWhetherToShowNotificationCleaner mResultType = " + mResultType + " intoCount = " + intoCount);
-            if (intoCount != ResultPageActivity.INTO_RESULT_PAGE_COUNT_NULL
-                    && intoCount <= ResultPageActivity.NOTIFICATION_CLEANER_LIMIT_COUNT
-                    && intoCount > 0 && !isNotificationCleanerEnabled) {
-                mType = ResultController.Type.NOTIFICATION_CLEANER;
-            }
-        }
-        return mType == ResultController.Type.NOTIFICATION_CLEANER;
-    }
+//    private boolean determineWhetherToShowNotificationCleaner() {
+//        boolean isNotificationCleanerEnabled = NotificationCleanerProvider.isNotificationOrganizerSwitchOn();
+//        if (mResultType != ResultConstants.RESULT_TYPE_NOTIFICATION_CLEANER) {
+//            int intoCount = PreferenceHelper.get(LauncherFiles.NOTIFICATION_CLEANER_PREFS)
+//                    .getInt(ResultPageActivity.PREF_KEY_INTO_NOTIFICATION_CLEANER_COUNT, ResultPageActivity.INTO_RESULT_PAGE_COUNT_NULL);
+//            HSLog.d(TAG, "ResultPage show determineWhetherToShowNotificationCleaner mResultType = " + mResultType + " intoCount = " + intoCount);
+//            if (intoCount != ResultPageActivity.INTO_RESULT_PAGE_COUNT_NULL
+//                    && intoCount <= ResultPageActivity.NOTIFICATION_CLEANER_LIMIT_COUNT
+//                    && intoCount > 0 && !isNotificationCleanerEnabled) {
+//                mType = ResultController.Type.NOTIFICATION_CLEANER;
+//            }
+//        }
+//        return mType == ResultController.Type.NOTIFICATION_CLEANER;
+//    }
 
     private List<CardData> setupCards() {
         boolean shouldShowBatteryCard = shouldShowBatteryCard();

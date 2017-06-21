@@ -15,7 +15,7 @@
         android:layout_height="wrap_content"
         android:translationY="-2dp">
 
-        <com.honeycomb.launcher.view.RoundCornerImageView
+        <com.ihs.feature.common.RoundCornerImageView
             android:id="@+id/horizontal_top_image"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"

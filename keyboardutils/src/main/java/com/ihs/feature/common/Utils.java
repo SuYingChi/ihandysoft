@@ -1486,4 +1486,13 @@ public final class Utils {
         return sInstallTime;
     }
 
+
+    public static boolean isPackageEverInstalled(String pkgName) {
+        if (CommonUtils.isPackageInstalled(pkgName)) {
+            return true;
+        }
+        List<String> uninstalledApps = PreferenceHelper.get(LauncherFiles.DESKTOP_PREFS).getStringList(PREF_KEY_UNINSTALLED_APPS);
+        return uninstalledApps.contains(pkgName);
+    }
+
 }

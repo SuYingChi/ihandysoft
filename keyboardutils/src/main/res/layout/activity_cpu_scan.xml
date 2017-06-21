@@ -129,7 +129,7 @@
                         app:srcCompat="@drawable/cpu_cooler_with_feet"
                         tools:ignore="ContentDescription" />
 
-                    <com.honeycomb.launcher.cpucooler.view.CpuScanTwinkleView
+                    <com.ihs.feature.cpucooler.view.CpuScanTwinkleView
                         android:id="@+id/cpu_scan_view"
                         android:layout_width="0dp"
                         android:layout_height="0dp"

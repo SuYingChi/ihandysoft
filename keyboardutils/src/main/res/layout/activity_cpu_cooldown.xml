@@ -25,7 +25,7 @@
             layout="@layout/white_toolbar"
             android:visibility="invisible" />
 
-        <com.honeycomb.launcher.cpucooler.view.CircleView
+        <com.ihs.feature.cpucooler.view.CircleView
             android:id="@+id/circle_view"
             android:layout_width="0dp"
             android:layout_height="0dp"
@@ -46,7 +46,7 @@
             app:layout_marginTopPercent="@fraction/cpu_circle_view_margin_top"
             app:layout_widthPercent="@fraction/cpu_circle_bound">
 
-            <com.honeycomb.launcher.cpucooler.view.SnowView
+            <com.ihs.feature.cpucooler.view.SnowView
                 android:id="@+id/growing_snow_view"
                 android:layout_width="0dp"
                 android:layout_height="0dp"
@@ -57,7 +57,7 @@
 
         </android.support.percent.PercentRelativeLayout>
 
-        <com.honeycomb.launcher.cpucooler.view.SnowView
+        <com.ihs.feature.cpucooler.view.SnowView
             android:id="@+id/left_falling_snow_view"
             android:layout_width="0dp"
             android:layout_height="0dp"
@@ -67,7 +67,7 @@
             app:layout_marginLeftPercent="@fraction/cpu_left_falling_snow_margin_left"
             app:layout_widthPercent="@fraction/cpu_left_falling_snow_bound" />
 
-        <com.honeycomb.launcher.cpucooler.view.SnowView
+        <com.ihs.feature.cpucooler.view.SnowView
             android:id="@+id/middle_falling_snow_view"
             android:layout_width="0dp"
             android:layout_height="0dp"
@@ -77,7 +77,7 @@
             app:layout_marginLeftPercent="@fraction/cpu_middle_falling_snow_margin_left"
             app:layout_widthPercent="@fraction/cpu_middle_falling_snow_bound" />
 
-        <com.honeycomb.launcher.cpucooler.view.SnowView
+        <com.ihs.feature.cpucooler.view.SnowView
             android:id="@+id/right_falling_snow_view"
             android:layout_width="0dp"
             android:layout_height="0dp"
@@ -87,7 +87,7 @@
             app:layout_marginLeftPercent="@fraction/cpu_right_falling_snow_margin_left"
             app:layout_widthPercent="@fraction/cpu_right_falling_snow_bound" />
 
-        <com.honeycomb.launcher.view.reveal.RevealFrameLayout
+        <com.ihs.feature.ui.RevealFrameLayout
             android:id="@+id/reveal_layout"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
@@ -140,7 +140,7 @@
                         android:textSize="@dimen/cpu_app_stop_hint_text_size" />
                 </android.support.percent.PercentRelativeLayout>
             </android.support.percent.PercentRelativeLayout>
-        </com.honeycomb.launcher.view.reveal.RevealFrameLayout>
+        </com.ihs.feature.ui.RevealFrameLayout>
 
         <LinearLayout
             android:id="@+id/app_icon_layout"

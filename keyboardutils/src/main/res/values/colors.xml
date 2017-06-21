@@ -130,4 +130,5 @@
     <color name="promotion_dialog_bg">#fafafa</color>
     <color name="notification_red">#f84321</color>
     <color name="permission_guide_text_gray">#757575</color>
+    <color name="white" >#fff</color>
 </resources>

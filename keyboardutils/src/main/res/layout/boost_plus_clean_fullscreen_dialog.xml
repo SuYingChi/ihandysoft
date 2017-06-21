@@ -110,7 +110,7 @@
                             android:layout_marginTop="10dp"
                             android:orientation="horizontal">
 
-                            <com.honeycomb.launcher.boost.plus.BoostTextView
+                            <com.ihs.feature.boost.plus.BoostTextView
                                 android:id="@+id/memory_used_number_tv"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
@@ -266,7 +266,7 @@
             android:gravity="center"
             android:orientation="vertical">
 
-            <com.honeycomb.launcher.customize.view.ProgressWheel
+            <com.ihs.feature.ui.ProgressWheel
                 android:id="@+id/exiting_progress_wheel"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"

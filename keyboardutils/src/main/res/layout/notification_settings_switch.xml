@@ -12,7 +12,7 @@
         android:background="@drawable/material_compat_bg"
         android:clickable="true">
 
-        <com.honeycomb.launcher.view.TypefacedTextView
+        <com.ihs.feature.common.TypefacedTextView
             style="@style/SettingsItem.SingleLine"
             android:text="@string/settings_badge_switch_hint"
             launcher:typeface="@string/proxima_nova_regular" />

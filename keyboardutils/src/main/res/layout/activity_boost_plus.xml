@@ -117,13 +117,13 @@
                     app:typeface="@string/roboto_regular" />
             </FrameLayout>
 
-            <com.honeycomb.launcher.customize.view.ProgressFrameLayout
+            <com.ihs.feature.ui.ProgressFrameLayout
                 android:id="@+id/scan_progress_banner"
                 android:layout_width="match_parent"
                 android:layout_height="39dp"
                 android:background="@android:color/white">
 
-                <com.honeycomb.launcher.customize.view.ProgressWheel
+                <com.ihs.feature.ui.ProgressWheel
                     android:id="@+id/progressWheel"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -184,7 +184,7 @@
                         android:textSize="14sp"
                         tools:ignore="RelativeOverlap" />
 
-                    <com.honeycomb.launcher.boost.plus.LauncherCheckBox
+                    <com.ihs.feature.boost.plus.LauncherCheckBox
                         android:id="@+id/running_apps_select_all_check_box"
                         android:layout_width="39dp"
                         android:layout_height="39dp"
@@ -194,7 +194,7 @@
                         android:layout_marginEnd="8dp"
                         android:layout_marginRight="8dp" />
                 </RelativeLayout>
-            </com.honeycomb.launcher.customize.view.ProgressFrameLayout>
+            </com.ihs.feature.ui.ProgressFrameLayout>
 
             <View
                 android:id="@+id/selection_banner_divider"

@@ -250,4 +250,6 @@
 
     <dimen name="notification_cleaner_block_btn_height">48dp</dimen>
     <dimen name="notification_cleaner_block_btn_text_size">16sp</dimen>
+    <dimen name="result_empty_view_top_margin">57dp</dimen>
+
 </resources>

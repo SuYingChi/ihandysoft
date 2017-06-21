@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<com.honeycomb.launcher.customize.view.ProgressFrameLayout
+<com.ihs.feature.ui.ProgressFrameLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     xmlns:wheel="http://schemas.android.com/apk/res-auto"
@@ -15,7 +15,7 @@
     android:paddingStart="21.3dp"
     >
 
-    <com.honeycomb.launcher.customize.view.ProgressWheel
+    <com.ihs.feature.ui.ProgressWheel
         android:id="@+id/progressWheel"
         android:layout_width="80dp"
         android:layout_height="80dp"
@@ -26,7 +26,7 @@
         wheel:circleRadius="32dp"
         wheel:rimColor="#99ffffff"/>
 
-    <com.honeycomb.launcher.customize.view.SuccessTickView
+    <com.ihs.feature.ui.SuccessTickView
         android:id="@+id/tickview"
         android:layout_width="42dp"
         android:layout_height="42dp"
@@ -50,5 +50,5 @@
         android:textColor="#d6ffffff"
         android:textSize="16sp"
         tools:text="@string/wallpaper_setting_progress_dialog_text"/>
-</com.honeycomb.launcher.customize.view.ProgressFrameLayout>
+</com.ihs.feature.ui.ProgressFrameLayout>
 

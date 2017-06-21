@@ -104,7 +104,7 @@
             android:layout_height="wrap_content"
             android:visibility="invisible">
 
-            <com.honeycomb.launcher.battery.ScanIconAnimationView
+            <com.ihs.feature.battery.ScanIconAnimationView
                 android:id="@+id/app_icon_animation_v"
                 android:layout_width="match_parent"
                 android:layout_height="75dp" />

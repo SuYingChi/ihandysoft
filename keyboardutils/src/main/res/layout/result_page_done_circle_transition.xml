@@ -21,7 +21,7 @@
             android:clipChildren="false"
             android:elevation="@dimen/clean_elevation_app_bar">
 
-            <com.honeycomb.launcher.view.FlashCircleView
+            <com.ihs.feature.ui.FlashCircleView
                 android:id="@+id/done_circle"
                 android:layout_width="@dimen/clean_done_circle_width"
                 android:layout_height="@dimen/clean_done_circle_width"

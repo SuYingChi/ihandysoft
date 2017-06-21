@@ -89,14 +89,14 @@
             android:layout_marginRight="16dp"
             android:layout_marginEnd="16dp">
 
-            <com.honeycomb.launcher.view.ThreeStatesCheckBox
+            <com.ihs.feature.ui.ThreeStatesCheckBox
                 android:id="@+id/category_junk_check"
                 android:layout_width="@dimen/clean_checkbox_width"
                 android:layout_height="@dimen/clean_checkbox_width"
                 android:checked="true"
                 android:visibility="visible"/>
 
-            <com.honeycomb.launcher.customize.view.ProgressWheel
+            <com.ihs.feature.ui.ProgressWheel
                 android:id="@+id/category_progress_wheel"
                 android:layout_width="@dimen/clean_loading_icon_width"
                 android:layout_height="@dimen/clean_loading_icon_width"

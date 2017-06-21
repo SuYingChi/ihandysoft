@@ -7,12 +7,12 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.CompoundButton;
 
-import com.honeycomb.launcher.R;
-import com.honeycomb.launcher.chargingscreen.ChargingScreenSettings;
-import com.honeycomb.launcher.settings.BaseSettingsActivity;
-import com.honeycomb.launcher.util.ActivityUtils;
-import com.honeycomb.launcher.util.CommonUtils;
-import com.honeycomb.launcher.util.ViewUtils;
+import com.artw.lockscreen.common.BaseSettingsActivity;
+import com.ihs.chargingscreen.utils.ChargingPrefsUtil;
+import com.ihs.feature.common.ActivityUtils;
+import com.ihs.feature.common.ViewUtils;
+import com.ihs.keyboardutils.R;
+import com.ihs.keyboardutils.utils.CommonUtils;
 
 public class BatterySettingsActivity extends BaseSettingsActivity
         implements View.OnClickListener, SwitchCompat.OnCheckedChangeListener {
@@ -40,7 +40,7 @@ public class BatterySettingsActivity extends BaseSettingsActivity
     @Override protected void onResume() {
         super.onResume();
 
-        mChargingScreenToggle.setChecked(ChargingScreenSettings.isChargingScreenEnabled());
+        mChargingScreenToggle.setChecked(ChargingPrefsUtil.getChargingEnableStates() == ChargingPrefsUtil.CHARGING_DEFAULT_ACTIVE);
     }
 
     @Override public void onAttachedToWindow() {
@@ -53,12 +53,11 @@ public class BatterySettingsActivity extends BaseSettingsActivity
     }
 
     @Override public void onClick(View v) {
-        switch (v.getId()) {
-            case R.id.charging_screen_cell:
-                mChargingScreenToggle.performClick();
-                break;
-            default:
-                break;
+        int i = v.getId();
+        if (i == R.id.charging_screen_cell) {
+            mChargingScreenToggle.performClick();
+
+        } else {
         }
     }
 
@@ -75,7 +74,7 @@ public class BatterySettingsActivity extends BaseSettingsActivity
 
     @Override public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
         if (buttonView == mChargingScreenToggle) {
-            ChargingScreenSettings.setChargingScreenEnabled(isChecked);
+            ChargingPrefsUtil.getInstance().setChargingEnableByUser(isChecked);
         }
     }
 }

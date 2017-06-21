@@ -4,9 +4,11 @@ import android.annotation.SuppressLint;
 import android.content.Context;
 import android.view.View;
 
-import com.honeycomb.launcher.R;
-import com.honeycomb.launcher.junkclean.util.JunkCleanConstant;
-import com.honeycomb.launcher.junkclean.util.JunkCleanUtils;
+import com.ihs.feature.junkclean.util.JunkCleanConstant;
+import com.ihs.feature.junkclean.util.JunkCleanUtils;
+import com.ihs.feature.ui.FloatWindowManager;
+import com.ihs.keyboardutils.R;
+
 
 @SuppressLint("ViewConstructor")
 public class JunkCleanInstallTip extends JunkCleanFloatTip {
@@ -23,14 +25,12 @@ public class JunkCleanInstallTip extends JunkCleanFloatTip {
     @Override
     public void onClick(View v) {
         super.onClick(v);
-        switch (v.getId()) {
-            case R.id.action_btn:
-                // click implements in super
-                JunkCleanUtils.FlurryLogger.logSpecialAlertClicked(JunkCleanConstant.OBSOLETE_APK);
-                JunkCleanUtils.FlurryLogger.logOpen(JunkCleanConstant.OBSOLETE_APK);
-                break;
-            default:
-                break;
+        int i = v.getId();
+        if (i == R.id.action_btn) {// click implements in super
+            JunkCleanUtils.FlurryLogger.logSpecialAlertClicked(JunkCleanConstant.OBSOLETE_APK);
+            JunkCleanUtils.FlurryLogger.logOpen(JunkCleanConstant.OBSOLETE_APK);
+
+        } else {
         }
     }
 
