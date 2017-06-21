@@ -1,9 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <attr name="lengthWidthRatio" format="float" />
-    <declare-styleable name="GifImageView">
-        <attr name="corner_radius" format="dimension" />
-    </declare-styleable>
 
     <declare-styleable name="RoundedCornerLayout">
         <attr name="rcl_corner_radius" format="dimension"/>
