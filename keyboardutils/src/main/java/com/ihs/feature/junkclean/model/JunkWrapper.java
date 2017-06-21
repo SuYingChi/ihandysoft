@@ -2,7 +2,8 @@ package com.ihs.feature.junkclean.model;
 
 import android.text.TextUtils;
 
-import com.honeycomb.launcher.util.Utils;
+import com.ihs.feature.common.Utils;
+
 
 public abstract class JunkWrapper {
 

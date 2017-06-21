@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!-- com.honeycomb.launcher.view.CustomRootView -->
-<com.honeycomb.launcher.view.CustomRootView xmlns:android="http://schemas.android.com/apk/res/android"
+<!-- com.ihs.feature.common.CustomRootView -->
+<com.ihs.feature.common.CustomRootView xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/view_container"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -65,7 +65,7 @@
                     android:background="@color/battery_system_hide_divider" />
             </RelativeLayout>
 
-            <com.honeycomb.launcher.battery.BatteryAppsRecyclerView
+            <com.ihs.feature.battery.BatteryAppsRecyclerView
                 android:id="@+id/rank_apps_rv"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
@@ -77,4 +77,4 @@
     </LinearLayout>
 
     <include layout="@layout/navigation_bar_bg" />
-</com.honeycomb.launcher.view.CustomRootView>
+</com.ihs.feature.common.CustomRootView>

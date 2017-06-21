@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="@dimen/notification_cleaner_animated_item_height"
+    android:layout_centerHorizontal="true">
+
+    <RelativeLayout
+        android:id="@+id/notification_item_container"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:background="@drawable/notification_cleaner_shape_item"
+        android:padding="4dp">
+
+        <android.support.v7.widget.AppCompatImageView
+            android:id="@+id/app_icon_iv"
+            android:layout_width="@dimen/notification_cleaner_animated_icon_init"
+            android:layout_height="@dimen/notification_cleaner_animated_icon_init"
+            android:scaleType="centerInside"
+            android:src="@mipmap/ic_launcher" />
+
+        <LinearLayout
+            android:id="@+id/title_and_description_layout"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="8dp"
+            android:layout_marginStart="8dp"
+            android:layout_toEndOf="@id/app_icon_iv"
+            android:layout_toRightOf="@id/app_icon_iv"
+            android:orientation="vertical">
+
+            <ImageView
+                android:id="@+id/title_notification_view"
+                android:layout_width="180dp"
+                android:layout_height="5dp"
+                android:layout_marginBottom="4dp"
+                android:layout_marginTop="4dp"
+                android:scaleType="matrix"
+                android:src="@android:color/darker_gray"
+                tools:ignore="ContentDescription" />
+
+            <ImageView
+                android:id="@+id/description_notification_view"
+                android:layout_width="180dp"
+                android:layout_height="5dp"
+                android:scaleType="matrix"
+                android:src="@android:color/darker_gray"
+                tools:ignore="ContentDescription" />
+
+        </LinearLayout>
+
+    </RelativeLayout>
+
+</RelativeLayout>

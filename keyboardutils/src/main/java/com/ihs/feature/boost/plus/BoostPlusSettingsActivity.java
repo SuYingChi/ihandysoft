@@ -2,24 +2,24 @@ package com.ihs.feature.boost.plus;
 
 import android.os.Bundle;
 import android.support.v7.widget.SwitchCompat;
-import android.text.TextUtils;
 import android.view.View;
 import android.widget.CompoundButton;
 import android.widget.RelativeLayout;
 
 import com.artw.lockscreen.common.BaseSettingsActivity;
-import com.ihs.app.analytics.HSAnalytics;
 import com.ihs.commons.utils.HSPreferenceHelper;
 import com.ihs.feature.boost.auto.AutoCleanService;
 import com.ihs.feature.boost.auto.LockHelper;
 import com.ihs.feature.common.AdminReceiver;
-import com.ihs.feature.common.LauncherTipManager;
+import com.ihs.feature.tip.LauncherTipManager;
 import com.ihs.feature.common.Profiler;
 import com.ihs.feature.common.ViewUtils;
 import com.ihs.feature.tip.BoostPlusAutoCleanTip;
 import com.ihs.keyboardutils.BuildConfig;
 import com.ihs.keyboardutils.R;
 import com.ihs.keyboardutils.permission.PermissionUtils;
+
+import hugo.weaving.DebugLog;
 
 
 public class BoostPlusSettingsActivity extends BaseSettingsActivity implements
@@ -44,7 +44,7 @@ public class BoostPlusSettingsActivity extends BaseSettingsActivity implements
         return R.string.launcher_widget_boost_plus_title;
     }
 
-
+    @DebugLog
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         if (BuildConfig.DEBUG) {
@@ -67,7 +67,6 @@ public class BoostPlusSettingsActivity extends BaseSettingsActivity implements
         if (BuildConfig.DEBUG) {
             Profiler.end("BoostPlusSettingsActivity-create");
         }
-        HSAnalytics.logEvent("BoostPlus_Setting_Click", "type", currentBoostState ? "Enabled" : "Disabled");
     }
 
     @Override
@@ -109,7 +108,6 @@ public class BoostPlusSettingsActivity extends BaseSettingsActivity implements
 
         } else if (i == R.id.boost_plus_settings_device_admin_cell) {
             if (mDeviceAdminToggle.isChecked()) {
-                HSAnalytics.logEvent("BoostPlus_DeviceAdmin_Close");
                 mInObserverMode = true;
                 // deativeAdmin is async
                 boolean deactived = AdminReceiver.deactiveAdmin(this);
@@ -130,7 +128,6 @@ public class BoostPlusSettingsActivity extends BaseSettingsActivity implements
     private boolean checkDeviceEnvironment(boolean showToast) {
         int rootStatus = RootHelper.grantRootPermissionWithTimeout();
         if (RootHelper.isPermissionGranted(rootStatus)) {
-            HSAnalytics.logEvent("BoostPlus_Setting_PowerNap_CheckboxClick", "type", "AlertRoot");
             mCurrentToastType = "AlertRoot";
             return true;
         }
@@ -149,7 +146,6 @@ public class BoostPlusSettingsActivity extends BaseSettingsActivity implements
                 mCurrentToastType = "Alert1";
                 LauncherTipManager.getInstance().showTip(this, LauncherTipManager.TipType.AUTO_CLEAN_AUTHORIZE,
                         BoostPlusAutoCleanTip.SETTING_ACCESSIBILITY);
-                HSAnalytics.logEvent("BoostPlus_Setting_PowerNap_CheckboxClick", "type", "Alert1");
             }
             return false;
 
@@ -158,7 +154,6 @@ public class BoostPlusSettingsActivity extends BaseSettingsActivity implements
                 mCurrentToastType = "Alert2";
                 LauncherTipManager.getInstance().showTip(this, LauncherTipManager.TipType.AUTO_CLEAN_AUTHORIZE,
                         BoostPlusAutoCleanTip.SETTING_DEVICE);
-                HSAnalytics.logEvent("BoostPlus_Setting_PowerNap_CheckboxClick", "type", "Alert2");
             }
             return false;
         } else {
@@ -168,7 +163,6 @@ public class BoostPlusSettingsActivity extends BaseSettingsActivity implements
                     mCurrentToastType = "Alert3";
                     LauncherTipManager.getInstance().showTip(this, LauncherTipManager.TipType.AUTO_CLEAN_AUTHORIZE,
                             BoostPlusAutoCleanTip.SETTING_LOCK_DELAY);
-                    HSAnalytics.logEvent("BoostPlus_Setting_PowerNap_CheckboxClick", "type", "Alert3");
                 }
                 return false;
             } else if (keyguardState == LockHelper.LOCK_INSTANTLY) {
@@ -176,13 +170,11 @@ public class BoostPlusSettingsActivity extends BaseSettingsActivity implements
                     mCurrentToastType = "Alert4";
                     LauncherTipManager.getInstance().showTip(this, LauncherTipManager.TipType.AUTO_CLEAN_AUTHORIZE,
                             BoostPlusAutoCleanTip.SETTING_LOCK_INSTANTLY);
-                    HSAnalytics.logEvent("BoostPlus_Setting_PowerNap_CheckboxClick", "type", "Alert4");
                 }
                 return false;
             }
         }
 
-        HSAnalytics.logEvent("BoostPlus_Setting_PowerNap_CheckboxClick", "type", "Open Directly");
         return true;
     }
 
@@ -191,13 +183,9 @@ public class BoostPlusSettingsActivity extends BaseSettingsActivity implements
         if (buttonView == mAutoBoostToggle) {
             HSPreferenceHelper.getDefault().putBoolean(PREF_KEY_AUTO_BOOST_ENABLED, isChecked);
             if (isChecked) {
-                if (!TextUtils.isEmpty(mCurrentToastType)) {
-                    HSAnalytics.logEvent("BoostPlus_Setting_PowerNap_Open", "type", mCurrentToastType);
-                }
                 AutoCleanService.start(getApplicationContext());
             } else {
                 AutoCleanService.stop(getApplicationContext());
-                HSAnalytics.logEvent("BoostPlus_Setting_PowerNap_CheckboxClick", "type", "Close");
             }
         }
     }

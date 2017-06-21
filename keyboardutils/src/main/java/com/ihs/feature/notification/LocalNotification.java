@@ -1,4 +1,4 @@
-package com.ihs.feature.boost.notification;
+package com.ihs.feature.notification;
 
 import android.app.PendingIntent;
 
@@ -16,5 +16,6 @@ public class LocalNotification implements Serializable {
     public int smallIconDrawableId;
     public PendingIntent pendingIntent;
     public PendingIntent deletePendingIntent;
+    public boolean isHeadsUp;
 
 }

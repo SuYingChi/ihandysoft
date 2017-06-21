@@ -1,7 +1,8 @@
 package com.ihs.feature.junkclean.util;
 
-import com.honeycomb.launcher.model.LauncherFiles;
-import com.honeycomb.launcher.util.PreferenceHelper;
+
+import com.ihs.feature.common.LauncherFiles;
+import com.ihs.feature.common.PreferenceHelper;
 
 public class JunkPreferenceHelper {
 

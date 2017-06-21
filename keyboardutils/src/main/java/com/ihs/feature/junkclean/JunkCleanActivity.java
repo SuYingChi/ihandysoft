@@ -5,7 +5,6 @@ import android.animation.ArgbEvaluator;
 import android.animation.TypeEvaluator;
 import android.animation.ValueAnimator;
 import android.annotation.SuppressLint;
-import android.app.NotificationManager;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Build;
@@ -64,15 +63,16 @@ import com.ihs.feature.junkclean.model.SystemJunkWrapper;
 import com.ihs.feature.junkclean.util.JunkCleanConstant;
 import com.ihs.feature.junkclean.util.JunkCleanUtils;
 import com.ihs.feature.junkclean.view.PermissionDialog;
+import com.ihs.feature.notification.NotificationManager;
 import com.ihs.feature.resultpage.ResultEmptyView;
 import com.ihs.feature.resultpage.ResultPageAdsManager;
 import com.ihs.feature.ui.HeuristicAnimator;
-import com.ihs.feature.ui.LauncherFloatWindowManager;
 import com.ihs.feature.ui.ProgressWheel;
 import com.ihs.feature.ui.TouchableRecycleView;
 import com.ihs.keyboardutils.R;
 import com.ihs.keyboardutils.permission.PermissionUtils;
 import com.ihs.keyboardutils.utils.CommonUtils;
+import com.ihs.keyboardutils.utils.ToastUtils;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -268,11 +268,11 @@ public class JunkCleanActivity extends BasePermissionActivity {
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR2) {
-            if (NotificationCleanerUtil.isJunkCleanerSettingsNotificationOpened()) {
-                getMenuInflater().inflate(R.menu.boost_plus, menu);
-            } else {
+//            if (NotificationCleanerUtil.isJunkCleanerSettingsNotificationOpened()) {
+//                getMenuInflater().inflate(R.menu.boost_plus, menu);
+//            } else {
                 getMenuInflater().inflate(R.menu.boost_plus_new, menu);
-            }
+//            }
             return true;
         } else {
             return false;
@@ -287,9 +287,7 @@ public class JunkCleanActivity extends BasePermissionActivity {
 
         } else if (i == R.id.action_bar_refresh) {
             NavUtils.startActivitySafely(this, new Intent(JunkCleanActivity.this, JunkCleanerSettingsActivity.class));
-            NotificationCleanerUtil.setJunkCleanerSettingsNotificationOpened(true);
             invalidateOptionsMenu();
-
         }
         return super.onOptionsItemSelected(item);
     }
@@ -735,12 +733,13 @@ public class JunkCleanActivity extends BasePermissionActivity {
                     powerfulCleanItem.setOnClickListener(new TopBannerBaseItem.OnClickListener() {
                         @Override
                         public void onClick() {
-                            PermissionUtils.requestAccessibilityPermission(JunkCleanActivity.this, new Runnable() {
-                                @Override
-                                public void run() {
-                                    onAccessibilityPermissionOpenSuccess();
-                                }
-                            });
+                            ToastUtils.showToast("这里请求Accessibility");
+//                            PermissionUtils.requestAccessibilityPermission(JunkCleanActivity.this, new Runnable() {
+//                                @Override
+//                                public void run() {
+//                                    onAccessibilityPermissionOpenSuccess();
+//                                }
+//                            });
                         }
                     });
 
@@ -798,8 +797,6 @@ public class JunkCleanActivity extends BasePermissionActivity {
         mJunkManager.selectSystemJunk();
         updateAdapterDataSet(getListItems());
 
-        LauncherFloatWindowManager.getInstance().removeFloatButton();
-        SettingLauncherPadActivity.closeSettingsActivity(JunkCleanActivity.this);
     }
 
     private void updateAdapterDataSet(List<AbstractFlexibleItem> dataList) {

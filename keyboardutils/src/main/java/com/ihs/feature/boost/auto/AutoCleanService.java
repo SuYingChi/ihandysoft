@@ -45,6 +45,7 @@ import static com.ihs.feature.boost.auto.AutoCleanService.Status.ROOT_CLEAN;
 import static com.ihs.feature.boost.auto.AutoCleanService.Status.SCANNING;
 import static com.ihs.feature.boost.auto.AutoCleanService.Status.STOPPING;
 
+
 /**
  * Service should always alive, we listen for screen off and execute force stop if needed.
  */

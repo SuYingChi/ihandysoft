@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:launcher="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_centerVertical="true">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <View style="@style/ThinHorizontalDivider" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_gravity="center_vertical"
+            android:background="@android:color/white"
+            android:gravity="center_vertical"
+            android:orientation="vertical"
+            android:paddingBottom="2dp">
+
+            <com.honeycomb.launcher.view.TypefacedTextView
+                android:id="@+id/group_title"
+                style="@style/SettingsItem.MultiLineTitle"
+                android:text="@string/settings_badge_recommended_apps"
+                android:textSize="@dimen/settings_item_content_text_size" />
+
+            <com.honeycomb.launcher.view.TypefacedTextView
+                android:id="@+id/group_desc"
+                style="@style/SettingsItem.MultiLineDescription"
+                android:text="@string/settings_badge_recommended_apps"
+                android:textSize="@dimen/settings_item_content_hint_text_size" />
+        </LinearLayout>
+    </LinearLayout>
+</FrameLayout>

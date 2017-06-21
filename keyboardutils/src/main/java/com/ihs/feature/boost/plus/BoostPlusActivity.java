@@ -40,15 +40,16 @@ import com.ihs.feature.boost.BoostTipUtils;
 import com.ihs.feature.common.ActivityUtils;
 import com.ihs.feature.common.AnimatorListenerAdapter;
 import com.ihs.feature.common.BasePermissionActivity;
-import com.ihs.feature.common.DeviceManager;
 import com.ihs.feature.common.FormatSizeBuilder;
 import com.ihs.feature.common.LauncherAnimUtils;
 import com.ihs.feature.common.LauncherPackageManager;
-import com.ihs.feature.common.LauncherTipManager;
+import com.ihs.feature.tip.LauncherTipManager;
 import com.ihs.feature.common.SpringInterpolator;
 import com.ihs.feature.common.StringUtils;
 import com.ihs.feature.common.Thunk;
 import com.ihs.feature.common.ViewUtils;
+import com.ihs.feature.resultpage.ResultEmptyView;
+import com.ihs.feature.resultpage.ResultPageAdsManager;
 import com.ihs.feature.ui.FloatWindowDialog;
 import com.ihs.feature.ui.FloatWindowManager;
 import com.ihs.feature.ui.ProgressFrameLayout;
@@ -56,6 +57,7 @@ import com.ihs.feature.ui.RecyclerViewAnimator;
 import com.ihs.feature.ui.SafeLinearLayoutManager;
 import com.ihs.keyboardutils.BuildConfig;
 import com.ihs.keyboardutils.R;
+import com.ihs.keyboardutils.permission.PermissionUtils;
 import com.ihs.keyboardutils.utils.CommonUtils;
 import com.ihs.keyboardutils.utils.ToastUtils;
 
@@ -67,6 +69,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Queue;
+
+import hugo.weaving.DebugLog;
 
 public class BoostPlusActivity extends BasePermissionActivity
         implements BoostPlusContracts.HomePage, BoostPlusContracts.View,
@@ -126,7 +130,6 @@ public class BoostPlusActivity extends BasePermissionActivity
     private LauncherCheckBox mSelectAllCheckBox;
     private RecyclerView mRunningAppsView;
     @Thunk Button mBoostActionBtn;
-    private View mPromotionContainer;
 
     // Action button translate animation
     private ViewPropertyAnimator mActionBtnAnim;
@@ -139,19 +142,30 @@ public class BoostPlusActivity extends BasePermissionActivity
     private long mColorChangeStartTime;
     private boolean mScanning;
     private static boolean sDestroyed;
+    public static boolean mIsAccessibilityOpenSuccess;
+    public static boolean mIsAccessibilitySettingsOpened;
     private boolean mIsCleanFinishedNeedReScan;
     public static boolean mScanFinished;
     private boolean mIsAccessibilityGranted;
 
     //region Activity Lifecycle
 
+    @Override
+    public boolean isEnableNotificationActivityFinish() {
+        return true;
+    }
+
     @SuppressWarnings("unchecked")
     @Override
+    @DebugLog
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_boost_plus);
         sDestroyed = false;
+        mIsAccessibilityOpenSuccess = false;
+        mIsAccessibilitySettingsOpened = false;
         mScanFinished = false;
+        mIsAccessibilityGranted = PermissionUtils.isAccessibilityGranted();
 
         mBannerBg = new BannerBackground(this, R.id.boost_plus_banner_background_container);
         ViewGroup container = ViewUtils.findViewById(this, R.id.container_view);
@@ -164,7 +178,6 @@ public class BoostPlusActivity extends BasePermissionActivity
         mSelectAllCheckBox = ViewUtils.findViewById(container, R.id.running_apps_select_all_check_box);
         mRunningAppsView = ViewUtils.findViewById(container, R.id.running_apps_view);
         mBoostActionBtn = ViewUtils.findViewById(container, R.id.boost_action_btn);
-        mPromotionContainer = ViewUtils.findViewById(container, R.id.promotion_container_view);
 
         mPresenter = new BoostPlusPresenter(this);
 
@@ -209,6 +222,16 @@ public class BoostPlusActivity extends BasePermissionActivity
     @Override
     protected void onResume() {
         super.onResume();
+        HSLog.d(TAG, "onResume mIsAccessibilitySettingsOpened = " + mIsAccessibilitySettingsOpened
+                + " mIsAccessibilityOpenSuccess = " + mIsAccessibilityOpenSuccess + " mIsCleanFinishedNeedReScan = " + mIsCleanFinishedNeedReScan);
+        if (mIsAccessibilitySettingsOpened && !mIsAccessibilityOpenSuccess) {
+            if (mIsHomeKeyClicked) {
+                mIsCleanFinishedNeedReScan = true;
+            } else {
+                showCleanAnimationDialog(BoostPlusCleanDialog.CLEAN_TYPE_NORMAL);
+            }
+            mIsAccessibilitySettingsOpened = false;
+        }
 
         HSLog.d(TAG, "onResume mIsHomeKeyClicked = " + mIsHomeKeyClicked + " mIsCleanFinishedNeedReScan = " + mIsCleanFinishedNeedReScan);
         if (mIsHomeKeyClicked && mIsCleanFinishedNeedReScan) {
@@ -282,6 +305,8 @@ public class BoostPlusActivity extends BasePermissionActivity
         HSGlobalNotificationCenter.removeObserver(this);
         mAnimationThrottler.removeCallbacksAndMessages(null);
         sDestroyed = true;
+        mIsAccessibilityOpenSuccess = false;
+        mIsAccessibilitySettingsOpened = false;
     }
 
     //endregion
@@ -390,10 +415,10 @@ public class BoostPlusActivity extends BasePermissionActivity
 
             HSLog.d(BoostPlusCleanDialog.TAG, "BoostPlusActivity onBackPressed isCleanResultViewShow = " + isCleanResultViewShow + " isCleaning = " + isCleaning);
             if (!isCleaning && isCleanResultViewShow) {
-                HSAnalytics.logEvent("BoostPlus_ResultPage_Back", "Type", "Back");
                 dismissBoostPlusCleanDialog();
             }
-
+        } else {
+            boolean isRemoveDialog = false;
         }
     }
 
@@ -523,8 +548,6 @@ public class BoostPlusActivity extends BasePermissionActivity
         wheel.animate().alpha(1f)
                 .setDuration(ANIMATION_OPT_TIME)
                 .start();
-        mPromotionContainer.setVisibility(View.GONE);
-        mPromotionContainer.setTranslationY(300);
         mColorChangeStartTime = SystemClock.uptimeMillis() + ANIMATION_OPT_TIME;
         HSLog.d(TAG + ".Banner", "Start scan, color change suppressed until " + ANIMATION_OPT_TIME + " ms later");
     }
@@ -532,7 +555,6 @@ public class BoostPlusActivity extends BasePermissionActivity
     private void cancelScan() {
         mScanning = false;
         HSAppMemoryManager.getInstance().stopScan(mScanListener);
-        mScanListener = null;
     }
 
     @Thunk
@@ -635,13 +657,13 @@ public class BoostPlusActivity extends BasePermissionActivity
                     mScanning = false;
                 }
             });
-//            mHandler.postDelayed(new Runnable() {
-//                @Override
-//                public void run() {
-//                    refreshTextAndBannerColor(true);
-//                    showAccessibilityDialog();
-//                }
-//            }, 500);
+            mHandler.postDelayed(new Runnable() {
+                @Override
+                public void run() {
+                    refreshTextAndBannerColor(true);
+                    showAccessibilityDialog();
+                }
+            }, 500);
         }
 
         if (!mScanAfterClean) {
@@ -761,14 +783,12 @@ public class BoostPlusActivity extends BasePermissionActivity
                 emptyView = emptyViewStub.inflate();
             }
             emptyView.setVisibility(View.VISIBLE);
-            mPromotionContainer.setVisibility(View.VISIBLE);
-            mPromotionContainer.animate()
-                    .translationY(0)
-                    .setDuration(1000)
-                    .start();
-            HSLog.d(TAG, "prepare for opt page junk clean size = " + (mScanListener.mCurrentMemoryCache / 1024 / 1024) + "MB");
-            HSLog.d(TAG, "prepare for opt page battery level = " + DeviceManager.getInstance().getBatteryLevel());
-            HSLog.d(TAG, "prepare for opt page CPU temperature = " + DeviceManager.getInstance().getCpuTemperatureCelsius());
+
+            if(emptyView instanceof ResultEmptyView){
+                ((ResultEmptyView) emptyView).setType(ResultEmptyView.TYPE_BOOST_PLUS);
+                ((ResultEmptyView) emptyView).setMemoryCache(mScanListener.mCurrentMemoryCache);
+                ((ResultEmptyView) emptyView).startPromotionEvaluation();
+            }
         } else {
             mProgressBanner.setVisibility(View.VISIBLE);
             divider.setVisibility(View.VISIBLE);
@@ -896,6 +916,7 @@ public class BoostPlusActivity extends BasePermissionActivity
             ToastUtils.showToast("No app selected");
             return;
         }
+        ResultPageAdsManager.getInstance().preloadAd();
         long sizeToClean = 0L;
         Map<String, String> selectedAppsMap = new HashMap<>();
         for (HSAppMemory selectedApp : mSelectedApps) {
@@ -1100,6 +1121,18 @@ public class BoostPlusActivity extends BasePermissionActivity
     @Override
     protected boolean registerCloseSystemDialogsReceiver() {
         return true;
+    }
+
+    private void showAccessibilityDialog() {
+        if (mScanAfterClean) {
+            return;
+        }
+        int runningAppSize = mRunningApps.size();
+        HSLog.d(TAG, "showAccessibilityDialog *** runningAppSize = " + runningAppSize);
+        if (BoostPlusUtils.shouldShowAccessibilityNoticeDialog(runningAppSize)) {
+            BoostPlusUtils.setAccessibilityNoticeDialogShowed();
+            HSAnalytics.logEvent("BoostPlus_DetectedAlert_Show");
+        }
     }
 
 }

@@ -2,7 +2,8 @@ package com.ihs.feature.junkclean.list;
 
 import android.content.Context;
 
-import com.honeycomb.launcher.R;
+import com.ihs.keyboardutils.R;
+
 
 public class SecurityItem extends TopBannerBaseItem {
 
@@ -12,7 +13,7 @@ public class SecurityItem extends TopBannerBaseItem {
 
     @Override
     public String getTitle() {
-        return getContext().getString(R.string.promotion_security_title);
+        return getContext().getString(com.ihs.keyboardutils.R.string.promotion_security_title);
     }
 
     @Override

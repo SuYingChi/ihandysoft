@@ -7,16 +7,16 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
-import com.honeycomb.launcher.R;
-import com.honeycomb.launcher.junkclean.JunkCleanActivity;
-import com.honeycomb.launcher.junkclean.JunkCleanWindowController;
-import com.honeycomb.launcher.model.LauncherFiles;
-import com.honeycomb.launcher.resultpage.data.ResultConstants;
-import com.honeycomb.launcher.util.PreferenceHelper;
-import com.honeycomb.launcher.util.ViewUtils;
 import com.ihs.app.analytics.HSAnalytics;
 import com.ihs.commons.utils.HSLog;
 import com.ihs.device.clean.accessibility.HSAccTaskManager;
+import com.ihs.feature.common.LauncherFiles;
+import com.ihs.feature.common.PreferenceHelper;
+import com.ihs.feature.common.ViewUtils;
+import com.ihs.feature.junkclean.JunkCleanActivity;
+import com.ihs.feature.junkclean.JunkCleanWindowController;
+import com.ihs.feature.resultpage.data.ResultConstants;
+import com.ihs.keyboardutils.R;
 
 public class JunkCleanUtils {
 

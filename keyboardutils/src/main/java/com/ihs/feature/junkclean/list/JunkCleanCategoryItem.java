@@ -9,12 +9,12 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-import com.honeycomb.launcher.R;
-import com.honeycomb.launcher.junkclean.model.JunkWrapper;
-import com.honeycomb.launcher.util.CommonUtils;
-import com.honeycomb.launcher.util.FormatSizeBuilder;
-import com.honeycomb.launcher.util.LauncherPackageManager;
 import com.ihs.app.framework.HSApplication;
+import com.ihs.feature.common.FormatSizeBuilder;
+import com.ihs.feature.common.LauncherPackageManager;
+import com.ihs.feature.junkclean.model.JunkWrapper;
+import com.ihs.keyboardutils.R;
+import com.ihs.keyboardutils.utils.CommonUtils;
 
 import java.util.List;
 

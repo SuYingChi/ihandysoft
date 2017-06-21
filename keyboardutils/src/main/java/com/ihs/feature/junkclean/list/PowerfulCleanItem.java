@@ -8,9 +8,9 @@ import android.text.Spanned;
 import android.text.style.ForegroundColorSpan;
 import android.text.style.StyleSpan;
 
-import com.honeycomb.launcher.R;
-import com.honeycomb.launcher.junkclean.data.JunkManager;
-import com.honeycomb.launcher.util.FormatSizeBuilder;
+import com.ihs.feature.common.FormatSizeBuilder;
+import com.ihs.feature.junkclean.data.JunkManager;
+import com.ihs.keyboardutils.R;
 
 public class PowerfulCleanItem extends TopBannerBaseItem {
 

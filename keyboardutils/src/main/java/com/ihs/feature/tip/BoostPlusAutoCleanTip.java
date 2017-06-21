@@ -15,7 +15,6 @@ import com.ihs.app.analytics.HSAnalytics;
 import com.ihs.app.framework.HSApplication;
 import com.ihs.commons.utils.HSLog;
 import com.ihs.feature.boost.plus.BoostPlusSettingsActivity;
-import com.ihs.feature.common.LauncherTipManager;
 import com.ihs.feature.ui.DefaultButtonDialog2;
 import com.ihs.keyboardutils.R;
 import com.ihs.keyboardutils.permission.PermissionUtils;

@@ -27,7 +27,7 @@ import android.widget.Toast;
 
 import com.acb.expressads.AcbExpressAdView;
 import com.artw.lockscreen.common.LockerChargingScreenUtils;
-import com.artw.lockscreen.common.ScreenStatusReceiver;
+import com.ihs.feature.common.ScreenStatusReceiver;
 import com.artw.lockscreen.shimmer.Shimmer;
 import com.artw.lockscreen.shimmer.ShimmerTextView;
 import com.artw.lockscreen.slidingdrawer.SlidingDrawer;

@@ -25,7 +25,7 @@ import android.widget.TextView;
 import com.artw.lockscreen.LockerActivity;
 import com.artw.lockscreen.LockerUtils;
 import com.ihs.keyboardutils.R;
-import com.artw.lockscreen.common.ScreenStatusReceiver;
+import com.ihs.feature.common.ScreenStatusReceiver;
 import com.artw.lockscreen.common.SystemSettingsManager;
 import com.ihs.charging.HSChargingManager;
 import com.ihs.commons.notificationcenter.HSGlobalNotificationCenter;

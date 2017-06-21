@@ -1,6 +1,8 @@
 package com.ihs.feature.common;
 
 
+import com.ihs.feature.tip.LauncherTipManager;
+
 public interface ITipInfo {
     LauncherTipManager.TipType getTipType();
 

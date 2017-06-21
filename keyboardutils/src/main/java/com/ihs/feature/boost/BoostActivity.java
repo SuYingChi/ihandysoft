@@ -13,7 +13,6 @@ import com.ihs.app.framework.HSApplication;
 import com.ihs.app.framework.activity.HSActivity;
 import com.ihs.commons.utils.HSLog;
 import com.ihs.feature.boost.animation.BlackHoleLayout;
-import com.ihs.feature.boost.notification.ScreenStatusReceiver;
 import com.ihs.feature.common.LauncherFiles;
 import com.ihs.feature.common.PreferenceHelper;
 import com.ihs.keyboardutils.R;

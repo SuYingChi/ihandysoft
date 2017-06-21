@@ -464,7 +464,7 @@ public class BoostAnimationManager {
         return translation;
     }
 
-    Bitmap[] getBoostAppIconBitmaps(Context context) {
+    public Bitmap[] getBoostAppIconBitmaps(Context context) {
         Drawable[] drawables = getBoostAppIconDrawables(context);
         Bitmap[] bitmaps = new Bitmap[COUNT_ICON];
         for (int i = 0; i < drawables.length; i++) {
@@ -534,7 +534,8 @@ public class BoostAnimationManager {
         return null != context.getPackageManager().resolveActivity(intent, 0);
     }
 
-    private @NonNull Drawable[] getRandomAppIcon(Context context, Drawable[] drawables, int currentIndex) {
+    private @NonNull
+    Drawable[] getRandomAppIcon(Context context, Drawable[] drawables, int currentIndex) {
         if (null == drawables) {
             return new Drawable[0];
         }

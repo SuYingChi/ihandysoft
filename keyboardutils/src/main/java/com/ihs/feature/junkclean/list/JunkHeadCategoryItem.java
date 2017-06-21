@@ -11,14 +11,14 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-import com.honeycomb.launcher.R;
-import com.honeycomb.launcher.animation.AnimatorListenerAdapter;
-import com.honeycomb.launcher.customize.view.ProgressWheel;
-import com.honeycomb.launcher.junkclean.util.JunkCleanConstant;
-import com.honeycomb.launcher.util.FormatSizeBuilder;
-import com.honeycomb.launcher.util.VectorCompat;
-import com.honeycomb.launcher.view.ThreeStatesCheckBox;
 import com.ihs.app.framework.HSApplication;
+import com.ihs.feature.common.AnimatorListenerAdapter;
+import com.ihs.feature.common.FormatSizeBuilder;
+import com.ihs.feature.common.VectorCompat;
+import com.ihs.feature.junkclean.util.JunkCleanConstant;
+import com.ihs.feature.ui.ProgressWheel;
+import com.ihs.feature.ui.ThreeStatesCheckBox;
+import com.ihs.keyboardutils.R;
 
 import java.util.ArrayList;
 import java.util.List;

@@ -1,7 +1,7 @@
 package com.ihs.feature.boost;
 
 import com.ihs.feature.common.ITipInfo;
-import com.ihs.feature.common.LauncherTipManager;
+import com.ihs.feature.tip.LauncherTipManager;
 import com.ihs.feature.ui.LauncherFloatWindowManager;
 
 public class BoostTipInfo implements ITipInfo {

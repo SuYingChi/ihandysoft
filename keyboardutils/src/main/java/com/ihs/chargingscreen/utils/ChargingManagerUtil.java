@@ -10,7 +10,6 @@ import android.net.NetworkInfo;
 import com.ihs.app.framework.HSApplication;
 import com.ihs.charging.HSChargingManager;
 import com.ihs.chargingscreen.HSChargingScreenManager;
-import com.ihs.chargingscreen.activity.DismissKeyguradActivity;
 import com.ihs.keyboardutils.R;
 
 /**

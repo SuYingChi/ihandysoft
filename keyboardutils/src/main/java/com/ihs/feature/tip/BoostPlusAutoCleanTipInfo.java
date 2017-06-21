@@ -1,6 +1,5 @@
 package com.ihs.feature.tip;
 
-import com.ihs.feature.common.LauncherTipManager;
 import com.ihs.feature.common.TipInfo;
 
 /**

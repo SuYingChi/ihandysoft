@@ -7,7 +7,7 @@ import android.content.IntentFilter;
 import android.widget.Toast;
 
 import com.artw.lockscreen.common.LockerChargingScreenUtils;
-import com.artw.lockscreen.common.ScreenStatusReceiver;
+import com.ihs.feature.common.ScreenStatusReceiver;
 import com.artw.lockscreen.common.TimeTickReceiver;
 import com.ihs.app.analytics.HSAnalytics;
 import com.ihs.app.framework.HSApplication;

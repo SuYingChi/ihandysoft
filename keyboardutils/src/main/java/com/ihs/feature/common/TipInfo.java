@@ -1,6 +1,8 @@
 package com.ihs.feature.common;
 
 
+import com.ihs.feature.tip.LauncherTipManager;
+
 public abstract class TipInfo implements ITipInfo {
 
     @Override

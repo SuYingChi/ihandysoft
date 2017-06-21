@@ -6,16 +6,13 @@ import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 import android.view.View;
 
-import com.honeycomb.launcher.R;
-import com.honeycomb.launcher.notificationcleaner.NotificationCleanerConstants;
-import com.honeycomb.launcher.notificationcleaner.NotificationCleanerUtil;
-import com.honeycomb.launcher.settings.BaseSettingsActivity;
-import com.honeycomb.launcher.util.ActivityUtils;
-import com.honeycomb.launcher.util.CommonUtils;
-import com.honeycomb.launcher.util.ViewUtils;
-import com.ihs.app.analytics.HSAnalytics;
+import com.artw.lockscreen.common.BaseSettingsActivity;
+import com.ihs.feature.common.ActivityUtils;
+import com.ihs.feature.common.ViewUtils;
+import com.ihs.keyboardutils.R;
+import com.ihs.keyboardutils.utils.CommonUtils;
+import com.ihs.keyboardutils.utils.ToastUtils;
 
-import static com.flurry.sdk.bb.R;
 
 public class JunkCleanerSettingsActivity extends BaseSettingsActivity implements View.OnClickListener {
 
@@ -60,13 +57,13 @@ public class JunkCleanerSettingsActivity extends BaseSettingsActivity implements
 
     @Override
     public void onClick(View v) {
-        switch (v.getId()) {
-            case R.id.notification_cleaner_rl:
-                HSAnalytics.logEvent("NotificationCleaner_Enterance_Click", "type", NotificationCleanerConstants.JUNK_CLEANER_SETTINGS);
-                NotificationCleanerUtil.checkToStartNotificationOrganizerActivity(JunkCleanerSettingsActivity.this, NotificationCleanerConstants.JUNK_CLEANER_SETTINGS);
-                break;
-            default:
-                break;
+        int i = v.getId();
+        if (i == R.id.notification_cleaner_rl) {
+            ToastUtils.showToast("这里打开Notification收纳界面");
+//            HSAnalytics.logEvent("NotificationCleaner_Enterance_Click", "type", NotificationCleanerConstants.JUNK_CLEANER_SETTINGS);
+//            NotificationCleanerUtil.checkToStartNotificationOrganizerActivity(JunkCleanerSettingsActivity.this, NotificationCleanerConstants.JUNK_CLEANER_SETTINGS);
+
+        } else {
         }
     }
 

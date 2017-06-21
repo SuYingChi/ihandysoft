@@ -7,7 +7,7 @@ import com.ihs.app.analytics.HSAnalytics;
 import com.ihs.commons.utils.HSLog;
 import com.ihs.feature.common.DeviceManager;
 import com.ihs.feature.common.LauncherFiles;
-import com.ihs.feature.common.LauncherTipManager;
+import com.ihs.feature.tip.LauncherTipManager;
 import com.ihs.feature.common.PreferenceHelper;
 import com.ihs.feature.resultpage.data.ResultConstants;
 import com.ihs.keyboardutils.BuildConfig;

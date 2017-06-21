@@ -22,7 +22,7 @@ import com.ihs.device.clean.memory.HSAppMemory;
 import com.ihs.device.clean.memory.HSAppMemoryManager;
 import com.ihs.feature.common.FormatSizeBuilder;
 import com.ihs.feature.common.LauncherPackageManager;
-import com.ihs.feature.common.LauncherTipManager;
+import com.ihs.feature.tip.LauncherTipManager;
 import com.ihs.feature.common.PackageItemInfo;
 import com.ihs.feature.common.Utils;
 import com.ihs.feature.junkclean.JunkCleanActivity;

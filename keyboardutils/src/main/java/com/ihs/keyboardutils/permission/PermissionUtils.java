@@ -23,7 +23,6 @@ import com.ihs.app.analytics.HSAnalytics;
 import com.ihs.app.framework.HSApplication;
 import com.ihs.commons.utils.HSLog;
 import com.ihs.devicemonitor.accessibility.HSAccessibilityService;
-import com.ihs.feature.common.LauncherTipManager;
 import com.ihs.keyboardutils.utils.CommonUtils;
 
 import java.util.List;

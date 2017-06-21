@@ -9,9 +9,9 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-import com.honeycomb.launcher.R;
-import com.honeycomb.launcher.util.VectorCompat;
-import com.honeycomb.launcher.util.ViewUtils;
+import com.ihs.feature.common.VectorCompat;
+import com.ihs.feature.common.ViewUtils;
+import com.ihs.keyboardutils.R;
 
 import java.util.List;
 

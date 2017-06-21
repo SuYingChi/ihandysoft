@@ -73,7 +73,6 @@ import java.util.EnumSet;
 import java.util.List;
 import java.util.Random;
 
-
 public class BoostPlusCleanDialog extends FullScreenDialog {
 
     public static final String TAG = BoostPlusCleanDialog.class.getSimpleName();
@@ -1382,12 +1381,8 @@ public class BoostPlusCleanDialog extends FullScreenDialog {
         HSLog.d(TAG, "onBackClicked ******* isNonRootCleaning = " + isNonRootCleaning + " mIsRootCleaning = "
                 + mIsRootCleaning + " mIsPermissionGetting = " + mIsPermissionGetting);
         if (isNonRootCleaning || mIsRootCleaning || mIsPermissionGetting) {
-            HSAnalytics.logEvent("BoostPlus_Animation_BackAlert_Show", "Type", "Btn Back");
             showStopDialog();
         } else {
-            if (mIsResultViewShow) {
-                HSAnalytics.logEvent("BoostPlus_ResultPage_Back", "Type", "Btn Back");
-            }
             dismissDialog();
         }
     }

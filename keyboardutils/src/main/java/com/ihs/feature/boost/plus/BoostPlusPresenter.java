@@ -25,6 +25,7 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
+
 class BoostPlusPresenter implements BoostPlusContracts.Presenter {
 
     private static final String TAG = BoostPlusPresenter.class.getSimpleName();
@@ -110,7 +111,6 @@ class BoostPlusPresenter implements BoostPlusContracts.Presenter {
         boolean userActionInvolved = RootHelper.isUserActionInvolved(rootStatus);
         if (userActionInvolved) {
             HSAnalytics.logEvent("BoostPlus_Homepage_BtnClick", "Type", "Root Alert Show");
-            HSAnalytics.logEvent("BoostPlus_RootAlert_Action", "Type", rootPermissionGranted ? "Allow" : "Deny");
         }
         if (rootPermissionGranted) {
             if (!userActionInvolved) {

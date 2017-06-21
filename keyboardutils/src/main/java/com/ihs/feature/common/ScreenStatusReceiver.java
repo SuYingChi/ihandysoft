@@ -1,7 +1,9 @@
-package com.artw.lockscreen.common;
+package com.ihs.feature.common;
 
+import com.artw.lockscreen.common.LockerChargingScreenUtils;
 import com.ihs.commons.notificationcenter.HSGlobalNotificationCenter;
 import com.ihs.commons.utils.HSLog;
+import com.ihs.feature.boost.RamUsageDisplayUpdater;
 
 public class ScreenStatusReceiver {
 
@@ -30,6 +32,7 @@ public class ScreenStatusReceiver {
 
         HSGlobalNotificationCenter.sendNotification(NOTIFICATION_SCREEN_ON);
 
+        RamUsageDisplayUpdater.getInstance().startUpdatingRamUsage();
 
         //// TODO: 17/4/1 打开这里。
 //        LChargingScreenUtils.onScreenOn();
@@ -40,8 +43,8 @@ public class ScreenStatusReceiver {
         sScreenOn = false;
 
         HSGlobalNotificationCenter.sendNotification(NOTIFICATION_SCREEN_OFF);
-
         LockerChargingScreenUtils.onScreenOff();
+        RamUsageDisplayUpdater.getInstance().stopUpdatingRamUsage();
     }
 
 }

@@ -13,7 +13,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"/>
 
-    <com.honeycomb.launcher.view.CustomRootView
+    <com.ihs.feature.common.CustomRootView
         android:id="@+id/view_container"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -70,5 +70,5 @@
 
         <include layout="@layout/navigation_bar_bg"/>
 
-    </com.honeycomb.launcher.view.CustomRootView>
+    </com.ihs.feature.common.CustomRootView>
 </FrameLayout>

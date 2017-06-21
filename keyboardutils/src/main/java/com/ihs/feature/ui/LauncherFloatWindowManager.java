@@ -17,7 +17,7 @@ import com.ihs.feature.boost.BoostSource;
 import com.ihs.feature.boost.BoostTip;
 import com.ihs.feature.boost.BoostType;
 import com.ihs.feature.common.ConcurrentUtils;
-import com.ihs.feature.common.LauncherTipManager;
+import com.ihs.feature.tip.LauncherTipManager;
 import com.ihs.feature.common.Thunk;
 import com.ihs.keyboardutils.utils.CommonUtils;
 
@@ -72,7 +72,7 @@ public class LauncherFloatWindowManager extends FloatWindowManager {
         }
     }
 
-    void setEnabled(boolean enabled) {
+    public void setEnabled(boolean enabled) {
         mEnabled = enabled;
     }
 

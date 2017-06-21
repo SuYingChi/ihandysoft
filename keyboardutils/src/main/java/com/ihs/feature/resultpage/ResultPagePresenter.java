@@ -5,17 +5,16 @@ import android.text.format.DateUtils;
 
 import com.acb.adadapter.AcbNativeAd;
 import com.annimon.stream.Stream;
-import com.honeycomb.launcher.BuildConfig;
-import com.honeycomb.launcher.chargingscreen.ChargingScreenSettings;
-import com.honeycomb.launcher.model.LauncherFiles;
-import com.honeycomb.launcher.notificationcleaner.data.NotificationCleanerProvider;
-import com.honeycomb.launcher.resultpage.data.CardData;
-import com.honeycomb.launcher.resultpage.data.ResultConstants;
-import com.honeycomb.launcher.util.PermissionUtils;
-import com.honeycomb.launcher.util.PreferenceHelper;
-import com.honeycomb.launcher.util.Utils;
+import com.ihs.chargingscreen.utils.ChargingPrefsUtil;
 import com.ihs.commons.config.HSConfig;
 import com.ihs.commons.utils.HSLog;
+import com.ihs.feature.common.LauncherFiles;
+import com.ihs.feature.common.PreferenceHelper;
+import com.ihs.feature.common.Utils;
+import com.ihs.feature.resultpage.data.CardData;
+import com.ihs.feature.resultpage.data.ResultConstants;
+import com.ihs.keyboardutils.BuildConfig;
+import com.ihs.keyboardutils.permission.PermissionUtils;
 
 import java.util.ArrayList;
 import java.util.Collections;

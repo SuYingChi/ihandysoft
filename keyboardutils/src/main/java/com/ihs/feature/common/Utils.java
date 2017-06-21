@@ -78,6 +78,7 @@ import android.widget.TextView;
 import com.ihs.app.framework.HSApplication;
 import com.ihs.commons.config.HSConfig;
 import com.ihs.commons.utils.HSLog;
+import com.ihs.commons.utils.HSPreferenceHelper;
 import com.ihs.keyboardutils.R;
 import com.ihs.keyboardutils.utils.CommonUtils;
 import com.nostra13.universalimageloader.core.ImageLoader;
@@ -1473,4 +1474,16 @@ public final class Utils {
         }
         return icon;
     }
+    public static boolean isNewUserInDNDStatus() {
+        long currentTimeMills = System.currentTimeMillis();
+        return currentTimeMills - getAppInstallTimeMillis() < USE_DND_DURATION;
+    }
+
+    public static long getAppInstallTimeMillis() {
+        if (sInstallTime <= 0) {
+            sInstallTime = HSPreferenceHelper.getDefault().getLong(LauncherConstants.PREF_KEY_INSTALLED_TIME, 0L);
+        }
+        return sInstallTime;
+    }
+
 }

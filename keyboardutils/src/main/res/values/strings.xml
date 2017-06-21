@@ -934,4 +934,32 @@
     <string name="promotion_dialog_action_btn">GET IT NOW</string>
     <string name="result_page_card_notification_cleaner_open_now">OPEN NOW</string>
 
+    <string name="optimalpage_boostplus">Perfect</string>
+    <string name="optimalpage_boostplus_desc">Your phone is as fast as a rocket!</string>
+    <string name="optimalpage_junkclean_desc">Your phone is clean as new!</string>
+
+    <string name="result_empty_view_boost_buttton">BOOST</string>
+    <string name="result_empty_view_clean_buttton">CLEAN</string>
+    <string name="result_empty_view_battery_buttton">SOLVE</string>
+    <string name="result_empty_view_cpucooler_buttton">COOL</string>
+    <string name="result_empty_view_notification_buttton">CLEAN</string>
+    <string name="result_empty_view_boost_title_single">%1$s Apps Lagging Phone!</string>
+    <string name="result_empty_view_clean_title_single">%1$s MB+ Junk Files Found!</string>
+    <string name="result_empty_view_battery_title_single">%1$s%% Battery Left!</string>
+    <string name="result_empty_view_cpucooler_title_single">%1$s℃ Phone Overheated!</string>
+    <string name="result_empty_view_notification_title_single">%1$s Junk Notifications!</string>
+    <string name="result_empty_view_boost_title_double">%1$s Apps</string>
+    <string name="result_empty_view_boost_description_double">Lagging Phone</string>
+    <string name="result_empty_view_clean_title_double" translatable="false">%1$s MB+</string>
+    <string name="result_empty_view_clean_description_double">Junk Files</string>
+    <string name="result_empty_view_battery_title_double" translatable="false">%1$s%%</string>
+    <string name="result_empty_view_battery_description_double">Battery Left</string>
+
+    <string name="result_empty_view_cpucooler_title_double" translatable="false">%1$s℃</string>
+    <string name="result_empty_view_cpucooler_description_double">Phone Overheated</string>
+    <string name="result_empty_view_notification_title_double">%1$s Notifications</string>
+    <string name="result_empty_view_notification_description_double">to clean</string>
+
+    <string name="notification_cpu_cooler_title">%1$s°C Phone Overheating!</string>
+    <string name="notification_cpu_cooler_content">Tap to cool down your phone!</string>
 </resources>

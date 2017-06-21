@@ -1,19 +1,27 @@
-package com.ihs.feature.common;
+package com.ihs.feature.tip;
 
 import android.content.Context;
 import android.os.Handler;
 import android.os.Looper;
 
-import com.ihs.app.analytics.HSAnalytics;
+import com.acb.adadapter.AcbNativeAd;
 import com.ihs.commons.notificationcenter.HSGlobalNotificationCenter;
 import com.ihs.commons.notificationcenter.INotificationObserver;
 import com.ihs.commons.utils.HSBundle;
 import com.ihs.commons.utils.HSLog;
-import com.ihs.commons.utils.HSPreferenceHelper;
 import com.ihs.feature.boost.BoostConditionManager;
 import com.ihs.feature.boost.BoostSource;
 import com.ihs.feature.boost.BoostTipInfo;
 import com.ihs.feature.boost.BoostType;
+import com.ihs.feature.common.DeviceManager;
+import com.ihs.feature.common.ITipInfo;
+import com.ihs.feature.common.LauncherConstants;
+import com.ihs.feature.common.LauncherFiles;
+import com.ihs.feature.common.NeedBoostTipInfo;
+import com.ihs.feature.common.PreferenceHelper;
+import com.ihs.feature.common.Thunk;
+import com.ihs.feature.common.Utils;
+import com.ihs.feature.ui.LauncherFloatWindowManager;
 import com.ihs.keyboardutils.utils.CommonUtils;
 
 import java.util.ArrayList;
@@ -22,6 +30,7 @@ import java.util.Calendar;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+
 
 
 @SuppressWarnings("WeakerAccess")
@@ -83,7 +92,7 @@ public class LauncherTipManager {
 
     public class TipEnvironment {
         public Context context;
-        public TipType requestShowTipType;
+        TipType requestShowTipType;
         public Object[] extras;
         int returnToLauncherCount;
         int finishBoostCount;
@@ -193,8 +202,7 @@ public class LauncherTipManager {
 
     @Thunk
     boolean mEnabled = true;
-    @Thunk
-    boolean isAnimationRunning = false;
+    @Thunk boolean isAnimationRunning = false;
 
     private LauncherTipManager() {
         environment = new TipEnvironment();
@@ -231,20 +239,150 @@ public class LauncherTipManager {
         }
         if (running && duration > 0) {
             handler.postDelayed(new Runnable() {
-                @Override
-                public void run() {
+                @Override public void run() {
                     isAnimationRunning = false;
                 }
             }, duration);
         }
     }
-    public static final String PREF_KEY_DEFAULT_SCREEN_VISIT_COUNT = "default.screen.visit.count";
 
+    public void setEnabled(boolean enabled) {
+        mEnabled = enabled;
+        LauncherFloatWindowManager.getInstance().setEnabled(enabled);
+    }
+    public static final String PREF_KEY_DEFAULT_SCREEN_VISIT_COUNT = "default.screen.visit.count";
 
     public TipEnvironment getEnvironment() {
         environment.returnToLauncherCount = PreferenceHelper.get(LauncherFiles.DESKTOP_PREFS)
                 .getInt(PREF_KEY_DEFAULT_SCREEN_VISIT_COUNT, 0);
         return environment.deepClone();
+    }
+
+//    public TipType shouldShowGestureGuideTrigger(Context context, int visitCount) {
+//
+//        boolean isNewUser = Workspace.isUpGestureChangedVersion();
+//        if (!isNewUser || visitCount < 10) {
+//            return null;
+//        }
+//        TipType showTipType = null;
+//
+//        environment.context = context;
+//
+//        for (TipType tipType : DESKTOP_SMALL_TIPS) {
+//            ResultType returnType = ResultType.NOT_SHOW;
+//            TipEnvironment env;
+//
+//            env = getEnvironment();
+//            env.requestShowTipType = tipType;
+//
+//            returnType = shouldTipShow(tipType, env);
+//            if (returnType == ResultType.SHOW) {
+//                showTipType = tipType;
+//                break;
+//            }
+//        }
+//
+//        if (showTipType != null
+//                && PreferenceHelper.get(LauncherFiles.DESKTOP_PREFS).getBoolean(GestureGuideTriggerView.DESKTOP_GESTURE_GUIDE_TRIGGER_IS_FIRST_TIME_SHOW, true)) {
+//            PreferenceHelper.get(LauncherFiles.DESKTOP_PREFS).putBoolean(GestureGuideTriggerView.DESKTOP_GESTURE_GUIDE_TRIGGER_IS_FIRST_TIME_SHOW, false);
+//            return showTipType;
+//        }
+//
+//        if (showTipType != null
+//                && !PreferenceHelper.get(LauncherFiles.DESKTOP_PREFS).getBoolean(GestureGuideTriggerView.DESKTOP_GESTURE_GUIDE_TRIGGER_IS_ON_DISPLAY, true)) {
+//            long lastShowTipTime = PreferenceHelper.get(LauncherFiles.DESKTOP_PREFS).getLong(GestureGuideTriggerView.DESKTOP_GESTURE_GUIDE_TRIGGER_DISMISS_TIME, 0);
+//            if (lastShowTipTime != 0) {
+//                long timeSpend = System.currentTimeMillis() - lastShowTipTime;
+//                if (timeSpend <= GestureGuideTriggerView.SHOW_TRIGGER_INTERVAL_TIME) {
+//                    showTipType = null;
+//                }
+//            }
+//        }
+//        return showTipType;
+//    }
+
+
+    private ResultType shouldTipShow(TipType type, TipEnvironment env) {
+        ITipInfo info = tipInfos.get(type);
+        if (info == null) {
+            info = createTipInfo(type);
+            tipInfos.put(type, info);
+        }
+        ResultType retType = ResultType.NOT_SHOW;
+
+        if (info.isValidExtras(env)) {
+//            if (type == TipType.MOMENT_GUIDE) {
+//                if (((MomentGuideTipInfo) info).shouldShow(env.returnToLauncherCount)) {
+//                    retType = ResultType.SHOW;
+//                }
+//            } else if (type == TipType.HIDE_APP_GUIDE) {
+//                if (((HideAppGuideTipInfo) info).shouldShow(env.returnToLauncherCount)) {
+//                    retType = ResultType.SHOW;
+//                }
+//            } else if (type == TipType.SEARCH_BAR_GUIDE) {
+//                if (((SearchBarGuideTipInfo) info).shouldShow(env.returnToLauncherCount)) {
+//                    retType = ResultType.SHOW;
+//                }
+//            }
+        }
+
+        return retType;
+    }
+
+    public ResultType triggerShow(Context context, TriggerType type) {
+        HSLog.d("showTip TriggerType == " + type);
+        if (!mEnabled) {
+            return ResultType.NOT_SHOW;
+        }
+
+        TipType[] checkTips;
+        switch (type) {
+            case RETURN_TO_LAUNCHER:
+                afterTipList.clear();
+                checkTips = RETURN_TO_LAUNCHER_TIPS;
+                break;
+            case FINISH_BOOST:
+                checkTips = FINISH_BOOST_TIPS;
+                break;
+            default:
+                throw new RuntimeException("TriggerType not support!! ");
+        }
+
+        environment.context = context;
+        ResultType returnType = ResultType.NOT_SHOW;
+        TipEnvironment shouldShowEnv = null;
+
+        for (TipType tipType : checkTips) {
+            TipEnvironment env;
+            if (nextTipList.containsKey(tipType)) {
+                env = nextTipList.get(tipType);
+                env.returnToLauncherCount = PreferenceHelper.get(LauncherFiles.DESKTOP_PREFS)
+                        .getInt(PREF_KEY_DEFAULT_SCREEN_VISIT_COUNT, 0);
+            } else {
+                env = getEnvironment();
+                env.requestShowTipType = tipType;
+            }
+
+            returnType = checkTipShow(tipType, env);
+            if (returnType == ResultType.SHOW) {
+                shouldShowEnv = env;
+                currentShowTipType = env.requestShowTipType;
+                nextTipList.remove(tipType);
+            } else if (returnType == ResultType.FOCUS_SHOW) {
+                if (shouldShowEnv != null) {
+                    nextTipList.put(shouldShowEnv.requestShowTipType, shouldShowEnv);
+                }
+                shouldShowEnv = env;
+                currentShowTipType = env.requestShowTipType;
+                nextTipList.remove(tipType);
+            } else if (returnType == ResultType.SHOW_AFTER_CURRENT) {
+                afterTipList.add(env);
+            }
+        }
+        if (shouldShowEnv != null && currentShowTipType == shouldShowEnv.requestShowTipType) {
+            doShow(shouldShowEnv, returnType == ResultType.FOCUS_SHOW);
+        }
+        return returnType;
     }
 
     public ResultType showTip(Context context, TipType type, Object... extras) {
@@ -282,9 +420,6 @@ public class LauncherTipManager {
                 isRecodeConflict = false;
             }
 
-            if (isRecodeConflict && cur != null && req != null) {
-                HSAnalytics.logEvent("Remind_Conflict", "type", cur.name() + "," + req.name());
-            }
             if (!env.result) {
                 HSLog.w("showTip failed to not show");
                 retType = ResultType.NOT_SHOW;
@@ -323,27 +458,54 @@ public class LauncherTipManager {
         }
     }
 
-    public void showFinishBoostAlert(Context context, BoostSource source, BoostType type, int boostedPercentage) {
-        if (!mEnabled) {
-            HSLog.d("FloatWindowManager", "Disable at now");
-            return;
-        }
-        showBoostTip(context, source, type, boostedPercentage);
+    public void onLauncherDestroy() {
+        currentShowTipType = null;
+        focusShowTipType = null;
+        environment.requestShowTipType = null;
+        environment.extras = null;
+        environment.context = null;
+        tipInfos.clear();
+        afterTipList.clear();
+        nextTipList.clear();
     }
 
-    private void showBoostTip(Context context, BoostSource source, BoostType type, int boostedPercentage) {
-        if (CommonUtils.ATLEAST_JB_MR2 && boostedPercentage >= 5 && source != BoostSource.LOCKER_TOGGLE) {
-            PreferenceHelper.getDefault().incrementAndGetInt(PREF_KEY_BOOST_TIMES_PER_DAY_PREFIX + mDayOfYear);
+    public void showFinishBoostAlert(Context context, BoostSource source, BoostType type, int boostedPercentage, AcbNativeAd ad) {
+        if (!mEnabled) {
+            HSLog.d("FloatWindowManager", "Disable at now");
+            if (ad != null) {
+                ad.release();
+            }
+            return;
         }
-        showTip(context, TipType.BOOST_TIP, type, boostedPercentage, source);
+        // BoostActivity will finish self after boost animation, so should not display dialogs.
+        if (CommonUtils.ATLEAST_JB_MR2 && !Utils.isDefaultLauncher()
+                && boostedPercentage >= BoostConditionManager.EFFECTIVE_BOOST_PERCENTAGE_THRESHOLD) {
+            LauncherTipManager.ResultType retType = showTip(context,
+                    LauncherTipManager.TipType.SET_AS_DEFAULT_BOOSTED,
+                    (long) (((float) boostedPercentage / 100) * DeviceManager.getInstance().getTotalRam()));
+            if (retType != LauncherTipManager.ResultType.SHOW) {
+                showBoostTip(context, source, type, boostedPercentage, ad);
+            }
+        } else {
+            showBoostTip(context, source, type, boostedPercentage, ad);
+        }
+    }
+
+    private void showBoostTip(Context context, BoostSource source, BoostType type, int boostedPercentage, AcbNativeAd ad) {
+        if (CommonUtils.ATLEAST_JB_MR2 && boostedPercentage >= 5 && source != BoostSource.LOCKER_TOGGLE) {
+            PreferenceHelper.get(LauncherFiles.DESKTOP_PREFS)
+                    .incrementAndGetInt(PREF_KEY_BOOST_TIMES_PER_DAY_PREFIX + mDayOfYear);
+        }
+        showTip(context, TipType.BOOST_TIP, type, boostedPercentage, source, ad);
     }
 
     int getBoostTimesToday() {
         int day = Calendar.getInstance().get(Calendar.DAY_OF_YEAR);
+        PreferenceHelper prefs = PreferenceHelper.get(LauncherFiles.DESKTOP_PREFS);
         if (mDayOfYear == day) {
-            return HSPreferenceHelper.getDefault().getInt(PREF_KEY_BOOST_TIMES_PER_DAY_PREFIX + mDayOfYear, 0);
+            return prefs.getInt(PREF_KEY_BOOST_TIMES_PER_DAY_PREFIX + mDayOfYear, 0);
         } else {
-            HSPreferenceHelper.getDefault().remove(PREF_KEY_BOOST_TIMES_PER_DAY_PREFIX + mDayOfYear);
+            prefs.remove(PREF_KEY_BOOST_TIMES_PER_DAY_PREFIX + mDayOfYear);
             mDayOfYear = day;
             return 0;
         }
@@ -369,7 +531,7 @@ public class LauncherTipManager {
 
     private boolean doShow(final TipEnvironment env, boolean isFocus, long delay) {
         if (Looper.myLooper() != Looper.getMainLooper()) {
-            HSLog.e("no main looper");
+            return false;
         }
         final ITipInfo info = tipInfos.get(env.requestShowTipType);
         if (isFocus) {
@@ -383,7 +545,7 @@ public class LauncherTipManager {
         }
 
         if (delay != 0) {
-            new Handler(Looper.getMainLooper()).postDelayed(new Runnable() {
+            handler.postDelayed(new Runnable() {
                 @Override
                 public void run() {
                     environment.copyFrom(env);
@@ -410,6 +572,24 @@ public class LauncherTipManager {
                 break;
             case NEED_BOOST_TIP:
                 info = new NeedBoostTipInfo();
+                break;
+            case NOTIFICATION_TIP:
+                info = new NotificationTipInfo();
+                break;
+            case AUTO_CLEAN_AUTHORIZE:
+                info = new BoostPlusAutoCleanTipInfo();
+                break;
+            case BATTERY_LOW:
+                info = new BatteryLowTipInfo();
+                break;
+            case JUNK_CLEAN_INSTALL_TIP:
+                info = new JunkCleanInstallTipInfo();
+                break;
+            case JUNK_CLEAN_UNINSTALL_TIP:
+                info = new JunkCleanUninstallTipInfo();
+                break;
+            case CHARGING_SCREEN_GUIDE:
+                info = new ChargingScreenTipInfo();
                 break;
             default:
                 break;

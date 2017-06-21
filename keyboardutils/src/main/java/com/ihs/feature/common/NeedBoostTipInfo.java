@@ -6,6 +6,7 @@ import android.os.Looper;
 import com.ihs.commons.utils.HSLog;
 import com.ihs.feature.boost.BoostConditionManager;
 import com.ihs.feature.boost.BoostType;
+import com.ihs.feature.tip.LauncherTipManager;
 
 
 public class NeedBoostTipInfo extends TipInfo {

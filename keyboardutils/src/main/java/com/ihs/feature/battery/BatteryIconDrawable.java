@@ -16,8 +16,6 @@ import android.support.v4.content.ContextCompat;
 
 import com.ihs.app.framework.HSApplication;
 import com.ihs.commons.utils.HSLog;
-import com.ihs.feature.common.DeviceManager;
-import com.ihs.feature.common.ViewUtils;
 import com.ihs.keyboardutils.R;
 import com.ihs.keyboardutils.utils.FontUtils;
 
@@ -193,25 +191,25 @@ public class BatteryIconDrawable extends Drawable {
         return color;
     }
 
-    public static Bitmap getBatteryBitmap(boolean isNeedReloadIcon) {
-        int iconSize = IconSize.getFolderScaledIconSize();
-        return ViewUtils.convertDrawable2BitmapByCanvas(getBatteryDrawable(isNeedReloadIcon), iconSize, iconSize);
-    }
-
-    public static Bitmap getBatteryBitmapFromDrawable(BatteryIconDrawable batteryIconDrawable) {
-        int iconSize = batteryIconDrawable.mIconSize;
-        return ViewUtils.convertDrawable2BitmapByCanvas(batteryIconDrawable, iconSize, iconSize);
-    }
-
-    public static BatteryIconDrawable getBatteryDrawable(int batteryNumber, boolean isNeedReloadIcon) {
-        int iconSize = IconSize.getFolderScaledIconSize();
-        return new BatteryIconDrawable(iconSize, batteryNumber, isNeedReloadIcon);
-    }
-
-    private static Drawable getBatteryDrawable(boolean isNeedReloadIcon) {
-        int iconSize = IconSize.getFolderScaledIconSize();
-        return new BatteryIconDrawable(iconSize, DeviceManager.getInstance().getBatteryLevel(), isNeedReloadIcon);
-    }
+//    public static Bitmap getBatteryBitmap(boolean isNeedReloadIcon) {
+//        int iconSize = IconSize.getFolderScaledIconSize();
+//        return ViewUtils.convertDrawable2BitmapByCanvas(getBatteryDrawable(isNeedReloadIcon), iconSize, iconSize);
+//    }
+//
+//    public static Bitmap getBatteryBitmapFromDrawable(BatteryIconDrawable batteryIconDrawable) {
+//        int iconSize = batteryIconDrawable.mIconSize;
+//        return ViewUtils.convertDrawable2BitmapByCanvas(batteryIconDrawable, iconSize, iconSize);
+//    }
+//
+//    public static BatteryIconDrawable getBatteryDrawable(int batteryNumber, boolean isNeedReloadIcon) {
+//        int iconSize = IconSize.getFolderScaledIconSize();
+//        return new BatteryIconDrawable(iconSize, batteryNumber, isNeedReloadIcon);
+//    }
+//
+//    private static Drawable getBatteryDrawable(boolean isNeedReloadIcon) {
+//        int iconSize = IconSize.getFolderScaledIconSize();
+//        return new BatteryIconDrawable(iconSize, DeviceManager.getInstance().getBatteryLevel(), isNeedReloadIcon);
+//    }
 
     @Override
     public void setAlpha(int i) {

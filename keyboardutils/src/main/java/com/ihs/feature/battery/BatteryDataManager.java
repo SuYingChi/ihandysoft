@@ -1,13 +1,9 @@
 package com.ihs.feature.battery;
 
 import android.app.ActivityManager;
-import android.content.ComponentName;
-import android.content.ContentResolver;
 import android.content.Context;
-import android.content.Intent;
 import android.content.pm.ApplicationInfo;
-import android.database.Cursor;
-import android.database.sqlite.SQLiteException;
+import android.content.pm.PackageManager;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.text.TextUtils;
@@ -15,18 +11,17 @@ import android.text.TextUtils;
 import com.ihs.app.framework.HSApplication;
 import com.ihs.feature.common.ConcurrentUtils;
 import com.ihs.feature.common.LauncherPackageManager;
-import com.ihs.feature.common.UserHandleCompat;
 import com.ihs.feature.common.Utils;
+import com.ihs.keyboardutils.BuildConfig;
 
-import java.net.URISyntaxException;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.HashMap;
-import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
+
+import static com.facebook.FacebookSdk.getApplicationContext;
 
 public class BatteryDataManager {
 
@@ -35,20 +30,23 @@ public class BatteryDataManager {
     private List<BatteryAppInfo> mAllInstallBatteryAppInfoListCache;
     private List<String> mAllSystemAppsPackageNameCache;
     private HashMap<String, Double> mRankAppsBatteryUsageMap = new HashMap<>();
-    private static final String[] systemAppPackageNames = new String[] {"com.android.phone", "com.android.camera2", "com.google.android.GoogleCamera", "com.google.android.videos",
-        "com.android.music", "com.android.providers.downloads", "com.android.providers.downloads.ui", "com.android.systemui"};
+    private static final String[] systemAppPackageNames = new String[]{"com.android.phone", "com.android.camera2", "com.google.android.GoogleCamera", "com.google.android.videos",
+            "com.android.music", "com.android.providers.downloads", "com.android.providers.downloads.ui", "com.android.systemui"};
+    private List<BatteryAppInfo> launchApps;
+    private List<String> runningPackageList;
+
 
     BatteryDataManager(Context context) {
         initLauncherApps();
         intAllInstallApps();
-        initRecentOpenApps(context);
     }
+
 
     private void initLauncherApps() {
         ConcurrentUtils.postOnThreadPoolExecutor(new Runnable() {
             @Override
             public void run() {
-                mLauncherBatteryAppInfoListCache = getLauncherBatteryAppInfoList(getLaunchApps());
+                mLauncherBatteryAppInfoListCache = getLauncherBatteryAppInfoList();
             }
         });
     }
@@ -65,69 +63,6 @@ public class BatteryDataManager {
         });
     }
 
-    /**
-     * load recent opened apps from LauncherProvider statistics table.
-     */
-    private void initRecentOpenApps(final Context context) {
-        ConcurrentUtils.postOnThreadPoolExecutor(new Runnable() {
-            @Override
-            public void run() {
-                ContentResolver cr = context.getContentResolver();
-                Cursor cursor;
-                try {
-                    cursor = cr.query(LauncherSettings.Statistics.CONTENT_URI, null, null, null,
-                            LauncherSettings.Statistics.MODIFIED + " DESC");
-                } catch (SQLiteException e) {
-                    return;
-                }
-                if (cursor == null) {
-                    return;
-                }
-                StringBuilder appInfoStr = new StringBuilder();
-                try {
-                    Set<String> deduplicateSet = new HashSet<>();
-                    while (cursor.moveToNext()) {
-                        Stats.LaunchStatItem statItem = new Stats.LaunchStatItem(cursor);
-                        Intent intent;
-                        try {
-                            intent = Intent.parseUri(statItem.intent, 0);
-                        } catch (URISyntaxException e) {
-                            e.printStackTrace();
-                            continue;
-                        }
-                        ComponentName component = intent.getComponent();
-                        if (component == null) {
-                            continue;
-                        }
-                        String packageName = component.getPackageName();
-                        if (deduplicateSet.contains(packageName)) {
-                            // Skip duplicated apps
-                            continue;
-                        }
-                        deduplicateSet.add(packageName);
-                        if(packageName.equals(BuildConfig.APPLICATION_ID)){
-                            continue;
-                        }
-                        appInfoStr.append(packageName).append(",");
-                    }
-                } finally {
-                    cursor.close();
-                }
-
-                List<LauncherActivityInfoCompat> launcherActivityInfos = getLaunchApps();
-                for (LauncherActivityInfoCompat info : launcherActivityInfos) {
-                    if(info.getPackageName().equals(BuildConfig.APPLICATION_ID)){
-                        continue;
-                    }
-                    if (!appInfoStr.toString().contains(info.getPackageName())) {
-                        appInfoStr.append(info.getPackageName()).append(",");
-                    }
-                }
-
-                recentOpenedPackages = appInfoStr.toString();
-            }
-        });
-    }
 
     List<BatteryAppInfo> getCleanAnimationBatteryApps() {
         if (null != mAllInstallBatteryAppInfoListCache) {
@@ -136,7 +71,8 @@ public class BatteryDataManager {
         return mLauncherBatteryAppInfoListCache;
     }
 
-    @NonNull List<BatteryAppInfo> getAllRankBatteryApps(boolean isContainSystemApp) {
+    @NonNull
+    List<BatteryAppInfo> getAllRankBatteryApps(boolean isContainSystemApp) {
         List<BatteryAppInfo> allBatteryAppInfoList = getAllInstallBatteryApps();
         if (null == allBatteryAppInfoList) {
             allBatteryAppInfoList = getAllLauncherBatteryApps();
@@ -155,10 +91,10 @@ public class BatteryDataManager {
             int runningSize = runningNoSystemPackageList.size();
             if (runningSize == 1) {
                 String runningPackageName = runningNoSystemPackageList.get(0);
-                double percent = (double)8 + Math.random() * 2; // 8^10
+                double percent = (double) 8 + Math.random() * 2; // 8^10
                 mRankAppsBatteryUsageMap.put(runningPackageName, percent);
             } else if (runningSize > 1) {
-                double totalPercent = (double)15 + Math.random() * 5; // 15^20(7 < total < 20)
+                double totalPercent = (double) 15 + Math.random() * 5; // 15^20(7 < total < 20)
                 double[] everyPercents = getInterpolatorPercent(runningSize, 2);
                 for (int i = 0; i < runningSize; i++) {
                     String packageName = runningNoSystemPackageList.get(i);
@@ -177,7 +113,7 @@ public class BatteryDataManager {
         if (null != recentOpenedPackageList) {
             int recentOpenedSize = recentOpenedPackageList.size();
             if (hasRunningProcessInBackground) {
-                double totalPercent = (double)5 + Math.random() * 5; // 5^10(2 < total < 10)
+                double totalPercent = (double) 5 + Math.random() * 5; // 5^10(2 < total < 10)
                 double[] everyPercents = getInterpolatorPercent(recentOpenedSize, 3);
                 for (int i = 0; i < recentOpenedSize; i++) {
                     String packageName = recentOpenedPackageList.get(i);
@@ -189,7 +125,7 @@ public class BatteryDataManager {
                     }
                 }
             } else {
-                double totalPercent = (double)15 + Math.random() * 5; // 15^20(7 < total < 20)
+                double totalPercent = (double) 15 + Math.random() * 5; // 15^20(7 < total < 20)
                 double[] everyPercents = getInterpolatorPercent(recentOpenedSize, 2);
                 for (int i = 0; i < recentOpenedSize; i++) {
                     String packageName = recentOpenedPackageList.get(i);
@@ -208,7 +144,7 @@ public class BatteryDataManager {
         if (null != mainSystemAppPackageList) {
             //systemAppPackageNames
             int mainSystemAppSize = mainSystemAppPackageList.size();
-            double totalPercent = (double)35 + Math.random() * 5; // 35^40(17 < total < 40)
+            double totalPercent = (double) 35 + Math.random() * 5; // 35^40(17 < total < 40)
             double[] everyPercents = getInterpolatorPercent(mainSystemAppSize, 2);
             for (int i = 0; i < mainSystemAppSize; i++) {
                 String packageName = mainSystemAppPackageList.get(i);
@@ -279,11 +215,11 @@ public class BatteryDataManager {
             public int compare(BatteryAppInfo lhs, BatteryAppInfo rhs) {
                 double percentPre = lhs.getPercent();
                 double percentCurrent = rhs.getPercent();
-                if(percentPre > percentCurrent){
+                if (percentPre > percentCurrent) {
                     return -1;
-                } else if(percentPre < percentCurrent){
+                } else if (percentPre < percentCurrent) {
                     return 1;
-                } else{
+                } else {
                     return 0;
                 }
             }
@@ -298,7 +234,9 @@ public class BatteryDataManager {
     /**
      * Maybe return null
      */
-    private @Nullable List<BatteryAppInfo> getAllInstallBatteryApps() {
+    private
+    @Nullable
+    List<BatteryAppInfo> getAllInstallBatteryApps() {
         if (null == mAllInstallBatteryAppInfoListCache) {
             mAllInstallBatteryAppInfoListCache = getBatteryAppInfoList(LauncherPackageManager.getInstance().getInstalledApplications(), false);
         }
@@ -354,10 +292,6 @@ public class BatteryDataManager {
         return resultSystemPackageList;
     }
 
-    private List<LauncherActivityInfoCompat> getLaunchApps() {
-        UserHandleCompat user = UserHandleCompat.myUserHandle();
-        return LauncherAppsCompat.getInstance(HSApplication.getContext()).getActivityList(null, user);
-    }
 
     private List<String> getRunningPackageList(boolean isContainSystemApp) {
         List<String> packageNameList = new ArrayList<>();
@@ -402,7 +336,9 @@ public class BatteryDataManager {
         return packageNameList;
     }
 
-    private @Nullable List<BatteryAppInfo> getBatteryAppInfoList(List<ApplicationInfo> applicationInfoList, boolean isNoSystemApp) {
+    private
+    @Nullable
+    List<BatteryAppInfo> getBatteryAppInfoList(List<ApplicationInfo> applicationInfoList, boolean isNoSystemApp) {
         if (null == applicationInfoList || applicationInfoList.size() == 0) {
             return null;
         }
@@ -431,18 +367,29 @@ public class BatteryDataManager {
         return isNoSystemApp ? allNoSystemBatteryAppInfoList : allBatteryAppInfoList;
     }
 
-    private List<BatteryAppInfo> getLauncherBatteryAppInfoList(List<LauncherActivityInfoCompat> applicationInfoList) {
-        if (null == applicationInfoList || applicationInfoList.size() == 0) {
-            return null;
-        }
+    private List<BatteryAppInfo> getLauncherBatteryAppInfoList() {
+//        if (null == applicationInfoList || applicationInfoList.size() == 0) {
+//            return null;
+//        }
+        runningPackageList = getRunningPackageList(true);
         List<BatteryAppInfo> usageInfoList = new ArrayList<>();
-        for (LauncherActivityInfoCompat applicationInfo : applicationInfoList) {
-            if (null != applicationInfo) {
-                String appName = applicationInfo.getLabel().toString();
-                String packageName = applicationInfo.getPackageName();
-                BatteryAppInfo hSAppUsageInfo = new BatteryAppInfo(packageName);
+        PackageManager packageManager = getApplicationContext().getPackageManager();
+        for (String pkgName : runningPackageList) {
+            if (!TextUtils.isEmpty(pkgName)) {
+                ApplicationInfo applicationInfo = null;
+                try {
+                    applicationInfo = packageManager.getApplicationInfo(pkgName, PackageManager.GET_META_DATA);
+                } catch (PackageManager.NameNotFoundException e) {
+                    e.printStackTrace();
+                }
+                if (applicationInfo == null) {
+                    continue;
+                }
+
+                String appName = String.valueOf(packageManager.getApplicationLabel(applicationInfo));
+                BatteryAppInfo hSAppUsageInfo = new BatteryAppInfo(pkgName);
                 hSAppUsageInfo.setAppName(appName);
-                hSAppUsageInfo.setIsSystemApp(Utils.isSystemApp(applicationInfo.getApplicationInfo()));
+                hSAppUsageInfo.setIsSystemApp(Utils.isSystemApp(applicationInfo));
                 usageInfoList.add(hSAppUsageInfo);
             }
         }
@@ -476,7 +423,7 @@ public class BatteryDataManager {
                             percents[1] = 0.2;
                         } else if (i == 2) {
                             percents[1] = 0.1;
-                        }  else {
+                        } else {
                             percents[i] = 0.1 / (size - 2);
                         }
                         break;
@@ -487,4 +434,5 @@ public class BatteryDataManager {
         }
         return percents;
     }
+
 }

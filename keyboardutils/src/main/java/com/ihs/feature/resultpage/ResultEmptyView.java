@@ -12,26 +12,23 @@ import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
-import com.honeycomb.launcher.R;
-import com.honeycomb.launcher.battery.BatteryActivity;
-import com.honeycomb.launcher.battery.BatteryUtils;
-import com.honeycomb.launcher.boost.DeviceManager;
-import com.honeycomb.launcher.boost.plus.BoostPlusActivity;
-import com.honeycomb.launcher.cpucooler.CpuCoolerScanActivity;
-import com.honeycomb.launcher.cpucooler.util.CpuPreferenceHelper;
-import com.honeycomb.launcher.junkclean.JunkCleanActivity;
-import com.honeycomb.launcher.model.LauncherFiles;
-import com.honeycomb.launcher.notificationcleaner.NotificationCleanerConstants;
-import com.honeycomb.launcher.notificationcleaner.NotificationCleanerUtil;
-import com.honeycomb.launcher.notificationcleaner.data.NotificationCleanerProvider;
-import com.honeycomb.launcher.resultpage.data.ResultConstants;
-import com.honeycomb.launcher.util.CommonUtils;
-import com.honeycomb.launcher.util.DeviceUtils;
-import com.honeycomb.launcher.util.NavUtils;
-import com.honeycomb.launcher.util.PreferenceHelper;
-import com.honeycomb.launcher.util.VectorCompat;
-import com.honeycomb.launcher.util.ViewUtils;
+import com.artw.lockscreen.common.NavUtils;
 import com.ihs.app.analytics.HSAnalytics;
+import com.ihs.feature.battery.BatteryActivity;
+import com.ihs.feature.battery.BatteryUtils;
+import com.ihs.feature.boost.plus.BoostPlusActivity;
+import com.ihs.feature.common.DeviceManager;
+import com.ihs.feature.common.DeviceUtils;
+import com.ihs.feature.common.LauncherFiles;
+import com.ihs.feature.common.PreferenceHelper;
+import com.ihs.feature.common.VectorCompat;
+import com.ihs.feature.common.ViewUtils;
+import com.ihs.feature.cpucooler.CpuCoolerScanActivity;
+import com.ihs.feature.cpucooler.util.CpuPreferenceHelper;
+import com.ihs.feature.junkclean.JunkCleanActivity;
+import com.ihs.feature.resultpage.data.ResultConstants;
+import com.ihs.keyboardutils.R;
+import com.ihs.keyboardutils.utils.CommonUtils;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -276,7 +273,6 @@ public class ResultEmptyView extends RelativeLayout {
                 break;
             case EVALUATION_TYPE_NOTIFICATION:
                 view.setOnClickListener(v -> {
-                    NotificationCleanerUtil.checkToStartNotificationOrganizerActivity(getContext(), NotificationCleanerConstants.LAUNCHER_SETTINGS);
                     ((Activity) getContext()).finish();
 
                     Map<String, String> params = new HashMap<>();
@@ -413,36 +409,36 @@ public class ResultEmptyView extends RelativeLayout {
                     }
                 }
                 break;
-            case EVALUATION_TYPE_NOTIFICATION:
-                int notificationCount = NotificationCleanerProvider.fetchBlockedAndTimeValidNotificationCount(false);
-                long lastNotificationCleanerUsedTime = PreferenceHelper.get(LauncherFiles.NOTIFICATION_CLEANER_PREFS)
-                        .getLong(ResultConstants.PREF_KEY_LAST_NOTIFICATION_CLEANER_USED_TIME, -1);
-                if (notificationCount >= THRESHOLD_NOTIFICATION_COUNT
-                        && System.currentTimeMillis() - lastNotificationCleanerUsedTime > 5 * DateUtils.MINUTE_IN_MILLIS) {
-                    if (models.size() == 0) {
-                        mFirstEvaluatedType = EVALUATION_TYPE_NOTIFICATION;
-
-                        Model model = new Model();
-                        model.type = EVALUATION_TYPE_NOTIFICATION;
-                        model.iconDrawableId = R.drawable.empty_view_notification_big;
-                        model.titleString = getContext().getString(R.string.result_empty_view_notification_title_single,
-                                String.valueOf(notificationCount));
-                        model.buttonResourceId = R.string.result_empty_view_notification_buttton;
-                        models.add(model);
-                    } else {
-                        Model model = new Model();
-                        model.type = EVALUATION_TYPE_NOTIFICATION;
-                        model.iconDrawableId = R.drawable.empty_view_notification_small;
-                        model.titleString = getContext().getString(R.string.result_empty_view_notification_title_double,
-                                String.valueOf(notificationCount));
-                        model.descriptionString = getContext().getString(R.string.result_empty_view_notification_description_double);
-                        model.buttonResourceId = R.string.result_empty_view_notification_buttton;
-                        models.add(model);
-
-                        reEvaluateFirstModel();
-                    }
-                }
-                break;
+//            case EVALUATION_TYPE_NOTIFICATION:
+//                int notificationCount = NotificationCleanerProvider.fetchBlockedAndTimeValidNotificationCount(false);
+//                long lastNotificationCleanerUsedTime = PreferenceHelper.get(LauncherFiles.NOTIFICATION_CLEANER_PREFS)
+//                        .getLong(ResultConstants.PREF_KEY_LAST_NOTIFICATION_CLEANER_USED_TIME, -1);
+//                if (notificationCount >= THRESHOLD_NOTIFICATION_COUNT
+//                        && System.currentTimeMillis() - lastNotificationCleanerUsedTime > 5 * DateUtils.MINUTE_IN_MILLIS) {
+//                    if (models.size() == 0) {
+//                        mFirstEvaluatedType = EVALUATION_TYPE_NOTIFICATION;
+//
+//                        Model model = new Model();
+//                        model.type = EVALUATION_TYPE_NOTIFICATION;
+//                        model.iconDrawableId = R.drawable.empty_view_notification_big;
+//                        model.titleString = getContext().getString(R.string.result_empty_view_notification_title_single,
+//                                String.valueOf(notificationCount));
+//                        model.buttonResourceId = R.string.result_empty_view_notification_buttton;
+//                        models.add(model);
+//                    } else {
+//                        Model model = new Model();
+//                        model.type = EVALUATION_TYPE_NOTIFICATION;
+//                        model.iconDrawableId = R.drawable.empty_view_notification_small;
+//                        model.titleString = getContext().getString(R.string.result_empty_view_notification_title_double,
+//                                String.valueOf(notificationCount));
+//                        model.descriptionString = getContext().getString(R.string.result_empty_view_notification_description_double);
+//                        model.buttonResourceId = R.string.result_empty_view_notification_buttton;
+//                        models.add(model);
+//
+//                        reEvaluateFirstModel();
+//                    }
+//                }
+//                break;
             default:
                 break;
         }

@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="@dimen/air_launcher_settings_single_line_item_row_height"
+    android:background="@android:color/white">
+
+    <RelativeLayout
+        android:id="@+id/content"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@drawable/material_compat_bg"
+        android:clickable="true"
+        tools:ignore="RtlHardcoded,RelativeOverlap">
+
+        <ImageView
+            android:id="@+id/image_view"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="20dp"
+            android:layout_marginStart="20dp"
+            tools:ignore="ContentDescription" />
+
+        <com.honeycomb.launcher.view.TypefacedTextView
+            android:id="@+id/text_view"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="12dp"
+            android:layout_marginRight="12dp"
+            android:layout_toEndOf="@id/image_view"
+            android:layout_toLeftOf="@+id/package_toggle_button"
+            android:layout_toRightOf="@id/image_view"
+            android:lines="1"
+            android:textColor="@color/material_text_black_primary"
+            android:textSize="@dimen/settings_item_text_size"
+            app:typeface="@string/proxima_nova_regular"
+            tools:text="Facebook" />
+
+        <android.support.v7.widget.SwitchCompat
+            android:id="@+id/package_toggle_button"
+            style="@style/SettingsToggleButton"
+            android:layout_alignParentRight="true"
+            android:theme="@style/SettingsToggleButton.Theme" />
+    </RelativeLayout>
+
+    <View
+        android:id="@+id/item_divider"
+        style="@style/HorizontalDividerWithStartInset"
+        android:layout_gravity="bottom" />
+</FrameLayout>
