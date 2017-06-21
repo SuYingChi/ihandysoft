@@ -7,6 +7,7 @@ import android.os.SystemClock;
 import com.ihs.commons.utils.HSLog;
 import com.ihs.device.clean.memory.HSAppMemory;
 import com.ihs.device.clean.memory.HSAppMemoryManager;
+import com.ihs.feature.common.DeviceManager;
 import com.ihs.feature.common.Thunk;
 
 import java.lang.ref.WeakReference;

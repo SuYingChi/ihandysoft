@@ -7,6 +7,8 @@ import android.graphics.Paint;
 import android.util.AttributeSet;
 import android.view.View;
 
+import com.ihs.feature.common.DeviceManager;
+
 public class StatusBarBatteryIndicator extends View {
     private int percentage = 19;
     private int redColor = Color.parseColor("#ee4458");

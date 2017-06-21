@@ -8,6 +8,8 @@ import android.view.Gravity;
 import android.widget.TextView;
 
 import com.ihs.keyboardutils.R;
+import com.ihs.keyboardutils.utils.CommonUtils;
+import com.ihs.keyboardutils.utils.FontUtils;
 
 import static com.ihs.app.framework.HSApplication.getContext;
 

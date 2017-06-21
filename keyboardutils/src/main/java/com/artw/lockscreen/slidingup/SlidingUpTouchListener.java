@@ -6,8 +6,8 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewConfiguration;
 
-import com.artw.lockscreen.common.CommonUtils;
 import com.ihs.app.framework.HSApplication;
+import com.ihs.keyboardutils.utils.CommonUtils;
 
 public class SlidingUpTouchListener implements View.OnTouchListener {
 

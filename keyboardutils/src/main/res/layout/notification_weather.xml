@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="64dp"
+    android:background="@android:color/white">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@drawable/material_compat_bg">
+
+        <ImageView
+            android:id="@+id/notification_icon"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="12dp"
+            android:layout_marginStart="12dp"
+            tools:ignore="ContentDescription"
+            tools:src="@drawable/weather_cloudy_s" />
+
+        <TextView
+            android:id="@+id/notification_title"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="75dp"
+            android:layout_marginLeft="12dp"
+            android:layout_marginRight="75dp"
+            android:layout_marginStart="12dp"
+            android:layout_marginTop="12dp"
+            android:layout_toEndOf="@id/notification_icon"
+            android:layout_toRightOf="@id/notification_icon"
+            android:lines="1"
+            android:textColor="@color/material_text_black_primary"
+            android:textSize="16sp"
+            tools:text="Cloudy 30\u00b0C ~ 35\u00b0C" />
+
+        <ImageView
+            android:id="@+id/notification_location_icon"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="12dp"
+            android:layout_marginStart="12dp"
+            android:layout_marginTop="35dp"
+            android:layout_toEndOf="@id/notification_icon"
+            android:layout_toRightOf="@id/notification_icon"
+            android:src="@drawable/notification_weather_locate" />
+
+        <TextView
+            android:id="@+id/notification_description"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="75dp"
+            android:layout_marginLeft="4dp"
+            android:layout_marginRight="75dp"
+            android:layout_marginStart="4dp"
+            android:layout_marginTop="32dp"
+            android:gravity="start"
+            android:layout_toEndOf="@id/notification_location_icon"
+            android:layout_toRightOf="@id/notification_location_icon"
+            android:lines="1"
+            android:textColor="@color/material_text_black_secondary"
+            android:textSize="13sp"
+            tools:text="Beijing" />
+
+        <FrameLayout
+            android:layout_width="60dp"
+            android:layout_height="30dp"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_marginEnd="16dp"
+            android:layout_marginRight="16dp"
+            android:background="@drawable/blue_btn_bg">
+
+            <FrameLayout
+                android:layout_width="match_parent"
+                android:background="@drawable/material_compat_toolbar_bg"
+                android:layout_height="match_parent">
+
+                <TextView
+                    android:id="@+id/notification_btn_text"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:textAlignment="center"
+                    android:textColor="@android:color/white"
+                    android:textSize="12sp"
+                    tools:ignore="UnusedAttribute"
+                    tools:text="@string/boost_notification_low_ram_btn" />
+            </FrameLayout>
+        </FrameLayout>
+    </RelativeLayout>
+</FrameLayout>

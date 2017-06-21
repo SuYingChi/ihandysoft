@@ -7,7 +7,7 @@ import android.graphics.Paint;
 import android.util.Log;
 
 import com.ihs.keyboardutils.R;
-import com.artw.lockscreen.common.CommonUtils;
+import com.ihs.keyboardutils.utils.CommonUtils;
 
 
 /**
@@ -31,7 +31,7 @@ public class WallpaperBlurUtils {
         int startY;
         int rangeHeight;
 
-        int rangeWidth = height * Utils.getPhoneWidth(context) / CommonUtils.getPhoneHeight(context);
+        int rangeWidth = height * CommonUtils.getPhoneWidth(context) / CommonUtils.getPhoneHeight(context);
         if (rangeWidth <= width) {
             rangeHeight = height * context.getResources().getDimensionPixelOffset(R.dimen.locker_toggle_height)
                     / CommonUtils.getPhoneHeight(context);

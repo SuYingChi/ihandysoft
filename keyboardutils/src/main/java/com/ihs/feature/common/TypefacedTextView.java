@@ -9,6 +9,7 @@ import android.util.AttributeSet;
 import android.widget.TextView;
 
 import com.ihs.keyboardutils.R;
+import com.ihs.keyboardutils.utils.FontUtils;
 
 public class TypefacedTextView extends TextView {
 

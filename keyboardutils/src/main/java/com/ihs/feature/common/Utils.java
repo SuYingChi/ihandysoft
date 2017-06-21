@@ -1495,4 +1495,59 @@ public final class Utils {
         return uninstalledApps.contains(pkgName);
     }
 
+
+    public static boolean setMobileDataStatus(Context context, boolean enabled) {
+        if (CompatUtils.IS_HUAWEI_DEVICE && isWifiEnabled()) {
+            return false;
+        }
+        ConnectivityManager connectivityManager;
+        Class connectivityManagerClz;
+        try {
+            connectivityManager = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
+            connectivityManagerClz = connectivityManager.getClass();
+            @SuppressWarnings("unchecked")
+            Method method = connectivityManagerClz.getMethod("setMobileDataEnabled", boolean.class);
+            // Asynchronous invocation
+            method.invoke(connectivityManager, enabled);
+        } catch (IllegalArgumentException e) {
+            e.printStackTrace();
+            return false;
+        } catch (IllegalAccessException e) {
+            e.printStackTrace();
+            return false;
+        } catch (NoSuchMethodException e) {
+            e.printStackTrace();
+            return false;
+        } catch (InvocationTargetException e) {
+            e.printStackTrace();
+            return false;
+        }
+        return true;
+    }
+
+    public static boolean getMobileDataStatus(Context context) {
+        ConnectivityManager connectivityManager = (ConnectivityManager) context.getApplicationContext().getSystemService(Context.CONNECTIVITY_SERVICE);
+        String methodName = "getMobileDataEnabled";
+        Class cmClass = connectivityManager.getClass();
+        Boolean isOpen;
+
+        try {
+            @SuppressWarnings("unchecked")
+            Method method = cmClass.getMethod(methodName);
+            isOpen = (Boolean) method.invoke(connectivityManager);
+        } catch (IllegalArgumentException e) {
+            e.printStackTrace();
+            return false;
+        } catch (IllegalAccessException e) {
+            e.printStackTrace();
+            return false;
+        } catch (NoSuchMethodException e) {
+            e.printStackTrace();
+            return false;
+        } catch (InvocationTargetException e) {
+            e.printStackTrace();
+            return false;
+        }
+        return isOpen;
+    }
 }

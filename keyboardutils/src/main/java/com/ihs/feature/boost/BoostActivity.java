@@ -15,6 +15,7 @@ import com.ihs.commons.utils.HSLog;
 import com.ihs.feature.boost.animation.BlackHoleLayout;
 import com.ihs.feature.common.LauncherFiles;
 import com.ihs.feature.common.PreferenceHelper;
+import com.ihs.feature.common.ScreenStatusReceiver;
 import com.ihs.keyboardutils.R;
 
 import static android.content.IntentFilter.SYSTEM_HIGH_PRIORITY;

@@ -6,9 +6,9 @@ import android.view.View;
 import android.widget.CompoundButton;
 
 import com.artw.lockscreen.common.BaseSettingsActivity;
-import com.artw.lockscreen.common.ViewUtils;
 import com.ihs.app.analytics.HSAnalytics;
 import com.ihs.chargingscreen.activity.ChargingScreenActivity;
+import com.ihs.feature.common.ViewUtils;
 import com.ihs.keyboardutils.R;
 
 public class LockerSettingsActivity extends BaseSettingsActivity

@@ -11,14 +11,15 @@ import android.view.View;
 import android.view.WindowManager;
 import android.view.WindowManager.LayoutParams;
 
+import com.acb.adadapter.AcbNativeAd;
 import com.ihs.app.framework.HSApplication;
 import com.ihs.commons.utils.HSLog;
 import com.ihs.feature.boost.BoostSource;
 import com.ihs.feature.boost.BoostTip;
 import com.ihs.feature.boost.BoostType;
 import com.ihs.feature.common.ConcurrentUtils;
-import com.ihs.feature.tip.LauncherTipManager;
 import com.ihs.feature.common.Thunk;
+import com.ihs.feature.tip.LauncherTipManager;
 import com.ihs.keyboardutils.utils.CommonUtils;
 
 public class LauncherFloatWindowManager extends FloatWindowManager {
@@ -92,14 +93,14 @@ public class LauncherFloatWindowManager extends FloatWindowManager {
 
     //region Permission Guides
 
-    public void showBoostTip(Context context, BoostType type, int boostedPercentage, BoostSource source) {
+    public void showBoostTip(Context context, BoostType type, int boostedPercentage, BoostSource source, AcbNativeAd ad) {
         if (!mEnabled) {
             HSLog.d("FloatWindowManager", "Disable at now");
             return;
         }
         try {
             if (mBoostTip == null) {
-                mBoostTip = new BoostTip(context, type, boostedPercentage, source);
+                mBoostTip = new BoostTip(context, type, boostedPercentage, source, ad);
                 if (mBoostTipWindowParams == null) {
                     mBoostTipWindowParams = getDefaultLayoutParams();
                     mBoostTipWindowParams.y = CommonUtils.pxFromDp(80);

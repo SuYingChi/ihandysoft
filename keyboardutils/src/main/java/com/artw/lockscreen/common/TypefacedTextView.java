@@ -8,6 +8,7 @@ import android.graphics.drawable.Drawable;
 import android.util.AttributeSet;
 
 import com.ihs.keyboardutils.R;
+import com.ihs.keyboardutils.utils.FontUtils;
 
 
 public class TypefacedTextView extends android.support.v7.widget.AppCompatTextView {

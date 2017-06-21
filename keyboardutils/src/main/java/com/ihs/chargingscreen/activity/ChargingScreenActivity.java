@@ -40,6 +40,7 @@ import android.widget.PopupWindow;
 import android.widget.TextView;
 
 import com.acb.expressads.AcbExpressAdView;
+import com.artw.lockscreen.LockerUtils;
 import com.ihs.app.framework.HSApplication;
 import com.ihs.charging.HSChargingManager;
 import com.ihs.charging.HSChargingManager.HSChargingState;
@@ -73,7 +74,6 @@ import static android.view.WindowManager.LayoutParams.FLAG_TRANSLUCENT_NAVIGATIO
 import static android.view.WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS;
 import static android.view.WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN;
 import static com.ihs.chargingscreen.HSChargingScreenManager.getChargingState;
-import static com.ihs.chargingscreen.activity.DismissKeyguradActivity.isKeyguardSecure;
 
 /**
  * Created by zhixiangxiao on 5/4/16.
@@ -221,7 +221,7 @@ public class ChargingScreenActivity extends Activity {
 
         window.addFlags(FLAG_SHOW_WHEN_LOCKED);
         window.setSoftInputMode(SOFT_INPUT_STATE_ALWAYS_HIDDEN);
-        if (!isKeyguardSecure(this, false)) {
+        if (!LockerUtils.isKeyguardSecure(this, false)) {
             window.addFlags(FLAG_DISMISS_KEYGUARD);
         }
 

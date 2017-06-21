@@ -1,4 +1,5 @@
 apply plugin: 'com.android.library'
+apply plugin: 'me.tatarka.retrolambda'
 
 android {
     compileSdkVersion 25
@@ -21,9 +22,11 @@ android {
     lintOptions {
         abortOnError false
     }
+
+
     compileOptions {
-        targetCompatibility 1.8
-        sourceCompatibility 1.8
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
     }
 }
 final LIB_DEVICE_VERSION = '.gm:4.1.+'
@@ -62,6 +65,7 @@ dependencies {
         transitive = false //由于AppFramework中也包含Flurry, 所以需要在这里去除引用传递
     }
 
+    compile files('../libs/ihs/libFlashlight/libFlashlight.jar')
     compile("com.android.support:support-v4:${rootProject.ext.supportVersion}")
     compile("com.android.support:gridlayout-v7:${rootProject.ext.supportVersion}")
     compile("com.android.support:support-vector-drawable:${rootProject.ext.supportVersion}")

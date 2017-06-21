@@ -92,7 +92,7 @@ public class LauncherTipManager {
 
     public class TipEnvironment {
         public Context context;
-        TipType requestShowTipType;
+        public TipType requestShowTipType;
         public Object[] extras;
         int returnToLauncherCount;
         int finishBoostCount;

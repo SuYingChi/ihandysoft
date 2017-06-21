@@ -1,8 +1,10 @@
 package com.ihs.feature.boost;
 
+import com.acb.adadapter.AcbNativeAd;
 import com.ihs.feature.common.ITipInfo;
 import com.ihs.feature.tip.LauncherTipManager;
 import com.ihs.feature.ui.LauncherFloatWindowManager;
+
 
 public class BoostTipInfo implements ITipInfo {
     @Override
@@ -22,7 +24,8 @@ public class BoostTipInfo implements ITipInfo {
     @Override
     public void show(LauncherTipManager.TipEnvironment env) {
         if (isValidExtras(env)) {
-            LauncherFloatWindowManager.getInstance().showBoostTip(env.context, (BoostType) env.extras[0], (Integer) env.extras[1], (BoostSource) env.extras[2]);
+            LauncherFloatWindowManager.getInstance().showBoostTip(env.context, (BoostType) env.extras[0],
+                    (Integer) env.extras[1], (BoostSource) env.extras[2], (AcbNativeAd) env.extras[3]);
         } else {
             LauncherTipManager.getInstance().notifyDismiss();
         }
@@ -36,8 +39,10 @@ public class BoostTipInfo implements ITipInfo {
     @Override
     public boolean isValidExtras(LauncherTipManager.TipEnvironment env) {
         if (env.requestShowTipType == getTipType()) {
-            if (env.extras != null && env.extras.length >= 2) {
-                if (env.extras[0] instanceof BoostType && env.extras[1] instanceof Integer) {
+            if (env.extras != null && env.extras.length >= 4) {
+                if (env.extras[0] instanceof BoostType && env.extras[1] instanceof Integer
+                        && env.extras[2] instanceof BoostSource
+                        && (env.extras[3] == null || env.extras[3] instanceof AcbNativeAd)) {
                     return true;
                 }
             }

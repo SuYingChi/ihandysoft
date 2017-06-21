@@ -12,12 +12,12 @@ import android.widget.Toast;
 
 import com.artw.lockscreen.common.NavUtils;
 import com.ihs.app.analytics.HSAnalytics;
-import com.ihs.app.framework.HSApplication;
 import com.ihs.commons.utils.HSLog;
+import com.ihs.feature.boost.auto.LockHelper;
 import com.ihs.feature.boost.plus.BoostPlusSettingsActivity;
+import com.ihs.feature.common.CompatUtils;
 import com.ihs.feature.ui.DefaultButtonDialog2;
 import com.ihs.keyboardutils.R;
-import com.ihs.keyboardutils.permission.PermissionUtils;
 import com.ihs.keyboardutils.utils.ToastUtils;
 
 public class BoostPlusAutoCleanTip extends DefaultButtonDialog2 {
@@ -63,19 +63,6 @@ public class BoostPlusAutoCleanTip extends DefaultButtonDialog2 {
         } else if( mSubType == SETTING_LOCK_INSTANTLY) {
             openSecureSettings(context);
             LockHelper.startObservingLockInstantly(context, new Runnable() {
-                @Override
-                public void run() {
-                    startThisActivity(context);
-                }
-            });
-        } else if (mSubType == SETTING_DEVICE) {
-            NavUtils.startDeviceAdminSettings(v.getContext());
-        } else if (mSubType == SETTING_ACCESSIBILITY) {
-            SettingLauncherPadActivity.startSystemSettingsActivity(HSApplication.getContext(), SettingLauncherPadActivity.ACCESSIBILITY_SETTINGS_PERMISSION);
-            HSAnalytics.logEvent("BoostPlus_Diagram_Show");
-            LauncherTipManager.getInstance().showTip(context, LauncherTipManager.TipType.TURN_ON_ACCESSIBILITY_GUIDE);
-
-            PermissionUtils.startObservingAccessibilityPermission(new Runnable() {
                 @Override
                 public void run() {
                     startThisActivity(context);

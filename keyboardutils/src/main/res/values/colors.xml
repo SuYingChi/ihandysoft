@@ -131,4 +131,6 @@
     <color name="notification_red">#f84321</color>
     <color name="permission_guide_text_gray">#757575</color>
     <color name="white" >#fff</color>
+    <color name="button_purple">#6c40db</color>
+    <color name="button_purple_pressed">#5d37bc</color>
 </resources>
