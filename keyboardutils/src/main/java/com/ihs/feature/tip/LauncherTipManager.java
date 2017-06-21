@@ -13,14 +13,12 @@ import com.ihs.feature.boost.BoostConditionManager;
 import com.ihs.feature.boost.BoostSource;
 import com.ihs.feature.boost.BoostTipInfo;
 import com.ihs.feature.boost.BoostType;
-import com.ihs.feature.common.DeviceManager;
 import com.ihs.feature.common.ITipInfo;
 import com.ihs.feature.common.LauncherConstants;
 import com.ihs.feature.common.LauncherFiles;
 import com.ihs.feature.common.NeedBoostTipInfo;
 import com.ihs.feature.common.PreferenceHelper;
 import com.ihs.feature.common.Thunk;
-import com.ihs.feature.common.Utils;
 import com.ihs.feature.ui.LauncherFloatWindowManager;
 import com.ihs.keyboardutils.utils.CommonUtils;
 
@@ -478,17 +476,17 @@ public class LauncherTipManager {
             return;
         }
         // BoostActivity will finish self after boost animation, so should not display dialogs.
-        if (CommonUtils.ATLEAST_JB_MR2 && !Utils.isDefaultLauncher()
-                && boostedPercentage >= BoostConditionManager.EFFECTIVE_BOOST_PERCENTAGE_THRESHOLD) {
-            LauncherTipManager.ResultType retType = showTip(context,
-                    LauncherTipManager.TipType.SET_AS_DEFAULT_BOOSTED,
-                    (long) (((float) boostedPercentage / 100) * DeviceManager.getInstance().getTotalRam()));
-            if (retType != LauncherTipManager.ResultType.SHOW) {
-                showBoostTip(context, source, type, boostedPercentage, ad);
-            }
-        } else {
+//        if (CommonUtils.ATLEAST_JB_MR2 && !Utils.isDefaultLauncher()
+//                && boostedPercentage >= BoostConditionManager.EFFECTIVE_BOOST_PERCENTAGE_THRESHOLD) {
+//            LauncherTipManager.ResultType retType = showTip(context,
+//                    LauncherTipManager.TipType.SET_AS_DEFAULT_BOOSTED,
+//                    (long) (((float) boostedPercentage / 100) * DeviceManager.getInstance().getTotalRam()));
+//            if (retType != LauncherTipManager.ResultType.SHOW) {
+//                showBoostTip(context, source, type, boostedPercentage, ad);
+//            }
+//        } else {
             showBoostTip(context, source, type, boostedPercentage, ad);
-        }
+//        }
     }
 
     private void showBoostTip(Context context, BoostSource source, BoostType type, int boostedPercentage, AcbNativeAd ad) {
