@@ -2,6 +2,8 @@ package com.ihs.keyboardutils.iap;
 
 import com.ihs.commons.config.HSConfig;
 import com.ihs.commons.notificationcenter.HSGlobalNotificationCenter;
+import com.ihs.commons.notificationcenter.INotificationObserver;
+import com.ihs.commons.utils.HSBundle;
 import com.ihs.commons.utils.HSLog;
 import com.ihs.iap.HSIAPManager;
 
@@ -22,6 +24,8 @@ public class RemoveAdsManager {
     private boolean isPurchasingRemoveAds = false;
     private boolean needsServerVerification = false;
 
+    private String removeAdsIapId;
+
     public static RemoveAdsManager getInstance() {
 		if(instance == null) {
 			synchronized(RemoveAdsManager.class) {
@@ -33,6 +37,16 @@ public class RemoveAdsManager {
 		return instance;
     }
 
+    private RemoveAdsManager() {
+        removeAdsIapId = HSConfig.optString("", "Application", "RemoveAds", "iapID");
+        HSGlobalNotificationCenter.addObserver(HSConfig.HS_NOTIFICATION_CONFIG_CHANGED, new INotificationObserver() {
+            @Override
+            public void onReceive(String s, HSBundle hsBundle) {
+                removeAdsIapId = HSConfig.optString("", "Application", "RemoveAds", "iapID");
+            }
+        });
+    }
+
     /**
      * 设置去广告购买是否需要服务器验证， 默认不需要
      * @param needsServerVerification bool
@@ -42,7 +56,7 @@ public class RemoveAdsManager {
     }
 
     public boolean isRemoveAdsPurchased() {
-        return HSIAPManager.getInstance().hasOwnedSku(getRemoveAdsIapId());
+        return HSIAPManager.getInstance().hasOwnedSku(removeAdsIapId);
     }
 
     public void purchaseRemoveAds() {
@@ -56,7 +70,7 @@ public class RemoveAdsManager {
         }
         isPurchasingRemoveAds = true;
 
-        HSIAPManager.getInstance().purchase(needsServerVerification ? HSIAPManager.VERIFICATION_ON_SERVER : HSIAPManager.VERIFICATION_ON_DEVICE, getRemoveAdsIapId(), new HSIAPManager.HSPurchaseListener() {
+        HSIAPManager.getInstance().purchase(needsServerVerification ? HSIAPManager.VERIFICATION_ON_SERVER : HSIAPManager.VERIFICATION_ON_DEVICE, removeAdsIapId, new HSIAPManager.HSPurchaseListener() {
             @Override
             public void onPurchaseSucceeded(String s) {
                 HSLog.d("onPurchaseSucceeded: " + s);
@@ -83,9 +97,5 @@ public class RemoveAdsManager {
                 isPurchasingRemoveAds = false;
             }
         });
-    }
-
-    public String getRemoveAdsIapId() {
-         return HSConfig.optString("", "Application", "RemoveAds", "iapID");
     }
 }
