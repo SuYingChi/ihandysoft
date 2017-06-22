@@ -23,6 +23,16 @@ import com.ihs.keyboardutils.utils.CommonUtils;
 
 public class ActivityUtils {
 
+    @TargetApi(Build.VERSION_CODES.LOLLIPOP)
+    public static void setBlueStatusBar(Activity activity) {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            Window window = activity.getWindow();
+            window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
+            window.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
+            window.setStatusBarColor(ContextCompat.getColor(activity, R.color.blue_action_bar_bg));
+        }
+    }
+
     public static Toolbar configSimpleAppBar(AppCompatActivity activity, @StringRes int titleResId) {
         return configSimpleAppBar(activity, activity.getString(titleResId));
     }
@@ -51,6 +61,14 @@ public class ActivityUtils {
         return toolbar;
     }
 
+    public static void configSimpleAppBar(AppCompatActivity activity, String title, int bgColor) {
+        configSimpleAppBar(activity, title, bgColor, true);
+    }
+
+    public static void configSimpleAppBar(AppCompatActivity activity, String title, int bgColor,
+                                          boolean containsBackButton) {
+        configSimpleAppBar(activity, title, Color.WHITE, bgColor, containsBackButton);
+    }
 
     public static void configSimpleAppBar(AppCompatActivity activity, String title, int titleColor, int bgColor,
                                           boolean containsBackButton) {
@@ -96,15 +114,6 @@ public class ActivityUtils {
         }
     }
 
-    public static void configSimpleAppBar(AppCompatActivity activity, String title, int bgColor) {
-        configSimpleAppBar(activity, title, bgColor, true);
-    }
-
-    public static void configSimpleAppBar(AppCompatActivity activity, String title, int bgColor,
-                                          boolean containsBackButton) {
-        configSimpleAppBar(activity, title, Color.WHITE, bgColor, containsBackButton);
-    }
-
     public static void configSimpleAppBar(AppCompatActivity activity, String title, int bgColor, int logoResource) {
         View container = activity.findViewById(R.id.action_bar);
         assert container != null;
@@ -145,13 +154,24 @@ public class ActivityUtils {
     }
 
 
+
     @TargetApi(Build.VERSION_CODES.LOLLIPOP)
-    public static void setBlueStatusBar(Activity activity) {
+    public static void setWhiteStatusBar(Activity activity) {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             Window window = activity.getWindow();
             window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
             window.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
-            window.setStatusBarColor(ContextCompat.getColor(activity, R.color.blue_action_bar_bg));
+            window.setStatusBarColor(ContextCompat.getColor(activity, android.R.color.white));
+        }
+    }
+
+    @TargetApi(Build.VERSION_CODES.LOLLIPOP)
+    public static void setCustomColorStatusBar(Activity activity, int color) {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            Window window = activity.getWindow();
+            window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
+            window.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
+            window.setStatusBarColor(color);
         }
     }
 
@@ -213,6 +233,14 @@ public class ActivityUtils {
                     navigationBarView.setVisibility(View.VISIBLE);
                 }
             }
+        }
+    }
+
+    public static void hideSystemUi(Activity activity) {
+        if (Build.VERSION.SDK_INT >= 19) {
+            View decorView = activity.getWindow().getDecorView();
+            int uiOptions = View.SYSTEM_UI_FLAG_HIDE_NAVIGATION | View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY | View.SYSTEM_UI_FLAG_FULLSCREEN;
+            decorView.setSystemUiVisibility(uiOptions);
         }
     }
 }

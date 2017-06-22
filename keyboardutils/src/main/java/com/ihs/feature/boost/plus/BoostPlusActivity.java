@@ -935,7 +935,8 @@ public class BoostPlusActivity extends BasePermissionActivity
 
     @Override
     public void showAuthorizeDialog(long sizeToClean) {
-        if (BoostPlusUtils.hasTurnOnAccessibilityDialogShowed()) {
+        //这里本来应该请求Accessibility授权
+        if (true || BoostPlusUtils.hasTurnOnAccessibilityDialogShowed()) {
             showCleanAnimationDialog(BoostPlusCleanDialog.CLEAN_TYPE_NORMAL);
             return;
         }

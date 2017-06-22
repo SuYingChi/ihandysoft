@@ -48,6 +48,11 @@ public class FloatWindowManager {
     private volatile static FloatWindowManager sInstance;
     public static boolean isRemoveDialogFrozen;
 
+
+    protected FloatWindowDialog createDialog(Context context, Type type, Object... extra) {
+        return null;
+    }
+
     public static FloatWindowManager getInstance() {
         if (sInstance == null) {
             Class<?> klass = null;
@@ -116,10 +121,6 @@ public class FloatWindowManager {
             e.printStackTrace();
             HSLog.e("Error creating dialog: " + e.getMessage());
         }
-    }
-
-    protected FloatWindowDialog createDialog(Context context, Type type, Object... extra) {
-        return null;
     }
 
     public FloatWindowDialog getDialog(Type type) {

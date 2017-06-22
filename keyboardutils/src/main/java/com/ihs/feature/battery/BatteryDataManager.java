@@ -21,8 +21,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import static com.facebook.FacebookSdk.getApplicationContext;
-
 public class BatteryDataManager {
 
     private String recentOpenedPackages;
@@ -373,7 +371,7 @@ public class BatteryDataManager {
 //        }
         runningPackageList = getRunningPackageList(true);
         List<BatteryAppInfo> usageInfoList = new ArrayList<>();
-        PackageManager packageManager = getApplicationContext().getPackageManager();
+        PackageManager packageManager = HSApplication.getContext().getPackageManager();
         for (String pkgName : runningPackageList) {
             if (!TextUtils.isEmpty(pkgName)) {
                 ApplicationInfo applicationInfo = null;

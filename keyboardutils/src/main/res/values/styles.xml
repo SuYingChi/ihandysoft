@@ -299,4 +299,7 @@
         <item name="android:colorBackgroundCacheHint">@null</item>
         <item name="android:windowNoTitle">true</item>
     </style>
+
+    <style name="Theme" parent="@style/BaseWallpaperTheme" />
+
 </resources>

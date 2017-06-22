@@ -6,9 +6,11 @@ import android.animation.ArgbEvaluator;
 import android.animation.ObjectAnimator;
 import android.animation.ValueAnimator;
 import android.annotation.SuppressLint;
+import android.content.BroadcastReceiver;
 import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.content.ServiceConnection;
 import android.graphics.Color;
 import android.graphics.Typeface;
@@ -40,6 +42,7 @@ import android.widget.TextView;
 import com.artw.lockscreen.common.NavUtils;
 import com.ihs.aidl.ISubAdService;
 import com.ihs.app.analytics.HSAnalytics;
+import com.ihs.app.framework.HSApplication;
 import com.ihs.charging.HSChargingManager;
 import com.ihs.chargingscreen.utils.ChargingPrefsUtil;
 import com.ihs.commons.utils.HSLog;
@@ -52,6 +55,7 @@ import com.ihs.feature.common.BaseCenterActivity;
 import com.ihs.feature.common.CustomRootView;
 import com.ihs.feature.common.DeviceManager;
 import com.ihs.feature.common.LauncherAnimUtils;
+import com.ihs.feature.common.ScreenStatusReceiver;
 import com.ihs.feature.common.SubAdService;
 import com.ihs.feature.common.Utils;
 import com.ihs.feature.common.VectorCompat;
@@ -65,6 +69,7 @@ import com.ihs.keyboardutils.utils.LauncherAnimationUtils;
 
 import java.util.List;
 
+import static android.content.IntentFilter.SYSTEM_HIGH_PRIORITY;
 
 
 public class BatteryActivity extends BaseCenterActivity implements View.OnClickListener {
@@ -1400,5 +1405,36 @@ public class BatteryActivity extends BaseCenterActivity implements View.OnClickL
 
     private void cancelBoost() {
         HSAppMemoryManager.getInstance().stopClean();
+    }
+
+    public static void initBattery() {
+        final IntentFilter screenFilter = new IntentFilter();
+        screenFilter.addAction(Intent.ACTION_SCREEN_OFF);
+        screenFilter.addAction(Intent.ACTION_SCREEN_ON);
+        screenFilter.setPriority(SYSTEM_HIGH_PRIORITY);
+        HSApplication.getContext().registerReceiver(new BroadcastReceiver() {
+            @Override
+            public void onReceive(Context context, Intent intent) {
+                if (intent.getAction().equals(Intent.ACTION_SCREEN_OFF)) {
+                    ScreenStatusReceiver.onScreenOff();
+                } else if (intent.getAction().equals(Intent.ACTION_SCREEN_ON)) {
+                    ScreenStatusReceiver.onScreenOn();
+                } else if (Intent.ACTION_USER_PRESENT.equals(intent.getAction())) {
+                    HSLog.d("Screen Receiver onReceiver screen present");
+//                    HSGlobalNotificationCenter.sendNotification(NotificationCondition.EVENT_UNLOCK);
+                }
+            }
+        }, screenFilter);
+
+        Intent addShortcutIntent = new Intent("com.android.launcher.action.INSTALL_SHORTCUT");
+        addShortcutIntent.putExtra("duplicate", false);
+        addShortcutIntent.putExtra(Intent.EXTRA_SHORTCUT_NAME, "battery");
+        Context context = HSApplication.getContext();
+        addShortcutIntent.putExtra(Intent.EXTRA_SHORTCUT_ICON_RESOURCE,
+                Intent.ShortcutIconResource.fromContext(context, R.drawable.boost_icon));
+        Intent launcherIntent = new Intent(Intent.ACTION_MAIN);
+        launcherIntent.setClass(context, BatteryActivity.class);
+        addShortcutIntent.putExtra(Intent.EXTRA_SHORTCUT_INTENT, launcherIntent);
+        context.sendBroadcast(addShortcutIntent);
     }
 }
