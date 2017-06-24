@@ -1,9 +1,11 @@
 package com.ihs.keyboardutils.utils;
 
+import com.ihs.app.framework.HSApplication;
 import com.ihs.chargingscreen.utils.FeatureDelayReleaseUtil;
 import com.ihs.commons.config.HSConfig;
 import com.ihs.commons.countrycode.HSCountryCodeManager;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.TimeZone;
@@ -44,7 +46,15 @@ public final class KCFeatureRestrictionConfig {
 
         int hourOffset = TimeZone.getDefault().getRawOffset() / 3600000;
 
-        if ((timeZoneBlacklist != null && timeZoneBlacklist.contains(hourOffset)) || hourOffset == 8) {
+        if (!HSApplication.isDebugging) {
+            // 在实际 Release 中，将+8区加入限制名单
+            if (timeZoneBlacklist == null) {
+                timeZoneBlacklist = new ArrayList<>();
+            }
+            timeZoneBlacklist.add(8);
+        }
+
+        if ((timeZoneBlacklist != null && timeZoneBlacklist.contains(hourOffset))) {
             return true;
         }
 
