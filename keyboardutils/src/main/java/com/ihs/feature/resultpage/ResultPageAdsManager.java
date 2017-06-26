@@ -8,8 +8,10 @@ import com.ihs.commons.utils.HSError;
 import com.ihs.commons.utils.HSLog;
 import com.ihs.feature.common.AdAnalytics;
 import com.ihs.feature.common.AdPlacements;
+import com.ihs.keyboardutils.R;
 
 import java.util.List;
+
 
 public class ResultPageAdsManager {
 
@@ -34,7 +36,7 @@ public class ResultPageAdsManager {
     }
 
     public void preloadAd() {
-        AcbNativeAdLoader loader = new AcbNativeAdLoader(HSApplication.getContext(), AdPlacements.RESULT_PAGE_AD_PLACEMENT_NAME);
+        AcbNativeAdLoader loader = new AcbNativeAdLoader(HSApplication.getContext(), HSApplication.getContext().getString(R.string.ad_placement_result_page));
         loader.load(1, new AcbNativeAdLoader.AcbNativeAdLoadListener() {
             @Override
             public void onAdReceived(AcbNativeAdLoader acbNativeAdLoader, List<AcbNativeAd> list) {

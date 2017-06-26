@@ -18,9 +18,7 @@ public class AdAnalytics {
          **/
 
         // Events that uses AcbNativeAdAnalytics#logAppViewEvent directly
-        map.put(AdPlacements.AD_PLACEMENT_NAME_CHARGING_SCREEN, "");
         // boost ad, boost has been removed and this placement CAN NOT be used by others
-        map.put(AdPlacements.LOCKER_NATIVE_AD_PLACEMENT_NAME, "");
         // lucky ad, lucky has been removed and this placement CAN NOT be used by others
         // boost plus ad, boost plus has been removed and this placement CAN NOT be used by others
         // battery ad, battery has been removed and this placement CAN NOT be used by others
@@ -40,20 +38,11 @@ public class AdAnalytics {
         // folder close ad, folder close has been removed and this placement CAN NOT be used by others
         // wallpaper preview ad, wallpaper preview has been removed and this placement CAN NOT be used by others
         // news ad, news has been removed and this placement CAN NOT be used by others
-        map.put(AdPlacements.SHARED_POOL_NATIVE_AD_FLURRY_KEY_VIEW_IN_APP_RESULT_PAGE, "Launcher2");
         // app drawer and folder ad, app drawer and folder has been removed and this placement CAN NOT be used by others
 
         // widget, widget has been removed and this placement CAN NOT be used by others
         // search1, search1 has been removed and this placement CAN NOT be used by others
         // search news ad, search news has been removed and this placement CAN NOT be used by others
-        map.put(AdPlacements.WALLPAPER_THEME_EXIT_AD_PLACEMENT_NAME, "Launcher3");
-        map.put(AdPlacements.WALLPAPER_NATIVE_AD_PLACEMENT_NAME, "Launcher3");
-        map.put(AdPlacements.MOMENT_NATIVE_AD_PLACEMENT_HUB, "Launcher3");
-        map.put(AdPlacements.FOLDER_ALL_APPS_AD_PLACEMENT_NAME, "Launcher3");
-
-        map.put(AdPlacements.ALL_APPS_GIFT_AD_PLACEMENT_NAME, "Launcher4");
-        map.put(AdPlacements.NEARBY_NATIVE_AD_PLACEMENT_NAME, "Launcher4");
-
     }
 
     /**

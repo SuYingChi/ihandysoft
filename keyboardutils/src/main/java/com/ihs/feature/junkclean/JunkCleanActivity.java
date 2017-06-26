@@ -267,16 +267,17 @@ public class JunkCleanActivity extends BasePermissionActivity {
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR2) {
-//            if (NotificationCleanerUtil.isJunkCleanerSettingsNotificationOpened()) {
-//                getMenuInflater().inflate(R.menu.boost_plus, menu);
-//            } else {
-                getMenuInflater().inflate(R.menu.boost_plus_new, menu);
-//            }
-            return true;
-        } else {
-            return false;
-        }
+//        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR2) {
+////            if (NotificationCleanerUtil.isJunkCleanerSettingsNotificationOpened()) {
+////                getMenuInflater().inflate(R.menu.boost_plus, menu);
+////            } else {
+////                getMenuInflater().inflate(R.menu.boost_plus_new, menu);
+////            }
+//            return true;
+//        } else {
+//            return false;
+//        }
+        return false;
     }
 
     @Override
@@ -616,6 +617,10 @@ public class JunkCleanActivity extends BasePermissionActivity {
         for (JunkWrapper junkWrapper : junkWrappers) {
             switch (junkWrapper.getCategory()) {
                 case SystemJunkWrapper.SYSTEM_JUNK:
+                    if(true){
+                        break;
+                    }
+
                     JunkDetailItem systemJunkItem = new JunkDetailItem(junkWrapper);
 
                     if (JunkCleanUtils.shouldForceCleanSystemAppCache() && !PermissionUtils.isAccessibilityGranted()) {
@@ -704,7 +709,7 @@ public class JunkCleanActivity extends BasePermissionActivity {
         boolean isNetworkAvailable = Utils.isNetworkAvailable(-1);
         boolean isApkInstalled = CommonUtils.isPackageInstalled(mSecurityPackage);
         boolean isSecurityBannerShowCountLimit = JunkCleanUtils.isSecurityBannerShowCountLimit();
-        boolean shouldSecurityItemVisible = isNetworkAvailable && !isApkInstalled && !isSecurityBannerShowCountLimit;
+        boolean shouldSecurityItemVisible = false;//isNetworkAvailable && !isApkInstalled && !isSecurityBannerShowCountLimit;
         HSLog.d(TAG, "getListItems **** isNetworkAvailable = " + isNetworkAvailable + " isApkInstalled = " + isApkInstalled + " isSecurityBannerShowCountLimit = " + isSecurityBannerShowCountLimit + " shouldSecurityItemVisible = " + shouldSecurityItemVisible);
         if (shouldSecurityItemVisible) {
             final String eventLogParam = "SecurityBanner";
@@ -721,10 +726,10 @@ public class JunkCleanActivity extends BasePermissionActivity {
             }
         }
 
-        boolean shouldForceCleanSystemAppCache = JunkCleanUtils.shouldForceCleanSystemAppCache();
+        boolean shouldForceCleanSystemAppCache = false;// JunkCleanUtils.shouldForceCleanSystemAppCache();
         boolean isAccessibilityGranted = PermissionUtils.isAccessibilityGranted();
         HSLog.d(TAG, "getListItems ^^^ shouldForceCleanSystemAppCache = " + shouldForceCleanSystemAppCache + " isAccessibilityGranted = " + isAccessibilityGranted);
-        if (shouldForceCleanSystemAppCache && !isAccessibilityGranted) {
+        if (false) {
             if (!shouldSecurityItemVisible) {
                 long hiddenCacheCount = systemSubCategory.getSize();
                 HSLog.d(TAG, "getListItems hiddenCacheCount = " + hiddenCacheCount);

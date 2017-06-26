@@ -426,6 +426,7 @@ public class BoostPlusActivity extends BasePermissionActivity
         } else {
             boolean isRemoveDialog = false;
         }
+        super.onBackPressed();
     }
 
     //endregion

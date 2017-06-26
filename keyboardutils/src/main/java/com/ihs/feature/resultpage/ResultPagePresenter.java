@@ -13,7 +13,6 @@ import com.ihs.feature.common.PreferenceHelper;
 import com.ihs.feature.common.Utils;
 import com.ihs.feature.resultpage.data.CardData;
 import com.ihs.feature.resultpage.data.ResultConstants;
-import com.ihs.keyboardutils.BuildConfig;
 import com.ihs.keyboardutils.permission.PermissionUtils;
 
 import java.util.ArrayList;
@@ -28,7 +27,7 @@ public class ResultPagePresenter implements ResultPageContracts.Presenter {
     public static final String TAG = ResultPagePresenter.class.getSimpleName();
 
     @SuppressWarnings("PointlessBooleanExpression")
-    private static final boolean DEBUG_ALL_CARDS = false && BuildConfig.DEBUG;
+    private static final boolean DEBUG_ALL_CARDS = true;// && BuildConfig.DEBUG;
 
     private static final String PREF_KEY_CARDS_SHOW_COUNT = "result_page_cards_show_count";
     private static final String PREF_KEY_SHOW_COUNT_PREFIX = "result_page_show_count_";
