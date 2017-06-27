@@ -23,6 +23,7 @@ import com.ihs.keyboardutils.utils.KCAnalyticUtil;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 
@@ -83,9 +84,12 @@ public class KCNotificationManager {
                 }
             }
         });
-        refreshConfig();
+//        refreshConfig();
+        readNextEvent();
         checkNextEventTime();
     }
+
+
 
     public void scheduleNotify() {
         if (!HSPreferenceHelper.getDefault().getBoolean(PREFS_NOTIFICATION_ENABLE, true)) {
@@ -115,6 +119,33 @@ public class KCNotificationManager {
 
             }
         }
+    }
+
+    private void readNextEvent() {
+         List<Map<?,?>> configs = null;
+        try {
+            configs = (List<Map<?, ?>>) HSConfig.getList("Application", "LocalNotifications");
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+        if (configs == null) {
+            HSLog.e("没有配置本地提醒");
+            return;
+        }
+
+        for (Map<?, ?> config : configs) {
+            for (Map.Entry<String, ?> entry : config.entrySet()) {
+                String eventType = entry.getKey();
+                try {
+                    Map<String, Object> value = (Map<String, Object>) entry.getValue();
+                    NotificationBean bean = new NotificationBean(value);
+                    bean.setEvent(eventType);
+                } catch (Exception e) {
+                    HSLog.e("wrong config for ==> " + eventType);
+                }
+            }
+        }
+
     }
 
     private void refreshConfig() {
