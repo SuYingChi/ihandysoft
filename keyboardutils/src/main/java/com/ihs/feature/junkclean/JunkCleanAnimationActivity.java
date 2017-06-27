@@ -272,13 +272,13 @@ public class JunkCleanAnimationActivity extends BasePermissionActivity {
                     return;
                 }
 
-                if (mShouldSecurityItemVisible) {
-                    showSecurityBottomDialog();
-                } else if (mShouldPowerfulCleanItemVisible) {
-                    showPowerfulCleanBottomDialog();
-                } else {
+//                if (mShouldSecurityItemVisible) {
+//                    showSecurityBottomDialog();
+//                } else if (mShouldPowerfulCleanItemVisible) {
+//                    showPowerfulCleanBottomDialog();
+//                } else {
                     startToResultPageActivity();
-                }
+//                }
             }
         });
         animatorSet.playTogether(colorAnimator, mJunkSizeAnimator);
