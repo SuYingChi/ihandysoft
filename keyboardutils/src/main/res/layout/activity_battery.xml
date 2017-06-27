@@ -293,6 +293,7 @@
 
                     <android.support.v7.widget.AppCompatImageView
                         android:id="@+id/mode_menu_iv"
+                        android:visibility="gone"
                         android:layout_width="wrap_content"
                         android:layout_height="match_parent"
                         android:background="?attr/selectableItemBackground"
@@ -302,6 +303,7 @@
 
                     <android.support.v7.widget.AppCompatImageView
                         android:id="@+id/rank_menu_iv"
+                        android:visibility="gone"
                         android:layout_width="wrap_content"
                         android:layout_height="match_parent"
                         android:background="?attr/selectableItemBackground"
