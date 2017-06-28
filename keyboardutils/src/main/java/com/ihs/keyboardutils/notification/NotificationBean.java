@@ -24,7 +24,6 @@ public class NotificationBean implements Comparable<NotificationBean> {
                 ", interval=" + interval +
                 ", message=" + message +
                 ", title='" + title + '\'' +
-                ", event='" + event + '\'' +
                 ", iconUrl='" + iconUrl + '\'' +
                 ", bgUrl='" + bgUrl + '\'' +
                 ", name='" + name + '\'' +
@@ -38,11 +37,71 @@ public class NotificationBean implements Comparable<NotificationBean> {
     private int interval = 0;
     private List<String> message; //随机出其中一个描述
     private String title = "";
-    private String event = "";
     private String iconUrl = "";
     private String bgUrl = "";
     private String name = ""; // 用于匹配是否已下载的对象
     private String actionType = ""; //跳转对象类型
+
+    public void setPriority(int priority) {
+        this.priority = priority;
+    }
+
+    public void setMaxShowCount(int maxShowCount) {
+        this.maxShowCount = maxShowCount;
+    }
+
+    public void setInterval(int interval) {
+        this.interval = interval;
+    }
+
+    public void setMessage(List<String> message) {
+        this.message = message;
+    }
+
+    public void setTitle(String title) {
+        this.title = title;
+    }
+
+    public String getIconUrl() {
+        return iconUrl;
+    }
+
+    public void setIconUrl(String iconUrl) {
+        this.iconUrl = iconUrl;
+    }
+
+    public String getBgUrl() {
+        return bgUrl;
+    }
+
+    public void setBgUrl(String bgUrl) {
+        this.bgUrl = bgUrl;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public String getActionType() {
+        return actionType;
+    }
+
+    public void setActionType(String actionType) {
+        this.actionType = actionType;
+    }
+
+    public int getPushTime() {
+        return pushTime;
+    }
+
+    public void setPushTime(int pushTime) {
+        this.pushTime = pushTime;
+    }
+
     private int pushTime; //每天有不同的时间
 
 
@@ -133,12 +192,7 @@ public class NotificationBean implements Comparable<NotificationBean> {
         return o.getPriority() - priority;
     }
 
-
-    public String getEvent() {
-        return event;
-    }
-
-    public void setEvent(String event) {
-        this.event = event;
+    public String getSPKey(){
+        return actionType + "," + name;
     }
 }
