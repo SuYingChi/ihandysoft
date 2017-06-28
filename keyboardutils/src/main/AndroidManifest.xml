@@ -217,6 +217,8 @@
             android:screenOrientation="portrait"
             android:taskAffinity=".cpu.cooler"
             android:theme="@style/Theme" />
+
+        <receiver android:name="com.ihs.feature.notification.NotificationReceiver"/>
     </application>
 
 </manifest>

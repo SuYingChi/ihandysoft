@@ -225,12 +225,6 @@ public class NotificationCondition implements INotificationObserver {
     void checkNextNotification() {
         switch (checkState) {
             case CHECK_STATE_START:
-                checkState = NOTIFICATION_TYPE_THEME;
-                break;
-            case NOTIFICATION_TYPE_THEME:
-                checkState = NOTIFICATION_TYPE_WEATHER;
-                break;
-            case NOTIFICATION_TYPE_WEATHER:
                 checkState = NOTIFICATION_TYPE_BATTERY;
                 break;
             case NOTIFICATION_TYPE_BATTERY:
@@ -272,9 +266,9 @@ public class NotificationCondition implements INotificationObserver {
         boolean ret = true;
         HSLog.d(TAG, "trySendNotification type == " + type);
         switch (type) {
-            case NOTIFICATION_TYPE_WEATHER:
-                ret = sendSetAsDefaultNotificationIfNeeded();
-                break;
+//            case NOTIFICATION_TYPE_WEATHER:
+//                ret = sendSetAsDefaultNotificationIfNeeded();
+//                break;
             case NOTIFICATION_TYPE_BATTERY:
                 ret = sendBatteryNotificationIfNeeded(HSApplication.getContext(),
                         DeviceManager.getInstance().getBatteryLevel(), runningApps);
