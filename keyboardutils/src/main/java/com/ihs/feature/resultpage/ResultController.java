@@ -135,11 +135,13 @@ abstract class ResultController implements View.OnClickListener {
             case AD:
             case CHARGE_SCREEN:
             case NOTIFICATION_CLEANER:
+            case CARD_VIEW:
                 initAdOrChargingScreenView(activity, layoutInflater);
                 break;
-            case CARD_VIEW:
-                initCardView(activity, layoutInflater, type);
-                break;
+//            case CARD_VIEW:
+//
+//                initCardView(activity, layoutInflater, type);
+//                break;
         }
         mResultView = ViewUtils.findViewById(activity, R.id.result_view);
     }
