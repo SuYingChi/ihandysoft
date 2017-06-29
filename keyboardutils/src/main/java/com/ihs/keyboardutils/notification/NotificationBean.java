@@ -1,7 +1,5 @@
 package com.ihs.keyboardutils.notification;
 
-import android.support.annotation.NonNull;
-
 import com.ihs.commons.utils.HSLog;
 
 import java.util.ArrayList;
@@ -13,15 +11,12 @@ import java.util.Random;
  * Created by Arthur on 17/4/29.
  */
 
-public class NotificationBean implements Comparable<NotificationBean> {
+public class NotificationBean {
 
 
     @Override
     public String toString() {
         return "NotificationBean{" +
-                "priority=" + priority +
-                ", maxShowCount=" + maxShowCount +
-                ", interval=" + interval +
                 ", message=" + message +
                 ", title='" + title + '\'' +
                 ", iconUrl='" + iconUrl + '\'' +
@@ -32,9 +27,6 @@ public class NotificationBean implements Comparable<NotificationBean> {
                 '}';
     }
 
-    private int priority = 0;
-    private int maxShowCount = Integer.MAX_VALUE;
-    private int interval = 0;
     private List<String> message; //随机出其中一个描述
     private String title = "";
     private String iconUrl = "";
@@ -42,17 +34,6 @@ public class NotificationBean implements Comparable<NotificationBean> {
     private String name = ""; // 用于匹配是否已下载的对象
     private String actionType = ""; //跳转对象类型
 
-    public void setPriority(int priority) {
-        this.priority = priority;
-    }
-
-    public void setMaxShowCount(int maxShowCount) {
-        this.maxShowCount = maxShowCount;
-    }
-
-    public void setInterval(int interval) {
-        this.interval = interval;
-    }
 
     public void setMessage(List<String> message) {
         this.message = message;
@@ -106,9 +87,6 @@ public class NotificationBean implements Comparable<NotificationBean> {
 
 
     public NotificationBean(Map<String, Object> value) {
-        priority = readIntConfig(value, "Priority", 0);
-        maxShowCount = readIntConfig(value, "MaxShowCount", 0);
-        interval = readIntConfig(value, "Interval", 0);
         message = readStringListConfig(value, "Message");
         title = readStringConfig(value, "Title");
         pushTime = readIntConfig(value, "PushTime", 0);
@@ -167,29 +145,12 @@ public class NotificationBean implements Comparable<NotificationBean> {
     }
 
 
-    public int getPriority() {
-        return priority;
-    }
-
-    public int getMaxShowCount() {
-        return maxShowCount;
-    }
-
-    public int getInterval() {
-        return interval;
-    }
-
     public String getMessage() {
         return message.get(new Random().nextInt(message.size()));
     }
 
     public String getTitle() {
         return title;
-    }
-
-    @Override
-    public int compareTo(@NonNull NotificationBean o) {
-        return o.getPriority() - priority;
     }
 
     public String getSPKey(){
