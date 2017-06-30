@@ -7,18 +7,27 @@ import android.app.PendingIntent;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.Handler;
 import android.os.Message;
 import android.support.v4.app.NotificationCompat;
+import android.text.TextUtils;
+import android.view.View;
+import android.widget.RemoteViews;
 
 import com.artw.lockscreen.LockerSettings;
 import com.ihs.app.framework.HSApplication;
+import com.ihs.chargingscreen.utils.ChargingManagerUtil;
 import com.ihs.chargingscreen.utils.ChargingPrefsUtil;
 import com.ihs.commons.config.HSConfig;
 import com.ihs.commons.utils.HSLog;
 import com.ihs.commons.utils.HSPreferenceHelper;
 import com.ihs.keyboardutils.R;
 import com.ihs.keyboardutils.utils.KCAnalyticUtil;
+import com.nostra13.universalimageloader.core.ImageLoader;
+import com.nostra13.universalimageloader.core.assist.FailReason;
+import com.nostra13.universalimageloader.core.listener.ImageLoadingListener;
 
 import java.util.Arrays;
 import java.util.Calendar;
@@ -26,7 +35,6 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 
-import static android.R.string.no;
 import static android.content.Context.ALARM_SERVICE;
 import static android.content.Context.NOTIFICATION_SERVICE;
 import static com.ihs.app.framework.HSApplication.getContext;
@@ -36,9 +44,15 @@ import static com.ihs.app.framework.HSApplication.getContext;
  */
 
 public class KCNotificationManager {
+    public interface NotificationAvailabilityCallBack {
+        boolean isItemDownloaded(NotificationBean notificationBean);
+    }
+
     private static final String PREFS_FILE_NAME = "notification_prefs";
     private static final String PREFS_FINISHED_EVENT = "prefs_finished_event";
+    private static final String PREFS_NEXT_EVENT_TIME = "prefs_next_event_time";
     public static final String PREFS_NOTIFICATION_ENABLE = HSApplication.getContext().getString(R.string.prefs_notification_enable);
+    private static final int TOTAL_IMG_REQUEST_SEND = 2;
 
 
     private static long intervalDuration = AlarmManager.INTERVAL_DAY;
@@ -49,19 +63,26 @@ public class KCNotificationManager {
 
 
     private static KCNotificationManager instance;
-    private final String ACTION_CHARGING = "Charging";
-    private final String ACTION_LOCKER = "Locker";
+    private static final String ACTION_CHARGING = "charging";
+    private static final String ACTION_LOCKER = "locker";
 
     private Context context;
     private HSPreferenceHelper spHelper;
     private NotificationBean nextNotification;
     private BroadcastReceiver eventReceiver;
+    private NotificationAvailabilityCallBack notificationCallBack;
+    private int imgRequestCompleteCount = TOTAL_IMG_REQUEST_SEND; //现在一共有两个图片地方需要请求。所以最大值给2，当此数字为0的时候表示都已经返回。
 
     public synchronized static KCNotificationManager getInstance() {
         if (instance == null) {
             instance = new KCNotificationManager();
         }
         return instance;
+    }
+
+    public void init(NotificationAvailabilityCallBack notificationAvaliablilityCallBack) {
+        notificationCallBack = notificationAvaliablilityCallBack;
+        scheduleNextEventTime();
     }
 
     private Handler handler = new Handler() {
@@ -86,10 +107,16 @@ public class KCNotificationManager {
         spHelper = HSPreferenceHelper.create(getContext(), PREFS_FILE_NAME);
 
 //        scheduleNextEvent();
-        scheduleNextEventTime();
     }
 
     private void scheduleNextEventTime() {
+        //先检查是否有已经保存好的时间
+        long nextTime = spHelper.getLong(PREFS_NEXT_EVENT_TIME, 0);
+        if (nextTime > System.currentTimeMillis()) {
+            setNextTriggerTime(nextTime);
+            return;
+        }
+
         List<Float> list = null;
         try {
             list = (List<Float>) HSConfig.getList("Application", "LocalNotificationsPushTime");
@@ -118,84 +145,22 @@ public class KCNotificationManager {
                 }
             }
         }
-
-        setNextNotification(nextEventTime);
+        spHelper.putLong(PREFS_NEXT_EVENT_TIME, nextEventTime);
+        setNextTriggerTime(nextEventTime);
     }
-
-//    private void scheduleNextEvent() {
-//        List<Map<String, ?>> configs = null;
-//        try {
-//            configs = (List<Map<String, ?>>) HSConfig.getList("Application", "LocalNotifications");
-//        } catch (Exception e) {
-//            e.printStackTrace();
-//        }
-//        if (configs == null) {
-//            HSLog.e("没有配置本地提醒");
-//            return;
-//        }
-//
-//        HashMap<Integer, Long> avaliableTime = new HashMap<>();
-//        ArrayList<NotificationBean> avaliableList = new ArrayList<>();
-//        long nextEventTime = Long.MAX_VALUE;
-//        for (int i = 0; i < configs.size(); i++) {
-//            NotificationBean bean = null;
-//            try {
-//                Map<String, Object> value = (Map<String, Object>) configs.get(i);
-//                bean = new NotificationBean(value);
-////                notificationMap.put(i,configs.get(i));
-//            } catch (Exception e) {
-//                HSLog.e("wrong config for ==> " + configs.get(i));
-//            }
-//
-//            if (bean == null) {
-//                continue;
-//            }
-//
-//            //check charging and locker state
-//            if (bean.getActionType().equals(ACTION_CHARGING)) {
-//                if (isChargingEnabled()) {
-//                    continue;
-//                }
-//            }
-//            if (bean.getActionType().equals(ACTION_LOCKER)) {
-//                if (isLockerEnabled()) {
-//                    continue;
-//                }
-//            }
-//
-//
-//            //从本地去出保存的 maxShowCount和lastShow。格式：("beanEventName","eventShowTimes,lastShow")
-//            String[] eventRecord = spHelper.getString(bean.getSPKey(), "0,0").split(",");
-//            int eventShowTimes = Integer.valueOf(eventRecord[0]);
-//            long lastShow = Long.valueOf(eventRecord[1]);
-//
-//            //如果达到可以出现的条件
-//            if ((bean.getMaxShowCount() == 0 ||
-//                    eventShowTimes < bean.getMaxShowCount())) {
-//                long nextTime = lastShow + intervalDuration * bean.getInterval();
-//                if (nextTime < nextEventTime) {
-//                    avaliableList.clear();
-//                    nextEventTime = nextTime;
-//                    avaliableList.add(bean);
-//                } else if (nextTime == nextEventTime) {
-//                    avaliableList.add(bean);
-//                }
-//            }
-//        }
-//
-//        if (avaliableList.size() > 0) {
-//            nextNotification = avaliableList.get(0);
-//            setNextNotification(nextEventTime);
-//        }
-//    }
-
 
     public void sendNotification() {
         if (!HSPreferenceHelper.getDefault().getBoolean(PREFS_NOTIFICATION_ENABLE, true)) {
             return;
         }
 
-        List<String> finishedEvent = Arrays.asList(spHelper.getString(PREFS_FINISHED_EVENT, "").split(","));
+        if (!ChargingManagerUtil.isNetworkAvailable(context)) {
+            scheduleNextEventTime();
+            return;
+        }
+
+        String recordedEvent = spHelper.getString(PREFS_FINISHED_EVENT, "");
+        List<String> finishedEvent = Arrays.asList(recordedEvent.split(","));
 
 
         List<Map<String, ?>> configs = null;
@@ -224,7 +189,7 @@ public class KCNotificationManager {
             }
         }
 
-        NotificationBean notificationToSend;
+        NotificationBean notificationToSend = null;
         for (int i = 0; i < configs.size(); i++) {
             NotificationBean bean = null;
             try {
@@ -242,13 +207,11 @@ public class KCNotificationManager {
                 continue;
             }
 
-            //如果是charging 或者 locker 很有可能会重复 所以需要单独判断。
             if (bean.getActionType().equals(ACTION_LOCKER)) {
                 if (isLockerEnabled()) {
                     continue;
                 } else if (lockerShowedTimes < lockerCanShowTimes) {
                     notificationToSend = bean;
-                    spHelper.putInt(ACTION_LOCKER,++lockerShowedTimes);
                     break;
                 }
             } else if (bean.getActionType().equals(ACTION_CHARGING)) {
@@ -256,27 +219,162 @@ public class KCNotificationManager {
                     continue;
                 } else if (chargingShowedTimes < chargingCanShowTimes) {
                     notificationToSend = bean;
-                    spHelper.putInt(ACTION_CHARGING,++chargingShowedTimes);
+                    break;
+                }
+            } else {
+                //如果下载过了，就记录到不再发送列表里面
+                if (notificationCallBack.isItemDownloaded(bean)) {
+                    spHelper.putString(recordedEvent, bean.getSPKey());
+                    continue;
+                } else {
+                    notificationToSend = bean;
                     break;
                 }
             }
-            notificationToSend = bean;
         }
 
+        if (notificationToSend == null) {
+            return;
+        }
 
-        NotificationCompat.Builder mBuilder = new NotificationCompat.Builder(context)
+        final NotificationCompat.Builder mBuilder = new NotificationCompat.Builder(context)
                 .setAutoCancel(true)
                 .setSmallIcon(R.drawable.ic_notification)
-                .setContentTitle(notificationBean.getTitle())
-                .setContentText(notificationBean.getMessage())
+                .setContentTitle(notificationToSend.getTitle())
+                .setContentText(notificationToSend.getMessage())
+                .setPriority(NotificationCompat.PRIORITY_MAX)
                 .setDefaults(Notification.DEFAULT_ALL);
 
-        NotificationCompat.BigTextStyle bigText = new NotificationCompat.BigTextStyle();
-        bigText.bigText(notificationBean.getMessage());
-        bigText.setBigContentTitle(notificationBean.getTitle());
-        mBuilder.setStyle(bigText);
-        mBuilder.setPriority(NotificationCompat.PRIORITY_MAX);
+        final NotificationBean beanCopy = notificationToSend;
+        final RemoteViews contentView = new RemoteViews(HSApplication.getContext().getPackageName(), R.layout.notification_custom);
+        contentView.setImageViewResource(R.id.notification_icon, context.getApplicationInfo().icon);
+        contentView.setTextViewText(R.id.notification_title, notificationToSend.getTitle());
+        contentView.setTextViewText(R.id.notification_description, notificationToSend.getMessage());
 
+
+        //如果iconurl没有给的话 就用默认icon
+        if (TextUtils.isEmpty(notificationToSend.getIconUrl())) {
+            //如果背景也没给就直接默认模式
+            if (TextUtils.isEmpty(notificationToSend.getBgUrl())) {
+                mBuilder.setLargeIcon(BitmapFactory.decodeResource(context.getResources(), context.getApplicationInfo().icon));
+                tryToNotify(mBuilder, beanCopy);
+            } else {
+                //如果给了背景就要用自定义样式
+                ImageLoader.getInstance().loadImage(notificationToSend.getBgUrl(), new ImageLoadingListener() {
+                    @Override
+                    public void onLoadingStarted(String imageUri, View view) {
+
+                    }
+
+                    @Override
+                    public void onLoadingFailed(String imageUri, View view, FailReason failReason) {
+                    }
+
+                    @Override
+                    public void onLoadingComplete(String imageUri, View view, Bitmap loadedImage) {
+                        contentView.setImageViewBitmap(R.id.notification_background, loadedImage);
+                        mBuilder.setContent(contentView);
+                        tryToNotify(mBuilder, beanCopy);
+                    }
+
+                    @Override
+                    public void onLoadingCancelled(String imageUri, View view) {
+
+                    }
+                });
+            }
+
+        } else {
+
+
+            //如果icon 不为空的情况下
+            //如果bg为空，则从网上加载icon
+            if (TextUtils.isEmpty(notificationToSend.getBgUrl())) {
+                ImageLoader.getInstance().loadImage(notificationToSend.getIconUrl(), new ImageLoadingListener() {
+                    @Override
+                    public void onLoadingStarted(String imageUri, View view) {
+
+                    }
+
+                    @Override
+                    public void onLoadingFailed(String imageUri, View view, FailReason failReason) {
+                    }
+
+                    @Override
+                    public void onLoadingComplete(String imageUri, View view, Bitmap loadedImage) {
+                        mBuilder.setLargeIcon(loadedImage);
+                        tryToNotify(mBuilder, beanCopy);
+                    }
+
+                    @Override
+                    public void onLoadingCancelled(String imageUri, View view) {
+
+                    }
+                });
+            } else {
+
+                //如果bg也不为空就要用remoteview 并将会产生两次图片请求的回传。
+                final int[] imgRequestCompleteCount = {2};
+                ImageLoader.getInstance().loadImage(notificationToSend.getIconUrl(), new ImageLoadingListener() {
+                    @Override
+                    public void onLoadingStarted(String imageUri, View view) {
+
+                    }
+
+                    @Override
+                    public void onLoadingFailed(String imageUri, View view, FailReason failReason) {
+                        scheduleNextEventTime();
+                    }
+
+                    @Override
+                    public void onLoadingComplete(String imageUri, View view, Bitmap loadedImage) {
+                        imgRequestCompleteCount[0]--;
+                        contentView.setImageViewBitmap(R.id.notification_icon, loadedImage);
+                        mBuilder.setContent(contentView);
+                        if (imgRequestCompleteCount[0] == 0) {
+                            tryToNotify(mBuilder, beanCopy);
+                        }
+                    }
+
+                    @Override
+                    public void onLoadingCancelled(String imageUri, View view) {
+
+                    }
+                });
+
+                ImageLoader.getInstance().loadImage(notificationToSend.getBgUrl(), new ImageLoadingListener() {
+                    @Override
+                    public void onLoadingStarted(String imageUri, View view) {
+
+                    }
+
+                    @Override
+                    public void onLoadingFailed(String imageUri, View view, FailReason failReason) {
+                    }
+
+                    @Override
+                    public void onLoadingComplete(String imageUri, View view, Bitmap loadedImage) {
+                        imgRequestCompleteCount[0]--;
+                        contentView.setImageViewBitmap(R.id.notification_background, loadedImage);
+                        mBuilder.setContent(contentView);
+                        if (imgRequestCompleteCount[0] == 0) {
+                            tryToNotify(mBuilder, beanCopy);
+                        }
+                    }
+
+                    @Override
+                    public void onLoadingCancelled(String imageUri, View view) {
+
+                    }
+                });
+            }
+        }
+
+        //无论此次结果如何，均请求下一次。
+        scheduleNextEventTime();
+    }
+
+    private void tryToNotify(NotificationCompat.Builder mBuilder, NotificationBean notificationBean) {
         Intent intent = new Intent(context, eventReceiver.getClass());
         intent.setAction(Long.toString(System.currentTimeMillis()));
         intent.putExtra("actionType", notificationBean.getActionType());
@@ -296,6 +394,17 @@ public class KCNotificationManager {
         try {
             //用event名 加 packageName的hashcode来确保，每个程序有自己的一套通知系统，并且，每种通知事件不重复。
             manager.notify(notificationBean.getActionType(), NOTIFICATION_ID, mBuilder.build());
+            switch (notificationBean.getActionType()) {
+                case ACTION_LOCKER:
+                case ACTION_CHARGING:
+                    int chargingShowed = spHelper.getInt(notificationBean.getActionType(), 0);
+                    spHelper.putInt(notificationBean.getActionType(), ++chargingShowed);
+                    break;
+                default:
+                    String finishedEvents = spHelper.getString(PREFS_FINISHED_EVENT, "");
+                    spHelper.putString(PREFS_FINISHED_EVENT, finishedEvents + notificationBean.getSPKey());
+                    break;
+            }
         } catch (Exception e) {
             e.printStackTrace();
             return;
@@ -316,7 +425,7 @@ public class KCNotificationManager {
         this.eventReceiver = eventReceiver;
     }
 
-    private void setNextNotification(long time) {
+    private void setNextTriggerTime(long time) {
         Intent intent = new Intent(context, NotificationExecutionReceiver.class);
         PendingIntent pendingIntent = PendingIntent.getBroadcast(context, 1, intent, PendingIntent.FLAG_UPDATE_CURRENT);
         AlarmManager alarmManager = (AlarmManager) context.getSystemService(ALARM_SERVICE);
