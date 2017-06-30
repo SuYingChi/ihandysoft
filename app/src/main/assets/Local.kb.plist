@@ -6,6 +6,270 @@
 	<dict>
 		<key>Application</key>
 		<dict>
+			<key>LocalNotifications</key>
+			<array>
+				<dict>
+					<key>StyleType</key>
+					<integer>0</integer>
+					<key>BgUrl</key>
+					<string></string>
+					<key>IconUrl</key>
+					<string></string>
+					<key>Name</key>
+					<string>s1</string>
+					<key>Actiontype</key>
+					<string>sticker</string>
+					<key>Message</key>
+					<array>
+						<string>Check it NOW！</string>
+						<string>Used by 5 million people</string>
+						<string>Dress up and make up! </string>
+					</array>
+					<key>Title</key>
+					<string></string>
+				</dict>
+				<dict>
+					<key>StyleType</key>
+					<integer>0</integer>
+					<key>BgUrl</key>
+					<string></string>
+					<key>IconUrl</key>
+					<string></string>
+					<key>Name</key>
+					<string></string>
+					<key>Actiontype</key>
+					<string>locker</string>
+					<key>Message</key>
+					<array>
+						<string>Check it NOW！</string>
+						<string>Used by 5 million people</string>
+						<string>Dress up and make up! </string>
+					</array>
+					<key>Title</key>
+					<string></string>
+				</dict>
+				<dict>
+					<key>StyleType</key>
+					<integer>0</integer>
+					<key>BgUrl</key>
+					<string></string>
+					<key>IconUrl</key>
+					<string></string>
+					<key>Name</key>
+					<string>f1</string>
+					<key>Actiontype</key>
+					<string>filter</string>
+					<key>Message</key>
+					<array>
+						<string>Check it NOW！</string>
+						<string>Used by 5 million people</string>
+						<string>Dress up and make up! </string>
+					</array>
+					<key>Title</key>
+					<string></string>
+				</dict>
+				<dict>
+					<key>StyleType</key>
+					<integer>0</integer>
+					<key>BgUrl</key>
+					<string></string>
+					<key>IconUrl</key>
+					<string></string>
+					<key>Name</key>
+					<string></string>
+					<key>Actiontype</key>
+					<string>charging</string>
+					<key>Message</key>
+					<array>
+						<string>Check it NOW！</string>
+						<string>Used by 5 million people</string>
+						<string>Dress up and make up! </string>
+					</array>
+					<key>Title</key>
+					<string></string>
+				</dict>
+				<dict>
+					<key>StyleType</key>
+					<integer>0</integer>
+					<key>BgUrl</key>
+					<string></string>
+					<key>IconUrl</key>
+					<string></string>
+					<key>Name</key>
+					<string>s2</string>
+					<key>Actiontype</key>
+					<string>sticker</string>
+					<key>Message</key>
+					<array>
+						<string>Check it NOW！</string>
+						<string>Used by 5 million people</string>
+						<string>Dress up and make up! </string>
+					</array>
+					<key>Title</key>
+					<string></string>
+				</dict>
+				<dict>
+					<key>StyleType</key>
+					<integer>0</integer>
+					<key>BgUrl</key>
+					<string></string>
+					<key>IconUrl</key>
+					<string></string>
+					<key>Name</key>
+					<string>f2</string>
+					<key>Actiontype</key>
+					<string>filter</string>
+					<key>Message</key>
+					<array>
+						<string>Check it NOW！</string>
+						<string>Used by 5 million people</string>
+						<string>Dress up and make up! </string>
+					</array>
+					<key>Title</key>
+					<string></string>
+				</dict>
+				<dict>
+					<key>StyleType</key>
+					<integer>0</integer>
+					<key>BgUrl</key>
+					<string></string>
+					<key>IconUrl</key>
+					<string></string>
+					<key>Name</key>
+					<string>s3</string>
+					<key>Actiontype</key>
+					<string>sticker</string>
+					<key>Message</key>
+					<array>
+						<string>Check it NOW！</string>
+						<string>Used by 5 million people</string>
+						<string>Dress up and make up! </string>
+					</array>
+					<key>Title</key>
+					<string></string>
+				</dict>
+				<dict>
+					<key>StyleType</key>
+					<integer>0</integer>
+					<key>BgUrl</key>
+					<string></string>
+					<key>IconUrl</key>
+					<string></string>
+					<key>Name</key>
+					<string>f3</string>
+					<key>Actiontype</key>
+					<string>filter</string>
+					<key>Message</key>
+					<array>
+						<string>Check it NOW！</string>
+						<string>Used by 5 million people</string>
+						<string>Dress up and make up! </string>
+					</array>
+					<key>Title</key>
+					<string></string>
+				</dict>
+				<dict>
+					<key>StyleType</key>
+					<integer>0</integer>
+					<key>BgUrl</key>
+					<string></string>
+					<key>IconUrl</key>
+					<string></string>
+					<key>Name</key>
+					<string></string>
+					<key>Actiontype</key>
+					<string>locker</string>
+					<key>Message</key>
+					<array>
+						<string>Check it NOW！</string>
+						<string>Used by 5 million people</string>
+						<string>Dress up and make up! </string>
+					</array>
+					<key>Title</key>
+					<string></string>
+				</dict>
+				<dict>
+					<key>StyleType</key>
+					<integer>0</integer>
+					<key>BgUrl</key>
+					<string></string>
+					<key>IconUrl</key>
+					<string></string>
+					<key>Name</key>
+					<string></string>
+					<key>Actiontype</key>
+					<string>charging</string>
+					<key>Message</key>
+					<array>
+						<string>Check it NOW！</string>
+						<string>Used by 5 million people</string>
+						<string>Dress up and make up! </string>
+					</array>
+					<key>Title</key>
+					<string></string>
+				</dict>
+				<dict>
+					<key>StyleType</key>
+					<integer>0</integer>
+					<key>BgUrl</key>
+					<string></string>
+					<key>IconUrl</key>
+					<string></string>
+					<key>Name</key>
+					<string>s4</string>
+					<key>Actiontype</key>
+					<string>sticker</string>
+					<key>Message</key>
+					<array>
+						<string>Check it NOW！</string>
+						<string>Used by 5 million people</string>
+						<string>Dress up and make up! </string>
+					</array>
+					<key>Title</key>
+					<string></string>
+				</dict>
+				<dict>
+					<key>StyleType</key>
+					<integer>0</integer>
+					<key>BgUrl</key>
+					<string></string>
+					<key>IconUrl</key>
+					<string></string>
+					<key>Name</key>
+					<string>f4</string>
+					<key>Actiontype</key>
+					<string>filter</string>
+					<key>Message</key>
+					<array>
+						<string>Check it NOW！</string>
+						<string>Used by 5 million people</string>
+						<string>Dress up and make up! </string>
+					</array>
+					<key>Title</key>
+					<string></string>
+				</dict>
+				<dict>
+					<key>Name</key>
+					<string>Charging</string>
+					<key>activatetype</key>
+					<string>Charging</string>
+					<key>Interval</key>
+					<integer>1</integer>
+					<key>MaxShowCount</key>
+					<integer>1</integer>
+					<key>Message</key>
+					<string>Enable smart charging to prevent overcharging efficiently.</string>
+					<key>Priority</key>
+					<integer>1</integer>
+					<key>Title</key>
+					<string>Enable Smart Charging</string>
+				</dict>
+			</array>
+			<key>LocalNotificationsPushTime</key>
+			<array>
+				<integer>12</integer>
+				<real>16.5</real>
+			</array>
 			<key>BoostResult</key>
 			<dict>
 				<key>Enabled</key>
@@ -61,16 +325,6 @@
 				<true/>
 				<key>style</key>
 				<integer>1</integer>
-			</dict>
-			<key>LocalNotifications</key>
-			<dict>
-				<key>Charging</key>
-				<dict>
-					<key>Message</key>
-					<string>bbb</string>
-					<key>Title</key>
-					<string>charging aaa</string>
-				</dict>
 			</dict>
 			<key>Locker</key>
 			<dict>

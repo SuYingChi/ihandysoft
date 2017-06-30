@@ -9,8 +9,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-import android.os.Handler;
-import android.os.Message;
 import android.support.v4.app.NotificationCompat;
 import android.text.TextUtils;
 import android.view.View;
@@ -32,7 +30,6 @@ import com.nostra13.universalimageloader.core.listener.ImageLoadingListener;
 import java.util.Arrays;
 import java.util.Calendar;
 import java.util.List;
-import java.util.Locale;
 import java.util.Map;
 
 import static android.content.Context.ALARM_SERVICE;
@@ -52,15 +49,8 @@ public class KCNotificationManager {
     private static final String PREFS_FINISHED_EVENT = "prefs_finished_event";
     private static final String PREFS_NEXT_EVENT_TIME = "prefs_next_event_time";
     public static final String PREFS_NOTIFICATION_ENABLE = HSApplication.getContext().getString(R.string.prefs_notification_enable);
-    private static final int TOTAL_IMG_REQUEST_SEND = 2;
 
-
-    private static long intervalDuration = AlarmManager.INTERVAL_DAY;
-    //方法延迟或者计算误差
-    private static final int METHOD_EXCUTION_ERROR_TIME = 10;
-    private static final int HANDLER_MSG_SUCCESFULL = 10;
     private static final int NOTIFICATION_ID = Math.abs(HSApplication.getContext().getPackageName().hashCode() / 100000);
-
 
     private static KCNotificationManager instance;
     private static final String ACTION_CHARGING = "charging";
@@ -68,10 +58,8 @@ public class KCNotificationManager {
 
     private Context context;
     private HSPreferenceHelper spHelper;
-    private NotificationBean nextNotification;
     private BroadcastReceiver eventReceiver;
     private NotificationAvailabilityCallBack notificationCallBack;
-    private int imgRequestCompleteCount = TOTAL_IMG_REQUEST_SEND; //现在一共有两个图片地方需要请求。所以最大值给2，当此数字为0的时候表示都已经返回。
 
     public synchronized static KCNotificationManager getInstance() {
         if (instance == null) {
@@ -84,19 +72,6 @@ public class KCNotificationManager {
         notificationCallBack = notificationAvaliablilityCallBack;
         scheduleNextEventTime();
     }
-
-    private Handler handler = new Handler() {
-        @Override
-        public void handleMessage(Message msg) {
-            if (msg.what == HANDLER_MSG_SUCCESFULL) {
-                //从本地去出保存的 maxShowCount和lastShow。格式：("beanEventName","eventShowTimes,lastShow")
-                String[] eventRecord = spHelper.getString(nextNotification.getSPKey(), "0,0").split(",");
-                int eventShowTimes = Integer.valueOf(eventRecord[0]);
-                eventShowTimes++;
-                spHelper.putString(nextNotification.getSPKey(), String.format(Locale.ENGLISH, "%d,%d", eventShowTimes, System.currentTimeMillis()));
-            }
-        }
-    };
 
     private KCNotificationManager() {
         //初始化notification 设置项
@@ -286,7 +261,6 @@ public class KCNotificationManager {
 
         } else {
 
-
             //如果icon 不为空的情况下
             //如果bg为空，则从网上加载icon
             if (TextUtils.isEmpty(notificationToSend.getBgUrl())) {
@@ -434,9 +408,5 @@ public class KCNotificationManager {
         } catch (Exception e) {
             e.printStackTrace();
         }
-    }
-
-    public static void setIntervalDuration(long intervalDuration) {
-        KCNotificationManager.intervalDuration = intervalDuration;
     }
 }
