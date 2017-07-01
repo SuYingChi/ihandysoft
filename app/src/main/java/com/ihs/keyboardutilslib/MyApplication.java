@@ -1,7 +1,6 @@
 package com.ihs.keyboardutilslib;
 
 import android.content.Context;
-import android.content.Intent;
 import android.support.multidex.MultiDex;
 import android.text.TextUtils;
 
@@ -17,12 +16,11 @@ import com.ihs.commons.utils.HSBundle;
 import com.ihs.commons.utils.HSLog;
 import com.ihs.feature.boost.BoostActivity;
 import com.ihs.keyboardutils.notification.KCNotificationManager;
+import com.ihs.keyboardutils.notification.NotificationBean;
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
 import com.nostra13.universalimageloader.core.assist.QueueProcessingType;
 import com.squareup.leakcanary.LeakCanary;
-
-import java.util.ArrayList;
 
 
 /**
@@ -68,33 +66,16 @@ public class MyApplication extends HSApplication {
         HSGlobalNotificationCenter.addObserver(HSNotificationConstant.HS_SESSION_START, sessionEventObserver);
         HSGlobalNotificationCenter.addObserver(HSNotificationConstant.HS_SESSION_END, sessionEventObserver);
 
-
-        KCNotificationManager.getInstance().setNotificationResponserType(KCNotificationManager.TYPE_ACTIVITY);
-        ArrayList<String> eventList = new ArrayList<>();
-        eventList.add("ScreenLocker");
-        eventList.add("Charging");
-        eventList.add("AddNewPhotoToPrivate");
-        for (String event : eventList) {
-            int reqCode = 0;
-            switch (event) {
-                case "ScreenLocker":
-                    reqCode = 1;
-                    break;
-                case "Charging":
-                    reqCode = 2;
-                    break;
-                case "AddNewPhotoToPrivate":
-                    reqCode = 3;
-                    break;
-            }
-
-            Intent resultIntent = new Intent(getContext(), MainActivity.class);
-            resultIntent.putExtra("reqCode", reqCode);
-            KCNotificationManager.getInstance().addNotificationEvent(event, resultIntent);
-        }
         BoostActivity.initBoost();
         ScreenLockerManager.init();
         initImageLoader();
+
+        KCNotificationManager.getInstance().init(NotificationReceiver.class, new KCNotificationManager.NotificationAvailabilityCallBack() {
+            @Override
+            public boolean isItemDownloaded(NotificationBean notificationBean) {
+                return false;
+            }
+        });
     }
 
 

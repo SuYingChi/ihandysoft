@@ -12,12 +12,12 @@
 					<key>StyleType</key>
 					<integer>0</integer>
 					<key>BgUrl</key>
-					<string></string>
+					<string>https://emojidevelop.s3.amazonaws.com/colorcam/push/bg/Sakura.png</string>
 					<key>IconUrl</key>
-					<string></string>
+					<string>https://emojidevelop.s3.amazonaws.com/colorcam/push/icon/Sakura.png</string>
 					<key>Name</key>
 					<string>s1</string>
-					<key>Actiontype</key>
+					<key>ActionType</key>
 					<string>sticker</string>
 					<key>Message</key>
 					<array>
@@ -26,7 +26,7 @@
 						<string>Dress up and make up! </string>
 					</array>
 					<key>Title</key>
-					<string></string>
+					<string>stickers1</string>
 				</dict>
 				<dict>
 					<key>StyleType</key>
@@ -37,7 +37,7 @@
 					<string></string>
 					<key>Name</key>
 					<string></string>
-					<key>Actiontype</key>
+					<key>ActionType</key>
 					<string>locker</string>
 					<key>Message</key>
 					<array>
@@ -46,7 +46,7 @@
 						<string>Dress up and make up! </string>
 					</array>
 					<key>Title</key>
-					<string></string>
+					<string>locker</string>
 				</dict>
 				<dict>
 					<key>StyleType</key>
@@ -57,7 +57,7 @@
 					<string></string>
 					<key>Name</key>
 					<string>f1</string>
-					<key>Actiontype</key>
+					<key>ActionType</key>
 					<string>filter</string>
 					<key>Message</key>
 					<array>
@@ -66,7 +66,7 @@
 						<string>Dress up and make up! </string>
 					</array>
 					<key>Title</key>
-					<string></string>
+					<string>filter f1</string>
 				</dict>
 				<dict>
 					<key>StyleType</key>
@@ -77,7 +77,7 @@
 					<string></string>
 					<key>Name</key>
 					<string></string>
-					<key>Actiontype</key>
+					<key>ActionType</key>
 					<string>charging</string>
 					<key>Message</key>
 					<array>
@@ -86,7 +86,7 @@
 						<string>Dress up and make up! </string>
 					</array>
 					<key>Title</key>
-					<string></string>
+					<string>charging</string>
 				</dict>
 				<dict>
 					<key>StyleType</key>
@@ -97,7 +97,7 @@
 					<string></string>
 					<key>Name</key>
 					<string>s2</string>
-					<key>Actiontype</key>
+					<key>ActionType</key>
 					<string>sticker</string>
 					<key>Message</key>
 					<array>
@@ -106,7 +106,7 @@
 						<string>Dress up and make up! </string>
 					</array>
 					<key>Title</key>
-					<string></string>
+					<string>ss 2</string>
 				</dict>
 				<dict>
 					<key>StyleType</key>
@@ -117,7 +117,7 @@
 					<string></string>
 					<key>Name</key>
 					<string>f2</string>
-					<key>Actiontype</key>
+					<key>ActionType</key>
 					<string>filter</string>
 					<key>Message</key>
 					<array>
@@ -126,7 +126,7 @@
 						<string>Dress up and make up! </string>
 					</array>
 					<key>Title</key>
-					<string></string>
+					<string>f2</string>
 				</dict>
 				<dict>
 					<key>StyleType</key>
@@ -137,7 +137,7 @@
 					<string></string>
 					<key>Name</key>
 					<string>s3</string>
-					<key>Actiontype</key>
+					<key>ActionType</key>
 					<string>sticker</string>
 					<key>Message</key>
 					<array>
@@ -157,7 +157,7 @@
 					<string></string>
 					<key>Name</key>
 					<string>f3</string>
-					<key>Actiontype</key>
+					<key>ActionType</key>
 					<string>filter</string>
 					<key>Message</key>
 					<array>
@@ -177,7 +177,7 @@
 					<string></string>
 					<key>Name</key>
 					<string></string>
-					<key>Actiontype</key>
+					<key>ActionType</key>
 					<string>locker</string>
 					<key>Message</key>
 					<array>
@@ -197,7 +197,7 @@
 					<string></string>
 					<key>Name</key>
 					<string></string>
-					<key>Actiontype</key>
+					<key>ActionType</key>
 					<string>charging</string>
 					<key>Message</key>
 					<array>
@@ -217,7 +217,7 @@
 					<string></string>
 					<key>Name</key>
 					<string>s4</string>
-					<key>Actiontype</key>
+					<key>ActionType</key>
 					<string>sticker</string>
 					<key>Message</key>
 					<array>
@@ -237,7 +237,7 @@
 					<string></string>
 					<key>Name</key>
 					<string>f4</string>
-					<key>Actiontype</key>
+					<key>ActionType</key>
 					<string>filter</string>
 					<key>Message</key>
 					<array>
@@ -251,7 +251,7 @@
 				<dict>
 					<key>Name</key>
 					<string>Charging</string>
-					<key>activatetype</key>
+					<key>ActionType</key>
 					<string>Charging</string>
 					<key>Interval</key>
 					<integer>1</integer>

@@ -4,7 +4,6 @@ import android.app.AlarmManager;
 import android.app.Notification;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
-import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
@@ -27,6 +26,7 @@ import com.nostra13.universalimageloader.core.ImageLoader;
 import com.nostra13.universalimageloader.core.assist.FailReason;
 import com.nostra13.universalimageloader.core.listener.ImageLoadingListener;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Calendar;
 import java.util.List;
@@ -58,7 +58,7 @@ public class KCNotificationManager {
 
     private Context context;
     private HSPreferenceHelper spHelper;
-    private BroadcastReceiver eventReceiver;
+    private Class eventReceiverClass;
     private NotificationAvailabilityCallBack notificationCallBack;
 
     public synchronized static KCNotificationManager getInstance() {
@@ -68,8 +68,9 @@ public class KCNotificationManager {
         return instance;
     }
 
-    public void init(NotificationAvailabilityCallBack notificationAvaliablilityCallBack) {
+    public void init(Class eventReceiverClass, NotificationAvailabilityCallBack notificationAvaliablilityCallBack) {
         notificationCallBack = notificationAvaliablilityCallBack;
+        this.eventReceiverClass = eventReceiverClass;
         scheduleNextEventTime();
     }
 
@@ -85,14 +86,18 @@ public class KCNotificationManager {
     }
 
     private void scheduleNextEventTime() {
+        if(true){
+            setNextTriggerTime(System.currentTimeMillis()+10000);
+            return;
+        }
+
         //先检查是否有已经保存好的时间
         long nextTime = spHelper.getLong(PREFS_NEXT_EVENT_TIME, 0);
         if (nextTime > System.currentTimeMillis()) {
             setNextTriggerTime(nextTime);
             return;
-        }
-
-        List<Float> list = null;
+       }
+        List<Float> list = new ArrayList<>();
         try {
             list = (List<Float>) HSConfig.getList("Application", "LocalNotificationsPushTime");
         } catch (Exception e) {
@@ -199,7 +204,7 @@ public class KCNotificationManager {
             } else {
                 //如果下载过了，就记录到不再发送列表里面
                 if (notificationCallBack.isItemDownloaded(bean)) {
-                    spHelper.putString(recordedEvent, bean.getSPKey());
+                    spHelper.putString(PREFS_FINISHED_EVENT, recordedEvent + bean.getSPKey() + ",");
                     continue;
                 } else {
                     notificationToSend = bean;
@@ -349,7 +354,7 @@ public class KCNotificationManager {
     }
 
     private void tryToNotify(NotificationCompat.Builder mBuilder, NotificationBean notificationBean) {
-        Intent intent = new Intent(context, eventReceiver.getClass());
+        Intent intent = new Intent(context, eventReceiverClass);
         intent.setAction(Long.toString(System.currentTimeMillis()));
         intent.putExtra("actionType", notificationBean.getActionType());
         intent.putExtra("name", notificationBean.getName());
@@ -376,7 +381,7 @@ public class KCNotificationManager {
                     break;
                 default:
                     String finishedEvents = spHelper.getString(PREFS_FINISHED_EVENT, "");
-                    spHelper.putString(PREFS_FINISHED_EVENT, finishedEvents + notificationBean.getSPKey());
+                    spHelper.putString(PREFS_FINISHED_EVENT, finishedEvents + notificationBean.getSPKey() + ",");
                     break;
             }
         } catch (Exception e) {
@@ -392,11 +397,6 @@ public class KCNotificationManager {
 
     private boolean isLockerEnabled() {
         return LockerSettings.getLockerEnableStates() == LockerSettings.LOCKER_DEFAULT_ACTIVE;
-    }
-
-
-    public void setNotificationReceiver(BroadcastReceiver eventReceiver) {
-        this.eventReceiver = eventReceiver;
     }
 
     private void setNextTriggerTime(long time) {

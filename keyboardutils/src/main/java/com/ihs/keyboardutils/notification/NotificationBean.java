@@ -146,7 +146,9 @@ public class NotificationBean {
 
 
     public String getMessage() {
-        return message.get(new Random().nextInt(message.size()));
+        if(message.size()>0){
+            return message.get(new Random().nextInt(message.size()));
+        }else return "";
     }
 
     public String getTitle() {
@@ -154,6 +156,6 @@ public class NotificationBean {
     }
 
     public String getSPKey(){
-        return actionType + "," + name;
+        return actionType + "|" + name;
     }
 }
