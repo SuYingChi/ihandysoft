@@ -53,8 +53,8 @@ public class KCNotificationManager {
     private static final int NOTIFICATION_ID = Math.abs(HSApplication.getContext().getPackageName().hashCode() / 100000);
 
     private static KCNotificationManager instance;
-    private static final String ACTION_CHARGING = "charging";
-    private static final String ACTION_LOCKER = "locker";
+    private static final String ACTION_CHARGING = "Charging";
+    private static final String ACTION_LOCKER = "Locker";
 
     private Context context;
     private HSPreferenceHelper spHelper;

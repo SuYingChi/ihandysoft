@@ -38,7 +38,7 @@
 					<key>Name</key>
 					<string></string>
 					<key>ActionType</key>
-					<string>locker</string>
+					<string>Locker</string>
 					<key>Message</key>
 					<array>
 						<string>Check it NOW！</string>
@@ -46,7 +46,7 @@
 						<string>Dress up and make up! </string>
 					</array>
 					<key>Title</key>
-					<string>locker</string>
+					<string>Locker</string>
 				</dict>
 				<dict>
 					<key>StyleType</key>
@@ -78,7 +78,7 @@
 					<key>Name</key>
 					<string></string>
 					<key>ActionType</key>
-					<string>charging</string>
+					<string>Charging</string>
 					<key>Message</key>
 					<array>
 						<string>Check it NOW！</string>
@@ -86,7 +86,7 @@
 						<string>Dress up and make up! </string>
 					</array>
 					<key>Title</key>
-					<string>charging</string>
+					<string>Charging</string>
 				</dict>
 				<dict>
 					<key>StyleType</key>
@@ -178,7 +178,7 @@
 					<key>Name</key>
 					<string></string>
 					<key>ActionType</key>
-					<string>locker</string>
+					<string>Locker</string>
 					<key>Message</key>
 					<array>
 						<string>Check it NOW！</string>
@@ -186,7 +186,7 @@
 						<string>Dress up and make up! </string>
 					</array>
 					<key>Title</key>
-					<string></string>
+					<string>Locker</string>
 				</dict>
 				<dict>
 					<key>StyleType</key>
@@ -196,9 +196,9 @@
 					<key>IconUrl</key>
 					<string></string>
 					<key>Name</key>
-					<string></string>
+					<string>Charging</string>
 					<key>ActionType</key>
-					<string>charging</string>
+					<string>Charging</string>
 					<key>Message</key>
 					<array>
 						<string>Check it NOW！</string>
