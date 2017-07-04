@@ -68,6 +68,10 @@ public class ChargingPrefsUtil {
 
 
     public static int getChargingEnableStates() {
+        if(spHelper == null){
+            getInstance();
+        }
+
         //用户设置过的话，直接返回用户设置的状态。不管plist任何值，包括静默。
         if (spHelper.contains(USER_ENABLED_CHARGING)) {
             HSLog.e("CHARGING 获取用户设置" );

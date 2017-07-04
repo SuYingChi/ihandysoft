@@ -151,21 +151,18 @@
         <activity
             android:name="com.ihs.feature.battery.BatteryModeActivity"
             android:excludeFromRecents="true"
-            android:process=":battery"
             android:screenOrientation="portrait"
             android:taskAffinity=".battery"
             android:theme="@style/BatteryTheme" />
         <activity
             android:name="com.ihs.feature.battery.BatterySettingsActivity"
             android:excludeFromRecents="true"
-            android:process=":battery"
             android:screenOrientation="portrait"
             android:taskAffinity=".battery"
             android:theme="@style/BatteryTheme" />
         <activity
             android:name="com.ihs.feature.battery.BatteryRankingActivity"
             android:excludeFromRecents="true"
-            android:process=":battery"
             android:screenOrientation="portrait"
             android:taskAffinity=".battery"
             android:theme="@style/BatteryTheme" />

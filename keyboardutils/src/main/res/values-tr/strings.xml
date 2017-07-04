@@ -561,7 +561,7 @@
     <string name="folder_ad_title">Önerilen Uygulamalar</string>
     <string name="search_guide_contacts">Kişiler</string>
 
-    <string name="launcher_widget_boost_plus_title">Yükselt+</string>
+    <string name="launcher_widget_boost_plus_title">Yükselt</string>
     <string name="boost_plus_accessibility_service_label">☆Yükselt+☆</string>
     <string name="advanced_boost_authorize_btn">Etkinleştir</string>
     <string name="boost_plus_action_button_text">Yükselt (%1$s)</string>

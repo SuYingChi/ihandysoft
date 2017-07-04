@@ -448,7 +448,7 @@
     <string name="launcher_widget_menu_widgets_title">Widgets</string>
     <string name="launcher_widget_system_settings_title">System Settings</string>
     <string name="launcher_widget_launcher_settings_title">Launcher Settings</string>
-    <string name="launcher_widget_boost_plus_title">Boost+</string>
+    <string name="launcher_widget_boost_plus_title">Boost</string>
     <string name="launcher_shortcut_boost">1-Tap Boost</string>
     <string name="launcher_widget_market_title">App Picks</string>
 

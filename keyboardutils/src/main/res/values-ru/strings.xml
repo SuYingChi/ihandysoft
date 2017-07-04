@@ -570,7 +570,7 @@
     <string name="folder_ad_title">Рекомендованные приложения</string>
     <string name="search_guide_contacts">Контакты</string>
 
-    <string name="launcher_widget_boost_plus_title">Ускорени+</string>
+    <string name="launcher_widget_boost_plus_title">Ускорени</string>
     <string name="boost_plus_accessibility_service_label">☆Ускорени+☆</string>
     <string name="advanced_boost_authorize_btn">Включить </string>
     <string name="boost_plus_action_button_text">Ускорение (%1$s)</string>

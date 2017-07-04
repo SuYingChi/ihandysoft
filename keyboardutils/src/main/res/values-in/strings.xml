@@ -558,7 +558,7 @@
     <string name="folder_ad_title">Aplikasi yang diberi komentar ulang</string>
     <string name="search_guide_contacts">Kontak</string>
 
-    <string name="launcher_widget_boost_plus_title">Percepat+</string>
+    <string name="launcher_widget_boost_plus_title">Percepat</string>
     <string name="boost_plus_accessibility_service_label">☆Percepat+☆</string>
     <string name="advanced_boost_authorize_btn">Aktifkan </string>
     <string name="boost_plus_action_button_text">Percepat (%1$s)</string>

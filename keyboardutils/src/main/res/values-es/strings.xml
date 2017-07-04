@@ -606,7 +606,7 @@
 
 
 
-    <string name="launcher_widget_boost_plus_title">Acelerar+</string>
+    <string name="launcher_widget_boost_plus_title">Acelerar</string>
     <string name="boost_plus_accessibility_service_label">☆Acelerar+☆</string>
     <string name="advanced_boost_authorize_btn">Activar</string>
     <string name="boost_plus_action_button_text">Acelerar (%1$s)</string>

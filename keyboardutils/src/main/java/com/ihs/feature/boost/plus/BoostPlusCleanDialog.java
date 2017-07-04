@@ -223,7 +223,7 @@ public class BoostPlusCleanDialog extends FullScreenDialog {
 
     public static void showBoostPlusCleanDialog(Context context, int type) {
         if (CLEAN_TYPE_NORMAL == type && !BoostPlusUtils.isNormalCleanToasted()) {
-            Toast.makeText(context, context.getString(R.string.boost_plus_normal_toast), Toast.LENGTH_LONG).show();
+//            Toast.makeText(context, context.getString(R.string.boost_plus_normal_toast), Toast.LENGTH_LONG).show();
             BoostPlusUtils.setNormalCleanToasted();
         }
         LauncherFloatWindowManager.getInstance().showDialog(context,
