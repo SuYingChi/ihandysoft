@@ -47,7 +47,7 @@ public class ResultPagePresenter implements ResultPageContracts.Presenter {
         List<CardData> cards = null;
         recordFeatureLastUsedTime();
 
-        mType = ResultController.Type.CARD_VIEW;
+        mType = ResultController.Type.AD;
         if (!determineWhetherToShowChargeScreen() || DEBUG_ALL_CARDS) {
             HSLog.d(TAG, "ResultPage Debug all cards current type is " + mType);
             if ( DEBUG_ALL_CARDS) {

@@ -902,7 +902,7 @@
     <string name="guide_open_camera">Slide to open camera quickly</string>
     <string name="guide_open_control_centre">Slide to open Control Centre</string>
     <string name="ok">OK</string>
-    <string name="battery_air_title">Air Battery</string>
+    <string name="battery_air_title">Battery</string>
 
 
     <!-- Cpu Cooler -->
@@ -1080,5 +1080,5 @@
     <string name="wallpaper_change_network_error">Oops! Something went wrong, please try again.</string>
     <string name="workspace_loading">Loading your desktop…</string>
 
-    <string name="ad_placement_result_page">500_A(NativeAds)SevenInOne</string>
+    <string name="ad_placement_result_page">Master_A(NativeAds)Charging</string>
 </resources>

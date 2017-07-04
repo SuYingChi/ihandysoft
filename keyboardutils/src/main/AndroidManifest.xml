@@ -132,7 +132,6 @@
         <activity
             android:name="com.ihs.feature.battery.BatteryActivity"
             android:excludeFromRecents="true"
-            android:process=":battery"
             android:screenOrientation="portrait"
             android:taskAffinity=".battery"
             android:theme="@style/BatteryTheme">

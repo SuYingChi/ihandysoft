@@ -61,6 +61,7 @@ import com.ihs.feature.common.Utils;
 import com.ihs.feature.common.VectorCompat;
 import com.ihs.feature.common.ViewUtils;
 import com.ihs.feature.resultpage.ResultPageActivity;
+import com.ihs.feature.resultpage.ResultPageAdsManager;
 import com.ihs.feature.ui.HeuristicAnimator;
 import com.ihs.feature.ui.SeekCircleProgressBar;
 import com.ihs.keyboardutils.R;
@@ -273,6 +274,7 @@ public class BatteryActivity extends BaseCenterActivity implements View.OnClickL
         mBatteryDataManager = new BatteryDataManager(this);
         initView();
         setListeners();
+        ResultPageAdsManager.getInstance().preloadAd();
     }
 
     @Override
@@ -388,7 +390,7 @@ public class BatteryActivity extends BaseCenterActivity implements View.OnClickL
         TextView titleTv = ViewUtils.findViewById(this, R.id.battery_title_tv);
         String contentText = getString(R.string.battery_air_title);
         SpannableString contentSpannableString = new SpannableString(contentText);
-        contentSpannableString.setSpan(new StyleSpan(Typeface.BOLD), 0, 3, Spanned.SPAN_INCLUSIVE_EXCLUSIVE);
+        contentSpannableString.setSpan(new StyleSpan(Typeface.BOLD), 0, contentText.length(), Spanned.SPAN_INCLUSIVE_EXCLUSIVE);
         titleTv.setText(contentSpannableString);
 
         if (!ChargingPrefsUtil.getInstance().isChargingEnabledBefore()
