@@ -25,8 +25,9 @@ android {
 final LIB_DEVICE_VERSION = '.gm:4.1.+'
 
 dependencies {
-    compile "com.ihandy.nativeads:libNativeAds.gm:4.1.7.gm"
-    compile ("com.ihandy.interstitialads:InterstitialAds.gm:4.1.4.gm")
+    compile "com.ihandy.nativeads:libNativeAds.beta:4.2.1.beta01"
+    compile ("com.ihandy.interstitialads:InterstitialAds.beta:4.1.4.beta01")
+    compile 'com.ihandy.expressads:libExpressAds.beta:4.1.0.beta01'
     compile "com.ihandy.iap:iap.gm:4.0.+"
 
     compile "com.ihandy.device:device-clean-memory$LIB_DEVICE_VERSION"
