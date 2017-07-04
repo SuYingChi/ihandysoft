@@ -35,8 +35,6 @@ libFramework:
     RemoteUrl: ""
 
 libIAP:
-  Purchased: no
-  PurchasedAction: yes
   Verify:
     ByDevice:
       SignatureKey: "MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAnHCQTYWS0OnyHjO/yl+RQ5sFZ3eqpgilg0856s86qiZsAmTmLRB1M5dik2p4oO6HMyLQNScY2e6y0erpbq6YmLdG4kLclDb7+T71/0WsXik49HCDv7nI7i/bxywkgYqjtew3sGj99mhDvdCU3+5BnITGKAOJwjxq6N1sw0ork3KxPo3QpFUCPpqo2CPKctEJgJEbxYhIatPQoN3GyJPtiGFSu62nxVr/tqyUkEAKJtAOjqqoEQ6BhdGN7PY/GOe+N+2T5PsNKdltoBd/zobybvH9o4uOrfDTMM7Z1C6Ocgm+nmdWs0FgRuTgZp7LtS4QThdaUuSRDeW5cvvg40TeOQIDAQAB"

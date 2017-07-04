@@ -1,7 +1,5 @@
 package com.ihs.keyboardutils.iap;
 
-import android.os.Handler;
-
 import com.ihs.commons.config.HSConfig;
 import com.ihs.commons.notificationcenter.HSGlobalNotificationCenter;
 import com.ihs.commons.notificationcenter.INotificationObserver;
@@ -58,27 +56,12 @@ public class RemoveAdsManager {
     }
 
     public boolean isRemoveAdsPurchased() {
-        // TODO: 删除测试代码及配置
-        if (HSLog.isDebugging() && HSConfig.optBoolean(false, "libIAP", "Purchased")) {
-            return true;
-        }
-
         return HSIAPManager.getInstance().hasOwnedSku(removeAdsIapId);
     }
 
     public void purchaseRemoveAds() {
         if (isRemoveAdsPurchased()) {
             return;
-        }
-
-        // TODO: 删除测试代码
-        if (HSLog.isDebugging() && HSConfig.optBoolean(false, "libIAP", "PurchasedAction")) {
-            new Handler().postDelayed(new Runnable() {
-                @Override
-                public void run() {
-                    HSGlobalNotificationCenter.sendNotification(NOTIFICATION_REMOVEADS_PURCHASED);
-                }
-            }, 5000);
         }
 
         if (isPurchasingRemoveAds) {
