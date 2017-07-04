@@ -68,7 +68,7 @@ abstract class ResultController implements View.OnClickListener {
     protected ResultPageActivity mActivity;
     int mScreenHeight;
     int mResultType;
-    Type mType = Type.CARD_VIEW;
+    Type mType = Type.AD;
 
     private FrameLayout mTransitionView;
     private FrameLayout mAdOrChargingScreenContainerView;
@@ -219,6 +219,7 @@ abstract class ResultController implements View.OnClickListener {
         }
         switch (mType) {
             case AD:
+            case CARD_VIEW:
                 mAdImageContainer.setBackground(imageFrame);
                 AcbNativeAdContainerView adContainer = new AcbNativeAdContainerView(getContext());
                 adContainer.addContentView(resultView);
@@ -362,6 +363,11 @@ abstract class ResultController implements View.OnClickListener {
     }
 
     public void startCardResultAnimation(long startDelay) {
+        if(true){
+            mType = Type.AD;
+            startAdOrChargingScreenResultAnimation(startDelay);
+        }
+
         if (mType == Type.CARD_VIEW){
             if (null != mResultView) {
                 mResultView.postDelayed(new Runnable() {

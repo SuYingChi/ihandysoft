@@ -540,7 +540,6 @@ public class NotificationManager {
     }
 
 
-
     @SuppressWarnings({"WeakerAccess", "UnusedParameters"})
     @Thunk
     void updateBoostIcon(int ramUsage) {
@@ -790,5 +789,9 @@ public class NotificationManager {
 
     public static void logNotificationClicked(String type) {
         HSAnalytics.logEvent("Notification_Clicked", "Type", type);
+    }
+
+    public void checkNextNotification() {
+        mNotificationCondition.trySendNotificationInOrder();
     }
 }

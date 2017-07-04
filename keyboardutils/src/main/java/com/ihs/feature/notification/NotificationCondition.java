@@ -6,6 +6,7 @@ import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
+import android.os.Build;
 import android.os.Handler;
 import android.os.Message;
 import android.support.v4.content.ContextCompat;
@@ -27,6 +28,7 @@ import com.ihs.commons.utils.HSLog;
 import com.ihs.feature.battery.BatteryUtils;
 import com.ihs.feature.boost.BoostTipUtils;
 import com.ihs.feature.boost.animation.BoostAnimationManager;
+import com.ihs.feature.common.BitmapUtils;
 import com.ihs.feature.common.DeviceManager;
 import com.ihs.feature.common.DeviceUtils;
 import com.ihs.feature.common.FormatSizeBuilder;
@@ -84,15 +86,15 @@ public class NotificationCondition implements INotificationObserver {
     public static final String KEY_NOTIFICATION_TYPE = "key_notification_type";
 
     @SuppressWarnings("PointlessBooleanExpression")
-    private static final boolean DEBUG_WEATHER_NOTIFICATION = false && BuildConfig.DEBUG;
+    private static final boolean DEBUG_WEATHER_NOTIFICATION = BuildConfig.DEBUG;
     @SuppressWarnings("PointlessBooleanExpression")
-    private static final boolean DEBUG_BATTERY_NOTIFICATION = false && BuildConfig.DEBUG;
+    private static final boolean DEBUG_BATTERY_NOTIFICATION = BuildConfig.DEBUG;
     @SuppressWarnings("PointlessBooleanExpression")
-    private static final boolean DEBUG_BOOST_PLUS_NOTIFICATION = false && BuildConfig.DEBUG;
+    private static final boolean DEBUG_BOOST_PLUS_NOTIFICATION = BuildConfig.DEBUG;
     @SuppressWarnings("PointlessBooleanExpression")
-    private static final boolean DEBUG_JUNK_CLEAN_NOTIFICATION = false && BuildConfig.DEBUG;
+    private static final boolean DEBUG_JUNK_CLEAN_NOTIFICATION = BuildConfig.DEBUG;
     @SuppressWarnings("PointlessBooleanExpression")
-    public static final boolean DEBUG_THEME_NOTIFICATION = false && BuildConfig.DEBUG;
+    public static final boolean DEBUG_THEME_NOTIFICATION =  BuildConfig.DEBUG;
 
     private static final int NOTIFICATION_ID_THEME = 10001;
     public static final int NOTIFICATION_ID_WEATHER = 10002;
@@ -166,7 +168,7 @@ public class NotificationCondition implements INotificationObserver {
         HSGlobalNotificationCenter.addObserver(EVENT_UNLOCK, this);
     }
 
-    private void trySendNotificationInOrder() {
+    public void trySendNotificationInOrder() {
         if (checkState != CHECK_STATE_DONE) {
             return;
         }
@@ -222,7 +224,7 @@ public class NotificationCondition implements INotificationObserver {
     }
 
     @Thunk
-    void checkNextNotification() {
+    public void checkNextNotification() {
         switch (checkState) {
             case CHECK_STATE_START:
                 checkState = NOTIFICATION_TYPE_BATTERY;
@@ -887,7 +889,14 @@ public class NotificationCondition implements INotificationObserver {
 
     private static RemoteViews createIconsRemoteViews(LocalNotification notificationModel) {
         RemoteViews remoteViews = new RemoteViews(HSApplication.getContext().getPackageName(), R.layout.notification_cleaner_bar_block_view);
-        remoteViews.setImageViewResource(R.id.protect_image, notificationModel.iconDrawableId);
+
+
+        if(notificationModel.notificationId == NOTIFICATION_ID_BOOST_PLUS && Build.VERSION.SDK_INT < Build.VERSION_CODES.LOLLIPOP){
+            remoteViews.setImageViewBitmap(R.id.protect_image, BitmapUtils.vectorToBitmap(HSApplication.getContext(),notificationModel.iconDrawableId));
+        }else{
+            remoteViews.setImageViewResource(R.id.protect_image, notificationModel.iconDrawableId);
+        }
+
         remoteViews.setTextViewText(R.id.block_title_text, notificationModel.title);
         remoteViews.setTextViewText(R.id.notification_btn_text, notificationModel.buttonText);
 

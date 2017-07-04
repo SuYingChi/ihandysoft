@@ -1,5 +1,6 @@
 package com.ihs.feature.common;
 
+import android.content.Context;
 import android.content.res.Resources;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -11,6 +12,8 @@ import android.graphics.PorterDuff;
 import android.graphics.PorterDuffColorFilter;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
+import android.support.annotation.DrawableRes;
+import android.support.graphics.drawable.VectorDrawableCompat;
 
 /**
  * Bitmap utility from https://developer.android.com/training/displaying-bitmaps/load-bitmap.html.
@@ -316,5 +319,17 @@ public class BitmapUtils {
 
         bitmap.setPixels(pix, 0, w, 0, 0, w, h);
         return bitmap;
+    }
+
+    public static Bitmap vectorToBitmap(Context ctx, @DrawableRes int resVector) {
+        Drawable drawable = VectorDrawableCompat.create(ctx.getResources(), resVector,null);
+        if(drawable==null){
+            return null;
+        }
+        Bitmap b = Bitmap.createBitmap(drawable.getIntrinsicWidth(), drawable.getIntrinsicHeight(), Bitmap.Config.ARGB_8888);
+        Canvas c = new Canvas(b);
+        drawable.setBounds(0, 0, c.getWidth(), c.getHeight());
+        drawable.draw(c);
+        return b;
     }
 }
