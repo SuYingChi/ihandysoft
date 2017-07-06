@@ -41,7 +41,9 @@ import android.widget.TextView;
 
 import com.acb.expressads.AcbExpressAdView;
 import com.artw.lockscreen.LockerUtils;
+import com.ihs.app.analytics.HSAnalytics;
 import com.ihs.app.framework.HSApplication;
+import com.ihs.app.framework.HSSessionMgr;
 import com.ihs.charging.HSChargingManager;
 import com.ihs.charging.HSChargingManager.HSChargingState;
 import com.ihs.chargingscreen.Constants;
@@ -391,6 +393,7 @@ public class ChargingScreenActivity extends Activity {
     @Override
     public void onStart() {
         super.onStart();
+        HSAnalytics.startFlurry();
 
         PowerManager powerManager = (PowerManager) getSystemService(Context.POWER_SERVICE);
         if (powerManager.isScreenOn()) {
@@ -420,6 +423,9 @@ public class ChargingScreenActivity extends Activity {
     @Override
     protected void onStop() {
         super.onStop();
+        if (!HSSessionMgr.isSessionStarted()) {
+            HSAnalytics.stopFlurry();
+        }
         HSLog.d("chargingtest onStop");
 
         bubbleView.stop();
