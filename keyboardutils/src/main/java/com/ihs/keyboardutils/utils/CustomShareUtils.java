@@ -32,6 +32,7 @@ import com.ihs.app.analytics.HSAnalytics;
 import com.ihs.app.framework.HSApplication;
 import com.ihs.keyboardutils.R;
 import com.ihs.keyboardutils.alerts.HSAlertDialog;
+import com.ihs.keyboardutils.iap.RemoveAdsManager;
 import com.ihs.keyboardutils.nativeads.NativeAdParams;
 import com.ihs.keyboardutils.nativeads.NativeAdView;
 
@@ -122,27 +123,32 @@ public class CustomShareUtils {
         recyclerView.addItemDecoration(new ShareItemDecoration(resources.getDimensionPixelSize(R.dimen.share_item_column_space)));
 
         final View shareAdView = View.inflate(context, R.layout.ad_share, null);
-        View adActionView = shareAdView.findViewById(R.id.ad_call_to_action);
-        adActionView.setBackgroundDrawable(RippleDrawableUtils.getCompatRippleDrawable(resources.getColor(R.color.ad_share_action_button_bg), resources.getDimension(R.dimen.corner_radius)));
-        shareAdView.setLayoutParams(new FrameLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT));
+        if (!RemoveAdsManager.getInstance().isRemoveAdsPurchased()) {
+            View adActionView = shareAdView.findViewById(R.id.ad_call_to_action);
+            adActionView.setBackgroundDrawable(RippleDrawableUtils.getCompatRippleDrawable(resources.getColor(R.color.ad_share_action_button_bg), resources.getDimension(R.dimen.corner_radius)));
+            shareAdView.setLayoutParams(new FrameLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT));
 
-        final NativeAdView nativeAdView = new NativeAdView(context, shareAdView, adLoadingView);
-        nativeAdView.setOnAdClickedListener(new NativeAdView.OnAdClickedListener() {
-            @Override
-            public void onAdClicked(NativeAdView adView) {
-                dismissDialog(context, dialog);
-            }
-        });
-        nativeAdView.configParams(new NativeAdParams(adPlaceName, resources.getDisplayMetrics().widthPixels, 1.9f));
+            final NativeAdView nativeAdView = new NativeAdView(context, shareAdView, adLoadingView);
+            nativeAdView.setOnAdClickedListener(new NativeAdView.OnAdClickedListener() {
+                @Override
+                public void onAdClicked(NativeAdView adView) {
+                    dismissDialog(context, dialog);
+                }
+            });
+            nativeAdView.configParams(new NativeAdParams(adPlaceName, resources.getDisplayMetrics().widthPixels, 1.9f));
 
-        shareAdContainer.addView(nativeAdView);
+            shareAdContainer.addView(nativeAdView);
 
-        dialog.setOnDismissListener(new DialogInterface.OnDismissListener() {
-            @Override
-            public void onDismiss(DialogInterface dialog) {
-                nativeAdView.release();
-            }
-        });
+            dialog.setOnDismissListener(new DialogInterface.OnDismissListener() {
+                @Override
+                public void onDismiss(DialogInterface dialog) {
+                    nativeAdView.release();
+                }
+            });
+        } else {
+            shareAdView.setVisibility(View.GONE);
+        }
+
         if (context!=null && context instanceof Activity){
             if (!((Activity) context).isFinishing()){
                 dialog.show();

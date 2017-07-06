@@ -4,6 +4,7 @@ import android.animation.ObjectAnimator;
 import android.app.Dialog;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.graphics.Color;
 import android.graphics.drawable.BitmapDrawable;
 import android.os.Build;
 import android.support.v4.content.ContextCompat;
@@ -39,6 +40,7 @@ import com.artw.lockscreen.slidingup.SlidingUpCallback;
 import com.artw.lockscreen.slidingup.SlidingUpTouchListener;
 import com.ihs.app.analytics.HSAnalytics;
 import com.ihs.app.framework.HSApplication;
+import com.ihs.chargingscreen.utils.DisplayUtils;
 import com.ihs.commons.notificationcenter.HSGlobalNotificationCenter;
 import com.ihs.commons.notificationcenter.INotificationObserver;
 import com.ihs.commons.utils.HSBundle;
@@ -46,6 +48,7 @@ import com.ihs.flashlight.FlashlightManager;
 import com.ihs.keyboardutils.R;
 import com.ihs.keyboardutils.alerts.KCAlert;
 import com.ihs.keyboardutils.iap.RemoveAdsManager;
+import com.ihs.keyboardutils.utils.RippleDrawableUtils;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
@@ -61,6 +64,7 @@ public class LockerMainFrame extends RelativeLayout implements INotificationObse
     public static final String EVENT_SLIDING_DRAWER_OPENED = "EVENT_SLIDING_DRAWER_OPENED";
     public static final String EVENT_SLIDING_DRAWER_CLOSED = "EVENT_SLIDING_DRAWER_CLOSED";
     private AcbExpressAdView acbExpressAdView;
+    private ImageView removeAds;
 
     private boolean mIsSlidingDrawerOpened = false;
     private boolean mIsBlackHoleShowing = false;
@@ -178,10 +182,10 @@ public class LockerMainFrame extends RelativeLayout implements INotificationObse
         super.onAttachedToWindow();
 
         // 单次关闭广告或永久删除广告
-        final ImageView removeAds = (ImageView) findViewById(R.id.remove_ads);
-        if (RemoveAdsManager.getInstance().isRemoveAdsPurchased()) {
+        if (!RemoveAdsManager.getInstance().isRemoveAdsPurchased()) {
+            removeAds = (ImageView) findViewById(R.id.remove_ads);
             removeAds.setVisibility(GONE);
-        } else {
+
             acbExpressAdView = new AcbExpressAdView(HSApplication.getContext(),getContext().getString(R.string.ad_placement_locker));
             acbExpressAdView.setExpressAdViewListener(new AcbExpressAdView.AcbExpressAdViewListener() {
                 @Override
@@ -189,44 +193,22 @@ public class LockerMainFrame extends RelativeLayout implements INotificationObse
                     HSAnalytics.logEvent("NativeAd_ColorCam_A(NativeAds)ScreenLocker_Click");
                     HSGlobalNotificationCenter.sendNotification(LockerActivity.EVENT_FINISH_SELF);
                 }
+
+                @Override
+                public void onAdShown(AcbExpressAdView acbExpressAdView) {
+                    removeAds.setVisibility(VISIBLE);
+                }
             });
             mAdContainer.addView(acbExpressAdView);
             mAdContainer.setVisibility(VISIBLE);
 
-            removeAds.setVisibility(VISIBLE);
             removeAds.setOnClickListener(new OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    KCAlert.Builder builder = new KCAlert.Builder();
-                    builder.setTitle("Remove Ads")
-                            .setMessage("Remove all ads forever or just this time?")
-                            .setNegativeButton("Just once", new OnClickListener() {
-                                @Override
-                                public void onClick(View view) {
-                                    mAdContainer.removeView(acbExpressAdView);
-                                    removeAds.setVisibility(GONE);
-                                }
-                            })
-                            .setPositiveButton("Forever", new OnClickListener() {
-                                @Override
-                                public void onClick(View view) {
-                                    RemoveAdsManager.getInstance().purchaseRemoveAds();
-
-                                    HSGlobalNotificationCenter.addObserver(NOTIFICATION_REMOVEADS_PURCHASED, new INotificationObserver() {
-                                        @Override
-                                        public void onReceive(String s, HSBundle hsBundle) {
-                                            HSGlobalNotificationCenter.removeObserver(this);
-                                            mAdContainer.removeView(acbExpressAdView);
-                                            removeAds.setVisibility(GONE);
-                                        }
-                                    });
-                                }
-                            })
-                            .show();
+                    showRemoveAdsDialog();
                 }
             });
         }
-        removeAds.setVisibility(GONE);
 
         ViewTreeObserver viewTreeObserver = getViewTreeObserver();
         viewTreeObserver.addOnGlobalLayoutListener(new OnGlobalLayoutListener() {
@@ -473,5 +455,51 @@ public class LockerMainFrame extends RelativeLayout implements INotificationObse
             this.dialog.dismiss();
             this.dialog = null;
         }
+    }
+
+    private void showRemoveAdsDialog() {
+        final Dialog removeAdsDialog = new Dialog(this.getContext(), R.style.dialog);
+        removeAdsDialog.setContentView(R.layout.remove_ads_dialog);
+
+        View btnJustOnce = removeAdsDialog.findViewById(R.id.btn_just_once);
+        View btnForever = removeAdsDialog.findViewById(R.id.btn_forever);
+
+        btnJustOnce.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                removeAdsDialog.dismiss();
+
+                mAdContainer.removeView(acbExpressAdView);
+                removeAds.setVisibility(GONE);
+            }
+        });
+
+        btnForever.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                removeAdsDialog.dismiss();
+
+                RemoveAdsManager.getInstance().purchaseRemoveAds();
+
+                HSGlobalNotificationCenter.addObserver(NOTIFICATION_REMOVEADS_PURCHASED, new INotificationObserver() {
+                    @Override
+                    public void onReceive(String s, HSBundle hsBundle) {
+                        HSGlobalNotificationCenter.removeObserver(this);
+                        if (removeAds != null) {
+                            removeAds.setVisibility(GONE);
+                        }
+                        if (acbExpressAdView != null) {
+                            mAdContainer.removeView(acbExpressAdView);
+                            acbExpressAdView.destroy();
+                            acbExpressAdView = null;
+                        }
+                    }
+                });
+            }
+        });
+        btnForever.setBackgroundDrawable(RippleDrawableUtils.getCompatRippleDrawable(Color.WHITE, 0, 0, 0, DisplayUtils.dip2px(8)));
+        btnJustOnce.setBackgroundDrawable(RippleDrawableUtils.getCompatRippleDrawable(Color.WHITE, 0, 0, DisplayUtils.dip2px(8), 0));
+
+        removeAdsDialog.show();
     }
 }

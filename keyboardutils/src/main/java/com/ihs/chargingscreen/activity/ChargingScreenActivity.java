@@ -202,6 +202,8 @@ public class ChargingScreenActivity extends Activity {
     private BubbleView bubbleView;
     private PowerManager powerManager = (PowerManager) HSApplication.getContext().getSystemService(Context.POWER_SERVICE);
     private AcbExpressAdView acbExpressAdView;
+    private FrameLayout adContainer;
+    private ImageView removeAds;
 
 
     private long createTime;
@@ -321,7 +323,7 @@ public class ChargingScreenActivity extends Activity {
         } catch (Exception e) {
         }
 
-        final FrameLayout adContainer = (FrameLayout) findViewById(R.id.ad_container);
+        adContainer = (FrameLayout) findViewById(R.id.ad_container);
         txtBatteryLevelPercent = (TextView) findViewById(R.id.txt_battery_level);
         Typeface tf = Typeface.createFromAsset(getAssets(), "fonts/dincond_medium.otf");
         txtBatteryLevelPercent.setTypeface(tf);
@@ -349,53 +351,31 @@ public class ChargingScreenActivity extends Activity {
             findViewById(R.id.img_setting).setVisibility(View.INVISIBLE);
         }
 
-        acbExpressAdView = new AcbExpressAdView(HSApplication.getContext(), HSChargingScreenManager.getInstance().getNaitveAdsPlacementName());
-        adContainer.addView(acbExpressAdView);
-        acbExpressAdView.setExpressAdViewListener(new AcbExpressAdView.AcbExpressAdViewListener() {
-            @Override
-            public void onAdClicked(AcbExpressAdView acbExpressAdView) {
-                finish();
-            }
-        });
+        if (!RemoveAdsManager.getInstance().isRemoveAdsPurchased()) {
+            acbExpressAdView = new AcbExpressAdView(HSApplication.getContext(), HSChargingScreenManager.getInstance().getNaitveAdsPlacementName());
+            adContainer.addView(acbExpressAdView);
 
-        // 单次关闭广告或永久删除广告
-        final ImageView removeAds = (ImageView) findViewById(R.id.remove_ads);
-        if (RemoveAdsManager.getInstance().isRemoveAdsPurchased()) {
-            removeAds.setVisibility(View.GONE);
-        } else {
+            // 单次关闭广告或永久删除广告
+            removeAds = (ImageView) findViewById(R.id.remove_ads);
             removeAds.setOnClickListener(new OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    KCAlert.Builder builder = new KCAlert.Builder();
-                    builder.setTitle("Remove Ads")
-                            .setMessage("Remove all ads forever or just this time?")
-                            .setNegativeButton("Just once", new OnClickListener() {
-                                @Override
-                                public void onClick(View view) {
-                                    adContainer.removeView(acbExpressAdView);
-                                    removeAds.setVisibility(View.GONE);
-                                }
-                            })
-                            .setPositiveButton("Forever", new OnClickListener() {
-                                @Override
-                                public void onClick(View view) {
-                                    RemoveAdsManager.getInstance().purchaseRemoveAds();
+                    showRemoveAdsDialog();
+                }
+            });
 
-                                    HSGlobalNotificationCenter.addObserver(NOTIFICATION_REMOVEADS_PURCHASED, new INotificationObserver() {
-                                        @Override
-                                        public void onReceive(String s, HSBundle hsBundle) {
-                                            HSGlobalNotificationCenter.removeObserver(this);
-                                            adContainer.removeView(acbExpressAdView);
-                                            removeAds.setVisibility(View.GONE);
-                                        }
-                                    });
-                                }
-                            })
-                            .show();
+            acbExpressAdView.setExpressAdViewListener(new AcbExpressAdView.AcbExpressAdViewListener() {
+                @Override
+                public void onAdClicked(AcbExpressAdView acbExpressAdView) {
+                    finish();
+                }
+
+                @Override
+                public void onAdShown(AcbExpressAdView acbExpressAdView) {
+                    removeAds.setVisibility(View.VISIBLE);
                 }
             });
         }
-        removeAds.setVisibility(View.GONE);
     }
 
     private void showChargingIndicatorText() {
@@ -923,4 +903,49 @@ public class ChargingScreenActivity extends Activity {
         }
     }
 
+    private void showRemoveAdsDialog() {
+        final Dialog removeAdsDialog = new Dialog(this, R.style.dialog);
+        removeAdsDialog.setContentView(R.layout.remove_ads_dialog);
+
+        View btnJustOnce = removeAdsDialog.findViewById(R.id.btn_just_once);
+        View btnForever = removeAdsDialog.findViewById(R.id.btn_forever);
+
+        btnJustOnce.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                removeAdsDialog.dismiss();
+
+                adContainer.removeView(acbExpressAdView);
+                removeAds.setVisibility(View.GONE);
+            }
+        });
+
+        btnForever.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                removeAdsDialog.dismiss();
+
+                RemoveAdsManager.getInstance().purchaseRemoveAds();
+
+                HSGlobalNotificationCenter.addObserver(NOTIFICATION_REMOVEADS_PURCHASED, new INotificationObserver() {
+                    @Override
+                    public void onReceive(String s, HSBundle hsBundle) {
+                        HSGlobalNotificationCenter.removeObserver(this);
+                        if (removeAds != null) {
+                            removeAds.setVisibility(View.GONE);
+                        }
+                        if (acbExpressAdView != null) {
+                            adContainer.removeView(acbExpressAdView);
+                            acbExpressAdView.destroy();
+                            acbExpressAdView = null;
+                        }
+                    }
+                });
+            }
+        });
+        btnForever.setBackgroundDrawable(RippleDrawableUtils.getCompatRippleDrawable(Color.WHITE, 0, 0, 0, DisplayUtils.dip2px(8)));
+        btnJustOnce.setBackgroundDrawable(RippleDrawableUtils.getCompatRippleDrawable(Color.WHITE, 0, 0, DisplayUtils.dip2px(8), 0));
+
+        removeAdsDialog.show();
+    }
 }

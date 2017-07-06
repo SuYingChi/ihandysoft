@@ -82,7 +82,8 @@
         android:layout_above="@+id/rl_ad_container"
         android:layout_alignParentRight="true"
         android:layout_marginRight="9dp"
-        android:src="@drawable/ad_close_button" />
+        android:src="@drawable/ad_close_button"
+        android:visibility="gone" />
 
     <com.ihs.keyboardutils.view.RoundedCornerLayout
         android:id="@+id/rl_ad_container"

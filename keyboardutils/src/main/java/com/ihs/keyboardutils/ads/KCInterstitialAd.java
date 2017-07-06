@@ -12,6 +12,7 @@ import com.acb.interstitialads.AcbInterstitialAdLoader;
 import com.ihs.app.framework.HSApplication;
 import com.ihs.commons.utils.HSError;
 import com.ihs.commons.utils.HSLog;
+import com.ihs.keyboardutils.iap.RemoveAdsManager;
 import com.ihs.keyboardutils.utils.KCAnalyticUtil;
 
 import java.util.List;
@@ -27,6 +28,9 @@ public class KCInterstitialAd {
     }
 
     public static void load(String placement) {
+        if (RemoveAdsManager.getInstance().isRemoveAdsPurchased()) {
+            return;
+        }
         logAnalyticsEvent(placement, "Load");
         new AcbInterstitialAdLoader(HSApplication.getContext(), placement).load(1, null);
     }
@@ -43,6 +47,10 @@ public class KCInterstitialAd {
      * @return 广告的Loader，需要在合适的时机去 Cancel
      */
     public static AcbInterstitialAdLoader loadAndShow(final String placement, final OnAdShowListener onAdShowListener, final OnAdCloseListener onAdCloseListener, final boolean showQuietly) {
+        if (RemoveAdsManager.getInstance().isRemoveAdsPurchased()) {
+            return null;
+        }
+
         logAnalyticsEvent(placement, "Load");
         AcbInterstitialAdLoader loader = new AcbInterstitialAdLoader(HSApplication.getContext(), placement);
         loader.load(1, new AcbInterstitialAdLoader.AcbInterstitialAdLoadListener() {
@@ -91,6 +99,10 @@ public class KCInterstitialAd {
     }
 
     public static boolean show(final String placement, final OnAdCloseListener onAdCloseListener, boolean showQuietly) {
+        if (RemoveAdsManager.getInstance().isRemoveAdsPurchased()) {
+            return false;
+        }
+
         List<AcbInterstitialAd> interstitialAds = AcbInterstitialAdLoader.fetch(HSApplication.getContext(), placement, 1);
         if (interstitialAds.size() <= 0) {
             logAnalyticsEvent(placement, "FetchNoAd");
@@ -101,6 +113,10 @@ public class KCInterstitialAd {
     }
 
     private static boolean show(final String placement, List<AcbInterstitialAd> interstitialAds, final OnAdCloseListener onAdCloseListener, boolean showQuietly) {
+        if (RemoveAdsManager.getInstance().isRemoveAdsPurchased()) {
+            return false;
+        }
+
         if (interstitialAds == null || interstitialAds.size() == 0) {
             return false;
         }
