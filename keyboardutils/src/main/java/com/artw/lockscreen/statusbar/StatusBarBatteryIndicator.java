@@ -7,7 +7,7 @@ import android.graphics.Paint;
 import android.util.AttributeSet;
 import android.view.View;
 
-import com.artw.lockscreen.common.DeviceManager;
+import com.ihs.feature.common.DeviceManager;
 
 public class StatusBarBatteryIndicator extends View {
     private int percentage = 19;

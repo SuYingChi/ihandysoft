@@ -5,6 +5,7 @@ import com.ihs.app.framework.HSSessionMgr;
 import com.ihs.commons.config.HSConfig;
 import com.ihs.commons.utils.HSLog;
 import com.ihs.commons.utils.HSPreferenceHelper;
+import com.ihs.feature.common.PreferenceHelper;
 
 import static com.ihs.chargingscreen.utils.ChargingAnalytics.app_chargingLocker_enable;
 
@@ -16,6 +17,7 @@ public class ChargingPrefsUtil {
     public static final String UNPLUG_MAX_TIME = "unplug_max_time";
     public static final String FULL_CHARGED_MAX_TIME = "full_charged_max_time";
     private static final int CHARGING_STATE_MAX_APPEAR_TIMES = 3;
+    public static final String PREF_KEY_CHARGING_SCREEN_BATTERY_MENU_TIP_SHOWN = "pref_key_charging_screen_battery_menu_tip_shown";
 
     public static final int CHARGING_MUTED = 0;
     public static final int CHARGING_DEFAULT_DISABLED = 1;
@@ -66,6 +68,10 @@ public class ChargingPrefsUtil {
 
 
     public static int getChargingEnableStates() {
+        if(spHelper == null){
+            getInstance();
+        }
+
         //用户设置过的话，直接返回用户设置的状态。不管plist任何值，包括静默。
         if (spHelper.contains(USER_ENABLED_CHARGING)) {
             HSLog.e("CHARGING 获取用户设置" );
@@ -136,5 +142,13 @@ public class ChargingPrefsUtil {
 
     private static int getChargingPlistConfig() {
         return HSConfig.optInteger(CHARGING_MUTED, "Application", "ChargeLocker", "state");
+    }
+
+    public static boolean isBatteryTipShown() {
+        return PreferenceHelper.getDefault().getBoolean(PREF_KEY_CHARGING_SCREEN_BATTERY_MENU_TIP_SHOWN, false);
+    }
+
+    public static void setBatteryTipShown() {
+        PreferenceHelper.getDefault().putBoolean(PREF_KEY_CHARGING_SCREEN_BATTERY_MENU_TIP_SHOWN, true);
     }
 }

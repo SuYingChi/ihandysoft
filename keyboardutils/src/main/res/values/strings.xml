@@ -447,7 +447,7 @@
     <string name="launcher_widget_menu_widgets_title">Widgets</string>
     <string name="launcher_widget_system_settings_title">System Settings</string>
     <string name="launcher_widget_launcher_settings_title">Launcher Settings</string>
-    <string name="launcher_widget_boost_plus_title">Boost+</string>
+    <string name="launcher_widget_boost_plus_title">Boost</string>
     <string name="launcher_shortcut_boost">1-Tap Boost</string>
     <string name="launcher_widget_market_title">App Picks</string>
 
@@ -906,10 +906,8 @@
     <!-- For libDevice:permanent -->
     <string name="sync_account_type" translatable="false">com.honeycomb.launcher.sync_account</string>
 
-    <string name="install_btn">INSTALL</string>
     <string name="popular_hot_text">HOT</string>
 
-    <string name="workspace_loading">Loading your desktop…</string>
     <string-array name="workspace_loading_array">
         <item>Loading your desktop</item>
         <item>Loading your desktop.</item>
@@ -939,31 +937,12 @@
     <string name="desktop_settings_title">Desktop settings</string>
     <string name="hotseat_label_settings_title">Dock label</string>
 
-    <string name="customize_keyboard_title">Keyboard</string>
-    <string name="customize_locker_title">Locker</string>
-    <string name="online_theme_tab_title_hot">Hot</string>
-    <string name="online_theme_tab_title_new">New</string>
-    <string name="online_theme_tab_title_category">Categories</string>
-
-
-    <string name="online_wallpaper_tab_title_hot">Hot</string>
-
-
-    <string name="add_wallpaper">Add Wallpaper</string>
-    <string name="upload_wallpaper">Upload Wallpaper</string>
-    <string name="upload_wallpaper_button_text">Upload</string>
-    <string name="upload_wallpaper_tip">Tips：\n1. Image will be automatically scaled to optimum size\n2. Your image will be shown in \"Me\"\n3. High quality images are more possible to be collected by App\n4. Your image will show up in the feed after it\'s been reviewed</string>
-    <string name="upload_wallpaper_declaration">By uploading, you agree App\'s</string>
-    <string name="upload_wallpaper_success">Upload successfully</string>
-
 
     <!-- Custom Alert -->
 
     <string name="launcher_widget_desktop_ad_title">Air Board</string>
 
     <string name="launcher_widget_desktop_settings_title">Desktop Settings</string>
-    <string name="launcher_widget_flashlight_promotion_title">Flashlight</string>
-    <string name="launcher_widget_one_tap_wallpaper_title">Shuffle</string>
 
 
     <string name="set_as_default_boost_mem_body_1">Set App as home\nto make your phone run faster!</string>
@@ -971,7 +950,6 @@
     <string name="set_as_default_boost_mem_body_3">Set App as home\nto clean your phone completely!</string>
 
     <!-- Desktop grid -->
-    <string name="desktop_grid_dialog_title">Desktop grid (Column × Row)</string>
     <string-array name="desktop_grid_dialog_choices" translatable="false">
         <item>4 × 4</item>
         <item>4 × 5</item>
@@ -985,6 +963,37 @@
     </string-array>
     <string name="desktop_grid_separator" translatable="false">×</string>
 
+    <string name="ok">OK</string>
+    <string name="battery_air_title">Battery</string>
+
+
+
+    <string name="optimalpage_boostplus">Perfect</string>
+    <string name="optimalpage_boostplus_desc">Your phone is as fast as a rocket!</string>
+    <string name="optimalpage_junkclean_desc">Your phone is clean as new!</string>
+
+    <string name="result_empty_view_boost_buttton">BOOST</string>
+    <string name="result_empty_view_clean_buttton">CLEAN</string>
+    <string name="result_empty_view_battery_buttton">SOLVE</string>
+    <string name="result_empty_view_cpucooler_buttton">COOL</string>
+    <string name="result_empty_view_notification_buttton">CLEAN</string>
+    <string name="result_empty_view_boost_title_single">%1$s Apps Lagging Phone!</string>
+    <string name="result_empty_view_clean_title_single">%1$s MB+ Junk Files Found!</string>
+    <string name="result_empty_view_battery_title_single">%1$s%% Battery Left!</string>
+    <string name="result_empty_view_cpucooler_title_single">%1$s℃ Phone Overheated!</string>
+    <string name="result_empty_view_notification_title_single">%1$s Junk Notifications!</string>
+    <string name="result_empty_view_boost_title_double">%1$s Apps</string>
+    <string name="result_empty_view_boost_description_double">Lagging Phone</string>
+    <string name="result_empty_view_clean_title_double" translatable="false">%1$s MB+</string>
+    <string name="result_empty_view_clean_description_double">Junk Files</string>
+    <string name="result_empty_view_battery_title_double" translatable="false">%1$s%%</string>
+    <string name="result_empty_view_battery_description_double">Battery Left</string>
+
+    <string name="result_empty_view_cpucooler_title_double" translatable="false">%1$s℃</string>
+    <string name="result_empty_view_cpucooler_description_double">Phone Overheated</string>
+    <string name="result_empty_view_notification_title_double">%1$s Notifications</string>
+    <string name="result_empty_view_notification_description_double">to clean</string>
+>>>>>>> boost
 
     <string name="notification_cpu_cooler_title">%1$s°C Phone Overheating!</string>
     <string name="notification_cpu_cooler_content">Tap to cool down your phone!</string>
@@ -995,30 +1004,6 @@
     <string name="search_bar_ad_content" translatable="false">AD</string>
 
     <!-- Battery Main-->
-
-    <string name="gesture_guide_content_folder_down">Swipe down to start one-handed operation</string>
-    <string name="gesture_guide_content_two_up">Two fingers swipe up to open Hide Apps</string>
-
-    <string name="accessibility_service_label">☆App☆</string>
-
-    <string name="result_page_card_default_boost_plus_title">Why use Boost+?</string>
-    <string name="result_page_card_default_boost_plus_description">Auto-started apps can\'t be stopped by normal boost and always lag your phone. Use Boost+ to force stop them.\nBoost+ is more effective than 90\%% cleaner software.</string>
-    <string name="result_page_card_default_junk_cleaner_title">Use Junk Cleaner often</string>
-    <string name="result_page_card_default_junk_cleaner_description">Useless cache &amp; junk files always take up large phone space and lag your phone. Use Junk Cleaner to clean them completely.</string>
-    <string name="result_page_card_default_cpu_cooler_title">Why use CPU Cooler?</string>
-    <string name="result_page_card_default_cpu_cooler_description">CPU overheating will lag your phone, consume power and even cause phone explosion. Use CPU cooler to cool your phone down!</string>
-    <string name="result_page_card_default_battery_title">Battery life saver</string>
-    <string name="result_page_card_default_battery_description">Apps running in the background consume power all the time. Using Battery to extend battery life by 50\%% or more.</string>
-    <string name="result_page_card_default_notification_center_title">Why use Notification Cleaner?</string>
-    <string name="result_page_card_default_notification_center_description">Notification cleaner helps you hide unwanted notifications and clean them by 1 tap. Use it often to keep your phone clean!</string>
-
-    <!-- Junk Clean -->
-    <string name="accessibility_service_description" tools:ignore="UnusedResources">Turn on the switch above, then tap OK.\n\nEnable to:\n1) Boost phone 80\%%\n2) Clean junk files\n3) Kill battery draining apps\n\nBoost+ team is devoted to speed up your phone and never collects any personal data.</string>
-    <string name="notification_junk_clean_title">%1$s junk files found!</string>
-    <string name="notification_junk_clean_content">Clean to save phone space</string>
-    <string name="clean_title">Junk Cleaner</string>
-    <string name="clean_title_capital">JUNK CLEANER</string>
-    <string name="clean_capital">CLEAN</string>
 
     <string name="clean_junk_found_title_case">Junk Found</string>
     <string name="clean_junk_selected">Junk Selected</string>
@@ -1042,14 +1027,7 @@
     <string name="clean_card_content">Too many junk files found. Clean to boost your phone.</string>
     <string name="installed">Installed</string>
     <string name="uninstalled">Uninstalled</string>
-    <string name="skip">SKIP</string>
 
-    <!-- App promotions -->
-    <string name="promotion_security_title">Super Security</string>
-    <string name="promotion_security_banner_description">Scan and remove apps with malware or viruses that crash or slow your device.</string>
-    <string name="promotion_security_alert_title">Find 1 Suspect File</string>
-    <string name="promotion_security_alert_description">Install Super Security to clean this suspect file and protect your phone from malware and viruses.</string>
-    <string name="promotion_security_card_description">Your phone is being threatened by hidden risks, activate Super Security to protect your phone.</string>
     <string name="promotion_max_card_title_cpu_cooler">CPU Cooler</string>
     <string name="promotion_max_card_title_game_booster">Game Booster</string>
     <string name="promotion_max_card_description_game_booster">Can\'t run games smoothly? Game booster boosts games at least by 30% automatically.</string>
@@ -1069,8 +1047,6 @@
     <string name="clean_ad_cache">AD Cache</string>
     <string name="clean_app_cache">%1$s Cache</string>
     <string name="boost_plus_normal_toast">Normal Boost!</string>
-    <string name="enable_now">ENABLE NOW</string>
-    <string name="notice">Notice</string>
     <string name="accessibility_dialog_description">Detected: %1$s apps always auto start automatically. Stop them after accessibility enabled!</string>
 
     <!-- Cpu Cooler -->
@@ -1103,6 +1079,47 @@
 
     <!-- folder add button -->
     <string name="folder_add_button_title">Add Apps</string>
+
+    <string name="promotion_security_title">Super Security</string>
+    <string name="promotion_security_banner_description">Scan and remove apps with malware or viruses that crash or slow your device.</string>
+    <string name="promotion_security_alert_title">Find 1 Suspect File</string>
+    <string name="promotion_security_alert_description">Install Super Security to clean this suspect file and protect your phone from malware and viruses.</string>
+    <string name="promotion_security_card_description">Your phone is being threatened by hidden risks, activate Super Security to protect your phone.</string>
+
+    <string name="clean_title">Junk Cleaner</string>
+    <string name="clean_title_capital">JUNK CLEANER</string>
+    <string name="clean_capital">CLEAN</string>
+
+    <string name="customize_keyboard_title">Keyboard</string>
+    <string name="customize_locker_title">Locker</string>
+    <string name="desktop_grid_dialog_title">Desktop grid (Column × Row)</string>
+    <string name="enable_now">ENABLE NOW</string>
+
+    <string name="gesture_guide_content_folder_down">Swipe down to start one-handed operation</string>
+    <string name="gesture_guide_content_two_up">Two fingers swipe up to open Hide Apps</string>
+    <string name="install_btn">INSTALL</string>
+    <string name="notice">Notice</string>
+    <string name="notification_junk_clean_title">%1$s junk files found!</string>
+    <string name="notification_junk_clean_content">Clean to save phone space</string>
+    <string name="online_theme_tab_title_category">Categories</string>
+    <string name="online_theme_tab_title_hot">Hot</string>
+    <string name="online_wallpaper_tab_title_hot">Hot</string>
+    <string name="result_page_card_default_boost_plus_title">Why use Boost+?</string>
+    <string name="result_page_card_default_boost_plus_description">Auto-started apps can\'t be stopped by normal boost and always lag your phone. Use Boost+ to force stop them.\nBoost+ is more effective than 90\%% cleaner software.</string>
+    <string name="result_page_card_default_junk_cleaner_title">Use Junk Cleaner often</string>
+    <string name="result_page_card_default_junk_cleaner_description">Useless cache &amp; junk files always take up large phone space and lag your phone. Use Junk Cleaner to clean them completely.</string>
+    <string name="result_page_card_default_cpu_cooler_title">Why use CPU Cooler?</string>
+    <string name="result_page_card_default_cpu_cooler_description">CPU overheating will lag your phone, consume power and even cause phone explosion. Use CPU cooler to cool your phone down!</string>
+    <string name="result_page_card_default_battery_title">Battery life saver</string>
+    <string name="result_page_card_default_battery_description">Apps running in the background consume power all the time. Using Battery to extend battery life by 50\%% or more.</string>
+    <string name="result_page_card_default_notification_center_title">Why use Notification Cleaner?</string>
+    <string name="result_page_card_default_notification_center_description">Notification cleaner helps you hide unwanted notifications and clean them by 1 tap. Use it often to keep your phone clean!</string>
+    <string name="skip">SKIP</string>
+    <string name="upload_wallpaper">Upload Wallpaper</string>
+    <string name="upload_wallpaper_button_text">Upload</string>
+    <string name="upload_wallpaper_tip">Tips：\n1. Image will be automatically scaled to optimum size\n2. Your image will be shown in \"Me\"\n3. High quality images are more possible to be collected by Air Launcher\n4. Your image will show up in the feed after it\'s been reviewed</string>
+    <string name="upload_wallpaper_declaration">By uploading, you agree Air Launcher\'s</string>
+    <string name="upload_wallpaper_success">Upload successfully</string>
 
     <!-- One tap wallpaper -->
     <string name="wallpaper_change_revert">Revert</string>
@@ -1142,4 +1159,8 @@
     <string name="notification_battery_consuming_title_level">%1$s%% Battery Left!</string>
     <string name="notification_clear_default_title">Home has been cleared</string>
 
+    <string name="workspace_loading">Loading your desktop…</string>
+
+    <string name="ad_placement_result_page">Master_A(NativeAds)Charging</string>
+    <string name="boost_notification_key">boost_noti_key</string>
 </resources>

@@ -140,4 +140,166 @@
         <item name="android:windowEnterAnimation">@null</item>
         <item name="android:windowExitAnimation">@null</item>
     </style>
+
+    <!-- Settings activities -->
+    <style name="ThinHorizontalDivider">
+        <item name="android:background">@color/list_item_divider</item>
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">0.33dp</item>
+    </style>
+
+    <style name="WideHorizontalDivider">
+        <item name="android:background">#f4f4f4</item>
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">6dp</item>
+    </style>
+
+    <style name="BaseSettings.ActionBarTheme" parent="@style/ThemeOverlay.AppCompat.Light">
+        <item name="colorControlNormal">@color/material_text_black_primary</item>
+    </style>
+
+    <style name="DialogMatchButton">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:minWidth">64dp</item>
+        <item name="android:minHeight">36dp</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:paddingTop">12dp</item>
+        <item name="android:paddingBottom">12dp</item>
+        <item name="android:paddingLeft">18dp</item>
+        <item name="android:paddingRight">18dp</item>
+        <item name="android:textAllCaps">true</item>
+        <item name="android:textSize">16sp</item>
+    </style>
+
+    <style name="DialogButton">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:minWidth">64dp</item>
+        <item name="android:minHeight">36dp</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:paddingTop">4dp</item>
+        <item name="android:paddingBottom">4dp</item>
+        <item name="android:paddingLeft">@dimen/dialog_button_padding</item>
+        <item name="android:paddingRight">@dimen/dialog_button_padding</item>
+        <item name="android:textAllCaps">true</item>
+        <item name="android:textSize">14sp</item>
+    </style>
+
+    <color name="list_item_divider">#c7c7c7</color>
+
+    <style name="Theme.CustomOverScroll" parent="@android:style/Theme.DeviceDefault" />
+
+    <style name="SettingsItem.MultiLineTitle">
+        <item name="android:textColor">@color/material_text_black_primary</item>
+        <item name="android:layout_marginTop">10dp</item>
+    </style>
+
+    <style name="SettingsItem.MultiLineDescription">
+        <item name="android:textSize">@dimen/settings_item_detail_text_size</item>
+        <item name="android:textColor">@color/material_text_black_hint</item>
+        <item name="android:singleLine">false</item>
+        <item name="android:layout_marginTop">3dp</item>
+    </style>
+
+    <style name="SettingsItem.MultiLineContent">
+        <item name="android:textSize">@dimen/settings_item_content_text_size</item>
+        <item name="android:textColor">@color/blue</item>
+        <item name="android:singleLine">false</item>
+        <item name="android:layout_marginTop">3dp</item>
+    </style>
+
+    <dimen name="settings_item_detail_text_size">14sp</dimen>
+    <style name="SettingsToggleButton.Theme" parent="Theme.AppCompat.Light">
+        <item name="colorSwitchThumbNormal">#f5f5f5</item>
+        <item name="colorControlActivated">#448aff</item>
+    </style>
+
+    <style name="DefaultCompatDialog" parent="Theme.AppCompat.Light.Dialog.Alert"/>
+    <style name="BatteryRadioButton" parent="Theme.AppCompat.Light">
+        <item name="colorControlActivated">@color/battery_green</item>
+    </style>
+
+    <!-- Dialog Style-->
+
+    <style name="DialogTitleText">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="typeface">@string/proxima_nova_semibold</item>
+        <item name="android:textSize">18sp</item>
+        <item name="android:textColor">@color/material_text_black_primary</item>
+    </style>
+
+    <style name="DialogDescText">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:textSize">16sp</item>
+        <item name="typeface">@string/proxima_nova_regular</item>
+        <item name="android:textColor">@color/material_text_black_secondary</item>
+    </style>
+
+    <style name="result_page_charging_content">
+        <item name="android:textSize">12sp</item>
+        <item name="android:textColor">@color/result_page_charging_description</item>
+    </style>
+
+    <style name="AlertDialogTheme" parent="Theme.AppCompat.Light.Dialog.Alert">
+        <!-- Used for the buttons -->
+        <item name="colorAccent">@color/material_text_button_positive</item>
+        <!-- Used for the title -->
+        <item name="android:textColor">@color/material_text_black_primary</item>
+        <!-- Used for the message -->
+        <item name="android:textColorPrimary">@color/material_text_black_secondary</item>
+        <item name="textColorAlertDialogListItem">@color/material_text_black_secondary</item>
+        <item name="colorControlNormal">@color/material_text_black_secondary</item>
+        <item name="colorControlActivated">@color/blue</item>
+    </style>
+
+    <style name="ResultPagePrimaryImage">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">@dimen/result_page_image_frame_height</item>
+        <item name="android:layout_marginLeft">@dimen/result_page_image_frame_horizontal_margin
+        </item>
+        <item name="android:layout_marginRight">@dimen/result_page_image_frame_horizontal_margin
+        </item>
+        <item name="android:paddingBottom">9dp</item>
+        <item name="android:paddingLeft">20dp</item>
+        <item name="android:paddingRight">20dp</item>
+        <item name="android:paddingTop">9dp</item>
+    </style>
+
+
+    <style name="NotificationToolbarIconText">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:textSize">10sp</item>
+        <item name="android:layout_marginTop">2dp</item>
+        <item name="android:textColor">#FFCFCFCF</item>
+        <item name="android:singleLine">true</item>
+        <item name="android:ellipsize">end</item>
+    </style>
+
+    <!-- Boost+ -->
+    <style name="BoostPlusTheme" parent="AppCompatTheme">
+        <item name="colorAccent">@color/blue</item>
+    </style>
+
+    <!-- Result Page -->
+    <style name="ResultPageTheme" parent="AppCompatTheme">
+        <item name="android:windowBackground">@null</item>
+        <item name="android:windowDisablePreview">true</item>
+    </style>
+
+
+    <!-- Battery Style-->
+    <style name="BatteryTheme" parent="AppCompatTheme">
+        <item name="colorAccent">@color/battery_green</item>
+        <item name="android:windowDisablePreview">true</item>
+    </style>
+
+    <style name="AppCompatTheme" parent="@style/Theme.AppCompat.Light.NoActionBar">
+        <item name="android:colorBackgroundCacheHint">@null</item>
+        <item name="android:windowNoTitle">true</item>
+    </style>
+
+    <style name="Theme" parent="@style/BaseWallpaperTheme" />
+
 </resources>

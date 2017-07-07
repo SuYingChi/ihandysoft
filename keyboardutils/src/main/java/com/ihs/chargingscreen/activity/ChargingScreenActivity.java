@@ -61,7 +61,6 @@ import com.ihs.commons.notificationcenter.INotificationObserver;
 import com.ihs.commons.utils.HSBundle;
 import com.ihs.commons.utils.HSLog;
 import com.ihs.keyboardutils.R;
-import com.ihs.keyboardutils.alerts.KCAlert;
 import com.ihs.keyboardutils.iap.RemoveAdsManager;
 import com.ihs.keyboardutils.utils.KCAnalyticUtil;
 import com.ihs.keyboardutils.utils.RippleDrawableUtils;

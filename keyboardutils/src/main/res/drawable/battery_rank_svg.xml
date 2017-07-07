@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="@dimen/battery_menu_button_icon"
+    android:height="@dimen/battery_menu_button_icon"
+    android:viewportHeight="72"
+    android:viewportWidth="72">
+    <path
+        android:fillColor="@android:color/white"
+        android:pathData="M14.9 43.3l4.7 0c1 0 1.8 0.8 1.8 1.8l0 11.3c0 1 -0.8 1.8 -1.8 1.8l-4.7 0c-1 0 -1.8 -0.8 -1.8 -1.8l0 -11.3c0 -1 0.8 -1.8 1.8 -1.8z" />
+    <path
+        android:fillColor="@android:color/white"
+        android:pathData="M30.8 36l4.7 0c1 0 1.8 0.8 1.8 1.8l0 18.6c0 1 -0.8 1.8 -1.8 1.8l-4.7 0c-1 0 -1.8 -0.8 -1.8 -1.8l0 -18.6c0 -1 0.8 -1.8 1.8 -1.8z" />
+    <path
+        android:fillColor="@android:color/white"
+        android:pathData="M48.1 24.9l4.7 0c1 0 1.8 0.8 1.8 1.8l0 30c0 1 -0.8 1.8 -1.8 1.8l-4.7 0c-1 0 -1.8 -0.8 -1.8 -1.8l0 -30c0 -1 0.8 -1.8 1.8 -1.8z" />
+    <path
+        android:fillColor="@android:color/white"
+        android:pathData="M61.9 28L51.1 12.5c-0.2 -0.3 -0.7 -0.4 -1 -0.2 -0.1 0.1 -0.1 0.1 -0.2 0.2L39.1 28c-0.2 0.4 -0.2 0.8 0.2 1.1 0.1 0.1 0.3 0.1 0.4 0.1l21.6 0c0.4 0 0.8 -0.4 0.7 -0.8 0 -0.1 0 -0.3 -0.1 -0.4z" />
+</vector>

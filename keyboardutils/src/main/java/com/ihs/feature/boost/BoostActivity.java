@@ -1,24 +1,17 @@
 package com.ihs.feature.boost;
 
-import android.content.BroadcastReceiver;
-import android.content.Context;
 import android.content.Intent;
-import android.content.IntentFilter;
 import android.os.Bundle;
 import android.view.View;
 import android.view.ViewGroup;
 
 import com.ihs.app.analytics.HSAnalytics;
-import com.ihs.app.framework.HSApplication;
 import com.ihs.app.framework.activity.HSActivity;
 import com.ihs.commons.utils.HSLog;
 import com.ihs.feature.boost.animation.BlackHoleLayout;
-import com.ihs.feature.boost.notification.ScreenStatusReceiver;
 import com.ihs.feature.common.LauncherFiles;
 import com.ihs.feature.common.PreferenceHelper;
 import com.ihs.keyboardutils.R;
-
-import static android.content.IntentFilter.SYSTEM_HIGH_PRIORITY;
 
 
 /**
@@ -127,34 +120,5 @@ public class BoostActivity extends HSActivity {
         super.onStop();
     }
 
-    public static void initBoost() {
-        final IntentFilter screenFilter = new IntentFilter();
-        screenFilter.addAction(Intent.ACTION_SCREEN_OFF);
-        screenFilter.addAction(Intent.ACTION_SCREEN_ON);
-        screenFilter.setPriority(SYSTEM_HIGH_PRIORITY);
-        HSApplication.getContext().registerReceiver(new BroadcastReceiver() {
-            @Override
-            public void onReceive(Context context, Intent intent) {
-                if (intent.getAction().equals(Intent.ACTION_SCREEN_OFF)) {
-                    ScreenStatusReceiver.onScreenOff();
-                } else if (intent.getAction().equals(Intent.ACTION_SCREEN_ON)) {
-                    ScreenStatusReceiver.onScreenOn();
-                } else if (Intent.ACTION_USER_PRESENT.equals(intent.getAction())) {
-                    HSLog.d("Screen Receiver onReceiver screen present");
-//                    HSGlobalNotificationCenter.sendNotification(NotificationCondition.EVENT_UNLOCK);
-                }
-            }
-        }, screenFilter);
 
-        Intent addShortcutIntent = new Intent("com.android.launcher.action.INSTALL_SHORTCUT");
-        addShortcutIntent.putExtra("duplicate", false);
-        addShortcutIntent.putExtra(Intent.EXTRA_SHORTCUT_NAME, "key 1-Tap Boost");
-        Context context = HSApplication.getContext();
-        addShortcutIntent.putExtra(Intent.EXTRA_SHORTCUT_ICON_RESOURCE,
-                Intent.ShortcutIconResource.fromContext(context, R.drawable.boost_icon));
-        Intent launcherIntent = new Intent(Intent.ACTION_MAIN);
-        launcherIntent.setClass(context, BoostActivity.class);
-        addShortcutIntent.putExtra(Intent.EXTRA_SHORTCUT_INTENT, launcherIntent);
-        context.sendBroadcast(addShortcutIntent);
-    }
 }

@@ -17,9 +17,9 @@ import android.view.animation.AccelerateInterpolator;
 import android.view.animation.DecelerateInterpolator;
 import android.widget.FrameLayout;
 
-import com.ihs.keyboardutils.R;
-import com.artw.lockscreen.common.CommonUtils;
 import com.ihs.commons.utils.HSLog;
+import com.ihs.keyboardutils.R;
+import com.ihs.keyboardutils.utils.CommonUtils;
 
 import java.lang.ref.WeakReference;
 

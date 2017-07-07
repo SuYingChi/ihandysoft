@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/launcher_settings_light_gray_bg"
+    android:orientation="vertical">
+
+    <!-- Action Bar -->
+    <include
+        android:id="@+id/action_bar"
+        layout="@layout/black_toolbar_container" />
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:theme="@style/Theme.CustomOverScroll">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@android:color/white"
+            android:orientation="vertical">
+
+            <!-- Notification toolbar -->
+            <RelativeLayout
+                android:id="@+id/boost_plus_settings_auto_boost_cell"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/material_compat_bg"
+                android:clickable="true"
+                android:paddingBottom="16dp">
+
+                <com.ihs.feature.common.TypefacedTextView
+                    android:id="@+id/auto_boost_title"
+                    style="@style/SettingsItem.MultiLineTitle"
+                    android:layout_marginTop="16dp"
+                    android:text="@string/boost_plus_settings_auto_boost_title"
+                    app:typeface="@string/proxima_nova_regular" />
+
+                <com.ihs.feature.common.TypefacedTextView
+                    style="@style/SettingsItem.MultiLineDescription"
+                    android:layout_below="@id/auto_boost_title"
+                    android:layout_marginEnd="80dp"
+                    android:layout_marginRight="80dp"
+                    android:text="@string/boost_plus_settings_auto_boost_description"
+                    app:typeface="@string/proxima_nova_regular" />
+
+                <android.support.v7.widget.SwitchCompat
+                    android:id="@+id/auto_boost_toggle_button"
+                    style="@style/SettingsToggleButton"
+                    android:theme="@style/SettingsToggleButton.Theme" />
+            </RelativeLayout>
+
+            <View style="@style/WideHorizontalDivider" />
+
+            <!-- Notification toolbar -->
+            <RelativeLayout
+                android:id="@+id/boost_plus_settings_device_admin_cell"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/material_compat_bg"
+                android:clickable="true"
+                android:paddingBottom="16dp"
+                android:visibility="gone">
+
+                <com.ihs.feature.common.TypefacedTextView
+                    android:id="@+id/device_admin_title"
+                    style="@style/SettingsItem.MultiLineTitle"
+                    android:layout_marginTop="16dp"
+                    android:text="@string/boost_plus_settings_device_admin_title"
+                    app:typeface="@string/proxima_nova_regular" />
+
+                <com.ihs.feature.common.TypefacedTextView
+                    style="@style/SettingsItem.MultiLineDescription"
+                    android:layout_below="@id/device_admin_title"
+                    android:layout_marginEnd="80dp"
+                    android:layout_marginRight="80dp"
+                    android:text="@string/boost_plus_settings_device_admin_description"
+                    app:typeface="@string/proxima_nova_regular" />
+
+                <android.support.v7.widget.SwitchCompat
+                    android:id="@+id/device_admin_toggle_button"
+                    style="@style/SettingsToggleButton"
+                    android:theme="@style/SettingsToggleButton.Theme" />
+            </RelativeLayout>
+
+            <View style="@style/WideHorizontalDivider" />
+
+        </LinearLayout>
+    </ScrollView>
+</LinearLayout>

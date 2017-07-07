@@ -8,7 +8,7 @@ import com.ihs.commons.utils.HSLog;
 import com.ihs.commons.utils.HSPreferenceHelper;
 import com.ihs.feature.common.ConcurrentUtils;
 import com.ihs.feature.common.LauncherFiles;
-import com.ihs.feature.common.LauncherTipManager;
+import com.ihs.feature.tip.LauncherTipManager;
 import com.ihs.feature.common.PreferenceHelper;
 import com.ihs.feature.common.Utils;
 import com.ihs.keyboardutils.BuildConfig;

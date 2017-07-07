@@ -1,0 +1,221 @@
+<?xml version="1.0" encoding="utf-8"?><!-- com.ihs.feature.common.CustomRootView -->
+<com.ihs.feature.common.CustomRootView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/view_container"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/launcher_settings_light_gray_bg"
+    android:clipChildren="false"
+    android:fitsSystemWindows="false">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@android:color/white"
+        android:orientation="vertical">
+
+        <include
+            android:id="@+id/action_bar"
+            layout="@layout/black_toolbar_container" />
+
+        <android.support.v7.widget.CardView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="8dp"
+            android:layout_marginRight="8dp"
+            android:layout_marginTop="8dp"
+            app:cardBackgroundColor="@android:color/white"
+            app:cardCornerRadius="2dp"
+            app:cardElevation="4dp">
+
+            <LinearLayout
+                android:id="@+id/smart_saver_rl"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="?attr/selectableItemBackground"
+                android:gravity="center_vertical"
+                android:orientation="horizontal"
+                android:padding="@dimen/battery_mode_item_padding">
+
+                <android.support.v7.widget.AppCompatImageView
+                    android:layout_width="@dimen/battery_mode_icon"
+                    android:layout_height="@dimen/battery_mode_icon"
+                    android:scaleType="center"
+                    app:srcCompat="@drawable/battery_smart_saver_svg" />
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/battery_mode_item_center_margin"
+                    android:layout_marginStart="@dimen/battery_mode_item_center_margin"
+                    android:layout_weight="1"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="sans-serif-medium"
+                        android:maxLines="1"
+                        android:text="@string/battery_smart_saver"
+                        android:textColor="@color/battery_mode_title"
+                        android:textSize="@dimen/battery_mode_title_size" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="2dp"
+                        android:maxLines="2"
+                        android:lines="2"
+                        android:text="@string/battery_smart_saver_content"
+                        android:textColor="@color/battery_mode_content"
+                        android:textSize="@dimen/battery_mode_content_size" />
+                </LinearLayout>
+
+                <RadioButton
+                    android:id="@+id/smart_saver_rb"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/battery_mode_item_center_margin"
+                    android:layout_marginStart="@dimen/battery_mode_item_center_margin"
+                    android:background="@null"
+                    android:checked="false"
+                    android:theme="@style/BatteryRadioButton" />
+            </LinearLayout>
+        </android.support.v7.widget.CardView>
+
+        <android.support.v7.widget.CardView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="8dp"
+            android:layout_marginRight="8dp"
+            android:layout_marginTop="8dp"
+            app:cardBackgroundColor="@android:color/white"
+            app:cardCornerRadius="2dp"
+            app:cardElevation="4dp">
+
+            <LinearLayout
+                android:id="@+id/max_saver_rl"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="?attr/selectableItemBackground"
+                android:gravity="center_vertical"
+                android:orientation="horizontal"
+                android:padding="@dimen/battery_mode_item_padding">
+
+                <android.support.v7.widget.AppCompatImageView
+                    android:layout_width="@dimen/battery_mode_icon"
+                    android:layout_height="@dimen/battery_mode_icon"
+                    android:scaleType="center"
+                    app:srcCompat="@drawable/battery_max_saver_svg" />
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/battery_mode_item_center_margin"
+                    android:layout_marginStart="@dimen/battery_mode_item_center_margin"
+                    android:layout_weight="1"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="sans-serif-medium"
+                        android:maxLines="1"
+                        android:text="@string/battery_max_saver"
+                        android:textColor="@color/battery_mode_title"
+                        android:textSize="@dimen/battery_mode_title_size" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="2dp"
+                        android:maxLines="2"
+                        android:lines="2"
+                        android:text="@string/battery_max_saver_content"
+                        android:textColor="@color/battery_mode_content"
+                        android:textSize="@dimen/battery_mode_content_size" />
+                </LinearLayout>
+
+                <RadioButton
+                    android:id="@+id/max_saver_rb"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/battery_mode_item_center_margin"
+                    android:layout_marginStart="@dimen/battery_mode_item_center_margin"
+                    android:background="@null"
+                    android:checked="false"
+                    android:theme="@style/BatteryRadioButton" />
+            </LinearLayout>
+        </android.support.v7.widget.CardView>
+
+        <android.support.v7.widget.CardView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="8dp"
+            android:layout_marginRight="8dp"
+            android:layout_marginTop="8dp"
+            app:cardBackgroundColor="@android:color/white"
+            app:cardCornerRadius="2dp"
+            app:cardElevation="4dp">
+
+            <LinearLayout
+                android:id="@+id/current_rl"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="?attr/selectableItemBackground"
+                android:gravity="center_vertical"
+                android:orientation="horizontal"
+                android:padding="@dimen/battery_mode_item_padding">
+
+                <android.support.v7.widget.AppCompatImageView
+                    android:id="@+id/current_iv"
+                    android:layout_width="@dimen/battery_mode_icon"
+                    android:layout_height="@dimen/battery_mode_icon"
+                    android:scaleType="center"
+                    app:srcCompat="@drawable/battery_current_svg" />
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/battery_mode_item_center_margin"
+                    android:layout_marginStart="@dimen/battery_mode_item_center_margin"
+                    android:layout_weight="1"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:id="@+id/current_tv"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="sans-serif-medium"
+                        android:maxLines="1"
+                        android:text="@string/battery_current"
+                        android:textColor="@color/battery_mode_title"
+                        android:textSize="@dimen/battery_mode_title_size" />
+
+                    <TextView
+                        android:id="@+id/current_description_tv"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="2dp"
+                        android:maxLines="2"
+                        android:lines="2"
+                        android:text="@string/battery_current_content"
+                        android:textColor="@color/battery_mode_content"
+                        android:textSize="@dimen/battery_mode_content_size" />
+                </LinearLayout>
+
+                <RadioButton
+                    android:id="@+id/current_rb"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/battery_mode_item_center_margin"
+                    android:layout_marginStart="@dimen/battery_mode_item_center_margin"
+                    android:background="@null"
+                    android:checked="true"
+                    android:theme="@style/BatteryRadioButton" />
+            </LinearLayout>
+        </android.support.v7.widget.CardView>
+    </LinearLayout>
+
+    <include layout="@layout/navigation_bar_bg" />
+</com.ihs.feature.common.CustomRootView>

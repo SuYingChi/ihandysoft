@@ -1,9 +1,7 @@
 package com.ihs.feature.common;
 
-import com.ihs.app.framework.HSApplication;
 import com.ihs.commons.config.HSConfig;
 import com.ihs.keyboardutils.BuildConfig;
-import com.ihs.keyboardutils.utils.CommonUtils;
 
 import java.util.Map;
 
@@ -13,45 +11,6 @@ import java.util.Map;
 @SuppressWarnings("unchecked")
 public class LauncherConfig {
 
-    /**
-     * Wraps {@link com.ihs.commons.config.HSConfig#getString(String...)} and added multilingual support.
-     *
-     * @param path Config path
-     */
-    public static String getMultilingualString(String... path) {
-        String configString;
-        try {
-            configString = HSConfig.getString(path);
-            if (configString.isEmpty()) {
-                Map<String, String> stringMap = (Map<String, String>) HSConfig.getMap(path);
-                configString = getStringForCurrentLanguage(stringMap);
-            }
-        } catch (Exception expected) {
-            Map<String, String> stringMap = (Map<String, String>) HSConfig.getMap(path);
-            configString = getStringForCurrentLanguage(stringMap);
-        }
-        return configString;
-    }
-
-    public static String getMultilingualString(Map<String, ?> map, String key) {
-        String configString;
-        try {
-            configString = (String) map.get(key);
-        } catch (ClassCastException expected) {
-            Map<String, String> stringMap = (Map<String, String>) map.get(key);
-            configString = getStringForCurrentLanguage(stringMap);
-        }
-        return configString;
-    }
-
-    public static String getStringForCurrentLanguage(Map<String, String> stringMap) {
-        String language = CommonUtils.getLocale(HSApplication.getContext()).getLanguage();
-        String localeString = stringMap.get(language);
-        if (localeString == null) {
-            localeString = stringMap.get("Default");
-        }
-        return localeString;
-    }
 
     public static boolean getVariantBoolean(String... path) {
         boolean configBool;

@@ -172,9 +172,6 @@ public class SystemSettingsManager {
             case BRIGHTNESS:
                 state = getBrightness();
                 break;
-            case MOBILE_DATA:
-                state = Utils.getMobileDataStatus(mContext) ? 1 : 0;
-                break;
             case AUTO_ROTATE:
                 state = isAutoRotateOn() ? 1 : 0;
                 break;
@@ -370,11 +367,6 @@ public class SystemSettingsManager {
                 break;
             case BRIGHTNESS:
                 setBrightness(state);
-                break;
-            case MOBILE_DATA:
-                if (getSystemSettingsItemState(item) != state) {
-                    Utils.setMobileDataStatus(mContext, state == 1);
-                }
                 break;
             case AUTO_ROTATE:
                 break;

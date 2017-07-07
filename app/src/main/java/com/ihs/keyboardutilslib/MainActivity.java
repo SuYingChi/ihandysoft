@@ -12,6 +12,7 @@ import android.widget.Toast;
 
 import com.ihs.app.framework.HSApplication;
 import com.ihs.app.framework.activity.HSActivity;
+import com.ihs.feature.notification.NotificationManager;
 import com.ihs.keyboardutils.alerts.ExitAlert;
 import com.ihs.keyboardutils.utils.CustomShareUtils;
 import com.ihs.keyboardutilslib.adactivities.AdDemoActivity;
@@ -32,7 +33,8 @@ public class MainActivity extends HSActivity {
             "Exit Alert Demo",
             "Charging Locker Settings",
             "Camera Utils",
-            "Country Code Parser"
+            "Country Code Parser",
+            "Send Boost Related Notification"
     };
 
     Class[] activityClassArray = {
@@ -44,7 +46,8 @@ public class MainActivity extends HSActivity {
             null,
             ChargingLockerSettingsActivity.class,
             CameraUtilActivity.class,
-            CountryCodeUtil.class
+            CountryCodeUtil.class,
+            null
     };
 
     @Override
@@ -120,6 +123,8 @@ public class MainActivity extends HSActivity {
             });
         } else if (position == 5) {
             exitAlert.show();
+        } else if (position == 9) {
+            NotificationManager.getInstance().checkNextNotification();
         }
     }
 

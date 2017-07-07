@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<animated-vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:drawable="@drawable/battery_continue_svg" >
+    <target
+        android:name="line2"
+        android:animation="@animator/battery_continue_line2" />
+
+    <target
+        android:name="line3"
+        android:animation="@animator/battery_continue_line3" />
+
+    <target
+        android:name="line4"
+        android:animation="@animator/battery_continue_line4" />
+</animated-vector>

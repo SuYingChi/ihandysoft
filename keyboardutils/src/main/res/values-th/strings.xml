@@ -565,7 +565,7 @@
     <string name="folder_ad_title">แอปที่ได้รับการแนะนำ</string>
     <string name="search_guide_contacts">รายชื่อติดต่อ</string>
 
-    <string name="launcher_widget_boost_plus_title">เร่งเครื่อง+</string>
+    <string name="launcher_widget_boost_plus_title">เร่งเครื่อง</string>
     <string name="boost_plus_accessibility_service_label">☆เร่งเครื่อง+☆</string>
     <string name="advanced_boost_authorize_btn">เปิดใช้งาน</string>
     <string name="boost_plus_action_button_text">เร่งความเร็ว (%1$s)</string>

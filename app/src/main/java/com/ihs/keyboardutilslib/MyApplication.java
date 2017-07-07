@@ -15,7 +15,10 @@ import com.ihs.commons.notificationcenter.HSGlobalNotificationCenter;
 import com.ihs.commons.notificationcenter.INotificationObserver;
 import com.ihs.commons.utils.HSBundle;
 import com.ihs.commons.utils.HSLog;
-import com.ihs.feature.boost.BoostActivity;
+import com.ihs.feature.battery.BatteryActivity;
+import com.ihs.feature.boost.plus.BoostPlusActivity;
+import com.ihs.feature.cpucooler.CpuCoolerScanActivity;
+import com.ihs.feature.notification.NotificationManager;
 import com.ihs.keyboardutils.notification.KCNotificationManager;
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
@@ -35,7 +38,7 @@ public class MyApplication extends HSApplication {
     @Override
     public void onCreate() {
         super.onCreate();
-
+        HSLog.e("apppli");
 
         String packageName = getPackageName();
         String processName = getProcessName();
@@ -92,8 +95,11 @@ public class MyApplication extends HSApplication {
             resultIntent.putExtra("reqCode", reqCode);
             KCNotificationManager.getInstance().addNotificationEvent(event, resultIntent);
         }
-        BoostActivity.initBoost();
+        BoostPlusActivity.initBoost();
+        BatteryActivity.initBattery();
+        CpuCoolerScanActivity.initBoost();
         ScreenLockerManager.init();
+        NotificationManager.getInstance().updateBattery();
         initImageLoader();
     }
 
