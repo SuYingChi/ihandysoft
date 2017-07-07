@@ -23,6 +23,7 @@ import android.os.Message;
 import android.os.PowerManager;
 import android.provider.Settings;
 import android.support.annotation.IntRange;
+import android.support.graphics.drawable.VectorDrawableCompat;
 import android.telephony.PhoneStateListener;
 import android.telephony.TelephonyManager;
 import android.text.TextUtils;
@@ -285,6 +286,10 @@ public class ChargingScreenActivity extends Activity {
         }
 
         setContentView(R.layout.charging_module_activity_charging_screen);
+
+
+        findViewById(R.id.view_spac1).setBackgroundDrawable(VectorDrawableCompat.create(getResources(),R.drawable.shape_wihte_dot,null));
+        findViewById(R.id.view_spac2).setBackgroundDrawable(VectorDrawableCompat.create(getResources(),R.drawable.shape_wihte_dot,null));
 
         bubbleView = ((BubbleView) findViewById(R.id.bubbleView));
 
@@ -706,13 +711,17 @@ public class ChargingScreenActivity extends Activity {
                 resources.getString(R.string.charging_module_charging_state_trickle_charging_indicator),
         };
 
-        imgChargingStateGreenDrawables.add(resources.getDrawable(R.drawable.ic_charging_speed));
-        imgChargingStateGreenDrawables.add(resources.getDrawable(R.drawable.ic_charging_continue));
-        imgChargingStateGreenDrawables.add(resources.getDrawable(R.drawable.ic_charging_trickle));
+        imgChargingStateGreenDrawables.add(getCompatDrawable(R.drawable.ic_charging_speed));
+        imgChargingStateGreenDrawables.add(getCompatDrawable(R.drawable.ic_charging_continue));
+        imgChargingStateGreenDrawables.add(getCompatDrawable(R.drawable.ic_charging_trickle));
 
-        imgChargingStateDarkDrawables.add(resources.getDrawable(R.drawable.ic_charging_speed_dark));
-        imgChargingStateDarkDrawables.add(resources.getDrawable(R.drawable.ic_charging_continue_dark));
-        imgChargingStateDarkDrawables.add(resources.getDrawable(R.drawable.ic_charging_trickle_dark));
+        imgChargingStateDarkDrawables.add(getCompatDrawable(R.drawable.ic_charging_speed_dark));
+        imgChargingStateDarkDrawables.add(getCompatDrawable(R.drawable.ic_charging_continue_dark));
+        imgChargingStateDarkDrawables.add(getCompatDrawable(R.drawable.ic_charging_trickle_dark));
+    }
+
+    private Drawable getCompatDrawable(int drawableRes){
+        return VectorDrawableCompat.create(getResources(),drawableRes,null);
     }
 
     private void cancelAllAnimators() {
