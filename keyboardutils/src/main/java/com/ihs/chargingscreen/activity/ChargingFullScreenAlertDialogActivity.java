@@ -15,6 +15,7 @@ import com.ihs.commons.config.HSConfig;
 import com.ihs.commons.notificationcenter.HSGlobalNotificationCenter;
 import com.ihs.keyboardutils.R;
 import com.ihs.keyboardutils.alerts.KCAlert;
+import com.ihs.keyboardutils.utils.AlertShowingUtils;
 import com.ihs.keyboardutils.utils.KCAnalyticUtil;
 
 import java.util.HashMap;
@@ -47,6 +48,12 @@ public class ChargingFullScreenAlertDialogActivity extends Activity {
                     break;
             }
         }
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        AlertShowingUtils.startShowingAlert();
     }
 
     private void initLockerDialog() {
@@ -124,5 +131,11 @@ public class ChargingFullScreenAlertDialogActivity extends Activity {
         intent.putExtra("type","charging");
         intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         HSApplication.getContext().startActivity(intent);
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+        AlertShowingUtils.stopShowingAlert();
     }
 }
