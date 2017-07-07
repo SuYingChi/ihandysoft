@@ -25,6 +25,7 @@ import com.ihs.commons.notificationcenter.HSGlobalNotificationCenter;
 import com.ihs.commons.notificationcenter.INotificationObserver;
 import com.ihs.commons.utils.HSBundle;
 import com.ihs.commons.utils.HSLog;
+import com.ihs.commons.utils.HSPreferenceHelper;
 import com.ihs.feature.battery.BatteryUtils;
 import com.ihs.feature.boost.BoostTipUtils;
 import com.ihs.feature.boost.animation.BoostAnimationManager;
@@ -94,7 +95,7 @@ public class NotificationCondition implements INotificationObserver {
     @SuppressWarnings("PointlessBooleanExpression")
     private static final boolean DEBUG_JUNK_CLEAN_NOTIFICATION = BuildConfig.DEBUG;
     @SuppressWarnings("PointlessBooleanExpression")
-    public static final boolean DEBUG_THEME_NOTIFICATION =  BuildConfig.DEBUG;
+    public static final boolean DEBUG_THEME_NOTIFICATION = BuildConfig.DEBUG;
 
     private static final int NOTIFICATION_ID_THEME = 10001;
     public static final int NOTIFICATION_ID_WEATHER = 10002;
@@ -119,15 +120,15 @@ public class NotificationCondition implements INotificationObserver {
 
     // 等待通知检查条件时间，超时认为失败检查下一条。
     // 比如 boost+ 或者 junk clean 扫描用时。这里目前没做处理，所以最好是时间足够长，保证能完成扫描。
-    private static final long CHECK_NOTIFICATION_TIMEOUT     = DateUtils.MINUTE_IN_MILLIS;
+    private static final long CHECK_NOTIFICATION_TIMEOUT = DateUtils.MINUTE_IN_MILLIS;
     // 没有打开相应功能模块的时间
-    public static final long NOT_OPEN_FEATURE_INTERVAL       = 30 * DateUtils.MINUTE_IN_MILLIS;
+    public static final long NOT_OPEN_FEATURE_INTERVAL = 30 * DateUtils.MINUTE_IN_MILLIS;
     // 两条消息之间的时间间隔
-    private static final long CHECK_NOTIFICATION_INTERVAL    = DateUtils.HOUR_IN_MILLIS;
+    private static final long CHECK_NOTIFICATION_INTERVAL = DateUtils.HOUR_IN_MILLIS;
     // 亮屏之后到检查通知的时间
-    private static final long AFTER_SCREEN_ON_TIME           = 33 * DateUtils.SECOND_IN_MILLIS;
+    private static final long AFTER_SCREEN_ON_TIME = 33 * DateUtils.SECOND_IN_MILLIS;
     // 同一类型的消息的时间间隔 (需求为 24 小时 1 条)
-    private static final long SAME_NOTIFICATION_INTERVAL     = DateUtils.DAY_IN_MILLIS;
+    private static final long SAME_NOTIFICATION_INTERVAL = DateUtils.DAY_IN_MILLIS;
     // 每天最多通知条数 (需求为 24 小时 1 条)
     private static final int NOTIFICATION_LIMIT_IN_DAY = HSConfig.optInteger(6, "Application", "NotificationPushedNumber");
 
@@ -143,9 +144,11 @@ public class NotificationCondition implements INotificationObserver {
     private NotificationHolder lastHolder;
     private boolean isUnlock = false;
 
-    @SuppressLint("HandlerLeak") // NotificationCondition instance has process-wide life cycle, leak is not a concern here
+    @SuppressLint("HandlerLeak")
+    // NotificationCondition instance has process-wide life cycle, leak is not a concern here
     private Handler mHandler = new Handler() {
-        @Override public void handleMessage(Message msg) {
+        @Override
+        public void handleMessage(Message msg) {
             super.handleMessage(msg);
             switch (msg.what) {
                 case EVENT_CHECK_NEXT_NOTIFICATION:
@@ -195,18 +198,21 @@ public class NotificationCondition implements INotificationObserver {
         trySendNotification(type);
     }
 
-    @Override protected void finalize() throws Throwable {
+    @Override
+    protected void finalize() throws Throwable {
         super.finalize();
         HSGlobalNotificationCenter.removeObserver(this);
     }
 
-    @Override public void onReceive(String s, HSBundle hsBundle) {
+    @Override
+    public void onReceive(String s, HSBundle hsBundle) {
         HSLog.d(TAG, "onReceive s == " + s);
         if (TextUtils.equals(s, ScreenStatusReceiver.NOTIFICATION_SCREEN_OFF)) {
             isUnlock = false;
         } else if (TextUtils.equals(s, ScreenStatusReceiver.NOTIFICATION_SCREEN_ON)) {
             mHandler.postDelayed(new Runnable() {
-                @Override public void run() {
+                @Override
+                public void run() {
                     sendNotificationIfNeeded();
                 }
             }, AFTER_SCREEN_ON_TIME);
@@ -291,6 +297,10 @@ public class NotificationCondition implements INotificationObserver {
     }
 
     private void sendNotificationIfNeeded() {
+        if (!isNotificationEnabled()) {
+            return;
+        }
+
         KeyguardManager km = (KeyguardManager) context.getSystemService(Context.KEYGUARD_SERVICE);
         if (!isUnlock && km.isKeyguardLocked()) {
             HSLog.d(TAG, "没有解锁。" + !isUnlock + "  km: " + km.isKeyguardLocked());
@@ -417,8 +427,6 @@ public class NotificationCondition implements INotificationObserver {
     }
 
 
-
-
     private static void sendNotification(Context context,
                                          String title, String description, String buttonText,
                                          int smallIconId, int largeIconId) {
@@ -496,7 +504,7 @@ public class NotificationCondition implements INotificationObserver {
                 return true;
             }
 
-           if (runningApps >= 3 && batteryLevel >= LOW_BATTERY) {
+            if (runningApps >= 3 && batteryLevel >= LOW_BATTERY) {
                 sendBatteryNotification(context, runningApps);
                 setLastBatteryNotificationTime(PREF_KEY_BATTERY_NOTIFICATION_A_SHOW_TIME);
                 return true;
@@ -527,7 +535,7 @@ public class NotificationCondition implements INotificationObserver {
         } else {
             number = String.valueOf(DeviceManager.getInstance().getBatteryLevel());
             title = context.getString(R.string.notification_battery_consuming_title_level, number);
-            type = ResultConstants.BATTERY +  "_A";
+            type = ResultConstants.BATTERY + "_A";
         }
         SpannableString titleSpannableString = new SpannableString(title);
         titleSpannableString.setSpan(new ForegroundColorSpan(ContextCompat.getColor(context, R.color.notification_red)), 0, title.indexOf(" "), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
@@ -891,9 +899,9 @@ public class NotificationCondition implements INotificationObserver {
         RemoteViews remoteViews = new RemoteViews(HSApplication.getContext().getPackageName(), R.layout.notification_cleaner_bar_block_view);
 
 
-        if(notificationModel.notificationId == NOTIFICATION_ID_BOOST_PLUS && Build.VERSION.SDK_INT < Build.VERSION_CODES.LOLLIPOP){
-            remoteViews.setImageViewBitmap(R.id.protect_image, BitmapUtils.vectorToBitmap(HSApplication.getContext(),notificationModel.iconDrawableId));
-        }else{
+        if (notificationModel.notificationId == NOTIFICATION_ID_BOOST_PLUS && Build.VERSION.SDK_INT < Build.VERSION_CODES.LOLLIPOP) {
+            remoteViews.setImageViewBitmap(R.id.protect_image, BitmapUtils.vectorToBitmap(HSApplication.getContext(), notificationModel.iconDrawableId));
+        } else {
             remoteViews.setImageViewResource(R.id.protect_image, notificationModel.iconDrawableId);
         }
 
@@ -959,12 +967,21 @@ public class NotificationCondition implements INotificationObserver {
             return nType >= 0 && sendTime > time;
         }
 
-        @Override public String toString() {
+        @Override
+        public String toString() {
             return "NotificationHolder{" +
                     "nId=" + nId +
                     ", nType=" + nType +
                     ", sendTime=" + sendTime +
                     '}';
         }
+    }
+
+    public static boolean isNotificationEnabled() {
+        return HSPreferenceHelper.getDefault().getBoolean(HSApplication.getContext().getString(R.string.boost_notification_key), true);
+    }
+
+    public static void setNotificationEnable(boolean enable) {
+        HSPreferenceHelper.getDefault().putBoolean(HSApplication.getContext().getString(R.string.boost_notification_key), enable);
     }
 }
