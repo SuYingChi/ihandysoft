@@ -5,6 +5,7 @@ import android.annotation.SuppressLint;
 import android.app.AppOpsManager;
 import android.content.ComponentName;
 import android.content.Context;
+import android.content.Intent;
 import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageManager;
 import android.content.pm.ResolveInfo;
@@ -230,6 +231,19 @@ public class PermissionUtils {
         }
         HSLog.d(TAG, "permission access for " + uri);
         return true;
+    }
+
+    public static void enableUsageAccessPermission() {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP && !PermissionUtils.isUsageAccessGranted()) {
+            Intent intent = new Intent(Settings.ACTION_USAGE_ACCESS_SETTINGS);
+            intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+            intent.addFlags(Intent.FLAG_ACTIVITY_NO_HISTORY);
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB) {
+                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
+            }
+            HSApplication.getContext().startActivity(intent);
+            PermissionFloatWindow.getInstance().createPermissionTip(PermissionTip.TYPE_TEXT_USAGE);
+        }
     }
 
 }
