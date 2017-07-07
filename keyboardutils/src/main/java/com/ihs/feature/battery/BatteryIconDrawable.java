@@ -67,10 +67,10 @@ public class BatteryIconDrawable extends Drawable {
         mPercentNumberPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
         mPercentSymbolPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
 
-        mPercentNumberPaint.setTypeface(FontUtils.getTypeface(FontUtils.Font.PROXIMA_NOVA_REGULAR)); // Condensed
+        mPercentNumberPaint.setTypeface(FontUtils.getTypeface(new FontUtils.Font(HSApplication.getContext().getString(R.string.proxima_nova_regular)))); // Condensed
         mPercentNumberPaint.setFakeBoldText(false);
 
-        mPercentSymbolPaint.setTypeface(FontUtils.getTypeface(FontUtils.Font.PROXIMA_NOVA_REGULAR)); // Condensed
+        mPercentSymbolPaint.setTypeface(FontUtils.getTypeface(new FontUtils.Font(HSApplication.getContext().getString(R.string.proxima_nova_regular)))); // Condensed
         mPercentSymbolPaint.setFakeBoldText(false);
 
         mTempRect = new Rect();

@@ -1,111 +1,42 @@
 package com.ihs.keyboardutils.utils;
 
 import android.graphics.Typeface;
-import android.util.SparseArray;
 
 import com.ihs.app.framework.HSApplication;
 import com.ihs.keyboardutils.R;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.HashMap;
+
+
 
 /**
  * Utility for text fonts.
  */
 public class FontUtils {
 
-    public enum Font {
-        ROBOTO_LIGHT(0),
-        ROBOTO_REGULAR(1),
-        ROBOTO_MEDIUM(2),
-        ROBOTO_THIN(3),
-        ROBOTO_CONDENSED(4),
-        DS_DIGIB(5),
-        AKROBAT_LIGHT(6),
-        PROXIMA_NOVA_REGULAR(7),
-        PROXIMA_NOVA_LIGHT(8),
-        PROXIMA_NOVA_THIN(9),
-        PROXIMA_NOVA_SEMIBOLD(11),
-        PROXIMA_NOVA_REGULAR_CONDENSED(12);
-
-        private int mValue;
-
-        Font(int value) {
-            mValue = value;
+    public static class Font {
+        String font;
+        private boolean isCustom = true;
+        public Font(String font) {
+            this.font = font;
+            if (HSApplication.getContext().getString(R.string.roboto_light).equals(font)
+                    ||HSApplication.getContext().getString(R.string.roboto_regular).equals(font)
+                    ||HSApplication.getContext().getString(R.string.roboto_medium).equals(font)
+                    ||HSApplication.getContext().getString(R.string.roboto_thin).equals(font)
+                    ||HSApplication.getContext().getString(R.string.roboto_condensed).equals(font)) {
+                isCustom = false;
+            }
+        }
+        public boolean isCustom(){
+            return isCustom;
         }
 
-        int getResId() {
-            switch (mValue) {
-                case 0:
-                    return R.string.roboto_light;
-                case 1:
-                    return R.string.roboto_regular;
-                case 2:
-                    return R.string.roboto_medium;
-                case 3:
-                    return R.string.roboto_thin;
-                case 4:
-                    return R.string.roboto_condensed;
-                case 5:
-                    return R.string.ds_digib;
-                case 6:
-                    return R.string.akrobat_light;
-                case 7:
-                    return R.string.proxima_nova_regular;
-                case 8:
-                    return R.string.proxima_nova_light;
-                case 9:
-                    return R.string.proxima_nova_thin;
-                case 11:
-                    return R.string.proxima_nova_semibold;
-                case 12:
-                    return R.string.proxima_nova_regular_condensed;
-            }
-            return R.string.roboto_regular;
-        }
-
-        public static Font ofFontResId(int resId) {
-            if (resId == R.string.roboto_light) {
-                return ROBOTO_LIGHT;
-            } else if (resId == R.string.roboto_regular) {
-                return ROBOTO_REGULAR;
-            } else if (resId == R.string.roboto_medium) {
-                return ROBOTO_MEDIUM;
-            } else if (resId == R.string.roboto_thin) {
-                return ROBOTO_THIN;
-            } else if (resId == R.string.roboto_condensed) {
-                return ROBOTO_CONDENSED;
-            } else if (resId == R.string.ds_digib) {
-                return DS_DIGIB;
-            } else if (resId == R.string.akrobat_light) {
-                return AKROBAT_LIGHT;
-            } else if (resId == R.string.proxima_nova_regular) {
-                return PROXIMA_NOVA_REGULAR;
-            } else if (resId == R.string.proxima_nova_light) {
-                return PROXIMA_NOVA_LIGHT;
-            } else if (resId == R.string.proxima_nova_thin) {
-                return PROXIMA_NOVA_THIN;
-            } else if (resId == R.string.proxima_nova_semibold) {
-                return PROXIMA_NOVA_SEMIBOLD;
-            } else if (resId == R.string.proxima_nova_regular_condensed) {
-                return PROXIMA_NOVA_REGULAR_CONDENSED;
-            }
-            return null;
+        public String getFont() {
+            return font;
         }
     }
 
-    private static SparseArray<Typeface> sFontCache = new SparseArray<>(5);
-
-    private static List<Integer> sCustomFontsResIds = new ArrayList<>(8);
-    static {
-        sCustomFontsResIds.add(R.string.ds_digib);
-        sCustomFontsResIds.add(R.string.akrobat_light);
-        sCustomFontsResIds.add(R.string.proxima_nova_regular);
-        sCustomFontsResIds.add(R.string.proxima_nova_light);
-        sCustomFontsResIds.add(R.string.proxima_nova_thin);
-        sCustomFontsResIds.add(R.string.proxima_nova_semibold);
-        sCustomFontsResIds.add(R.string.proxima_nova_regular_condensed);
-    }
+    private static HashMap<String,Typeface> sFontCache = new HashMap<>();
 
     public static Typeface getTypeface(Font font) {
         return getTypeface(font, Typeface.NORMAL);
@@ -113,30 +44,23 @@ public class FontUtils {
 
     public static Typeface getTypeface(Font font, int style) {
         if (font != null) {
-            int fontResId = font.getResId();
-            Typeface typeface = sFontCache.get(fontResId);
-            if (sCustomFontsResIds.contains(fontResId)) {
+            String fontStr = font.getFont();
+            Typeface typeface;
+            if (font.isCustom()){
+                typeface  = sFontCache.get(fontStr);
                 if (typeface != null) {
                     return typeface;
                 }
-                try {
-                    typeface = Typeface.createFromAsset(HSApplication.getContext().getAssets(),
-                            "fonts/" + HSApplication.getContext().getString(fontResId) + ".ttf");
-                } catch (RuntimeException e) {
-                    try {
-                        typeface = Typeface.createFromAsset(HSApplication.getContext().getAssets(),
-                                "fonts/" + HSApplication.getContext().getString(fontResId) + ".otf");
-                    } catch (RuntimeException ingored) {
-                        return null;
-                    }
-                }
-                sFontCache.put(fontResId, typeface);
-            } else {
+                typeface = Typeface.createFromAsset(HSApplication.getContext().getAssets(),
+                        "fonts/" + fontStr);
+                sFontCache.put(fontStr, typeface);
+            }else {
                 // Already cached by framework.
-                typeface = Typeface.create(HSApplication.getContext().getString(fontResId), style);
+                typeface = Typeface.create(fontStr, style);
             }
             return typeface;
         }
         return null;
     }
+
 }

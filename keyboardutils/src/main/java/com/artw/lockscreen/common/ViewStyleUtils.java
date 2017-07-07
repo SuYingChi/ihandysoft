@@ -7,6 +7,7 @@ import android.support.v7.widget.Toolbar;
 import android.view.Gravity;
 import android.widget.TextView;
 
+import com.ihs.app.framework.HSApplication;
 import com.ihs.keyboardutils.R;
 import com.ihs.keyboardutils.utils.CommonUtils;
 import com.ihs.keyboardutils.utils.FontUtils;
@@ -31,7 +32,7 @@ public class ViewStyleUtils {
         }
         titleTextView.setTextColor(Color.WHITE);
         titleTextView.setTextSize(20);
-        final Typeface typeface = FontUtils.getTypeface(FontUtils.Font.ROBOTO_MEDIUM);
+        final Typeface typeface = FontUtils.getTypeface(new FontUtils.Font(HSApplication.getContext().getString(R.string.font_robot_medium)));
         titleTextView.setTypeface(typeface);
         Toolbar.LayoutParams toolbarTitleParams = new Toolbar.LayoutParams(
                 Toolbar.LayoutParams.WRAP_CONTENT, Toolbar.LayoutParams.WRAP_CONTENT, Gravity.START);

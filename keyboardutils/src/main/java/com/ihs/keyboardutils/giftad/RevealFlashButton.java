@@ -48,7 +48,7 @@ public class RevealFlashButton extends AppCompatButton {
         mFlashDuration = res.getInteger(R.integer.config_resultPageActionButtonFlashDuration);
 
         setVisibility(INVISIBLE);
-        setTypeface(FontUtils.getTypeface(FontUtils.Font.PROXIMA_NOVA_SEMIBOLD));
+        setTypeface(FontUtils.getTypeface(new FontUtils.Font(HSApplication.getContext().getString(R.string.proxima_nova_semibold))));
 
         setLayerType(View.LAYER_TYPE_SOFTWARE, null);
 

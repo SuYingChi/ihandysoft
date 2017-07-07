@@ -7,7 +7,7 @@
     android:layout_height="match_parent">
 
 
-    <com.artw.lockscreen.common.TypefacedTextView
+    <com.ihs.feature.common.TypefacedTextView
         android:text="@string/app_name"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -40,7 +40,7 @@
         android:paddingTop="4dp"
         app:srcCompat="@drawable/ic_more_vert_black_24dp"/>
 
-    <com.artw.lockscreen.common.TypefacedTextView
+    <com.ihs.feature.common.TypefacedTextView
         android:id="@+id/tv_time"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -52,7 +52,7 @@
         android:textSize="84sp"
         app:typeface="@string/akrobat_light"/>
 
-    <com.artw.lockscreen.common.TypefacedTextView
+    <com.ihs.feature.common.TypefacedTextView
         android:id="@+id/tv_date"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
