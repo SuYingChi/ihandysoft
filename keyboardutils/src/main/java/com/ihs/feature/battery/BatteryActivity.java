@@ -274,7 +274,6 @@ public class BatteryActivity extends BaseCenterActivity implements View.OnClickL
         mBatteryDataManager = new BatteryDataManager(this);
         initView();
         setListeners();
-        ResultPageAdsManager.getInstance().preloadAd();
     }
 
     @Override
@@ -1331,6 +1330,8 @@ public class BatteryActivity extends BaseCenterActivity implements View.OnClickL
     }
 
     private void onOptimizeButtonClicked() {
+        ResultPageAdsManager.getInstance().preloadAd();
+
         if (mBatteryChargingLl.getVisibility() == View.VISIBLE) {
             mBatteryChargingLl.setVisibility(View.GONE);
         }

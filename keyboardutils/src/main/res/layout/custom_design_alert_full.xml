@@ -22,7 +22,7 @@
             android:layout_marginRight="12dp"
             android:layout_marginTop="12dp"
             android:padding="5dp"
-            android:src="@drawable/ic_fullscreen_alert_close" />
+            app:srcCompat="@drawable/ic_fullscreen_alert_close" />
     </RelativeLayout>
 
 

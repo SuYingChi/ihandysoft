@@ -126,7 +126,7 @@ public class NotificationCondition implements INotificationObserver {
     // 两条消息之间的时间间隔
     private static final long CHECK_NOTIFICATION_INTERVAL = DateUtils.HOUR_IN_MILLIS;
     // 亮屏之后到检查通知的时间
-    private static final long AFTER_SCREEN_ON_TIME = 33 * DateUtils.SECOND_IN_MILLIS;
+    private static final long AFTER_SCREEN_ON_TIME = 10 * DateUtils.SECOND_IN_MILLIS;
     // 同一类型的消息的时间间隔 (需求为 24 小时 1 条)
     private static final long SAME_NOTIFICATION_INTERVAL = DateUtils.DAY_IN_MILLIS;
     // 每天最多通知条数 (需求为 24 小时 1 条)
