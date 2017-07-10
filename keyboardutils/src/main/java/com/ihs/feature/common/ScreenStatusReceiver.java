@@ -1,5 +1,7 @@
 package com.ihs.feature.common;
 
+import android.os.Build;
+
 import com.artw.lockscreen.common.LockerChargingScreenUtils;
 import com.ihs.commons.notificationcenter.HSGlobalNotificationCenter;
 import com.ihs.commons.utils.HSLog;
@@ -32,19 +34,22 @@ public class ScreenStatusReceiver {
 
         HSGlobalNotificationCenter.sendNotification(NOTIFICATION_SCREEN_ON);
 
-        RamUsageDisplayUpdater.getInstance().startUpdatingRamUsage();
+        if (Build.VERSION.SDK_INT >= 16) {
+            RamUsageDisplayUpdater.getInstance().startUpdatingRamUsage();
+        }
 
         //// TODO: 17/4/1 打开这里。
 //        LChargingScreenUtils.onScreenOn();
     }
 
-    public static void onScreenOff( ) {
+    public static void onScreenOff() {
         HSLog.i(TAG, "Screen off");
         sScreenOn = false;
-
         HSGlobalNotificationCenter.sendNotification(NOTIFICATION_SCREEN_OFF);
         LockerChargingScreenUtils.onScreenOff();
-        RamUsageDisplayUpdater.getInstance().stopUpdatingRamUsage();
+        if (Build.VERSION.SDK_INT >= 16) {
+            RamUsageDisplayUpdater.getInstance().stopUpdatingRamUsage();
+        }
     }
 
 }
