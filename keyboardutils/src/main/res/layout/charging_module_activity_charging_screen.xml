@@ -298,29 +298,25 @@
                 android:layout_alignParentRight="true"
                 android:layout_marginRight="9dp"
                 android:src="@drawable/ad_close_button"
-                android:visibility="visible" />
-                <!--android:visibility="gone" />-->
+                android:visibility="gone" />
 
             <FrameLayout
                 android:id="@+id/ad_container"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_below="@+id/remove_ads"
-                android:layout_alignRight="@+id/remove_ads"
-                android:layout_alignEnd="@+id/remove_ads">
+                android:layout_marginTop="20dp">
 
 
                 <TextView
                     android:id="@+id/txt_charging_indicator"
-                    android:layout_width="250dp"
+                    android:layout_width="wrap_content"
                     android:layout_height="250dp"
                     android:layout_gravity="center"
                     android:fontFamily="sans-serif-thin"
                     android:gravity="center"
                     android:text="@string/charging_module_charging_state_speed_charging_indicator"
                     android:textColor="#88ffffff"
-                    android:textSize="12sp"
-                    android:background="#ff0303"/>
+                    android:textSize="12sp"/>
             </FrameLayout>
 
 
