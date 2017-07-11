@@ -123,7 +123,7 @@ public class ChargingLockerSettingsActivity extends AppCompatPreferenceActivity 
                         if ((Boolean) newValue) {
                             ChargingManagerUtil.enableCharging(false,"setting");
                         } else {
-                            ChargingManagerUtil.disableCharging("setting");
+                            ChargingManagerUtil.disableCharging();
                         }
                         return true;
                     }

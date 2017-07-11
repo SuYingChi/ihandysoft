@@ -1,7 +1,6 @@
 package com.ihs.chargingscreen.utils;
 
 import com.ihs.app.framework.HSApplication;
-import com.ihs.app.framework.HSSessionMgr;
 import com.ihs.commons.config.HSConfig;
 import com.ihs.commons.utils.HSLog;
 import com.ihs.commons.utils.HSPreferenceHelper;
@@ -71,37 +70,15 @@ public class ChargingPrefsUtil {
         if(spHelper == null){
             getInstance();
         }
-
         //用户设置过的话，直接返回用户设置的状态。不管plist任何值，包括静默。
         if (spHelper.contains(USER_ENABLED_CHARGING)) {
             HSLog.e("CHARGING 获取用户设置" );
             return spHelper.getBoolean(USER_ENABLED_CHARGING, false) ? CHARGING_DEFAULT_ACTIVE : CHARGING_DEFAULT_DISABLED;
         }
 
-        //用户没有设置过，并且超过3个Session，并且本地记录过值，就返回被记录的plist值。
-        if (HSSessionMgr.getCurrentSessionId() > 3 || spHelper.contains(RECORD_CURRENT_PLIST_SETTING)) {
-            HSLog.e("CHARGING 获取已经记录值" );
-            return spHelper.getInt(RECORD_CURRENT_PLIST_SETTING, CHARGING_DEFAULT_DISABLED);
-        } else {
-            //否则 直接取plist
-            HSLog.e("CHARGING 获取plist" );
-            return getChargingPlistConfig();
-        }
+        return getChargingPlistConfig();
     }
 
-
-    //前3次session退出检查用户是否设置过 charging
-    public void setChargingForFirstSession() {
-        if (HSSessionMgr.getCurrentSessionId() < 3) {
-            //如果用户设置过了就不用记录
-            if (!spHelper.contains(USER_ENABLED_CHARGING) && !spHelper.contains(RECORD_CURRENT_PLIST_SETTING)) {
-                HSLog.e("chagring 正在记录");
-                //没有设置的话就获取当前plist配置 并记录下来。
-                spHelper.putInt(RECORD_CURRENT_PLIST_SETTING, getChargingPlistConfig());
-            }
-        }
-        HSLog.e("chagring 已经记录 ");
-    }
 
     private int chargingNotifyAppearTimes(String chargingType) {
         return spHelper.getInt(chargingType, 0);

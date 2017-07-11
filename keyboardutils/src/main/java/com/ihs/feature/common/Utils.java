@@ -81,6 +81,7 @@ import com.ihs.commons.utils.HSLog;
 import com.ihs.commons.utils.HSPreferenceHelper;
 import com.ihs.keyboardutils.R;
 import com.ihs.keyboardutils.utils.CommonUtils;
+import com.ihs.keyboardutils.utils.KCFeatureRestrictionConfig;
 import com.nostra13.universalimageloader.core.ImageLoader;
 
 import java.io.BufferedReader;
@@ -1475,8 +1476,7 @@ public final class Utils {
         return icon;
     }
     public static boolean isNewUserInDNDStatus() {
-        long currentTimeMills = System.currentTimeMillis();
-        return currentTimeMills - getAppInstallTimeMillis() < USE_DND_DURATION;
+        return KCFeatureRestrictionConfig.isFeatureRestricted("BoostNotification");
     }
 
     public static long getAppInstallTimeMillis() {

@@ -296,8 +296,8 @@
 
             <ImageView
                 android:id="@+id/remove_ads"
-                android:layout_width="20dp"
-                android:layout_height="20dp"
+                android:layout_width="16dp"
+                android:layout_height="16dp"
                 android:layout_alignParentRight="true"
                 android:layout_marginRight="9dp"
                 android:src="@drawable/ad_close_button"

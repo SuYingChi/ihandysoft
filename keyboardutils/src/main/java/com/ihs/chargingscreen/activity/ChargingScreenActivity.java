@@ -64,6 +64,7 @@ import com.ihs.commons.utils.HSLog;
 import com.ihs.keyboardutils.R;
 import com.ihs.keyboardutils.iap.RemoveAdsManager;
 import com.ihs.keyboardutils.utils.KCAnalyticUtil;
+import com.ihs.keyboardutils.utils.PublisherUtils;
 import com.ihs.keyboardutils.utils.RippleDrawableUtils;
 
 import java.text.SimpleDateFormat;
@@ -80,6 +81,7 @@ import static android.view.WindowManager.LayoutParams.FLAG_TRANSLUCENT_NAVIGATIO
 import static android.view.WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS;
 import static android.view.WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN;
 import static com.ihs.chargingscreen.HSChargingScreenManager.getChargingState;
+import static com.ihs.chargingscreen.utils.ChargingAnalytics.app_chargingLocker_disable;
 import static com.ihs.keyboardutils.iap.RemoveAdsManager.NOTIFICATION_REMOVEADS_PURCHASED;
 
 /**
@@ -217,6 +219,8 @@ public class ChargingScreenActivity extends Activity {
         requestWindowFeature(Window.FEATURE_NO_TITLE);
         super.onCreate(savedInstanceState);
         ChargingManagerUtil.enableCharging(false, "plist");
+
+        ChargingAnalytics.getInstance().recordChargingEnableOnce();
 
         Window window = getWindow();
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
@@ -479,11 +483,6 @@ public class ChargingScreenActivity extends Activity {
             closeDialog.dismiss();
         }
         super.onDestroy();
-        ChargingPrefsUtil.getInstance().setChargingForFirstSession();
-
-
-
-
     }
 
     private void updateTime(Calendar calendar) {
@@ -668,7 +667,7 @@ public class ChargingScreenActivity extends Activity {
                     closeDialog = null;
 
                     ChargingAnalytics.getInstance().chargingDisableConfirmedOnce("activity");
-
+                    KCAnalyticUtil.logEvent(app_chargingLocker_disable, "activity", PublisherUtils.getInstallType());
 
                     HSChargingScreenManager.getInstance().stop(true);
                     ChargingPrefsUtil.getInstance().setChargingEnableByUser(false);

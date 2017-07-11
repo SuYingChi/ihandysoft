@@ -29,7 +29,6 @@ import android.widget.Toast;
 
 import com.acb.expressads.AcbExpressAdView;
 import com.artw.lockscreen.common.LockerChargingScreenUtils;
-import com.ihs.feature.common.ScreenStatusReceiver;
 import com.artw.lockscreen.shimmer.Shimmer;
 import com.artw.lockscreen.shimmer.ShimmerTextView;
 import com.artw.lockscreen.slidingdrawer.SlidingDrawer;
@@ -42,13 +41,13 @@ import com.ihs.chargingscreen.utils.DisplayUtils;
 import com.ihs.commons.notificationcenter.HSGlobalNotificationCenter;
 import com.ihs.commons.notificationcenter.INotificationObserver;
 import com.ihs.commons.utils.HSBundle;
+import com.ihs.feature.common.ScreenStatusReceiver;
 import com.ihs.feature.common.ViewUtils;
 import com.ihs.flashlight.FlashlightManager;
 import com.ihs.keyboardutils.R;
-import com.ihs.keyboardutils.alerts.KCAlert;
 import com.ihs.keyboardutils.iap.RemoveAdsManager;
-import com.ihs.keyboardutils.utils.RippleDrawableUtils;
 import com.ihs.keyboardutils.utils.CommonUtils;
+import com.ihs.keyboardutils.utils.RippleDrawableUtils;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
@@ -56,6 +55,7 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.Locale;
 
+import static com.artw.lockscreen.LockerSettings.recordLockerDisableOnce;
 import static com.artw.lockscreen.common.TimeTickReceiver.NOTIFICATION_CLOCK_TIME_CHANGED;
 import static com.ihs.keyboardutils.iap.RemoveAdsManager.NOTIFICATION_REMOVEADS_PURCHASED;
 
@@ -186,7 +186,7 @@ public class LockerMainFrame extends RelativeLayout implements INotificationObse
             removeAds = (ImageView) findViewById(R.id.remove_ads);
             removeAds.setVisibility(GONE);
 
-            acbExpressAdView = new AcbExpressAdView(HSApplication.getContext(),getContext().getString(R.string.ad_placement_locker));
+            acbExpressAdView = new AcbExpressAdView(HSApplication.getContext(), getContext().getString(R.string.ad_placement_locker));
             acbExpressAdView.setExpressAdViewListener(new AcbExpressAdView.AcbExpressAdViewListener() {
                 @Override
                 public void onAdClicked(AcbExpressAdView acbExpressAdView) {
@@ -248,7 +248,7 @@ public class LockerMainFrame extends RelativeLayout implements INotificationObse
 
 
         HSGlobalNotificationCenter.removeObserver(this);
-        if(mShimmer!=null){
+        if (mShimmer != null) {
             mShimmer.cancel();
         }
     }
@@ -425,6 +425,7 @@ public class LockerMainFrame extends RelativeLayout implements INotificationObse
                 ((LockerActivity) getContext()).finishSelf(false);
                 Toast.makeText(getContext(), R.string.locker_diabled_success, Toast.LENGTH_SHORT).show();
                 HSAnalytics.logEvent("Locker_DisableLocker_Alert_TurnOff_Clicked");
+                recordLockerDisableOnce("activity");
             }
         });
 

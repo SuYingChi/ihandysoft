@@ -34,15 +34,8 @@ public class LockerSettings {
         return getLockerEnableStates() == LOCKER_DEFAULT_ACTIVE;
     }
 
-    public static void setLockerEnabled(boolean isEnabled,String from) {
+    public static void setLockerEnabled(boolean isEnabled, String from) {
         getPref().putBoolean(USER_ENABLED_LOCKER, isEnabled);
-
-        if (isEnabled) {
-            lockerEnableOnce(from);
-        } else {
-            lockerDisableOnce(from);
-        }
-
         getDefaultPref().putBoolean(PREF_KEY_LOCKER_ENABLED, isEnabled);
     }
 
@@ -99,47 +92,24 @@ public class LockerSettings {
         if (getPref().contains(USER_ENABLED_LOCKER)) {
             HSLog.e("locker 获取用户设置");
             return getPref().getBoolean(USER_ENABLED_LOCKER, false) ? LOCKER_DEFAULT_ACTIVE : LOCKER_DEFAULT_DISABLED;
-        }
-
-        //用户没有设置过，并且不在第一个session的话。就返回第一个session结束时，被记录的plist值。
-        if (HSSessionMgr.getCurrentSessionId() > 3 || getPref().contains(RECORD_CURRENT_PLIST_SETTING)) {
-            HSLog.e("locker 获取已经记录值");
-            return getPref().getInt(RECORD_CURRENT_PLIST_SETTING, LOCKER_DEFAULT_DISABLED);
         } else {
-            HSLog.e("locker 获取plist");
-            //第一个session就取plist值
             return getLockerPlistState();
         }
-    }
 
-    //session结束退出检查用户是否设置过
-    public static void setLockerForFirstSession() {
-        //3次
-        if(HSSessionMgr.getCurrentSessionId() >= 3){
-            return;
-        }
-        //如果用户设置过了就不用记录
-        if (!getPref().contains(USER_ENABLED_LOCKER) && !getPref().contains(RECORD_CURRENT_PLIST_SETTING)) {
-            HSLog.e("locker 正在记录 ");
-            //没有设置的话就获取当前plist配置 并记录下来。
-            getPref().putInt(RECORD_CURRENT_PLIST_SETTING, getLockerPlistState());
-
-        }
-        HSLog.e("locker 已经记录 ");
     }
 
     public static boolean isLockerEnabledBefore() {
         return getPref().contains(app_screen_locker_enable);
     }
 
-    private static void lockerEnableOnce(String from) {
+    public static void recordLockerEnableOnce() {
         if (!getPref().contains(app_screen_locker_enable)) {
             getPref().putBoolean(app_screen_locker_enable, true);
-            HSAnalytics.logEvent(app_screen_locker_enable, app_screen_locker_enable, from, "install_type", PublisherUtils.getInstallType());
+            HSAnalytics.logEvent(app_screen_locker_enable, app_screen_locker_enable, "lockerEnabled", "install_type", PublisherUtils.getInstallType());
         }
     }
 
-    private static void lockerDisableOnce(String from) {
+    public static void recordLockerDisableOnce(String from) {
         if (!getPref().contains(app_screen_locker_disable)) {
             getPref().putBoolean(app_screen_locker_disable, true);
             HSAnalytics.logEvent(app_screen_locker_disable, app_screen_locker_enable, from, "install_type", PublisherUtils.getInstallType());

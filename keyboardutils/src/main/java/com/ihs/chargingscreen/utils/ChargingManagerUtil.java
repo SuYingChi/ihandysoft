@@ -8,7 +8,6 @@ import android.content.pm.PackageManager.NameNotFoundException;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 
-import com.artw.lockscreen.DismissKeyguradActivity;
 import com.ihs.app.framework.HSApplication;
 import com.ihs.charging.HSChargingManager;
 import com.ihs.chargingscreen.HSChargingScreenManager;
@@ -138,7 +137,6 @@ public class ChargingManagerUtil {
 
 
     public static void enableCharging(boolean startChagringActivity,String enableFrom) {
-        ChargingAnalytics.getInstance().chargingEnableOnce(enableFrom);
         ChargingPrefsUtil.getInstance().setChargingEnableByUser(true);
         HSChargingScreenManager.getInstance().start();
 
@@ -153,10 +151,9 @@ public class ChargingManagerUtil {
         context.startActivity(intent);
     }
 
-    public static void disableCharging(String from) {
+    public static void disableCharging() {
         HSChargingScreenManager.getInstance().stop();
         ChargingPrefsUtil.getInstance().setChargingEnableByUser(false);
-        ChargingAnalytics.getInstance().chargingDisableConfirmedOnce(from);
     }
 
 
