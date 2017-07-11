@@ -67,6 +67,7 @@ public class LockerActivity extends AppCompatActivity implements INotificationOb
 
         super.onCreate(savedInstanceState);
         overridePendingTransition(0, 0);
+        LockerSettings.recordLockerEnableOnce();
 
         // set translucent status bar & navigation bar
         Window window = getWindow();

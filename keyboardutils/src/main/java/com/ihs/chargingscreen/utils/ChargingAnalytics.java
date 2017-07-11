@@ -34,14 +34,14 @@ public class ChargingAnalytics {
     private static final String notification_chargingLocker_show = "notification_chargingLocker_show";//充电锁屏通知出现
     private static final String notification_chargingLocker_click = "notification_chargingLocker_click";//充电锁屏通知点击
     private static final String app_chargingLocker_disable_clicked = "app_chargingLocker_disable_clicked";//关闭按钮点击  - 每个用户只记一次
-    private static final String app_chargingLocker_disable = "app_chargingLocker_disable";//充电锁屏关闭 - 每个用户只记一次
+    public static final String app_chargingLocker_disable = "app_chargingLocker_disable";//充电锁屏关闭 - 每个用户只记一次
 
 
-    public void chargingEnableOnce(String triggerFrom) {
+    public void recordChargingEnableOnce() {
         if (!ChargingPrefsUtil.getInstance().getSpHelper().contains(app_chargingLocker_enable)) {
             ChargingPrefsUtil.getInstance().getSpHelper().putBoolean(app_chargingLocker_enable, true);
 
-            KCAnalyticUtil.logEvent(app_chargingLocker_enable, triggerFrom, PublisherUtils.getInstallType());
+            KCAnalyticUtil.logEvent(app_chargingLocker_enable, "enabledForm", PublisherUtils.getInstallType());
         }
     }
 
@@ -60,15 +60,13 @@ public class ChargingAnalytics {
     public void chargingDisableTouchedOnce(String from) {
         if (!ChargingPrefsUtil.getInstance().getSpHelper().contains(app_chargingLocker_disable_clicked)) {
             ChargingPrefsUtil.getInstance().getSpHelper().putBoolean(app_chargingLocker_disable_clicked, true);
-            KCAnalyticUtil.logEvent(app_chargingLocker_disable_clicked,from);
+            KCAnalyticUtil.logEvent(app_chargingLocker_disable_clicked, from);
         }
     }
 
     public void chargingDisableConfirmedOnce(String from) {
         if (!ChargingPrefsUtil.getInstance().getSpHelper().contains(app_chargingLocker_disable)) {
             ChargingPrefsUtil.getInstance().getSpHelper().putBoolean(app_chargingLocker_disable, true);
-
-            KCAnalyticUtil.logEvent(app_chargingLocker_disable, from, PublisherUtils.getInstallType());
         }
     }
 

@@ -7,7 +7,6 @@ import android.content.IntentFilter;
 import android.widget.Toast;
 
 import com.artw.lockscreen.common.LockerChargingScreenUtils;
-import com.ihs.feature.common.ScreenStatusReceiver;
 import com.artw.lockscreen.common.TimeTickReceiver;
 import com.ihs.app.analytics.HSAnalytics;
 import com.ihs.app.framework.HSApplication;
@@ -17,9 +16,8 @@ import com.ihs.chargingscreen.activity.ChargingScreenActivity;
 import com.ihs.commons.notificationcenter.HSGlobalNotificationCenter;
 import com.ihs.commons.notificationcenter.INotificationObserver;
 import com.ihs.commons.utils.HSBundle;
+import com.ihs.feature.common.ScreenStatusReceiver;
 import com.ihs.keyboardutils.R;
-
-import static android.content.IntentFilter.SYSTEM_HIGH_PRIORITY;
 
 /**
  * Created by Arthur on 17/3/31.
@@ -51,14 +49,12 @@ public class ScreenLockerManager {
         INotificationObserver observer = new INotificationObserver() {
             @Override
             public void onReceive(String s, HSBundle hsBundle) {
-                if(s.equals(ChargingScreenActivity.NOTIFICATION_CHARGING_ACTIVITY_STARTED)){
+                if (s.equals(ChargingScreenActivity.NOTIFICATION_CHARGING_ACTIVITY_STARTED)) {
                     LockerChargingScreenUtils.finishLockerActivity();
-                }else if(s.equals(ChargingFullScreenAlertDialogActivity.NOTIFICATION_LOCKER_ENABLED)){
+                } else if (s.equals(ChargingFullScreenAlertDialogActivity.NOTIFICATION_LOCKER_ENABLED)) {
                     enableLockerFromAlert();
-                }else if(s.equals(HSNotificationConstant.HS_CONFIG_CHANGED)){
-                    LockerSettings.setLockerEnabled(LockerSettings.isLockerEnabled(),"plist");
-                }else if(s.equals(HSNotificationConstant.HS_SESSION_END)){
-                    LockerSettings.setLockerForFirstSession();
+                } else if (s.equals(HSNotificationConstant.HS_CONFIG_CHANGED)) {
+                    LockerSettings.setLockerEnabled(LockerSettings.isLockerEnabled(), "plist");
                 }
             }
         };
@@ -69,7 +65,7 @@ public class ScreenLockerManager {
     }
 
     public static void enableLockerFromAlert() {
-        LockerSettings.setLockerEnabled(true,"alert");
+        LockerSettings.setLockerEnabled(true, "alert");
         Toast.makeText(HSApplication.getContext(), HSApplication.getContext().getString(R.string.screen_locker_enable_alert_toast), Toast.LENGTH_SHORT).show();
         HSAnalytics.logEvent("alert_screen_locker_click");
     }
