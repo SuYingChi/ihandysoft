@@ -170,7 +170,7 @@
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:layout_weight="7">
+            android:layout_weight="1">
 
 
             <LinearLayout
@@ -179,7 +179,7 @@
                 android:layout_height="wrap_content"
                 android:layout_alignParentBottom="true"
                 android:layout_centerHorizontal="true"
-                android:layout_marginBottom="30dp"
+                android:layout_marginBottom="20dp"
                 android:gravity="center_vertical"
                 android:orientation="horizontal">
 
@@ -288,48 +288,49 @@
 
         <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_weight="8"
+            android:layout_height="wrap_content"
             android:clipChildren="false">
 
             <ImageView
                 android:id="@+id/remove_ads"
-                android:layout_width="24dp"
-                android:layout_height="24dp"
+                android:layout_width="20dp"
+                android:layout_height="20dp"
                 android:layout_alignParentRight="true"
                 android:layout_marginRight="9dp"
                 android:src="@drawable/ad_close_button"
-                android:visibility="gone" />
+                android:visibility="visible" />
+                <!--android:visibility="gone" />-->
 
             <FrameLayout
                 android:id="@+id/ad_container"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_marginBottom="50dp"
-                android:layout_marginTop="27dp"
-                android:layout_marginLeft="9dp"
-                android:layout_marginRight="9dp">
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/remove_ads"
+                android:layout_alignRight="@+id/remove_ads"
+                android:layout_alignEnd="@+id/remove_ads">
 
 
                 <TextView
                     android:id="@+id/txt_charging_indicator"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:layout_width="250dp"
+                    android:layout_height="250dp"
                     android:layout_gravity="center"
                     android:fontFamily="sans-serif-thin"
                     android:gravity="center"
                     android:text="@string/charging_module_charging_state_speed_charging_indicator"
                     android:textColor="#88ffffff"
-                    android:textSize="12sp" />
+                    android:textSize="12sp"
+                    android:background="#ff0303"/>
             </FrameLayout>
 
 
             <com.facebook.shimmer.ShimmerFrameLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_alignParentBottom="true"
+                android:layout_below="@+id/ad_container"
                 android:layout_centerHorizontal="true"
-                android:layout_marginBottom="20dp"
+                android:layout_marginBottom="15dp"
+                android:layout_marginTop="15dp"
                 app:angle="cw_0"
                 app:auto_start="true"
                 app:duration="2000"
@@ -351,14 +352,8 @@
 
             </com.facebook.shimmer.ShimmerFrameLayout>
 
-
         </RelativeLayout>
 
-        <ImageView
-            android:id="@+id/imageView3"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            app:srcCompat="@drawable/ad_close_button" />
     </LinearLayout>
 
 </RelativeLayout>
