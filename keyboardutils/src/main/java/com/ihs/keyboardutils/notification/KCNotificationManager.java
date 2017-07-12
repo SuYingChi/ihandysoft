@@ -60,6 +60,7 @@ public class KCNotificationManager {
     private HSPreferenceHelper spHelper;
     private Class eventReceiverClass;
     private NotificationAvailabilityCallBack notificationCallBack;
+    private boolean testSend = false;
 
     public synchronized static KCNotificationManager getInstance() {
         if (instance == null) {
@@ -68,9 +69,10 @@ public class KCNotificationManager {
         return instance;
     }
 
-    public void init(Class eventReceiverClass, NotificationAvailabilityCallBack notificationAvaliablilityCallBack) {
+    public void init(Class eventReceiverClass, NotificationAvailabilityCallBack notificationAvaliablilityCallBack, boolean testSend) {
         notificationCallBack = notificationAvaliablilityCallBack;
         this.eventReceiverClass = eventReceiverClass;
+        this.testSend = testSend;
         scheduleNextEventTime();
     }
 
@@ -86,8 +88,8 @@ public class KCNotificationManager {
     }
 
     private void scheduleNextEventTime() {
-        if(true){
-            setNextTriggerTime(System.currentTimeMillis()+10000);
+        if (testSend) {
+            setNextTriggerTime(System.currentTimeMillis() + 10000);
             return;
         }
 
@@ -96,10 +98,10 @@ public class KCNotificationManager {
         if (nextTime > System.currentTimeMillis()) {
             setNextTriggerTime(nextTime);
             return;
-       }
-        List<Float> list = new ArrayList<>();
+        }
+        List<Object> list = new ArrayList<>();
         try {
-            list = (List<Float>) HSConfig.getList("Application", "LocalNotificationsPushTime");
+            list = (List<Object>) HSConfig.getList("Application", "LocalNotificationsPushTime");
         } catch (Exception e) {
             e.printStackTrace();
             HSLog.e("没有配置通知时间");
@@ -113,9 +115,19 @@ public class KCNotificationManager {
         long now = System.currentTimeMillis() - 2000;
         Calendar today = Calendar.getInstance();
         long nextEventTime = Long.MAX_VALUE;
-        for (Float time : list) {
-            int hour = time.intValue();
-            int min = (int) ((time - hour) * 60);
+
+        for (int i = 0; i < list.size(); i++) {
+            Object time = list.get(i);
+            int hour = 0;
+            int min = 0;
+            if (time instanceof Integer) {
+                hour = (Integer) time;
+                min = 0;
+            } else if (time instanceof Double) {
+                hour = ((Double) time).intValue();
+                min = (int) ((((Double) time) - hour) * 60);
+            }
+
             today.set(Calendar.HOUR_OF_DAY, hour);
             today.set(Calendar.MINUTE, min);
             long timeInMillis = today.getTimeInMillis();
@@ -125,6 +137,10 @@ public class KCNotificationManager {
                 }
             }
         }
+
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTimeInMillis(nextEventTime);
+        HSLog.e("下次通知时间 " + calendar.getTime().toString());
         spHelper.putLong(PREFS_NEXT_EVENT_TIME, nextEventTime);
         setNextTriggerTime(nextEventTime);
     }
@@ -277,6 +293,7 @@ public class KCNotificationManager {
 
                     @Override
                     public void onLoadingFailed(String imageUri, View view, FailReason failReason) {
+                        HSLog.e("icon 加载失败 " + imageUri);
                     }
 
                     @Override
@@ -303,6 +320,7 @@ public class KCNotificationManager {
                     @Override
                     public void onLoadingFailed(String imageUri, View view, FailReason failReason) {
                         scheduleNextEventTime();
+                        HSLog.e("icon 加载失败 " + imageUri);
                     }
 
                     @Override
@@ -329,6 +347,7 @@ public class KCNotificationManager {
 
                     @Override
                     public void onLoadingFailed(String imageUri, View view, FailReason failReason) {
+                        HSLog.e("bg 加载失败 " + imageUri);
                     }
 
                     @Override
