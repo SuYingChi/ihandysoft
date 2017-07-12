@@ -45,6 +45,13 @@ public class ChargingAnalytics {
         }
     }
 
+    public void recordChargingDisableOnce() {
+        if (!ChargingPrefsUtil.getInstance().getSpHelper().contains(app_chargingLocker_disable)) {
+            ChargingPrefsUtil.getInstance().getSpHelper().putBoolean(app_chargingLocker_disable, true);
+            KCAnalyticUtil.logEvent(app_chargingLocker_disable, "enabledForm", PublisherUtils.getInstallType());
+        }
+    }
+
     public void chargingScreenShowed() {
         KCAnalyticUtil.logEvent(app_chargingLocker_show, null, PublisherUtils.getInstallType());
     }
