@@ -74,6 +74,7 @@ public class ChargingAnalytics {
     public void chargingDisableConfirmedOnce(String from) {
         if (!ChargingPrefsUtil.getInstance().getSpHelper().contains(app_chargingLocker_disable)) {
             ChargingPrefsUtil.getInstance().getSpHelper().putBoolean(app_chargingLocker_disable, true);
+            KCAnalyticUtil.logEvent(app_chargingLocker_disable, "enabledForm", PublisherUtils.getInstallType());
         }
     }
 
