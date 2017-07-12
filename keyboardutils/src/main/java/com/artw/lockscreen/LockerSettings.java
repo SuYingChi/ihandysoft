@@ -109,10 +109,10 @@ public class LockerSettings {
         }
     }
 
-    public static void recordLockerDisableOnce(String from) {
+    public static void recordLockerDisableOnce() {
         if (!getPref().contains(app_screen_locker_disable)) {
             getPref().putBoolean(app_screen_locker_disable, true);
-            HSAnalytics.logEvent(app_screen_locker_disable, app_screen_locker_enable, from, "install_type", PublisherUtils.getInstallType());
+            HSAnalytics.logEvent(app_screen_locker_disable, app_screen_locker_disable,"lockerDisabled", "install_type", PublisherUtils.getInstallType());
         }
     }
 

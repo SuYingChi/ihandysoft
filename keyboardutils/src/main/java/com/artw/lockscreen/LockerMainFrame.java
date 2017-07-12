@@ -425,7 +425,7 @@ public class LockerMainFrame extends RelativeLayout implements INotificationObse
                 ((LockerActivity) getContext()).finishSelf(false);
                 Toast.makeText(getContext(), R.string.locker_diabled_success, Toast.LENGTH_SHORT).show();
                 HSAnalytics.logEvent("Locker_DisableLocker_Alert_TurnOff_Clicked");
-                recordLockerDisableOnce("activity");
+                recordLockerDisableOnce();
             }
         });
 
