@@ -116,6 +116,9 @@ public class KCNotificationManager {
         Calendar today = Calendar.getInstance();
         long nextEventTime = Long.MAX_VALUE;
 
+        long lastPushTime = spHelper.getLong(PREFS_NEXT_EVENT_TIME, 0);
+
+
         for (int i = 0; i < list.size(); i++) {
             Object time = list.get(i);
             int hour = 0;
@@ -131,10 +134,15 @@ public class KCNotificationManager {
             today.set(Calendar.HOUR_OF_DAY, hour);
             today.set(Calendar.MINUTE, min);
             long timeInMillis = today.getTimeInMillis();
+            if (timeInMillis - lastPushTime < 5000) {
+                continue;
+            }
             if (timeInMillis > now) {
                 if (timeInMillis < nextEventTime) {
                     nextEventTime = timeInMillis;
                 }
+            }else{
+
             }
         }
 
@@ -298,6 +306,7 @@ public class KCNotificationManager {
 
                     @Override
                     public void onLoadingComplete(String imageUri, View view, Bitmap loadedImage) {
+                        HSLog.e("icon 加载成功 " + imageUri);
                         mBuilder.setLargeIcon(loadedImage);
                         tryToNotify(mBuilder, beanCopy);
                     }
@@ -325,6 +334,7 @@ public class KCNotificationManager {
 
                     @Override
                     public void onLoadingComplete(String imageUri, View view, Bitmap loadedImage) {
+                        HSLog.e("icon 加载成功 " + imageUri);
                         imgRequestCompleteCount[0]--;
                         contentView.setImageViewBitmap(R.id.notification_icon, loadedImage);
                         mBuilder.setContent(contentView);
@@ -352,6 +362,7 @@ public class KCNotificationManager {
 
                     @Override
                     public void onLoadingComplete(String imageUri, View view, Bitmap loadedImage) {
+                        HSLog.e("bg 加载成功 " + imageUri);
                         imgRequestCompleteCount[0]--;
                         contentView.setImageViewBitmap(R.id.notification_background, loadedImage);
                         mBuilder.setContent(contentView);
