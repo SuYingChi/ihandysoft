@@ -183,6 +183,14 @@ public class AdLoadingView extends RelativeLayout implements NativeAdView.OnAdLo
 
     }
 
+    public void setConnectionStateText(String text) {
+        tvApply.setText(text);
+    }
+
+    public void setConnectionProgressVisibility(int visibility) {
+        progressBar.setVisibility(visibility);
+    }
+
     public void startFakeLoading() {
         fakeLoadingProgress(0, 100);
     }
@@ -205,7 +213,6 @@ public class AdLoadingView extends RelativeLayout implements NativeAdView.OnAdLo
 
             @Override
             public void onAnimationEnd(Animator animation) {
-                closeButton.setVisibility(VISIBLE);
                 tvApply.setText(onLoadingText[1]);
 
                 progressBar.setVisibility(INVISIBLE);
