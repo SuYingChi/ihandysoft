@@ -35,6 +35,7 @@ import com.ihs.keyboardutils.alerts.HSAlertDialog;
 import com.ihs.keyboardutils.iap.RemoveAdsManager;
 import com.ihs.keyboardutils.nativeads.NativeAdParams;
 import com.ihs.keyboardutils.nativeads.NativeAdView;
+import com.nostra13.universalimageloader.core.ImageLoader;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -114,7 +115,7 @@ public class CustomShareUtils {
         window.setBackgroundDrawable(new ColorDrawable(android.graphics.Color.TRANSPARENT));
 
         ImageView imageView = (ImageView) view.findViewById(R.id.share_image);
-        imageView.setImageURI(previewUri);
+        ImageLoader.getInstance().displayImage(previewUri.toString(), imageView);
 
         RecyclerView recyclerView = (RecyclerView) view.findViewById(R.id.share_list);
         ShareAdapter shareAdapter = new ShareAdapter(context, dialog, shareIntent, resolveInfoList, itemWidth, shareItemClickedListener);
