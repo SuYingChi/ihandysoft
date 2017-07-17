@@ -136,7 +136,7 @@ public class ChargingManagerUtil {
 
 
 
-    public static void enableCharging(boolean startChagringActivity,String enableFrom) {
+    public static void enableCharging(boolean startChagringActivity) {
         ChargingPrefsUtil.getInstance().setChargingEnableByUser(true);
         HSChargingScreenManager.getInstance().start();
 

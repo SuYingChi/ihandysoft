@@ -421,7 +421,7 @@ public class LockerMainFrame extends RelativeLayout implements INotificationObse
         builder.setNegativeButton(getContext().getString(R.string.charging_screen_close_dialog_negative_action), new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int i) {
-                LockerSettings.setLockerEnabled(false, "activity");
+                LockerSettings.setLockerEnabled(false);
                 ((LockerActivity) getContext()).finishSelf(false);
                 Toast.makeText(getContext(), R.string.locker_diabled_success, Toast.LENGTH_SHORT).show();
                 HSAnalytics.logEvent("Locker_DisableLocker_Alert_TurnOff_Clicked");

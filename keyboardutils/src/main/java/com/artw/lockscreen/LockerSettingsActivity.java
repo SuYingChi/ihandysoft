@@ -49,7 +49,7 @@ public class LockerSettingsActivity extends BaseSettingsActivity
 
     @Override public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
         if (buttonView == mLockerEnabledToggle) {
-            LockerSettings.setLockerEnabled(isChecked,"LockerSettings");
+            LockerSettings.setLockerEnabled(isChecked);
             HSAnalytics.logEvent("LauncherSettings_LockerSettings_Locker_Clicked", "type", isChecked ? "On" : "Off");
         }
     }

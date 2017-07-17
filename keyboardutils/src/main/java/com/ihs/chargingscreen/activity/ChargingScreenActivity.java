@@ -216,7 +216,7 @@ public class ChargingScreenActivity extends Activity {
 
         requestWindowFeature(Window.FEATURE_NO_TITLE);
         super.onCreate(savedInstanceState);
-        ChargingManagerUtil.enableCharging(false, "plist");
+        ChargingManagerUtil.enableCharging(false);
 
         ChargingAnalytics.getInstance().recordChargingEnableOnce();
 
@@ -634,11 +634,6 @@ public class ChargingScreenActivity extends Activity {
             closeDialog.setContentView(R.layout.charging_module_alert_close_charge_screen);
 
             TextView closeAlertTitle = (TextView) closeDialog.findViewById(R.id.close_alert_title);
-            String moduleName = HSChargingScreenManager.getInstance().getModuleName();
-            if (moduleName == null || "".equals(moduleName)) {
-                moduleName = getResources().getString(R.string.charging_module_default_module_name);
-            }
-//            closeAlertTitle.setText(getResources().getString(R.string.charging_module_close_charging_boost) + moduleName + "?");
 
             closeAlertTitle.setText(R.string.disable_battery_master);
             View btnCancel = closeDialog.findViewById(R.id.alert_cancel);
@@ -667,7 +662,7 @@ public class ChargingScreenActivity extends Activity {
                     ChargingAnalytics.getInstance().chargingDisableConfirmedOnce("activity");
                     ChargingAnalytics.getInstance().recordChargingDisableOnce();
 
-                    HSChargingScreenManager.getInstance().stop(true);
+                    HSChargingScreenManager.getInstance().stop();
                     ChargingPrefsUtil.getInstance().setChargingEnableByUser(false);
 
                     finish();

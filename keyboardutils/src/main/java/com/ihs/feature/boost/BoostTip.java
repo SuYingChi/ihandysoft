@@ -499,9 +499,9 @@ public class BoostTip extends FrameLayout implements View.OnClickListener, Float
         }
         button.setOnClickListener(v -> {
             dismiss(false);
-            ChargingManagerUtil.enableCharging(false,"Boost");
+            ChargingManagerUtil.enableCharging(false);
             if (!LockerSettings.isLockerEnabledBefore()) {
-                LockerSettings.setLockerEnabled(true,"Boost");
+                LockerSettings.setLockerEnabled(true);
             }
             HSAnalytics.logEvent("ChargingScreen_Toast_TurnOn_Clicked", "type",
                     mType == BoostType.BATTERY ? "Battery life" : "CPU");

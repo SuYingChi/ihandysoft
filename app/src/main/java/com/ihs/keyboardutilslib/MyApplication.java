@@ -62,11 +62,7 @@ public class MyApplication extends HSApplication {
         }
         LeakCanary.install(this);
 
-        HSChargingScreenManager.init(true, "", "Master_A(NativeAds)Charging", new HSChargingScreenManager.IChargingScreenListener() {
-            @Override
-            public void onClosedByChargingPage() {
-            }
-        });
+        HSChargingScreenManager.init(true, "Master_A(NativeAds)Charging");
 
         HSGlobalNotificationCenter.addObserver(HSNotificationConstant.HS_SESSION_START, sessionEventObserver);
         HSGlobalNotificationCenter.addObserver(HSNotificationConstant.HS_SESSION_END, sessionEventObserver);

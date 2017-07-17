@@ -431,9 +431,9 @@ abstract class ResultController implements View.OnClickListener {
         if (i == R.id.result_action_btn) {
             switch (mType) {
                 case CHARGE_SCREEN:
-                    ChargingManagerUtil.enableCharging(false,"ResultPage");
+                    ChargingManagerUtil.enableCharging(false);
                     if (!LockerSettings.isLockerEnabledBefore()) {
-                        LockerSettings.setLockerEnabled(true,"ResultPage");
+                        LockerSettings.setLockerEnabled(true);
                     }
                     ToastUtils.showToast(R.string.result_page_card_battery_protection_toast);
                     mActivity.finishAndNotify();

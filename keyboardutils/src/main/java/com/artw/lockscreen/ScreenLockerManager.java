@@ -54,7 +54,7 @@ public class ScreenLockerManager {
                 } else if (s.equals(ChargingFullScreenAlertDialogActivity.NOTIFICATION_LOCKER_ENABLED)) {
                     enableLockerFromAlert();
                 } else if (s.equals(HSNotificationConstant.HS_CONFIG_CHANGED)) {
-                    LockerSettings.setLockerEnabled(LockerSettings.isLockerEnabled(), "plist");
+                    LockerSettings.updateLockerSetting();
                 }
             }
         };
@@ -65,7 +65,7 @@ public class ScreenLockerManager {
     }
 
     public static void enableLockerFromAlert() {
-        LockerSettings.setLockerEnabled(true, "alert");
+        LockerSettings.setLockerEnabled(true);
         Toast.makeText(HSApplication.getContext(), HSApplication.getContext().getString(R.string.screen_locker_enable_alert_toast), Toast.LENGTH_SHORT).show();
         HSAnalytics.logEvent("alert_screen_locker_click");
     }

@@ -12,7 +12,10 @@ import com.ihs.chargingscreen.notification.ChargeNotifyManager;
 import com.ihs.chargingscreen.utils.ChargingAnalytics;
 import com.ihs.chargingscreen.utils.ChargingManagerUtil;
 import com.ihs.chargingscreen.utils.ChargingPrefsUtil;
+import com.ihs.commons.config.HSConfig;
 import com.ihs.commons.notificationcenter.HSGlobalNotificationCenter;
+import com.ihs.commons.notificationcenter.INotificationObserver;
+import com.ihs.commons.utils.HSBundle;
 import com.ihs.commons.utils.HSLog;
 
 import static com.ihs.charging.HSChargingManager.HSChargingState.STATE_CHARGING_FULL;
@@ -34,43 +37,41 @@ public class HSChargingScreenManager {
         return naitveAdsPlacementName;
     }
 
-    public interface IChargingScreenListener {
-        void onClosedByChargingPage();
-    }
-
     private static HSChargingScreenManager instance;
 
     private boolean isChargingModuleOpened;
     private boolean showNativeAd;
 
-    private String moduleName = "";
     private String naitveAdsPlacementName;
-
-    private IChargingScreenListener iChargingScreenListener;
 
     public static HSChargingScreenManager getInstance() {
         return instance;
     }
 
-    public synchronized static void init(boolean showNativeAd, String moduleName, String naitveAdsPlacementName, IChargingScreenListener chargingScreenListener) {
+    public synchronized static void init(boolean showNativeAd, String naitveAdsPlacementName) {
         if (instance == null) {
-            instance = new HSChargingScreenManager(showNativeAd, moduleName, naitveAdsPlacementName, chargingScreenListener);
+            instance = new HSChargingScreenManager(showNativeAd, naitveAdsPlacementName);
 
             registerChargingService();
 
             ChargeNotifyManager.getInstance().refreshChargingNotification();
 
+            HSGlobalNotificationCenter.addObserver(HSConfig.HS_NOTIFICATION_CONFIG_CHANGED, new INotificationObserver() {
+                @Override
+                public void onReceive(String s, HSBundle hsBundle) {
+                    registerChargingService();
+                }
+            });
+
         }
     }
 
 
-    private HSChargingScreenManager(boolean showNativeAd, String moduleName, String placementName, IChargingScreenListener iChargingScreenListener) {
+    private HSChargingScreenManager(boolean showNativeAd, String placementName) {
 
         AcbNativeAdManager.sharedInstance();
         this.naitveAdsPlacementName = placementName;
         this.showNativeAd = showNativeAd;
-        this.moduleName = moduleName;
-        this.iChargingScreenListener = iChargingScreenListener;
 
         HSChargingManager.getInstance().addChargingListener(new IChargingListener() {
             @Override
@@ -111,47 +112,12 @@ public class HSChargingScreenManager {
                 if (!isChargingModuleOpened) {
                     return;
                 }
-//
-//                if (preChargingState == HSChargingState.STATE_DISCHARGING &&
-//                        HSChargingManager.getInstance().getBatteryPluggedSource() == BatteryPluggedSource.USB) {
-//                    /**低电压充电提醒*/
-//                    if (HSChargingScreenManager.getInstance().isChargingModuleOpened()) {
-//                        ChargeNotifyManager.getInstance().pendingToShow(ChargeNotifyManager.PUSH_LOW_VOLTAGE_PRIORITY);
-//                    }
-//                }
-//
-//
-//                if (preChargingState != HSChargingState.STATE_DISCHARGING && preChargingState != HSChargingState.STATE_UNKNOWN
-//                        && curChargingState == HSChargingState.STATE_DISCHARGING) {
-//                    //拔电源
-//                    ChargeNotifyManager.getInstance().cancelLowVoltagePush();
-//
-//                    if (HSChargingManager.getInstance().getBatteryRemainingPercent() <= 80) {
-//                        ChargeNotifyManager.getInstance().pendingToShow(ChargeNotifyManager.PUSH_CUT_OFF_CHARGE_PRIORITY);
-//                    }
-//                }
-//
+
                 if (preChargingState == HSChargingState.STATE_DISCHARGING && curChargingState != HSChargingState.STATE_DISCHARGING) {
                     //插电
                     ChargingManagerUtil.startChargingActivity();
                 }
 
-//                    ChargeNotifyManager.getInstance().pendingToShow(ChargeNotifyManager.PUSH_CHARGING_PRIORITY);
-//                }
-//
-//                if (preChargingState == HSChargingState.STATE_CHARGING_CONTINUOUS && curChargingState == HSChargingState.STATE_CHARGING_TRICKLE) {
-//                    //电量充至100，提示继续充10min
-//                    ChargeNotifyManager.getInstance().pendingToShow(ChargeNotifyManager.PUSH_BATTERY_DOCTOR_PRIORITY);
-//                }
-//
-//                if (preChargingState == HSChargingState.STATE_CHARGING_TRICKLE && curChargingState == HSChargingState.STATE_CHARGING_FULL) {
-//                    //完全充满
-//                    ChargeNotifyManager.getInstance().pendingToShow(ChargeNotifyManager.PUSH_FULL_CHARGE_PRIORITY);
-//
-//                }
-
-//                HSGlobalNotificationCenter.sendNotificationOnMainThread(Constants.EVENT_CHARGING_SHOW_PUSH);
-//                HSGlobalNotificationCenter.sendNotificationOnMainThread(Constants.EVENT_SYSTEM_BATTERY_CHARGING_STATE_CHANGED);
             }
 
             private boolean canShowFullChargNotification(HSChargingState preChargingState, HSChargingState curChargingState) {
@@ -204,11 +170,7 @@ public class HSChargingScreenManager {
         isChargingModuleOpened = true;
     }
 
-    public void stop() {
-        stop(true);
-    }
-
-    public synchronized void stop(boolean isClosedByModule) {
+    public synchronized void stop() {
 
         if (!isChargingModuleOpened) {
             return;
@@ -217,15 +179,6 @@ public class HSChargingScreenManager {
         ChargeNotifyManager.getInstance().refreshChargingNotification();
         ChargeNotifyManager.getInstance().unregisterScreenOffReceiver();
         isChargingModuleOpened = false;
-
-        if (iChargingScreenListener != null && isClosedByModule) {
-            iChargingScreenListener.onClosedByChargingPage();
-        }
-
-    }
-
-    public String getModuleName() {
-        return moduleName;
     }
 
     public boolean isChargingModuleOpened() {
@@ -242,10 +195,9 @@ public class HSChargingScreenManager {
         int chargingEnabled = ChargingPrefsUtil.getInstance().getChargingEnableStates();
         switch (chargingEnabled) {
             case CHARGING_MUTED:
-            default:
-                return;
             case CHARGING_DEFAULT_DISABLED:
-                HSChargingScreenManager.getInstance().stop(false);
+            default:
+                HSChargingScreenManager.getInstance().stop();
                 break;
             case CHARGING_DEFAULT_ACTIVE:
                 HSChargingScreenManager.getInstance().start();

@@ -37,7 +37,7 @@ public class ChargingScreenTip extends DefaultButtonDialog2 {
     protected void onClickPositiveButton(View v) {
         ChargingPrefsUtil.getInstance().setChargingEnableByUser(true);
         if (!LockerSettings.isLockerEnabledBefore()) {
-            LockerSettings.setLockerEnabled(true,"tip");
+            LockerSettings.setLockerEnabled(true);
         }
         Toast.makeText(getContext(), R.string.charging_screen_guide_turn_on, Toast.LENGTH_SHORT).show();
         super.onClickPositiveButton(v);

@@ -89,7 +89,7 @@ public class ChargingFullScreenAlertDialogActivity extends Activity {
                 .setPositiveButton(chargingMap.get("Button"), new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
-                        ChargingManagerUtil.enableCharging(false,"alert");
+                        ChargingManagerUtil.enableCharging(false);
                         KCAnalyticUtil.logEvent("alert_charging_click");
                     }
                 })

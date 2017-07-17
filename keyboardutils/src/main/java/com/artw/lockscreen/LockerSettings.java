@@ -2,7 +2,6 @@ package com.artw.lockscreen;
 
 import com.ihs.app.analytics.HSAnalytics;
 import com.ihs.app.framework.HSApplication;
-import com.ihs.app.framework.HSSessionMgr;
 import com.ihs.commons.config.HSConfig;
 import com.ihs.commons.utils.HSLog;
 import com.ihs.commons.utils.HSPreferenceHelper;
@@ -34,9 +33,9 @@ public class LockerSettings {
         return getLockerEnableStates() == LOCKER_DEFAULT_ACTIVE;
     }
 
-    public static void setLockerEnabled(boolean isEnabled, String from) {
+    public static void setLockerEnabled(boolean isEnabled) {
         getPref().putBoolean(USER_ENABLED_LOCKER, isEnabled);
-        getDefaultPref().putBoolean(PREF_KEY_LOCKER_ENABLED, isEnabled);
+        updateLockerSetting();
     }
 
     public static void increaseLockerShowCount() {
@@ -80,10 +79,8 @@ public class LockerSettings {
         }
     }
 
-    public void refreshLockerSetting() {
-        if (HSSessionMgr.getCurrentSessionId() <= 1) {
-            getDefaultPref().putBoolean(PREF_KEY_LOCKER_ENABLED, isLockerEnabled());
-        }
+    static void updateLockerSetting() {
+        getDefaultPref().putBoolean(PREF_KEY_LOCKER_ENABLED, isLockerEnabled());
     }
 
 
