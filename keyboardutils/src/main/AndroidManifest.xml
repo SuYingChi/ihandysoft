@@ -58,6 +58,11 @@
 
         <activity
             android:name="com.ihs.chargingscreen.activity.ChargingFullScreenAlertDialogActivity"
+            android:excludeFromRecents="true"
+            android:launchMode="singleTop"
+            android:noHistory="true"
+            android:screenOrientation="portrait"
+            android:taskAffinity="com.ihs.chargingScreen.ChargingFullScreenAlertDialogActivity"
             android:theme="@style/Transparent" />
 
         <receiver android:name=".notification.NotificationExecutionReceiver" />

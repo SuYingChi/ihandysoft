@@ -8,6 +8,7 @@ import com.ihs.app.framework.HSApplication;
 import com.ihs.charging.HSChargingManager;
 import com.ihs.charging.HSChargingManager.HSChargingState;
 import com.ihs.charging.HSChargingManager.IChargingListener;
+import com.ihs.chargingscreen.activity.ChargingFullScreenAlertDialogActivity;
 import com.ihs.chargingscreen.notification.ChargeNotifyManager;
 import com.ihs.chargingscreen.utils.ChargingAnalytics;
 import com.ihs.chargingscreen.utils.ChargingManagerUtil;
@@ -126,12 +127,15 @@ public class HSChargingScreenManager {
             }
 
             private void showChargingStateChangedNotification(int pushEnableWhenPlug) {
-                ChargingAnalytics.getInstance().chargingEnableNotificationShowed();
-                if (Build.VERSION.SDK_INT < Build.VERSION_CODES.LOLLIPOP) {
-                    ChargeNotifyManager.getInstance().pendingToShow(pushEnableWhenPlug);
-                    HSGlobalNotificationCenter.sendNotificationOnMainThread(Constants.EVENT_CHARGING_SHOW_PUSH);
+                if (HSChargingState.STATE_DISCHARGING != HSChargingManager.getInstance().getChargingState()) {
+                    ChargingFullScreenAlertDialogActivity.startChargingAlert();
                 }
-                HSGlobalNotificationCenter.sendNotificationOnMainThread(Constants.EVENT_SYSTEM_BATTERY_CHARGING_STATE_CHANGED);
+//                ChargingAnalytics.getInstance().chargingEnableNotificationShowed();
+//                if (Build.VERSION.SDK_INT < Build.VERSION_CODES.LOLLIPOP) {
+//                    ChargeNotifyManager.getInstance().pendingToShow(pushEnableWhenPlug);
+//                    HSGlobalNotificationCenter.sendNotificationOnMainThread(Constants.EVENT_CHARGING_SHOW_PUSH);
+//                }
+//                HSGlobalNotificationCenter.sendNotificationOnMainThread(Constants.EVENT_SYSTEM_BATTERY_CHARGING_STATE_CHANGED);
             }
 
             private boolean canShowUnplugNotification(HSChargingState preChargingState, HSChargingState curChargingState) {

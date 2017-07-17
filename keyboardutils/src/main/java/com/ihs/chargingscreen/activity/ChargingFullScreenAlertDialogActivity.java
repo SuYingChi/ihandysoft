@@ -35,6 +35,9 @@ public class ChargingFullScreenAlertDialogActivity extends Activity {
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         requestWindowFeature(Window.FEATURE_NO_TITLE);
         this.getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
+        Window window = getWindow();
+        window.addFlags(WindowManager.LayoutParams.FLAG_SHOW_WHEN_LOCKED);//锁屏状态下也能出现
+
         super.onCreate(savedInstanceState);
         Intent intent = getIntent();
         if (intent != null) {
