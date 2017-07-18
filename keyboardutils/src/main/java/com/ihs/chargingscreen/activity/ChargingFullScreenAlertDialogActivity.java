@@ -10,6 +10,7 @@ import android.view.Window;
 import android.view.WindowManager;
 
 import com.ihs.app.framework.HSApplication;
+import com.ihs.charging.HSChargingManager;
 import com.ihs.chargingscreen.utils.ChargingManagerUtil;
 import com.ihs.commons.config.HSConfig;
 import com.ihs.commons.notificationcenter.HSGlobalNotificationCenter;
@@ -92,7 +93,7 @@ public class ChargingFullScreenAlertDialogActivity extends Activity {
                 .setPositiveButton(chargingMap.get("Button"), new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
-                        ChargingManagerUtil.enableCharging(false);
+                        ChargingManagerUtil.enableCharging(HSChargingManager.getInstance().getChargingState() != HSChargingManager.HSChargingState.STATE_DISCHARGING);
                         KCAnalyticUtil.logEvent("alert_charging_click");
                     }
                 })
