@@ -40,7 +40,6 @@ public class AdLoadingView extends RelativeLayout implements NativeAdView.OnAdLo
     private boolean showCloseButtonWhenFinish;
 
     //下载延迟常量
-    private static final int DELAY_PERCENT_AFTER_DOWNLOAD_COMPLETE = 5;
     private boolean hasPurchaseNoAds = false;
     private boolean isAdFlashAnimationPlayed = false;
     private ViewTreeObserver.OnGlobalLayoutListener mGlobalLayoutListener;
@@ -175,12 +174,10 @@ public class AdLoadingView extends RelativeLayout implements NativeAdView.OnAdLo
     public void updateProgressPercent(int percent) {
         int maxProgress = 100;
         if (percent < maxProgress) {
-            percent = percent - DELAY_PERCENT_AFTER_DOWNLOAD_COMPLETE;
             progressBar.getDrawable().setLevel(percent);
         } else {
-            fakeLoadingProgress(maxProgress - DELAY_PERCENT_AFTER_DOWNLOAD_COMPLETE, maxProgress);
+            fakeLoadingProgress(percent, 101);
         }
-
     }
 
     public void setConnectionStateText(String text) {
@@ -241,17 +238,17 @@ public class AdLoadingView extends RelativeLayout implements NativeAdView.OnAdLo
         this.hasPurchaseNoAds = hasPurchaseNoAds;
     }
 
-    public void setIconImageVisibility(int visibility){
+    public void setIconImageVisibility(int visibility) {
         findViewById(R.id.iv_icon).setVisibility(visibility);
     }
 
-    public void setLoadingTextSize(float size){
+    public void setLoadingTextSize(float size) {
         tvApply.setTextSize(size);
     }
 
-    public void hideCloseButtonUntilSuccess(boolean showCloseButtonWhenFinish){
+    public void hideCloseButtonUntilSuccess(boolean showCloseButtonWhenFinish) {
         this.showCloseButtonWhenFinish = showCloseButtonWhenFinish;
-        if (showCloseButtonWhenFinish){
+        if (showCloseButtonWhenFinish) {
             closeButton.setVisibility(INVISIBLE);
         }
     }
@@ -264,7 +261,9 @@ public class AdLoadingView extends RelativeLayout implements NativeAdView.OnAdLo
         dialog.setOnDismissListener(new DialogInterface.OnDismissListener() {
             @Override
             public void onDismiss(DialogInterface dialog) {
-                onAdBufferingListener.onDismiss(progressComplete);
+                if (onAdBufferingListener != null) {
+                    onAdBufferingListener.onDismiss(progressComplete);
+                }
             }
         });
     }

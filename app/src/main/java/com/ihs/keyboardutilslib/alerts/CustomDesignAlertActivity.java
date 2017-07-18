@@ -7,6 +7,7 @@ import android.widget.Toast;
 
 import com.ihs.app.framework.HSApplication;
 import com.ihs.app.framework.activity.HSActivity;
+import com.ihs.keyboardutils.adbuffer.AdLoadingView;
 import com.ihs.keyboardutils.alerts.CustomUIRateAlert;
 import com.ihs.chargingscreen.activity.ChargingFullScreenAlertDialogActivity;
 import com.ihs.keyboardutils.alerts.KCAlert;
@@ -127,5 +128,12 @@ public class CustomDesignAlertActivity extends HSActivity {
         intent.putExtra("type","locker");
         intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         this.startActivity(intent);
+    }
+    public void showAdloadingView(View view) {
+        AdLoadingView adLoadingView = new AdLoadingView(HSApplication.getContext());
+        adLoadingView.configParams(null,null,"a","a","a",null,4000,false);
+        adLoadingView.showInDialog();
+        adLoadingView.startFakeLoading();
+
     }
 }
