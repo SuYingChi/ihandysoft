@@ -3,6 +3,7 @@ package com.ihs.chargingscreen;
 import android.content.Intent;
 import android.os.Build;
 
+import com.acb.expressads.AcbExpressAdManager;
 import com.acb.nativeads.AcbNativeAdManager;
 import com.ihs.app.framework.HSApplication;
 import com.ihs.charging.HSChargingManager;
@@ -18,6 +19,7 @@ import com.ihs.commons.notificationcenter.HSGlobalNotificationCenter;
 import com.ihs.commons.notificationcenter.INotificationObserver;
 import com.ihs.commons.utils.HSBundle;
 import com.ihs.commons.utils.HSLog;
+import com.ihs.keyboardutils.iap.RemoveAdsManager;
 
 import static com.ihs.charging.HSChargingManager.HSChargingState.STATE_CHARGING_FULL;
 import static com.ihs.charging.HSChargingManager.HSChargingState.STATE_DISCHARGING;
@@ -201,9 +203,13 @@ public class HSChargingScreenManager {
             case CHARGING_MUTED:
             case CHARGING_DEFAULT_DISABLED:
             default:
+                AcbExpressAdManager.getInstance().deactivePlacementInProcess(HSChargingScreenManager.getInstance().getNaitveAdsPlacementName());
                 HSChargingScreenManager.getInstance().stop();
                 break;
             case CHARGING_DEFAULT_ACTIVE:
+                if (!RemoveAdsManager.getInstance().isRemoveAdsPurchased()) {
+                    AcbExpressAdManager.getInstance().activePlacementInProcess(HSChargingScreenManager.getInstance().getNaitveAdsPlacementName());
+                }
                 HSChargingScreenManager.getInstance().start();
                 break;
         }

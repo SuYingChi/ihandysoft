@@ -1,11 +1,13 @@
 package com.artw.lockscreen;
 
+import com.acb.expressads.AcbExpressAdManager;
 import com.ihs.app.analytics.HSAnalytics;
 import com.ihs.app.framework.HSApplication;
 import com.ihs.commons.config.HSConfig;
 import com.ihs.commons.utils.HSLog;
 import com.ihs.commons.utils.HSPreferenceHelper;
 import com.ihs.keyboardutils.R;
+import com.ihs.keyboardutils.iap.RemoveAdsManager;
 import com.ihs.keyboardutils.utils.PublisherUtils;
 
 
@@ -80,6 +82,13 @@ public class LockerSettings {
     }
 
     static void updateLockerSetting() {
+        if (isLockerEnabled()) {
+            if (!RemoveAdsManager.getInstance().isRemoveAdsPurchased()) {
+                AcbExpressAdManager.getInstance().activePlacementInProcess(HSApplication.getContext().getString(R.string.ad_placement_locker));
+            }
+        } else {
+            AcbExpressAdManager.getInstance().deactivePlacementInProcess(HSApplication.getContext().getString(R.string.ad_placement_locker));
+        }
         getDefaultPref().putBoolean(PREF_KEY_LOCKER_ENABLED, isLockerEnabled());
     }
 

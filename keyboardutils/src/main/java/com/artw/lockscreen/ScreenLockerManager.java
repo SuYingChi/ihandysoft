@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.widget.Toast;
 
+import com.acb.expressads.AcbExpressAdManager;
 import com.artw.lockscreen.common.LockerChargingScreenUtils;
 import com.artw.lockscreen.common.TimeTickReceiver;
 import com.ihs.app.analytics.HSAnalytics;
@@ -18,6 +19,7 @@ import com.ihs.commons.notificationcenter.INotificationObserver;
 import com.ihs.commons.utils.HSBundle;
 import com.ihs.feature.common.ScreenStatusReceiver;
 import com.ihs.keyboardutils.R;
+import com.ihs.keyboardutils.iap.RemoveAdsManager;
 
 /**
  * Created by Arthur on 17/3/31.
@@ -62,6 +64,9 @@ public class ScreenLockerManager {
         HSGlobalNotificationCenter.addObserver(ChargingFullScreenAlertDialogActivity.NOTIFICATION_LOCKER_ENABLED, observer);
         HSGlobalNotificationCenter.addObserver(HSNotificationConstant.HS_CONFIG_CHANGED, observer);
         HSGlobalNotificationCenter.addObserver(HSNotificationConstant.HS_SESSION_END, observer);
+        if (LockerSettings.isLockerEnabled() && !RemoveAdsManager.getInstance().isRemoveAdsPurchased()) {
+            AcbExpressAdManager.getInstance().activePlacementInProcess(HSApplication.getContext().getString(R.string.ad_placement_locker));
+        }
     }
 
     public static void enableLockerFromAlert() {

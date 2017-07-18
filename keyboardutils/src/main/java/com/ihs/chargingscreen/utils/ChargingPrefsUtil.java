@@ -1,10 +1,13 @@
 package com.ihs.chargingscreen.utils;
 
+import com.acb.expressads.AcbExpressAdManager;
 import com.ihs.app.framework.HSApplication;
+import com.ihs.chargingscreen.HSChargingScreenManager;
 import com.ihs.commons.config.HSConfig;
 import com.ihs.commons.utils.HSLog;
 import com.ihs.commons.utils.HSPreferenceHelper;
 import com.ihs.feature.common.PreferenceHelper;
+import com.ihs.keyboardutils.iap.RemoveAdsManager;
 
 import static com.ihs.chargingscreen.utils.ChargingAnalytics.app_chargingLocker_enable;
 
@@ -95,6 +98,13 @@ public class ChargingPrefsUtil {
 
     //用户每次更改设置都要记录值，以便下次直接读取。
     public void setChargingEnableByUser(boolean isEnable) {
+        if (isEnable) {
+            if (!RemoveAdsManager.getInstance().isRemoveAdsPurchased()) {
+                AcbExpressAdManager.getInstance().activePlacementInProcess(HSChargingScreenManager.getInstance().getNaitveAdsPlacementName());
+            }
+        } else {
+            AcbExpressAdManager.getInstance().deactivePlacementInProcess(HSChargingScreenManager.getInstance().getNaitveAdsPlacementName());
+        }
         spHelper.putBoolean(USER_ENABLED_CHARGING, isEnable);
     }
 
