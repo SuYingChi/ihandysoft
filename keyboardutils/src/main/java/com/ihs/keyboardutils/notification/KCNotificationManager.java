@@ -31,6 +31,7 @@ import java.util.Arrays;
 import java.util.Calendar;
 import java.util.List;
 import java.util.Map;
+import java.util.concurrent.TimeUnit;
 
 import static android.content.Context.ALARM_SERVICE;
 import static android.content.Context.NOTIFICATION_SERVICE;
@@ -113,7 +114,7 @@ public class KCNotificationManager {
 
         //减少2秒真实时间用于计算耗时，保证 例如0.30的通知出不来，能够从0.29再次开始查找0.30是否能出
         long now = System.currentTimeMillis() - 2000;
-        Calendar today = Calendar.getInstance();
+        Calendar requestTime = Calendar.getInstance();
         long nextEventTime = Long.MAX_VALUE;
 
         long lastPushTime = spHelper.getLong(PREFS_NEXT_EVENT_TIME, 0);
@@ -131,18 +132,17 @@ public class KCNotificationManager {
                 min = (int) ((((Double) time) - hour) * 60);
             }
 
-            today.set(Calendar.HOUR_OF_DAY, hour);
-            today.set(Calendar.MINUTE, min);
-            long timeInMillis = today.getTimeInMillis();
-            if (timeInMillis - lastPushTime < 5000) {
-                continue;
-            }
-            if (timeInMillis > now) {
-                if (timeInMillis < nextEventTime) {
-                    nextEventTime = timeInMillis;
-                }
-            }else{
+            requestTime.set(Calendar.HOUR_OF_DAY, hour);
+            requestTime.set(Calendar.MINUTE, min);
+            requestTime.set(Calendar.SECOND, 0);
 
+            long timeInMillis = requestTime.getTimeInMillis();
+            if (timeInMillis - lastPushTime < 1000 || timeInMillis < now) {
+                timeInMillis = timeInMillis + TimeUnit.DAYS.toMillis(1);
+            }
+
+            if (timeInMillis < nextEventTime) {
+                nextEventTime = timeInMillis;
             }
         }
 
