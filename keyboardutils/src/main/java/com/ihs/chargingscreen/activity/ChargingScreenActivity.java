@@ -380,7 +380,7 @@ public class ChargingScreenActivity extends Activity {
 
                 @Override
                 public void onAdShown(AcbExpressAdView acbExpressAdView) {
-                    removeAds.setVisibility(View.VISIBLE);
+//                    removeAds.setVisibility(View.VISIBLE);
                 }
             });
         }

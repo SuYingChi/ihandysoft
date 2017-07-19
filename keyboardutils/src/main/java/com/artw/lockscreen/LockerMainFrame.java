@@ -196,7 +196,7 @@ public class LockerMainFrame extends RelativeLayout implements INotificationObse
 
                 @Override
                 public void onAdShown(AcbExpressAdView acbExpressAdView) {
-                    removeAds.setVisibility(VISIBLE);
+//                    removeAds.setVisibility(VISIBLE);
                 }
             });
             mAdContainer.addView(acbExpressAdView);
