@@ -7,3 +7,6 @@
 [submodule "libs/ihs/libCharging"]
 	path = libs/ihs/libCharging
 	url = http://git.ihandysoft.com/bingroup/bin_chargingscreen_android.git
+[submodule "libs/libKeyboardCommons"]
+	path = libs/libKeyboardCommons
+	url = http://git.ihandysoft.com/bingroup/Bin_KeyboardCommons_Android.git
