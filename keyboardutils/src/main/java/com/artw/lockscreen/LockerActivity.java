@@ -213,7 +213,7 @@ public class LockerActivity extends AppCompatActivity implements INotificationOb
             @Override
             public void onPageSelected(int position) {
                 if (LockerAdapter.PAGE_INDEX_UNLOCK == position) {
-                    finishSelf(true);
+                    finishSelf();
                     HSAnalytics.logEvent("Locker_Unlocked");
                 }
             }
@@ -225,7 +225,7 @@ public class LockerActivity extends AppCompatActivity implements INotificationOb
         });
     }
 
-    public void finishSelf(final boolean dismissKeyguard) {
+    public void finishSelf() {
         findViewById(R.id.bottom_layer).setVisibility(View.GONE);
         ObjectAnimator fadeOutAnim = ObjectAnimator.ofFloat(mLockerWallpaper, View.ALPHA, 0f);
         fadeOutAnim.setDuration(300);
@@ -235,9 +235,6 @@ public class LockerActivity extends AppCompatActivity implements INotificationOb
                 finish();
                 overridePendingTransition(0, 0);
 
-                if (dismissKeyguard) {
-                    DismissKeyguradActivity.startSelfIfKeyguardSecure(LockerActivity.this);
-                }
                 mLockerWallpaper.setImageResource(android.R.color.transparent);
                 if (mLockerAdapter != null && mLockerAdapter.lockerMainFrame != null) {
                     mLockerAdapter.lockerMainFrame.clearDrawerBackground();
@@ -258,11 +255,7 @@ public class LockerActivity extends AppCompatActivity implements INotificationOb
     public void onReceive(String s, HSBundle hsBundle) {
         switch (s) {
             case EVENT_FINISH_SELF:
-                boolean shouldDismissKeyguard = true;
-                if (hsBundle != null) {
-                    hsBundle.getBoolean(EXTRA_SHOULD_DISMISS_KEYGUARD, true);
-                }
-                finishSelf(shouldDismissKeyguard);
+                finishSelf();
                 break;
             default:
                 break;
