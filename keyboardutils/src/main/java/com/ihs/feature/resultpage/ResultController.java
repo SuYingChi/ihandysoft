@@ -29,6 +29,7 @@ import com.acb.adadapter.ContainerView.AcbNativeAdPrimaryView;
 import com.artw.lockscreen.LockerSettings;
 import com.ihs.app.analytics.HSAnalytics;
 import com.ihs.chargingscreen.utils.ChargingManagerUtil;
+import com.ihs.chargingscreen.utils.ChargingPrefsUtil;
 import com.ihs.commons.utils.HSLog;
 import com.ihs.feature.common.LauncherAnimUtils;
 import com.ihs.feature.common.Thunk;
@@ -43,6 +44,10 @@ import com.ihs.keyboardutils.utils.ToastUtils;
 
 import java.util.List;
 
+import static com.flurry.sdk.bb.D;
+import static com.flurry.sdk.bb.P;
+import static com.ihs.feature.resultpage.ResultController.Type.AD;
+
 @SuppressWarnings("WeakerAccess")
 abstract class ResultController implements View.OnClickListener {
 
@@ -54,26 +59,34 @@ abstract class ResultController implements View.OnClickListener {
     private static final long START_DELAY_CARDS = FRAME / 10 * 86;
     @Thunk
     static final long DURATION_CARD_TRANSLATE = 8 * FRAME;
-    @Thunk static final long DURATION_BG_TRANSLATE = 7 * FRAME;
+    @Thunk
+    static final long DURATION_BG_TRANSLATE = 7 * FRAME;
 
     // Ad / charging screen
     private static final long START_DELAY_AD_OR_CHARGING_SCREEN = 16 * FRAME;
-    @Thunk static final long START_DELAY_BUTTON_REVEAL = 3 * FRAME;
-    @Thunk static final long START_DELAY_BUTTON_FLASH = 23 * FRAME;
-    @Thunk static final float TRANSLATION_MULTIPLIER_SHADOW_1 = 1.4f;
-    @Thunk static final float TRANSLATION_MULTIPLIER_SHADOW_2 = 1.2f;
-    @Thunk static final float TRANSLATION_MULTIPLIER_DESCRIPTION = 1.25f;
-    @Thunk static final long DURATION_SLIDE_IN = 800;
+    @Thunk
+    static final long START_DELAY_BUTTON_REVEAL = 3 * FRAME;
+    @Thunk
+    static final long START_DELAY_BUTTON_FLASH = 23 * FRAME;
+    @Thunk
+    static final float TRANSLATION_MULTIPLIER_SHADOW_1 = 1.4f;
+    @Thunk
+    static final float TRANSLATION_MULTIPLIER_SHADOW_2 = 1.2f;
+    @Thunk
+    static final float TRANSLATION_MULTIPLIER_DESCRIPTION = 1.25f;
+    @Thunk
+    static final long DURATION_SLIDE_IN = 800;
 
     protected ResultPageActivity mActivity;
     int mScreenHeight;
     int mResultType;
-    Type mType = Type.AD;
+    Type mType = AD;
 
     private FrameLayout mTransitionView;
     private FrameLayout mAdOrChargingScreenContainerView;
     private RecyclerView mCardRecyclerView;
-    @Thunk View mResultView;
+    @Thunk
+    View mResultView;
     private View mBgView;
     private View mHeaderTagView;
 
@@ -184,7 +197,7 @@ abstract class ResultController implements View.OnClickListener {
                 mActionBtn.setTextColor(ContextCompat.getColor(context, R.color.battery_green));
             } else if (this instanceof CpuCoolerResultController) {
                 mActionBtn.setTextColor(ContextCompat.getColor(context, R.color.cpu_cooler_primary_blue));
-            }  else if (this instanceof JunkCleanResultController) {
+            } else if (this instanceof JunkCleanResultController) {
                 mActionBtn.setTextColor(ContextCompat.getColor(context, R.color.clean_primary_blue));
             }
         }
@@ -200,7 +213,7 @@ abstract class ResultController implements View.OnClickListener {
         Context context = getContext();
         VectorDrawableCompat imageFrame = null;
 
-        if (mType == Type.AD || mType == Type.CHARGE_SCREEN || mType == Type.NOTIFICATION_CLEANER) {
+        if (mType == AD || mType == Type.CHARGE_SCREEN || mType == Type.NOTIFICATION_CLEANER) {
             mImageFrameShadow1 = ViewUtils.findViewById(resultView, R.id.result_image_iv_shadow_1);
             mImageFrameShadow2 = ViewUtils.findViewById(resultView, R.id.result_image_iv_shadow_2);
             mAdImageContainer = ViewUtils.findViewById(resultView, R.id.result_image_container_ad);
@@ -217,6 +230,11 @@ abstract class ResultController implements View.OnClickListener {
             mImageFrameShadow1.setBackground(imageFrame);
             mImageFrameShadow2.setBackground(imageFrame);
         }
+
+        if (ChargingPrefsUtil.getChargingEnableStates() == ChargingPrefsUtil.CHARGING_DEFAULT_ACTIVE) {
+            mType = AD;
+        }
+
         switch (mType) {
             case AD:
             case CARD_VIEW:
@@ -280,13 +298,14 @@ abstract class ResultController implements View.OnClickListener {
 
     protected abstract void onStartTransitionAnimation(View transitionView);
 
-    protected void onFunctionCardViewShown() {}
+    protected void onFunctionCardViewShown() {
+    }
 
     void startTransitionAnimation() {
         HSLog.d(TAG, "startTransitionAnimation mTransitionView = " + mTransitionView);
         if (null != mTransitionView) {
             onStartTransitionAnimation(mTransitionView);
-            if (mType == Type.AD || mType == Type.CHARGE_SCREEN || mType == Type.NOTIFICATION_CLEANER) {
+            if (mType == AD || mType == Type.CHARGE_SCREEN || mType == Type.NOTIFICATION_CLEANER) {
                 if (mResultType != ResultConstants.RESULT_TYPE_JUNK_CLEAN && mResultType != ResultConstants.RESULT_TYPE_CPU_COOLER
                         && mResultType != ResultConstants.RESULT_TYPE_NOTIFICATION_CLEANER) {
                     // animation self
@@ -309,7 +328,7 @@ abstract class ResultController implements View.OnClickListener {
                 @Override
                 public void run() {
                     HSLog.d(TAG, "startAdOrChargingScreenResultAnimation run");
-                    View imageContainer = (mType == Type.AD) ? mAdImageContainer : mChargingScreenImageContainer;
+                    View imageContainer = (mType == AD) ? mAdImageContainer : mChargingScreenImageContainer;
 
                     int[] location = new int[2];
                     imageContainer.getLocationInWindow(location);
@@ -336,7 +355,7 @@ abstract class ResultController implements View.OnClickListener {
                                 .setInterpolator(LauncherAnimUtils.DECELERATE_QUINT)
                                 .start();
                     }
-                    if (mType == Type.AD) {
+                    if (mType == AD) {
                         // Choice view only applies to ad, no need to animate when charging screen is shown
                         mAdChoice.animate()
                                 .alpha(1f)
@@ -363,12 +382,12 @@ abstract class ResultController implements View.OnClickListener {
     }
 
     public void startCardResultAnimation(long startDelay) {
-        if(true){
-            mType = Type.AD;
+        if (true) {
+            mType = AD;
             startAdOrChargingScreenResultAnimation(startDelay);
         }
 
-        if (mType == Type.CARD_VIEW){
+        if (mType == Type.CARD_VIEW) {
             if (null != mResultView) {
                 mResultView.postDelayed(new Runnable() {
                     @Override
@@ -379,7 +398,7 @@ abstract class ResultController implements View.OnClickListener {
                         TranslateAnimation translateAnimation = new TranslateAnimation(0, 0, slideUpTranslation, 0);
                         translateAnimation.setDuration(DURATION_CARD_TRANSLATE);
                         translateAnimation.setInterpolator(LauncherAnimationUtils.accelerateDecelerateInterpolator);
-                        translateAnimation.setAnimationListener(new LauncherAnimationUtils.AnimationListenerAdapter(){
+                        translateAnimation.setAnimationListener(new LauncherAnimationUtils.AnimationListenerAdapter() {
                             @Override
                             public void onAnimationEnd(Animation animation) {
                                 super.onAnimationEnd(animation);
@@ -393,7 +412,8 @@ abstract class ResultController implements View.OnClickListener {
         }
     }
 
-    @Thunk void startBgTranslateAnimation() {
+    @Thunk
+    void startBgTranslateAnimation() {
         if (null == mBgView) {
             return;
         }
@@ -449,7 +469,7 @@ abstract class ResultController implements View.OnClickListener {
     }
 
     private void logViewEvent(Type type) {
-        if (type == Type.AD) {
+        if (type == AD) {
             HSAnalytics.logEvent("ResultPage_Cards_Show", "type", ResultConstants.AD);
         } else if (type == Type.CHARGE_SCREEN) {
             HSAnalytics.logEvent("ResultPage_Cards_Show", "type", ResultConstants.CHARGING_SCREEN_FULL);
@@ -459,7 +479,7 @@ abstract class ResultController implements View.OnClickListener {
     }
 
     protected void logClickEvent(Type type) {
-        if (type == Type.AD) {
+        if (type == AD) {
             // No log here, logged in onAdClick()
         } else if (type == Type.CHARGE_SCREEN) {
             HSAnalytics.logEvent("ResultPage_Cards_Click", "Type", ResultConstants.CHARGING_SCREEN_FULL);
