@@ -39,7 +39,6 @@ import com.ihs.commons.notificationcenter.INotificationObserver;
 import com.ihs.commons.utils.HSBundle;
 import com.ihs.commons.utils.HSLog;
 import com.ihs.commons.utils.HSPreferenceHelper;
-import com.ihs.device.clean.accessibility.HSAccTaskManager;
 import com.ihs.device.clean.memory.HSAppMemory;
 import com.ihs.device.clean.memory.HSAppMemoryManager;
 import com.ihs.feature.boost.animation.BoostAnimationManager;
@@ -149,16 +148,23 @@ public class BoostPlusCleanDialog extends FullScreenDialog {
 
     @Thunk
     RelativeLayout mCleanMainRl;
-    @Thunk RelativeLayout mBoostIconContainer;
+    @Thunk
+    RelativeLayout mBoostIconContainer;
     private RelativeLayout mExitingRl;
-    @Thunk LinearLayout mBoostingTextLl;
-    @Thunk View mContainerV;
+    @Thunk
+    LinearLayout mBoostingTextLl;
+    @Thunk
+    View mContainerV;
     private View mStopDialogV;
 
-    @Thunk ImageView mCircleInIV;
-    @Thunk ImageView mCircleMiddleIv;
-    @Thunk ImageView mCircleOutIv;
-    @Thunk ImageView mDotPositionTagIv;
+    @Thunk
+    ImageView mCircleInIV;
+    @Thunk
+    ImageView mCircleMiddleIv;
+    @Thunk
+    ImageView mCircleOutIv;
+    @Thunk
+    ImageView mDotPositionTagIv;
     private ImageView mRocketIv;
     private ImageView mSmokeIv;
     private ImageView mBoostCenterIv;
@@ -169,48 +175,66 @@ public class BoostPlusCleanDialog extends FullScreenDialog {
     private ImageView mIconFiveV;
     private ImageView mIconSixV;
     private ImageView mIconSevenV;
-    @Thunk AppCompatImageView mDotTagIv;
+    @Thunk
+    AppCompatImageView mDotTagIv;
 
     private TextView mTipTitleTv;
-    @Thunk TextView mCleaningTv;
-    @Thunk TextView mCleaningAppNumberTv;
-    @Thunk TextView mTipTv;
+    @Thunk
+    TextView mCleaningTv;
+    @Thunk
+    TextView mCleaningAppNumberTv;
+    @Thunk
+    TextView mTipTv;
     private BoostTextView mMemoryUsedNumberTv;
 
     private ProgressWheel mExitingProgressWheel;
 
-    @Thunk Handler mHandler = new Handler();
-    @Thunk Handler mDotsHandler = new Handler();
+    @Thunk
+    Handler mHandler = new Handler();
+    @Thunk
+    Handler mDotsHandler = new Handler();
 
     private Runnable mCleanTimeOutRunnable;
     private Runnable mGetPermissionTimeOutRunnable;
 
-    @Thunk boolean mIsResultViewShow;
+    @Thunk
+    boolean mIsResultViewShow;
     private boolean mIsStartGetPermission;
-    @Thunk boolean mIsPermissionGetting;
+    @Thunk
+    boolean mIsPermissionGetting;
     private boolean mIsStartForceStopCancel;
     private boolean mIsStartRootCancel;
-    @Thunk boolean mIsBackDisabled;
-    @Thunk boolean mIsRootCleaning;
+    @Thunk
+    boolean mIsBackDisabled;
+    @Thunk
+    boolean mIsRootCleaning;
     private boolean mIsFlurryLogResultShow;
 
     private int mScreenHeight;
-    @Thunk int mDotsAnimationCount = 0;
+    @Thunk
+    int mDotsAnimationCount = 0;
     private long mCurrentLastCleanSize;
-    @Thunk long mStartCircleAnimationTime;
+    @Thunk
+    long mStartCircleAnimationTime;
 
     @Thunk
     DynamicRotateAnimation mCircleInDynamicRotateAnimation;
-    @Thunk DynamicRotateAnimation mCircleMiddleDynamicRotateAnimation;
-    @Thunk DynamicRotateAnimation mCircleOutDynamicRotateAnimation;
+    @Thunk
+    DynamicRotateAnimation mCircleMiddleDynamicRotateAnimation;
+    @Thunk
+    DynamicRotateAnimation mCircleOutDynamicRotateAnimation;
 
     private ValueAnimator mBgColorAnimator;
 
-    @Thunk ArrayList<HSAppMemory> mSelectedAppList;
-    @Thunk List<String> mCleanedAppPackageNameList = new ArrayList<>();
-    @Thunk CleanResult mCleanResult = CleanResult.CLEAN_CANCEL;
+    @Thunk
+    ArrayList<HSAppMemory> mSelectedAppList;
+    @Thunk
+    List<String> mCleanedAppPackageNameList = new ArrayList<>();
+    @Thunk
+    CleanResult mCleanResult = CleanResult.CLEAN_CANCEL;
 
-    @Thunk BoostPlusContracts.HomePage mHome;
+    @Thunk
+    BoostPlusContracts.HomePage mHome;
 
     private enum CleanResult {
         CLEAN_SUCCESS,
@@ -374,6 +398,7 @@ public class BoostPlusCleanDialog extends FullScreenDialog {
 
     private void initAnimationLocation() {
         mDotTagIv.getViewTreeObserver().addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
+            @SuppressLint("NewApi")
             @Override
             public void onGlobalLayout() {
                 mDotTagIv.getViewTreeObserver().removeOnGlobalLayoutListener(this);
@@ -541,12 +566,7 @@ public class BoostPlusCleanDialog extends FullScreenDialog {
 
     private boolean cancelClean() {
         boolean cancelStart = false;
-        if (HSAccTaskManager.getInstance().isRunning()) {
-            HSLog.d(TAG, "non root cancelClean");
-            cancelStart = true;
-            mIsStartForceStopCancel = true;
-            HSAccTaskManager.getInstance().cancel();
-        } else if (mIsRootCleaning) {
+        if (mIsRootCleaning) {
             HSLog.d(TAG, "root cancelClean");
             cancelStart = true;
             mIsStartRootCancel = true;
@@ -635,7 +655,8 @@ public class BoostPlusCleanDialog extends FullScreenDialog {
         return DURATION_BACKGROUND_SINGLE_CHANGED * factor;
     }
 
-    @Thunk void startResultAnimation() {
+    @Thunk
+    void startResultAnimation() {
         if (isStopDialogShowing()) {
             dismissStopDialog();
         }
@@ -805,25 +826,25 @@ public class BoostPlusCleanDialog extends FullScreenDialog {
                 DURATION_MEMORY_USED_ALPHA_REDUCE, START_OFF_CIRCLE_ROTATE_MAIN);
         mBoostingTextLl.setTag(true);
         LauncherAnimationUtils.startAnimation(mBoostingTextLl, memoryUsedAlphaDisAppearAnimation,
-                new LauncherAnimationUtils.AnimationListenerAdapter(){
-            @Override
-            public void onAnimationStart(Animation animation) {
-                super.onAnimationStart(animation);
-                // Use tag to record animation start status. When screen off then start animation in some phones,
-                // it will be onAnimationEnd callback before onAnimationStart.
-                Object tag = mBoostingTextLl.getTag();
-                if (null != tag && tag instanceof Boolean && (Boolean) tag) {
-                    mBoostingTextLl.setVisibility(View.VISIBLE);
-                }
-            }
+                new LauncherAnimationUtils.AnimationListenerAdapter() {
+                    @Override
+                    public void onAnimationStart(Animation animation) {
+                        super.onAnimationStart(animation);
+                        // Use tag to record animation start status. When screen off then start animation in some phones,
+                        // it will be onAnimationEnd callback before onAnimationStart.
+                        Object tag = mBoostingTextLl.getTag();
+                        if (null != tag && tag instanceof Boolean && (Boolean) tag) {
+                            mBoostingTextLl.setVisibility(View.VISIBLE);
+                        }
+                    }
 
-            @Override
-            public void onAnimationEnd(Animation animation) {
-                super.onAnimationEnd(animation);
-                mBoostingTextLl.setVisibility(View.INVISIBLE);
-                mBoostingTextLl.setTag(false);
-            }
-        });
+                    @Override
+                    public void onAnimationEnd(Animation animation) {
+                        super.onAnimationEnd(animation);
+                        mBoostingTextLl.setVisibility(View.INVISIBLE);
+                        mBoostingTextLl.setTag(false);
+                    }
+                });
     }
 
     private void startCleanRunningDisappearAnimation() {
@@ -883,31 +904,6 @@ public class BoostPlusCleanDialog extends FullScreenDialog {
             if (cleanType == CLEAN_TYPE_NON_ROOT) {
                 int timeout = HSConfig.optInteger(DEFAULT_ACC_CLEAN_TIMEOUT_SECONDS,
                         "Application", "BoostPlus", "AccCleanTimeoutSeconds");
-                HSAccTaskManager.getInstance().startForceStop(selectedPackageList, timeout, new HSAccTaskManager.AccTaskListener() {
-                    @Override
-                    public void onStarted() {
-                        mCleanedAppPackageNameList.clear();
-                        onCleanStarted(totalSizeMbs, true);
-                    }
-
-                    @Override
-                    public void onProgressUpdated(int processedCount, int total, String packageName) {
-                        mCleanedAppPackageNameList.add(packageName);
-                        onCleanProgressUpdated(processedCount, total, packageName, true);
-                    }
-
-                    @Override
-                    public void onSucceeded() {
-                        cancelCleanTimeOut();
-                        onCleanSucceeded(CLEAN_TYPE_NON_ROOT);
-                    }
-
-                    @Override
-                    public void onFailed(int code, String failMsg) {
-                        cancelCleanTimeOut();
-                        onCleanFailed(CLEAN_TYPE_NON_ROOT, code, failMsg);
-                    }
-                });
             } else {
                 HSLog.d(TAG, "startClean root or normal ***** startClean ***** cleanType = " + cleanType);
                 if (null != mSelectedAppList) {
@@ -937,7 +933,8 @@ public class BoostPlusCleanDialog extends FullScreenDialog {
     }
 
     // Region Clean Task Handling Methods
-    @Thunk void onCleanStarted(long totalSizeMB, boolean shouldStartImgCurveAnimation) {
+    @Thunk
+    void onCleanStarted(long totalSizeMB, boolean shouldStartImgCurveAnimation) {
         if (mSelectedAppList != null && !mSelectedAppList.isEmpty()) {
             HSAppMemory hSAppMemory = mSelectedAppList.get(0);
             if (null != hSAppMemory) {
@@ -961,7 +958,8 @@ public class BoostPlusCleanDialog extends FullScreenDialog {
         }
     }
 
-    @Thunk void onCleanProgressUpdated(int processedCount, int total, String packageName, boolean shouldStartImgCurveAnimation) {
+    @Thunk
+    void onCleanProgressUpdated(int processedCount, int total, String packageName, boolean shouldStartImgCurveAnimation) {
         startBackgroundChangedAnimation(ContextCompat.getColor(getContext(), R.color.boost_plus_yellow),
                 ContextCompat.getColor(getContext(), R.color.boost_plus_clean_green), getBackgroundCenterDuration());
         String animationPackageName = "";
@@ -993,7 +991,8 @@ public class BoostPlusCleanDialog extends FullScreenDialog {
         }
     }
 
-    @Thunk void onCleanSucceeded(int cleanType) {
+    @Thunk
+    void onCleanSucceeded(int cleanType) {
         HSLog.d(TAG, "onSucceeded cleanType = " + cleanType + " mIsStartForceStopCancel = "
                 + mIsStartForceStopCancel + " mIsStartRootCancel = " + mIsStartRootCancel);
         mCleanResult = BoostPlusCleanDialog.CleanResult.CLEAN_SUCCESS;
@@ -1007,12 +1006,13 @@ public class BoostPlusCleanDialog extends FullScreenDialog {
         }
     }
 
-    @Thunk void onCleanFailed(int cleanType, int code, String failMsg) {
+    @Thunk
+    void onCleanFailed(int cleanType, int code, String failMsg) {
         HSLog.d(TAG, "onCleanFailed cleanType = " + cleanType + " code = "
                 + code + " failMsg = " + failMsg + " mIsStartRootCancel = " + mIsStartRootCancel);
         mCleanResult = BoostPlusCleanDialog.CleanResult.CLEAN_FAILED;
 
-        if (cleanType == CLEAN_TYPE_NON_ROOT && code == HSAccTaskManager.FAIL_CANCEL
+        if (cleanType == CLEAN_TYPE_NON_ROOT
                 || (cleanType == CLEAN_TYPE_ROOT && code == HSAppMemoryManager.FAIL_CANCEL)
                 || (cleanType == CLEAN_TYPE_ROOT && mIsStartRootCancel)) {
             HSLog.d(TAG, "onCleanFailed ****** onCancelExitClean");
@@ -1297,7 +1297,8 @@ public class BoostPlusCleanDialog extends FullScreenDialog {
         dotAnimation.start();
     }
 
-    @Thunk void startDecelerateResultAnimation() {
+    @Thunk
+    void startDecelerateResultAnimation() {
         NotificationCenter.clearNotification(ResultPageActivity.NOTIFICATION_VISIBLE_TO_USER);
         ResultPageActivity.startForBoostPlus((Activity) getContext(), getAppTotalSizeMbs());
 
@@ -1377,7 +1378,7 @@ public class BoostPlusCleanDialog extends FullScreenDialog {
             return;
         }
 
-        boolean isNonRootCleaning = HSAccTaskManager.getInstance().isRunning();
+        boolean isNonRootCleaning = false;
         HSLog.d(TAG, "onBackClicked ******* isNonRootCleaning = " + isNonRootCleaning + " mIsRootCleaning = "
                 + mIsRootCleaning + " mIsPermissionGetting = " + mIsPermissionGetting);
         if (isNonRootCleaning || mIsRootCleaning || mIsPermissionGetting) {

@@ -36,7 +36,6 @@ import com.ihs.commons.notificationcenter.HSGlobalNotificationCenter;
 import com.ihs.commons.notificationcenter.INotificationObserver;
 import com.ihs.commons.utils.HSBundle;
 import com.ihs.commons.utils.HSLog;
-import com.ihs.device.clean.accessibility.HSAccTaskManager;
 import com.ihs.device.clean.memory.HSAppMemory;
 import com.ihs.device.clean.memory.HSAppMemoryManager;
 import com.ihs.feature.boost.BoostTipUtils;
@@ -410,7 +409,7 @@ public class BoostPlusActivity extends BasePermissionActivity
     @Override
     public void onBackPressed() {
         boolean isBoostCleanVisible = FloatWindowManager.getInstance().isDialogShowing(FloatWindowManager.Type.BOOST_PLUS_CLEAN);
-        boolean isCleaning = HSAccTaskManager.getInstance().isRunning();
+        boolean isCleaning = false;
 
         if (isBoostCleanVisible) {
             FloatWindowDialog floatWindowDialog  = FloatWindowManager.getInstance().getDialog(FloatWindowManager.Type.BOOST_PLUS_CLEAN);

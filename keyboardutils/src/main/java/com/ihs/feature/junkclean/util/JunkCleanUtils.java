@@ -9,7 +9,6 @@ import android.widget.TextView;
 
 import com.ihs.app.analytics.HSAnalytics;
 import com.ihs.commons.utils.HSLog;
-import com.ihs.device.clean.accessibility.HSAccTaskManager;
 import com.ihs.feature.common.LauncherFiles;
 import com.ihs.feature.common.PreferenceHelper;
 import com.ihs.feature.common.ViewUtils;
@@ -185,7 +184,6 @@ public class JunkCleanUtils {
             @Override
             public void onClick(View view) {
                 junkCleanWindowController.mIsBackButtonClicked = true;
-                HSAccTaskManager.getInstance().cancel();
                 dismissStopDialog(stopDialogV);
                 junkCleanWindowController.dismissCleanWindow();
             }

@@ -1,6 +1,5 @@
 package com.ihs.feature.boost.auto;
 
-import android.accessibilityservice.AccessibilityService;
 import android.app.Service;
 import android.content.BroadcastReceiver;
 import android.content.Context;
@@ -17,18 +16,15 @@ import android.view.WindowManager;
 import android.widget.TextView;
 
 import com.ihs.commons.utils.HSLog;
-import com.ihs.devicemonitor.accessibility.HSAccessibilityService;
 import com.ihs.keyboardutils.BuildConfig;
 import com.ihs.keyboardutils.R;
 import com.ihs.keyboardutils.utils.CommonUtils;
-
-import java.lang.reflect.Field;
 
 /**
  * Cover screen after screen off, we do auto clean below that cower, it looks like nothing happen.
  */
 
-public class LockScreenCover extends Service{
+public class LockScreenCover extends Service {
 
     private static final String TAG = LockScreenCover.class.getSimpleName();
     public static final String ACTION_BROADCAST_SHOW = BuildConfig.APPLICATION_ID + ".action.LOCK_COVER_SHOW";
@@ -71,7 +67,7 @@ public class LockScreenCover extends Service{
         }
     };
 
-    private Runnable mTimeOutWorker =  new Runnable() {
+    private Runnable mTimeOutWorker = new Runnable() {
         @Override
         public void run() {
             stopSelf();
@@ -88,7 +84,7 @@ public class LockScreenCover extends Service{
         i.setAction(ACTION_CLEAR);
         context.startService(i);
     }
-    
+
     @Override
     public void onCreate() {
         super.onCreate();
@@ -183,16 +179,6 @@ public class LockScreenCover extends Service{
     }
 
     private IBinder getAccessibilityServiceToken() {
-        AccessibilityService service = HSAccessibilityService.getInstance();
-        try {
-            Field field = AccessibilityService.class.getDeclaredField("mWindowToken");
-            if (!field.isAccessible()) {
-                field.setAccessible(true);
-                return (IBinder) field.get(service);
-            }
-        } catch (Exception e) {
-            HSLog.e(e.getMessage());
-        }
         return null;
     }
 

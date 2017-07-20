@@ -24,7 +24,6 @@ import android.telephony.TelephonyManager;
 import com.ihs.commons.config.HSConfig;
 import com.ihs.commons.utils.HSLog;
 import com.ihs.commons.utils.HSPreferenceHelper;
-import com.ihs.device.clean.accessibility.HSAccTaskManager;
 import com.ihs.device.clean.memory.HSAppMemory;
 import com.ihs.device.clean.memory.HSAppMemoryManager;
 import com.ihs.feature.boost.plus.BoostPlusSettingsActivity;
@@ -93,7 +92,6 @@ public class AutoCleanService extends Service {
         public void onReceive(Context context, Intent intent) {
             HSLog.d(TAG, "Cover show, start to clean");
             if (mStatus == STOPPING) {
-                HSAccTaskManager.getInstance().cancel();
             } else if (mStatus != IDLE) {
                 scanAndClean();
             }
@@ -134,8 +132,6 @@ public class AutoCleanService extends Service {
             onScanFail();
         }
     };
-
-    private final CleanCallback mCleanCallback = new CleanCallback();
 
     public static void start(Context context) {
         Intent intent = new Intent(context, AutoCleanService.class);
@@ -396,7 +392,6 @@ public class AutoCleanService extends Service {
             memoryList.add(new HSAppMemory(packageName));
         }
 
-        HSAppMemoryManager.getInstance().startClean(memoryList, false, mCleanCallback);
     }
 
     private boolean launchCleaner(List<String> pendingCleanList) {
@@ -416,7 +411,6 @@ public class AutoCleanService extends Service {
         }
         mLockHelper.disableKeyguard();
         removeHasStoppedApps(pendingCleanList);
-        HSAccTaskManager.getInstance().startForceStop(pendingCleanList, mCleanCallback);
         return true;
     }
 
@@ -452,7 +446,6 @@ public class AutoCleanService extends Service {
             setStatus(IDLE);
         }
         HSAppMemoryManager.getInstance().stopScan(mMemoryTaskNoProgressListener);
-        HSAccTaskManager.getInstance().cancel();
     }
 
     private void onCleanFailed() {
@@ -553,37 +546,4 @@ public class AutoCleanService extends Service {
         }
     }
 
-    private class CleanCallback implements HSAccTaskManager.AccTaskListener,HSAppMemoryManager.MemoryTaskListener {
-
-        @Override
-        public void onStarted() {
-            HSLog.d(TAG, "Clean start, Mode:" + mStatus);
-        }
-
-        @Override
-        public void onProgressUpdated(int i, int i1, HSAppMemory hsAppMemory) {
-            HSLog.d(TAG, "Clean " + i + "/" + i1 + " : " + hsAppMemory);
-        }
-
-        @Override
-        public void onProgressUpdated(int i, int i1, String s) {
-            HSLog.d(TAG, "Clean " + i + "/" + i1 + " : " + s);
-        }
-
-        @Override
-        public void onSucceeded() {
-            onCleanOver();
-        }
-
-        @Override
-        public void onSucceeded(List<HSAppMemory> list, long l) {
-            onCleanOver();
-        }
-
-        @Override
-        public void onFailed(int i, String s) {
-            HSLog.d(TAG, "Clean fail, reason is " + s);
-            onCleanFailed();
-        }
-    }
 }

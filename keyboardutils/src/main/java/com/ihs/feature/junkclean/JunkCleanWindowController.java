@@ -22,7 +22,6 @@ import android.widget.TextView;
 
 import com.ihs.app.framework.HSApplication;
 import com.ihs.commons.utils.HSLog;
-import com.ihs.device.clean.accessibility.HSAccTaskManager;
 import com.ihs.feature.common.FormatSizeBuilder;
 import com.ihs.feature.junkclean.data.JunkManager;
 import com.ihs.feature.junkclean.list.JunkCleanCategoryItem;
@@ -40,7 +39,6 @@ import com.ihs.feature.ui.TouchableRecycleView;
 import com.ihs.keyboardutils.R;
 
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
 
 import eu.davidea.flexibleadapter.FlexibleAdapter;
@@ -296,7 +294,6 @@ public class JunkCleanWindowController {
                                 }, ITEM_CLEAN_DELAY_DURATION * 2);
                             } else {
                                 mIsTimeoutCanceled = true;
-                                HSAccTaskManager.getInstance().cancel();
                             }
 
                         }
@@ -312,125 +309,8 @@ public class JunkCleanWindowController {
 
     private void startOneTapClearCache() {
         mIsCleanSucceed = false;
-
-        HSAccTaskManager.getInstance().startOneTapClearCache(new HSAccTaskManager.AccTaskListener() {
-            @Override
-            public void onStarted() {
-                HSLog.d("one tap clear cache start");
-            }
-
-            @Override
-            public void onProgressUpdated(int index, int total, String packageName) {
-            }
-
-            @Override
-            public void onSucceeded() {
-                HSLog.d("one tap clear cache onSucceeded");
-
-                mIsCleanSucceed = true;
-
-                List<JunkWrapper> junkWrappers = JunkManager.getInstance().getJunkWrappers();
-                Iterator<JunkWrapper> iterator = junkWrappers.iterator();
-
-                List<JunkWrapper> removed = new ArrayList<>();
-                while (iterator.hasNext()) {
-                    JunkWrapper junkWrapper = iterator.next();
-                    if (junkWrapper.getCategory().equals(SystemJunkWrapper.SYSTEM_JUNK)) {
-                        removed.add(junkWrapper);
-                    }
-                }
-                junkWrappers.removeAll(removed);
-            }
-
-            @Override
-            public void onFailed(int failCode, String string) {
-                HSLog.d("one tap clear cache onFailed : " + string);
-                HSLog.d("one tap clear cache onFailed : mIsBackButtonClicked = " + mIsBackButtonClicked);
-                HSLog.d("one tap clear cache onFailed : mIsTimeoutCanceled = " + mIsTimeoutCanceled);
-
-                if (failCode == HSAccTaskManager.FAIL_CANCEL && mIsBackButtonClicked) {
-
-                    mHandler.postDelayed(new Runnable() {
-                        @Override
-                        public void run() {
-                            dismissCleanWindow();
-                        }
-                    }, 300);
-
-                    return;
-                }
-
-                if (failCode == HSAccTaskManager.FAIL_CANCEL && mIsTimeoutCanceled){
-
-                    mHandler.postDelayed(new Runnable() {
-                        @Override
-                        public void run() {
-                            normalClean();
-                        }
-                    }, ITEM_CLEAN_DELAY_DURATION * 2);
-
-                    return;
-                }
-
-                startForceClear();
-            }
-        });
-
     }
 
-    private void startForceClear() {
-        HSAccTaskManager.getInstance().startClearCache(mForceCleanPackageNameList, new HSAccTaskManager.AccTaskListener() {
-            @Override
-            public void onStarted() {
-                HSLog.d("force Clean  onStarted");
-            }
-
-            @Override
-            public void onProgressUpdated(int index, int total, String packageName) {
-                HSLog.d("Force clean onProgressUpdated packageName = " + packageName);
-
-                List<JunkWrapper> junkWrappers = JunkManager.getInstance().getJunkWrappers();
-                for (JunkWrapper junkWrapper : junkWrappers) {
-                    if (junkWrapper.getCategory().equals(SystemJunkWrapper.SYSTEM_JUNK)
-                            && junkWrapper.getPackageName().equals(packageName)) {
-                        junkWrappers.remove(junkWrapper);
-                        break;
-                    }
-                }
-            }
-
-            @Override
-            public void onSucceeded() {
-                HSLog.d("Force clean succeed");
-                mIsCleanSucceed = true;
-            }
-
-            @Override
-            public void onFailed(int failCode, String string) {
-                HSLog.d("Force clean onFailed");
-                if (failCode == HSAccTaskManager.FAIL_CANCEL && mIsTimeoutCanceled) {
-                    mHandler.postDelayed(new Runnable() {
-                        @Override
-                        public void run() {
-                            normalClean();
-                        }
-                    }, ITEM_CLEAN_DELAY_DURATION * 2);
-
-                    return;
-                }
-
-                if ((failCode == HSAccTaskManager.FAIL_CANCEL && mIsBackButtonClicked)
-                        || failCode != HSAccTaskManager.FAIL_CANCEL) {
-                    mHandler.postDelayed(new Runnable() {
-                        @Override
-                        public void run() {
-                            dismissCleanWindow();
-                        }
-                    }, 300);
-                }
-            }
-        });
-    }
 
     private void normalClean() {
         if (mJunkSizeReduceAnimator != null && mJunkSizeReduceAnimator.isRunning()) {
