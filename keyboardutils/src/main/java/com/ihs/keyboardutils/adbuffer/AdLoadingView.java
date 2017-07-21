@@ -25,6 +25,8 @@ import com.ihs.keyboardutils.utils.RippleDrawableUtils;
 import com.ihs.keyboardutils.view.CustomProgressDrawable;
 import com.ihs.keyboardutils.view.FlashFrameLayout;
 
+import static java.lang.System.currentTimeMillis;
+
 /**
  * Created by Arthur on 17/4/12.
  */
@@ -34,10 +36,11 @@ public class AdLoadingView extends RelativeLayout implements NativeAdView.OnAdLo
 
     private AdLoadingDialog dialog;
     public TextView tvApply;
-    private int delayAfterDownloadComplete;
+    private int leastDownloadingTime;
     private ImageView progressBar;
     private boolean progressComplete;
     private boolean showCloseButtonWhenFinish;
+    private long startDownloadingTime = -1;
 
     //下载延迟常量
     private boolean hasPurchaseNoAds = false;
@@ -167,16 +170,24 @@ public class AdLoadingView extends RelativeLayout implements NativeAdView.OnAdLo
     }
 
     /**
-     * 当前进度 百分之几. 有进度的数据则进度延迟5%，没有进度的数据，则使用延迟的假进度;
+     * 如果真正下载时间不足 leastDownloadingTime
      *
      * @param percent
      */
     public void updateProgressPercent(int percent) {
-        int maxProgress = 100;
-        if (percent < maxProgress) {
+        if (percent < 100) {
+            if (startDownloadingTime < 0) {
+                startDownloadingTime = currentTimeMillis();
+            }
             progressBar.getDrawable().setLevel(percent);
         } else {
-            fakeLoadingProgress(percent, 101);
+            long fakeLoadingTime = leastDownloadingTime - (System.currentTimeMillis() - startDownloadingTime);
+            if (fakeLoadingTime > 0) {
+                fakeLoadingProgress(percent, 101, fakeLoadingTime);
+            } else {
+                fakeLoadingProgress(percent, 101, 1);
+            }
+            startDownloadingTime = -1;
         }
     }
 
@@ -189,12 +200,12 @@ public class AdLoadingView extends RelativeLayout implements NativeAdView.OnAdLo
     }
 
     public void startFakeLoading() {
-        fakeLoadingProgress(0, 100);
+        fakeLoadingProgress(0, 100, leastDownloadingTime);
     }
 
-    private void fakeLoadingProgress(final int startPercent, final int endPercent) {
+    private void fakeLoadingProgress(final int startPercent, final int endPercent, long duration) {
         ValueAnimator valueAnimator = ValueAnimator.ofInt(startPercent, endPercent);
-        valueAnimator.setDuration(delayAfterDownloadComplete);
+        valueAnimator.setDuration(duration);
         valueAnimator.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
             @Override
             public void onAnimationUpdate(ValueAnimator animation) {
@@ -233,7 +244,7 @@ public class AdLoadingView extends RelativeLayout implements NativeAdView.OnAdLo
     public void configParams(Drawable bg, Drawable icon, String loadingText, String loadComplete, String adPlacementName, OnAdBufferingListener onAdBufferingListener
             , int delayAfterDownloadComplete, boolean hasPurchaseNoAds) {
         setBackgroundPreview(bg).setIcon(icon).setAdPlacementName(adPlacementName).setOnLoadingText(loadingText, loadComplete);
-        this.delayAfterDownloadComplete = delayAfterDownloadComplete;
+        this.leastDownloadingTime = delayAfterDownloadComplete;
         this.onAdBufferingListener = onAdBufferingListener;
         this.hasPurchaseNoAds = hasPurchaseNoAds;
     }
