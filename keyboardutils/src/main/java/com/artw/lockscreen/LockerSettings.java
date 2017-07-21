@@ -1,5 +1,8 @@
 package com.artw.lockscreen;
 
+import android.app.Activity;
+import android.content.Intent;
+
 import com.acb.expressads.AcbExpressAdManager;
 import com.ihs.app.analytics.HSAnalytics;
 import com.ihs.app.framework.HSApplication;
@@ -29,6 +32,9 @@ public class LockerSettings {
     private static final String app_screen_locker_disable = "app_screen_locker_disable";
 
     private static final String USER_ENABLED_LOCKER = "user_enabled_locker";
+
+    private static final String LOCKER_ENABLE_SHOW_COUNT = "locker_enable_show_count";
+    private static final int LOCKER_ENABLE_MAX_SHOW_COUNT = 5;
 
     //与键值有关，所以需要使用默认的prefs
     public static boolean isLockerEnabled() {
@@ -102,6 +108,21 @@ public class LockerSettings {
             return getLockerPlistState();
         }
 
+    }
+
+    static void addLockerEnableShowCount() {
+        int count = getLockerEnableShowCount();
+        getPref().putInt(LOCKER_ENABLE_SHOW_COUNT, ++count);
+    }
+
+    private static int getLockerEnableShowCount() {
+        return getPref().getInt(LOCKER_ENABLE_SHOW_COUNT, 0);
+    }
+
+    public static boolean isLockerEnableShowSatisfied() {
+        return getLockerEnableStates() == LOCKER_DEFAULT_DISABLED
+                && !getPref().contains(USER_ENABLED_LOCKER)
+                && getLockerEnableShowCount() <= LOCKER_ENABLE_MAX_SHOW_COUNT;
     }
 
     public static boolean isLockerEnabledBefore() {

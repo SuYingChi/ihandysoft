@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/wallpaper_enable_locker">
+
+    <ImageView
+        android:id="@+id/exit_btn"
+        android:layout_width="16dp"
+        android:layout_height="16dp"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginRight="25dp"
+        android:layout_marginTop="40dp"
+        android:src="@drawable/ic_lockscreen_enable_delete" />
+
+    <com.ihs.feature.common.TypefacedTextView
+        android:id="@+id/locker_enable_time_tv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="18dp"
+        android:layout_marginStart="18dp"
+        android:layout_marginTop="90dp"
+        android:includeFontPadding="false"
+        android:text="15:45"
+        android:textColor="@android:color/white"
+        android:textSize="84sp"
+        app:typeface="@string/akrobat_light" />
+
+    <com.ihs.feature.common.TypefacedTextView
+        android:id="@+id/locker_enable_data_tv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@id/locker_enable_time_tv"
+        android:layout_alignStart="@id/locker_enable_time_tv"
+        android:layout_below="@id/locker_enable_time_tv"
+        android:layout_marginLeft="8dp"
+        android:layout_marginStart="8dp"
+        android:lineSpacingExtra="5dp"
+        android:lines="2"
+        android:text="Septermber,21"
+        android:textColor="@android:color/white"
+        android:textSize="15sp"
+        app:typeface="@string/roboto_regular" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:background="#80000000"
+        android:orientation="vertical">
+
+        <com.ihs.feature.common.TypefacedTextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="15dp"
+            android:lines="2"
+            android:text="          Applied successfully!\nSet as your lockscreen as well?"
+            android:textColor="@android:color/white"
+            android:textSize="15sp"
+            app:typeface="@string/roboto_regular" />
+
+        <com.ihs.feature.common.TypefacedTextView
+            android:id="@+id/enable_btn"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginBottom="15dp"
+            android:layout_marginLeft="32dp"
+            android:layout_marginRight="32dp"
+            android:layout_marginTop="15dp"
+            android:background="@drawable/selector_blue_btn"
+            android:gravity="center"
+            android:maxLines="1"
+            android:paddingBottom="15dp"
+            android:paddingTop="15dp"
+            android:text="OK"
+            android:textColor="@android:color/white"
+            android:textSize="18sp"
+            app:typeface="@string/roboto_regular" />
+    </LinearLayout>
+</RelativeLayout>

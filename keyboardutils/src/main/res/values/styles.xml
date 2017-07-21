@@ -141,6 +141,16 @@
         <item name="android:windowExitAnimation">@null</item>
     </style>
 
+    <!-- LockerEnableDialog -->
+    <style name="LockerEnableDialogTheme" parent="@android:style/Theme.Light.NoTitleBar.Fullscreen">
+        <item name="android:windowBackground">@android:color/transparent</item>
+        <item name="android:windowFullscreen">true</item>
+        <item name="android:windowNoTitle">true</item>
+        <item name="android:windowActionBar">@null</item>
+        <item name="android:windowContentOverlay">@null</item>
+        <item name="android:windowIsTranslucent">true</item>
+    </style>
+
     <!-- Settings activities -->
     <style name="ThinHorizontalDivider">
         <item name="android:background">@color/list_item_divider</item>
