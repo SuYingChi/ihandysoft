@@ -122,7 +122,7 @@ public class LockerSettings {
     public static boolean isLockerEnableShowSatisfied() {
         return getLockerEnableStates() == LOCKER_DEFAULT_DISABLED
                 && !getPref().contains(USER_ENABLED_LOCKER)
-                && getLockerEnableShowCount() <= HSConfig.optInteger(LOCKER_ENABLE_MAX_SHOW_COUNT, "Application", "Locker", "EnableDialogMaxShowCount");
+                && getLockerEnableShowCount() < HSConfig.optInteger(LOCKER_ENABLE_MAX_SHOW_COUNT, "Application", "Locker", "EnableDialogMaxShowCount");
     }
 
     public static boolean isLockerEnabledBefore() {
