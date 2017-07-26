@@ -70,16 +70,35 @@ public class ChargingPrefsUtil {
 
 
     public static int getChargingEnableStates() {
-        if(spHelper == null){
+        if (spHelper == null) {
             getInstance();
         }
         //用户设置过的话，直接返回用户设置的状态。不管plist任何值，包括静默。
         if (spHelper.contains(USER_ENABLED_CHARGING)) {
-            HSLog.e("CHARGING 获取用户设置" );
+            HSLog.e("CHARGING 获取用户设置");
             return spHelper.getBoolean(USER_ENABLED_CHARGING, false) ? CHARGING_DEFAULT_ACTIVE : CHARGING_DEFAULT_DISABLED;
         }
 
-        return getChargingPlistConfig();
+
+        //老用户会记录 RECORD_CURRENT_PLIST_SETTING 这个值，这里我们可以用来判断是否对他们使用新逻辑
+        //老用户使用以前不变的记录，新用户使用（只有当线上开启过一次之后，就不再改变，线上没开起过，将会一直使用新值，直到远端开启过一次
+        if (spHelper.contains(RECORD_CURRENT_PLIST_SETTING)) {
+            HSLog.e("CHARGING 老用户读值");
+            return spHelper.getInt(RECORD_CURRENT_PLIST_SETTING, CHARGING_DEFAULT_DISABLED);
+        } else {
+            //否则 直接取plist
+            HSLog.e("CHARGING 获取plist");
+            return getChargingPlistConfig();
+        }
+    }
+
+    public static void refreshChargingRecord() {
+        //如果没有记录过 并且为开启状态。
+        if (!spHelper.contains(RECORD_CURRENT_PLIST_SETTING)
+                && getChargingPlistConfig() == CHARGING_DEFAULT_ACTIVE) {
+            //记录为已开启。
+            spHelper.putInt(RECORD_CURRENT_PLIST_SETTING, CHARGING_DEFAULT_ACTIVE);
+        }
     }
 
 

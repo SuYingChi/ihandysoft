@@ -1,7 +1,6 @@
 package com.ihs.chargingscreen;
 
 import android.content.Intent;
-import android.os.Build;
 
 import com.acb.expressads.AcbExpressAdManager;
 import com.acb.nativeads.AcbNativeAdManager;
@@ -11,7 +10,6 @@ import com.ihs.charging.HSChargingManager.HSChargingState;
 import com.ihs.charging.HSChargingManager.IChargingListener;
 import com.ihs.chargingscreen.activity.ChargingFullScreenAlertDialogActivity;
 import com.ihs.chargingscreen.notification.ChargeNotifyManager;
-import com.ihs.chargingscreen.utils.ChargingAnalytics;
 import com.ihs.chargingscreen.utils.ChargingManagerUtil;
 import com.ihs.chargingscreen.utils.ChargingPrefsUtil;
 import com.ihs.commons.config.HSConfig;
@@ -62,6 +60,7 @@ public class HSChargingScreenManager {
             HSGlobalNotificationCenter.addObserver(HSConfig.HS_NOTIFICATION_CONFIG_CHANGED, new INotificationObserver() {
                 @Override
                 public void onReceive(String s, HSBundle hsBundle) {
+                    ChargingPrefsUtil.refreshChargingRecord();
                     registerChargingService();
                 }
             });
@@ -198,7 +197,7 @@ public class HSChargingScreenManager {
 
     public static void registerChargingService() {
         HSApplication.getContext().startService(new Intent(HSApplication.getContext(), AgentService.class));
-        int chargingEnabled = ChargingPrefsUtil.getInstance().getChargingEnableStates();
+        int chargingEnabled = ChargingPrefsUtil.getChargingEnableStates();
         switch (chargingEnabled) {
             case CHARGING_MUTED:
             case CHARGING_DEFAULT_DISABLED:

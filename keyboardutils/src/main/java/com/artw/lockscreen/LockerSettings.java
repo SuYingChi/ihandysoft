@@ -1,8 +1,5 @@
 package com.artw.lockscreen;
 
-import android.app.Activity;
-import android.content.Intent;
-
 import com.acb.expressads.AcbExpressAdManager;
 import com.ihs.app.analytics.HSAnalytics;
 import com.ihs.app.framework.HSApplication;
@@ -88,6 +85,8 @@ public class LockerSettings {
     }
 
     static void updateLockerSetting() {
+        LockerSettings.refreshLockerRecord();
+
         if (isLockerEnabled()) {
             if (!RemoveAdsManager.getInstance().isRemoveAdsPurchased()) {
                 AcbExpressAdManager.getInstance().activePlacementInProcess(HSApplication.getContext().getString(R.string.ad_placement_locker));
@@ -104,10 +103,27 @@ public class LockerSettings {
         if (getPref().contains(USER_ENABLED_LOCKER)) {
             HSLog.e("locker 获取用户设置");
             return getPref().getBoolean(USER_ENABLED_LOCKER, false) ? LOCKER_DEFAULT_ACTIVE : LOCKER_DEFAULT_DISABLED;
-        } else {
-            return getLockerPlistState();
         }
 
+        //老用户会记录 RECORD_CURRENT_PLIST_SETTING 这个值，这里我们可以用来判断是否对他们使用新逻辑
+        //老用户使用以前不变的记录，新用户使用（只有当线上开启过一次之后，就不再改变，线上没开起过，将会一直使用新值，直到远端开启过一次
+        if (getPref().contains(RECORD_CURRENT_PLIST_SETTING)) {
+            HSLog.e("locker 获取已经记录值");
+            return getPref().getInt(RECORD_CURRENT_PLIST_SETTING, LOCKER_DEFAULT_DISABLED);
+        } else {
+            HSLog.e("locker 获取plist");
+            //否则 直接取plist
+            return getLockerPlistState();
+        }
+    }
+
+    public static void refreshLockerRecord() {
+        //如果没有记录过 并且为开启状态。
+        if (!getPref().contains(RECORD_CURRENT_PLIST_SETTING)
+                && getLockerPlistState() == LOCKER_DEFAULT_ACTIVE) {
+            //记录为已开启。
+            getPref().putInt(RECORD_CURRENT_PLIST_SETTING, LOCKER_DEFAULT_ACTIVE);
+        }
     }
 
     static void addLockerEnableShowCount() {
@@ -139,7 +155,7 @@ public class LockerSettings {
     public static void recordLockerDisableOnce() {
         if (!getPref().contains(app_screen_locker_disable)) {
             getPref().putBoolean(app_screen_locker_disable, true);
-            HSAnalytics.logEvent(app_screen_locker_disable, app_screen_locker_disable,"lockerDisabled", "install_type", PublisherUtils.getInstallType());
+            HSAnalytics.logEvent(app_screen_locker_disable, app_screen_locker_disable, "lockerDisabled", "install_type", PublisherUtils.getInstallType());
         }
     }
 
