@@ -130,7 +130,7 @@ public class CustomDesignAlertActivity extends HSActivity {
         this.startActivity(intent);
     }
     public void showAdloadingView(View view) {
-        AdLoadingView adLoadingView = new AdLoadingView(HSApplication.getContext());
+        AdLoadingView adLoadingView = new AdLoadingView(this);
         adLoadingView.configParams(null,null,"a","a","a",null,4000,false);
         adLoadingView.showInDialog();
         adLoadingView.startFakeLoading();
