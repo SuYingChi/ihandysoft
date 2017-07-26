@@ -1,5 +1,8 @@
 package com.ihs.keyboardutils.notification;
 
+import android.graphics.Color;
+import android.text.TextUtils;
+
 import com.ihs.commons.utils.HSLog;
 
 import java.util.ArrayList;
@@ -23,7 +26,6 @@ public class NotificationBean {
                 ", bgUrl='" + bgUrl + '\'' +
                 ", name='" + name + '\'' +
                 ", actionType='" + actionType + '\'' +
-                ", pushTime=" + pushTime +
                 '}';
     }
 
@@ -36,8 +38,9 @@ public class NotificationBean {
     private String messageColor = "#99000000";
     private String titleColor = "#000000";
     private String buttonTextColor = "#ffffff";
-    private String buttonBgColor = "#006ff2";
-    private String
+    private String buttonText = "CHECK";
+    private String bgColor = "#ffffff";
+    private int style = 0;
 
 
     public void setMessage(List<String> message) {
@@ -52,16 +55,8 @@ public class NotificationBean {
         return iconUrl;
     }
 
-    public void setIconUrl(String iconUrl) {
-        this.iconUrl = iconUrl;
-    }
-
     public String getBgUrl() {
         return bgUrl;
-    }
-
-    public void setBgUrl(String bgUrl) {
-        this.bgUrl = bgUrl;
     }
 
     public String getName() {
@@ -76,29 +71,19 @@ public class NotificationBean {
         return actionType;
     }
 
-    public void setActionType(String actionType) {
-        this.actionType = actionType;
-    }
-
-    public int getPushTime() {
-        return pushTime;
-    }
-
-    public void setPushTime(int pushTime) {
-        this.pushTime = pushTime;
-    }
-
-    private int pushTime; //每天有不同的时间
-
-
     public NotificationBean(Map<String, Object> value) {
         message = readStringListConfig(value, "Message");
-        title = readStringConfig(value, "Title");
-        pushTime = readIntConfig(value, "PushTime", 0);
-        iconUrl = readStringConfig(value, "IconUrl");
-        bgUrl = readStringConfig(value, "BgUrl");
-        name = readStringConfig(value, "Name");
-        actionType = readStringConfig(value, "ActionType");
+        title = readStringConfig(value, "Title", "");
+        iconUrl = readStringConfig(value, "IconUrl", "");
+        bgUrl = readStringConfig(value, "BgUrl", bgUrl);
+        name = readStringConfig(value, "Name", "");
+        actionType = readStringConfig(value, "ActionType", "");
+        buttonText = readStringConfig(value, "ButtonText", buttonText);
+        buttonTextColor = readStringConfig(value, "ButtonTextColor", buttonTextColor);
+        titleColor = readStringConfig(value, "TitleColor", titleColor);
+        messageColor = readStringConfig(value, "MessageColor", messageColor);
+        bgColor = readStringConfig(value, "BgColor", bgColor);
+        style = readIntConfig(value, "Style", 0);
     }
 
 
@@ -112,12 +97,15 @@ public class NotificationBean {
         return item;
     }
 
-    private String readStringConfig(Map<String, Object> configs, String key) {
+    private String readStringConfig(Map<String, Object> configs, String key, String defaultString) {
         String item = "";
         try {
             item = (String) configs.get(key);
         } catch (Exception e) {
             HSLog.e(key + " config reading error giving default value ==> empty string");
+        }
+        if (TextUtils.isEmpty(item)) {
+            item = defaultString;
         }
         return item;
     }
@@ -151,16 +139,39 @@ public class NotificationBean {
 
 
     public String getMessage() {
-        if(message.size()>0){
+        if (message.size() > 0) {
             return message.get(new Random().nextInt(message.size()));
-        }else return "";
+        } else return "";
     }
 
     public String getTitle() {
         return title;
     }
 
-    public String getSPKey(){
+    public String getSPKey() {
         return actionType + "|" + name;
+    }
+
+    public int getMessageColor() {
+        return Color.parseColor(messageColor);
+    }
+
+    public int getTitleColor() {
+        return Color.parseColor(titleColor);
+    }
+
+    public int getButtonTextColor() {
+        return Color.parseColor(buttonTextColor);
+    }
+
+    public String getButtonText() {
+        return buttonText;
+    }
+
+    public int getBgColor() {
+        return Color.parseColor(bgColor);
+    }
+    public int getStyle() {
+        return style;
     }
 }

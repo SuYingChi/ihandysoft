@@ -69,4 +69,7 @@
     <color name="material_color_foreground">#cccccc</color>
 
     <color name="wallpaper_activities_control_highlight">#dadada</color>
+
+    <color name="notification_action_button_color">#006ff2</color>
+    <color name="notification_action_button_color_pressed">#228ff2</color>
 </resources>

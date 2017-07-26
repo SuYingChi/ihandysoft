@@ -89,25 +89,13 @@
                     android:maxLines="1"
                     android:text="@string/enable_charging_detail"
                     android:textSize="12dp" />
-
-                <TextView
-                    android:id="@+id/txt_charging_left_time"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="2dp"
-                    android:layout_marginStart="2dp"
-                    android:text="1H 20Min"
-                    android:textColor="#aa00ff00"
-                    android:textSize="8sp"
-                    android:visibility="gone" />
-
             </LinearLayout>
 
         </LinearLayout>
 
 
         <TextView
-            android:id="@+id/tv_enable"
+            android:id="@+id/notification_action"
             android:layout_width="wrap_content"
             android:layout_height="34dp"
             android:layout_gravity="center_vertical"

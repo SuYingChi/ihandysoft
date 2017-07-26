@@ -9,8 +9,12 @@
 			<key>LocalNotifications</key>
 			<array>
 				<dict>
+					<key>Style</key>
+					<integer>1</integer>
 					<key>ActionType</key>
 					<string>Charging</string>
+					<key>BgUrl</key>
+					<string>https://emojidevelop.s3.amazonaws.com/colorcam/push/icon/Sakura.png</string>
 					<key>IconUrl</key>
 					<string>https://emojidevelop.s3.amazonaws.com/colorcam/push/icon/Sakura.png</string>
 					<key>Message</key>
@@ -21,6 +25,10 @@
 					<string>Enable Smart Charging</string>
 				</dict>
 				<dict>
+					<key>MessageColor</key>
+					<string>#ffccff</string>
+					<key>Style</key>
+					<integer>2</integer>
 					<key>ActionType</key>
 					<string>CustomizedTheme</string>
 					<key>IconUrl</key>
@@ -35,8 +43,10 @@
 					<string>name1</string>
 				</dict>
 				<dict>
+					<key>Style</key>
+					<integer>0</integer>
 					<key>ActionType</key>
-					<string>CustomizedTheme</string>
+					<string>CustomizedTheme2</string>
 					<key>IconUrl</key>
 					<string>https://emojidevelop.s3.amazonaws.com/colorcam/push/icon/Sakura.png</string>
 					<key>Message</key>
@@ -116,7 +126,7 @@
 				<key>HoursFromFirstUse</key>
 				<integer>0</integer>
 				<key>state</key>
-				<integer>2</integer>
+				<integer>0</integer>
 			</dict>
 			<key>ExitAlert</key>
 			<dict>

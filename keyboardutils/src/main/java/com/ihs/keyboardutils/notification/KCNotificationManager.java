@@ -35,6 +35,7 @@ import java.util.concurrent.TimeUnit;
 
 import static android.content.Context.ALARM_SERVICE;
 import static android.content.Context.NOTIFICATION_SERVICE;
+import static android.view.View.GONE;
 import static com.ihs.app.framework.HSApplication.getContext;
 
 /**
@@ -251,132 +252,151 @@ public class KCNotificationManager {
 
         final NotificationBean beanCopy = notificationToSend;
         final RemoteViews contentView = new RemoteViews(HSApplication.getContext().getPackageName(), R.layout.notification_custom);
+
         contentView.setImageViewResource(R.id.notification_icon, context.getApplicationInfo().icon);
-        contentView.setTextViewText(R.id.notification_title, notificationToSend.getTitle());
+
         contentView.setTextViewText(R.id.notification_description, notificationToSend.getMessage());
+        contentView.setTextColor(R.id.notification_description, notificationToSend.getMessageColor());
 
+        contentView.setTextViewText(R.id.notification_title, notificationToSend.getTitle());
+        contentView.setTextColor(R.id.notification_title, notificationToSend.getTitleColor());
 
-        //如果iconurl没有给的话 就用默认icon
-        if (TextUtils.isEmpty(notificationToSend.getIconUrl())) {
-            //如果背景也没给就直接默认模式
-            if (TextUtils.isEmpty(notificationToSend.getBgUrl())) {
-                mBuilder.setLargeIcon(BitmapFactory.decodeResource(context.getResources(), context.getApplicationInfo().icon));
-                tryToNotify(mBuilder, beanCopy);
-            } else {
-                //如果给了背景就要用自定义样式
-                ImageLoader.getInstance().loadImage(notificationToSend.getBgUrl(), new ImageLoadingListener() {
-                    @Override
-                    public void onLoadingStarted(String imageUri, View view) {
+        contentView.setInt(R.id.notification_background, "setBackgroundColor", notificationToSend.getBgColor());
 
-                    }
+        contentView.setTextViewText(R.id.notification_action, notificationToSend.getButtonText());
+        contentView.setTextColor(R.id.notification_action, notificationToSend.getButtonTextColor());
+        contentView.setInt(R.id.notification_action, "setBackgroundResource", R.drawable.notification_action_bg);
 
-                    @Override
-                    public void onLoadingFailed(String imageUri, View view, FailReason failReason) {
-                    }
+        switch (notificationToSend.getStyle()) {
+            //系统默认样式
+            case 0:
+            default:
+                //icon为空 则用默认icon 否则网络请求次数加一
+                if (TextUtils.isEmpty(notificationToSend.getIconUrl())) {
+                    mBuilder.setLargeIcon(BitmapFactory.decodeResource(context.getResources(), context.getApplicationInfo().icon));
+                    tryToNotify(mBuilder, beanCopy);
+                    HSLog.e("notification 默认 no icon ");
+                } else {
+                    ImageLoader.getInstance().loadImage(notificationToSend.getIconUrl(), new ImageLoadingListener() {
+                        @Override
+                        public void onLoadingStarted(String imageUri, View view) {
 
-                    @Override
-                    public void onLoadingComplete(String imageUri, View view, Bitmap loadedImage) {
-                        contentView.setImageViewBitmap(R.id.notification_background, loadedImage);
-                        mBuilder.setContent(contentView);
-                        tryToNotify(mBuilder, beanCopy);
-                    }
+                        }
 
-                    @Override
-                    public void onLoadingCancelled(String imageUri, View view) {
+                        @Override
+                        public void onLoadingFailed(String imageUri, View view, FailReason failReason) {
+                            HSLog.e("icon 加载失败 url: " + imageUri);
+                        }
 
-                    }
-                });
-            }
+                        @Override
+                        public void onLoadingComplete(String imageUri, View view, Bitmap loadedImage) {
+                            HSLog.e("icon 加载成功 " + imageUri);
+                            mBuilder.setLargeIcon(loadedImage);
+                            tryToNotify(mBuilder, beanCopy);
+                            HSLog.e("notification 默认 with icon");
+                        }
 
-        } else {
+                        @Override
+                        public void onLoadingCancelled(String imageUri, View view) {
 
-            //如果icon 不为空的情况下
-            //如果bg为空，则从网上加载icon
-            if (TextUtils.isEmpty(notificationToSend.getBgUrl())) {
-                ImageLoader.getInstance().loadImage(notificationToSend.getIconUrl(), new ImageLoadingListener() {
-                    @Override
-                    public void onLoadingStarted(String imageUri, View view) {
+                        }
+                    });
+                }
+                break;
 
-                    }
-
-                    @Override
-                    public void onLoadingFailed(String imageUri, View view, FailReason failReason) {
-                        HSLog.e("icon 加载失败 " + imageUri);
-                    }
-
-                    @Override
-                    public void onLoadingComplete(String imageUri, View view, Bitmap loadedImage) {
-                        HSLog.e("icon 加载成功 " + imageUri);
-                        mBuilder.setLargeIcon(loadedImage);
-                        tryToNotify(mBuilder, beanCopy);
-                    }
-
-                    @Override
-                    public void onLoadingCancelled(String imageUri, View view) {
-
-                    }
-                });
-            } else {
+            //附带背景不带button样式
+            case 1:
+            case 2: //带button 不配置的项都为默认。
 
                 //如果bg也不为空就要用remoteview 并将会产生两次图片请求的回传。
-                final int[] imgRequestCompleteCount = {2};
-                ImageLoader.getInstance().loadImage(notificationToSend.getIconUrl(), new ImageLoadingListener() {
-                    @Override
-                    public void onLoadingStarted(String imageUri, View view) {
+                int requestCount = 0;
 
+                //icon为空 则用默认icon 否则网络请求次数加一
+                if (TextUtils.isEmpty(notificationToSend.getIconUrl())) {
+                    mBuilder.setLargeIcon(BitmapFactory.decodeResource(context.getResources(), context.getApplicationInfo().icon));
+                } else {
+                    requestCount++;
+                }
+
+                //bg为空则默认bg 否则网络请求次数加一
+                if (!TextUtils.isEmpty(notificationToSend.getBgUrl())) {
+                    requestCount++;
+                }
+
+                if (notificationToSend.getStyle() == 1) {
+                    contentView.setViewVisibility(R.id.notification_action, GONE);
+                    HSLog.e("notification 自定义除button");
+                } else if (notificationToSend.getStyle() == 2) {
+                    HSLog.e("notification 完全自定义");
+                }
+
+                //如果没有任何需要网络加载的直接发送。
+                if (requestCount == 0) {
+                    tryToNotify(mBuilder, beanCopy);
+                } else {
+                    final int[] imgRequestCompleteCount = {requestCount};
+
+                    if (!TextUtils.isEmpty(notificationToSend.getIconUrl())) {
+                        ImageLoader.getInstance().loadImage(notificationToSend.getIconUrl(), new ImageLoadingListener() {
+                            @Override
+                            public void onLoadingStarted(String imageUri, View view) {
+
+                            }
+
+                            @Override
+                            public void onLoadingFailed(String imageUri, View view, FailReason failReason) {
+                                HSLog.e("icon 加载失败 url: " + imageUri);
+                            }
+
+                            @Override
+                            public void onLoadingComplete(String imageUri, View view, Bitmap loadedImage) {
+                                HSLog.e("icon 加载成功 " + imageUri);
+                                imgRequestCompleteCount[0]--;
+                                contentView.setImageViewBitmap(R.id.notification_icon, loadedImage);
+                                mBuilder.setContent(contentView);
+                                if (imgRequestCompleteCount[0] == 0) {
+                                    tryToNotify(mBuilder, beanCopy);
+                                }
+                            }
+
+                            @Override
+                            public void onLoadingCancelled(String imageUri, View view) {
+
+                            }
+                        });
                     }
 
-                    @Override
-                    public void onLoadingFailed(String imageUri, View view, FailReason failReason) {
-                        scheduleNextEventTime();
-                        HSLog.e("icon 加载失败 " + imageUri);
+                    if (!TextUtils.isEmpty(notificationToSend.getBgUrl())) {
+                        ImageLoader.getInstance().loadImage(notificationToSend.getBgUrl(), new ImageLoadingListener() {
+                            @Override
+                            public void onLoadingStarted(String imageUri, View view) {
+
+                            }
+
+                            @Override
+                            public void onLoadingFailed(String imageUri, View view, FailReason failReason) {
+                                HSLog.e("bg 加载失败 url: " + imageUri);
+                            }
+
+                            @Override
+                            public void onLoadingComplete(String imageUri, View view, Bitmap loadedImage) {
+                                HSLog.e("bg 加载成功 " + imageUri);
+                                imgRequestCompleteCount[0]--;
+                                contentView.setImageViewBitmap(R.id.notification_background, loadedImage);
+                                mBuilder.setContent(contentView);
+                                if (imgRequestCompleteCount[0] == 0) {
+                                    tryToNotify(mBuilder, beanCopy);
+                                }
+                            }
+
+                            @Override
+                            public void onLoadingCancelled(String imageUri, View view) {
+
+                            }
+                        });
                     }
-
-                    @Override
-                    public void onLoadingComplete(String imageUri, View view, Bitmap loadedImage) {
-                        HSLog.e("icon 加载成功 " + imageUri);
-                        imgRequestCompleteCount[0]--;
-                        contentView.setImageViewBitmap(R.id.notification_icon, loadedImage);
-                        mBuilder.setContent(contentView);
-                        if (imgRequestCompleteCount[0] == 0) {
-                            tryToNotify(mBuilder, beanCopy);
-                        }
-                    }
-
-                    @Override
-                    public void onLoadingCancelled(String imageUri, View view) {
-
-                    }
-                });
-
-                ImageLoader.getInstance().loadImage(notificationToSend.getBgUrl(), new ImageLoadingListener() {
-                    @Override
-                    public void onLoadingStarted(String imageUri, View view) {
-
-                    }
-
-                    @Override
-                    public void onLoadingFailed(String imageUri, View view, FailReason failReason) {
-                        HSLog.e("bg 加载失败 " + imageUri);
-                    }
-
-                    @Override
-                    public void onLoadingComplete(String imageUri, View view, Bitmap loadedImage) {
-                        HSLog.e("bg 加载成功 " + imageUri);
-                        imgRequestCompleteCount[0]--;
-                        contentView.setImageViewBitmap(R.id.notification_background, loadedImage);
-                        mBuilder.setContent(contentView);
-                        if (imgRequestCompleteCount[0] == 0) {
-                            tryToNotify(mBuilder, beanCopy);
-                        }
-                    }
-
-                    @Override
-                    public void onLoadingCancelled(String imageUri, View view) {
-
-                    }
-                });
-            }
+                }
+                break;
         }
 
         //无论此次结果如何，均请求下一次。
