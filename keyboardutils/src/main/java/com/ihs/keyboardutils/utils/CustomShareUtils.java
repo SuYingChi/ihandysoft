@@ -126,7 +126,7 @@ public class CustomShareUtils {
         final View shareAdView = View.inflate(context, R.layout.ad_share, null);
         if (!RemoveAdsManager.getInstance().isRemoveAdsPurchased()) {
             View adActionView = shareAdView.findViewById(R.id.ad_call_to_action);
-            adActionView.setBackgroundDrawable(RippleDrawableUtils.getCompatRippleDrawable(resources.getColor(R.color.ad_share_action_button_bg), resources.getDimension(R.dimen.corner_radius)));
+            adActionView.setBackgroundDrawable(RippleDrawableUtils.getCompatRippleDrawable(resources.getColor(R.color.ad_action_button_bg), resources.getDimension(R.dimen.corner_radius)));
             shareAdView.setLayoutParams(new FrameLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT));
 
             final NativeAdView nativeAdView = new NativeAdView(context, shareAdView, adLoadingView);

@@ -111,7 +111,7 @@ public class AdLoadingView extends RelativeLayout implements NativeAdView.OnAdLo
 
         inflate.findViewById(R.id.ad_call_to_action)
                 .setBackgroundDrawable(
-                        RippleDrawableUtils.getButtonRippleBackground(R.color.ad_button_blue));
+                        RippleDrawableUtils.getButtonRippleBackground(R.color.ad_action_button_bg));
         flashAdContainer = (FlashFrameLayout) inflate.findViewById(R.id.ad_loading_flash_container);
 
 
