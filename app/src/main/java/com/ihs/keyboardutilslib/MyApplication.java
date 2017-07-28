@@ -69,31 +69,6 @@ public class MyApplication extends HSApplication {
         HSGlobalNotificationCenter.addObserver(HSNotificationConstant.HS_SESSION_START, sessionEventObserver);
         HSGlobalNotificationCenter.addObserver(HSNotificationConstant.HS_SESSION_END, sessionEventObserver);
 
-        BoostActivity.initBoost();
-
-        KCNotificationManager.getInstance().setNotificationResponserType(KCNotificationManager.TYPE_ACTIVITY);
-        ArrayList<String> eventList = new ArrayList<>();
-        eventList.add("ScreenLocker");
-        eventList.add("Charging");
-        eventList.add("AddNewPhotoToPrivate");
-        for (String event : eventList) {
-            int reqCode = 0;
-            switch (event) {
-                case "ScreenLocker":
-                    reqCode = 1;
-                    break;
-                case "Charging":
-                    reqCode = 2;
-                    break;
-                case "AddNewPhotoToPrivate":
-                    reqCode = 3;
-                    break;
-            }
-
-            Intent resultIntent = new Intent(getContext(), MainActivity.class);
-            resultIntent.putExtra("reqCode", reqCode);
-            KCNotificationManager.getInstance().addNotificationEvent(event, resultIntent);
-        }
         BoostPlusActivity.initBoost();
         BatteryActivity.initBattery();
         CpuCoolerScanActivity.initBoost();
