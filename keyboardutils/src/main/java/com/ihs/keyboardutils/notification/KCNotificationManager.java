@@ -438,7 +438,13 @@ public class KCNotificationManager {
             e.printStackTrace();
             return;
         }
-        KCAnalyticUtil.logEvent("notification_show", notificationBean.getActionType());
+        KCAnalyticUtil.logEvent("local_push_showed", notificationBean.getActionType());
+        KCAnalyticUtil.logEvent("local_push_showed_content_name", notificationBean.getName());
+    }
+
+    public static void logNotificationClick(String actionType, String name) {
+        KCAnalyticUtil.logEvent("local_push_showed", actionType);
+        KCAnalyticUtil.logEvent("local_push_showed_content_name", name);
     }
 
     private boolean isChargingEnabled() {
