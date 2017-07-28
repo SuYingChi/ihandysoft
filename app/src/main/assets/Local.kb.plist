@@ -88,24 +88,6 @@
 				<key>ShowChargingRate</key>
 				<integer>0</integer>
 			</dict>
-			<key>FeatureRestriction</key>
-			<dict>
-				<key>TestFeatureA</key>
-				<dict>
-					<key>HoursFromFirstUse</key>
-					<real>0.002</real>
-				</dict>
-				<key>TestFeatureB</key>
-				<dict>
-					<key>HoursFromFirstUse</key>
-					<real>0.002</real>
-					<key>RegionException</key>
-					<array>
-						<string>US</string>
-						<string>GB</string>
-					</array>
-				</dict>
-			</dict>
 			<key>ChargeLocker</key>
 			<dict>
 				<key>Alert</key>
@@ -135,10 +117,38 @@
 				<key>style</key>
 				<integer>1</integer>
 			</dict>
+
+			<key>FeatureRestriction</key>
+			<dict>
+				<key>TestFeatureA</key>
+				<dict>
+					<key>HoursFromFirstUse</key>
+					<real>0.002</real>
+				</dict>
+				<key>TestFeatureB</key>
+				<dict>
+					<key>HoursFromFirstUse</key>
+					<real>0.002</real>
+					<key>RegionException</key>
+					<array>
+						<string>US</string>
+						<string>GB</string>
+					</array>
+				</dict>
+			</dict>
+			<key>LocalNotifications</key>
+			<dict>
+				<key>Charging</key>
+				<dict>
+					<key>Message</key>
+					<string>bbb</string>
+					<key>Title</key>
+					<string>charging aaa</string>
+				</dict>
+			</dict>
+
 			<key>Locker</key>
 			<dict>
-				<key>state</key>
-				<integer>2</integer>
 				<key>Alert</key>
 				<dict>
 					<key>AdText</key>
@@ -150,6 +160,8 @@
 					<key>Title</key>
 					<string>Tittle</string>
 				</dict>
+				<key>state</key>
+				<integer>2</integer>
 			</dict>
 		</dict>
 		<key>adAdapter</key>
@@ -199,17 +211,39 @@
 		<dict>
 			<key>Master_A(NativeAds)Charging</key>
 			<dict>
+				<key>autoRefresh</key>
+				<dict>
+					<key>enable</key>
+					<true/>
+					<key>interval</key>
+					<integer>8</integer>
+				</dict>
 				<key>deDuplicate</key>
 				<true/>
 				<key>packageFilter</key>
 				<true/>
 				<key>parallelCount</key>
-				<integer>1</integer>
+				<integer>0</integer>
 				<key>parallelList</key>
+				<array/>
+				<key>preCacheIcon</key>
+				<true/>
+				<key>preCacheImage</key>
+				<true/>
+				<key>preload</key>
+				<dict>
+					<key>inventory</key>
+					<integer>0</integer>
+					<key>strategy</key>
+					<string>initiative</string>
+				</dict>
+				<key>preloadOnlyInWifi</key>
+				<false/>
+				<key>serialList</key>
 				<array>
 					<dict>
 						<key>adType</key>
-						<string>adxnative</string>
+						<string>adxexpress</string>
 						<key>countPerLoad</key>
 						<integer>1</integer>
 						<key>cpmInfo</key>
@@ -217,213 +251,25 @@
 							<key>Others</key>
 							<dict>
 								<key>cpm</key>
-								<integer>20</integer>
+								<real>3.0499999999999998</real>
 							</dict>
 						</dict>
 						<key>ids</key>
 						<array>
-							<string>ca-mb-app-pub-2629263325495000/1098692959</string>
+							<string>ca-mb-app-pub-8621759356895416/9903849563</string>
 						</array>
 						<key>loadCount</key>
 						<integer>1</integer>
 						<key>networkType</key>
 						<integer>0</integer>
-						<key>osVersionException</key>
-						<array/>
-						<key>osVersionFilter</key>
-						<array/>
-						<key>priceRatio</key>
-						<integer>1</integer>
 						<key>regionException</key>
 						<array/>
 						<key>regionFilter</key>
 						<array/>
-						<key>url</key>
-						<string></string>
-					</dict>
-					<dict>
-						<key>adType</key>
-						<string>facebooknative</string>
-						<key>countPerLoad</key>
-						<integer>1</integer>
-						<key>cpmInfo</key>
-						<dict>
-							<key>Others</key>
-							<dict>
-								<key>cpm</key>
-								<integer>30</integer>
-							</dict>
-						</dict>
-						<key>ids</key>
-						<array>
-							<string>1302359676453065_1302494433106256</string>
-						</array>
-						<key>loadCount</key>
-						<integer>1</integer>
-						<key>networkType</key>
-						<integer>0</integer>
-						<key>osVersionException</key>
-						<array/>
-						<key>osVersionFilter</key>
-						<array/>
-						<key>priceRatio</key>
-						<integer>1</integer>
-						<key>primaryViewOption</key>
-						<string></string>
-						<key>regionException</key>
-						<array/>
-						<key>regionFilter</key>
-						<array/>
-						<key>url</key>
-						<string></string>
-					</dict>
-					<dict>
-						<key>adType</key>
-						<string>admobnative</string>
-						<key>countPerLoad</key>
-						<integer>1</integer>
-						<key>cpmInfo</key>
-						<dict>
-							<key>Others</key>
-							<dict>
-								<key>cpm</key>
-								<integer>25</integer>
-							</dict>
-						</dict>
-						<key>ids</key>
-						<array>
-							<string>ca-app-pub-7319126281585813/8940031086</string>
-						</array>
-						<key>loadCount</key>
-						<integer>1</integer>
-						<key>networkType</key>
-						<integer>0</integer>
-						<key>osVersionException</key>
-						<array/>
-						<key>osVersionFilter</key>
-						<array/>
-						<key>priceRatio</key>
-						<integer>1</integer>
-						<key>primaryViewOption</key>
-						<string></string>
-						<key>regionException</key>
-						<array/>
-						<key>regionFilter</key>
-						<array/>
-						<key>url</key>
-						<string></string>
-					</dict>
-					<dict>
-						<key>adType</key>
-						<string>yeahmobinative</string>
-						<key>countPerLoad</key>
-						<integer>1</integer>
-						<key>cpmInfo</key>
-						<dict>
-							<key>Others</key>
-							<dict>
-								<key>cpm</key>
-								<integer>15</integer>
-							</dict>
-						</dict>
-						<key>ids</key>
-						<array>
-							<string>1251</string>
-						</array>
-						<key>loadCount</key>
-						<integer>1</integer>
-						<key>networkType</key>
-						<integer>0</integer>
-						<key>osVersionException</key>
-						<array/>
-						<key>osVersionFilter</key>
-						<array/>
-						<key>priceRatio</key>
-						<integer>1</integer>
-						<key>primaryViewOption</key>
-						<string></string>
-						<key>regionException</key>
-						<array/>
-						<key>regionFilter</key>
-						<array/>
-						<key>url</key>
-						<string></string>
-					</dict>
-					<dict>
-						<key>adType</key>
-						<string>appnextnative</string>
-						<key>countPerLoad</key>
-						<integer>1</integer>
-						<key>cpmInfo</key>
-						<dict>
-							<key>Others</key>
-							<dict>
-								<key>cpm</key>
-								<integer>10</integer>
-							</dict>
-						</dict>
-						<key>ids</key>
-						<array>
-							<string>820b2d51-bb13-459b-a5da-5281f4c90515</string>
-						</array>
-						<key>loadCount</key>
-						<integer>1</integer>
-						<key>networkType</key>
-						<integer>0</integer>
-						<key>osVersionException</key>
-						<array/>
-						<key>osVersionFilter</key>
-						<array/>
-						<key>priceRatio</key>
-						<integer>1</integer>
-						<key>primaryViewOption</key>
-						<string></string>
-						<key>regionException</key>
-						<array/>
-						<key>regionFilter</key>
-						<array/>
-						<key>url</key>
-						<string></string>
-					</dict>
-					<dict>
-						<key>adType</key>
-						<string>adxnative</string>
-						<key>countPerLoad</key>
-						<integer>1</integer>
-						<key>cpmInfo</key>
-						<dict>
-							<key>Others</key>
-							<dict>
-								<key>cpm</key>
-								<integer>14</integer>
-							</dict>
-						</dict>
-						<key>ids</key>
-						<array>
-							<string>ca-mb-app-pub-2629263325495000/1563052999</string>
-						</array>
-						<key>loadCount</key>
-						<integer>1</integer>
-						<key>networkType</key>
-						<integer>0</integer>
-						<key>osVersionException</key>
-						<array/>
-						<key>osVersionFilter</key>
-						<array/>
-						<key>priceRatio</key>
-						<integer>1</integer>
-						<key>primaryViewOption</key>
-						<string></string>
-						<key>regionException</key>
-						<array/>
-						<key>regionFilter</key>
-						<array/>
-						<key>url</key>
-						<string></string>
 					</dict>
 				</array>
-				<key>serialList</key>
-				<array/>
+				<key>tempInventoryTime</key>
+				<integer>0</integer>
 			</dict>
 		</dict>
 		<key>interstitialAds</key>

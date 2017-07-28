@@ -167,10 +167,11 @@
 
         </LinearLayout>
 
-        <RelativeLayout
+        <android.support.percent.PercentRelativeLayout
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:layout_weight="7">
+            android:layout_weight="1"
+            android:gravity="center_vertical">
 
 
             <LinearLayout
@@ -179,7 +180,6 @@
                 android:layout_height="wrap_content"
                 android:layout_alignParentBottom="true"
                 android:layout_centerHorizontal="true"
-                android:layout_marginBottom="30dp"
                 android:gravity="center_vertical"
                 android:orientation="horizontal">
 
@@ -187,10 +187,10 @@
                     android:id="@+id/img_charging_state1"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:src="@drawable/ic_charging_speed" />
+                    app:srcCompat="@drawable/ic_charging_speed" />
 
                 <View
-                    android:id="@+id/view"
+                    android:id="@+id/view_spac1"
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_marginEnd="@dimen/white_dots_margins"
@@ -198,16 +198,16 @@
                     android:layout_marginRight="@dimen/white_dots_margins"
                     android:layout_marginStart="@dimen/white_dots_margins"
                     android:layout_weight="1"
-                    android:background="@drawable/shape_wihte_dot"
                     android:layerType="software" />
 
                 <ImageView
                     android:id="@+id/img_charging_state2"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:src="@drawable/ic_charging_continue" />
+                    app:srcCompat="@drawable/ic_charging_continue" />
 
                 <View
+                    android:id="@+id/view_spac2"
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_marginEnd="@dimen/white_dots_margins"
@@ -215,14 +215,13 @@
                     android:layout_marginRight="@dimen/white_dots_margins"
                     android:layout_marginStart="@dimen/white_dots_margins"
                     android:layout_weight="1"
-                    android:background="@drawable/shape_wihte_dot"
                     android:layerType="software" />
 
                 <ImageView
                     android:id="@+id/img_charging_state3"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:src="@drawable/ic_charging_trickle" />
+                    app:srcCompat="@drawable/ic_charging_trickle" />
             </LinearLayout>
 
             <LinearLayout
@@ -232,6 +231,7 @@
                 android:layout_above="@id/layout_charging_state"
                 android:layout_centerHorizontal="true"
                 android:layout_marginBottom="20dp"
+                android:layout_marginTop="5dp"
                 android:orientation="horizontal">
 
                 <TextView
@@ -256,22 +256,24 @@
             </LinearLayout>
 
             <LinearLayout
-                android:layout_above="@id/layout_left_time"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_above="@id/layout_left_time"
                 android:layout_centerHorizontal="true"
+                android:gravity="bottom|center_horizontal"
                 android:orientation="horizontal"
                 android:paddingLeft="8dp"
-                android:paddingStart="8dp">
+                android:paddingStart="8dp"
+                app:layout_heightPercent="38%">
 
-                <TextView
+                <com.ihs.feature.ui.AutoSizeTextView
                     android:id="@+id/txt_battery_level"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:fontFamily="sans-serif-light"
+                    android:lineSpacingExtra="0dp"
                     android:text="84"
                     android:textColor="#ffffff"
-                    android:textSize="94dp"
                     android:typeface="monospace" />
 
                 <TextView
@@ -285,52 +287,51 @@
                     android:typeface="monospace" />
             </LinearLayout>
 
-        </RelativeLayout>
+        </android.support.percent.PercentRelativeLayout>
 
         <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_weight="8"
+            android:layout_height="wrap_content"
             android:clipChildren="false">
 
             <ImageView
                 android:id="@+id/remove_ads"
-                android:layout_width="24dp"
-                android:layout_height="24dp"
+                android:layout_width="16dp"
+                android:layout_height="16dp"
                 android:layout_alignParentRight="true"
                 android:layout_marginRight="9dp"
-                android:src="@drawable/ad_close_button" />
+                android:src="@drawable/ad_close_button"
+                android:visibility="gone" />
 
             <FrameLayout
                 android:id="@+id/ad_container"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_marginBottom="50dp"
-                android:layout_marginTop="3dp"
+                android:layout_height="wrap_content"
                 android:layout_marginLeft="9dp"
                 android:layout_marginRight="9dp"
-                android:layout_below="@+id/remove_ads">
+                android:layout_marginTop="16dp">
 
 
                 <TextView
                     android:id="@+id/txt_charging_indicator"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:layout_height="250dp"
                     android:layout_gravity="center"
                     android:fontFamily="sans-serif-thin"
                     android:gravity="center"
                     android:text="@string/charging_module_charging_state_speed_charging_indicator"
                     android:textColor="#88ffffff"
-                    android:textSize="12sp" />
+                    android:textSize="12sp"/>
             </FrameLayout>
 
 
             <com.facebook.shimmer.ShimmerFrameLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_alignParentBottom="true"
+                android:layout_below="@+id/ad_container"
                 android:layout_centerHorizontal="true"
-                android:layout_marginBottom="20dp"
+                android:layout_marginBottom="15dp"
+                android:layout_marginTop="15dp"
                 app:angle="cw_0"
                 app:auto_start="true"
                 app:duration="2000"
@@ -352,14 +353,8 @@
 
             </com.facebook.shimmer.ShimmerFrameLayout>
 
-
         </RelativeLayout>
 
-        <ImageView
-            android:id="@+id/imageView3"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            app:srcCompat="@drawable/ad_close_button" />
     </LinearLayout>
 
 </RelativeLayout>

@@ -14,9 +14,7 @@ import android.view.ViewGroup;
 import android.view.Window;
 import android.widget.ImageView;
 
-import com.artw.lockscreen.common.CommonUtils;
 import com.artw.lockscreen.common.LockerChargingScreenUtils;
-import com.artw.lockscreen.common.Thunk;
 import com.artw.lockscreen.slidingdrawer.SlidingDrawerContent;
 import com.artw.lockscreen.slidingup.LockerSlidingUpCallback;
 import com.artw.lockscreen.statusbar.StatusBar;
@@ -26,7 +24,9 @@ import com.ihs.chargingscreen.activity.ChargingScreenActivity;
 import com.ihs.commons.notificationcenter.HSGlobalNotificationCenter;
 import com.ihs.commons.notificationcenter.INotificationObserver;
 import com.ihs.commons.utils.HSBundle;
+import com.ihs.feature.common.Thunk;
 import com.ihs.keyboardutils.R;
+import com.ihs.keyboardutils.utils.CommonUtils;
 import com.ihs.keyboardutils.utils.PublisherUtils;
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.ImageLoader;
@@ -67,6 +67,7 @@ public class LockerActivity extends AppCompatActivity implements INotificationOb
 
         super.onCreate(savedInstanceState);
         overridePendingTransition(0, 0);
+        LockerSettings.recordLockerEnableOnce();
 
         // set translucent status bar & navigation bar
         Window window = getWindow();
@@ -212,7 +213,7 @@ public class LockerActivity extends AppCompatActivity implements INotificationOb
             @Override
             public void onPageSelected(int position) {
                 if (LockerAdapter.PAGE_INDEX_UNLOCK == position) {
-                    finishSelf(true);
+                    finishSelf();
                     HSAnalytics.logEvent("Locker_Unlocked");
                 }
             }
@@ -224,7 +225,7 @@ public class LockerActivity extends AppCompatActivity implements INotificationOb
         });
     }
 
-    public void finishSelf(final boolean dismissKeyguard) {
+    public void finishSelf() {
         findViewById(R.id.bottom_layer).setVisibility(View.GONE);
         ObjectAnimator fadeOutAnim = ObjectAnimator.ofFloat(mLockerWallpaper, View.ALPHA, 0f);
         fadeOutAnim.setDuration(300);
@@ -234,9 +235,6 @@ public class LockerActivity extends AppCompatActivity implements INotificationOb
                 finish();
                 overridePendingTransition(0, 0);
 
-                if (dismissKeyguard) {
-                    DismissKeyguradActivity.startSelfIfKeyguardSecure(LockerActivity.this);
-                }
                 mLockerWallpaper.setImageResource(android.R.color.transparent);
                 if (mLockerAdapter != null && mLockerAdapter.lockerMainFrame != null) {
                     mLockerAdapter.lockerMainFrame.clearDrawerBackground();
@@ -257,11 +255,7 @@ public class LockerActivity extends AppCompatActivity implements INotificationOb
     public void onReceive(String s, HSBundle hsBundle) {
         switch (s) {
             case EVENT_FINISH_SELF:
-                boolean shouldDismissKeyguard = true;
-                if (hsBundle != null) {
-                    hsBundle.getBoolean(EXTRA_SHOULD_DISMISS_KEYGUARD, true);
-                }
-                finishSelf(shouldDismissKeyguard);
+                finishSelf();
                 break;
             default:
                 break;

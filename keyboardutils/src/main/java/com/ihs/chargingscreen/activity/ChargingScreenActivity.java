@@ -23,6 +23,7 @@ import android.os.Message;
 import android.os.PowerManager;
 import android.provider.Settings;
 import android.support.annotation.IntRange;
+import android.support.graphics.drawable.VectorDrawableCompat;
 import android.telephony.PhoneStateListener;
 import android.telephony.TelephonyManager;
 import android.text.TextUtils;
@@ -41,7 +42,9 @@ import android.widget.TextView;
 
 import com.acb.expressads.AcbExpressAdView;
 import com.artw.lockscreen.LockerUtils;
+import com.ihs.app.analytics.HSAnalytics;
 import com.ihs.app.framework.HSApplication;
+import com.ihs.app.framework.HSSessionMgr;
 import com.ihs.charging.HSChargingManager;
 import com.ihs.charging.HSChargingManager.HSChargingState;
 import com.ihs.chargingscreen.Constants;
@@ -59,7 +62,6 @@ import com.ihs.commons.notificationcenter.INotificationObserver;
 import com.ihs.commons.utils.HSBundle;
 import com.ihs.commons.utils.HSLog;
 import com.ihs.keyboardutils.R;
-import com.ihs.keyboardutils.alerts.KCAlert;
 import com.ihs.keyboardutils.iap.RemoveAdsManager;
 import com.ihs.keyboardutils.utils.KCAnalyticUtil;
 import com.ihs.keyboardutils.utils.RippleDrawableUtils;
@@ -202,6 +204,8 @@ public class ChargingScreenActivity extends Activity {
     private BubbleView bubbleView;
     private PowerManager powerManager = (PowerManager) HSApplication.getContext().getSystemService(Context.POWER_SERVICE);
     private AcbExpressAdView acbExpressAdView;
+    private FrameLayout adContainer;
+    private ImageView removeAds;
 
 
     private long createTime;
@@ -212,7 +216,9 @@ public class ChargingScreenActivity extends Activity {
 
         requestWindowFeature(Window.FEATURE_NO_TITLE);
         super.onCreate(savedInstanceState);
-        ChargingManagerUtil.enableCharging(false, "plist");
+        ChargingManagerUtil.enableCharging(false);
+
+        ChargingAnalytics.getInstance().recordChargingEnableOnce();
 
         Window window = getWindow();
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
@@ -283,6 +289,10 @@ public class ChargingScreenActivity extends Activity {
 
         setContentView(R.layout.charging_module_activity_charging_screen);
 
+
+        findViewById(R.id.view_spac1).setBackgroundDrawable(VectorDrawableCompat.create(getResources(),R.drawable.shape_wihte_dot,null));
+        findViewById(R.id.view_spac2).setBackgroundDrawable(VectorDrawableCompat.create(getResources(),R.drawable.shape_wihte_dot,null));
+
         bubbleView = ((BubbleView) findViewById(R.id.bubbleView));
 
         rootView = findViewById(R.id.root_view);
@@ -321,7 +331,7 @@ public class ChargingScreenActivity extends Activity {
         } catch (Exception e) {
         }
 
-        final FrameLayout adContainer = (FrameLayout) findViewById(R.id.ad_container);
+        adContainer = (FrameLayout) findViewById(R.id.ad_container);
         txtBatteryLevelPercent = (TextView) findViewById(R.id.txt_battery_level);
         Typeface tf = Typeface.createFromAsset(getAssets(), "fonts/dincond_medium.otf");
         txtBatteryLevelPercent.setTypeface(tf);
@@ -349,53 +359,31 @@ public class ChargingScreenActivity extends Activity {
             findViewById(R.id.img_setting).setVisibility(View.INVISIBLE);
         }
 
-        acbExpressAdView = new AcbExpressAdView(HSApplication.getContext(), HSChargingScreenManager.getInstance().getNaitveAdsPlacementName());
-        adContainer.addView(acbExpressAdView);
-        acbExpressAdView.setExpressAdViewListener(new AcbExpressAdView.AcbExpressAdViewListener() {
-            @Override
-            public void onAdClicked(AcbExpressAdView acbExpressAdView) {
-                finish();
-            }
-        });
+        if (!RemoveAdsManager.getInstance().isRemoveAdsPurchased()) {
+            acbExpressAdView = new AcbExpressAdView(HSApplication.getContext(), HSChargingScreenManager.getInstance().getNaitveAdsPlacementName());
+            adContainer.addView(acbExpressAdView);
 
-        // 单次关闭广告或永久删除广告
-        final ImageView removeAds = (ImageView) findViewById(R.id.remove_ads);
-        if (RemoveAdsManager.getInstance().isRemoveAdsPurchased()) {
-            removeAds.setVisibility(View.GONE);
-        } else {
+            // 单次关闭广告或永久删除广告
+            removeAds = (ImageView) findViewById(R.id.remove_ads);
             removeAds.setOnClickListener(new OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    KCAlert.Builder builder = new KCAlert.Builder();
-                    builder.setTitle("Remove Ads")
-                            .setMessage("Remove all ads forever or just this time?")
-                            .setNegativeButton("Just once", new OnClickListener() {
-                                @Override
-                                public void onClick(View view) {
-                                    adContainer.removeView(acbExpressAdView);
-                                    removeAds.setVisibility(View.GONE);
-                                }
-                            })
-                            .setPositiveButton("Forever", new OnClickListener() {
-                                @Override
-                                public void onClick(View view) {
-                                    RemoveAdsManager.getInstance().purchaseRemoveAds();
+                    showRemoveAdsDialog();
+                }
+            });
 
-                                    HSGlobalNotificationCenter.addObserver(NOTIFICATION_REMOVEADS_PURCHASED, new INotificationObserver() {
-                                        @Override
-                                        public void onReceive(String s, HSBundle hsBundle) {
-                                            HSGlobalNotificationCenter.removeObserver(this);
-                                            adContainer.removeView(acbExpressAdView);
-                                            removeAds.setVisibility(View.GONE);
-                                        }
-                                    });
-                                }
-                            })
-                            .show();
+            acbExpressAdView.setExpressAdViewListener(new AcbExpressAdView.AcbExpressAdViewListener() {
+                @Override
+                public void onAdClicked(AcbExpressAdView acbExpressAdView) {
+                    finish();
+                }
+
+                @Override
+                public void onAdShown(AcbExpressAdView acbExpressAdView) {
+//                    removeAds.setVisibility(View.VISIBLE);
                 }
             });
         }
-        removeAds.setVisibility(View.GONE);
     }
 
     private void showChargingIndicatorText() {
@@ -411,6 +399,7 @@ public class ChargingScreenActivity extends Activity {
     @Override
     public void onStart() {
         super.onStart();
+        HSAnalytics.startFlurry();
 
         PowerManager powerManager = (PowerManager) getSystemService(Context.POWER_SERVICE);
         if (powerManager.isScreenOn()) {
@@ -440,6 +429,9 @@ public class ChargingScreenActivity extends Activity {
     @Override
     protected void onStop() {
         super.onStop();
+        if (!HSSessionMgr.isSessionStarted()) {
+            HSAnalytics.stopFlurry();
+        }
         HSLog.d("chargingtest onStop");
 
         bubbleView.stop();
@@ -489,11 +481,6 @@ public class ChargingScreenActivity extends Activity {
             closeDialog.dismiss();
         }
         super.onDestroy();
-        ChargingPrefsUtil.getInstance().setChargingForFirstSession();
-
-
-
-
     }
 
     private void updateTime(Calendar calendar) {
@@ -647,11 +634,6 @@ public class ChargingScreenActivity extends Activity {
             closeDialog.setContentView(R.layout.charging_module_alert_close_charge_screen);
 
             TextView closeAlertTitle = (TextView) closeDialog.findViewById(R.id.close_alert_title);
-            String moduleName = HSChargingScreenManager.getInstance().getModuleName();
-            if (moduleName == null || "".equals(moduleName)) {
-                moduleName = getResources().getString(R.string.charging_module_default_module_name);
-            }
-//            closeAlertTitle.setText(getResources().getString(R.string.charging_module_close_charging_boost) + moduleName + "?");
 
             closeAlertTitle.setText(R.string.disable_battery_master);
             View btnCancel = closeDialog.findViewById(R.id.alert_cancel);
@@ -678,9 +660,9 @@ public class ChargingScreenActivity extends Activity {
                     closeDialog = null;
 
                     ChargingAnalytics.getInstance().chargingDisableConfirmedOnce("activity");
+                    ChargingAnalytics.getInstance().recordChargingDisableOnce();
 
-
-                    HSChargingScreenManager.getInstance().stop(true);
+                    HSChargingScreenManager.getInstance().stop();
                     ChargingPrefsUtil.getInstance().setChargingEnableByUser(false);
 
                     finish();
@@ -721,13 +703,17 @@ public class ChargingScreenActivity extends Activity {
                 resources.getString(R.string.charging_module_charging_state_trickle_charging_indicator),
         };
 
-        imgChargingStateGreenDrawables.add(resources.getDrawable(R.drawable.ic_charging_speed));
-        imgChargingStateGreenDrawables.add(resources.getDrawable(R.drawable.ic_charging_continue));
-        imgChargingStateGreenDrawables.add(resources.getDrawable(R.drawable.ic_charging_trickle));
+        imgChargingStateGreenDrawables.add(getCompatDrawable(R.drawable.ic_charging_speed));
+        imgChargingStateGreenDrawables.add(getCompatDrawable(R.drawable.ic_charging_continue));
+        imgChargingStateGreenDrawables.add(getCompatDrawable(R.drawable.ic_charging_trickle));
 
-        imgChargingStateDarkDrawables.add(resources.getDrawable(R.drawable.ic_charging_speed_dark));
-        imgChargingStateDarkDrawables.add(resources.getDrawable(R.drawable.ic_charging_continue_dark));
-        imgChargingStateDarkDrawables.add(resources.getDrawable(R.drawable.ic_charging_trickle_dark));
+        imgChargingStateDarkDrawables.add(getCompatDrawable(R.drawable.ic_charging_speed_dark));
+        imgChargingStateDarkDrawables.add(getCompatDrawable(R.drawable.ic_charging_continue_dark));
+        imgChargingStateDarkDrawables.add(getCompatDrawable(R.drawable.ic_charging_trickle_dark));
+    }
+
+    private Drawable getCompatDrawable(int drawableRes){
+        return VectorDrawableCompat.create(getResources(),drawableRes,null);
     }
 
     private void cancelAllAnimators() {
@@ -923,4 +909,49 @@ public class ChargingScreenActivity extends Activity {
         }
     }
 
+    private void showRemoveAdsDialog() {
+        final Dialog removeAdsDialog = new Dialog(this, R.style.dialog);
+        removeAdsDialog.setContentView(R.layout.remove_ads_dialog);
+
+        View btnJustOnce = removeAdsDialog.findViewById(R.id.btn_just_once);
+        View btnForever = removeAdsDialog.findViewById(R.id.btn_forever);
+
+        btnJustOnce.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                removeAdsDialog.dismiss();
+
+                adContainer.removeView(acbExpressAdView);
+                removeAds.setVisibility(View.GONE);
+            }
+        });
+
+        btnForever.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                removeAdsDialog.dismiss();
+
+                RemoveAdsManager.getInstance().purchaseRemoveAds();
+
+                HSGlobalNotificationCenter.addObserver(NOTIFICATION_REMOVEADS_PURCHASED, new INotificationObserver() {
+                    @Override
+                    public void onReceive(String s, HSBundle hsBundle) {
+                        HSGlobalNotificationCenter.removeObserver(this);
+                        if (removeAds != null) {
+                            removeAds.setVisibility(View.GONE);
+                        }
+                        if (acbExpressAdView != null) {
+                            adContainer.removeView(acbExpressAdView);
+                            acbExpressAdView.destroy();
+                            acbExpressAdView = null;
+                        }
+                    }
+                });
+            }
+        });
+        btnForever.setBackgroundDrawable(RippleDrawableUtils.getCompatRippleDrawable(Color.WHITE, 0, 0, 0, DisplayUtils.dip2px(8)));
+        btnJustOnce.setBackgroundDrawable(RippleDrawableUtils.getCompatRippleDrawable(Color.WHITE, 0, 0, DisplayUtils.dip2px(8), 0));
+
+        removeAdsDialog.show();
+    }
 }

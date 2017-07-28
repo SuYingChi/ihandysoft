@@ -5,13 +5,14 @@ import android.content.res.TypedArray;
 import android.graphics.Rect;
 import android.graphics.Typeface;
 import android.graphics.drawable.Drawable;
+import android.support.v7.widget.AppCompatTextView;
 import android.util.AttributeSet;
-import android.widget.TextView;
 
 import com.ihs.keyboardutils.R;
+import com.ihs.keyboardutils.utils.FontUtils;
 
-public class TypefacedTextView extends TextView {
 
+public class TypefacedTextView extends AppCompatTextView {
     private Drawable mTopDrawable;
 
     public TypefacedTextView(Context context, AttributeSet attrs) {
@@ -27,7 +28,7 @@ public class TypefacedTextView extends TextView {
         int drawableHeight = styledAttrs.getDimensionPixelSize(R.styleable.TypefacedTextView_drawable_height, -1);
         styledAttrs.recycle();
 
-        Typeface typeface = FontUtils.getTypeface(FontUtils.Font.ofFontResId(fontType), fontStyle);
+        Typeface typeface = FontUtils.getTypeface(new FontUtils.Font(context.getResources().getString(fontType)), fontStyle);
         if (typeface != null) {
             setTypeface(typeface);
         }
@@ -46,10 +47,6 @@ public class TypefacedTextView extends TextView {
         }
 
         mTopDrawable = getCompoundDrawables()[1];
-    }
-
-    public TypefacedTextView(Context context, AttributeSet attrs, int defStyleAttr){
-        super(context, attrs, defStyleAttr);
     }
 
     @Override

@@ -25,7 +25,7 @@ public class ChargingBroadcastReceiver extends BroadcastReceiver {
         long lastTime = System.currentTimeMillis() - sp.getLong(LAST_RESTART_SERVICE, 0);
 
         if (intent.getAction().equals(ACTION_START_CHARGING_ACTIVITY)) {
-            ChargingManagerUtil.enableCharging(true,"popupNotification");
+            ChargingManagerUtil.enableCharging(true);
             ChargingAnalytics.getInstance().chargingEnableNotificationClicked();
         } else if (!isServiceRunning) {
             if (lastTime > CHECK_INTERVAL) {

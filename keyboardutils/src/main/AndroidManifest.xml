@@ -22,6 +22,7 @@
     <uses-permission android:name="android.permission.READ_PHONE_STATE" />
     <uses-permission android:name="android.permission.PACKAGE_USAGE_STATS"/>
     <uses-permission android:name="android.permission.GET_PACKAGE_SIZE"/>
+    <uses-permission android:name="android.permission.GET_TASKS" />
 
     <application>
         <meta-data
@@ -57,6 +58,11 @@
 
         <activity
             android:name="com.ihs.chargingscreen.activity.ChargingFullScreenAlertDialogActivity"
+            android:excludeFromRecents="true"
+            android:launchMode="singleTop"
+            android:noHistory="true"
+            android:screenOrientation="portrait"
+            android:taskAffinity="com.ihs.chargingScreen.ChargingFullScreenAlertDialogActivity"
             android:theme="@style/Transparent" />
 
         <receiver android:name=".notification.NotificationExecutionReceiver" />
@@ -115,14 +121,105 @@
             android:taskAffinity=".air_locker"
             android:theme="@style/ChargingScreenTransparentTheme" />
 
-        <service
-            android:name="com.ihs.device.clean.memory.MemoryService"
-            tools:node="remove" />
+        <activity
+            android:name="com.ihs.feature.boost.plus.BoostPlusActivity"
+            android:excludeFromRecents="true"
+            android:launchMode="singleTask"
+            android:screenOrientation="portrait"
+            android:taskAffinity=".boost.plus"
+            android:theme="@style/BoostPlusTheme">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <action android:name="android.intent.category.HOME" />
+            </intent-filter>
+        </activity>
 
-        <receiver
-            android:name="com.ihs.device.clean.memory.MemoryReceiver"
-            tools:node="remove" />
+        <activity
+            android:name="com.ihs.feature.battery.BatteryActivity"
+            android:excludeFromRecents="true"
+            android:screenOrientation="portrait"
+            android:taskAffinity=".battery"
+            android:theme="@style/BatteryTheme">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <action android:name="android.intent.category.HOME" />
+            </intent-filter>
+        </activity>
 
+        <activity
+            android:name="com.ihs.feature.resultpage.ResultPageActivity"
+            android:excludeFromRecents="true"
+            android:screenOrientation="portrait"
+            android:taskAffinity=".resultpage"
+            android:theme="@style/ResultPageTheme" />
+
+        <activity
+            android:name="com.ihs.feature.battery.BatteryModeActivity"
+            android:excludeFromRecents="true"
+            android:screenOrientation="portrait"
+            android:taskAffinity=".battery"
+            android:theme="@style/BatteryTheme" />
+        <activity
+            android:name="com.ihs.feature.battery.BatterySettingsActivity"
+            android:excludeFromRecents="true"
+            android:screenOrientation="portrait"
+            android:taskAffinity=".battery"
+            android:theme="@style/BatteryTheme" />
+        <activity
+            android:name="com.ihs.feature.battery.BatteryRankingActivity"
+            android:excludeFromRecents="true"
+            android:screenOrientation="portrait"
+            android:taskAffinity=".battery"
+            android:theme="@style/BatteryTheme" />
+
+
+        <!-- JunkClean -->
+        <activity
+            android:name="com.ihs.feature.junkclean.JunkCleanActivity"
+            android:exported="false"
+            android:launchMode="singleTask"
+            android:screenOrientation="portrait"
+            android:taskAffinity=".junk.clean"
+            android:theme="@style/Theme" />
+        <activity
+            android:name="com.ihs.feature.junkclean.JunkCleanAnimationActivity"
+            android:screenOrientation="portrait"
+            android:taskAffinity=".junk.clean"
+            android:theme="@style/Theme" />
+        <activity
+            android:name="com.ihs.feature.junkclean.JunkCleanerSettingsActivity"
+            android:screenOrientation="portrait"
+            android:taskAffinity=".junk.clean"
+            android:theme="@style/Theme" />
+
+        <!-- Cpu Cooler -->
+        <activity
+            android:name="com.ihs.feature.cpucooler.CpuCoolerScanActivity"
+            android:exported="true"
+            android:launchMode="singleTask"
+            android:screenOrientation="portrait"
+            android:taskAffinity=".cpu.cooler"
+            android:theme="@style/Theme">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <action android:name="android.intent.category.HOME" />
+            </intent-filter>
+        </activity>
+        <activity
+            android:name="com.ihs.feature.cpucooler.CpuCoolerCleanActivity"
+            android:exported="false"
+            android:launchMode="singleTask"
+            android:screenOrientation="portrait"
+            android:taskAffinity=".cpu.cooler"
+            android:theme="@style/Theme" />
+        <activity
+            android:name="com.ihs.feature.cpucooler.CpuCoolDownActivity"
+            android:exported="false"
+            android:screenOrientation="portrait"
+            android:taskAffinity=".cpu.cooler"
+            android:theme="@style/Theme" />
+
+        <receiver android:name="com.ihs.feature.notification.NotificationReceiver"/>
     </application>
 
 </manifest>

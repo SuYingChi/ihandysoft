@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="@dimen/clean_height_list_item"
+    android:background="@drawable/material_compat_bg_white">
+
+    <android.support.v7.widget.AppCompatImageView
+        android:id="@+id/junk_icon"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:layout_centerVertical="true"
+        android:layout_marginLeft="23dp"
+        android:layout_marginStart="23dp"
+        app:srcCompat="@drawable/clean_fold_junk_svg" />
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_centerVertical="true"
+        android:layout_marginLeft="72dp"
+        android:layout_marginStart="72dp"
+        android:layout_marginRight="16dp"
+        android:layout_marginEnd="16dp"
+        android:layout_toLeftOf="@+id/junk_size"
+        android:layout_toStartOf="@+id/junk_size"
+        android:orientation="vertical">
+
+        <com.ihs.feature.common.TypefacedTextView
+            android:id="@+id/junk_desc_view"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:ellipsize="end"
+            android:text=""
+            android:textColor="@color/black_primary"
+            android:textSize="16sp"
+            app:typeface="@string/roboto_regular" />
+
+        <com.ihs.feature.common.TypefacedTextView
+            android:id="@+id/junk_sub_desc_view"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:ellipsize="end"
+            android:text=""
+            android:textColor="@color/black_secondary"
+            android:textSize="12sp"
+            app:typeface="@string/roboto_regular"
+            android:visibility="gone" />
+    </LinearLayout>
+
+    <com.ihs.feature.common.TypefacedTextView
+        android:id="@+id/junk_size"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerVertical="true"
+        android:layout_marginRight="8dp"
+        android:layout_marginEnd="8dp"
+        android:layout_toLeftOf="@+id/junk_check"
+        android:layout_toStartOf="@+id/junk_check"
+        android:text=""
+        android:textColor="@color/black_secondary"
+        android:textSize="16sp"
+        app:typeface="@string/roboto_regular" />
+
+    <com.ihs.feature.ui.ThreeStatesCheckBox
+        android:id="@+id/junk_check"
+        android:layout_width="@dimen/clean_checkbox_width"
+        android:layout_height="@dimen/clean_checkbox_width"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true"
+        android:layout_centerVertical="true"
+        android:layout_marginRight="16dp"
+        android:layout_marginEnd="16dp"
+        android:checked="true" />
+
+    <ImageView
+        android:id="@+id/triangle_expand"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_marginLeft="32dp"
+        android:layout_marginStart="32dp"
+        android:src="@drawable/clean_triangle_expand" />
+</RelativeLayout>

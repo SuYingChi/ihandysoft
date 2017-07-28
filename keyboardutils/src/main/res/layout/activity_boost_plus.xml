@@ -1,0 +1,254 @@
+<?xml version="1.0" encoding="utf-8"?>
+ <com.ihs.feature.common.CustomRootView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:clipChildren="false"
+    android:fitsSystemWindows="false">
+
+    <!-- Do not change container_view id -->
+    <FrameLayout
+        android:id="@+id/container_view"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:id="@+id/linear_fixed_container"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <FrameLayout
+                android:id="@+id/boost_plus_banner_background_container"
+                android:layout_width="match_parent"
+                android:layout_height="206dp"
+                android:background="@color/boost_plus_blue">
+
+                <android.support.v7.widget.AppCompatImageView
+                    android:layout_width="120dp"
+                    android:layout_height="120dp"
+                    android:layout_gravity="end|bottom"
+                    android:layout_marginBottom="-15dp"
+                    android:layout_marginEnd="-18dp"
+                    android:layout_marginRight="-18dp"
+                    app:srcCompat="@drawable/boost_plus_rocket_vector" />
+
+                <android.support.v7.widget.Toolbar xmlns:android="http://schemas.android.com/apk/res/android"
+                    xmlns:app="http://schemas.android.com/apk/res-auto"
+                    xmlns:tools="http://schemas.android.com/tools"
+                    android:id="@+id/action_bar"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/abc_action_bar_default_height_material"
+                    android:layout_gravity="top"
+                    android:layout_marginTop="@dimen/status_bar_default_height"
+                    android:background="@android:color/transparent"
+                    app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
+                    app:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
+                    tools:ignore="PrivateResource" />
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="bottom"
+                    android:layout_marginBottom="39dp"
+                    android:layout_marginLeft="24dp"
+                    android:layout_marginStart="24dp"
+                    android:orientation="horizontal">
+
+                    <com.ihs.feature.common.TypefacedTextView
+                        android:id="@+id/total_size_text"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:lines="1"
+                        android:maxLength="8"
+                        android:textColor="@android:color/white"
+                        android:textSize="52sp"
+                        app:typeface="@string/roboto_regular"
+                        tools:text="154.12" />
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="6dp"
+                        android:layout_marginStart="6dp"
+                        android:layout_gravity="center_vertical"
+                        android:orientation="vertical">
+
+                        <com.ihs.feature.common.TypefacedTextView
+                            android:id="@+id/total_size_unit_text"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:lines="1"
+                            android:maxLength="5"
+                            android:text="@string/megabyte_abbr"
+                            android:textColor="@android:color/white"
+                            android:textSize="24sp"
+                            app:typeface="@string/roboto_regular" />
+
+                        <com.ihs.feature.common.TypefacedTextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="-1dp"
+                            android:lines="1"
+                            android:paddingBottom="3dp"
+                            android:text="@string/boost_plus_freeable"
+                            android:textColor="@android:color/white"
+                            android:textSize="16sp"
+                            app:typeface="@string/roboto_regular" />
+                    </LinearLayout>
+                </LinearLayout>
+
+                <com.ihs.feature.common.TypefacedTextView
+                    android:id="@+id/selected_size_text"
+                    android:layout_width="match_parent"
+                    android:layout_height="30dp"
+                    android:layout_gravity="start|bottom"
+                    android:background="#22000000"
+                    android:gravity="start|center_vertical"
+                    android:lines="1"
+                    android:maxLength="35"
+                    android:paddingLeft="@dimen/activity_horizontal_margin"
+                    android:paddingRight="@dimen/activity_horizontal_margin"
+                    android:text="@string/boost_plus_selected_size_text"
+                    android:textAlignment="textStart"
+                    android:textColor="@android:color/white"
+                    android:textSize="14sp"
+                    app:typeface="@string/roboto_regular" />
+            </FrameLayout>
+
+            <com.ihs.feature.ui.ProgressFrameLayout
+                android:id="@+id/scan_progress_banner"
+                android:layout_width="match_parent"
+                android:layout_height="39dp"
+                android:background="@android:color/white">
+
+                <com.ihs.feature.ui.ProgressWheel
+                    android:id="@+id/progressWheel"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    app:barColor="#ffd5d5d5"
+                    app:barWidth="3dp"
+                    app:circleRadius="26dp" />
+
+                <RelativeLayout
+                    android:id="@+id/app_list_banner"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:visibility="invisible"
+                    tools:visibility="visible">
+
+                    <com.ihs.feature.common.TypefacedTextView
+                        android:id="@+id/running_apps_title"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerVertical="true"
+                        android:layout_marginLeft="@dimen/activity_horizontal_margin"
+                        android:layout_marginStart="@dimen/activity_horizontal_margin"
+                        android:lines="1"
+                        android:maxLength="35"
+                        android:text="@string/boost_plus_scanned_list_running_apps"
+                        android:textColor="@color/material_text_black_secondary"
+                        android:textSize="14sp" />
+
+                    <com.ihs.feature.common.TypefacedTextView
+                        android:id="@+id/running_apps_count"
+                        android:layout_width="19dp"
+                        android:layout_height="19dp"
+                        android:layout_centerVertical="true"
+                        android:layout_marginLeft="8dp"
+                        android:layout_marginStart="8dp"
+                        android:layout_toEndOf="@id/running_apps_title"
+                        android:layout_toRightOf="@id/running_apps_title"
+                        android:background="@drawable/numeric_bg_circle"
+                        android:gravity="center"
+                        android:textAlignment="center"
+                        android:textColor="@color/material_text_black_secondary"
+                        android:textSize="12sp"
+                        tools:text="6" />
+
+                    <com.ihs.feature.common.TypefacedTextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerVertical="true"
+                        android:layout_marginEnd="6dp"
+                        android:layout_marginLeft="@dimen/activity_horizontal_margin"
+                        android:layout_marginRight="6dp"
+                        android:layout_marginStart="@dimen/activity_horizontal_margin"
+                        android:layout_toLeftOf="@+id/running_apps_select_all_check_box"
+                        android:layout_toStartOf="@+id/running_apps_select_all_check_box"
+                        android:lines="1"
+                        android:text="@string/boost_plus_scanned_list_select_all"
+                        android:textColor="@color/material_text_black_secondary"
+                        android:textSize="14sp"
+                        tools:ignore="RelativeOverlap" />
+
+                    <com.ihs.feature.boost.plus.LauncherCheckBox
+                        android:id="@+id/running_apps_select_all_check_box"
+                        android:layout_width="39dp"
+                        android:layout_height="39dp"
+                        android:layout_alignParentEnd="true"
+                        android:layout_alignParentRight="true"
+                        android:layout_centerVertical="true"
+                        android:layout_marginEnd="8dp"
+                        android:layout_marginRight="8dp" />
+                </RelativeLayout>
+            </com.ihs.feature.ui.ProgressFrameLayout>
+
+            <View
+                android:id="@+id/selection_banner_divider"
+                style="@style/ThinHorizontalDivider"
+                android:layout_height="0.7dp" />
+
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/running_apps_view"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@android:color/white"
+                android:clipToPadding="false"
+                android:paddingBottom="72dp"
+                android:theme="@style/Theme.CustomOverScroll"/>
+
+            <ViewStub
+                android:id="@+id/empty_view_stub"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:inflatedId="@+id/empty_view"
+                android:layout="@layout/boost_plus_empty_view" />
+        </LinearLayout>
+
+        <Button
+            android:id="@+id/boost_action_btn"
+            android:layout_width="match_parent"
+            android:layout_height="48dp"
+            android:layout_gravity="bottom|center_horizontal"
+            android:layout_marginBottom="12dp"
+            android:layout_marginLeft="16dp"
+            android:layout_marginRight="16dp"
+            android:background="@drawable/selector_blue_btn"
+            android:gravity="center"
+            android:textAllCaps="true"
+            android:textColor="@color/selector_theme_btn_text_color"
+            android:textSize="17sp"
+            android:translationY="@dimen/boost_plus_action_btn_anim_translation"
+            tools:text="Boost (154.12 MB)" />
+
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="12dp"
+            android:layout_gravity="bottom"
+            android:src="@drawable/horizontal_edge_shader" />
+
+        <LinearLayout
+            android:id="@+id/promotion_container_view"
+            android:layout_width="match_parent"
+            android:layout_height="30dp"
+            android:layout_gravity="bottom"
+            android:orientation="horizontal"
+            android:visibility="gone"
+            android:background="@android:color/holo_red_dark" />
+    </FrameLayout>
+
+    <include layout="@layout/navigation_bar_bg" />
+</com.ihs.feature.common.CustomRootView>

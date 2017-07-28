@@ -10,11 +10,13 @@ import android.view.Window;
 import android.view.WindowManager;
 
 import com.ihs.app.framework.HSApplication;
+import com.ihs.charging.HSChargingManager;
 import com.ihs.chargingscreen.utils.ChargingManagerUtil;
 import com.ihs.commons.config.HSConfig;
 import com.ihs.commons.notificationcenter.HSGlobalNotificationCenter;
 import com.ihs.keyboardutils.R;
 import com.ihs.keyboardutils.alerts.KCAlert;
+import com.ihs.keyboardutils.utils.AlertShowingUtils;
 import com.ihs.keyboardutils.utils.KCAnalyticUtil;
 
 import java.util.HashMap;
@@ -34,6 +36,9 @@ public class ChargingFullScreenAlertDialogActivity extends Activity {
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         requestWindowFeature(Window.FEATURE_NO_TITLE);
         this.getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
+        Window window = getWindow();
+        window.addFlags(WindowManager.LayoutParams.FLAG_SHOW_WHEN_LOCKED);//锁屏状态下也能出现
+
         super.onCreate(savedInstanceState);
         Intent intent = getIntent();
         if (intent != null) {
@@ -47,6 +52,12 @@ public class ChargingFullScreenAlertDialogActivity extends Activity {
                     break;
             }
         }
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        AlertShowingUtils.startShowingAlert();
     }
 
     private void initLockerDialog() {
@@ -82,7 +93,7 @@ public class ChargingFullScreenAlertDialogActivity extends Activity {
                 .setPositiveButton(chargingMap.get("Button"), new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
-                        ChargingManagerUtil.enableCharging(false,"alert");
+                        ChargingManagerUtil.enableCharging(HSChargingManager.getInstance().getChargingState() != HSChargingManager.HSChargingState.STATE_DISCHARGING);
                         KCAnalyticUtil.logEvent("alert_charging_click");
                     }
                 })
@@ -124,5 +135,11 @@ public class ChargingFullScreenAlertDialogActivity extends Activity {
         intent.putExtra("type","charging");
         intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         HSApplication.getContext().startActivity(intent);
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+        AlertShowingUtils.stopShowingAlert();
     }
 }

@@ -78,8 +78,10 @@ import android.widget.TextView;
 import com.ihs.app.framework.HSApplication;
 import com.ihs.commons.config.HSConfig;
 import com.ihs.commons.utils.HSLog;
+import com.ihs.commons.utils.HSPreferenceHelper;
 import com.ihs.keyboardutils.R;
 import com.ihs.keyboardutils.utils.CommonUtils;
+import com.ihs.keyboardutils.utils.KCFeatureRestrictionConfig;
 import com.nostra13.universalimageloader.core.ImageLoader;
 
 import java.io.BufferedReader;
@@ -1472,5 +1474,80 @@ public final class Utils {
             icon = HSApplication.getContext().getResources().getDrawable(R.drawable.ic_lucky);
         }
         return icon;
+    }
+    public static boolean isNewUserInDNDStatus() {
+        return KCFeatureRestrictionConfig.isFeatureRestricted("BoostNotification");
+    }
+
+    public static long getAppInstallTimeMillis() {
+        if (sInstallTime <= 0) {
+            sInstallTime = HSPreferenceHelper.getDefault().getLong(LauncherConstants.PREF_KEY_INSTALLED_TIME, 0L);
+        }
+        return sInstallTime;
+    }
+
+
+    public static boolean isPackageEverInstalled(String pkgName) {
+        if (CommonUtils.isPackageInstalled(pkgName)) {
+            return true;
+        }
+        List<String> uninstalledApps = PreferenceHelper.get(LauncherFiles.DESKTOP_PREFS).getStringList(PREF_KEY_UNINSTALLED_APPS);
+        return uninstalledApps.contains(pkgName);
+    }
+
+
+    public static boolean setMobileDataStatus(Context context, boolean enabled) {
+        if (CompatUtils.IS_HUAWEI_DEVICE && isWifiEnabled()) {
+            return false;
+        }
+        ConnectivityManager connectivityManager;
+        Class connectivityManagerClz;
+        try {
+            connectivityManager = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
+            connectivityManagerClz = connectivityManager.getClass();
+            @SuppressWarnings("unchecked")
+            Method method = connectivityManagerClz.getMethod("setMobileDataEnabled", boolean.class);
+            // Asynchronous invocation
+            method.invoke(connectivityManager, enabled);
+        } catch (IllegalArgumentException e) {
+            e.printStackTrace();
+            return false;
+        } catch (IllegalAccessException e) {
+            e.printStackTrace();
+            return false;
+        } catch (NoSuchMethodException e) {
+            e.printStackTrace();
+            return false;
+        } catch (InvocationTargetException e) {
+            e.printStackTrace();
+            return false;
+        }
+        return true;
+    }
+
+    public static boolean getMobileDataStatus(Context context) {
+        ConnectivityManager connectivityManager = (ConnectivityManager) context.getApplicationContext().getSystemService(Context.CONNECTIVITY_SERVICE);
+        String methodName = "getMobileDataEnabled";
+        Class cmClass = connectivityManager.getClass();
+        Boolean isOpen;
+
+        try {
+            @SuppressWarnings("unchecked")
+            Method method = cmClass.getMethod(methodName);
+            isOpen = (Boolean) method.invoke(connectivityManager);
+        } catch (IllegalArgumentException e) {
+            e.printStackTrace();
+            return false;
+        } catch (IllegalAccessException e) {
+            e.printStackTrace();
+            return false;
+        } catch (NoSuchMethodException e) {
+            e.printStackTrace();
+            return false;
+        } catch (InvocationTargetException e) {
+            e.printStackTrace();
+            return false;
+        }
+        return isOpen;
     }
 }

@@ -68,7 +68,7 @@ public class PermissionTip extends RelativeLayout {
         rootView.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
-                FloatWindowManager.getInstance().removePermissionTip();
+                PermissionFloatWindow.getInstance().removePermissionTip();
             }
         });
 
@@ -102,7 +102,7 @@ public class PermissionTip extends RelativeLayout {
             case KeyEvent.KEYCODE_BACK:
             case KeyEvent.KEYCODE_MENU:
                 // 处理自己的逻辑break;
-                FloatWindowManager.getInstance().removePermissionTip();
+                PermissionFloatWindow.getInstance().removePermissionTip();
             default:
                 break;
         }
@@ -156,7 +156,7 @@ public class PermissionTip extends RelativeLayout {
         permissionAsyncTimer = PermissionAsyncTimer.runAsync(new Runnable() {
             @Override
             public void run() {
-                FloatWindowManager.getInstance().removePermissionTip();
+                PermissionFloatWindow.getInstance().removePermissionTip();
             }
         }, (int) PERMISSION_TIP_DISAPPEAR_TIME);
     }

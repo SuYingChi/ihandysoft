@@ -5,6 +5,7 @@ import android.animation.AnimatorListenerAdapter;
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.graphics.Typeface;
+import android.os.Build;
 import android.support.annotation.ColorRes;
 import android.support.annotation.StringRes;
 import android.support.v4.content.ContextCompat;
@@ -31,9 +32,8 @@ import com.acb.adadapter.AcbNativeAd;
 import com.acb.adadapter.ContainerView.AcbNativeAdContainerView;
 import com.acb.adadapter.ContainerView.AcbNativeAdIconView;
 import com.acb.adadapter.ContainerView.AcbNativeAdPrimaryView;
-import com.acb.nativeads.AcbNativeAdLoader;
+import com.artw.lockscreen.LockerSettings;
 import com.ihs.app.analytics.HSAnalytics;
-import com.ihs.app.framework.HSApplication;
 import com.ihs.chargingscreen.utils.ChargingManagerUtil;
 import com.ihs.commons.notificationcenter.HSGlobalNotificationCenter;
 import com.ihs.commons.utils.HSBundle;
@@ -54,20 +54,19 @@ import com.ihs.keyboardutils.R;
 import com.ihs.keyboardutils.utils.CommonUtils;
 import com.ihs.keyboardutils.utils.LauncherAnimationUtils;
 
-import java.util.List;
 
 /**
  * After boost, this tip view is shown as floating window.
  */
 @SuppressLint("ViewConstructor")
-public class BoostTip extends FrameLayout implements View.OnClickListener, FloatWindowListener,
-        AcbNativeAd.AcbNativeClickListener, AcbNativeAd.AcbAdListener {
+public class BoostTip extends FrameLayout implements View.OnClickListener, FloatWindowListener {
 
     public static final String TAG = BoostTip.class.getSimpleName();
 
     public static final String NOTIFICATION_LAUNCH_BOOST_PLUS = "launch_boost_plus";
     public static final String NOTIFICATION_BOOST_END = "notification_boost_end";
     public static final String BUNDLE_KEY_SRC_BUTTON = "src_button";
+    public static final String PREF_KEY_BOOST_TIP_SHOWN = "boost_tip_shown2";
 
     private static final String PREF_KEY_BOOST_TIP_SHOW_COUNT = "boost_tip_show_count";
     public static final String PREF_KEY_BOOST_PLUS_SHOW_TIME_OPTIMAL = "boost_plus_show_time_optimal";
@@ -116,7 +115,7 @@ public class BoostTip extends FrameLayout implements View.OnClickListener, Float
     private RelativeLayout mAdContainerLayout;
     private RelativeLayout mAdWindowLayout;
 
-    public BoostTip(Context context, BoostType type, int boostedPercentage, BoostSource source) {
+    public BoostTip(Context context, BoostType type, int boostedPercentage, BoostSource source, AcbNativeAd ad) {
         super(context);
         mContext = context;
         LayoutInflater.from(context).inflate(R.layout.boost_tip, this);
@@ -137,6 +136,7 @@ public class BoostTip extends FrameLayout implements View.OnClickListener, Float
         mType = type;
         mBoostedPercentage = boostedPercentage;
         mBoostSource = source;
+        mAd = ad;
         bindViews();
 
         mContentWrapper.setOnClickListener(this);
@@ -204,10 +204,11 @@ public class BoostTip extends FrameLayout implements View.OnClickListener, Float
     @Override
     public void onAddedToWindow(SafeWindowManager windowManager) {
         getViewTreeObserver().addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
-            @SuppressLint("NewApi")
             @Override
             public void onGlobalLayout() {
-                getViewTreeObserver().removeOnGlobalLayoutListener(this);
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
+                    getViewTreeObserver().removeOnGlobalLayoutListener(this);
+                }
 
                 // Removed from default preferences file since v1.3.4 (44) and moved to separate file
                 HSPreferenceHelper.getDefault().remove(PREF_KEY_BOOST_TIP_SHOW_COUNT);
@@ -226,12 +227,11 @@ public class BoostTip extends FrameLayout implements View.OnClickListener, Float
     }
 
     @Override
-    public void onClick(final View v) {
+    public void onClick(View v) {
         if (v == mContentWrapper) {
 
         } else if (v == mDismissButton) {
             HSLog.d("Boost.Alert", "boost toast closed");
-            HSAnalytics.logEvent("Boost_Toast_Closed");
             dismiss(true);
             mBackground.setClickable(false);
         } else if (v == mBackground) {
@@ -328,8 +328,6 @@ public class BoostTip extends FrameLayout implements View.OnClickListener, Float
     }
 
     private boolean getAndShowAd() {
-        List<AcbNativeAd> ads = AcbNativeAdLoader.fetch(HSApplication.getContext(), HSApplication.getContext().getString(R.string.ad_placement_boost_tip), 1);
-        mAd = ads.isEmpty() ? null : ads.get(0);
         if (mAd != null) {
             mContentWrapperPopup.setBackgroundResource(R.drawable.dialog_boost_with_ad_above_bg);
             setupAdsView(mAd);
@@ -358,7 +356,7 @@ public class BoostTip extends FrameLayout implements View.OnClickListener, Float
                     public void onAnimationEnd(Animator animator) {
                         removeCallbacks(mDismissAction);
                         LauncherFloatWindowManager.getInstance().removeBoostTip();
-//                        showFiveStarRateIfNeeded();
+                        showFiveStarRateIfNeeded();
                         releaseAds();
                         HSGlobalNotificationCenter.sendNotification(NOTIFICATION_BOOST_END);
                     }
@@ -376,6 +374,10 @@ public class BoostTip extends FrameLayout implements View.OnClickListener, Float
             mAd.release();
             mAd = null;
         }
+    }
+
+    private void showFiveStarRateIfNeeded() {
+//        LauncherTipManager.getInstance().showTip(mContext, LauncherTipManager.TipType.FIVE_STAR_RATE, FiveStarRateTip.From.BOOST);
     }
 
     private void showSlideDownView() {
@@ -404,7 +406,7 @@ public class BoostTip extends FrameLayout implements View.OnClickListener, Float
             nativeAdContainerView.setAdBodyView((TextView) containerView.findViewById(R.id.boost_ad_description));
             nativeAdContainerView.setAdActionView(containerView.findViewById(R.id.boost_ad_action));
 
-            final ImageView flash = (ImageView) containerView.findViewById(R.id.boost_ad_action_flash);
+            ImageView flash = (ImageView) containerView.findViewById(R.id.boost_ad_action_flash);
             Runnable flashAction = new Runnable() {
                 @Override
                 public void run() {
@@ -436,7 +438,18 @@ public class BoostTip extends FrameLayout implements View.OnClickListener, Float
         TextView button = (TextView) boostPlusView.findViewById(R.id.boost_tip_boost_plus_btn);
 
         boolean optimal = !isEffectiveBoost();
-        if (optimal) {
+        if (BoostTipUtils.getLowBattery() && !BoostTipUtils.getAlreadyShownBatteryToday()) {
+            // Battery
+            mBoostPlusViewType = BoostPlusViewType.BATTERY;
+            icon.setImageDrawable(VectorCompat.createVectorDrawable(getContext(), R.drawable.boost_plus_tip_battery));
+            title.setText(getContext().getText(R.string.boost_plus_tip_battery_title));
+            description.setText(getContext().getText(R.string.boost_plus_tip_battery_desc));
+            button.setText(getContext().getText(R.string.boost_plus_tip_battery_btn));
+            button.setBackgroundResource(R.drawable.boost_tip_boost_plus_green_bg);
+
+            mPrefs.putLong(PREF_KEY_BOOST_PLUS_SHOW_TIME_BATTERY, System.currentTimeMillis());
+            HSAnalytics.logEvent("BoostPlus_Show", "Type", "Toast Battery");
+        } else if (optimal) {
             // Optimal
             mBoostPlusViewType = BoostPlusViewType.OPTIMAL;
             if (BoostTipUtils.getAlreadyShownOptimalToday()) {
@@ -451,17 +464,6 @@ public class BoostTip extends FrameLayout implements View.OnClickListener, Float
 
             mPrefs.putLong(PREF_KEY_BOOST_PLUS_SHOW_TIME_OPTIMAL, System.currentTimeMillis());
             HSAnalytics.logEvent("BoostPlus_Show", "Type", "Toast Optimal");
-        } else if (BoostTipUtils.getLowBattery() && !BoostTipUtils.getAlreadyShownBatteryToday()) {
-            // Battery
-            mBoostPlusViewType = BoostPlusViewType.BATTERY;
-            icon.setImageDrawable(VectorCompat.createVectorDrawable(getContext(), R.drawable.boost_plus_tip_battery));
-            title.setText(getContext().getText(R.string.boost_plus_tip_battery_title));
-            description.setText(getContext().getText(R.string.boost_plus_tip_battery_desc));
-            button.setText(getContext().getText(R.string.boost_plus_tip_battery_btn));
-            button.setBackgroundResource(R.drawable.boost_tip_boost_plus_green_bg);
-
-            mPrefs.putLong(PREF_KEY_BOOST_PLUS_SHOW_TIME_BATTERY, System.currentTimeMillis());
-            HSAnalytics.logEvent("BoostPlus_Show", "Type", "Toast Battery");
         } else {
             // Memory
             mBoostPlusViewType = BoostPlusViewType.MEMORY;
@@ -495,28 +497,16 @@ public class BoostTip extends FrameLayout implements View.OnClickListener, Float
             title.setText(getContext().getText(R.string.charging_screen_guide_temperature_title));
             HSAnalytics.logEvent("ChargingScreen_Toast_Shown", "type", "CPU");
         }
-        button.setOnClickListener(new OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                dismiss(false);
-                ChargingManagerUtil.enableCharging(false,"BoostTip");
-                HSAnalytics.logEvent("ChargingScreen_Toast_TurnOn_Clicked", "type",
-                        mType == BoostType.BATTERY ? "Battery life" : "CPU");
-                Toast.makeText(getContext(), R.string.charging_screen_guide_turn_on, Toast.LENGTH_SHORT).show();
+        button.setOnClickListener(v -> {
+            dismiss(false);
+            ChargingManagerUtil.enableCharging(false);
+            if (!LockerSettings.isLockerEnabledBefore()) {
+                LockerSettings.setLockerEnabled(true);
             }
+            HSAnalytics.logEvent("ChargingScreen_Toast_TurnOn_Clicked", "type",
+                    mType == BoostType.BATTERY ? "Battery life" : "CPU");
+            Toast.makeText(getContext(), R.string.charging_screen_guide_turn_on, Toast.LENGTH_SHORT).show();
         });
         mAdContainerLayout.addView(boostPlusView);
-    }
-
-    @Override
-    public void onAdExpired(AcbAd acbAd) {
-    }
-
-    @Override
-    public void onAdWillExpired(AcbAd acbAd) {
-    }
-
-    @Override
-    public void onAdClick(AcbAd acbAd) {
     }
 }

@@ -12,13 +12,13 @@ import android.view.animation.Interpolator;
 import android.widget.ImageView;
 
 import com.artw.lockscreen.LockerActivity;
-import com.ihs.keyboardutils.R;
-import com.artw.lockscreen.common.CommonUtils;
 import com.artw.lockscreen.common.NavUtils;
-import com.artw.lockscreen.common.Thunk;
 import com.ihs.app.analytics.HSAnalytics;
 import com.ihs.app.framework.HSApplication;
 import com.ihs.commons.notificationcenter.HSGlobalNotificationCenter;
+import com.ihs.feature.common.Thunk;
+import com.ihs.keyboardutils.R;
+import com.ihs.keyboardutils.utils.CommonUtils;
 import com.ihs.keyboardutils.utils.PublisherUtils;
 
 import static com.ihs.app.framework.HSApplication.getContext;

@@ -1,0 +1,208 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/cleaning_content_rl"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:gravity="center_horizontal"
+    android:orientation="vertical"
+    android:clipChildren="false"
+    android:paddingBottom="10dp"
+    android:visibility="gone">
+
+    <View
+        android:id="@+id/battery_cleaning_toolbar_space_v"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/abc_action_bar_default_height_material"
+        android:visibility="gone"
+        tools:ignore="PrivateResource" />
+
+    <RelativeLayout
+        android:id="@+id/scanning_rl"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@+id/battery_cleaning_toolbar_space_v"
+        android:layout_above="@+id/cleaning_ll"
+        android:clipChildren="false"
+        android:layout_marginBottom="30dp">
+
+        <android.support.v7.widget.AppCompatImageView
+            android:id="@+id/cleaning_ball_iv"
+            android:layout_width="@dimen/battery_scan_circle_bg"
+            android:layout_height="@dimen/battery_scan_circle_bg"
+            android:layout_centerInParent="true"
+            android:src="@drawable/battery_white_circle_bg" />
+
+        <LinearLayout
+            android:id="@+id/cleaning_percent_ll"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:gravity="bottom"
+            android:orientation="horizontal"
+            android:visibility="visible">
+
+            <TextView
+                android:id="@+id/cleaning_percent_tv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="sans-serif-condensed"
+                android:gravity="center"
+                android:text=""
+                android:textSize="@dimen/battery_cleaning_number" />
+
+            <TextView
+                android:id="@+id/cleaning_percent_symbol_tv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="sans-serif-condensed"
+                android:gravity="center"
+                android:text=""
+                android:textSize="26sp" />
+        </LinearLayout>
+
+        <android.support.v7.widget.AppCompatImageView
+            android:id="@+id/cleaning_ring_iv"
+            android:layout_width="@dimen/battery_scan_circle_animate_bg"
+            android:layout_height="@dimen/battery_scan_circle_animate_bg"
+            android:layout_centerInParent="true"
+            android:src="@drawable/battery_optimize_circle"
+            android:visibility="invisible"/>
+
+        <android.support.v7.widget.AppCompatImageView
+            android:id="@+id/scan_right_symbol_iv"
+            android:layout_width="wrap_content"
+            android:layout_height="@dimen/battery_scan_circle_animate_bg"
+            android:layout_centerInParent="true"
+            android:src="@drawable/battery_optimize_check_mark"
+            android:visibility="gone" />
+    </RelativeLayout>
+
+    <!-- cleaning_ll use invisible because scanning_rl above it for position -->
+    <LinearLayout
+        android:id="@+id/cleaning_ll"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:gravity="center"
+        android:orientation="vertical"
+        android:visibility="visible">
+
+        <TextView
+            android:id="@+id/cleaning_tv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="3dp"
+            android:fontFamily="sans-serif-medium"
+            android:text="@string/battery_cleaning"
+            android:textColor="@android:color/white"
+            android:textSize="@dimen/battery_cleaning" />
+
+        <RelativeLayout
+            android:id="@+id/app_icon_animation_rl"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:visibility="invisible">
+
+            <com.ihs.feature.battery.ScanIconAnimationView
+                android:id="@+id/app_icon_animation_v"
+                android:layout_width="match_parent"
+                android:layout_height="75dp" />
+
+            <android.support.v7.widget.AppCompatImageView
+                android:id="@+id/app_icon_light_iv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="-60dp"
+                android:layout_marginStart="-60dp"
+                android:alpha="0.56"/>
+        </RelativeLayout>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/clean_result_ll"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/scanning_rl"
+        android:layout_alignParentBottom="true"
+        android:gravity="center_horizontal|bottom"
+        android:orientation="vertical"
+        android:visibility="gone">
+
+        <TextView
+            android:id="@+id/clean_result_description_line_o_tv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="sans-serif-medium"
+            android:gravity="center"
+            android:maxLines="1"
+            android:text="@string/battery_clean_finished_line_o"
+            android:textColor="@android:color/white"
+            android:textSize="@dimen/battery_clean_finished_content_size" />
+
+        <TextView
+            android:id="@+id/clean_result_description_line_i_tv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="sans-serif-medium"
+            android:gravity="center"
+            android:maxLines="1"
+            android:text="@string/battery_clean_finished_line_i"
+            android:textColor="@android:color/white"
+            android:textSize="@dimen/battery_clean_finished_content_size" />
+
+        <LinearLayout
+            android:id="@+id/save_time_ll"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
+            android:gravity="bottom"
+            android:orientation="horizontal"
+            android:visibility="visible">
+
+            <TextView
+                android:id="@+id/save_hour_time_tv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="sans-serif-medium"
+                android:text="@string/battery_time_default"
+                android:textColor="@android:color/white"
+                android:textSize="@dimen/battery_clean_extend_time" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="sans-serif-medium"
+                android:paddingLeft="@dimen/battery_save_time_padding"
+                android:paddingStart="@dimen/battery_save_time_padding"
+                android:paddingRight="@dimen/battery_save_time_padding"
+                android:paddingEnd="@dimen/battery_save_time_padding"
+                android:text="@string/battery_time_hour"
+                android:textColor="@android:color/white"
+                android:textSize="@dimen/battery_clean_extend_time_unit" />
+
+            <TextView
+                android:id="@+id/save_minute_time_tv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="sans-serif-medium"
+                android:text="@string/battery_time_default"
+                android:textColor="@android:color/white"
+                android:textSize="@dimen/battery_clean_extend_time" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="sans-serif-medium"
+                android:paddingLeft="@dimen/battery_save_time_padding"
+                android:paddingStart="@dimen/battery_save_time_padding"
+                android:paddingRight="@dimen/battery_save_time_padding"
+                android:paddingEnd="@dimen/battery_save_time_padding"
+                android:text="@string/battery_time_minute"
+                android:textColor="@android:color/white"
+                android:textSize="@dimen/battery_clean_extend_time_unit" />
+        </LinearLayout>
+    </LinearLayout>
+</RelativeLayout>

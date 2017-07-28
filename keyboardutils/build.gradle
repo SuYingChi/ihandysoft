@@ -1,4 +1,5 @@
 apply plugin: 'com.android.library'
+apply plugin: 'me.tatarka.retrolambda'
 
 android {
     compileSdkVersion 25
@@ -10,7 +11,7 @@ android {
         versionCode 1
         versionName "1.0"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
-
+        vectorDrawables.useSupportLibrary = true
     }
     buildTypes {
         release {
@@ -21,16 +22,27 @@ android {
     lintOptions {
         abortOnError false
     }
+
+
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
 }
-final LIB_DEVICE_VERSION = '.gm:4.1.+'
+final LIB_DEVICE_VERSION = '.gm:4.2.0.gm'
 
 dependencies {
-    compile "com.ihandy.nativeads:libNativeAds.gm:4.1.7.gm"
-    compile ("com.ihandy.interstitialads:InterstitialAds.gm:4.1.4.gm")
+    compile (name: 'libKeyboardCommons/libKeyboardCommons', ext: 'aar')
+
+    compile "com.ihandy.nativeads:libNativeAds.gm:4.3.0.gm"
+    compile "com.ihandy.interstitialads:InterstitialAds.gm:4.3.0.gm"
+    compile 'com.ihandy.expressads:libExpressAds.gm:4.2.0.gm'
     compile "com.ihandy.iap:iap.gm:4.0.+"
 
     compile "com.ihandy.device:device-clean-memory$LIB_DEVICE_VERSION"
-
+    compile "com.ihandy.device:device-clean-junk$LIB_DEVICE_VERSION"
+    compile "com.ihandy.device:device-accessibility-task$LIB_DEVICE_VERSION"
+    compile (name: 'ihs/libPermissionAcquire/libpermissionrequest', ext: 'aar')
     compile "com.ihandy.appframework:libAppframework.${rootProject.ext.frameworkVersion}"
     compile 'com.airbnb.android:lottie:1.5.3'
     compile "com.android.support:appcompat-v7:${rootProject.ext.supportVersion}"
@@ -61,4 +73,6 @@ dependencies {
     compile("com.android.support:support-v4:${rootProject.ext.supportVersion}")
     compile("com.android.support:gridlayout-v7:${rootProject.ext.supportVersion}")
     compile("com.android.support:support-vector-drawable:${rootProject.ext.supportVersion}")
+    compile 'com.annimon:stream:1.1.7'
+    compile 'eu.davidea:flexible-adapter:5.0.0-rc1'
 }

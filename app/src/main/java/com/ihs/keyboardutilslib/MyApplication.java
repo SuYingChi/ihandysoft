@@ -1,6 +1,7 @@
 package com.ihs.keyboardutilslib;
 
 import android.content.Context;
+import android.content.Intent;
 import android.support.multidex.MultiDex;
 import android.text.TextUtils;
 
@@ -14,13 +15,19 @@ import com.ihs.commons.notificationcenter.HSGlobalNotificationCenter;
 import com.ihs.commons.notificationcenter.INotificationObserver;
 import com.ihs.commons.utils.HSBundle;
 import com.ihs.commons.utils.HSLog;
+import com.ihs.feature.battery.BatteryActivity;
 import com.ihs.feature.boost.BoostActivity;
+import com.ihs.feature.boost.plus.BoostPlusActivity;
+import com.ihs.feature.cpucooler.CpuCoolerScanActivity;
+import com.ihs.feature.notification.NotificationManager;
 import com.ihs.keyboardutils.notification.KCNotificationManager;
 import com.ihs.keyboardutils.notification.NotificationBean;
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
 import com.nostra13.universalimageloader.core.assist.QueueProcessingType;
 import com.squareup.leakcanary.LeakCanary;
+
+import java.util.ArrayList;
 
 
 /**
@@ -33,7 +40,7 @@ public class MyApplication extends HSApplication {
     @Override
     public void onCreate() {
         super.onCreate();
-
+        HSLog.e("apppli");
 
         String packageName = getPackageName();
         String processName = getProcessName();
@@ -57,17 +64,41 @@ public class MyApplication extends HSApplication {
         }
         LeakCanary.install(this);
 
-        HSChargingScreenManager.init(true, "", "Master_A(NativeAds)Charging", new HSChargingScreenManager.IChargingScreenListener() {
-            @Override
-            public void onClosedByChargingPage() {
-            }
-        });
+        HSChargingScreenManager.init(true, "Master_A(NativeAds)Charging");
 
         HSGlobalNotificationCenter.addObserver(HSNotificationConstant.HS_SESSION_START, sessionEventObserver);
         HSGlobalNotificationCenter.addObserver(HSNotificationConstant.HS_SESSION_END, sessionEventObserver);
 
         BoostActivity.initBoost();
+
+        KCNotificationManager.getInstance().setNotificationResponserType(KCNotificationManager.TYPE_ACTIVITY);
+        ArrayList<String> eventList = new ArrayList<>();
+        eventList.add("ScreenLocker");
+        eventList.add("Charging");
+        eventList.add("AddNewPhotoToPrivate");
+        for (String event : eventList) {
+            int reqCode = 0;
+            switch (event) {
+                case "ScreenLocker":
+                    reqCode = 1;
+                    break;
+                case "Charging":
+                    reqCode = 2;
+                    break;
+                case "AddNewPhotoToPrivate":
+                    reqCode = 3;
+                    break;
+            }
+
+            Intent resultIntent = new Intent(getContext(), MainActivity.class);
+            resultIntent.putExtra("reqCode", reqCode);
+            KCNotificationManager.getInstance().addNotificationEvent(event, resultIntent);
+        }
+        BoostPlusActivity.initBoost();
+        BatteryActivity.initBattery();
+        CpuCoolerScanActivity.initBoost();
         ScreenLockerManager.init();
+        NotificationManager.getInstance().updateBattery();
         initImageLoader();
 
         KCNotificationManager.getInstance().init(NotificationReceiver.class, new KCNotificationManager.NotificationAvailabilityCallBack() {

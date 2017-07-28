@@ -19,15 +19,22 @@ import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.acb.adadapter.AcbNativeAd;
+import com.acb.nativeads.AcbNativeAdLoader;
+import com.ihs.app.framework.HSApplication;
+import com.ihs.commons.utils.HSError;
 import com.ihs.commons.utils.HSLog;
 import com.ihs.feature.boost.BoostConditionManager;
 import com.ihs.feature.boost.BoostSource;
+import com.ihs.feature.boost.BoostTipUtils;
 import com.ihs.feature.boost.BoostType;
 import com.ihs.feature.boost.RamUsageDisplayUpdater;
-import com.ihs.feature.common.LauncherTipManager;
+import com.ihs.feature.common.AdPlacements;
+import com.ihs.feature.tip.LauncherTipManager;
 import com.ihs.keyboardutils.R;
 import com.ihs.keyboardutils.utils.CommonUtils;
 
+import java.util.List;
 import java.util.Random;
 
 public class BlackHoleLayout extends RelativeLayout {
@@ -35,6 +42,8 @@ public class BlackHoleLayout extends RelativeLayout {
     public interface BlackHoleAnimationListener {
         void onEnd();
     }
+
+    private static final String TAG = BlackHoleLayout.class.getSimpleName();
 
     private static final int FRAME_TIME = 40;
 
@@ -63,6 +72,8 @@ public class BlackHoleLayout extends RelativeLayout {
 
     private BlackHoleAnimationListener listener;
 
+    private AcbNativeAd mAd = null;
+
     public BlackHoleLayout(Context context) {
         this(context, null);
     }
@@ -90,7 +101,7 @@ public class BlackHoleLayout extends RelativeLayout {
         tvMemory.setText(String.valueOf(mBeforeBoostRamUsage));
     }
 
-    public void setBoostType(BoostType type){
+    public void setBoostType(BoostType type) {
         mBoostType = type;
     }
 
@@ -171,6 +182,25 @@ public class BlackHoleLayout extends RelativeLayout {
         }
 
         // show tip and dismiss view
+        if (BoostSource.STANDALONE_ACTIVITY == mBoostSource &&
+                !BoostTipUtils.mayShowChargingScreen(mBoostType)
+                && !BoostTipUtils.mayShowBoostPlus()
+                && BoostTipUtils.shouldShowBoostAd()) {
+            AcbNativeAdLoader loader = new AcbNativeAdLoader(HSApplication.getContext(), AdPlacements.MOMENT_NATIVE_AD_PLACEMENT_HUB);
+            loader.load(1, new AcbNativeAdLoader.AcbNativeAdLoadListener() {
+                @Override
+                public void onAdReceived(AcbNativeAdLoader acbNativeAdLoader, List<AcbNativeAd> list) {
+                    mAd = list.isEmpty() ? null : list.get(0);
+                }
+
+                @Override
+                public void onAdFinished(AcbNativeAdLoader acbNativeAdLoader, HSError hsError) {
+                    if (hsError != null) {
+                        HSLog.d(TAG, "loadAds fail. reason is " + hsError);
+                    }
+                }
+            });
+        }
         postDelayed(new Runnable() {
             @Override
             public void run() {
@@ -195,7 +225,7 @@ public class BlackHoleLayout extends RelativeLayout {
         HSLog.d("BoostActivity", "After boost RAM usage: " + afterBoostRamUsage);
         final int percentageBoosted = mBeforeBoostRamUsage - afterBoostRamUsage;
 
-        LauncherTipManager.getInstance().showFinishBoostAlert(getContext(), mBoostSource, mBoostType, percentageBoosted);
+        LauncherTipManager.getInstance().showFinishBoostAlert(getContext(), mBoostSource, mBoostType, percentageBoosted, mAd);
         BoostConditionManager.getInstance().reportBoostDone(percentageBoosted);
     }
 

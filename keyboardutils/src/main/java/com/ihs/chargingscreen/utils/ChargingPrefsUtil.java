@@ -1,10 +1,13 @@
 package com.ihs.chargingscreen.utils;
 
+import com.acb.expressads.AcbExpressAdManager;
 import com.ihs.app.framework.HSApplication;
-import com.ihs.app.framework.HSSessionMgr;
+import com.ihs.chargingscreen.HSChargingScreenManager;
 import com.ihs.commons.config.HSConfig;
 import com.ihs.commons.utils.HSLog;
 import com.ihs.commons.utils.HSPreferenceHelper;
+import com.ihs.feature.common.PreferenceHelper;
+import com.ihs.keyboardutils.iap.RemoveAdsManager;
 
 import static com.ihs.chargingscreen.utils.ChargingAnalytics.app_chargingLocker_enable;
 
@@ -16,6 +19,7 @@ public class ChargingPrefsUtil {
     public static final String UNPLUG_MAX_TIME = "unplug_max_time";
     public static final String FULL_CHARGED_MAX_TIME = "full_charged_max_time";
     private static final int CHARGING_STATE_MAX_APPEAR_TIMES = 3;
+    public static final String PREF_KEY_CHARGING_SCREEN_BATTERY_MENU_TIP_SHOWN = "pref_key_charging_screen_battery_menu_tip_shown";
 
     public static final int CHARGING_MUTED = 0;
     public static final int CHARGING_DEFAULT_DISABLED = 1;
@@ -66,36 +70,37 @@ public class ChargingPrefsUtil {
 
 
     public static int getChargingEnableStates() {
+        if (spHelper == null) {
+            getInstance();
+        }
         //用户设置过的话，直接返回用户设置的状态。不管plist任何值，包括静默。
         if (spHelper.contains(USER_ENABLED_CHARGING)) {
-            HSLog.e("CHARGING 获取用户设置" );
+            HSLog.e("CHARGING 获取用户设置");
             return spHelper.getBoolean(USER_ENABLED_CHARGING, false) ? CHARGING_DEFAULT_ACTIVE : CHARGING_DEFAULT_DISABLED;
         }
 
-        //用户没有设置过，并且超过3个Session，并且本地记录过值，就返回被记录的plist值。
-        if (HSSessionMgr.getCurrentSessionId() > 3 || spHelper.contains(RECORD_CURRENT_PLIST_SETTING)) {
-            HSLog.e("CHARGING 获取已经记录值" );
+
+        //老用户会记录 RECORD_CURRENT_PLIST_SETTING 这个值，这里我们可以用来判断是否对他们使用新逻辑
+        //老用户使用以前不变的记录，新用户使用（只有当线上开启过一次之后，就不再改变，线上没开起过，将会一直使用新值，直到远端开启过一次
+        if (spHelper.contains(RECORD_CURRENT_PLIST_SETTING)) {
+            HSLog.e("CHARGING 老用户读值");
             return spHelper.getInt(RECORD_CURRENT_PLIST_SETTING, CHARGING_DEFAULT_DISABLED);
         } else {
             //否则 直接取plist
-            HSLog.e("CHARGING 获取plist" );
+            HSLog.e("CHARGING 获取plist");
             return getChargingPlistConfig();
         }
     }
 
-
-    //前3次session退出检查用户是否设置过 charging
-    public void setChargingForFirstSession() {
-        if (HSSessionMgr.getCurrentSessionId() < 3) {
-            //如果用户设置过了就不用记录
-            if (!spHelper.contains(USER_ENABLED_CHARGING) && !spHelper.contains(RECORD_CURRENT_PLIST_SETTING)) {
-                HSLog.e("chagring 正在记录");
-                //没有设置的话就获取当前plist配置 并记录下来。
-                spHelper.putInt(RECORD_CURRENT_PLIST_SETTING, getChargingPlistConfig());
-            }
+    public static void refreshChargingRecord() {
+        //如果没有记录过 并且为开启状态。
+        if (!spHelper.contains(RECORD_CURRENT_PLIST_SETTING)
+                && getChargingPlistConfig() == CHARGING_DEFAULT_ACTIVE) {
+            //记录为已开启。
+            spHelper.putInt(RECORD_CURRENT_PLIST_SETTING, CHARGING_DEFAULT_ACTIVE);
         }
-        HSLog.e("chagring 已经记录 ");
     }
+
 
     private int chargingNotifyAppearTimes(String chargingType) {
         return spHelper.getInt(chargingType, 0);
@@ -112,6 +117,13 @@ public class ChargingPrefsUtil {
 
     //用户每次更改设置都要记录值，以便下次直接读取。
     public void setChargingEnableByUser(boolean isEnable) {
+        if (isEnable) {
+            if (!RemoveAdsManager.getInstance().isRemoveAdsPurchased()) {
+                AcbExpressAdManager.getInstance().activePlacementInProcess(HSChargingScreenManager.getInstance().getNaitveAdsPlacementName());
+            }
+        } else {
+            AcbExpressAdManager.getInstance().deactivePlacementInProcess(HSChargingScreenManager.getInstance().getNaitveAdsPlacementName());
+        }
         spHelper.putBoolean(USER_ENABLED_CHARGING, isEnable);
     }
 
@@ -136,5 +148,13 @@ public class ChargingPrefsUtil {
 
     private static int getChargingPlistConfig() {
         return HSConfig.optInteger(CHARGING_MUTED, "Application", "ChargeLocker", "state");
+    }
+
+    public static boolean isBatteryTipShown() {
+        return PreferenceHelper.getDefault().getBoolean(PREF_KEY_CHARGING_SCREEN_BATTERY_MENU_TIP_SHOWN, false);
+    }
+
+    public static void setBatteryTipShown() {
+        PreferenceHelper.getDefault().putBoolean(PREF_KEY_CHARGING_SCREEN_BATTERY_MENU_TIP_SHOWN, true);
     }
 }

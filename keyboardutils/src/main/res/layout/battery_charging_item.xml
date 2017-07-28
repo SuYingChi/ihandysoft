@@ -1,0 +1,156 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:gravity="center"
+    android:orientation="vertical"
+    android:paddingEnd="@dimen/battery_charging_padding_horizontal"
+    android:paddingLeft="@dimen/battery_charging_padding_horizontal"
+    android:paddingRight="@dimen/battery_charging_padding_horizontal"
+    android:paddingStart="@dimen/battery_charging_padding_horizontal">
+
+    <TextView
+        android:id="@+id/charging_content_tv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:fontFamily="sans-serif-medium"
+        android:gravity="center"
+        android:maxLines="2"
+        android:text="@string/battery_charging_content"
+        android:textColor="@android:color/white"
+        android:textSize="@dimen/battery_status_content_size" />
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginTop="15dp"
+        android:gravity="center"
+        android:orientation="horizontal">
+
+        <!-- Use battery_charging_item_speed_width, battery_charging_item_continue_width, battery_charging_item_trickle_width
+             for RTL, if wrap_content will be error in RTL -->
+        <LinearLayout
+            android:layout_width="@dimen/battery_charging_item_speed_width"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:orientation="vertical">
+
+            <android.support.v7.widget.AppCompatImageView
+                android:id="@+id/charging_speed_iv"
+                android:layout_width="@dimen/battery_charging_content_item"
+                android:layout_height="@dimen/battery_charging_content_item"
+                app:srcCompat="@drawable/battery_speed_svg" />
+
+            <TextView
+                android:id="@+id/charging_speed_tv"
+                android:layout_width="wrap_content"
+                android:layout_height="@dimen/battery_charging_content_item"
+                android:fontFamily="sans-serif-medium"
+                android:gravity="center"
+                android:lines="1"
+                android:minWidth="@dimen/battery_charging_text_min_width"
+                android:text="@string/battery_speed"
+                android:textColor="@android:color/white"
+                android:textSize="@dimen/battery_charging_content_size" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="@dimen/battery_charging_line_width"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/battery_charging_content_item"
+                android:gravity="center">
+
+                <View
+                    android:id="@+id/charging_left_line_v"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/battery_charging_line_height"
+                    android:background="@color/battery_charging_disable" />
+            </LinearLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/battery_charging_content_item" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="@dimen/battery_charging_item_continue_width"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:orientation="vertical">
+
+            <android.support.v7.widget.AppCompatImageView
+                android:id="@+id/charging_continue_iv"
+                android:layout_width="@dimen/battery_charging_content_item"
+                android:layout_height="@dimen/battery_charging_content_item"
+                app:srcCompat="@drawable/battery_continue_animated_svg" />
+
+            <TextView
+                android:id="@+id/charging_continue_tv"
+                android:layout_width="wrap_content"
+                android:layout_height="@dimen/battery_charging_content_item"
+                android:fontFamily="sans-serif-medium"
+                android:gravity="center"
+                android:minWidth="@dimen/battery_charging_text_min_width"
+                android:lines="1"
+                android:text="@string/battery_continue"
+                android:textColor="@color/battery_charging_disable"
+                android:textSize="@dimen/battery_charging_content_size" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="@dimen/battery_charging_line_width"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/battery_charging_content_item"
+                android:gravity="center">
+
+                <View
+                    android:id="@+id/charging_right_line_v"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/battery_charging_line_height"
+                    android:background="@color/battery_charging_disable" />
+            </LinearLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/battery_charging_content_item" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="@dimen/battery_charging_item_trickle_width"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:orientation="vertical">
+
+            <android.support.v7.widget.AppCompatImageView
+                android:id="@+id/charging_trickle_iv"
+                android:layout_width="@dimen/battery_charging_content_item"
+                android:layout_height="@dimen/battery_charging_content_item"
+                app:srcCompat="@drawable/battery_trickle_normal_svg" />
+
+            <TextView
+                android:id="@+id/charging_trickle_tv"
+                android:layout_width="wrap_content"
+                android:layout_height="@dimen/battery_charging_content_item"
+                android:fontFamily="sans-serif-medium"
+                android:gravity="center"
+                android:lines="1"
+                android:minWidth="@dimen/battery_charging_text_min_width"
+                android:text="@string/battery_trickle"
+                android:textColor="@color/battery_charging_disable"
+                android:textSize="@dimen/battery_charging_content_size" />
+        </LinearLayout>
+
+    </LinearLayout>
+</LinearLayout>

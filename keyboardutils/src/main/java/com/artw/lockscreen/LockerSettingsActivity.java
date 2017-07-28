@@ -6,9 +6,9 @@ import android.view.View;
 import android.widget.CompoundButton;
 
 import com.artw.lockscreen.common.BaseSettingsActivity;
-import com.artw.lockscreen.common.ViewUtils;
 import com.ihs.app.analytics.HSAnalytics;
 import com.ihs.chargingscreen.activity.ChargingScreenActivity;
+import com.ihs.feature.common.ViewUtils;
 import com.ihs.keyboardutils.R;
 
 public class LockerSettingsActivity extends BaseSettingsActivity
@@ -49,7 +49,7 @@ public class LockerSettingsActivity extends BaseSettingsActivity
 
     @Override public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
         if (buttonView == mLockerEnabledToggle) {
-            LockerSettings.setLockerEnabled(isChecked,"LockerSettings");
+            LockerSettings.setLockerEnabled(isChecked);
             HSAnalytics.logEvent("LauncherSettings_LockerSettings_Locker_Clicked", "type", isChecked ? "On" : "Off");
         }
     }

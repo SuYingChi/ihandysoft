@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.ihs.feature.common.CustomRootView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/view_container"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:clipChildren="false"
+    android:background="@color/launcher_settings_light_gray_bg"
+    android:fitsSystemWindows="false">
+
+    <!-- Do not change container_view id -->
+    <LinearLayout
+        android:id="@+id/container_view"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@android:color/white"
+        android:orientation="vertical">
+
+        <include
+            android:id="@+id/action_bar"
+            layout="@layout/black_toolbar_container" />
+
+        <!-- Charging Screen -->
+        <RelativeLayout
+            android:id="@+id/charging_screen_cell"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/air_launcher_settings_single_line_item_row_height"
+            android:background="@drawable/material_compat_bg"
+            android:clickable="true"
+            tools:ignore="SpUsage">
+
+            <ImageView
+                android:layout_width="24dp"
+                android:layout_height="wrap_content"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentStart="true"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="16dp"
+                android:layout_marginStart="16dp"
+                android:scaleType="fitCenter"
+                app:srcCompat="@drawable/launcher_settings_battery" />
+
+            <com.ihs.feature.common.TypefacedTextView
+                android:id="@+id/charging_screen_description"
+                style="@style/SettingsItem.SingleLine"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="72dp"
+                android:layout_marginStart="72dp"
+                android:text="@string/charging_screen_settings_description"
+                android:textColor="#999999"
+                android:textSize="12dp"
+                app:typeface="@string/proxima_nova_regular" />
+
+            <com.ihs.feature.common.TypefacedTextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_above="@id/charging_screen_description"
+                android:layout_marginLeft="72dp"
+                android:layout_marginStart="72dp"
+                android:text="@string/charging_screen_settings_title"
+                android:textColor="@color/material_text_black_primary"
+                android:textSize="@dimen/settings_item_content_text_size"
+                app:typeface="@string/proxima_nova_regular" />
+
+            <com.ihs.feature.common.TypefacedTextView
+                style="@style/SettingsItem.SingleLine"
+                android:layout_below="@id/charging_screen_description"
+                android:layout_marginLeft="72dp"
+                android:layout_marginStart="72dp"
+                android:text="@string/charging_screen_settings_subtitle"
+                android:textColor="#999999"
+                android:textSize="12dp"
+                app:typeface="@string/proxima_nova_regular" />
+
+            <android.support.v7.widget.SwitchCompat
+                android:id="@+id/charging_screen_toggle_button"
+                style="@style/SettingsToggleButton"
+                android:theme="@style/SettingsToggleButton.Theme" />
+        </RelativeLayout>
+    </LinearLayout>
+
+    <include layout="@layout/navigation_bar_bg" />
+</com.ihs.feature.common.CustomRootView>

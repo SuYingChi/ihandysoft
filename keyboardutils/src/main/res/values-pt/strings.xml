@@ -603,7 +603,7 @@
     <string name="folder_ad_title">Apps Recomendadas</string>
     <string name="search_guide_contacts">Contactos</string>
 
-    <string name="launcher_widget_boost_plus_title">Impulsionar+</string>
+    <string name="launcher_widget_boost_plus_title">Impulsionar</string>
     <string name="boost_plus_accessibility_service_label">☆Impulsionar+☆</string>
     <string name="advanced_boost_authorize_btn">Ativar </string>
     <string name="boost_plus_action_button_text">Melhorar (%1$s)</string>

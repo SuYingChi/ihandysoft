@@ -4,6 +4,7 @@ import android.app.ActivityManager;
 import android.content.Context;
 
 import com.ihs.feature.common.CompatUtils;
+import com.ihs.feature.common.DeviceManager;
 import com.ihs.feature.common.LauncherConfig;
 
 import java.util.Random;

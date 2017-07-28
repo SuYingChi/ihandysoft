@@ -1,9 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/root_view"
-    android:layout_gravity="bottom"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    android:layout_gravity="bottom"
     android:background="#192633"
     android:orientation="horizontal"
     android:paddingBottom="20dp"
@@ -11,11 +12,10 @@
 
 
     <ImageView
-        android:layout_marginLeft="15dp"
         android:layout_width="28dp"
         android:layout_height="50dp"
-        android:src="@drawable/charger_battery" />
-
+        android:layout_marginLeft="15dp"
+        app:srcCompat="@drawable/charger_battery" />
 
 
     <LinearLayout
@@ -98,16 +98,16 @@
         android:layout_weight="1" />
 
     <TextView
-        android:minWidth="65dp"
         android:id="@+id/tv_enable"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center_vertical"
-        android:layout_marginRight="15dp"
         android:layout_marginEnd="15dp"
+        android:layout_marginRight="15dp"
         android:background="#00c753"
         android:clickable="true"
         android:gravity="center"
+        android:minWidth="65dp"
         android:paddingBottom="10dp"
         android:paddingLeft="6dp"
         android:paddingRight="6dp"

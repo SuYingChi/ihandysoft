@@ -6,8 +6,8 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.widget.Toast;
 
+import com.acb.expressads.AcbExpressAdManager;
 import com.artw.lockscreen.common.LockerChargingScreenUtils;
-import com.artw.lockscreen.common.ScreenStatusReceiver;
 import com.artw.lockscreen.common.TimeTickReceiver;
 import com.ihs.app.analytics.HSAnalytics;
 import com.ihs.app.framework.HSApplication;
@@ -17,9 +17,9 @@ import com.ihs.chargingscreen.activity.ChargingScreenActivity;
 import com.ihs.commons.notificationcenter.HSGlobalNotificationCenter;
 import com.ihs.commons.notificationcenter.INotificationObserver;
 import com.ihs.commons.utils.HSBundle;
+import com.ihs.feature.common.ScreenStatusReceiver;
 import com.ihs.keyboardutils.R;
-
-import static android.content.IntentFilter.SYSTEM_HIGH_PRIORITY;
+import com.ihs.keyboardutils.iap.RemoveAdsManager;
 
 /**
  * Created by Arthur on 17/3/31.
@@ -51,14 +51,12 @@ public class ScreenLockerManager {
         INotificationObserver observer = new INotificationObserver() {
             @Override
             public void onReceive(String s, HSBundle hsBundle) {
-                if(s.equals(ChargingScreenActivity.NOTIFICATION_CHARGING_ACTIVITY_STARTED)){
+                if (s.equals(ChargingScreenActivity.NOTIFICATION_CHARGING_ACTIVITY_STARTED)) {
                     LockerChargingScreenUtils.finishLockerActivity();
-                }else if(s.equals(ChargingFullScreenAlertDialogActivity.NOTIFICATION_LOCKER_ENABLED)){
+                } else if (s.equals(ChargingFullScreenAlertDialogActivity.NOTIFICATION_LOCKER_ENABLED)) {
                     enableLockerFromAlert();
-                }else if(s.equals(HSNotificationConstant.HS_CONFIG_CHANGED)){
-                    LockerSettings.setLockerEnabled(LockerSettings.isLockerEnabled(),"plist");
-                }else if(s.equals(HSNotificationConstant.HS_SESSION_END)){
-                    LockerSettings.setLockerForFirstSession();
+                } else if (s.equals(HSNotificationConstant.HS_CONFIG_CHANGED)) {
+                    LockerSettings.updateLockerSetting();
                 }
             }
         };
@@ -66,10 +64,13 @@ public class ScreenLockerManager {
         HSGlobalNotificationCenter.addObserver(ChargingFullScreenAlertDialogActivity.NOTIFICATION_LOCKER_ENABLED, observer);
         HSGlobalNotificationCenter.addObserver(HSNotificationConstant.HS_CONFIG_CHANGED, observer);
         HSGlobalNotificationCenter.addObserver(HSNotificationConstant.HS_SESSION_END, observer);
+        if (LockerSettings.isLockerEnabled() && !RemoveAdsManager.getInstance().isRemoveAdsPurchased()) {
+            AcbExpressAdManager.getInstance().activePlacementInProcess(HSApplication.getContext().getString(R.string.ad_placement_locker));
+        }
     }
 
     public static void enableLockerFromAlert() {
-        LockerSettings.setLockerEnabled(true,"alert");
+        LockerSettings.setLockerEnabled(true);
         Toast.makeText(HSApplication.getContext(), HSApplication.getContext().getString(R.string.screen_locker_enable_alert_toast), Toast.LENGTH_SHORT).show();
         HSAnalytics.logEvent("alert_screen_locker_click");
     }

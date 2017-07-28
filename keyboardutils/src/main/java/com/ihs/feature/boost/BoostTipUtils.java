@@ -7,6 +7,7 @@ import com.ihs.app.utils.HSVersionControlUtils;
 import com.ihs.chargingscreen.utils.ChargingPrefsUtil;
 import com.ihs.commons.config.HSConfig;
 import com.ihs.commons.utils.HSLog;
+import com.ihs.feature.common.DeviceManager;
 import com.ihs.feature.common.LauncherFiles;
 import com.ihs.feature.common.PreferenceHelper;
 import com.ihs.feature.common.Utils;
@@ -273,6 +274,12 @@ public class BoostTipUtils {
         return SYSTEM_APPS_LIST;
     }
 
+    public static List<String> getExcludeSystemApps() {
+        List<String> excludeList = new ArrayList<>();
+        excludeList.add("com.honeycomb.launcher");
+        return excludeList;
+    }
+
     public static void doNotShowToastSecondTimes() {
         PreferenceHelper preferenceHelper = PreferenceHelper.get(LauncherFiles.BOOST_PREFS);
         int clickTimes = preferenceHelper.getInt(PREF_KEY_BOOST_CLICK_TIMES, 0);
@@ -319,8 +326,6 @@ public class BoostTipUtils {
 
     public static void setBoostPlusNotificationStartTiming() {
         long lastOpenBoostPlusTime = getLastOpenBoostPlusTime();
-        HSLog.d("NotificationManager",
-                "setBoostPlusNotificationStartTiming lastOpenBoostPlusTime = " + lastOpenBoostPlusTime);
         if (0 == lastOpenBoostPlusTime) {
             setLastOpenBoostPlusTime();
         }
@@ -389,12 +394,22 @@ public class BoostTipUtils {
                 && (type == BoostType.CPU_TEMPERATURE || type == BoostType.BATTERY);
     }
 
+    public static boolean boostTipHasBeenShown() {
+        return PreferenceHelper.get(LauncherFiles.BOOST_PREFS)
+                .getBoolean(BoostTip.PREF_KEY_BOOST_TIP_SHOWN, false);
+    }
+
+    public static void setBoostTipShown() {
+        PreferenceHelper.get(LauncherFiles.BOOST_PREFS)
+                .putBoolean(BoostTip.PREF_KEY_BOOST_TIP_SHOWN, true);
+    }
+
+
     public static boolean getIfMayShowBoostPlus() {
         return sMayShowBoostPlus;
     }
 
     public static boolean getShouldShowBoostAd() {
-        shouldShowBoostAd();
         return sShouldShowBoostAd;
     }
 

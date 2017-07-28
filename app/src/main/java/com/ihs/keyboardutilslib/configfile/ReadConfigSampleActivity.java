@@ -8,10 +8,10 @@ import android.view.View;
 import android.widget.TextView;
 
 import com.ihs.commons.utils.HSLog;
-import com.ihs.keyboardutils.configfile.KCMap;
-import com.ihs.keyboardutils.configfile.KCParser;
 import com.ihs.keyboardutils.utils.KCFeatureRestrictionConfig;
 import com.ihs.keyboardutilslib.R;
+import com.kc.commons.configfile.KCMap;
+import com.kc.commons.configfile.KCParser;
 
 import org.json.JSONObject;
 

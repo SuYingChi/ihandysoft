@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@android:color/white"
+    android:paddingBottom="@dimen/dialog_button_margin">
+
+    <com.ihs.feature.common.TypefacedTextView
+        android:id="@+id/title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="24dp"
+        android:layout_marginStart="24dp"
+        android:layout_marginRight="24dp"
+        android:layout_marginEnd="24dp"
+        android:layout_marginTop="24dp"
+        android:text="@string/clean_powerful_clean"
+        android:textColor="@android:color/black"
+        android:textSize="20sp"
+        app:typeface="@string/proxima_nova_regular"/>
+
+    <TextView
+        android:id="@+id/alert_message_tv"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/title"
+        android:layout_marginLeft="24dp"
+        android:layout_marginStart="24dp"
+        android:layout_marginRight="24dp"
+        android:layout_marginEnd="24dp"
+        android:layout_marginTop="21dp"
+        android:lineSpacingExtra="5dp"
+        android:text="@string/clean_need_authorization"
+        android:textColor="@color/black_secondary"
+        android:textSize="16sp"
+        android:typeface="sans" />
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/alert_message_tv"
+        android:layout_marginTop="@dimen/dialog_content_margin"
+        android:baselineAligned="false"
+        android:gravity="end"
+        android:orientation="horizontal"
+        android:paddingLeft="@dimen/dialog_button_margin"
+        android:paddingRight="@dimen/dialog_button_margin">
+
+        <Button
+            android:id="@+id/later_btn"
+            style="@style/DialogButton"
+            android:background="@drawable/material_compat_button_bg"
+            android:text="@string/set_as_default_alert_cancel_btn"
+            android:textColor="@color/material_text_black_secondary" />
+
+        <Space
+            android:layout_width="@dimen/dialog_button_padding"
+            android:layout_height="match_parent" />
+
+        <Button
+            android:id="@+id/clean_btn"
+            style="@style/DialogButton"
+            android:background="@drawable/material_compat_button_bg"
+            android:text="@string/advanced_boost_authorize_btn"
+            android:textColor="@color/dialog_button_blue" />
+    </LinearLayout>
+
+</RelativeLayout>

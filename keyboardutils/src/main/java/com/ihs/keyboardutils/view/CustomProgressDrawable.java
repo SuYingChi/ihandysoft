@@ -8,11 +8,17 @@ import android.graphics.Rect;
 import android.graphics.RectF;
 import android.graphics.drawable.Drawable;
 
+import com.ihs.app.framework.HSApplication;
+import com.ihs.keyboardutils.R;
+
 /**
  * Created by dsapphire on 16/2/27.
  */
 public final class CustomProgressDrawable extends Drawable {
 
+    public CustomProgressDrawable() {
+        mColor = HSApplication.getContext().getResources().getColor(R.color.downloading_progress_foreground);
+    }
 
     @Override
     public void draw(Canvas canvas) {
@@ -42,7 +48,7 @@ public final class CustomProgressDrawable extends Drawable {
 
     private final Paint mPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
     private int mBackgroundColor = 0x19000000;
-    private int mColor = 0xff558cfc;
+    private int mColor = 0;
     private int mPadding = 10;
     private int mBarWidth = 20;
     private int mLevel = 0;

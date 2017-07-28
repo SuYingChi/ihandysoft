@@ -1,12 +1,13 @@
 package com.artw.lockscreen;
 
+import com.acb.expressads.AcbExpressAdManager;
 import com.ihs.app.analytics.HSAnalytics;
 import com.ihs.app.framework.HSApplication;
-import com.ihs.app.framework.HSSessionMgr;
 import com.ihs.commons.config.HSConfig;
 import com.ihs.commons.utils.HSLog;
 import com.ihs.commons.utils.HSPreferenceHelper;
 import com.ihs.keyboardutils.R;
+import com.ihs.keyboardutils.iap.RemoveAdsManager;
 import com.ihs.keyboardutils.utils.PublisherUtils;
 
 
@@ -29,21 +30,17 @@ public class LockerSettings {
 
     private static final String USER_ENABLED_LOCKER = "user_enabled_locker";
 
+    private static final String LOCKER_ENABLE_SHOW_COUNT = "locker_enable_show_count";
+    private static final int LOCKER_ENABLE_MAX_SHOW_COUNT = 5;
+
     //与键值有关，所以需要使用默认的prefs
     public static boolean isLockerEnabled() {
         return getLockerEnableStates() == LOCKER_DEFAULT_ACTIVE;
     }
 
-    public static void setLockerEnabled(boolean isEnabled,String from) {
+    public static void setLockerEnabled(boolean isEnabled) {
         getPref().putBoolean(USER_ENABLED_LOCKER, isEnabled);
-
-        if (isEnabled) {
-            lockerEnableOnce(from);
-        } else {
-            lockerDisableOnce(from);
-        }
-
-        getDefaultPref().putBoolean(PREF_KEY_LOCKER_ENABLED, isEnabled);
+        updateLockerSetting();
     }
 
     public static void increaseLockerShowCount() {
@@ -87,10 +84,17 @@ public class LockerSettings {
         }
     }
 
-    public void refreshLockerSetting() {
-        if (HSSessionMgr.getCurrentSessionId() <= 1) {
-            getDefaultPref().putBoolean(PREF_KEY_LOCKER_ENABLED, isLockerEnabled());
+    static void updateLockerSetting() {
+        LockerSettings.refreshLockerRecord();
+
+        if (isLockerEnabled()) {
+            if (!RemoveAdsManager.getInstance().isRemoveAdsPurchased()) {
+                AcbExpressAdManager.getInstance().activePlacementInProcess(HSApplication.getContext().getString(R.string.ad_placement_locker));
+            }
+        } else {
+            AcbExpressAdManager.getInstance().deactivePlacementInProcess(HSApplication.getContext().getString(R.string.ad_placement_locker));
         }
+        getDefaultPref().putBoolean(PREF_KEY_LOCKER_ENABLED, isLockerEnabled());
     }
 
 
@@ -101,48 +105,57 @@ public class LockerSettings {
             return getPref().getBoolean(USER_ENABLED_LOCKER, false) ? LOCKER_DEFAULT_ACTIVE : LOCKER_DEFAULT_DISABLED;
         }
 
-        //用户没有设置过，并且不在第一个session的话。就返回第一个session结束时，被记录的plist值。
-        if (HSSessionMgr.getCurrentSessionId() > 3 || getPref().contains(RECORD_CURRENT_PLIST_SETTING)) {
+        //老用户会记录 RECORD_CURRENT_PLIST_SETTING 这个值，这里我们可以用来判断是否对他们使用新逻辑
+        //老用户使用以前不变的记录，新用户使用（只有当线上开启过一次之后，就不再改变，线上没开起过，将会一直使用新值，直到远端开启过一次
+        if (getPref().contains(RECORD_CURRENT_PLIST_SETTING)) {
             HSLog.e("locker 获取已经记录值");
             return getPref().getInt(RECORD_CURRENT_PLIST_SETTING, LOCKER_DEFAULT_DISABLED);
         } else {
             HSLog.e("locker 获取plist");
-            //第一个session就取plist值
+            //否则 直接取plist
             return getLockerPlistState();
         }
     }
 
-    //session结束退出检查用户是否设置过
-    public static void setLockerForFirstSession() {
-        //3次
-        if(HSSessionMgr.getCurrentSessionId() >= 3){
-            return;
+    public static void refreshLockerRecord() {
+        //如果没有记录过 并且为开启状态。
+        if (!getPref().contains(RECORD_CURRENT_PLIST_SETTING)
+                && getLockerPlistState() == LOCKER_DEFAULT_ACTIVE) {
+            //记录为已开启。
+            getPref().putInt(RECORD_CURRENT_PLIST_SETTING, LOCKER_DEFAULT_ACTIVE);
         }
-        //如果用户设置过了就不用记录
-        if (!getPref().contains(USER_ENABLED_LOCKER) && !getPref().contains(RECORD_CURRENT_PLIST_SETTING)) {
-            HSLog.e("locker 正在记录 ");
-            //没有设置的话就获取当前plist配置 并记录下来。
-            getPref().putInt(RECORD_CURRENT_PLIST_SETTING, getLockerPlistState());
+    }
 
-        }
-        HSLog.e("locker 已经记录 ");
+    static void addLockerEnableShowCount() {
+        int count = getLockerEnableShowCount();
+        getPref().putInt(LOCKER_ENABLE_SHOW_COUNT, ++count);
+    }
+
+    private static int getLockerEnableShowCount() {
+        return getPref().getInt(LOCKER_ENABLE_SHOW_COUNT, 0);
+    }
+
+    public static boolean isLockerEnableShowSatisfied() {
+        return getLockerEnableStates() == LOCKER_DEFAULT_DISABLED
+                && !getPref().contains(USER_ENABLED_LOCKER)
+                && getLockerEnableShowCount() < HSConfig.optInteger(LOCKER_ENABLE_MAX_SHOW_COUNT, "Application", "Locker", "EnableDialogMaxShowCount");
     }
 
     public static boolean isLockerEnabledBefore() {
         return getPref().contains(app_screen_locker_enable);
     }
 
-    private static void lockerEnableOnce(String from) {
+    public static void recordLockerEnableOnce() {
         if (!getPref().contains(app_screen_locker_enable)) {
             getPref().putBoolean(app_screen_locker_enable, true);
-            HSAnalytics.logEvent(app_screen_locker_enable, app_screen_locker_enable, from, "install_type", PublisherUtils.getInstallType());
+            HSAnalytics.logEvent(app_screen_locker_enable, app_screen_locker_enable, "lockerEnabled", "install_type", PublisherUtils.getInstallType());
         }
     }
 
-    private static void lockerDisableOnce(String from) {
+    public static void recordLockerDisableOnce() {
         if (!getPref().contains(app_screen_locker_disable)) {
             getPref().putBoolean(app_screen_locker_disable, true);
-            HSAnalytics.logEvent(app_screen_locker_disable, app_screen_locker_enable, from, "install_type", PublisherUtils.getInstallType());
+            HSAnalytics.logEvent(app_screen_locker_disable, app_screen_locker_disable, "lockerDisabled", "install_type", PublisherUtils.getInstallType());
         }
     }
 

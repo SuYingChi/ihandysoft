@@ -32,7 +32,11 @@ dependencies {
     compile 'com.android.support:multidex:1.0.1'
 
     // Native Ads
-    compile 'com.ihandy.3rdadadapter:libAdAdmobNativeAdapter.gm:4.1.2.gm'
+//    compile 'com.ihandy.3rdadadapter:libAdAdmobNativeAdapter.gm:4.1.2.gm'
+    compile 'com.ihandy.3rdadadapter:libAdAdmobNativeAdapter.gm:+'
+    compile 'com.ihandy.3rdadadapter:libAdMopubNativeAdapter.gm:+'
+    compile 'com.ihandy.3rdadadapter:libAdAdxExpressAdapter.gm:+'
+    compile 'com.ihandy.3rdadadapter:libAdAdmobExpressAdapter.gm:+'
 
     compile project(':keyboardutils')
 }

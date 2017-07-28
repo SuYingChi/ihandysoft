@@ -47,6 +47,12 @@ class CustomDesignAlert extends AlertDialog implements View.OnClickListener {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         requestWindowFeature(Window.FEATURE_NO_TITLE);
+
+        Window window = getWindow();
+        if (window != null) { // 在锁屏状态下也能弹出Dialog
+            window.addFlags(WindowManager.LayoutParams.FLAG_SHOW_WHEN_LOCKED);
+        }
+
         super.onCreate(savedInstanceState);
         if (!isFullScreen) {
             setContentView(R.layout.custom_design_alert);

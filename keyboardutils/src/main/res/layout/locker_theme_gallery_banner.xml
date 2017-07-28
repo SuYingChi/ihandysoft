@@ -20,7 +20,7 @@
         android:src="@drawable/ic_locker"
         tools:ignore="ContentDescription" />
 
-    <com.artw.lockscreen.common.TypefacedTextView
+    <com.ihs.feature.common.TypefacedTextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_centerVertical="true"

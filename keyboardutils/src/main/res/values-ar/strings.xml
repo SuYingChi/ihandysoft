@@ -730,7 +730,6 @@
     <string name="clean_stop_title">إيقاف التنظيف</string>
     <string name="clean_stop_content">قد يؤدي هذا إلى مخلفات غير متوقعة. استمرار؟</string>
     <string name="clean_powerful_clean_description"> ملفات قمامة أخرى %1$s يمكن تنظيفها! جربه %2$s من المستخدمين.</string>
-    <string name="accessibility_service_description" tools:ignore="UnusedResources">شغّل مفتاح التبديل أعلاه ثم اضغط موافق.\n\nفعّل هذه الخاصية لـ:\n1) تسريع هاتفك بنسبة 80\%%\n2) تنظيف ملفات القمامة\n3) إيقاف التطبيقات التي تستنزف البطارية\n\nفريق تسريع+ حريص على بذل قصارى جهده لتسريع هاتفك ولن يقوم أبداً بجمع أي بيانات شخصية.</string>
 
     <string name="boost_plus_freeable">ذاكرة قابلة للتنظيف</string>
     <string name="promotion_security_title">الحماية الفائقة</string>
@@ -755,7 +754,6 @@
 
 
     <string name="online_wallpaper_tab_title_hot">ساخن</string>
-    <string name="launcher_widget_flashlight_promotion_title">الكشاف</string>
     <string name="online_theme_tab_title_hot">ساخن</string>
     <string name="locker_install_btn">تثبيت</string>
 
@@ -810,13 +808,11 @@
     <string name="yesterday">أمس</string>
     <string name="notification_cleaner_accessibility_description">اسمح بإذن الوصول لتنظيف الإخطارات غير المرغوب فيها!</string>
     
-    <string name="launcher_widget_one_tap_wallpaper_title">خلط</string>
     <string name="wallpaper_change_revert">العودة</string>
     <string name="wallpaper_change_retry">حاول مرة أخرى</string>
     <string name="wallpaper_change_network_error">عذراً! حدث خطأ ما، يرجى إعادة المحاولة.</string>
     <string name="upload_wallpaper">تحميل خلفية</string>
     <string name="upload_wallpaper_button_text">تحميل </string>
-    <string name="add_wallpaper">إضافة خلفية</string>
     <string name="desktop_grid_dialog_title">شبكة الشاشة (عمود × صف)</string>
     <string name="desktop_grid_settings_title">شبكة الشاشة</string>
     <string name="folder_add_button_title">إضافة تطبيقات</string>

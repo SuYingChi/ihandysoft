@@ -21,33 +21,33 @@ import com.ihs.keyboardutils.R;
 
 class AdLoadingDialog extends Dialog {
 
-
+    private Context context;
 
     public AdLoadingDialog(@NonNull Context context) {
         super(context, R.style.Theme_AppCompat_Light_Dialog);
-        init();
+        init(context);
     }
 
-    private void init() {
+    private void init(Context context) {
         setCanceledOnTouchOutside(false);
+        this.context = context;
     }
 
     public AdLoadingDialog(@NonNull Context context, @StyleRes int themeResId) {
         super(context, themeResId);
-        init();
-
+        init(context);
     }
 
     public AdLoadingDialog(@NonNull Context context, boolean cancelable, @Nullable OnCancelListener cancelListener) {
         super(context, cancelable, cancelListener);
-        init();
+        init(context);
     }
 
     @Override
     public void show() {
         try {
             Window window = getWindow();
-            if (!(getContext() instanceof Activity) && window != null) {
+            if (!(context instanceof Activity) && window != null) {
                 window.setLayout((int) (DisplayUtils.getDisplay().getWidth() * 0.96), window.getAttributes().height);
                 if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.M && !android.provider.Settings.canDrawOverlays(HSApplication.getContext())) {
                     window.setType(WindowManager.LayoutParams.TYPE_TOAST);
@@ -55,11 +55,13 @@ class AdLoadingDialog extends Dialog {
                     window.setType(WindowManager.LayoutParams.TYPE_SYSTEM_ERROR);
                 }
             }
-
             super.show();
         } catch (Exception e) {
             e.printStackTrace();
         }
 
+
     }
+
+
 }

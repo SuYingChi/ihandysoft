@@ -8,6 +8,7 @@ import android.net.ConnectivityManager;
 import com.ihs.commons.notificationcenter.HSGlobalNotificationCenter;
 import com.ihs.commons.utils.HSBundle;
 import com.ihs.commons.utils.HSLog;
+import com.ihs.feature.common.Utils;
 
 public class NetworkChangeReceiver extends BroadcastReceiver {
 

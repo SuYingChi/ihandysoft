@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.ihs.feature.common.CustomRootView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/view_container"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/launcher_settings_light_gray_bg"
+    android:clipChildren="false"
+    android:fitsSystemWindows="false">
+
+    <!-- Do not change container_view id -->
+    <LinearLayout
+        android:id="@+id/container_view"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@android:color/white"
+        android:orientation="vertical">
+
+        <include
+            android:id="@+id/action_bar"
+            layout="@layout/black_toolbar_container" />
+
+        <RelativeLayout
+            android:id="@+id/notification_cleaner_rl"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/air_launcher_settings_single_line_item_row_height"
+            android:background="@drawable/material_compat_bg"
+            android:clickable="true">
+
+            <ImageView
+                android:layout_width="24dp"
+                android:layout_height="wrap_content"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentStart="true"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="16dp"
+                android:layout_marginStart="16dp"
+                android:scaleType="fitCenter"
+                app:srcCompat="@drawable/launcher_settings_cleaner"
+                android:contentDescription="@string/app_name"/>
+
+            <com.ihs.feature.common.TypefacedTextView
+                style="@style/SettingsItem.SingleLine"
+                android:layout_marginLeft="72dp"
+                android:layout_marginStart="72dp"
+                android:text="@string/notification_cleaner_title"
+                app:typeface="@string/roboto_regular"/>
+
+        </RelativeLayout>
+    </LinearLayout>
+
+    <include layout="@layout/navigation_bar_bg" />
+</com.ihs.feature.common.CustomRootView>

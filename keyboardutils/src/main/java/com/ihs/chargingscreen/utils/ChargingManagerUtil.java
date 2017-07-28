@@ -136,8 +136,7 @@ public class ChargingManagerUtil {
 
 
 
-    public static void enableCharging(boolean startChagringActivity,String enableFrom) {
-        ChargingAnalytics.getInstance().chargingEnableOnce(enableFrom);
+    public static void enableCharging(boolean startChagringActivity) {
         ChargingPrefsUtil.getInstance().setChargingEnableByUser(true);
         HSChargingScreenManager.getInstance().start();
 
@@ -152,10 +151,9 @@ public class ChargingManagerUtil {
         context.startActivity(intent);
     }
 
-    public static void disableCharging(String from) {
+    public static void disableCharging() {
         HSChargingScreenManager.getInstance().stop();
         ChargingPrefsUtil.getInstance().setChargingEnableByUser(false);
-        ChargingAnalytics.getInstance().chargingDisableConfirmedOnce(from);
     }
 
 

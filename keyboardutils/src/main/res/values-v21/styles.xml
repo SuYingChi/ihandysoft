@@ -22,4 +22,9 @@
         <item name="android:colorForeground">@color/material_color_foreground</item>
         <item name="colorAccent">@color/material_color_accent</item>
     </style>
+
+    <style name="BoostPlusTheme" parent="AppCompatTheme">
+        <item name="colorAccent">@color/blue</item>
+        <item name="android:colorPrimary">#aaaaaa</item>
+    </style>
 </resources>

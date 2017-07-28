@@ -25,12 +25,9 @@ import android.widget.ImageView;
 import android.widget.SeekBar;
 
 import com.artw.lockscreen.LockerActivity;
-import com.ihs.keyboardutils.R;
-import com.artw.lockscreen.common.ConcurrentUtils;
 import com.artw.lockscreen.common.ConfigConstants;
 import com.artw.lockscreen.common.NavUtils;
 import com.artw.lockscreen.common.SystemSettingsManager;
-import com.artw.lockscreen.common.Utils;
 import com.artw.lockscreen.slidingdrawer.wallpaper.WallpaperBlurUtils;
 import com.ihs.app.analytics.HSAnalytics;
 import com.ihs.app.framework.HSApplication;
@@ -39,7 +36,10 @@ import com.ihs.commons.notificationcenter.HSGlobalNotificationCenter;
 import com.ihs.commons.notificationcenter.INotificationObserver;
 import com.ihs.commons.utils.HSBundle;
 import com.ihs.commons.utils.HSLog;
+import com.ihs.feature.common.ConcurrentUtils;
+import com.ihs.feature.common.Utils;
 import com.ihs.flashlight.FlashlightManager;
+import com.ihs.keyboardutils.R;
 
 import java.util.ArrayList;
 import java.util.HashMap;
