@@ -65,6 +65,7 @@ import com.ihs.keyboardutils.R;
 import com.ihs.keyboardutils.iap.RemoveAdsManager;
 import com.ihs.keyboardutils.utils.KCAnalyticUtil;
 import com.ihs.keyboardutils.utils.RippleDrawableUtils;
+import com.kc.commons.utils.KCCommonUtils;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -481,6 +482,7 @@ public class ChargingScreenActivity extends Activity {
             closeDialog.dismiss();
         }
         super.onDestroy();
+        KCCommonUtils.fixInputMethodManagerLeak(this);
     }
 
     private void updateTime(Calendar calendar) {

@@ -28,6 +28,7 @@ import com.ihs.feature.common.Thunk;
 import com.ihs.keyboardutils.R;
 import com.ihs.keyboardutils.utils.CommonUtils;
 import com.ihs.keyboardutils.utils.PublisherUtils;
+import com.kc.commons.utils.KCCommonUtils;
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.nostra13.universalimageloader.core.assist.FailReason;
@@ -161,6 +162,8 @@ public class LockerActivity extends AppCompatActivity implements INotificationOb
     protected void onDestroy() {
         super.onDestroy();
         HSGlobalNotificationCenter.removeObserver(this);
+
+        KCCommonUtils.fixInputMethodManagerLeak(this);
     }
 
 
