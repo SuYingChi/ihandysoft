@@ -5,14 +5,17 @@ import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.StyleRes;
+import android.text.TextUtils;
 import android.view.View;
 import android.view.Window;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.ihs.app.framework.HSApplication;
+import com.ihs.feature.ui.BackgroundViewAware;
 import com.ihs.keyboardutils.R;
 import com.ihs.keyboardutils.utils.KCAnalyticUtil;
+import com.nostra13.universalimageloader.core.ImageLoader;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
@@ -20,16 +23,16 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.Locale;
 
+import static com.artw.lockscreen.LockerActivity.PREF_KEY_CURRENT_WALLPAPER_HD_URL;
+
 /**
  * Created by yanxia on 2017/7/21.
  */
 
 public class LockerEnableDialog extends Dialog {
-
-    private ImageView exitButton;
     private TextView mTvTime;
     private TextView mTvDate;
-    private TextView enableButton;
+    private String bgUrl;
 
     public LockerEnableDialog(@NonNull Context context) {
         super(context, R.style.LockerEnableDialogTheme);
@@ -39,31 +42,47 @@ public class LockerEnableDialog extends Dialog {
         super(context, themeResId);
     }
 
+    public LockerEnableDialog(@NonNull Context context, String bgUrl) {
+        super(context, R.style.LockerEnableDialogTheme);
+        this.bgUrl = bgUrl;
+    }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        View rootView;
+        rootView = View.inflate(getContext(), R.layout.dialog_locker_enable, null);
+        if (!TextUtils.isEmpty(bgUrl)) {
+            ImageLoader.getInstance().displayImage(bgUrl, new BackgroundViewAware(rootView), LockerActivity.lockerBgOption);
+        }
+
         requestWindowFeature(Window.FEATURE_NO_TITLE);
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.dialog_locker_enable);
 
-        exitButton = (ImageView) findViewById(R.id.exit_btn);
+        setContentView(rootView);
+        ImageView exitButton = (ImageView) findViewById(R.id.exit_btn);
         exitButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 onBackPressed();
             }
         });
-        enableButton = (TextView) findViewById(R.id.enable_btn);
+        TextView enableButton = (TextView) findViewById(R.id.enable_btn);
         enableButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 KCAnalyticUtil.logEvent("keyboard_lockeralert_ok_clicked");
                 LockerSettings.setLockerEnabled(true);
+                if (!TextUtils.isEmpty(bgUrl)) {
+                    LockerSettings.getPref().putString(PREF_KEY_CURRENT_WALLPAPER_HD_URL, bgUrl);
+                }
                 onBackPressed();
             }
         });
         mTvTime = (TextView) findViewById(R.id.locker_enable_time_tv);
         mTvDate = (TextView) findViewById(R.id.locker_enable_data_tv);
         refreshClock();
+
+
     }
 
     private void refreshClock() {
@@ -89,5 +108,9 @@ public class LockerEnableDialog extends Dialog {
         super.show();
         KCAnalyticUtil.logEvent("keyboard_lockeralert_show");
         LockerSettings.addLockerEnableShowCount();
+    }
+
+    public static void loadLockerBg(String url) {
+        ImageLoader.getInstance().loadImage(url, LockerActivity.lockerBgOption, null);
     }
 }
