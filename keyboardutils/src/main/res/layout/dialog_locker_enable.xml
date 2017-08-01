@@ -7,12 +7,15 @@
 
     <ImageView
         android:id="@+id/exit_btn"
-        android:layout_width="16dp"
-        android:layout_height="16dp"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
         android:layout_alignParentRight="true"
         android:layout_alignParentTop="true"
         android:layout_marginRight="25dp"
         android:layout_marginTop="40dp"
+        android:background="?attr/selectableItemBackground"
+        android:padding="6dp"
+        android:scaleType="fitXY"
         android:src="@drawable/ic_lockscreen_enable_delete" />
 
     <com.ihs.feature.common.TypefacedTextView

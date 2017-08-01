@@ -5,8 +5,10 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Toast;
 
+import com.artw.lockscreen.LockerEnableDialog;
 import com.ihs.app.framework.HSApplication;
 import com.ihs.app.framework.activity.HSActivity;
+import com.ihs.app.framework.activity.HSAppCompatActivity;
 import com.ihs.keyboardutils.adbuffer.AdLoadingView;
 import com.ihs.keyboardutils.alerts.CustomUIRateAlert;
 import com.ihs.chargingscreen.activity.ChargingFullScreenAlertDialogActivity;
@@ -17,7 +19,7 @@ import com.ihs.keyboardutilslib.R;
  * Created by jixiang on 16/11/3.
  */
 
-public class CustomDesignAlertActivity extends HSActivity {
+public class CustomDesignAlertActivity extends HSAppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -135,5 +137,10 @@ public class CustomDesignAlertActivity extends HSActivity {
         adLoadingView.showInDialog();
         adLoadingView.startFakeLoading();
 
+    }
+
+    public void showLockerEnableDialog(View view) {
+        LockerEnableDialog lockerEnableDialog = new LockerEnableDialog(this);
+        lockerEnableDialog.show();
     }
 }

@@ -32,20 +32,16 @@ public class LockerEnableDialog extends Dialog {
     private TextView enableButton;
 
     public LockerEnableDialog(@NonNull Context context) {
-        super(context);
+        super(context, R.style.LockerEnableDialogTheme);
     }
 
     public LockerEnableDialog(@NonNull Context context, @StyleRes int themeResId) {
-        super(context, R.style.LockerEnableDialogTheme);
+        super(context, themeResId);
     }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         requestWindowFeature(Window.FEATURE_NO_TITLE);
-        Window window = getWindow();
-        if (window != null) {
-            window.setBackgroundDrawableResource(android.R.color.transparent); //很关键，使Dialog全屏展示
-        }
         super.onCreate(savedInstanceState);
         setContentView(R.layout.dialog_locker_enable);
 
