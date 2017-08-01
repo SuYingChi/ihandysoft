@@ -162,4 +162,8 @@ public class LockerSettings {
     private static int getLockerPlistState() {
         return HSConfig.optInteger(LOCKER_MUTED, "Application", "Locker", "state");
     }
+
+    public static boolean isUserTouchedLockerSettings() {
+        return getPref().contains(USER_ENABLED_LOCKER);
+    }
 }
