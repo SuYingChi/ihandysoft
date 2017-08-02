@@ -74,6 +74,7 @@ public class KCNotificationManager {
         public void onReceive(String s, HSBundle hsBundle) {
             if (s.equals(HSNotificationConstant.HS_CONFIG_CHANGED)) {
                 spHelper.putInt(PREFS_NEXT_NOTIFICATION_INDEX_IN_PLIST, 0);
+                scheduleNextEventTime();
             }
         }
     };

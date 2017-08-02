@@ -6,21 +6,6 @@
 	<dict>
 		<key>Application</key>
 		<dict>
-			<key>LocalNotificationsPushTime</key>
-			<array>
-				<integer>8</integer>
-				<integer>9</integer>
-				<integer>10</integer>
-				<integer>11</integer>
-				<integer>12</integer>
-				<integer>13</integer>
-				<integer>14</integer>
-				<integer>15</integer>
-				<string>16</string>
-				<string>17</string>
-				<string>18</string>
-				<string>19</string>
-			</array>
 			<key>LocalNotifications</key>
 			<array>
 				<dict>
@@ -28,7 +13,7 @@
 					<string>Charging</string>
 					<key>BgColor</key>
 					<string>#00FFFF</string>
-					<key>BgUrl</key>
+					<key>BgURL</key>
 					<string>http://cdn.appcloudbox.net/keyboardarts/download/App_Theme_preview_large/Panda.jpg</string>
 					<key>ButtonColor</key>
 					<string>#00BFFF</string>
@@ -47,7 +32,7 @@
 					<key>Name</key>
 					<string>com.keyboard.theme.panda</string>
 					<key>Style</key>
-					<integer>1</integer>
+					<integer>0</integer>
 					<key>Title</key>
 					<string>Smart Changing</string>
 					<key>TitleColor</key>
@@ -58,7 +43,7 @@
 					<string>Locker</string>
 					<key>BgColor</key>
 					<string>#00FFFF</string>
-					<key>BgUrl</key>
+					<key>BgURL</key>
 					<string>http://cdn.appcloudbox.net/keyboardarts/download/App_Theme_preview_large/Panda.jpg</string>
 					<key>ButtonColor</key>
 					<string>#00BFFF</string>
@@ -75,7 +60,7 @@
 					<key>Name</key>
 					<string>com.keyboard.theme.panda</string>
 					<key>Style</key>
-					<integer>1</integer>
+					<integer>0</integer>
 					<key>Title</key>
 					<string>Screen Locker</string>
 					<key>TitleColor</key>
@@ -105,7 +90,7 @@
 					<key>Name</key>
 					<string>com.keyboard.theme.panda</string>
 					<key>Style</key>
-					<integer>1</integer>
+					<integer>0</integer>
 					<key>Title</key>
 					<string>New theme Panda available!</string>
 					<key>TitleColor</key>
@@ -121,7 +106,7 @@
 						<string>Check out our NEW BG</string>
 					</array>
 					<key>Style</key>
-					<integer>1</integer>
+					<integer>0</integer>
 					<key>Title</key>
 					<string>New BG available!</string>
 				</dict>
@@ -133,7 +118,7 @@
 						<string>Turn On</string>
 					</array>
 					<key>Style</key>
-					<integer>1</integer>
+					<integer>0</integer>
 					<key>Title</key>
 					<string>Smart Changing2222</string>
 				</dict>
@@ -145,7 +130,7 @@
 						<string>Turn On</string>
 					</array>
 					<key>Style</key>
-					<integer>1</integer>
+					<integer>0</integer>
 					<key>Title</key>
 					<string>Screen Locker2222</string>
 				</dict>
@@ -161,7 +146,7 @@
 					<key>Name</key>
 					<string>com.keyboard.theme.kitty</string>
 					<key>Style</key>
-					<integer>1</integer>
+					<integer>0</integer>
 					<key>Title</key>
 					<string>New theme Kitty available!</string>
 				</dict>
@@ -169,32 +154,47 @@
 					<key>ActionType</key>
 					<string>CustomizedTheme</string>
 					<key>BgColor</key>
-					<string></string>
+					<string>#00FFFF</string>
 					<key>BgURL</key>
-					<string></string>
+					<string>http://cdn.appcloudbox.net/keyboardarts/download/App_Theme_preview_large/Panda.jpg</string>
 					<key>ButtonColor</key>
-					<string></string>
+					<string>#00BFFF</string>
 					<key>ButtonText</key>
-					<string>Check out</string>
+					<string>Download</string>
 					<key>ButtonTextColor</key>
-					<string></string>
+					<string>#0000FF</string>
 					<key>IconUrl</key>
-					<string></string>
+					<string>https://emojidevelop.s3.amazonaws.com/colorcam/push/icon/Sakura.png</string>
 					<key>Message</key>
 					<array>
 						<string>Check out our NEW BG</string>
 					</array>
 					<key>MessageColor</key>
-					<string></string>
+					<string>#F0E68C</string>
 					<key>Name</key>
-					<string></string>
+					<string>com.keyboard.theme.panda</string>
 					<key>Style</key>
-					<integer>1</integer>
+					<integer>0</integer>
 					<key>Title</key>
 					<string>New FONT available!</string>
 					<key>TitleColor</key>
-					<string></string>
+					<string>#FFFF00</string>
 				</dict>
+			</array>
+			<key>LocalNotificationsPushTime</key>
+			<array>
+				<integer>8</integer>
+				<integer>9</integer>
+				<integer>10</integer>
+				<integer>11</integer>
+				<integer>12</integer>
+				<integer>13</integer>
+				<integer>14</integer>
+				<integer>15</integer>
+				<string>16</string>
+				<string>17</string>
+				<string>18</string>
+				<string>19</string>
 			</array>
 			<key>AccessUsageAlert</key>
 			<dict>
