@@ -370,6 +370,10 @@ public class KCNotificationManager {
     }
 
     private NotificationBean getNextAvailableBean(List<Map<String, ?>> configs, List<String> finishedEvent, String recordedEvent, int nextNotificationIndex) {
+        if(nextNotificationIndex >= configs.size()){
+            return null;
+        }
+
         NotificationBean bean = null;
         try {
             Map<String, Object> value = (Map<String, Object>) configs.get(nextNotificationIndex);
