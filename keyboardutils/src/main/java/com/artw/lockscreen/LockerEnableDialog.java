@@ -2,6 +2,7 @@ package com.artw.lockscreen;
 
 import android.app.Dialog;
 import android.content.Context;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.StyleRes;
@@ -33,24 +34,38 @@ public class LockerEnableDialog extends Dialog {
     private TextView mTvTime;
     private TextView mTvDate;
     private String bgUrl;
+    private View rootView;
+
 
     public LockerEnableDialog(@NonNull Context context) {
         super(context, R.style.LockerEnableDialogTheme);
+        init();
+    }
+
+    private void init() {
+        rootView = View.inflate(getContext(), R.layout.dialog_locker_enable, null);
     }
 
     public LockerEnableDialog(@NonNull Context context, @StyleRes int themeResId) {
         super(context, themeResId);
+        init();
     }
 
     public LockerEnableDialog(@NonNull Context context, String bgUrl) {
         super(context, R.style.LockerEnableDialogTheme);
         this.bgUrl = bgUrl;
+        init();
+    }
+
+
+    public void setLockerBackgroundDrawable(Drawable drawable) {
+        if (TextUtils.isEmpty(bgUrl)) {
+            rootView.setBackgroundDrawable(drawable);
+        }
     }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        View rootView;
-        rootView = View.inflate(getContext(), R.layout.dialog_locker_enable, null);
         if (!TextUtils.isEmpty(bgUrl)) {
             ImageLoader.getInstance().displayImage(bgUrl, new BackgroundViewAware(rootView), LockerActivity.lockerBgOption);
         }
