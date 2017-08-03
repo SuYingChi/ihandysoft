@@ -51,12 +51,6 @@
                     android:layout_width="match_parent"
                     android:layout_height="@dimen/result_page_header_height"/>
 
-                <!-- Container for AD / charging screen only -->
-                <FrameLayout
-                    android:id="@+id/ad_or_charging_screen_view_container"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"/>
-
                 <android.support.v7.widget.RecyclerView
                     android:id="@+id/result_card_recycler_view"
                     android:layout_width="match_parent"
@@ -65,10 +59,14 @@
                     android:layout_marginRight="@dimen/result_page_card_margin"
                     android:layout_marginLeft="@dimen/result_page_card_margin"
                     android:theme="@style/Theme.CustomOverScroll" />
+
+                <!-- Container for AD / charging screen only -->
+                <FrameLayout
+                    android:id="@+id/ad_or_charging_screen_view_container"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"/>
             </RelativeLayout>
         </RelativeLayout>
-
-        <include layout="@layout/navigation_bar_bg"/>
 
     </com.ihs.feature.common.CustomRootView>
 </FrameLayout>
