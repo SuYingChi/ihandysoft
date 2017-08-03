@@ -1,11 +1,15 @@
 package com.artw.lockscreen;
 
+import android.app.Activity;
 import android.app.Dialog;
 import android.content.Context;
+import android.content.DialogInterface;
+import android.graphics.Bitmap;
+import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
-import android.support.annotation.StyleRes;
+import android.support.v7.app.AlertDialog;
 import android.text.TextUtils;
 import android.view.View;
 import android.view.Window;
@@ -13,10 +17,12 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.ihs.app.framework.HSApplication;
-import com.ihs.feature.ui.BackgroundViewAware;
 import com.ihs.keyboardutils.R;
+import com.ihs.keyboardutils.alerts.HSAlertDialog;
 import com.ihs.keyboardutils.utils.KCAnalyticUtil;
 import com.nostra13.universalimageloader.core.ImageLoader;
+import com.nostra13.universalimageloader.core.assist.FailReason;
+import com.nostra13.universalimageloader.core.listener.ImageLoadingListener;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
@@ -33,8 +39,11 @@ import static com.artw.lockscreen.LockerActivity.PREF_KEY_CURRENT_WALLPAPER_HD_U
 public class LockerEnableDialog extends Dialog {
     private TextView mTvTime;
     private TextView mTvDate;
-    private String bgUrl;
     private View rootView;
+
+    public interface OnLockerBgLoadingListener {
+        void onDialogDismiss();
+    }
 
 
     public LockerEnableDialog(@NonNull Context context) {
@@ -46,29 +55,19 @@ public class LockerEnableDialog extends Dialog {
         rootView = View.inflate(getContext(), R.layout.dialog_locker_enable, null);
     }
 
-    public LockerEnableDialog(@NonNull Context context, @StyleRes int themeResId) {
-        super(context, themeResId);
-        init();
-    }
-
-    public LockerEnableDialog(@NonNull Context context, String bgUrl) {
+    public LockerEnableDialog(@NonNull Context context, Drawable drawable) {
         super(context, R.style.LockerEnableDialogTheme);
-        this.bgUrl = bgUrl;
         init();
+        setLockerBackgroundDrawable(drawable);
     }
 
 
-    public void setLockerBackgroundDrawable(Drawable drawable) {
-        if (TextUtils.isEmpty(bgUrl)) {
-            rootView.setBackgroundDrawable(drawable);
-        }
+    private void setLockerBackgroundDrawable(Drawable drawable) {
+        rootView.setBackgroundDrawable(drawable);
     }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        if (!TextUtils.isEmpty(bgUrl)) {
-            ImageLoader.getInstance().displayImage(bgUrl, new BackgroundViewAware(rootView), LockerActivity.lockerBgOption);
-        }
 
         requestWindowFeature(Window.FEATURE_NO_TITLE);
         super.onCreate(savedInstanceState);
@@ -87,9 +86,6 @@ public class LockerEnableDialog extends Dialog {
             public void onClick(View v) {
                 KCAnalyticUtil.logEvent("keyboard_lockeralert_ok_clicked");
                 LockerSettings.setLockerEnabled(true);
-                if (!TextUtils.isEmpty(bgUrl)) {
-                    LockerSettings.getPref().putString(PREF_KEY_CURRENT_WALLPAPER_HD_URL, bgUrl);
-                }
                 onBackPressed();
             }
         });
@@ -125,7 +121,48 @@ public class LockerEnableDialog extends Dialog {
         LockerSettings.addLockerEnableShowCount();
     }
 
-    public static void loadLockerBg(String url) {
-        ImageLoader.getInstance().loadImage(url, LockerActivity.lockerBgOption, null);
+    public static void loadLockerBg(Activity activity, String url, OnLockerBgLoadingListener bgLoadingListener) {
+        if (TextUtils.isEmpty(url)) {
+            bgLoadingListener.onDialogDismiss();
+            return;
+        }
+
+        AlertDialog savingDialog = HSAlertDialog.build(activity).setView(R.layout.layout_dialog_applying).create();
+        savingDialog.setCanceledOnTouchOutside(false);
+        ImageLoader.getInstance().loadImage(url, LockerActivity.lockerBgOption, new ImageLoadingListener() {
+            @Override
+            public void onLoadingStarted(String imageUri, View view) {
+                savingDialog.show();
+            }
+
+            @Override
+            public void onLoadingFailed(String imageUri, View view, FailReason failReason) {
+                savingDialog.dismiss();
+                bgLoadingListener.onDialogDismiss();
+
+            }
+
+            @Override
+            public void onLoadingComplete(String imageUri, View view, Bitmap loadedImage) {
+                savingDialog.dismiss();
+                LockerEnableDialog lockerEnableDialog = new LockerEnableDialog(activity, new BitmapDrawable(activity.getResources(), loadedImage));
+                lockerEnableDialog.show();
+                LockerSettings.getPref().putString(PREF_KEY_CURRENT_WALLPAPER_HD_URL, url);
+
+                lockerEnableDialog.setOnDismissListener(new OnDismissListener() {
+                    @Override
+                    public void onDismiss(DialogInterface dialog) {
+                        bgLoadingListener.onDialogDismiss();
+                    }
+                });
+            }
+
+            @Override
+            public void onLoadingCancelled(String imageUri, View view) {
+                savingDialog.dismiss();
+                bgLoadingListener.onDialogDismiss();
+
+            }
+        });
     }
 }

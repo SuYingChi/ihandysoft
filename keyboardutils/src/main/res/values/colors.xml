@@ -135,5 +135,6 @@
     <color name="button_purple_pressed">#5d37bc</color>
 
     <color name="downloading_progress_foreground">#ff558cfc</color>
+    <color name="locker_enable_loading_dialog_color">#00d7ff</color>
 
 </resources>
