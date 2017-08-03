@@ -157,4 +157,8 @@ public class ChargingPrefsUtil {
     public static void setBatteryTipShown() {
         PreferenceHelper.getDefault().putBoolean(PREF_KEY_CHARGING_SCREEN_BATTERY_MENU_TIP_SHOWN, true);
     }
+
+    public static boolean isUserTouchedChargingSetting(){
+        return spHelper.contains(USER_ENABLED_CHARGING);
+    }
 }

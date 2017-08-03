@@ -77,6 +77,9 @@
     <color name="material_color_foreground">#cccccc</color>
 
     <color name="wallpaper_activities_control_highlight">#dadada</color>
+
+    <color name="notification_action_button_color">#006ff2</color>
+    <color name="notification_action_button_color_pressed">#228ff2</color>
     <color name="launcher_settings_light_gray_bg">#F6F6F6</color>
     <color name="black_primary">#DE000000</color>    <!-- 87% -->
     <color name="black_secondary">#89000000</color>    <!-- 54% -->

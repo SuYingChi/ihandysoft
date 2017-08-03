@@ -11,6 +11,6 @@ import android.content.Intent;
 public class NotificationExecutionReceiver extends BroadcastReceiver {
     @Override
     public void onReceive(Context context, Intent intent) {
-       KCNotificationManager.getInstance().scheduleNotify();
+       KCNotificationManager.getInstance().sendNotification();
     }
 }

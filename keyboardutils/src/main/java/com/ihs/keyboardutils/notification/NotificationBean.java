@@ -1,41 +1,89 @@
 package com.ihs.keyboardutils.notification;
 
-import android.support.annotation.NonNull;
+import android.graphics.Color;
+import android.text.TextUtils;
 
 import com.ihs.commons.utils.HSLog;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
+import java.util.Random;
 
 /**
  * Created by Arthur on 17/4/29.
  */
 
-public class NotificationBean implements Comparable<NotificationBean> {
+public class NotificationBean {
 
 
-    private int priority = 0;
-    private int maxShowCount = Integer.MAX_VALUE;
-    private int interval = 0;
-    private String message = "";
-    private String title = "";
-    private String event;
-
-    public NotificationBean(int priority, int maxShowCount, int interval, String message, String title) {
-        this.priority = priority;
-        this.maxShowCount = maxShowCount;
-        this.interval = interval;
-        this.message = message;
-        this.title = title;
-
+    @Override
+    public String toString() {
+        return "NotificationBean{" +
+                ", message=" + message +
+                ", title='" + title + '\'' +
+                ", iconUrl='" + iconUrl + '\'' +
+                ", bgUrl='" + bgUrl + '\'' +
+                ", name='" + name + '\'' +
+                ", actionType='" + actionType + '\'' +
+                '}';
     }
 
+    private List<String> message; //随机出其中一个描述
+    private String title = "";
+    private String iconUrl = "";
+    private String bgUrl = "";
+    private String name = ""; // 用于匹配是否已下载的对象
+    private String actionType = ""; //跳转对象类型
+    private String messageColor = "#99000000";
+    private String titleColor = "#000000";
+    private String buttonTextColor = "#ffffff";
+    private String buttonText = "CHECK";
+    private String bgColor = "#ffffff";
+    private int style = 0;
+
+
+    public void setMessage(List<String> message) {
+        this.message = message;
+    }
+
+    public void setTitle(String title) {
+        this.title = title;
+    }
+
+    public String getIconUrl() {
+        return iconUrl;
+    }
+
+    public String getBgUrl() {
+        return bgUrl;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public String getActionType() {
+        return actionType;
+    }
 
     public NotificationBean(Map<String, Object> value) {
-        priority = readIntConfig(value, "Priority", 0);
-        maxShowCount = readIntConfig(value, "MaxShowCount", 0);
-        interval = readIntConfig(value, "Interval", 0);
-        message = readStringConfig(value, "Message");
-        title = readStringConfig(value, "Title");
+        message = readStringListConfig(value, "Message");
+        title = readStringConfig(value, "Title", "");
+        iconUrl = readStringConfig(value, "IconUrl", "");
+        bgUrl = readStringConfig(value, "BgUrl", bgUrl);
+        name = readStringConfig(value, "Name", "");
+        actionType = readStringConfig(value, "ActionType", "");
+        buttonText = readStringConfig(value, "ButtonText", buttonText);
+        buttonTextColor = readStringConfig(value, "ButtonTextColor", buttonTextColor);
+        titleColor = readStringConfig(value, "TitleColor", titleColor);
+        messageColor = readStringConfig(value, "MessageColor", messageColor);
+        bgColor = readStringConfig(value, "BgColor", bgColor);
+        style = readIntConfig(value, "Style", 0);
     }
 
 
@@ -49,58 +97,81 @@ public class NotificationBean implements Comparable<NotificationBean> {
         return item;
     }
 
-    private String readStringConfig(Map<String, Object> configs, String key) {
+    private String readStringConfig(Map<String, Object> configs, String key, String defaultString) {
         String item = "";
         try {
             item = (String) configs.get(key);
         } catch (Exception e) {
             HSLog.e(key + " config reading error giving default value ==> empty string");
         }
+        if (TextUtils.isEmpty(item)) {
+            item = defaultString;
+        }
         return item;
     }
 
-    public int getPriority() {
-        return priority;
+
+    private List<String> readStringListConfig(Map<String, Object> configs, String key) {
+        List<String> list = null;
+        try {
+            list = (List<String>) configs.get(key);
+        } catch (Exception e) {
+            HSLog.e(key + " config reading error giving default value ==> empty List");
+        }
+        if (list == null) {
+            list = new ArrayList<>();
+        }
+        return list;
     }
 
-    public int getMaxShowCount() {
-        return maxShowCount;
+    private List<Float> readFloatListConfig(Map<String, Object> configs, String key) {
+        List<Float> list = null;
+        try {
+            list = (List<Float>) configs.get(key);
+        } catch (Exception e) {
+            HSLog.e(key + " config reading error giving default value ==> empty List");
+        }
+        if (list == null) {
+            list = new ArrayList<>();
+        }
+        return list;
     }
 
-    public int getInterval() {
-        return interval;
-    }
 
     public String getMessage() {
-        return message;
+        if (message.size() > 0) {
+            return message.get(new Random().nextInt(message.size()));
+        } else return "";
     }
 
     public String getTitle() {
         return title;
     }
 
-    @Override
-    public int compareTo(@NonNull NotificationBean o) {
-        return o.getPriority() - priority;
+    public String getSPKey() {
+        return actionType + "|" + name;
     }
 
-
-    @Override
-    public String toString() {
-        return "NotificationBean{" +
-                "priority=" + priority +
-                ", maxShowCount=" + maxShowCount +
-                ", interval=" + interval +
-                ", message='" + message + '\'' +
-                ", title='" + title + '\'' +
-                '}';
+    public int getMessageColor() {
+        return Color.parseColor(messageColor);
     }
 
-    public String getEvent() {
-        return event;
+    public int getTitleColor() {
+        return Color.parseColor(titleColor);
     }
 
-    public void setEvent(String event) {
-        this.event = event;
+    public int getButtonTextColor() {
+        return Color.parseColor(buttonTextColor);
+    }
+
+    public String getButtonText() {
+        return buttonText;
+    }
+
+    public int getBgColor() {
+        return Color.parseColor(bgColor);
+    }
+    public int getStyle() {
+        return style;
     }
 }
