@@ -192,9 +192,9 @@ public class InterstitialGiftActivity extends Activity {
         setInterstitialAdDisplayPosition();
 
         // add to window.
-        mInterstitialAdContainer.addView(mInterstitialAdDisplayContent);
-        mInterstitialAdContainer.addView(mInterstitialAdRefreshContent);
         mInterstitialAdContainer.addView(mInterstitialAdAnimContent);
+        mInterstitialAdContainer.addView(mInterstitialAdRefreshContent);
+        mInterstitialAdContainer.addView(mInterstitialAdDisplayContent);
         mInterstitialAdContainer.setVisibility(View.VISIBLE);
         mInterstitialAdWindow.setVisibility(View.GONE);
     }
