@@ -30,8 +30,6 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.Locale;
 
-import static com.artw.lockscreen.LockerActivity.PREF_KEY_CURRENT_WALLPAPER_HD_URL;
-
 /**
  * Created by yanxia on 2017/7/21.
  */
@@ -42,14 +40,9 @@ public class LockerEnableDialog extends Dialog {
     private View rootView;
 
     public interface OnLockerBgLoadingListener {
-        void onDialogDismiss();
+        void onFinish();
     }
 
-
-    public LockerEnableDialog(@NonNull Context context) {
-        super(context, R.style.LockerEnableDialogTheme);
-        init();
-    }
 
     private void init() {
         rootView = View.inflate(getContext(), R.layout.dialog_locker_enable, null);
@@ -58,11 +51,6 @@ public class LockerEnableDialog extends Dialog {
     public LockerEnableDialog(@NonNull Context context, Drawable drawable) {
         super(context, R.style.LockerEnableDialogTheme);
         init();
-        setLockerBackgroundDrawable(drawable);
-    }
-
-
-    private void setLockerBackgroundDrawable(Drawable drawable) {
         rootView.setBackgroundDrawable(drawable);
     }
 
@@ -121,9 +109,9 @@ public class LockerEnableDialog extends Dialog {
         LockerSettings.addLockerEnableShowCount();
     }
 
-    public static void loadLockerBg(Activity activity, String url, OnLockerBgLoadingListener bgLoadingListener) {
+    public static void showLockerEnableDialog(Activity activity, String url, OnLockerBgLoadingListener bgLoadingListener) {
         if (TextUtils.isEmpty(url)) {
-            bgLoadingListener.onDialogDismiss();
+            bgLoadingListener.onFinish();
             return;
         }
 
@@ -138,7 +126,7 @@ public class LockerEnableDialog extends Dialog {
             @Override
             public void onLoadingFailed(String imageUri, View view, FailReason failReason) {
                 savingDialog.dismiss();
-                bgLoadingListener.onDialogDismiss();
+                bgLoadingListener.onFinish();
 
             }
 
@@ -147,12 +135,12 @@ public class LockerEnableDialog extends Dialog {
                 savingDialog.dismiss();
                 LockerEnableDialog lockerEnableDialog = new LockerEnableDialog(activity, new BitmapDrawable(activity.getResources(), loadedImage));
                 lockerEnableDialog.show();
-                LockerSettings.getPref().putString(PREF_KEY_CURRENT_WALLPAPER_HD_URL, url);
+                LockerSettings.setLockerBgUrl(url);
 
                 lockerEnableDialog.setOnDismissListener(new OnDismissListener() {
                     @Override
                     public void onDismiss(DialogInterface dialog) {
-                        bgLoadingListener.onDialogDismiss();
+                        bgLoadingListener.onFinish();
                     }
                 });
             }
@@ -160,7 +148,7 @@ public class LockerEnableDialog extends Dialog {
             @Override
             public void onLoadingCancelled(String imageUri, View view) {
                 savingDialog.dismiss();
-                bgLoadingListener.onDialogDismiss();
+                bgLoadingListener.onFinish();
 
             }
         });

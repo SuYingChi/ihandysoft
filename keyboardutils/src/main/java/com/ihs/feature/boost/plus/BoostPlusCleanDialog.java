@@ -582,7 +582,7 @@ public class BoostPlusCleanDialog extends FullScreenDialog {
     }
 
     private void onDialogDismiss() {
-        HSLog.d(TAG, "onDialogDismiss mCleanResult = " + mCleanResult + " mIsStartGetPermission = " + mIsStartGetPermission);
+        HSLog.d(TAG, "onFinish mCleanResult = " + mCleanResult + " mIsStartGetPermission = " + mIsStartGetPermission);
 
         // Notify underlying result page to start its animations
         HSBundle resultPageAction = new HSBundle();
