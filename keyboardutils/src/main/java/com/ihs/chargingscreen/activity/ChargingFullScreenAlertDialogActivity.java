@@ -5,10 +5,12 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.text.TextUtils;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
 
+import com.acb.autopilot.AutopilotEvent;
 import com.ihs.app.framework.HSApplication;
 import com.ihs.charging.HSChargingManager;
 import com.ihs.chargingscreen.utils.ChargingManagerUtil;
@@ -31,6 +33,7 @@ public class ChargingFullScreenAlertDialogActivity extends Activity {
     public static final String NOTIFICATION_LOCKER_ENABLED = "notification_locker_enabled";
 
     private String alertType;
+    private String topicID;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -41,6 +44,7 @@ public class ChargingFullScreenAlertDialogActivity extends Activity {
 
         super.onCreate(savedInstanceState);
         Intent intent = getIntent();
+        topicID = intent.getStringExtra("topicID");
         if (intent != null) {
             alertType= intent.getStringExtra("type");
             switch (alertType) {
@@ -93,6 +97,15 @@ public class ChargingFullScreenAlertDialogActivity extends Activity {
                 .setPositiveButton(chargingMap.get("Button"), new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
+                        if (!TextUtils.isEmpty(topicID)) {
+                            /**
+                             *  上传日志: topicID - ok_click
+                             *  ---------------------------------------------
+                             *  Topic.Event 名称:     ok_click
+                             *  Topic.Event 描述:     ok button click(set charging successfully)
+                             */
+                            AutopilotEvent.logTopicEvent(topicID, "ok_click");
+                        }
                         ChargingManagerUtil.enableCharging(HSChargingManager.getInstance().getChargingState() != HSChargingManager.HSChargingState.STATE_DISCHARGING);
                         KCAnalyticUtil.logEvent("alert_charging_click");
                     }
