@@ -1,10 +1,16 @@
 package com.artw.lockscreen;
 
+import android.app.Activity;
 import android.app.Dialog;
 import android.content.Context;
+import android.content.DialogInterface;
+import android.graphics.Bitmap;
+import android.graphics.drawable.BitmapDrawable;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
-import android.support.annotation.StyleRes;
+import android.support.v7.app.AlertDialog;
+import android.text.TextUtils;
 import android.view.View;
 import android.view.Window;
 import android.widget.ImageView;
@@ -12,7 +18,11 @@ import android.widget.TextView;
 
 import com.ihs.app.framework.HSApplication;
 import com.ihs.keyboardutils.R;
+import com.ihs.keyboardutils.alerts.HSAlertDialog;
 import com.ihs.keyboardutils.utils.KCAnalyticUtil;
+import com.nostra13.universalimageloader.core.ImageLoader;
+import com.nostra13.universalimageloader.core.assist.FailReason;
+import com.nostra13.universalimageloader.core.listener.ImageLoadingListener;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
@@ -25,34 +35,40 @@ import java.util.Locale;
  */
 
 public class LockerEnableDialog extends Dialog {
-
-    private ImageView exitButton;
     private TextView mTvTime;
     private TextView mTvDate;
-    private TextView enableButton;
+    private View rootView;
 
-    public LockerEnableDialog(@NonNull Context context) {
-        super(context, R.style.LockerEnableDialogTheme);
+    public interface OnLockerBgLoadingListener {
+        void onFinish();
     }
 
-    public LockerEnableDialog(@NonNull Context context, @StyleRes int themeResId) {
-        super(context, themeResId);
+
+    private void init() {
+        rootView = View.inflate(getContext(), R.layout.dialog_locker_enable, null);
+    }
+
+    public LockerEnableDialog(@NonNull Context context, Drawable drawable) {
+        super(context, R.style.LockerEnableDialogTheme);
+        init();
+        rootView.setBackgroundDrawable(drawable);
     }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+
         requestWindowFeature(Window.FEATURE_NO_TITLE);
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.dialog_locker_enable);
 
-        exitButton = (ImageView) findViewById(R.id.exit_btn);
+        setContentView(rootView);
+        ImageView exitButton = (ImageView) findViewById(R.id.exit_btn);
         exitButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 onBackPressed();
             }
         });
-        enableButton = (TextView) findViewById(R.id.enable_btn);
+        TextView enableButton = (TextView) findViewById(R.id.enable_btn);
         enableButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -64,6 +80,8 @@ public class LockerEnableDialog extends Dialog {
         mTvTime = (TextView) findViewById(R.id.locker_enable_time_tv);
         mTvDate = (TextView) findViewById(R.id.locker_enable_data_tv);
         refreshClock();
+
+
     }
 
     private void refreshClock() {
@@ -89,5 +107,50 @@ public class LockerEnableDialog extends Dialog {
         super.show();
         KCAnalyticUtil.logEvent("keyboard_lockeralert_show");
         LockerSettings.addLockerEnableShowCount();
+    }
+
+    public static void showLockerEnableDialog(Activity activity, String url, OnLockerBgLoadingListener bgLoadingListener) {
+        if (TextUtils.isEmpty(url)) {
+            bgLoadingListener.onFinish();
+            return;
+        }
+
+        AlertDialog savingDialog = HSAlertDialog.build(activity).setView(R.layout.layout_dialog_applying).create();
+        savingDialog.setCanceledOnTouchOutside(false);
+        ImageLoader.getInstance().loadImage(url, LockerActivity.lockerBgOption, new ImageLoadingListener() {
+            @Override
+            public void onLoadingStarted(String imageUri, View view) {
+                savingDialog.show();
+            }
+
+            @Override
+            public void onLoadingFailed(String imageUri, View view, FailReason failReason) {
+                savingDialog.dismiss();
+                bgLoadingListener.onFinish();
+
+            }
+
+            @Override
+            public void onLoadingComplete(String imageUri, View view, Bitmap loadedImage) {
+                savingDialog.dismiss();
+                LockerEnableDialog lockerEnableDialog = new LockerEnableDialog(activity, new BitmapDrawable(activity.getResources(), loadedImage));
+                lockerEnableDialog.show();
+                LockerSettings.setLockerBgUrl(url);
+
+                lockerEnableDialog.setOnDismissListener(new OnDismissListener() {
+                    @Override
+                    public void onDismiss(DialogInterface dialog) {
+                        bgLoadingListener.onFinish();
+                    }
+                });
+            }
+
+            @Override
+            public void onLoadingCancelled(String imageUri, View view) {
+                savingDialog.dismiss();
+                bgLoadingListener.onFinish();
+
+            }
+        });
     }
 }

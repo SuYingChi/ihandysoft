@@ -7,11 +7,10 @@ import android.widget.Toast;
 
 import com.artw.lockscreen.LockerEnableDialog;
 import com.ihs.app.framework.HSApplication;
-import com.ihs.app.framework.activity.HSActivity;
 import com.ihs.app.framework.activity.HSAppCompatActivity;
+import com.ihs.chargingscreen.activity.ChargingFullScreenAlertDialogActivity;
 import com.ihs.keyboardutils.adbuffer.AdLoadingView;
 import com.ihs.keyboardutils.alerts.CustomUIRateAlert;
-import com.ihs.chargingscreen.activity.ChargingFullScreenAlertDialogActivity;
 import com.ihs.keyboardutils.alerts.KCAlert;
 import com.ihs.keyboardutilslib.R;
 
@@ -140,7 +139,10 @@ public class CustomDesignAlertActivity extends HSAppCompatActivity {
     }
 
     public void showLockerEnableDialog(View view) {
-        LockerEnableDialog lockerEnableDialog = new LockerEnableDialog(this);
-        lockerEnableDialog.show();
+        LockerEnableDialog.showLockerEnableDialog(this, "http://pic1.win4000.com/wallpaper/5/587d8cc476942.jpg", new LockerEnableDialog.OnLockerBgLoadingListener() {
+            @Override
+            public void onFinish() {
+            }
+        });
     }
 }

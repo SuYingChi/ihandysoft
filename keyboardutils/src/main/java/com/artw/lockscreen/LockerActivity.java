@@ -56,7 +56,7 @@ public class LockerActivity extends AppCompatActivity implements INotificationOb
     ViewPager mViewPager;
     private LockerAdapter mLockerAdapter;
     private ImageView mLockerWallpaper;
-    private DisplayImageOptions mOption = new DisplayImageOptions.Builder()
+    public static DisplayImageOptions lockerBgOption = new DisplayImageOptions.Builder()
             .cacheOnDisk(true)
             .considerExifParams(true)
             .imageScaleType(ImageScaleType.EXACTLY)
@@ -170,7 +170,7 @@ public class LockerActivity extends AppCompatActivity implements INotificationOb
     private void initLockerWallpaper() {
         String wallpaperUrl = LockerSettings.getPref().getString(PREF_KEY_CURRENT_WALLPAPER_HD_URL, "");
         if (!TextUtils.isEmpty(wallpaperUrl)) {
-            ImageLoader.getInstance().loadImage(wallpaperUrl, mOption, new ImageLoadingListener() {
+            ImageLoader.getInstance().loadImage(wallpaperUrl, lockerBgOption, new ImageLoadingListener() {
                 @Override
                 public void onLoadingStarted(String s, View view) {
 

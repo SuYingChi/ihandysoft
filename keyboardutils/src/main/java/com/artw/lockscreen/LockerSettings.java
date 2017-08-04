@@ -10,6 +10,8 @@ import com.ihs.keyboardutils.R;
 import com.ihs.keyboardutils.iap.RemoveAdsManager;
 import com.ihs.keyboardutils.utils.PublisherUtils;
 
+import static com.artw.lockscreen.LockerActivity.PREF_KEY_CURRENT_WALLPAPER_HD_URL;
+
 
 public class LockerSettings {
 
@@ -165,5 +167,13 @@ public class LockerSettings {
 
     public static boolean isUserTouchedLockerSettings() {
         return getPref().contains(USER_ENABLED_LOCKER);
+    }
+
+    public static void setLockerBgUrl(String url) {
+        getPref().putString(PREF_KEY_CURRENT_WALLPAPER_HD_URL, url);
+    }
+
+    public static String getLockerBgUrl() {
+        return getPref().getString(PREF_KEY_CURRENT_WALLPAPER_HD_URL, "");
     }
 }
