@@ -13,6 +13,7 @@ import android.support.v7.app.AlertDialog;
 import android.text.TextUtils;
 import android.view.View;
 import android.view.Window;
+import android.view.WindowManager;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -39,6 +40,8 @@ public class LockerEnableDialog extends Dialog {
     private TextView mTvDate;
     private View rootView;
 
+    private Context context;
+
     public interface OnLockerBgLoadingListener {
         void onFinish();
     }
@@ -50,6 +53,7 @@ public class LockerEnableDialog extends Dialog {
 
     public LockerEnableDialog(@NonNull Context context, Drawable drawable) {
         super(context, R.style.LockerEnableDialogTheme);
+        this.context = context;
         init();
         rootView.setBackgroundDrawable(drawable);
     }
@@ -104,18 +108,30 @@ public class LockerEnableDialog extends Dialog {
      */
     @Override
     public void show() {
-        super.show();
+        try {
+            if (!(context instanceof Activity)) {
+                if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.M && !android.provider.Settings.canDrawOverlays(HSApplication.getContext())) {
+                    getWindow().setType(WindowManager.LayoutParams.TYPE_TOAST);
+                } else {
+                    getWindow().setType(WindowManager.LayoutParams.TYPE_SYSTEM_ALERT);
+                }
+            }
+            super.show();
+        } catch (Exception ex) {
+
+        }
+
         KCAnalyticUtil.logEvent("keyboard_lockeralert_show");
         LockerSettings.addLockerEnableShowCount();
     }
 
-    public static void showLockerEnableDialog(Activity activity, String url, OnLockerBgLoadingListener bgLoadingListener) {
+    public static void showLockerEnableDialog(Context activity, String url, OnLockerBgLoadingListener bgLoadingListener) {
         if (TextUtils.isEmpty(url)) {
             bgLoadingListener.onFinish();
             return;
         }
 
-        AlertDialog savingDialog = HSAlertDialog.build(activity).setView(R.layout.layout_dialog_applying).create();
+        AlertDialog savingDialog = HSAlertDialog.build(activity,0).setView(R.layout.layout_dialog_applying).setCancelable(false).create();
         savingDialog.setCanceledOnTouchOutside(false);
         ImageLoader.getInstance().loadImage(url, LockerActivity.lockerBgOption, new ImageLoadingListener() {
             @Override
