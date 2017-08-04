@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/root_view"
     style="@style/TextAppearance.AppCompat.Notification"
@@ -26,10 +27,10 @@
             android:id="@+id/notification_icon"
             android:layout_width="42dp"
             android:layout_height="42dp"
-            android:layout_marginLeft="6dp"
-            android:layout_marginStart="6dp"
+            android:layout_marginLeft="12dp"
+            android:layout_marginStart="12dp"
             android:scaleType="centerCrop"
-            android:src="@drawable/charger_notification_icon" />
+            app:srcCompat="@drawable/charger_notification_icon" />
 
         <LinearLayout
             android:layout_width="0dp"
@@ -96,20 +97,15 @@
 
         <TextView
             android:id="@+id/notification_action"
-            android:layout_width="wrap_content"
-            android:layout_height="34dp"
-            android:layout_gravity="center_vertical"
-            android:layout_marginEnd="6dp"
-            android:layout_marginRight="6dp"
-            android:background="@drawable/selector_ripple_round_conor_blue"
-            android:fontFamily="@string/font_robot_medium"
+            android:layout_width="60dp"
+            android:layout_height="30dp"
+            android:layout_gravity="center"
+            android:layout_marginEnd="16dp"
+            android:layout_marginRight="16dp"
+            android:background="@drawable/notification_action_bg"
             android:gravity="center"
-            android:minWidth="65dp"
-            android:paddingLeft="8dp"
-            android:paddingRight="8dp"
-            android:text="@string/enable"
             android:textColor="@android:color/white"
-            android:textSize="12sp" />
-
+            android:textSize="12sp"
+            tools:text="@string/boost_notification_low_ram_btn" />
     </LinearLayout>
 </FrameLayout>
