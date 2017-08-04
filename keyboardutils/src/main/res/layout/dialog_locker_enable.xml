@@ -58,12 +58,12 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
-            android:layout_marginTop="15dp"
+            android:layout_marginTop="20dp"
             android:lines="2"
             android:text="          Applied successfully!\nSet as your lockscreen as well?"
             android:textColor="@android:color/white"
-            android:textSize="15sp"
-            app:typeface="@string/roboto_regular" />
+            android:textSize="18sp"
+            app:typeface="@string/roboto_medium" />
 
         <com.ihs.feature.common.TypefacedTextView
             android:id="@+id/enable_btn"
@@ -73,7 +73,7 @@
             android:layout_marginBottom="15dp"
             android:layout_marginLeft="32dp"
             android:layout_marginRight="32dp"
-            android:layout_marginTop="15dp"
+            android:layout_marginTop="20dp"
             android:background="@drawable/selector_blue_btn"
             android:gravity="center"
             android:maxLines="1"
