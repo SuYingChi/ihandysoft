@@ -298,7 +298,7 @@ public class KCNotificationManager {
 
                 //如果没有任何需要网络加载的直接发送。
                 if (requestCount == 0) {
-                    tryToNotify(mBuilder, beanCopy);
+                    tryToNotify(mBuilder.setContent(contentView), beanCopy);
                 } else {
                     final int[] imgRequestCompleteCount = {requestCount};
 
@@ -370,7 +370,7 @@ public class KCNotificationManager {
     }
 
     private NotificationBean getNextAvailableBean(List<Map<String, ?>> configs, List<String> finishedEvent, String recordedEvent, int nextNotificationIndex) {
-        if(nextNotificationIndex >= configs.size()){
+        if (nextNotificationIndex >= configs.size()) {
             return null;
         }
 
@@ -390,7 +390,7 @@ public class KCNotificationManager {
             }
         }
 
-        if (!TextUtils.isEmpty(bean.getName()) && finishedEvent.contains(bean.getSPKey())) {
+        if (!bean.isRepeat() && finishedEvent.contains(bean.getSPKey())) {
             return getNextAvailableBean(configs, finishedEvent, recordedEvent, ++nextNotificationIndex);
         }
 
@@ -443,7 +443,7 @@ public class KCNotificationManager {
             manager.notify(notificationBean.getActionType(), NOTIFICATION_ID, mBuilder.build());
             switch (notificationBean.getActionType()) {
                 default:
-                    if (!TextUtils.isEmpty(notificationBean.getName())) {
+                    if (!notificationBean.isRepeat()) {
                         String finishedEvents = spHelper.getString(PREFS_FINISHED_EVENT, "");
                         spHelper.putString(PREFS_FINISHED_EVENT, finishedEvents + notificationBean.getSPKey() + ",");
                     }

@@ -40,6 +40,7 @@ public class NotificationBean {
     private String buttonTextColor = "#ffffff";
     private String buttonText = "CHECK";
     private String bgColor = "#ffffff";
+    private Boolean repeat;
     private int style = 0;
 
 
@@ -84,6 +85,7 @@ public class NotificationBean {
         messageColor = readStringConfig(value, "MessageColor", messageColor);
         bgColor = readStringConfig(value, "BgColor", bgColor);
         style = readIntConfig(value, "Style", 0);
+        repeat = readBooleanConfig(value, "Repeat", false);
     }
 
 
@@ -96,6 +98,17 @@ public class NotificationBean {
         }
         return item;
     }
+
+    private boolean readBooleanConfig(Map<String, Object> configs, String key, boolean defaultValue) {
+        boolean item = defaultValue;
+        try {
+            item = (boolean) configs.get(key);
+        } catch (Exception e) {
+            HSLog.e(key + " config reading error giving default value ==> " + defaultValue);
+        }
+        return item;
+    }
+
 
     private String readStringConfig(Map<String, Object> configs, String key, String defaultString) {
         String item = "";
@@ -171,7 +184,12 @@ public class NotificationBean {
     public int getBgColor() {
         return Color.parseColor(bgColor);
     }
+
     public int getStyle() {
         return style;
+    }
+
+    public Boolean isRepeat() {
+        return repeat;
     }
 }

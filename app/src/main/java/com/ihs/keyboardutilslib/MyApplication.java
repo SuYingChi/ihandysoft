@@ -1,7 +1,6 @@
 package com.ihs.keyboardutilslib;
 
 import android.content.Context;
-import android.content.Intent;
 import android.support.multidex.MultiDex;
 import android.text.TextUtils;
 
@@ -16,7 +15,6 @@ import com.ihs.commons.notificationcenter.INotificationObserver;
 import com.ihs.commons.utils.HSBundle;
 import com.ihs.commons.utils.HSLog;
 import com.ihs.feature.battery.BatteryActivity;
-import com.ihs.feature.boost.BoostActivity;
 import com.ihs.feature.boost.plus.BoostPlusActivity;
 import com.ihs.feature.cpucooler.CpuCoolerScanActivity;
 import com.ihs.feature.notification.NotificationManager;
@@ -26,8 +24,6 @@ import com.nostra13.universalimageloader.core.ImageLoader;
 import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
 import com.nostra13.universalimageloader.core.assist.QueueProcessingType;
 import com.squareup.leakcanary.LeakCanary;
-
-import java.util.ArrayList;
 
 
 /**
