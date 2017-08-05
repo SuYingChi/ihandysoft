@@ -33,7 +33,6 @@ public class ChargingFullScreenAlertDialogActivity extends Activity {
     public static final String NOTIFICATION_LOCKER_ENABLED = "notification_locker_enabled";
 
     private String alertType;
-    private String topicID;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -44,7 +43,6 @@ public class ChargingFullScreenAlertDialogActivity extends Activity {
 
         super.onCreate(savedInstanceState);
         Intent intent = getIntent();
-        topicID = intent.getStringExtra("topicID");
         if (intent != null) {
             alertType= intent.getStringExtra("type");
             switch (alertType) {
@@ -74,6 +72,7 @@ public class ChargingFullScreenAlertDialogActivity extends Activity {
                 .setPositiveButton(chargingMap.get("Button"), new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
+                        autopilotLogTopicEvent();
                         HSGlobalNotificationCenter.sendNotification(NOTIFICATION_LOCKER_ENABLED);
                     }
                 })
@@ -97,15 +96,7 @@ public class ChargingFullScreenAlertDialogActivity extends Activity {
                 .setPositiveButton(chargingMap.get("Button"), new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
-                        if (!TextUtils.isEmpty(topicID)) {
-                            /**
-                             *  上传日志: topicID - ok_click
-                             *  ---------------------------------------------
-                             *  Topic.Event 名称:     ok_click
-                             *  Topic.Event 描述:     ok button click(set charging successfully)
-                             */
-                            AutopilotEvent.logTopicEvent(topicID, "ok_click");
-                        }
+                        autopilotLogTopicEvent();
                         ChargingManagerUtil.enableCharging(HSChargingManager.getInstance().getChargingState() != HSChargingManager.HSChargingState.STATE_DISCHARGING);
                         KCAnalyticUtil.logEvent("alert_charging_click");
                     }
@@ -119,6 +110,17 @@ public class ChargingFullScreenAlertDialogActivity extends Activity {
                 .setFullScreen(true)
                 .setAdText(chargingMap.get("AdText"))
                 .show();
+    }
+
+    private void autopilotLogTopicEvent() {
+        Intent intent = getIntent();
+        if(intent != null) {
+            String topicID = intent.getStringExtra("topicID");
+            String topicEvent = intent.getStringExtra("topicEvent");
+            if (!TextUtils.isEmpty(topicID) && !TextUtils.isEmpty(topicEvent)) {
+                AutopilotEvent.logTopicEvent(topicID, topicEvent);
+            }
+        }
     }
 
     private Map<String, String> getAlertConfigMap(String keyLowercase){

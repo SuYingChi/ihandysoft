@@ -71,8 +71,6 @@ dependencies {
 
     //autopilot
     compile "com.acb.autopilot:autopilot.beta:4.1.2.beta01"
-    compile 'com.ihandy.common:libCommon.gm:4.1.0.+'
-    compile 'com.google.code.gson:gson:2.8.1'
 
     compile files('../libs/ihs/libFlashlight/libFlashlight.jar')
     compile("com.android.support:support-v4:${rootProject.ext.supportVersion}")
