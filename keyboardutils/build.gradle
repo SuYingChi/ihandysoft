@@ -69,6 +69,9 @@ dependencies {
         transitive = false //由于AppFramework中也包含Flurry, 所以需要在这里去除引用传递
     }
 
+    //autopilot
+    compile "com.acb.autopilot:autopilot.beta:4.1.2.beta01"
+
     compile files('../libs/ihs/libFlashlight/libFlashlight.jar')
     compile("com.android.support:support-v4:${rootProject.ext.supportVersion}")
     compile("com.android.support:gridlayout-v7:${rootProject.ext.supportVersion}")
