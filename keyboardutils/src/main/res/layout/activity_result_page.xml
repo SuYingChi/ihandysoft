@@ -62,6 +62,7 @@
 
                 <!-- Container for AD / charging screen only -->
                 <FrameLayout
+                    android:layout_below="@id/result_header_tag_view"
                     android:id="@+id/ad_or_charging_screen_view_container"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"/>

@@ -4,6 +4,7 @@ import android.content.Context;
 import android.support.multidex.MultiDex;
 import android.text.TextUtils;
 
+import com.acb.nativeads.AcbNativeAdManager;
 import com.artw.lockscreen.ScreenLockerManager;
 import com.ihs.app.alerts.HSAlertMgr;
 import com.ihs.app.framework.HSApplication;
@@ -78,6 +79,8 @@ public class MyApplication extends HSApplication {
                 return false;
             }
         },true);
+
+        AcbNativeAdManager.sharedInstance().activePlacementInProcess(getString(R.string.ad_placement_result_page));
     }
 
 

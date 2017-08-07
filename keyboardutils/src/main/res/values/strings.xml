@@ -1161,7 +1161,7 @@
 
     <string name="workspace_loading">Loading your desktop…</string>
 
-    <string name="ad_placement_result_page">Master_A(NativeAds)Charging</string>
+    <string name="ad_placement_result_page">Colorkey_A(NativeAds)ThemeTryAd</string>
     <string name="boost_notification_key">boost_noti_key</string>
     <string name="locker_enable_loading_dialog_text">Applying</string>
 </resources>
