@@ -148,6 +148,14 @@ public class LockerActivity extends AppCompatActivity implements INotificationOb
     protected void onStart() {
         super.onStart();
         HSAnalytics.startFlurry();
+
+        // ExpressAd灭屏亮屏刷新补丁
+        if (mLockerAdapter != null && mLockerAdapter.lockerMainFrame != null) {
+            View adView = mLockerAdapter.lockerMainFrame.getAdView();
+            if (adView != null) {
+                adView.setVisibility(View.VISIBLE);
+            }
+        }
     }
 
     @Override
@@ -155,6 +163,14 @@ public class LockerActivity extends AppCompatActivity implements INotificationOb
         super.onStop();
         if (!HSSessionMgr.isSessionStarted()) {
             HSAnalytics.stopFlurry();
+        }
+
+        // ExpressAd灭屏亮屏刷新补丁
+        if (mLockerAdapter != null && mLockerAdapter.lockerMainFrame != null) {
+            View adView = mLockerAdapter.lockerMainFrame.getAdView();
+            if (adView != null) {
+                adView.setVisibility(View.INVISIBLE);
+            }
         }
     }
 

@@ -503,4 +503,8 @@ public class LockerMainFrame extends RelativeLayout implements INotificationObse
 
         removeAdsDialog.show();
     }
+
+    public View getAdView() {
+        return acbExpressAdView;
+    }
 }

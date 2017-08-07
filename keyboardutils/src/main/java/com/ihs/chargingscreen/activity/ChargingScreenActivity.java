@@ -33,6 +33,7 @@ import android.view.MotionEvent;
 import android.view.VelocityTracker;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.view.ViewGroup;
 import android.view.Window;
 import android.view.WindowManager.LayoutParams;
 import android.widget.FrameLayout;
@@ -406,6 +407,13 @@ public class ChargingScreenActivity extends Activity {
         if (powerManager.isScreenOn()) {
             ChargeNotifyManager.getInstance().setIsChargingActivityAlive(true);
         }
+
+        // 为了解决ExpressAdView在灭屏亮屏时不刷新的补丁
+        if (acbExpressAdView != null) {
+            if (acbExpressAdView.getParent() == null) {
+                adContainer.addView(acbExpressAdView);
+            }
+        }
     }
 
     @Override
@@ -437,6 +445,13 @@ public class ChargingScreenActivity extends Activity {
 
         bubbleView.stop();
         showChargingIndicatorText();
+
+        // 为了解决ExpressAdView在灭屏亮屏时不刷新的补丁
+        if (acbExpressAdView != null) {
+            if (acbExpressAdView.getParent() != null) {
+                ((ViewGroup)acbExpressAdView.getParent()).removeView(acbExpressAdView);
+            }
+        }
     }
 
     @Override
