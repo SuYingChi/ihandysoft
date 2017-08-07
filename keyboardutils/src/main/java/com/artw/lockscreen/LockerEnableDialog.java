@@ -8,6 +8,7 @@ import android.graphics.Bitmap;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AlertDialog;
 import android.text.TextUtils;
@@ -131,16 +132,27 @@ public class LockerEnableDialog extends Dialog {
             return;
         }
 
-        AlertDialog savingDialog = HSAlertDialog.build(activity,0).setView(R.layout.layout_dialog_applying).setCancelable(false).create();
+        AlertDialog savingDialog = HSAlertDialog.build(activity, 0).setView(R.layout.layout_dialog_applying).setCancelable(false).create();
         savingDialog.setCanceledOnTouchOutside(false);
+        Handler handler = new Handler();
+        final boolean[] isImgLoaded = {false};
         ImageLoader.getInstance().loadImage(url, LockerActivity.lockerBgOption, new ImageLoadingListener() {
             @Override
             public void onLoadingStarted(String imageUri, View view) {
-                savingDialog.show();
+                handler.postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        if (!isImgLoaded[0]) {
+                            savingDialog.show();
+                        }
+                    }
+                }, 200);
             }
 
             @Override
             public void onLoadingFailed(String imageUri, View view, FailReason failReason) {
+                isImgLoaded[0] = true;
+                handler.removeCallbacksAndMessages(null);
                 savingDialog.dismiss();
                 bgLoadingListener.onFinish();
 
@@ -148,6 +160,8 @@ public class LockerEnableDialog extends Dialog {
 
             @Override
             public void onLoadingComplete(String imageUri, View view, Bitmap loadedImage) {
+                isImgLoaded[0] = true;
+                handler.removeCallbacksAndMessages(null);
                 savingDialog.dismiss();
                 LockerEnableDialog lockerEnableDialog = new LockerEnableDialog(activity, new BitmapDrawable(activity.getResources(), loadedImage));
                 lockerEnableDialog.show();
@@ -163,9 +177,10 @@ public class LockerEnableDialog extends Dialog {
 
             @Override
             public void onLoadingCancelled(String imageUri, View view) {
+                isImgLoaded[0] = true;
+                handler.removeCallbacksAndMessages(null);
                 savingDialog.dismiss();
                 bgLoadingListener.onFinish();
-
             }
         });
     }
