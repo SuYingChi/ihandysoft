@@ -47,6 +47,12 @@
                 android:layout_marginRight="2dp"
                 android:layout_marginTop="2dp" />
 
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@mipmap/ad_engine_ad_mark"
+                />
+
         </FrameLayout>
 
         <View

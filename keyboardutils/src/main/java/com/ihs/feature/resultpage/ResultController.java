@@ -106,6 +106,8 @@ abstract class ResultController implements View.OnClickListener {
     private AcbNativeAd mAd;
     private List<CardData> mCardDataList;
 
+    private ImageView adMarkView;
+
     enum Type {
         AD,
         CHARGE_SCREEN,
@@ -224,6 +226,7 @@ abstract class ResultController implements View.OnClickListener {
             mTitleTv = ViewUtils.findViewById(resultView, R.id.description_title_tv);
             mDescriptionTv = ViewUtils.findViewById(resultView, R.id.description_content_tv);
             mActionBtn = ViewUtils.findViewById(resultView, R.id.result_action_btn);
+            adMarkView = ViewUtils.findViewById(resultView, R.id.ad_mark_view);
 
             imageFrame = VectorDrawableCompat.create(context.getResources(),
                     R.drawable.result_page_image_frame, context.getTheme());
@@ -235,9 +238,12 @@ abstract class ResultController implements View.OnClickListener {
             mType = AD;
         }
 
+        adMarkView.setVisibility(View.INVISIBLE);
+
         switch (mType) {
             case AD:
             case CARD_VIEW:
+                adMarkView.setVisibility(View.VISIBLE);
                 mAdImageContainer.setBackground(imageFrame);
                 AcbNativeAdContainerView adContainer = new AcbNativeAdContainerView(getContext());
                 adContainer.addContentView(resultView);

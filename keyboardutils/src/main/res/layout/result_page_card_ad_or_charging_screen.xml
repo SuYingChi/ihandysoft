@@ -39,6 +39,8 @@
         style="@style/ResultPagePrimaryImage"
         tools:background="@drawable/result_page_image_frame"/>
 
+
+
     <!-- For charging screen only, set to INVISIBLE when ad is shown -->
     <!-- Background is added dynamically to handle compatibility issue -->
     <FrameLayout
@@ -52,7 +54,17 @@
             android:layout_height="match_parent"
             android:scaleType="centerCrop"
             tools:src="@drawable/charging_screen_guide"/>
+
     </FrameLayout>
+
+    <ImageView
+        android:id="@+id/ad_mark_view"
+        android:visibility="invisible"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@id/result_image_container_ad"
+        android:layout_alignTop="@id/result_image_container_ad"
+        android:src="@mipmap/ad_engine_ad_mark"/>
 
     <com.acb.adadapter.ContainerView.AcbNativeAdIconView
         android:id="@+id/result_ad_icon"
@@ -148,4 +160,6 @@
             android:textColor="@color/result_card_junk_cleaner_bg"
             tools:text="VISIT SITE"/>
     </FrameLayout>
+
+
 </RelativeLayout>
