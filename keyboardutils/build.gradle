@@ -70,7 +70,7 @@ dependencies {
     }
 
     //autopilot
-    compile "com.acb.autopilot:autopilot.beta:4.1.2.beta01"
+    compile "com.acb.autopilot:autopilot.gm:4.1.0.gm"
 
     compile files('../libs/ihs/libFlashlight/libFlashlight.jar')
     compile("com.android.support:support-v4:${rootProject.ext.supportVersion}")
