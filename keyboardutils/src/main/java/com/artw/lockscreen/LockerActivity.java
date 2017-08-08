@@ -3,6 +3,10 @@ package com.artw.lockscreen;
 import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
 import android.animation.ObjectAnimator;
+import android.content.BroadcastReceiver;
+import android.content.Context;
+import android.content.Intent;
+import android.content.IntentFilter;
 import android.graphics.Bitmap;
 import android.os.Build;
 import android.os.Bundle;
@@ -21,12 +25,14 @@ import com.artw.lockscreen.statusbar.StatusBar;
 import com.ihs.app.analytics.HSAnalytics;
 import com.ihs.app.framework.HSSessionMgr;
 import com.ihs.chargingscreen.activity.ChargingScreenActivity;
+import com.ihs.chargingscreen.utils.ClickUtils;
 import com.ihs.commons.notificationcenter.HSGlobalNotificationCenter;
 import com.ihs.commons.notificationcenter.INotificationObserver;
 import com.ihs.commons.utils.HSBundle;
 import com.ihs.feature.common.Thunk;
 import com.ihs.keyboardutils.R;
 import com.ihs.keyboardutils.utils.CommonUtils;
+import com.ihs.keyboardutils.utils.PublisherUtils;
 import com.kc.commons.utils.KCCommonUtils;
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.ImageLoader;
@@ -61,6 +67,18 @@ public class LockerActivity extends AppCompatActivity implements INotificationOb
             .imageScaleType(ImageScaleType.EXACTLY)
             .bitmapConfig(Bitmap.Config.RGB_565)
             .build();
+
+    private BroadcastReceiver broadcastReceiver = new BroadcastReceiver() {
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            if (intent.getAction().equals(Intent.ACTION_SCREEN_ON)) {
+                if (!ClickUtils.isFastDoubleClick()) {
+                    HSAnalytics.logEvent("app_screen_locker_show", "install_type", PublisherUtils.getInstallType());
+                }
+            }
+        }
+    };
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -115,6 +133,10 @@ public class LockerActivity extends AppCompatActivity implements INotificationOb
         }
 
         LockerSettings.increaseLockerShowCount();
+
+        IntentFilter filter = new IntentFilter();
+        filter.addAction(Intent.ACTION_SCREEN_ON);
+        registerReceiver(broadcastReceiver, filter);
     }
 
     @Override
@@ -126,9 +148,9 @@ public class LockerActivity extends AppCompatActivity implements INotificationOb
 //            mLockerAdapter.lockerMainFrame.closeDrawer();
 //        }
         long current = System.currentTimeMillis();
-        if(current  - startDisplayTime >1000){
+        if (current - startDisplayTime > 1000) {
             startDisplayTime = current;
-        }else {
+        } else {
             startDisplayTime = -1;
         }
     }
@@ -136,8 +158,8 @@ public class LockerActivity extends AppCompatActivity implements INotificationOb
     @Override
     protected void onPause() {
         super.onPause();
-        if(startDisplayTime!=-1){
-            ChargingScreenActivity.logDisplayTime("app_screenLocker_displaytime",startDisplayTime);
+        if (startDisplayTime != -1) {
+            ChargingScreenActivity.logDisplayTime("app_screenLocker_displaytime", startDisplayTime);
         }
     }
 
@@ -173,6 +195,8 @@ public class LockerActivity extends AppCompatActivity implements INotificationOb
 
     @Override
     protected void onDestroy() {
+        unregisterReceiver(broadcastReceiver);
+
         super.onDestroy();
         HSGlobalNotificationCenter.removeObserver(this);
 

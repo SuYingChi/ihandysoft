@@ -37,7 +37,6 @@ import com.artw.lockscreen.slidingup.SlidingUpCallback;
 import com.artw.lockscreen.slidingup.SlidingUpTouchListener;
 import com.ihs.app.analytics.HSAnalytics;
 import com.ihs.app.framework.HSApplication;
-import com.ihs.chargingscreen.utils.ClickUtils;
 import com.ihs.chargingscreen.utils.DisplayUtils;
 import com.ihs.commons.notificationcenter.HSGlobalNotificationCenter;
 import com.ihs.commons.notificationcenter.INotificationObserver;
@@ -48,7 +47,6 @@ import com.ihs.flashlight.FlashlightManager;
 import com.ihs.keyboardutils.R;
 import com.ihs.keyboardutils.iap.RemoveAdsManager;
 import com.ihs.keyboardutils.utils.CommonUtils;
-import com.ihs.keyboardutils.utils.PublisherUtils;
 import com.ihs.keyboardutils.utils.RippleDrawableUtils;
 
 import java.text.DateFormat;
@@ -104,6 +102,9 @@ public class LockerMainFrame extends RelativeLayout implements INotificationObse
     public LockerMainFrame(Context context, AttributeSet attrs, int defStyle) {
         super(context, attrs, defStyle);
     }
+
+
+
 
     public void onBackPressed() {
         if (!mIsBlackHoleShowing && mIsSlidingDrawerOpened && mSlidingDrawer != null) {
@@ -237,6 +238,7 @@ public class LockerMainFrame extends RelativeLayout implements INotificationObse
         HSGlobalNotificationCenter.addObserver(ScreenStatusReceiver.NOTIFICATION_SCREEN_ON, this);
         HSGlobalNotificationCenter.addObserver(SlidingDrawerContent.EVENT_SHOW_BLACK_HOLE, this);
         HSGlobalNotificationCenter.addObserver(NOTIFICATION_CLOCK_TIME_CHANGED, this);
+
         mShimmer.start(mUnlockText);
     }
 
@@ -244,6 +246,7 @@ public class LockerMainFrame extends RelativeLayout implements INotificationObse
     @Override
     protected void onDetachedFromWindow() {
         super.onDetachedFromWindow();
+
         if (acbExpressAdView != null) {
             acbExpressAdView.destroy();
         }
@@ -253,6 +256,7 @@ public class LockerMainFrame extends RelativeLayout implements INotificationObse
         if (mShimmer != null) {
             mShimmer.cancel();
         }
+
     }
 
     @Override
@@ -273,9 +277,6 @@ public class LockerMainFrame extends RelativeLayout implements INotificationObse
                     mShimmer.start(mUnlockText);
                 }
 
-                if(!ClickUtils.isFastDoubleClick()){
-                    HSAnalytics.logEvent("app_screen_locker_show", "install_type", PublisherUtils.getInstallType());
-                }
                 break;
             default:
                 break;
