@@ -81,7 +81,8 @@ public class LockerEnableDialog extends Dialog {
             @Override
             public void onClick(View v) {
                 KCAnalyticUtil.logEvent("keyboard_lockeralert_ok_clicked");
-
+                LockerSettings.setLockerEnabled(true);
+                LockerSettings.setLockerBgUrl(bgUrl);
                 dismiss();
             }
         });
