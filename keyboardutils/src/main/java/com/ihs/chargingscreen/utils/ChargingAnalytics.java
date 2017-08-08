@@ -53,7 +53,7 @@ public class ChargingAnalytics {
     }
 
     public void chargingScreenShowed() {
-        KCAnalyticUtil.logEvent(app_chargingLocker_show, null, PublisherUtils.getInstallType());
+        KCAnalyticUtil.logEvent(app_chargingLocker_show, "install_type", PublisherUtils.getInstallType());
     }
 
     public void chargingEnableNotificationShowed() {

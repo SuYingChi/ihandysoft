@@ -27,7 +27,6 @@ import com.ihs.commons.utils.HSBundle;
 import com.ihs.feature.common.Thunk;
 import com.ihs.keyboardutils.R;
 import com.ihs.keyboardutils.utils.CommonUtils;
-import com.ihs.keyboardutils.utils.PublisherUtils;
 import com.kc.commons.utils.KCCommonUtils;
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.ImageLoader;
@@ -116,8 +115,6 @@ public class LockerActivity extends AppCompatActivity implements INotificationOb
         }
 
         LockerSettings.increaseLockerShowCount();
-
-        HSAnalytics.logEvent("app_screen_locker_show", "install_type", PublisherUtils.getInstallType());
     }
 
     @Override

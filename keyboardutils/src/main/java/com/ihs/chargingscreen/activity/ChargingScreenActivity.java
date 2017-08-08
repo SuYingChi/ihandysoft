@@ -8,8 +8,11 @@ import android.animation.ValueAnimator;
 import android.animation.ValueAnimator.AnimatorUpdateListener;
 import android.app.Activity;
 import android.app.Dialog;
+import android.content.BroadcastReceiver;
 import android.content.ContentResolver;
 import android.content.Context;
+import android.content.Intent;
+import android.content.IntentFilter;
 import android.content.pm.PackageManager;
 import android.content.res.Configuration;
 import android.content.res.Resources;
@@ -203,14 +206,25 @@ public class ChargingScreenActivity extends Activity {
             }
         }
     };
+
     private BubbleView bubbleView;
     private PowerManager powerManager = (PowerManager) HSApplication.getContext().getSystemService(Context.POWER_SERVICE);
     private AcbExpressAdView acbExpressAdView;
     private FrameLayout adContainer;
     private ImageView removeAds;
-
-
     private long createTime;
+
+    private BroadcastReceiver broadcastReceiver = new BroadcastReceiver() {
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            if (intent.getAction().equals(Intent.ACTION_SCREEN_ON)) {
+                if (!ClickUtils.isFastDoubleClick()) {
+                    ChargingAnalytics.getInstance().chargingScreenShowed();
+                }
+            }
+        }
+    };
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         createTime = System.currentTimeMillis();
@@ -243,7 +257,6 @@ public class ChargingScreenActivity extends Activity {
             window.addFlags(FLAG_DISMISS_KEYGUARD);
         }
 
-        ChargingAnalytics.getInstance().chargingScreenShowed();
 
         Resources resources = getResources();
         Configuration config = resources.getConfiguration();
@@ -292,8 +305,8 @@ public class ChargingScreenActivity extends Activity {
         setContentView(R.layout.charging_module_activity_charging_screen);
 
 
-        findViewById(R.id.view_spac1).setBackgroundDrawable(VectorDrawableCompat.create(getResources(),R.drawable.shape_wihte_dot,null));
-        findViewById(R.id.view_spac2).setBackgroundDrawable(VectorDrawableCompat.create(getResources(),R.drawable.shape_wihte_dot,null));
+        findViewById(R.id.view_spac1).setBackgroundDrawable(VectorDrawableCompat.create(getResources(), R.drawable.shape_wihte_dot, null));
+        findViewById(R.id.view_spac2).setBackgroundDrawable(VectorDrawableCompat.create(getResources(), R.drawable.shape_wihte_dot, null));
 
         bubbleView = ((BubbleView) findViewById(R.id.bubbleView));
 
@@ -386,6 +399,10 @@ public class ChargingScreenActivity extends Activity {
                 }
             });
         }
+
+        IntentFilter filter = new IntentFilter();
+        filter.addAction(Intent.ACTION_SCREEN_ON);
+        registerReceiver(broadcastReceiver, filter);
     }
 
     private void showChargingIndicatorText() {
@@ -414,6 +431,7 @@ public class ChargingScreenActivity extends Activity {
                 adContainer.addView(acbExpressAdView);
             }
         }
+
     }
 
     @Override
@@ -422,9 +440,9 @@ public class ChargingScreenActivity extends Activity {
         if (getChargingState() > 0) {
             bubbleView.start();
         }
-        if(System.currentTimeMillis() - startDisplayTime >1000 ){
+        if (System.currentTimeMillis() - startDisplayTime > 1000) {
             startDisplayTime = System.currentTimeMillis();
-        }else{
+        } else {
             startDisplayTime = -1;
         }
         HSLog.d("chargingtest onResume");
@@ -449,7 +467,7 @@ public class ChargingScreenActivity extends Activity {
         // 为了解决ExpressAdView在灭屏亮屏时不刷新的补丁
         if (acbExpressAdView != null) {
             if (acbExpressAdView.getParent() != null) {
-                ((ViewGroup)acbExpressAdView.getParent()).removeView(acbExpressAdView);
+                ((ViewGroup) acbExpressAdView.getParent()).removeView(acbExpressAdView);
             }
         }
     }
@@ -467,7 +485,7 @@ public class ChargingScreenActivity extends Activity {
 
         ChargeNotifyManager.getInstance().setIsChargingActivityAlive(false);
 
-        if(startDisplayTime!=-1){
+        if (startDisplayTime != -1) {
             logDisplayTime("app_chargingLocker_displaytime", startDisplayTime);
         }
     }
@@ -482,6 +500,8 @@ public class ChargingScreenActivity extends Activity {
 
     @Override
     public void onDestroy() {
+        unregisterReceiver(broadcastReceiver);
+
         if (acbExpressAdView != null) {
             acbExpressAdView.destroy();
         }
@@ -729,8 +749,8 @@ public class ChargingScreenActivity extends Activity {
         imgChargingStateDarkDrawables.add(getCompatDrawable(R.drawable.ic_charging_trickle_dark));
     }
 
-    private Drawable getCompatDrawable(int drawableRes){
-        return VectorDrawableCompat.create(getResources(),drawableRes,null);
+    private Drawable getCompatDrawable(int drawableRes) {
+        return VectorDrawableCompat.create(getResources(), drawableRes, null);
     }
 
     private void cancelAllAnimators() {
