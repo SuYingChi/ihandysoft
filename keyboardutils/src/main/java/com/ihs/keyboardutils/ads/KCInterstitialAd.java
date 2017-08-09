@@ -5,6 +5,7 @@ import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.Handler;
 import android.os.Looper;
+import android.text.TextUtils;
 import android.widget.Toast;
 
 import com.acb.adadapter.AcbInterstitialAd;
@@ -58,7 +59,7 @@ public class KCInterstitialAd {
 
             @Override
             public void onAdReceived(AcbInterstitialAdLoader acbInterstitialAdLoader, List<AcbInterstitialAd> list) {
-                boolean success = show(placement, list, onAdCloseListener, showQuietly);
+                boolean success = show(placement, list, onAdCloseListener, showQuietly, null, null);
                 if (listener != null) {
                     listener.onAdShow(success);
                     listener = null;
@@ -94,6 +95,10 @@ public class KCInterstitialAd {
         return show(placement, null, false);
     }
 
+    public static boolean show(final String placement, final String title, final String subTitle) {
+        return show(placement, null, false, title, subTitle);
+    }
+
     public static boolean show(final String placement, final OnAdCloseListener onAdCloseListener) {
         return show(placement, onAdCloseListener, false);
     }
@@ -109,10 +114,24 @@ public class KCInterstitialAd {
             return false;
         }
 
-        return show(placement, interstitialAds, onAdCloseListener, showQuietly);
+        return show(placement, interstitialAds, onAdCloseListener, showQuietly, null, null);
     }
 
-    private static boolean show(final String placement, List<AcbInterstitialAd> interstitialAds, final OnAdCloseListener onAdCloseListener, boolean showQuietly) {
+    public static boolean show(final String placement, final OnAdCloseListener onAdCloseListener, boolean showQuietly, final String title, final String subTitle) {
+        if (RemoveAdsManager.getInstance().isRemoveAdsPurchased()) {
+            return false;
+        }
+
+        List<AcbInterstitialAd> interstitialAds = AcbInterstitialAdLoader.fetch(HSApplication.getContext(), placement, 1);
+        if (interstitialAds.size() <= 0) {
+            logAnalyticsEvent(placement, "FetchNoAd");
+            return false;
+        }
+
+        return show(placement, interstitialAds, onAdCloseListener, showQuietly, title, subTitle);
+    }
+
+    private static boolean show(final String placement, List<AcbInterstitialAd> interstitialAds, final OnAdCloseListener onAdCloseListener, boolean showQuietly, final String title, final String subTitle) {
         if (RemoveAdsManager.getInstance().isRemoveAdsPurchased()) {
             return false;
         }
@@ -146,6 +165,14 @@ public class KCInterstitialAd {
                 }
             }
         });
+
+        if (!TextUtils.isEmpty(title)) {
+            interstitialAd.setCustomTitle(title);
+        }
+
+        if (!TextUtils.isEmpty(subTitle)) {
+            interstitialAd.setCustomSubtitle(subTitle);
+        }
 
         if (showQuietly) {
             interstitialAd.showQuietly(HSApplication.getContext());
