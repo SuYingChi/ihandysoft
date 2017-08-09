@@ -2,7 +2,6 @@ package com.ihs.keyboardutils.adbuffer;
 
 import android.content.Context;
 import android.content.DialogInterface;
-import android.graphics.drawable.Drawable;
 import android.support.annotation.Nullable;
 import android.text.TextUtils;
 import android.util.AttributeSet;
@@ -10,7 +9,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.ViewTreeObserver;
 import android.widget.FrameLayout;
-import android.widget.ImageView;
 import android.widget.RelativeLayout;
 
 import com.ihs.chargingscreen.utils.DisplayUtils;
@@ -39,7 +37,6 @@ public class NativeAdDialogView extends RelativeLayout implements NativeAdView.O
         void onAdLoaded();
     }
 
-    private String[] onLoadingText = {"Applying...", "Applying SuccessFully"};
     private NativeAdView nativeAdView;
     private FlashFrameLayout flashAdContainer;
     private OnAdBufferingListener onAdBufferingListener;
@@ -73,9 +70,6 @@ public class NativeAdDialogView extends RelativeLayout implements NativeAdView.O
                 dismissSelf();
             }
         });
-
-        closeButton.setBackgroundDrawable(
-                RippleDrawableUtils.getTransparentRippleBackground());
     }
 
     private void initAdView() {
@@ -113,11 +107,6 @@ public class NativeAdDialogView extends RelativeLayout implements NativeAdView.O
                 }
             }
         };
-    }
-
-    private NativeAdDialogView setIcon(Drawable icon) {
-        ((ImageView) findViewById(R.id.iv_icon)).setImageDrawable(icon);
-        return this;
     }
 
     private NativeAdDialogView setAdPlacementName(String adPlacementName) {

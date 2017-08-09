@@ -13,12 +13,13 @@
         android:layout_height="30dp"
         android:layout_gravity="right"
         android:scaleType="fitXY"
-        android:src="@drawable/ic_close_button_circle" />
+        android:background="@drawable/selector_close_button_circle" />
 
     <com.ihs.keyboardutils.view.RoundedCornerLayout
         android:id="@+id/fl_ad_container"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginTop="5dp"
         android:background="@drawable/round_rectangle_white"
         app:rcl_corner_radius="@dimen/corner_radius" />
 </LinearLayout>
