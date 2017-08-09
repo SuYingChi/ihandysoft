@@ -289,6 +289,7 @@ public class AdLoadingView extends RelativeLayout implements NativeAdView.OnAdLo
             nativeAdView.release();
             isAdFlashAnimationPlayed = false;
             nativeAdView.getViewTreeObserver().removeGlobalOnLayoutListener(mGlobalLayoutListener);
+            nativeAdView = null;
         }
 
         if (dialog == null) {
@@ -298,4 +299,14 @@ public class AdLoadingView extends RelativeLayout implements NativeAdView.OnAdLo
         }
     }
 
+    @Override
+    protected void onDetachedFromWindow() {
+        super.onDetachedFromWindow();
+        if (nativeAdView != null) {
+            nativeAdView.release();
+            isAdFlashAnimationPlayed = false;
+            nativeAdView.getViewTreeObserver().removeGlobalOnLayoutListener(mGlobalLayoutListener);
+            nativeAdView = null;
+        }
+    }
 }
