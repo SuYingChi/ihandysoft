@@ -38,7 +38,6 @@ import com.ihs.commons.notificationcenter.HSGlobalNotificationCenter;
 import com.ihs.commons.notificationcenter.INotificationObserver;
 import com.ihs.commons.utils.HSBundle;
 import com.ihs.commons.utils.HSLog;
-import com.ihs.commons.utils.HSPreferenceHelper;
 import com.ihs.device.clean.memory.HSAppMemory;
 import com.ihs.device.clean.memory.HSAppMemoryManager;
 import com.ihs.feature.boost.animation.BoostAnimationManager;
@@ -61,14 +60,10 @@ import com.ihs.keyboardutils.BuildConfig;
 import com.ihs.keyboardutils.R;
 import com.ihs.keyboardutils.utils.CommonUtils;
 import com.ihs.keyboardutils.utils.LauncherAnimationUtils;
-import com.ihs.permission.HSPermissionRequestCallback;
-import com.ihs.permission.HSPermissionRequestMgr;
-import com.ihs.permission.HSPermissionType;
 
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
-import java.util.EnumSet;
 import java.util.List;
 import java.util.Random;
 
@@ -575,7 +570,6 @@ public class BoostPlusCleanDialog extends FullScreenDialog {
             if (mIsStartGetPermission && mCleanResult != CleanResult.PERMISSION_SUCCESS) {
                 HSLog.d(TAG, "cancelPermission");
                 cancelStart = true;
-                HSPermissionRequestMgr.getInstance().cancelRequest();
             }
         }
         return cancelStart;
@@ -1095,90 +1089,12 @@ public class BoostPlusCleanDialog extends FullScreenDialog {
 
     private void startDecelerateAndGetPermission(int cleanType) {
         dismissExitingDialog();
-        boolean isNotificationListeningGranted = com.ihs.permission.Utils.isNotificationListeningGranted();
-        boolean isUsageAccessGranted = com.ihs.permission.Utils.isUsageAccessGranted();
         boolean isRoot = (cleanType == CLEAN_TYPE_ROOT);
-
-        HSLog.i(TAG, "startDecelerateAndGetPermission isRoot = " + isRoot
-                + " isNotificationListeningGranted = " + isNotificationListeningGranted
-                + " isUsageAccessGranted = " + isUsageAccessGranted);
         if (isRoot) {
             startDecelerateResultAnimation();
             return;
         }
-
-        if (HSConfig.optBoolean(false, "Application", "BoostPlus", "PermissionAcquireFeatureEnabled")) {
-            if (!isUsageAccessGranted && HSPreferenceHelper.getDefault().getInt(PREF_KEY_USAGE_REQUEST_TIME, 0) < 2) {
-                startGetPermission(HSPermissionType.TYPE_USAGE_ACCESS);
-            } else if (!isNotificationListeningGranted
-                    && HSPreferenceHelper.getDefault().getInt(PREF_KEY_NOTIFICATION_REQUEST_TIME, 0) < 2) {
-                startGetPermission(HSPermissionType.TYPE_NOTIFICATION_LISTENING);
-            } else {
-                startDecelerateResultAnimation();
-            }
-        } else {
-            startDecelerateResultAnimation();
-        }
-    }
-
-    private void startGetPermission(final HSPermissionType type) {
-        mIsStartGetPermission = true;
-        mIsPermissionGetting = true;
-        if (BuildConfig.DEBUG) {
-            Toast.makeText(getContext(), "Start get permission...", Toast.LENGTH_SHORT).show();
-        }
-
-        if (type.equals(HSPermissionType.TYPE_NOTIFICATION_LISTENING)) {
-            int notificationRequestTime = HSPreferenceHelper.getDefault().getInt(PREF_KEY_NOTIFICATION_REQUEST_TIME, 0);
-            HSPreferenceHelper.getDefault().putInt(PREF_KEY_NOTIFICATION_REQUEST_TIME, ++notificationRequestTime);
-        } else if (type.equals(HSPermissionType.TYPE_USAGE_ACCESS)) {
-            int usageRequestTime = HSPreferenceHelper.getDefault().getInt(PREF_KEY_USAGE_REQUEST_TIME, 0);
-            HSPreferenceHelper.getDefault().putInt(PREF_KEY_USAGE_REQUEST_TIME, ++usageRequestTime);
-        }
-
-        HSLog.i(TAG, "startGetPermission type = " + type);
-        HSPermissionRequestMgr.getInstance().startRequest(EnumSet.of(type), new HSPermissionRequestCallback.Stub() {
-            @Override
-            public void onFinished(int succeedCount, int totalCount) {
-                HSLog.i(TAG, "permission request finished, succeeded " + succeedCount + " , total " + totalCount);
-                dismissExitingDialog();
-                cancelGetPermissionTimeOut();
-                mCleanResult = CleanResult.PERMISSION_SUCCESS;
-                startDecelerateResultAnimation();
-                mIsPermissionGetting = false;
-            }
-
-            @Override
-            public void onSinglePermissionStarted(int index) {
-                HSLog.i(TAG, "permission request index " + index + " started");
-            }
-
-            @Override
-            public void onSinglePermissionFinished(int index, boolean isSucceed) {
-                HSLog.i(TAG, "permission request index " + index + " finished, result " + isSucceed);
-            }
-
-            @Override
-            public void onCancelled() {
-                super.onCancelled();
-                HSLog.d(TAG, "onCancelled ****** get permission ****** dismissExitingDialog");
-                cancelGetPermissionTimeOut();
-                mIsPermissionGetting = false;
-                onCancelExitClean(false, mSelectedAppList);
-            }
-        });
-
-        mGetPermissionTimeOutRunnable = new Runnable() {
-            @Override
-            public void run() {
-                if (BuildConfig.DEBUG) {
-                    Toast.makeText(getContext(), "Get permission Time Out...", Toast.LENGTH_SHORT).show();
-                }
-                startDecelerateResultAnimation();
-                mIsPermissionGetting = false;
-            }
-        };
-        mHandler.postDelayed(mGetPermissionTimeOutRunnable, TIMEOUT_GET_PERMISSION);
+        startDecelerateResultAnimation();
     }
 
     private void startImgCurveAnimation(int processIndex, String packageName) {
