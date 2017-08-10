@@ -10,6 +10,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageManager;
+import android.content.pm.ResolveInfo;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.drawable.BitmapDrawable;
@@ -473,7 +474,9 @@ public class BoostAnimationManager {
         return bitmaps;
     }
 
-    public @NonNull Drawable[] getBoostAppIconDrawables(Context context) {
+    public
+    @NonNull
+    Drawable[] getBoostAppIconDrawables(Context context) {
         drawablePackageList.clear();
         boostDrawablePackageList.clear();
         Drawable[] drawables = new Drawable[COUNT_ICON];
@@ -534,7 +537,8 @@ public class BoostAnimationManager {
         return null != context.getPackageManager().resolveActivity(intent, 0);
     }
 
-    private @NonNull
+    private
+    @NonNull
     Drawable[] getRandomAppIcon(Context context, Drawable[] drawables, int currentIndex) {
         if (null == drawables) {
             return new Drawable[0];
@@ -647,17 +651,29 @@ public class BoostAnimationManager {
     private Collection<String> getAllAppPackageNames(Context context) {
         Set<String> packageNames = new HashSet<>();
         final PackageManager pm = context.getPackageManager();
-        List<ApplicationInfo> packages = pm.getInstalledApplications(PackageManager.GET_META_DATA);
-        for (ApplicationInfo packageInfo : packages) {
-            if (context.getPackageName().equals(BuildConfig.APPLICATION_ID)) {
-                continue;
-            }
-            packageNames.add(packageInfo.packageName);
+        final Intent mainIntent = new Intent(Intent.ACTION_MAIN, null);
+        mainIntent.addCategory(Intent.CATEGORY_LAUNCHER);
+        mainIntent.setPackage(null);
+        List<ResolveInfo> infos;
+        try {
+            infos = pm.queryIntentActivities(mainIntent, 0);
+        } catch (Exception e) {
+            // queryIntentActivities() call may kill package manager for TransactionTooLargeException
+            infos = new ArrayList<>();
         }
+
+        for (ResolveInfo info : infos) {
+            if(!info.activityInfo.packageName.equals(context.getPackageName())){
+                packageNames.add(info.activityInfo.packageName);
+            }
+        }
+
         return packageNames;
     }
 
-    private static @NonNull Bitmap drawableToBitmap(Drawable drawable) {
+    private static
+    @NonNull
+    Bitmap drawableToBitmap(Drawable drawable) {
         if (drawable == null) {
             return Utils.createFallbackBitmap();
         }
