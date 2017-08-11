@@ -10,8 +10,8 @@ import android.widget.LinearLayout;
 import android.widget.Spinner;
 import android.widget.Toast;
 
+import com.acb.nativeads.AcbNativeAdManager;
 import com.ihs.app.framework.activity.HSActivity;
-import com.ihs.chargingscreen.HSChargingScreenManager;
 import com.ihs.commons.config.HSConfig;
 import com.ihs.keyboardutils.ads.KCInterstitialAd;
 import com.ihs.keyboardutils.giftad.GiftInterstitialHelper;
@@ -58,6 +58,7 @@ public class AdDemoActivity extends HSActivity {
 
         for (String adPlacement : getAdPlacementList()) {
             adPlacementList.add(adPlacement);
+            AcbNativeAdManager.sharedInstance().activePlacementInProcess(adPlacement);
         }
 
         ArrayAdapter<String> arrayAdapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, adPlacementList);
@@ -105,7 +106,9 @@ public class AdDemoActivity extends HSActivity {
         String placement = (String) adPlacementSpinner.getSelectedItem();
         View adLayoutView = LayoutInflater.from(this).inflate(R.layout.ad_style_1, null);
         View adLoadingView = LayoutInflater.from(this).inflate(R.layout.ad_loading, null);
-        NativeAdView nativeAdView = new NativeAdView(this, adLayoutView, adLoadingView);
+        NativeAdView nativeAdView = new NativeAdView(this);
+        nativeAdView.setAdLayoutView(adLayoutView);
+        nativeAdView.setLoadingView(adLoadingView);
         nativeAdView.configParams(new NativeAdParams(placement, adContainer.getWidth(), 1.9f));
         nativeAdView.setOnAdLoadedListener(adLoadedListener);
         nativeAdView.setOnAdClickedListener(adClickedListener);

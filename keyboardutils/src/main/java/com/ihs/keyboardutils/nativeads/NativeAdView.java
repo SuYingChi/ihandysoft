@@ -7,11 +7,9 @@ import android.graphics.Rect;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.Handler;
-import android.support.annotation.NonNull;
 import android.text.TextUtils;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.ViewTreeObserver;
 import android.view.WindowManager;
 import android.view.animation.Animation;
 import android.view.animation.ScaleAnimation;
@@ -29,7 +27,6 @@ import com.ihs.app.analytics.HSAnalytics;
 import com.ihs.app.framework.HSApplication;
 import com.ihs.commons.utils.HSError;
 import com.ihs.commons.utils.HSLog;
-import com.ihs.keyboardutils.R;
 import com.ihs.keyboardutils.iap.RemoveAdsManager;
 
 import java.util.List;
@@ -57,8 +54,6 @@ public class NativeAdView extends FrameLayout {
 
     private NativeAdParams nativeAdParams;
 
-    private ViewTreeObserver.OnScrollChangedListener onScrollChangedListener;
-
     private OnAdLoadedListener adLoadedListener;
     private OnAdClickedListener adClickedListener;
 
@@ -67,25 +62,31 @@ public class NativeAdView extends FrameLayout {
     private static Handler handler = new Handler();
 
     private boolean adLoaded = false;
-    private long resumeTime = 0;
-    private long currentAdDisplayDurationBeforeResume = 0;
 
     private NativeAdType nativeAdType = NativeAdType.NORMAL;
 
-    private Runnable displayFinishRunnable = new Runnable() {
-        @Override
-        public void run() {
-            refresh();
-        }
-    };
-
-    public NativeAdView(Context context, View viewGroup) {
-        this(context, viewGroup, null);
+    public NativeAdView(Context context) {
+        super(context);
     }
 
-    public NativeAdView(Context context, View viewGroup, View loadingView) {
-        super(context);
-        this.adLayoutView = viewGroup;
+    @Deprecated
+    public NativeAdView(Context context, View adLayoutView, View loadingView) {
+        this(context);
+        setAdLayoutView(adLayoutView);
+        setLoadingView(loadingView);
+    }
+
+    @Deprecated
+    public NativeAdView(Context context, View adLayoutView) {
+        this(context);
+        setAdLayoutView(adLayoutView);
+    }
+
+    public void setAdLayoutView(View adLayoutView) {
+        this.adLayoutView = adLayoutView;
+    }
+
+    public void setLoadingView(View loadingView) {
         this.loadingView = loadingView;
     }
 
@@ -117,14 +118,6 @@ public class NativeAdView extends FrameLayout {
         this.nativeAdParams = nativeAdParams;
 
         initNativeAdContainerView(adLayoutView);
-
-        onScrollChangedListener = new ViewTreeObserver.OnScrollChangedListener() {
-
-            @Override
-            public void onScrollChanged() {
-                onViewPositionChanged(getScreenVisibleRect());
-            }
-        };
 
         if (loadingView != null) {
             addView(this.loadingView);
@@ -224,103 +217,6 @@ public class NativeAdView extends FrameLayout {
         return ready;
     }
 
-    protected void onViewEnviromentChanged() {
-        // 这里使用 Handler 来延迟一个周期执行的目的是为了解决 View 的回调方法调用时，相关方法的获取值还没变化的情况
-        // 比如，onWindowVisibilityChanged 调用且参数值为 GONE 时，使用 getWindowVisibility 仍返回 VISIBLE
-        handler.post(new Runnable() {
-            @Override
-            public void run() {
-                boolean ready = isViewEnviromentReady();
-
-                if (!adLoaded && adLoader == null && ready) {
-                    // 如果没有广告在显示或加载，则重新加载一次广告
-                    refresh();
-                } else if (adLoaded && nativeAdParams.getRefreshInterval() > 0) {
-                    if (ready) {
-                        resumeAutoRefreshing();
-                    } else {
-                        pauseAutoRefreshing();
-                    }
-                }
-            }
-        });
-    }
-
-    @Override
-    protected void onWindowVisibilityChanged(int visibility) {
-        super.onWindowVisibilityChanged(visibility);
-        onViewEnviromentChanged();
-    }
-
-    @Override
-    protected void onVisibilityChanged(@NonNull View changedView, int visibility) {
-        super.onVisibilityChanged(changedView, visibility);
-        onViewEnviromentChanged();
-    }
-
-    @Override
-    public void onWindowFocusChanged(boolean hasWindowFocus) {
-        super.onWindowFocusChanged(hasWindowFocus);
-        onViewEnviromentChanged();
-    }
-
-
-    protected void onViewPositionChanged(Rect rectInScreen) {
-        onViewEnviromentChanged();
-    }
-
-    @Override
-    protected void onAttachedToWindow() {
-        super.onAttachedToWindow();
-        getViewTreeObserver().addOnScrollChangedListener(onScrollChangedListener);
-    }
-
-    @Override
-    protected void onDetachedFromWindow() {
-        getViewTreeObserver().removeOnScrollChangedListener(onScrollChangedListener);
-        super.onDetachedFromWindow();
-    }
-
-    private void startAutoRefreshingIfNeeded() {
-        if (isViewEnviromentReady() && nativeAdParams.getRefreshInterval() > 0) {
-            isPaused = false;
-            resumeTime = System.currentTimeMillis();
-            scheduleRefreshing();
-        } else {
-            isPaused = true;
-            handler.removeCallbacks(displayFinishRunnable);
-        }
-    }
-
-    private void resumeAutoRefreshing() {
-        if (!isPaused) {
-            return;
-        }
-        isPaused = false;
-        resumeTime = System.currentTimeMillis();
-
-        scheduleRefreshing();
-    }
-
-    private void pauseAutoRefreshing() {
-        if (isPaused) {
-            return;
-        }
-
-        isPaused = true;
-        handler.removeCallbacks(displayFinishRunnable);
-
-        currentAdDisplayDurationBeforeResume += System.currentTimeMillis() - resumeTime;
-    }
-
-    private long getCurrentAdDisplayDuration() {
-        if (isPaused) {
-            return currentAdDisplayDurationBeforeResume;
-        } else {
-            return currentAdDisplayDurationBeforeResume + System.currentTimeMillis() - resumeTime;
-        }
-    }
-
     public void release() {
         if (adLoader != null) {
             adLoader.cancel();
@@ -332,14 +228,7 @@ public class NativeAdView extends FrameLayout {
         }
     }
 
-    private void scheduleRefreshing() {
-        if (!isPaused) {
-            handler.removeCallbacks(displayFinishRunnable);
-            handler.postDelayed(displayFinishRunnable, nativeAdParams.getRefreshInterval() - getCurrentAdDisplayDuration());
-        }
-    }
-
-    private void refresh() {
+    public void refresh() {
         if (RemoveAdsManager.getInstance().isRemoveAdsPurchased()) {
             return;
         }
@@ -386,7 +275,6 @@ public class NativeAdView extends FrameLayout {
     }
 
     private void adLoaded(final AcbNativeAd ad) {
-        currentAdDisplayDurationBeforeResume = 0;
         bindDataToView(ad);
 
         if (!adLoaded) {
@@ -396,8 +284,6 @@ public class NativeAdView extends FrameLayout {
                 adLoadedListener.onAdLoaded(NativeAdView.this);
             }
         }
-
-        startAutoRefreshingIfNeeded();
     }
 
     /**
@@ -461,10 +347,8 @@ public class NativeAdView extends FrameLayout {
     }
 
     private void logAnalyticsEvent(String actionSuffix) {
-        String screenName = HSApplication.getContext().getResources().getString(R.string.english_ime_name);
         String eventName = "NativeAd_" + nativeAdParams.getPlacementName() + "_" + actionSuffix;
         HSAnalytics.logEvent(eventName);
-        HSAnalytics.logGoogleAnalyticsEvent(screenName, "APP", eventName, null, null, null, null);
     }
 
     public AcbNativeAdContainerView getNativeAdContainerView() {

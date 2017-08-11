@@ -105,7 +105,8 @@ public class AdLoadingView extends RelativeLayout implements NativeAdView.OnAdLo
 
     private void initAdView() {
         View inflate = inflate(getContext(), R.layout.layout_ad_loading_adview, null);
-        nativeAdView = new NativeAdView(getContext(), inflate);
+        nativeAdView = new NativeAdView(getContext());
+        nativeAdView.setAdLayoutView(inflate);
         inflate.setLayoutParams(new FrameLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT));
         nativeAdView.setOnAdLoadedListener(this);
 

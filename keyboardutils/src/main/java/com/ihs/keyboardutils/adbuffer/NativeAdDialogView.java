@@ -74,7 +74,8 @@ public class NativeAdDialogView extends RelativeLayout implements NativeAdView.O
 
     private void initAdView() {
         View inflate = inflate(getContext(), R.layout.native_ad_dialog_adview, null);
-        nativeAdView = new NativeAdView(getContext(), inflate);
+        nativeAdView = new NativeAdView(getContext());
+        nativeAdView.setAdLayoutView(inflate);
         inflate.setLayoutParams(new FrameLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT));
         nativeAdView.setOnAdLoadedListener(this);
 

@@ -59,7 +59,8 @@ public class ExitAlert {
                 break;
         }
 
-        nativeAdView = new NativeAdView(getContext(), view, null);
+        nativeAdView = new NativeAdView(getContext());
+        nativeAdView.setAdLayoutView(view);
         nativeAdView.setOnAdClickedListener(new NativeAdView.OnAdClickedListener() {
             @Override
             public void onAdClicked(NativeAdView adView) {

@@ -129,7 +129,9 @@ public class CustomShareUtils {
             adActionView.setBackgroundDrawable(RippleDrawableUtils.getCompatRippleDrawable(resources.getColor(R.color.ad_action_button_bg), resources.getDimension(R.dimen.corner_radius)));
             shareAdView.setLayoutParams(new FrameLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT));
 
-            final NativeAdView nativeAdView = new NativeAdView(context, shareAdView, adLoadingView);
+            final NativeAdView nativeAdView = new NativeAdView(context);
+            nativeAdView.setAdLayoutView(shareAdView);
+            nativeAdView.setLoadingView(adLoadingView);
             nativeAdView.setOnAdClickedListener(new NativeAdView.OnAdClickedListener() {
                 @Override
                 public void onAdClicked(NativeAdView adView) {
