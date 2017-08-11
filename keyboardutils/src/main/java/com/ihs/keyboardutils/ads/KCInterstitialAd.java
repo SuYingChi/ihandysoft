@@ -95,6 +95,10 @@ public class KCInterstitialAd {
         return show(placement, title, subTitle, false);
     }
 
+    public static boolean show(final String placement, final String title, final String subTitle, final OnAdCloseListener onAdCloseListener) {
+        return show(placement, title, subTitle, false, onAdCloseListener);
+    }
+
     public static boolean show(final String placement, final String title, final String subTitle, boolean showQuietly) {
         return show(placement, title, subTitle, showQuietly, null);
     }
