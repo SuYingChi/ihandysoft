@@ -18,8 +18,7 @@ import android.widget.TextView;
 
 import com.ihs.chargingscreen.utils.DisplayUtils;
 import com.ihs.keyboardutils.R;
-import com.ihs.keyboardutils.nativeads.NativeAdParams;
-import com.ihs.keyboardutils.nativeads.NativeAdView;
+import com.ihs.keyboardutils.nativeads.KCNativeAdView;
 import com.ihs.keyboardutils.utils.KCAnalyticUtil;
 import com.ihs.keyboardutils.utils.RippleDrawableUtils;
 import com.ihs.keyboardutils.view.CustomProgressDrawable;
@@ -31,7 +30,7 @@ import static java.lang.System.currentTimeMillis;
  * Created by Arthur on 17/4/12.
  */
 
-public class AdLoadingView extends RelativeLayout implements NativeAdView.OnAdLoadedListener, NativeAdView.OnAdClickedListener {
+public class AdLoadingView extends RelativeLayout implements KCNativeAdView.OnAdLoadedListener, KCNativeAdView.OnAdClickedListener {
 
 
     private AdLoadingDialog dialog;
@@ -49,7 +48,7 @@ public class AdLoadingView extends RelativeLayout implements NativeAdView.OnAdLo
     private View closeButton;
 
     @Override
-    public void onAdClicked(NativeAdView adView) {
+    public void onAdClicked(KCNativeAdView adView) {
         KCAnalyticUtil.logEvent("NativeAds_A(NativeAds)ApplyingItem_Click");
         dismissSelf();
     }
@@ -60,7 +59,7 @@ public class AdLoadingView extends RelativeLayout implements NativeAdView.OnAdLo
     }
 
     private String[] onLoadingText = {"Applying...", "Applying SuccessFully"};
-    private NativeAdView nativeAdView;
+    private KCNativeAdView nativeAdView;
     private FlashFrameLayout flashAdContainer;
     private OnAdBufferingListener onAdBufferingListener;
 
@@ -105,7 +104,7 @@ public class AdLoadingView extends RelativeLayout implements NativeAdView.OnAdLo
 
     private void initAdView() {
         View inflate = inflate(getContext(), R.layout.layout_ad_loading_adview, null);
-        nativeAdView = new NativeAdView(getContext());
+        nativeAdView = new KCNativeAdView(getContext());
         nativeAdView.setAdLayoutView(inflate);
         inflate.setLayoutParams(new FrameLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT));
         nativeAdView.setOnAdLoadedListener(this);
@@ -160,10 +159,9 @@ public class AdLoadingView extends RelativeLayout implements NativeAdView.OnAdLo
 
     private AdLoadingView setAdPlacementName(String adPlacementName) {
         if (!TextUtils.isEmpty(adPlacementName) && !hasPurchaseNoAds) {
-            //吉祥阁跟我敲板
-            nativeAdView.configParams(new NativeAdParams(adPlacementName,
-                    (int) (DisplayUtils.getScreenWidthPixels() * 0.9),
-                    1.9f));
+            nativeAdView.setPrimaryViewSize((int)(DisplayUtils.getScreenWidthPixels() * 0.9), (int)(DisplayUtils.getScreenWidthPixels() * 0.9 / 1.9));
+            nativeAdView.load(adPlacementName);
+
             KCAnalyticUtil.logEvent("NativeAds_A(NativeAds)ApplyingItem_Load");
             return this;
         }
@@ -281,7 +279,7 @@ public class AdLoadingView extends RelativeLayout implements NativeAdView.OnAdLo
     }
 
     @Override
-    public void onAdLoaded(NativeAdView adView) {
+    public void onAdLoaded(KCNativeAdView adView) {
         KCAnalyticUtil.logEvent("NativeAds_A(NativeAds)ApplyingItem_Show");
     }
 

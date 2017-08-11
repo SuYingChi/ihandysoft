@@ -1,19 +1,19 @@
 package com.ihs.keyboardutils.nativeads;
 
-import android.app.Activity;
 import android.content.Context;
+import android.graphics.Bitmap;
 import android.graphics.Point;
-import android.graphics.Rect;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.Handler;
 import android.text.TextUtils;
+import android.util.AttributeSet;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.WindowManager;
 import android.view.animation.Animation;
 import android.view.animation.ScaleAnimation;
 import android.widget.FrameLayout;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -31,14 +31,14 @@ import com.ihs.keyboardutils.iap.RemoveAdsManager;
 
 import java.util.List;
 
-public class NativeAdView extends FrameLayout {
+public class KCNativeAdView extends FrameLayout {
 
     public interface OnAdLoadedListener {
-        void onAdLoaded(NativeAdView adView);
+        void onAdLoaded(KCNativeAdView adView);
     }
 
     public interface OnAdClickedListener {
-        void onAdClicked(NativeAdView adView);
+        void onAdClicked(KCNativeAdView adView);
     }
 
     public enum NativeAdType {
@@ -52,7 +52,10 @@ public class NativeAdView extends FrameLayout {
     private AcbNativeAd nativeAd;
     private AcbNativeAdContainerView nativeAdContainerView;
 
-    private NativeAdParams nativeAdParams;
+    private String placement;
+
+    private ImageView.ScaleType primaryViewScaleType = ImageView.ScaleType.FIT_XY;
+    private Point primaryViewSize;
 
     private OnAdLoadedListener adLoadedListener;
     private OnAdClickedListener adClickedListener;
@@ -65,21 +68,12 @@ public class NativeAdView extends FrameLayout {
 
     private NativeAdType nativeAdType = NativeAdType.NORMAL;
 
-    public NativeAdView(Context context) {
-        super(context);
+    public KCNativeAdView(Context context) {
+        this(context, null);
     }
 
-    @Deprecated
-    public NativeAdView(Context context, View adLayoutView, View loadingView) {
-        this(context);
-        setAdLayoutView(adLayoutView);
-        setLoadingView(loadingView);
-    }
-
-    @Deprecated
-    public NativeAdView(Context context, View adLayoutView) {
-        this(context);
-        setAdLayoutView(adLayoutView);
+    public KCNativeAdView(Context context, AttributeSet attrs) {
+        super(context, attrs);
     }
 
     public void setAdLayoutView(View adLayoutView) {
@@ -112,18 +106,6 @@ public class NativeAdView extends FrameLayout {
 
     public void setNativeAdType(NativeAdType nativeAdType) {
         this.nativeAdType = nativeAdType;
-    }
-
-    public void configParams(NativeAdParams nativeAdParams) {
-        this.nativeAdParams = nativeAdParams;
-
-        initNativeAdContainerView(adLayoutView);
-
-        if (loadingView != null) {
-            addView(this.loadingView);
-        }
-
-        refresh();
     }
 
     private void initNativeAdContainerView(View groupView) {
@@ -170,13 +152,13 @@ public class NativeAdView extends FrameLayout {
         nativeAdContainerView.getContentView().setLayoutParams(layoutParams);
 
         if (nativeAdContainerView.getAdPrimaryView() != null) {
-            nativeAdContainerView.getAdPrimaryView().getNormalImageView().setScaleType(nativeAdParams.getScaleType());
+            nativeAdContainerView.getAdPrimaryView().setBitmapConfig(Bitmap.Config.RGB_565);
+            nativeAdContainerView.getAdPrimaryView().getNormalImageView().setScaleType(primaryViewScaleType);
             ViewGroup.LayoutParams adPrimaryViewLayoutParams = nativeAdContainerView.getAdPrimaryView().getLayoutParams();
-            if (nativeAdParams.getPrimaryHWRatio() == 0) {
-                
-            } else {
+            if (primaryViewSize != null) {
+                nativeAdContainerView.getAdPrimaryView().setTargetSizePX(primaryViewSize.x, primaryViewSize.y);
                 adPrimaryViewLayoutParams.width = ViewGroup.LayoutParams.MATCH_PARENT;
-                adPrimaryViewLayoutParams.height = (int) (nativeAdParams.getPrimaryWidth() / nativeAdParams.getPrimaryHWRatio());
+                adPrimaryViewLayoutParams.height = primaryViewSize.y;
             }
         }
 
@@ -190,9 +172,11 @@ public class NativeAdView extends FrameLayout {
             }
         }
 
-        if (TextUtils.isEmpty(nativeAd.getIconUrl())) {
-            if (nativeAdContainerView.getAdIconView() != null) {
+        if (nativeAdContainerView.getAdIconView() != null) {
+            if (TextUtils.isEmpty(nativeAd.getIconUrl())) {
                 nativeAdContainerView.getAdIconView().setVisibility(View.GONE);
+            } else {
+                nativeAdContainerView.getAdIconView().setBitmapConfig(Bitmap.Config.RGB_565);
             }
         }
 
@@ -202,19 +186,19 @@ public class NativeAdView extends FrameLayout {
         }
     }
 
-    private boolean isViewEnviromentReady() {
-        boolean ready = true;
-        ready = ready && getVisibility() == VISIBLE;
-        ready = ready && getWindowVisibility() == VISIBLE;
+    public void setPrimaryViewScaleType(ImageView.ScaleType primaryViewScaleType) {
+        this.primaryViewScaleType = primaryViewScaleType;
+    }
 
-        // 如果 View 显示在键盘中，windowFocus 会一直是 false
-        if (getContext() instanceof Activity) {
-            ready = ready && hasWindowFocus();
+    public void setPrimaryViewSize(int x, int y) {
+        if (x > 0 && y > 0) {
+            this.primaryViewSize = new Point(x, y);
+        } else {
+            if (HSApplication.isDebugging) {
+                throw new IllegalArgumentException("Invalid primary view size.");
+            }
         }
 
-        ready = ready && !getScreenVisibleRect().isEmpty() && screenRect.contains(getScreenVisibleRect());
-
-        return ready;
     }
 
     public void release() {
@@ -225,6 +209,22 @@ public class NativeAdView extends FrameLayout {
         if (nativeAd != null) {
             nativeAd.release();
             nativeAd = null;
+        }
+    }
+
+    public void load(String placement) {
+        if (TextUtils.isEmpty(placement)) {
+            if (HSApplication.isDebugging) {
+                throw new IllegalArgumentException("Ad placement should not be empty.");
+            }
+        } else {
+            this.placement = placement;
+            initNativeAdContainerView(adLayoutView);
+
+            if (loadingView != null) {
+                addView(this.loadingView);
+            }
+            refresh();
         }
     }
 
@@ -239,7 +239,7 @@ public class NativeAdView extends FrameLayout {
 
         logAnalyticsEvent("Load");
 
-        adLoader = new AcbNativeAdLoader(getContext().getApplicationContext(), nativeAdParams.getPlacementName());
+        adLoader = new AcbNativeAdLoader(getContext().getApplicationContext(), placement);
 
         adLoader.load(1, new AcbNativeAdLoader.AcbNativeAdLoadListener() {
 
@@ -281,7 +281,7 @@ public class NativeAdView extends FrameLayout {
             adLoaded = true;
 
             if (adLoadedListener != null) {
-                adLoadedListener.onAdLoaded(NativeAdView.this);
+                adLoadedListener.onAdLoaded(KCNativeAdView.this);
             }
         }
     }
@@ -307,11 +307,11 @@ public class NativeAdView extends FrameLayout {
                     logAnalyticsEvent("Click");
 
                     if (HSApplication.isDebugging) {
-                        Toast.makeText(getContext(), nativeAdParams.getPlacementName() + ":" + acbAd.getVendorConfig().name(), Toast.LENGTH_SHORT).show();
+                        Toast.makeText(getContext(), placement + ":" + acbAd.getVendorConfig().name(), Toast.LENGTH_SHORT).show();
                     }
 
                     if (adClickedListener != null) {
-                        adClickedListener.onAdClicked(NativeAdView.this);
+                        adClickedListener.onAdClicked(KCNativeAdView.this);
                     }
                 }
             });
@@ -324,31 +324,11 @@ public class NativeAdView extends FrameLayout {
         nativeAdContainerView.startAnimation(scaleAnimation);
     }
 
-    private Rect screenRect = new Rect();
-
-    {
-        WindowManager wm = (WindowManager) getContext()
-                .getSystemService(Context.WINDOW_SERVICE);
-        Point p = new Point();
-        wm.getDefaultDisplay().getSize(p);
-        screenRect = new Rect(0, 0, p.x, p.y);
-    }
-
-    private Rect getScreenVisibleRect() {
-        int[] out = new int[2];
-        getLocationOnScreen(out);
-        int left = out[0] > 0 ? out[0] : 0;
-        int top = out[1] > 0 ? out[1] : 0;
-        int right = getMeasuredWidth() + out[0];
-        right = right >= screenRect.right ? screenRect.right : right;
-        int bottom = getMeasuredHeight() + out[1];
-        bottom = bottom >= screenRect.bottom ? screenRect.bottom : bottom;
-        return new Rect(left, top, right, bottom);
-    }
-
     private void logAnalyticsEvent(String actionSuffix) {
-        String eventName = "NativeAd_" + nativeAdParams.getPlacementName() + "_" + actionSuffix;
-        HSAnalytics.logEvent(eventName);
+        if (!TextUtils.isEmpty(placement)) {
+            String eventName = "NativeAd_" + placement + "_" + actionSuffix;
+            HSAnalytics.logEvent(eventName);
+        }
     }
 
     public AcbNativeAdContainerView getNativeAdContainerView() {

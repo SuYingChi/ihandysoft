@@ -13,7 +13,6 @@ import android.widget.Toast;
 import com.ihs.app.framework.HSApplication;
 import com.ihs.app.framework.activity.HSActivity;
 import com.ihs.feature.notification.NotificationManager;
-import com.ihs.keyboardutils.alerts.ExitAlert;
 import com.ihs.keyboardutils.utils.CustomShareUtils;
 import com.ihs.keyboardutilslib.adactivities.AdDemoActivity;
 import com.ihs.keyboardutilslib.alerts.CustomDesignAlertActivity;
@@ -22,7 +21,6 @@ import com.ihs.keyboardutilslib.configfile.ReadConfigSampleActivity;
 import com.ihs.keyboardutilslib.gif.GifViewDemoActivity;
 
 public class MainActivity extends HSActivity {
-    private ExitAlert exitAlert;
 
     String[] displayNameArray = {
             "Ad Demo",
@@ -30,7 +28,6 @@ public class MainActivity extends HSActivity {
             "KCConfig Demo",
             "Custom Alert Demo",
             "Custom Share Demo",
-            "Exit Alert Demo",
             "Charging Locker Settings",
             "Camera Utils",
             "Country Code Parser",
@@ -42,7 +39,6 @@ public class MainActivity extends HSActivity {
             GifViewDemoActivity.class,
             ReadConfigSampleActivity.class,
             CustomDesignAlertActivity.class,
-            null,
             null,
             ChargingLockerSettingsActivity.class,
             CameraUtilActivity.class,
@@ -59,8 +55,6 @@ public class MainActivity extends HSActivity {
         ListView listView = (ListView) findViewById(R.id.demo_list);
         listView.setAdapter(adapter);
         listView.setOnItemClickListener(onItemClickListener);
-
-        exitAlert = new ExitAlert(MainActivity.this, getString(R.string.exit_alert_native_ad_name));
 
         processIntent();
     }
@@ -121,9 +115,8 @@ public class MainActivity extends HSActivity {
                     Toast.makeText(HSApplication.getContext(), activityInfo.name, Toast.LENGTH_SHORT).show();
                 }
             });
-        } else if (position == 5) {
-            exitAlert.show();
-        } else if (position == 9) {
+
+        } else if (position == 8) {
             NotificationManager.getInstance().checkNextNotification();
         }
     }

@@ -33,8 +33,7 @@ import com.ihs.app.framework.HSApplication;
 import com.ihs.keyboardutils.R;
 import com.ihs.keyboardutils.alerts.HSAlertDialog;
 import com.ihs.keyboardutils.iap.RemoveAdsManager;
-import com.ihs.keyboardutils.nativeads.NativeAdParams;
-import com.ihs.keyboardutils.nativeads.NativeAdView;
+import com.ihs.keyboardutils.nativeads.KCNativeAdView;
 import com.nostra13.universalimageloader.core.ImageLoader;
 
 import java.util.ArrayList;
@@ -129,16 +128,17 @@ public class CustomShareUtils {
             adActionView.setBackgroundDrawable(RippleDrawableUtils.getCompatRippleDrawable(resources.getColor(R.color.ad_action_button_bg), resources.getDimension(R.dimen.corner_radius)));
             shareAdView.setLayoutParams(new FrameLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT));
 
-            final NativeAdView nativeAdView = new NativeAdView(context);
+            final KCNativeAdView nativeAdView = new KCNativeAdView(context);
             nativeAdView.setAdLayoutView(shareAdView);
             nativeAdView.setLoadingView(adLoadingView);
-            nativeAdView.setOnAdClickedListener(new NativeAdView.OnAdClickedListener() {
+            nativeAdView.setOnAdClickedListener(new KCNativeAdView.OnAdClickedListener() {
                 @Override
-                public void onAdClicked(NativeAdView adView) {
+                public void onAdClicked(KCNativeAdView adView) {
                     dismissDialog(context, dialog);
                 }
             });
-            nativeAdView.configParams(new NativeAdParams(adPlaceName, resources.getDisplayMetrics().widthPixels, 1.9f));
+            nativeAdView.setPrimaryViewSize((int)(resources.getDisplayMetrics().widthPixels), (int)(resources.getDisplayMetrics().widthPixels / 1.9));
+            nativeAdView.load(adPlaceName);
 
             shareAdContainer.addView(nativeAdView);
 

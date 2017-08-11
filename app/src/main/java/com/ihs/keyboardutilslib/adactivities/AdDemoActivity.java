@@ -15,8 +15,7 @@ import com.ihs.app.framework.activity.HSActivity;
 import com.ihs.commons.config.HSConfig;
 import com.ihs.keyboardutils.ads.KCInterstitialAd;
 import com.ihs.keyboardutils.giftad.GiftInterstitialHelper;
-import com.ihs.keyboardutils.nativeads.NativeAdParams;
-import com.ihs.keyboardutils.nativeads.NativeAdView;
+import com.ihs.keyboardutils.nativeads.KCNativeAdView;
 import com.ihs.keyboardutilslib.R;
 
 import java.util.ArrayList;
@@ -34,7 +33,7 @@ public class AdDemoActivity extends HSActivity {
 
     private List<String> adPlacementList = new ArrayList<>();
 
-    private Map<String, NativeAdView> adViewMap = new HashMap<>();
+    private Map<String, KCNativeAdView> adViewMap = new HashMap<>();
 
     private String interstitialAdPlacement;
 
@@ -93,7 +92,7 @@ public class AdDemoActivity extends HSActivity {
 
     public void closeAd(View view) {
         String placement = (String) adPlacementSpinner.getSelectedItem();
-        NativeAdView nativeAdView = adViewMap.get(placement);
+        KCNativeAdView nativeAdView = adViewMap.get(placement);
         if (nativeAdView != null) {
             adContainer.removeView(nativeAdView);
             adViewMap.remove(placement);
@@ -106,13 +105,14 @@ public class AdDemoActivity extends HSActivity {
         String placement = (String) adPlacementSpinner.getSelectedItem();
         View adLayoutView = LayoutInflater.from(this).inflate(R.layout.ad_style_1, null);
         View adLoadingView = LayoutInflater.from(this).inflate(R.layout.ad_loading, null);
-        NativeAdView nativeAdView = new NativeAdView(this);
+        KCNativeAdView nativeAdView = new KCNativeAdView(this);
         nativeAdView.setAdLayoutView(adLayoutView);
         nativeAdView.setLoadingView(adLoadingView);
-        nativeAdView.configParams(new NativeAdParams(placement, adContainer.getWidth(), 1.9f));
+        nativeAdView.setPrimaryViewSize(adContainer.getWidth(), (int)(adContainer.getWidth() / 1.9f));
         nativeAdView.setOnAdLoadedListener(adLoadedListener);
         nativeAdView.setOnAdClickedListener(adClickedListener);
         nativeAdView.setTag(placement);
+        nativeAdView.load(placement);
         adContainer.addView(nativeAdView);
         adViewMap.put(placement, nativeAdView);
         Toast.makeText(AdDemoActivity.this, placement + " is loading.", Toast.LENGTH_SHORT).show();
@@ -120,19 +120,19 @@ public class AdDemoActivity extends HSActivity {
         updateButtonStates();
     }
 
-    private NativeAdView.OnAdLoadedListener adLoadedListener = new NativeAdView.OnAdLoadedListener() {
+    private KCNativeAdView.OnAdLoadedListener adLoadedListener = new KCNativeAdView.OnAdLoadedListener() {
 
         @Override
-        public void onAdLoaded(NativeAdView adView) {
+        public void onAdLoaded(KCNativeAdView adView) {
             String placement = (String) adView.getTag();
             Toast.makeText(AdDemoActivity.this, placement + " is loaded.", Toast.LENGTH_SHORT).show();
         }
     };
 
-    private NativeAdView.OnAdClickedListener adClickedListener = new NativeAdView.OnAdClickedListener() {
+    private KCNativeAdView.OnAdClickedListener adClickedListener = new KCNativeAdView.OnAdClickedListener() {
 
         @Override
-        public void onAdClicked(NativeAdView adView) {
+        public void onAdClicked(KCNativeAdView adView) {
             String placement = (String) adView.getTag();
             Toast.makeText(AdDemoActivity.this, placement + " is clicked.", Toast.LENGTH_SHORT).show();
         }
@@ -150,8 +150,8 @@ public class AdDemoActivity extends HSActivity {
 
     @Override
     protected void onDestroy() {
-        for (Map.Entry<String, NativeAdView> adViewEntry : adViewMap.entrySet()) {
-            NativeAdView nativeAdView = adViewEntry.getValue();
+        for (Map.Entry<String, KCNativeAdView> adViewEntry : adViewMap.entrySet()) {
+            KCNativeAdView nativeAdView = adViewEntry.getValue();
             nativeAdView.release();
         }
         super.onDestroy();

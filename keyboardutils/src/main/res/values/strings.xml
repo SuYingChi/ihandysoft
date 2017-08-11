@@ -48,9 +48,6 @@
     <string name="enable_charging_detail">Enable smart charging to optimize battery. Contains Ads.</string>
     <string name="disable_battery_master">Disable Battery Master</string>
 
-    <string name="exit_alert_exit_button_text">EXIT</string>
-    <string name="exit_alert_native_ad_name">Master_A(NativeAds)AppQuit</string>
-
     <string name="applying">Applying...</string>
     <string name="cancel">cancel</string>
     <string name="exit_dialog_msg">Are you sure you want to exit?</string>
