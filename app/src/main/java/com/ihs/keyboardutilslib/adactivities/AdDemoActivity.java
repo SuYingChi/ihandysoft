@@ -173,7 +173,7 @@ public class AdDemoActivity extends HSActivity {
     }
 
     public void showInterstitialAd(View view) {
-        boolean success = KCInterstitialAd.show(interstitialAdPlacement);
+        boolean success = KCInterstitialAd.show(interstitialAdPlacement, "Title", "SubTitle");
         if (!success) {
             Toast.makeText(this, "No interstitial ad right now", Toast.LENGTH_SHORT);
         }
