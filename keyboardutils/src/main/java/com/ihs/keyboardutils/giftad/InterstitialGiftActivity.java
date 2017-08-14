@@ -102,8 +102,7 @@ public class InterstitialGiftActivity extends Activity {
 
     private void showInterstitialAd() {
         // request ad
-        AcbNativeAdLoader loader = new AcbNativeAdLoader(HSApplication.getContext(), placementName);
-        loader.load(1, null);
+        AcbNativeAdLoader.preload(HSApplication.getContext(), 1, placementName);
         if (mInterstitialAdContainer == null) {
             initInterstitialAd();
         }

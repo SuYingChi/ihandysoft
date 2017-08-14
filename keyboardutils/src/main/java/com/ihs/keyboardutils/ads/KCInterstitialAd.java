@@ -33,7 +33,7 @@ public class KCInterstitialAd {
             return;
         }
         logAnalyticsEvent(placement, "Load");
-        new AcbInterstitialAdLoader(HSApplication.getContext(), placement).load(1, null);
+        AcbInterstitialAdLoader.preload(HSApplication.getContext(), 1, placement);
     }
 
     public static AcbInterstitialAdLoader loadAndShow(final String placement, final String title, final String subTitle, final OnAdShowListener onAdShowListener, final OnAdCloseListener onAdCloseListener) {

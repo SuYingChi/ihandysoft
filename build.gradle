@@ -20,16 +20,6 @@ plugins {
 //////////////////iHandy Maven configuration end//////////////////
 allprojects {
 
-    //////////////////iHandy Maven configuration begin//////////////////
-    ext {
-        frameworkVersion = "gm:4.2.4.gm"
-        supportVersion = "25.3.1"
-        facebookSdkVersion = "4.8.2"
-        gmsVersion = "10.2.0"
-    }
-
-    //////////////////iHandy Maven configuration end//////////////////
-
     repositories {
         //////////////////iHandy Maven configuration begin//////////////////
         maven {
