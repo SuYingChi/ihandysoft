@@ -34,9 +34,9 @@ final LIB_DEVICE_VERSION = '.gm:4.2.0.gm'
 dependencies {
     compile (name: 'libKeyboardCommons/libKeyboardCommons', ext: 'aar')
 
-    compile "com.ihandy.nativeads:libNativeAds.beta:4.4.0.beta01"
-    compile "com.ihandy.interstitialads:InterstitialAds.beta:4.4.0.beta01"
-    compile 'com.ihandy.expressads:libExpressAds.beta:4.3.0.beta02'
+    compile "com.ihandy.nativeads:libNativeAds.gm:4.4.0.gm"
+    compile "com.ihandy.interstitialads:InterstitialAds.gm:4.4.0.gm"
+    compile 'com.ihandy.expressads:libExpressAds.gm:4.3.0.gm'
     compile "com.ihandy.iap:iap.gm:4.0.+"
 
     compile "com.ihandy.device:device-clean-memory$LIB_DEVICE_VERSION"
