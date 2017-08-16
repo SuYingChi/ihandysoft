@@ -22,7 +22,6 @@ import com.ihs.app.framework.HSApplication;
 import com.ihs.keyboardutils.R;
 import com.ihs.keyboardutils.alerts.HSAlertDialog;
 import com.ihs.keyboardutils.utils.KCAnalyticUtil;
-import com.ihs.keyboardutils.utils.ToastUtils;
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.nostra13.universalimageloader.core.assist.FailReason;
 import com.nostra13.universalimageloader.core.listener.ImageLoadingListener;
@@ -44,6 +43,7 @@ public class LockerEnableDialog extends Dialog {
 
     private Context context;
     private String bgUrl = "";
+    private boolean showAppliedText = true;
 
     public interface OnLockerBgLoadingListener {
         void onFinish();
@@ -54,12 +54,13 @@ public class LockerEnableDialog extends Dialog {
         rootView = View.inflate(getContext(), R.layout.dialog_locker_enable, null);
     }
 
-    public LockerEnableDialog(@NonNull Context context, Drawable drawable, String url) {
+    public LockerEnableDialog(@NonNull Context context, Drawable drawable, String url, boolean showAppliedText) {
         super(context, R.style.LockerEnableDialogTheme);
         this.context = context;
         init();
         rootView.setBackgroundDrawable(drawable);
         bgUrl = url;
+        this.showAppliedText = showAppliedText;
     }
 
     @Override
@@ -67,6 +68,7 @@ public class LockerEnableDialog extends Dialog {
 
         requestWindowFeature(Window.FEATURE_NO_TITLE);
         super.onCreate(savedInstanceState);
+
 
         setContentView(rootView);
         ImageView exitButton = (ImageView) findViewById(R.id.exit_btn);
@@ -86,8 +88,14 @@ public class LockerEnableDialog extends Dialog {
                 dismiss();
             }
         });
+//        enableButton.setBackgroundDrawable(RippleDrawableUtils.getButtonRippleBackground(Color.parseColor("#536dfe")));
+
         mTvTime = (TextView) findViewById(R.id.locker_enable_time_tv);
         mTvDate = (TextView) findViewById(R.id.locker_enable_data_tv);
+        if (!showAppliedText) {
+            TextView enableTv = (TextView) findViewById(R.id.enable_title);
+            enableTv.setText(R.string.locker_enable_title_no_desc);
+        }
         refreshClock();
 
 
@@ -134,7 +142,7 @@ public class LockerEnableDialog extends Dialog {
         showLockerEnableDialog(activity, url, true, bgLoadingListener);
     }
 
-    public static void showLockerEnableDialog(Context activity, String url, boolean showLockerEnableDialog, OnLockerBgLoadingListener bgLoadingListener) {
+    public static void showLockerEnableDialog(Context activity, String url, boolean showAppliedText, OnLockerBgLoadingListener bgLoadingListener) {
         if (TextUtils.isEmpty(url)) {
             if (bgLoadingListener != null) {
                 bgLoadingListener.onFinish();
@@ -175,27 +183,16 @@ public class LockerEnableDialog extends Dialog {
                 handler.removeCallbacksAndMessages(null);
                 savingDialog.dismiss();
 
-                if (showLockerEnableDialog) {
-                    LockerEnableDialog lockerEnableDialog = new LockerEnableDialog(activity, new BitmapDrawable(activity.getResources(), loadedImage), url);
-                    lockerEnableDialog.show();
-                    lockerEnableDialog.setOnDismissListener(new OnDismissListener() {
-                        @Override
-                        public void onDismiss(DialogInterface dialog) {
-                            if (bgLoadingListener != null) {
-                                bgLoadingListener.onFinish();
-                            }
+                LockerEnableDialog lockerEnableDialog = new LockerEnableDialog(activity, new BitmapDrawable(activity.getResources(), loadedImage), url, showAppliedText);
+                lockerEnableDialog.show();
+                lockerEnableDialog.setOnDismissListener(new OnDismissListener() {
+                    @Override
+                    public void onDismiss(DialogInterface dialog) {
+                        if (bgLoadingListener != null) {
+                            bgLoadingListener.onFinish();
                         }
-                    });
-                } else {
-                    if (bgLoadingListener != null) {
-                        bgLoadingListener.onFinish();
                     }
-                    LockerSettings.setLockerEnabled(true);
-                    LockerSettings.setLockerBgUrl(url);
-                    ToastUtils.showToast("Applied Successfully");
-                }
-
-
+                });
             }
 
             @Override

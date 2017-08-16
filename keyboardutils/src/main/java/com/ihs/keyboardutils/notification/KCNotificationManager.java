@@ -458,8 +458,8 @@ public class KCNotificationManager {
     }
 
     public static void logNotificationClick(String actionType, String name) {
-        KCAnalyticUtil.logEvent("local_push_showed", actionType);
-        KCAnalyticUtil.logEvent("local_push_showed_content_name", name);
+        KCAnalyticUtil.logEvent("local_push_clicked", actionType);
+        KCAnalyticUtil.logEvent("local_push_clicked_content_name", name);
     }
 
     private boolean isChargingEnabled() {

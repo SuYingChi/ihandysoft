@@ -138,7 +138,15 @@ public class CustomDesignAlertActivity extends HSAppCompatActivity {
 
     }
 
-    public void showLockerEnableDialog(View view) {
+    public void showLockerEnableDialogNoText(View view) {
+        LockerEnableDialog.showLockerEnableDialog(HSApplication.getContext(), "http://pic1.win4000.com/wallpaper/5/587d8cc476942.jpg",false, new LockerEnableDialog.OnLockerBgLoadingListener() {
+            @Override
+            public void onFinish() {
+            }
+        });
+    }
+
+    public void showLockerEnableDialogWithText(View view) {
         LockerEnableDialog.showLockerEnableDialog(HSApplication.getContext(), "http://pic1.win4000.com/wallpaper/5/587d8cc476942.jpg", new LockerEnableDialog.OnLockerBgLoadingListener() {
             @Override
             public void onFinish() {

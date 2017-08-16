@@ -1161,4 +1161,6 @@
     <string name="ad_placement_result_page">Colorkey_A(NativeAds)ThemeTryAd</string>
     <string name="boost_notification_key">boost_noti_key</string>
     <string name="locker_enable_loading_dialog_text">Applying</string>
+    <string name="locker_enable_title_no_desc">Set as your lockscreen?</string>
+    <string name="locker_enable_title_has_text">Applied successfully! \nSet as your lockscreen as well?</string>
 </resources>

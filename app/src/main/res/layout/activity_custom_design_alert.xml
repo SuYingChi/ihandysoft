@@ -64,8 +64,15 @@
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:onClick="showLockerEnableDialog"
-        android:text="Show Locker Enable Dialog"
+        android:onClick="showLockerEnableDialogWithText"
+        android:text="Show Locker Enable Dialog With Text"
+        />
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:onClick="showLockerEnableDialogNoText"
+        android:text="Show Locker Enable Dialog No Text"
         />
 
 </LinearLayout>

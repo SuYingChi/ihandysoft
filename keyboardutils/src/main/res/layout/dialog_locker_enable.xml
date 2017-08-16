@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.percent.PercentRelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -48,6 +48,7 @@
         app:typeface="@string/roboto_regular" />
 
     <LinearLayout
+        android:id="@+id/rl_enable"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
@@ -55,33 +56,42 @@
         android:orientation="vertical">
 
         <com.ihs.feature.common.TypefacedTextView
-            android:layout_width="wrap_content"
+            android:id="@+id/enable_title"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_gravity="center_horizontal"
-            android:layout_marginTop="20dp"
-            android:lines="2"
-            android:text="          Applied successfully!\nSet as your lockscreen as well?"
+            android:layout_marginTop="13dp"
+            android:gravity="center"
+            android:text="@string/locker_enable_title_has_text"
             android:textColor="@android:color/white"
-            android:textSize="18sp"
-            app:typeface="@string/roboto_medium" />
+            android:textSize="17sp"
+            app:typeface="@string/roboto_regular" />
 
         <com.ihs.feature.common.TypefacedTextView
             android:id="@+id/enable_btn"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_horizontal"
-            android:layout_marginBottom="15dp"
-            android:layout_marginLeft="32dp"
-            android:layout_marginRight="32dp"
-            android:layout_marginTop="20dp"
+            android:layout_height="43dp"
+            android:layout_marginBottom="8dp"
+            android:layout_marginLeft="15dp"
+            android:layout_marginRight="15dp"
+            android:layout_marginTop="13dp"
             android:background="@drawable/selector_blue_btn"
             android:gravity="center"
             android:maxLines="1"
-            android:paddingBottom="15dp"
-            android:paddingTop="15dp"
             android:text="OK"
             android:textColor="@android:color/white"
             android:textSize="18sp"
-            app:typeface="@string/roboto_regular" />
+            app:typeface="@string/font_robot_medium" />
+
+        <TextView
+            android:layout_alignParentBottom="true"
+            android:id="@+id/tv_warning"
+            android:layout_marginBottom="8dp"
+            android:gravity="center"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="May Contain Ads"
+            android:textColor="#80ffffff"
+            android:textSize="11sp"
+            />
     </LinearLayout>
-</RelativeLayout>
+</android.support.percent.PercentRelativeLayout>
