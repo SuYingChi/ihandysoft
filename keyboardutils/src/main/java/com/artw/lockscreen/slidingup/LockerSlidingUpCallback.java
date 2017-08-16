@@ -142,7 +142,7 @@ public class LockerSlidingUpCallback implements SlidingUpCallback {
                 if (type == SlidingUpTouchListener.TYPE_LEFT) {
                     HSGlobalNotificationCenter.sendNotification(LockerActivity.EVENT_FINISH_SELF);
                 } else {
-                    if (NavUtils.startCamera(HSApplication.getContext())) {
+                    if (NavUtils.startCameraFromLockerScreen(HSApplication.getContext())) {
                         HSAnalytics.logEvent("Locker_Camera_Opened", "install_type", PublisherUtils.getInstallType());
                     }
                     HSGlobalNotificationCenter.sendNotification(LockerActivity.EVENT_FINISH_SELF);

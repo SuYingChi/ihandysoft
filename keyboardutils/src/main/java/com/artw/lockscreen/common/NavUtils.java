@@ -180,9 +180,11 @@ public class NavUtils {
         }
     }
 
-    public static boolean startCamera(Context context) {
+    public static boolean startCameraFromLockerScreen(Context context) {
 
         Intent launchIntent = new Intent("com.keyboard.colorcam.locker");
+        launchIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+        launchIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
         launchIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         launchIntent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
         try {
