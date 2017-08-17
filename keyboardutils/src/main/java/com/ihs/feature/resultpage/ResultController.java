@@ -44,8 +44,6 @@ import com.ihs.keyboardutils.utils.ToastUtils;
 
 import java.util.List;
 
-import static com.flurry.sdk.bb.D;
-import static com.flurry.sdk.bb.P;
 import static com.ihs.feature.resultpage.ResultController.Type.AD;
 
 @SuppressWarnings("WeakerAccess")
@@ -246,6 +244,7 @@ abstract class ResultController implements View.OnClickListener {
                 adMarkView.setVisibility(View.VISIBLE);
                 mAdImageContainer.setBackground(imageFrame);
                 AcbNativeAdContainerView adContainer = new AcbNativeAdContainerView(getContext());
+                adContainer.hideAdCorner();
                 adContainer.addContentView(resultView);
                 adContainer.setAdPrimaryView(mAdImageContainer);
                 mChargingScreenImageContainer.setVisibility(View.INVISIBLE);
