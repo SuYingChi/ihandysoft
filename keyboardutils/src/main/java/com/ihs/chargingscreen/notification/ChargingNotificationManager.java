@@ -16,7 +16,6 @@ import com.ihs.charging.HSChargingManager;
 import com.ihs.chargingscreen.ChargingBroadcastReceiver;
 import com.ihs.chargingscreen.Constants;
 import com.ihs.chargingscreen.HSChargingScreenManager;
-import com.ihs.chargingscreen.AgentService;
 import com.ihs.chargingscreen.utils.ChargingAnalytics;
 import com.ihs.commons.notificationcenter.HSGlobalNotificationCenter;
 import com.ihs.commons.notificationcenter.INotificationObserver;
@@ -51,7 +50,7 @@ public class ChargingNotificationManager {
 
 
         Intent intent = new Intent(HSApplication.getContext(), ChargingBroadcastReceiver.class);
-        intent.setAction(AgentService.ACTION_START_CHARGING_ACTIVITY);
+        intent.setAction(ChargingBroadcastReceiver.ACTION_START_CHARGING_ACTIVITY);
         PendingIntent pendingIntent = PendingIntent.getBroadcast(HSApplication.getContext(), 1000, intent, 0);
 
         remoteViews = new RemoteViews(HSApplication.getContext().getPackageName(), R.layout.charging_module_notification_charging);

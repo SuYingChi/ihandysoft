@@ -7,13 +7,12 @@ import android.content.Intent;
 import com.ihs.chargingscreen.utils.ChargingAnalytics;
 import com.ihs.chargingscreen.utils.ChargingManagerUtil;
 
-import static com.ihs.chargingscreen.AgentService.ACTION_START_CHARGING_ACTIVITY;
-
 /**
  * Created by Arthur on 17/3/1.
  */
 
 public class ChargingBroadcastReceiver extends BroadcastReceiver {
+    public static final String ACTION_START_CHARGING_ACTIVITY = "com.artw.charging.ac";
 
     @Override
     public void onReceive(Context context, Intent intent) {
