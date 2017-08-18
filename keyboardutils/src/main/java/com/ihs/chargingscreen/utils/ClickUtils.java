@@ -16,4 +16,14 @@ public class ClickUtils {
         lastClickTime = time;
         return false;
     }
+
+    public static boolean isFastDoubleClick(long intervalTime) {
+        long time = SystemClock.elapsedRealtime();
+        long timeD = time - lastClickTime;
+        if (0 < timeD && timeD < intervalTime) {
+            return true;
+        }
+        lastClickTime = time;
+        return false;
+    }
 }
