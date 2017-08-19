@@ -22,6 +22,7 @@ import com.ihs.app.framework.HSApplication;
 import com.ihs.keyboardutils.R;
 import com.ihs.keyboardutils.alerts.HSAlertDialog;
 import com.ihs.keyboardutils.utils.KCAnalyticUtil;
+import com.kc.commons.utils.KCCommonUtils;
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.nostra13.universalimageloader.core.assist.FailReason;
 import com.nostra13.universalimageloader.core.listener.ImageLoadingListener;
@@ -161,7 +162,7 @@ public class LockerEnableDialog extends Dialog {
                     @Override
                     public void run() {
                         if (!isImgLoaded[0]) {
-                            savingDialog.show();
+                            KCCommonUtils.showDialog(savingDialog);
                         }
                     }
                 }, 200);
