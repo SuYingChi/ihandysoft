@@ -85,18 +85,21 @@ class CustomDesignAlert extends AlertDialog implements View.OnClickListener {
 
         prepareButtons();
 
-        if (isFullScreen) {
-            View iv_close = findViewById(R.id.iv_close);
-            if (iv_close != null) {
-                iv_close.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        cancel();
-                    }
-                });
-                iv_close.setBackgroundDrawable(RippleDrawableUtils.getTransparentRippleBackground());
-            }
-        } else {
+        // 原来：全屏下走下面的代码
+        // 现在：无论全屏和非全屏都走下面的代码
+        View iv_close = findViewById(R.id.iv_close);
+        if (iv_close != null) {
+            iv_close.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    cancel();
+                }
+            });
+            iv_close.setBackgroundDrawable(RippleDrawableUtils.getTransparentRippleBackground());
+        }
+
+        // 只有在不是全屏的时候走这段代码
+        if (!isFullScreen){
             int screenWidth = DisplayUtils.getScreenWidthPixels();
             findViewById(R.id.root_view).getLayoutParams().width = (int) getContext().getResources().getFraction(R.fraction.design_dialog_width, screenWidth, screenWidth);;
         }

@@ -44,7 +44,7 @@ public class ChargingFullScreenAlertDialogActivity extends Activity {
         super.onCreate(savedInstanceState);
         Intent intent = getIntent();
         if (intent != null) {
-            alertType= intent.getStringExtra("type");
+            alertType = intent.getStringExtra("type");
             switch (alertType) {
                 case "charging":
                     initChargingDialog();
@@ -82,6 +82,8 @@ public class ChargingFullScreenAlertDialogActivity extends Activity {
                         finish();
                     }
                 })
+                .setCancelable(false)
+                .setCanceledOnTouchOutside(false)
                 .setFullScreen(true)
                 .setAdText(chargingMap.get("AdText"))
                 .show();
@@ -107,6 +109,8 @@ public class ChargingFullScreenAlertDialogActivity extends Activity {
                         finish();
                     }
                 })
+                .setCancelable(false)
+                .setCanceledOnTouchOutside(false)
                 .setFullScreen(true)
                 .setAdText(chargingMap.get("AdText"))
                 .show();
@@ -114,7 +118,7 @@ public class ChargingFullScreenAlertDialogActivity extends Activity {
 
     private void autopilotLogTopicEvent() {
         Intent intent = getIntent();
-        if(intent != null) {
+        if (intent != null) {
             String topicID = intent.getStringExtra("topicID");
             String topicEvent = intent.getStringExtra("topicEvent");
             if (!TextUtils.isEmpty(topicID) && !TextUtils.isEmpty(topicEvent)) {
@@ -123,31 +127,31 @@ public class ChargingFullScreenAlertDialogActivity extends Activity {
         }
     }
 
-    private Map<String, String> getAlertConfigMap(String keyLowercase){
-        Map<String,String> alertMap = new HashMap();
+    private Map<String, String> getAlertConfigMap(String keyLowercase) {
+        Map<String, String> alertMap = new HashMap();
 
         switch (keyLowercase) {
             case "charging":
-                alertMap = (Map<String, String>) HSConfig.getMap("Application","ChargeLocker","Alert");
+                alertMap = (Map<String, String>) HSConfig.getMap("Application", "ChargeLocker", "Alert");
                 break;
 
             case "locker":
-                alertMap = (Map<String, String>) HSConfig.getMap("Application","Locker","Alert");
+                alertMap = (Map<String, String>) HSConfig.getMap("Application", "Locker", "Alert");
                 break;
         }
         return alertMap;
     }
 
-    public static void startChargingAlert(){
-        Intent intent = new Intent(HSApplication.getContext(),ChargingFullScreenAlertDialogActivity.class);
-        intent.putExtra("type","charging");
+    public static void startChargingAlert() {
+        Intent intent = new Intent(HSApplication.getContext(), ChargingFullScreenAlertDialogActivity.class);
+        intent.putExtra("type", "charging");
         intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         HSApplication.getContext().startActivity(intent);
     }
 
-    public static void startLockerAlert(){
-        Intent intent = new Intent(HSApplication.getContext(),ChargingFullScreenAlertDialogActivity.class);
-        intent.putExtra("type","charging");
+    public static void startLockerAlert() {
+        Intent intent = new Intent(HSApplication.getContext(), ChargingFullScreenAlertDialogActivity.class);
+        intent.putExtra("type", "charging");
         intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         HSApplication.getContext().startActivity(intent);
     }
