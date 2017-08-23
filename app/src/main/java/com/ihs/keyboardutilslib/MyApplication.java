@@ -15,9 +15,6 @@ import com.ihs.commons.notificationcenter.HSGlobalNotificationCenter;
 import com.ihs.commons.notificationcenter.INotificationObserver;
 import com.ihs.commons.utils.HSBundle;
 import com.ihs.commons.utils.HSLog;
-import com.ihs.feature.battery.BatteryActivity;
-import com.ihs.feature.boost.plus.BoostPlusActivity;
-import com.ihs.feature.cpucooler.CpuCoolerScanActivity;
 import com.ihs.feature.notification.NotificationManager;
 import com.ihs.keyboardutils.notification.KCNotificationManager;
 import com.ihs.keyboardutils.notification.NotificationBean;
@@ -65,10 +62,7 @@ public class MyApplication extends HSApplication {
 
         HSGlobalNotificationCenter.addObserver(HSNotificationConstant.HS_SESSION_START, sessionEventObserver);
         HSGlobalNotificationCenter.addObserver(HSNotificationConstant.HS_SESSION_END, sessionEventObserver);
-
-        BoostPlusActivity.initBoost();
-        BatteryActivity.initBattery();
-        CpuCoolerScanActivity.initBoost();
+        
         ScreenLockerManager.init();
         NotificationManager.getInstance().updateBattery();
         initImageLoader();
