@@ -98,7 +98,7 @@ public class ChargingFullScreenAlertDialogActivity extends Activity {
                     public void onClick(View view) {
                         autopilotLogTopicEvent();
                         ChargingManagerUtil.enableCharging(HSChargingManager.getInstance().getChargingState() != HSChargingManager.HSChargingState.STATE_DISCHARGING);
-                        KCAnalyticUtil.logEvent("alert_charging_click");
+                        KCAnalyticUtil.logEvent("alert_charging_clicked_fullscreen");
                     }
                 })
                 .setOnDismissListener(new DialogInterface.OnDismissListener() {
