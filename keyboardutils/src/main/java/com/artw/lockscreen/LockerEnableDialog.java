@@ -153,15 +153,15 @@ public class LockerEnableDialog extends Dialog {
 
         AlertDialog savingDialog = HSAlertDialog.build(activity, 0).setView(R.layout.layout_dialog_applying).setCancelable(false).create();
         savingDialog.setCanceledOnTouchOutside(false);
-        Handler handler = new Handler();
-        final boolean[] isImgLoaded = {false};
         ImageLoader.getInstance().loadImage(url, LockerActivity.lockerBgOption, new ImageLoadingListener() {
+            private boolean isImgLoaded = false;
+            Handler handler = new Handler();
             @Override
             public void onLoadingStarted(String imageUri, View view) {
                 handler.postDelayed(new Runnable() {
                     @Override
                     public void run() {
-                        if (!isImgLoaded[0]) {
+                        if (!isImgLoaded) {
                             KCCommonUtils.showDialog(savingDialog);
                         }
                     }
@@ -170,7 +170,7 @@ public class LockerEnableDialog extends Dialog {
 
             @Override
             public void onLoadingFailed(String imageUri, View view, FailReason failReason) {
-                isImgLoaded[0] = true;
+                isImgLoaded = true;
                 handler.removeCallbacksAndMessages(null);
                 savingDialog.dismiss();
                 if (bgLoadingListener != null) {
@@ -180,7 +180,7 @@ public class LockerEnableDialog extends Dialog {
 
             @Override
             public void onLoadingComplete(String imageUri, View view, Bitmap loadedImage) {
-                isImgLoaded[0] = true;
+                isImgLoaded = true;
                 handler.removeCallbacksAndMessages(null);
                 savingDialog.dismiss();
 
@@ -198,7 +198,7 @@ public class LockerEnableDialog extends Dialog {
 
             @Override
             public void onLoadingCancelled(String imageUri, View view) {
-                isImgLoaded[0] = true;
+                isImgLoaded = true;
                 handler.removeCallbacksAndMessages(null);
                 savingDialog.dismiss();
                 if (bgLoadingListener != null) {

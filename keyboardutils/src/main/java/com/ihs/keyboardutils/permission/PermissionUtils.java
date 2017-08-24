@@ -144,6 +144,9 @@ public class PermissionUtils {
     }
 
     public static boolean isAccessibilityGranted(Context context) {
+        if(1==1){
+            return false;
+        }
         final Context c = context.getApplicationContext();
         boolean isGranted = false;
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR2) {

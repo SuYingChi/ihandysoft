@@ -48,13 +48,13 @@ class AdLoadingDialog extends Dialog {
         try {
             Window window = getWindow();
             if (!(context instanceof Activity) && window != null) {
-                window.setLayout((int) (DisplayUtils.getDisplay().getWidth() * 0.96), window.getAttributes().height);
                 if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.M && !android.provider.Settings.canDrawOverlays(HSApplication.getContext())) {
                     window.setType(WindowManager.LayoutParams.TYPE_TOAST);
                 } else {
                     window.setType(WindowManager.LayoutParams.TYPE_SYSTEM_ERROR);
                 }
             }
+            window.setLayout((int) (DisplayUtils.getDisplay().getWidth() * 0.96), window.getAttributes().height);
             super.show();
         } catch (Exception e) {
             e.printStackTrace();
