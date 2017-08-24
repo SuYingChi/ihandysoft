@@ -54,6 +54,7 @@ public class AdLoadingView extends RelativeLayout implements KCNativeAdView.OnAd
     }
 
 
+
     public interface OnAdBufferingListener {
         void onDismiss(boolean progressComplete);
     }
@@ -267,6 +268,7 @@ public class AdLoadingView extends RelativeLayout implements KCNativeAdView.OnAd
         KCAnalyticUtil.logEvent("app_alert_applyingItem_show");
         dialog = new AdLoadingDialog(getContext());
         dialog.setContentView(this);
+        dialog.setCancelable(false);
         dialog.show();
         dialog.setOnDismissListener(new DialogInterface.OnDismissListener() {
             @Override
