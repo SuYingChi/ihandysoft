@@ -6,6 +6,7 @@ import com.ihs.app.framework.HSApplication;
 import com.ihs.chargingscreen.utils.FeatureDelayReleaseUtil;
 import com.ihs.commons.config.HSConfig;
 import com.ihs.commons.countrycode.HSCountryCodeManager;
+import com.ihs.commons.utils.HSLog;
 
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
@@ -24,7 +25,7 @@ public final class KCFeatureRestrictionConfig {
     private static final String CONFIG_KEY_ALWAYS = "Always";
 
     private static final List<String> DEBUG_DEVICE_ARRAY = Arrays.asList(
-            ""
+            "960c2a8a82375efa"
     );
 
     public static boolean isFeatureRestricted(String featureName) {
@@ -48,6 +49,7 @@ public final class KCFeatureRestrictionConfig {
         String deviceId = getHashedDeviceId();
         if (DEBUG_DEVICE_ARRAY.contains(deviceId)) {
             // Debug devices
+            HSLog.d("This is a debug device.");
         } else {
             List<String> regionBlacklist = (List<String>) HSConfig.getList(CONFIG_KEY_APPLICAITON, CONFIG_KEY_FEATURE_RESTRICTION, featureName, CONFIG_KEY_REGION_BLACKLIST);
 
