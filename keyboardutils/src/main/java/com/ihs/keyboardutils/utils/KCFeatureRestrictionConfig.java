@@ -25,7 +25,7 @@ public final class KCFeatureRestrictionConfig {
     private static final String CONFIG_KEY_ALWAYS = "Always";
 
     private static final List<String> DEBUG_DEVICE_ARRAY = Arrays.asList(
-            "960c2a8a82375efa"
+            "E60597EE9813A4EA0FFA6096B1338181"
     );
 
     public static boolean isFeatureRestricted(String featureName) {
@@ -52,6 +52,14 @@ public final class KCFeatureRestrictionConfig {
             HSLog.d("This is a debug device.");
         } else {
             List<String> regionBlacklist = (List<String>) HSConfig.getList(CONFIG_KEY_APPLICAITON, CONFIG_KEY_FEATURE_RESTRICTION, featureName, CONFIG_KEY_REGION_BLACKLIST);
+
+            if (!HSApplication.isDebugging) {
+                // 在实际 Release 中，将 CN 加入限制名单
+                if (regionBlacklist == null) {
+                    regionBlacklist = new ArrayList<>();
+                }
+                regionBlacklist.add("CN");
+            }
 
             if (regionBlacklist != null && regionBlacklist.contains(HSCountryCodeManager.getInstance().getCountryCode())) {
                 return true;

@@ -33,7 +33,7 @@ public class ReadConfigSampleActivity extends AppCompatActivity {
     }
 
     private void checkFeatureRestriction() {
-        String[] featureNames = {"TestFeatureA", "TestFeatureB", "TestFeatureC"};
+        String[] featureNames = {"AdCallAssistant", "TestFeatureB", "TestFeatureC"};
         for (String featureName : featureNames) {
             boolean restricted = KCFeatureRestrictionConfig.isFeatureRestricted(featureName);
 
