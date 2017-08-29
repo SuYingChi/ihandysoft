@@ -172,7 +172,7 @@ public class LockerEnableDialog extends Dialog {
             public void onLoadingFailed(String imageUri, View view, FailReason failReason) {
                 isImgLoaded = true;
                 handler.removeCallbacksAndMessages(null);
-                savingDialog.dismiss();
+                KCCommonUtils.dismissDialog(savingDialog);
                 if (bgLoadingListener != null) {
                     bgLoadingListener.onFinish();
                 }
@@ -182,10 +182,10 @@ public class LockerEnableDialog extends Dialog {
             public void onLoadingComplete(String imageUri, View view, Bitmap loadedImage) {
                 isImgLoaded = true;
                 handler.removeCallbacksAndMessages(null);
-                savingDialog.dismiss();
+                KCCommonUtils.dismissDialog(savingDialog);
 
                 LockerEnableDialog lockerEnableDialog = new LockerEnableDialog(activity, new BitmapDrawable(activity.getResources(), loadedImage), url, showAppliedText);
-                lockerEnableDialog.show();
+                KCCommonUtils.showDialog(lockerEnableDialog);
                 lockerEnableDialog.setOnDismissListener(new OnDismissListener() {
                     @Override
                     public void onDismiss(DialogInterface dialog) {
@@ -200,7 +200,7 @@ public class LockerEnableDialog extends Dialog {
             public void onLoadingCancelled(String imageUri, View view) {
                 isImgLoaded = true;
                 handler.removeCallbacksAndMessages(null);
-                savingDialog.dismiss();
+                KCCommonUtils.dismissDialog(savingDialog);
                 if (bgLoadingListener != null) {
                     bgLoadingListener.onFinish();
                 }
