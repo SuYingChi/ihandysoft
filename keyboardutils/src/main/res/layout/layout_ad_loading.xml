@@ -81,5 +81,15 @@
     <FrameLayout
         android:id="@+id/fl_ad_container"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
+        android:layout_height="wrap_content"
+        android:paddingTop="150dp"
+        android:paddingBottom="150dp">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="11.4sp"
+            android:text="Sponsored Content"
+            android:layout_gravity="center"/>
+    </FrameLayout>
 </LinearLayout>
