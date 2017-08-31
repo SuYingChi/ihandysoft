@@ -139,6 +139,7 @@ public class AdLoadingView extends RelativeLayout implements KCNativeAdView.OnAd
         if (nativeAdView.getParent() != null) {
             ((ViewGroup) nativeAdView.getParent()).removeView(nativeAdView);
         }
+        nativeAdView.setBackgroundColor(getContext().getResources().getColor(android.R.color.white));
         adContainer.addView(nativeAdView);
     }
 
