@@ -1,6 +1,7 @@
 package com.ihs.keyboardutils.adbuffer;
 
 import android.animation.Animator;
+import android.animation.ObjectAnimator;
 import android.animation.ValueAnimator;
 import android.app.Activity;
 import android.content.Context;
@@ -9,7 +10,6 @@ import android.graphics.drawable.Drawable;
 import android.support.annotation.Nullable;
 import android.text.TextUtils;
 import android.util.AttributeSet;
-import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.ViewTreeObserver;
@@ -127,11 +127,14 @@ public class AdLoadingView extends RelativeLayout implements KCNativeAdView.OnAd
 
         LinearLayout linearLayout = (LinearLayout) findViewById(R.id.root_view);
         linearLayout.getLayoutParams().width = (int)(((Activity) getContext()).getWindowManager().getDefaultDisplay().getWidth() * 0.8);
-        Log.i("123", linearLayout.getLayoutParams().width + "");
 
-        ViewGroup adContainer = (ViewGroup) findViewById(R.id.fl_ad_container);
+        FlashFrameLayout adContainer = (FlashFrameLayout) findViewById(R.id.fl_ad_container);
         adContainer.getLayoutParams().width = linearLayout.getLayoutParams().width;
-        adContainer.getLayoutParams().height = (int) (adContainer.getLayoutParams().width * 1.45);
+        adContainer.getLayoutParams().height = (int) (adContainer.getLayoutParams().width * 1.2);
+        adContainer.setDuration(2000);
+        adContainer.setAlpha(0.5f);
+        adContainer.setAutoStart(true);
+        adContainer.setRepeatMode(ObjectAnimator.RESTART);
         if (nativeAdView.getParent() != null) {
             ((ViewGroup) nativeAdView.getParent()).removeView(nativeAdView);
         }

@@ -78,7 +78,7 @@
 
     </RelativeLayout>
 
-    <FrameLayout
+    <com.ihs.keyboardutils.view.FlashFrameLayout
         android:id="@+id/fl_ad_container"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
@@ -88,9 +88,8 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:fontFamily="sans-serif-medium"
-            android:lineSpacingExtra="-8.8sp"
             android:text="Sponsored Content"
             android:textSize="11.4sp"
             android:textStyle="normal" />
-    </FrameLayout>
+    </com.ihs.keyboardutils.view.FlashFrameLayout>
 </LinearLayout>
