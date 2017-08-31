@@ -11,6 +11,7 @@ import android.view.Window;
 import android.view.WindowManager;
 
 import com.acb.autopilot.AutopilotEvent;
+import com.ihs.app.analytics.HSAnalytics;
 import com.ihs.app.framework.HSApplication;
 import com.ihs.charging.HSChargingManager;
 import com.ihs.chargingscreen.utils.ChargingManagerUtil;
@@ -88,6 +89,7 @@ public class ChargingFullScreenAlertDialogActivity extends Activity {
     }
 
     private void initChargingDialog() {
+        HSAnalytics.logEvent("alert_charging_show", "size", "full_screen");
         Map<String, String> chargingMap = getAlertConfigMap(alertType);
         new KCAlert.Builder(this)
                 .setTitle(chargingMap.get("Title"))
@@ -98,7 +100,7 @@ public class ChargingFullScreenAlertDialogActivity extends Activity {
                     public void onClick(View view) {
                         autopilotLogTopicEvent();
                         ChargingManagerUtil.enableCharging(HSChargingManager.getInstance().getChargingState() != HSChargingManager.HSChargingState.STATE_DISCHARGING);
-                        KCAnalyticUtil.logEvent("alert_charging_clicked_fullscreen");
+                        HSAnalytics.logEvent("alert_charging_click", "size", "full_screen");
                     }
                 })
                 .setOnDismissListener(new DialogInterface.OnDismissListener() {
