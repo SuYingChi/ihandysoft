@@ -16,6 +16,7 @@ import com.ihs.commons.config.HSConfig;
 import com.ihs.keyboardutils.ads.KCInterstitialAd;
 import com.ihs.keyboardutils.giftad.GiftInterstitialHelper;
 import com.ihs.keyboardutils.nativeads.KCNativeAdView;
+import com.ihs.keyboardutils.view.FlashFrameLayout;
 import com.ihs.keyboardutilslib.R;
 
 import java.util.ArrayList;
@@ -126,6 +127,8 @@ public class AdDemoActivity extends HSActivity {
         public void onAdLoaded(KCNativeAdView adView) {
             String placement = (String) adView.getTag();
             Toast.makeText(AdDemoActivity.this, placement + " is loaded.", Toast.LENGTH_SHORT).show();
+            FlashFrameLayout loadingText = (FlashFrameLayout) findViewById(R.id.loading_text);
+            loadingText.removeView(findViewById(R.id.loading_text_view));
         }
     };
 

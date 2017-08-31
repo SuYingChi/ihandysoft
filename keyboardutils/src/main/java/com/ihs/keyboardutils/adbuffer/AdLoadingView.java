@@ -15,7 +15,6 @@ import android.view.ViewGroup;
 import android.view.ViewTreeObserver;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
@@ -87,6 +86,17 @@ public class AdLoadingView extends RelativeLayout implements KCNativeAdView.OnAd
 
         tvApply = (TextView) findViewById(R.id.tv_apply);
 
+        RelativeLayout relativeLayout = (RelativeLayout) findViewById(R.id.root);
+        relativeLayout.getLayoutParams().width = (int)(((Activity) getContext()).getWindowManager().getDefaultDisplay().getWidth() * 0.8);
+
+        FlashFrameLayout loadingContainer = (FlashFrameLayout) findViewById(R.id.loading_text);
+        loadingContainer.getLayoutParams().width = relativeLayout.getLayoutParams().width;
+        loadingContainer.getLayoutParams().height = (int) (loadingContainer.getLayoutParams().width * 1.4);
+        loadingContainer.setDuration(4000);
+        loadingContainer.setAlpha(0.5f);
+        loadingContainer.setAutoStart(true);
+        loadingContainer.setRepeatMode(ObjectAnimator.RESTART);
+
         if (!hasPurchaseNoAds) {
             initAdView();
         }
@@ -125,16 +135,7 @@ public class AdLoadingView extends RelativeLayout implements KCNativeAdView.OnAd
         }
         nativeAdView.getViewTreeObserver().addOnGlobalLayoutListener(mGlobalLayoutListener);
 
-        LinearLayout linearLayout = (LinearLayout) findViewById(R.id.root_view);
-        linearLayout.getLayoutParams().width = (int)(((Activity) getContext()).getWindowManager().getDefaultDisplay().getWidth() * 0.8);
-
-        FlashFrameLayout adContainer = (FlashFrameLayout) findViewById(R.id.fl_ad_container);
-        adContainer.getLayoutParams().width = linearLayout.getLayoutParams().width;
-        adContainer.getLayoutParams().height = (int) (adContainer.getLayoutParams().width * 1.2);
-        adContainer.setDuration(2000);
-        adContainer.setAlpha(0.5f);
-        adContainer.setAutoStart(true);
-        adContainer.setRepeatMode(ObjectAnimator.RESTART);
+        ViewGroup adContainer = (ViewGroup) findViewById(R.id.fl_ad_container);
         if (nativeAdView.getParent() != null) {
             ((ViewGroup) nativeAdView.getParent()).removeView(nativeAdView);
         }
