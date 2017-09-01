@@ -1163,4 +1163,6 @@
     <string name="locker_enable_loading_dialog_text">Applying</string>
     <string name="locker_enable_title_no_desc">Set as your lockscreen?</string>
     <string name="locker_enable_title_has_text">Applied successfully! \nSet as your lockscreen as well?</string>
+
+    <string name="ad_loading_text">Sponsored Content</string>
 </resources>

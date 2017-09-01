@@ -102,7 +102,7 @@
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
                     android:fontFamily="@string/roboto_medium"
-                    android:text="Sponsored Content"
+                    android:text="@string/ad_loading_text"
                     android:textColor="#cacaca"
                     android:textSize="16sp"
                     android:textStyle="normal" />
