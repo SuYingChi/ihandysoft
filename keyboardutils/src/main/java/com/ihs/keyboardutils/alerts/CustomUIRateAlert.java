@@ -114,15 +114,12 @@ public class CustomUIRateAlert extends AlertDialog implements View.OnClickListen
                 if (positiveButtonClickListener != null) {
                     positiveButtonClickListener.onClick(v);
                 }
-
-                //HSGoogleAnalyticsUtils.getInstance().logAppEvent("custom_theme_simulate_rate_ratenow_clicked");
             }
         } else if (v == negativeButton) {
             dismiss();
             if (negativeButtonClickListener != null) {
                 negativeButtonClickListener.onClick(v);
             }
-            //HSGoogleAnalyticsUtils.getInstance().logAppEvent("custom_theme_simulate_rate_later_clicked");
         } else if (v.getId() == R.id.start_1) {
             rate(1);
         } else if (v.getId() == R.id.start_2) {
