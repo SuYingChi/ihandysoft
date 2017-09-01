@@ -9,9 +9,12 @@
     <!-- Example General settings -->
     <string name="pref_header_general">General</string>
 
-    <string name="pref_title_social_recommendations">Enable charging locker screen</string>
+    <string name="pref_title_social_recommendations">Enable charging</string>
     <string name="pref_description_social_recommendations">Enable smart charging to optimize battery. Contains Ads.</string>
     <string name="pref_header_key">charger_example_switch</string>
 
+    <string name="pref_title_locker_recommendations">Enable locker</string>
+    <string name="pref_description_locker_recommendations">Enable beautiful locker. Contains Ads.</string>
+    <string name="pref_locker_key">locker_example_switch</string>
 
 </resources>

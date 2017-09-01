@@ -6,4 +6,9 @@
         android:summary="@string/pref_description_social_recommendations"
         android:title="@string/pref_title_social_recommendations" />
 
+    <SwitchPreference
+        android:defaultValue="true"
+        android:key="@string/pref_locker_key"
+        android:summary="@string/pref_description_locker_recommendations"
+        android:title="@string/pref_title_locker_recommendations" />
 </PreferenceScreen>

@@ -14,6 +14,7 @@ import android.support.v7.app.ActionBar;
 import android.preference.PreferenceFragment;
 import android.view.MenuItem;
 
+import com.artw.lockscreen.LockerSettings;
 import com.ihs.chargingscreen.utils.ChargingManagerUtil;
 import com.ihs.chargingscreen.utils.ChargingPrefsUtil;
 import com.ihs.keyboardutilslib.R;
@@ -125,6 +126,28 @@ public class ChargingLockerSettingsActivity extends AppCompatPreferenceActivity 
                         } else {
                             ChargingManagerUtil.disableCharging();
                         }
+                        return true;
+                    }
+                });
+            }
+            if (LockerSettings.isLockerMuted()) {
+                getPreferenceScreen().removePreference(findPreference(getString(R.string.pref_locker_key)));
+            } else {
+                SwitchPreference lockerSwitcher = (SwitchPreference) findPreference(getString(R.string.pref_locker_key));
+                int lockerEnableStates = LockerSettings.getLockerEnableStates();
+                switch (lockerEnableStates) {
+                    case LockerSettings.LOCKER_DEFAULT_DISABLED:
+                        lockerSwitcher.setChecked(false);
+                        break;
+                    case LockerSettings.LOCKER_DEFAULT_ACTIVE:
+                        lockerSwitcher.setChecked(true);
+                        break;
+                }
+
+                lockerSwitcher.setOnPreferenceChangeListener(new Preference.OnPreferenceChangeListener() {
+                    @Override
+                    public boolean onPreferenceChange(Preference preference, Object newValue) {
+                        LockerSettings.setLockerEnabled((Boolean) newValue);
                         return true;
                     }
                 });
