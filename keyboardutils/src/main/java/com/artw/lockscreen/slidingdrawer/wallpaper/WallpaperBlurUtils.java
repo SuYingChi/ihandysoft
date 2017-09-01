@@ -6,6 +6,7 @@ import android.graphics.Canvas;
 import android.graphics.Paint;
 import android.util.Log;
 
+import com.ihs.chargingscreen.utils.DisplayUtils;
 import com.ihs.keyboardutils.R;
 import com.ihs.keyboardutils.utils.CommonUtils;
 
@@ -31,7 +32,7 @@ public class WallpaperBlurUtils {
         int startY;
         int rangeHeight;
 
-        int rangeWidth = height * CommonUtils.getPhoneWidth(context) / CommonUtils.getPhoneHeight(context);
+        int rangeWidth = height * DisplayUtils.getScreenWidthPixels() / DisplayUtils.getScreenHeightPixels();
         if (rangeWidth <= width) {
             rangeHeight = height * context.getResources().getDimensionPixelOffset(R.dimen.locker_toggle_height)
                     / CommonUtils.getPhoneHeight(context);
@@ -51,6 +52,11 @@ public class WallpaperBlurUtils {
         if (startY < 0) startY = 0;
         if (startX + rangeWidth > width) rangeWidth = width - startX;
         if (startY + rangeHeight > height) rangeHeight = height - startY;
+        if(rangeWidth == 0 || rangeHeight == 0){
+            return bitmap;
+        }
+
+
         Bitmap resizedbitmap = Bitmap.createBitmap(bitmap, startX, startY, rangeWidth, rangeHeight);
 
         // blur resized bitmap
