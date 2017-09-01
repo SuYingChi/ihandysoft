@@ -15,6 +15,7 @@ import android.view.ViewGroup;
 import android.view.ViewTreeObserver;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
@@ -86,16 +87,13 @@ public class AdLoadingView extends RelativeLayout implements KCNativeAdView.OnAd
 
         tvApply = (TextView) findViewById(R.id.tv_apply);
 
-        RelativeLayout relativeLayout = (RelativeLayout) findViewById(R.id.root);
-        relativeLayout.getLayoutParams().width = (int)(((Activity) getContext()).getWindowManager().getDefaultDisplay().getWidth() * 0.8);
+        LinearLayout rootView = (LinearLayout) findViewById(R.id.root_view);
+        rootView.getLayoutParams().height = (int)(((Activity) getContext()).getWindowManager().getDefaultDisplay().getWidth() * 1.2);
 
-        FlashFrameLayout loadingContainer = (FlashFrameLayout) findViewById(R.id.loading_text);
-        loadingContainer.getLayoutParams().width = relativeLayout.getLayoutParams().width;
-        loadingContainer.getLayoutParams().height = (int) (loadingContainer.getLayoutParams().width * 1.4);
-        loadingContainer.setDuration(4000);
-        loadingContainer.setAlpha(0.5f);
-        loadingContainer.setAutoStart(true);
-        loadingContainer.setRepeatMode(ObjectAnimator.RESTART);
+        FlashFrameLayout sponsoredContent = (FlashFrameLayout) findViewById(R.id.sponsored_content);
+        sponsoredContent.setDuration(3000);
+        sponsoredContent.setAutoStart(true);
+        sponsoredContent.setRepeatMode(ObjectAnimator.RESTART);
 
         if (!hasPurchaseNoAds) {
             initAdView();
