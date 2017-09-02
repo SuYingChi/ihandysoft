@@ -128,7 +128,8 @@ public class HSChargingScreenManager {
             }
 
             private void showChargingStateChangedNotification(int pushEnableWhenPlug) {
-                if (HSChargingState.STATE_DISCHARGING != HSChargingManager.getInstance().getChargingState()) {
+                if (HSChargingState.STATE_DISCHARGING != HSChargingManager.getInstance().getChargingState()
+                        && HSChargingState.STATE_CHARGING_FULL != HSChargingManager.getInstance().getChargingState()) {
                     ChargingFullScreenAlertDialogActivity.startChargingAlert();
                 }
 //                ChargingAnalytics.getInstance().chargingEnableNotificationShowed();
