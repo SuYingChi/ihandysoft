@@ -133,10 +133,9 @@ public class CustomDesignAlertActivity extends HSAppCompatActivity {
 
     public void showAdloadingView(View view) {
         AdLoadingView adLoadingView = new AdLoadingView(this);
-        adLoadingView.configParams(null, null, "a", "a", "a", null, 4000, false);
+        adLoadingView.configParams(null, null, "a", "a", "ColorCam_A(NativeAds)FilterDownload", null, 4000, false);
         adLoadingView.showInDialog();
         adLoadingView.startFakeLoading();
-
     }
 
     public void showLockerEnableDialogNoText(View view) {

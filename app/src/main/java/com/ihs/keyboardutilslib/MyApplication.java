@@ -75,6 +75,7 @@ public class MyApplication extends HSApplication {
         },true);
 
         AcbNativeAdManager.sharedInstance().activePlacementInProcess(getString(R.string.ad_placement_result_page));
+        AcbNativeAdManager.sharedInstance().activePlacementInProcess("ColorCam_A(NativeAds)FilterDownload");
     }
 
 

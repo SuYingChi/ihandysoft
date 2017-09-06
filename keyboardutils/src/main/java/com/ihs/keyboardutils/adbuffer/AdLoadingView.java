@@ -37,7 +37,7 @@ public class AdLoadingView extends RelativeLayout implements KCNativeAdView.OnAd
 
     private AdLoadingDialog dialog;
     public TextView tvApply;
-    private int leastDownloadingTime;
+    private int leastDownloadingTime = 4000;
     private ImageView progressBar;
     private boolean progressComplete;
     private boolean showCloseButtonWhenFinish;
@@ -86,7 +86,7 @@ public class AdLoadingView extends RelativeLayout implements KCNativeAdView.OnAd
         tvApply = (TextView) findViewById(R.id.tv_apply);
 
         LinearLayout rootView = (LinearLayout) findViewById(R.id.root_view);
-        rootView.getLayoutParams().height = (int) (DisplayUtils.getScreenHeightPixels() * 0.7);
+        rootView.getLayoutParams().height = (int) (DisplayUtils.getScreenHeightPixels() * 0.65);
 
         FlashFrameLayout sponsoredContent = (FlashFrameLayout) findViewById(R.id.sponsored_content);
         sponsoredContent.setDuration(3000);
@@ -197,7 +197,6 @@ public class AdLoadingView extends RelativeLayout implements KCNativeAdView.OnAd
             } else {
                 fakeLoadingProgress(percent, 101, 1);
             }
-            startDownloadingTime = -1;
         }
     }
 
@@ -236,11 +235,13 @@ public class AdLoadingView extends RelativeLayout implements KCNativeAdView.OnAd
                 progressBar.setVisibility(INVISIBLE);
                 closeButton.setVisibility(VISIBLE);
                 progressComplete = true;
+
+                startDownloadingTime = -1;
             }
 
             @Override
             public void onAnimationCancel(Animator animation) {
-
+                startDownloadingTime = -1;
             }
 
             @Override
@@ -254,7 +255,9 @@ public class AdLoadingView extends RelativeLayout implements KCNativeAdView.OnAd
     public void configParams(Drawable bg, Drawable icon, String loadingText, String loadComplete, String adPlacementName, OnAdBufferingListener onAdBufferingListener
             , int delayAfterDownloadComplete, boolean hasPurchaseNoAds) {
         setBackgroundPreview(bg).setIcon(icon).setAdPlacementName(adPlacementName).setOnLoadingText(loadingText, loadComplete);
-        this.leastDownloadingTime = delayAfterDownloadComplete;
+        if(leastDownloadingTime < delayAfterDownloadComplete){
+            this.leastDownloadingTime = delayAfterDownloadComplete;
+        }
         this.onAdBufferingListener = onAdBufferingListener;
         this.hasPurchaseNoAds = hasPurchaseNoAds;
     }
