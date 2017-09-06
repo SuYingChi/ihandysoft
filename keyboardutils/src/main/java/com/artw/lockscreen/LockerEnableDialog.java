@@ -3,13 +3,10 @@ package com.artw.lockscreen;
 import android.app.Activity;
 import android.app.Dialog;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.graphics.Bitmap;
 import android.graphics.drawable.BitmapDrawable;
-import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.os.Handler;
-import android.support.annotation.NonNull;
 import android.support.v7.app.AlertDialog;
 import android.text.TextUtils;
 import android.view.View;
@@ -44,24 +41,25 @@ public class LockerEnableDialog extends Dialog {
 
     private Context context;
     private String bgUrl = "";
-    private boolean showAppliedText = true;
+    private String appliedText = "";
+    private String showFrom = "";
+
+    public LockerEnableDialog(Context activity, BitmapDrawable bitmapDrawable, String url, String appliedText, String showFrom) {
+        super(activity, R.style.LockerEnableDialogTheme);
+        this.context = activity;
+        init();
+        rootView.setBackgroundDrawable(bitmapDrawable);
+        bgUrl = url;
+        this.appliedText = appliedText;
+        this.showFrom = showFrom;
+    }
 
     public interface OnLockerBgLoadingListener {
         void onFinish();
     }
 
-
     private void init() {
         rootView = View.inflate(getContext(), R.layout.dialog_locker_enable, null);
-    }
-
-    public LockerEnableDialog(@NonNull Context context, Drawable drawable, String url, boolean showAppliedText) {
-        super(context, R.style.LockerEnableDialogTheme);
-        this.context = context;
-        init();
-        rootView.setBackgroundDrawable(drawable);
-        bgUrl = url;
-        this.showAppliedText = showAppliedText;
     }
 
     @Override
@@ -83,7 +81,7 @@ public class LockerEnableDialog extends Dialog {
         enableButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                KCAnalyticUtil.logEvent("keyboard_lockeralert_ok_clicked");
+                KCAnalyticUtil.logEvent("keyboard_lockeralert_ok_clicked", showFrom);
                 LockerSettings.setLockerEnabled(true);
                 LockerSettings.setLockerBgUrl(bgUrl);
                 dismiss();
@@ -93,13 +91,9 @@ public class LockerEnableDialog extends Dialog {
 
         mTvTime = (TextView) findViewById(R.id.locker_enable_time_tv);
         mTvDate = (TextView) findViewById(R.id.locker_enable_data_tv);
-        if (!showAppliedText) {
-            TextView enableTv = (TextView) findViewById(R.id.enable_title);
-            enableTv.setText(R.string.locker_enable_title_no_desc);
-        }
+        TextView enableTv = (TextView) findViewById(R.id.enable_title);
+        enableTv.setText(appliedText);
         refreshClock();
-
-
     }
 
     private void refreshClock() {
@@ -135,15 +129,13 @@ public class LockerEnableDialog extends Dialog {
 
         }
 
-        KCAnalyticUtil.logEvent("keyboard_lockeralert_show");
+        KCAnalyticUtil.logEvent("keyboard_lockeralert_show", showFrom);
         LockerSettings.addLockerEnableShowCount();
     }
 
-    public static void showLockerEnableDialog(Context activity, String url, OnLockerBgLoadingListener bgLoadingListener) {
-        showLockerEnableDialog(activity, url, true, bgLoadingListener);
-    }
 
-    public static void showLockerEnableDialog(Context activity, String url, boolean showAppliedText, OnLockerBgLoadingListener bgLoadingListener) {
+    public static void showLockerEnableDialog(Context activity, String url, String appliedText,
+                                              String showFrom, OnLockerBgLoadingListener bgLoadingListener) {
         if (TextUtils.isEmpty(url)) {
             if (bgLoadingListener != null) {
                 bgLoadingListener.onFinish();
@@ -156,14 +148,12 @@ public class LockerEnableDialog extends Dialog {
         ImageLoader.getInstance().loadImage(url, LockerActivity.lockerBgOption, new ImageLoadingListener() {
             private boolean isImgLoaded = false;
             Handler handler = new Handler();
+
             @Override
             public void onLoadingStarted(String imageUri, View view) {
-                handler.postDelayed(new Runnable() {
-                    @Override
-                    public void run() {
-                        if (!isImgLoaded) {
-                            KCCommonUtils.showDialog(savingDialog);
-                        }
+                handler.postDelayed(() -> {
+                    if (!isImgLoaded) {
+                        KCCommonUtils.showDialog(savingDialog);
                     }
                 }, 200);
             }
@@ -184,14 +174,12 @@ public class LockerEnableDialog extends Dialog {
                 handler.removeCallbacksAndMessages(null);
                 KCCommonUtils.dismissDialog(savingDialog);
 
-                LockerEnableDialog lockerEnableDialog = new LockerEnableDialog(activity, new BitmapDrawable(activity.getResources(), loadedImage), url, showAppliedText);
+                LockerEnableDialog lockerEnableDialog = new LockerEnableDialog(activity, new BitmapDrawable(activity.getResources(), loadedImage),
+                        url, appliedText, showFrom);
                 KCCommonUtils.showDialog(lockerEnableDialog);
-                lockerEnableDialog.setOnDismissListener(new OnDismissListener() {
-                    @Override
-                    public void onDismiss(DialogInterface dialog) {
-                        if (bgLoadingListener != null) {
-                            bgLoadingListener.onFinish();
-                        }
+                lockerEnableDialog.setOnDismissListener(dialog -> {
+                    if (bgLoadingListener != null) {
+                        bgLoadingListener.onFinish();
                     }
                 });
             }

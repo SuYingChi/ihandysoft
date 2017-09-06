@@ -3,7 +3,6 @@ package com.ihs.keyboardutils.adbuffer;
 import android.animation.Animator;
 import android.animation.ObjectAnimator;
 import android.animation.ValueAnimator;
-import android.app.Activity;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.graphics.drawable.Drawable;
@@ -57,7 +56,6 @@ public class AdLoadingView extends RelativeLayout implements KCNativeAdView.OnAd
     }
 
 
-
     public interface OnAdBufferingListener {
         void onDismiss(boolean progressComplete);
     }
@@ -88,7 +86,7 @@ public class AdLoadingView extends RelativeLayout implements KCNativeAdView.OnAd
         tvApply = (TextView) findViewById(R.id.tv_apply);
 
         LinearLayout rootView = (LinearLayout) findViewById(R.id.root_view);
-        rootView.getLayoutParams().height = (int)(((Activity) getContext()).getWindowManager().getDefaultDisplay().getHeight() * 0.7);
+        rootView.getLayoutParams().height = (int) (DisplayUtils.getScreenHeightPixels() * 0.7);
 
         FlashFrameLayout sponsoredContent = (FlashFrameLayout) findViewById(R.id.sponsored_content);
         sponsoredContent.setDuration(3000);
@@ -172,7 +170,7 @@ public class AdLoadingView extends RelativeLayout implements KCNativeAdView.OnAd
 
     private AdLoadingView setAdPlacementName(String adPlacementName) {
         if (!TextUtils.isEmpty(adPlacementName) && !hasPurchaseNoAds) {
-            nativeAdView.setPrimaryViewSize((int)(DisplayUtils.getScreenWidthPixels() * 0.9), (int)(DisplayUtils.getScreenWidthPixels() * 0.9 / 1.9));
+            nativeAdView.setPrimaryViewSize((int) (DisplayUtils.getScreenWidthPixels() * 0.9), (int) (DisplayUtils.getScreenWidthPixels() * 0.9 / 1.9));
             nativeAdView.load(adPlacementName);
 
             KCAnalyticUtil.logEvent("NativeAds_A(NativeAds)ApplyingItem_Load");

@@ -118,28 +118,29 @@ public class CustomDesignAlertActivity extends HSAppCompatActivity {
     }
 
     public void showFullScreenChargingAlert(View view) {
-        Intent intent = new Intent(this,ChargingFullScreenAlertDialogActivity.class);
-        intent.putExtra("type","charging");
+        Intent intent = new Intent(this, ChargingFullScreenAlertDialogActivity.class);
+        intent.putExtra("type", "charging");
         intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         this.startActivity(intent);
     }
 
     public void showFullScreenLockerAlert(View view) {
-        Intent intent = new Intent(this,ChargingFullScreenAlertDialogActivity.class);
-        intent.putExtra("type","locker");
+        Intent intent = new Intent(this, ChargingFullScreenAlertDialogActivity.class);
+        intent.putExtra("type", "locker");
         intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         this.startActivity(intent);
     }
+
     public void showAdloadingView(View view) {
         AdLoadingView adLoadingView = new AdLoadingView(this);
-        adLoadingView.configParams(null,null,"a","a","a",null,4000,false);
+        adLoadingView.configParams(null, null, "a", "a", "a", null, 4000, false);
         adLoadingView.showInDialog();
         adLoadingView.startFakeLoading();
 
     }
 
     public void showLockerEnableDialogNoText(View view) {
-        LockerEnableDialog.showLockerEnableDialog(HSApplication.getContext(), "http://pic1.win4000.com/wallpaper/5/587d8cc476942.jpg",false, new LockerEnableDialog.OnLockerBgLoadingListener() {
+        LockerEnableDialog.showLockerEnableDialog(HSApplication.getContext(), "http://pic1.win4000.com/wallpaper/5/587d8cc476942.jpg", "applied", "fromwhere", new LockerEnableDialog.OnLockerBgLoadingListener() {
             @Override
             public void onFinish() {
             }
@@ -147,7 +148,7 @@ public class CustomDesignAlertActivity extends HSAppCompatActivity {
     }
 
     public void showLockerEnableDialogWithText(View view) {
-        LockerEnableDialog.showLockerEnableDialog(HSApplication.getContext(), "http://pic1.win4000.com/wallpaper/5/587d8cc476942.jpg", new LockerEnableDialog.OnLockerBgLoadingListener() {
+        LockerEnableDialog.showLockerEnableDialog(HSApplication.getContext(), "http://pic1.win4000.com/wallpaper/5/587d8cc476942.jpg", null, "fromwhere", new LockerEnableDialog.OnLockerBgLoadingListener() {
             @Override
             public void onFinish() {
             }
