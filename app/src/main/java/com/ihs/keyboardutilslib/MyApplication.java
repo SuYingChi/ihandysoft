@@ -18,6 +18,7 @@ import com.ihs.commons.utils.HSLog;
 import com.ihs.feature.notification.NotificationManager;
 import com.ihs.keyboardutils.notification.KCNotificationManager;
 import com.ihs.keyboardutils.notification.NotificationBean;
+import com.launcher.FloatWindowCompat;
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
 import com.nostra13.universalimageloader.core.assist.QueueProcessingType;
@@ -76,6 +77,7 @@ public class MyApplication extends HSApplication {
 
         AcbNativeAdManager.sharedInstance().activePlacementInProcess(getString(R.string.ad_placement_result_page));
         AcbNativeAdManager.sharedInstance().activePlacementInProcess("ColorCam_A(NativeAds)FilterDownload");
+        FloatWindowCompat.initLockScreen(this);
     }
 
 

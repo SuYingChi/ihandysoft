@@ -16,7 +16,7 @@ import com.ihs.keyboardutils.R;
 public class LockerGuideView extends RelativeLayout implements View.OnClickListener {
     private static final int MAX_HAND_SWIPE_ANIMATION_COUNT = 2;
 
-    interface OnFinishListener {
+    public interface OnFinishListener {
         void onFinish();
     }
 

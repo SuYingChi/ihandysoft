@@ -420,13 +420,15 @@ public class SystemSettingsManager {
         }
 
         // Enforce a refresh for current window
-        WindowManager.LayoutParams lp = ((Activity) mContext).getWindow().getAttributes();
-        if (brightness == -1) {
-            lp.screenBrightness = WindowManager.LayoutParams.BRIGHTNESS_OVERRIDE_NONE;
-        } else {
-            lp.screenBrightness = getBrightness() / 100f;
+        if (mContext instanceof Activity) {
+            WindowManager.LayoutParams lp = ((Activity) mContext).getWindow().getAttributes();
+            if (brightness == -1) {
+                lp.screenBrightness = WindowManager.LayoutParams.BRIGHTNESS_OVERRIDE_NONE;
+            } else {
+                lp.screenBrightness = getBrightness() / 100f;
+            }
+            ((Activity) mContext).getWindow().setAttributes(lp);
         }
-        ((Activity) mContext).getWindow().setAttributes(lp);
     }
 
     public void toggleSound() {

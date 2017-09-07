@@ -14,6 +14,7 @@ import com.ihs.chargingscreen.utils.ChargingPrefsUtil;
 import com.ihs.chargingscreen.utils.FeatureDelayReleaseUtil;
 import com.ihs.commons.config.HSConfig;
 import com.ihs.commons.notificationcenter.HSGlobalNotificationCenter;
+import com.launcher.FloatWindowController;
 
 public class LockerChargingScreenUtils {
 
@@ -84,17 +85,18 @@ public class LockerChargingScreenUtils {
             return;
         }
 
-//        LifeCycleCallbacks lifeCycleCallbacks = ((HSApplication) HSApplication.getContext().getApplicationContext()).getActivityLifecycleCallbacks();
-//        if (lifeCycleCallbacks.isChargingScreenActive()) {
-//            return;
-//        }
-        Intent intent = new Intent(HSApplication.getContext(), LockerActivity.class);
-        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK
-                | Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NO_ANIMATION);
-        HSApplication.getContext().startActivity(intent);
+        // TODO: 读配置决定
+        if (false) {
+            Intent intent = new Intent(HSApplication.getContext(), LockerActivity.class);
+            intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK
+                    | Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NO_ANIMATION);
+            HSApplication.getContext().startActivity(intent);
+        } else {
+            FloatWindowController.getInstance().showLockScreen();
+        }
     }
 
-    private static boolean isCalling() {
+    public static boolean isCalling() {
         TelephonyManager telephonyMgr = (TelephonyManager) HSApplication.getContext().getSystemService(Context.TELEPHONY_SERVICE);
         return telephonyMgr.getCallState() != TelephonyManager.CALL_STATE_IDLE;
     }

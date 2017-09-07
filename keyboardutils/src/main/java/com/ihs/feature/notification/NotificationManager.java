@@ -92,7 +92,7 @@ public class NotificationManager {
 
     public static final String TAG = NotificationManager.class.getSimpleName();
 
-    private static final int TOOLBAR_NOTIFICATION_ID = 0;
+    public static final int TOOLBAR_NOTIFICATION_ID = 0;
 
     private static final int CLICK_DEBOUNCE_INTERVAL = 400;
 
@@ -368,6 +368,11 @@ public class NotificationManager {
             mBatteryDrawableId = resId;
             mRemoteViews.setImageViewResource(R.id.iv_battery, resId);
         }
+    }
+
+    public Notification getNotificationToolbar() {
+        initIfNeeded(HSApplication.getContext());
+        return mNotificationToolbar;
     }
 
     public boolean isWifiDisplayEnabled() {

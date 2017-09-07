@@ -1,4 +1,4 @@
-package com.artw.lockscreen;
+package com.launcher.locker;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
@@ -7,22 +7,25 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.artw.lockscreen.slidingup.SlidingUpCallback;
 import com.ihs.keyboardutils.R;
+import com.launcher.LockScreen;
+import com.launcher.locker.slidingup.SlidingUpCallback;
 
-
-class LockerAdapter extends PagerAdapter {
+public class LockerAdapter extends PagerAdapter {
 
     public static final int PAGE_INDEX_UNLOCK = 0;
     public static final int PAGE_INDEX_MAINFRAME = 1;
+
+    private LockScreen mLockScreen;
 
     LockerMainFrame lockerMainFrame;
     private SlidingUpCallback mSlidingUpCallback;
     private View unlockFrame;
     private Context mContext;
 
-    public LockerAdapter(Context context, SlidingUpCallback callback) {
+    public LockerAdapter(Context context, LockScreen lockScreen, SlidingUpCallback callback) {
         mContext = context;
+        mLockScreen = lockScreen;
         mSlidingUpCallback = callback;
     }
 
@@ -57,7 +60,6 @@ class LockerAdapter extends PagerAdapter {
 
     @Override
     public void destroyItem(ViewGroup container, int position, Object object) {
-
     }
 
     @Override
@@ -74,7 +76,8 @@ class LockerAdapter extends PagerAdapter {
 
     @SuppressLint("InflateParams")
     private void createMainFrame() {
-        lockerMainFrame = (LockerMainFrame) LayoutInflater.from(mContext).inflate(R.layout.locker_main_frame, null);
+        lockerMainFrame = (LockerMainFrame) LayoutInflater.from(mContext).inflate(R.layout.locker_main_frame_new, null);
         lockerMainFrame.setSlidingUpCallback(mSlidingUpCallback);
+        lockerMainFrame.setLockScreen(mLockScreen);
     }
 }

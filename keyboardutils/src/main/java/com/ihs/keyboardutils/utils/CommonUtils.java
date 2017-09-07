@@ -10,8 +10,13 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageInfo;
 import android.content.res.Resources;
+import android.graphics.Bitmap;
+import android.graphics.Canvas;
 import android.graphics.Color;
+import android.graphics.PixelFormat;
 import android.graphics.Point;
+import android.graphics.drawable.BitmapDrawable;
+import android.graphics.drawable.Drawable;
 import android.os.Build;
 import android.provider.Settings;
 import android.support.annotation.NonNull;
@@ -273,7 +278,22 @@ public class CommonUtils {
         return false;
     }
 
+    public static Bitmap drawableToBitmap(@NonNull Drawable drawable) {
+        if (drawable instanceof BitmapDrawable) {
+            return ((BitmapDrawable) drawable).getBitmap();
+        }
 
+        final int width = drawable.getIntrinsicWidth();
+        final int height = drawable.getIntrinsicHeight();
+
+        Bitmap.Config config = drawable.getOpacity() != PixelFormat.OPAQUE ? Bitmap.Config.ARGB_8888 : Bitmap.Config.RGB_565;
+        Bitmap bitmap = Bitmap.createBitmap(width, height, config);
+
+        drawable.setBounds(0, 0, width, height);
+        drawable.draw(new Canvas(bitmap));
+
+        return bitmap;
+    }
 
     public static void startLauncherAndShowAllApps(Context context) {
         Intent launcherIntent = getLauncherIntent();

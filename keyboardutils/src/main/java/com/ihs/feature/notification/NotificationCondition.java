@@ -64,6 +64,7 @@ public class NotificationCondition implements INotificationObserver {
     private static final String WEATHER_TAG = "Weather.Notification";
     private static final String NOTIFICATION_HISTORY = "NOTIFICATION_HISTORY";
     public static final String EVENT_UNLOCK = "locker_event_unlock";
+    public static final String EVENT_LOCK = "locker_event_lock";
 
     private static final int[] ICON_CONTAINER_RES_ID = {
             R.id.recentest_notification_icon_0,

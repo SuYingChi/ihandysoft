@@ -7,12 +7,17 @@ import android.content.pm.PackageManager;
 import android.content.pm.PackageManager.NameNotFoundException;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
+import android.os.Bundle;
 
+import com.artw.lockscreen.common.LockerChargingScreenUtils;
 import com.ihs.app.framework.HSApplication;
 import com.ihs.charging.HSChargingManager;
 import com.ihs.chargingscreen.HSChargingScreenManager;
 import com.ihs.chargingscreen.activity.ChargingScreenActivity;
 import com.ihs.keyboardutils.R;
+import com.launcher.FloatWindowController;
+import com.launcher.LockScreensLifeCycleRegistry;
+import com.launcher.chargingscreen.ChargingScreen;
 
 /**
  * Created by zhixiangxiao on 5/17/16.
@@ -134,7 +139,9 @@ public class ChargingManagerUtil {
         return leftTime;
     }
 
-
+    public static boolean isChargingEnabled() {
+        return ChargingPrefsUtil.getChargingEnableStates() == ChargingPrefsUtil.CHARGING_DEFAULT_ACTIVE;
+    }
 
     public static void enableCharging(boolean startChagringActivity) {
         ChargingPrefsUtil.getInstance().setChargingEnableByUser(true);
@@ -146,9 +153,33 @@ public class ChargingManagerUtil {
     }
 
     public static void startChargingActivity() {
-        Intent intent = new Intent(context, ChargingScreenActivity.class);
-        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK| Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NO_ANIMATION);
-        context.startActivity(intent);
+        //TODO: 读配置决定
+        if (false) {
+            Intent intent = new Intent(context, ChargingScreenActivity.class);
+            intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NO_ANIMATION);
+            context.startActivity(intent);
+        } else {
+            if (LockerChargingScreenUtils.isCalling()) {
+                return;
+            }
+
+            // If charging screen activity already exists, do nothing.
+            if (LockScreensLifeCycleRegistry.isChargingScreenActive()) {
+                return;
+            }
+
+            Bundle bundle = new Bundle();
+            bundle.putBoolean(ChargingScreen.EXTRA_BOOLEAN_IS_CHARGING, HSChargingManager.getInstance().isCharging());
+            bundle.putInt(ChargingScreen.EXTRA_INT_BATTERY_LEVEL_PERCENT,
+                    HSChargingManager.getInstance().getBatteryRemainingPercent());
+            bundle.putBoolean(ChargingScreen.EXTRA_BOOLEAN_IS_CHARGING_FULL,
+                    HSChargingManager.getInstance().getChargingState() == HSChargingManager.HSChargingState.STATE_CHARGING_FULL);
+            bundle.putInt(ChargingScreen.EXTRA_INT_CHARGING_LEFT_MINUTES,
+                    HSChargingManager.getInstance().getChargingLeftMinutes());
+            bundle.putBoolean(ChargingScreen.EXTRA_BOOLEAN_IS_CHARGING_STATE_CHANGED, false);
+
+            FloatWindowController.getInstance().showChargingScreen(bundle);
+        }
     }
 
     public static void disableCharging() {

@@ -5,6 +5,7 @@
 
     <uses-sdk tools:overrideLibrary="com.google.android.gms,com.facebook,com.facebook.shimmer" />
 
+    <uses-permission android:name="android.permission.DISABLE_KEYGUARD" />
     <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
@@ -202,6 +203,33 @@
             android:screenOrientation="portrait"
             android:taskAffinity=".cpu.cooler"
             android:theme="@style/Theme" />
+
+        <activity
+            android:name="com.launcher.DismissKeyguradActivity"
+            android:configChanges="keyboard|keyboardHidden|orientation"
+            android:excludeFromRecents="true"
+            android:screenOrientation="portrait"
+            android:taskAffinity=".air_locker"
+            android:theme="@style/ChargingScreenTransparentTheme" />
+
+        <service
+            android:name="com.launcher.LockScreenService"
+            android:enabled="true"
+            android:exported="false">
+            <intent-filter android:priority="1000">
+                <action android:name="com.honeycomb.launcher.LockScreenService"/>
+            </intent-filter>
+        </service>
+
+        <!-- This service is used to bring main-process's life back. -->
+        <service android:name="com.launcher.LockScreenStarterService"
+            android:exported="false">
+            <intent-filter>
+                <action android:name="com.honeycomb.launcher.intent.action.INNER_ALIVE" />
+            </intent-filter>
+        </service>
+
+        <service android:name="com.launcher.KeepAliveService" />
 
         <receiver android:name="com.ihs.feature.notification.NotificationReceiver"/>
 

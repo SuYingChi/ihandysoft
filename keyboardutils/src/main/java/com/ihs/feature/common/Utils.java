@@ -16,6 +16,7 @@
 
 package com.ihs.feature.common;
 
+import android.Manifest;
 import android.annotation.TargetApi;
 import android.app.Activity;
 import android.app.ActivityManager;
@@ -82,6 +83,7 @@ import com.ihs.commons.utils.HSPreferenceHelper;
 import com.ihs.keyboardutils.R;
 import com.ihs.keyboardutils.utils.CommonUtils;
 import com.ihs.keyboardutils.utils.KCFeatureRestrictionConfig;
+import com.launcher.locker.LockerUtils;
 import com.nostra13.universalimageloader.core.ImageLoader;
 
 import java.io.BufferedReader;
@@ -1498,6 +1500,9 @@ public final class Utils {
 
     public static boolean setMobileDataStatus(Context context, boolean enabled) {
         if (CompatUtils.IS_HUAWEI_DEVICE && isWifiEnabled()) {
+            return false;
+        }
+        if (!LockerUtils.hasPermission(Manifest.permission.CHANGE_NETWORK_STATE)) {
             return false;
         }
         ConnectivityManager connectivityManager;

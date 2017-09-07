@@ -5,9 +5,31 @@
     <dimen name="charging_module_data_text_size">12sp</dimen>
     <dimen name="charging_module_battery_level_size">25dp</dimen>
     <dimen name="charging_module_left_time_text_size">12sp</dimen>
-
+    <dimen name="charging_screen_title_margin_top">12dp</dimen>
     <dimen name="charging_left_time_layout_margin_bottom">20dp</dimen>
+    <dimen name="charging_screen_power_percentage_font_size">115dp</dimen>
+    <dimen name="charging_screen_full_charge_left_margin_top">0dp</dimen>
+    <dimen name="charging_screen_charging_state_margin_top">14dp</dimen>
+    <dimen name="charging_screen_slid_to_unlock_margin_bottom">15dp</dimen>
     <dimen name="white_dots_margins">4dp</dimen>
+
+    <!-- Lock Screen = Locker + Charging Screen -->
+    <dimen name="lock_screen_pop_menu_offset_x">130dp</dimen>
+    <dimen name="smart_charging_spread_battery_bg_x">86dp</dimen>
+    <dimen name="smart_charging_spread_battery_bg_y">128dp</dimen>
+    <dimen name="smart_charging_spread_content_layout_margin_top">28dp</dimen>
+    <dimen name="smart_charging_spread_content_item_interval">12dp</dimen>
+    <dimen name="smart_charging_spread_button_margin_top">40dp</dimen>
+    <dimen name="smart_charging_spread_tip_margin_top">7dp</dimen>
+    <dimen name="smart_charging_spread_tip_margin_bottom">24dp</dimen>
+    <dimen name="smart_charging_spread_space_height">12dp</dimen>
+    <dimen name="smart_charging_spread_content_font_size">16sp</dimen>
+    <dimen name="smart_charging_spread_blister1_trans_y">30dp</dimen>
+    <dimen name="smart_charging_spread_blister2_trans_y">25dp</dimen>
+    <dimen name="smart_charging_spread_blister3_trans_y">21dp</dimen>
+
+    <!-- Locker -->
+    <dimen name="locker_popmenu_width">120dp</dimen>
 
     <dimen name="share_item_column_space">16dp</dimen>
     <dimen name="share_layout_title_height">56dp</dimen>

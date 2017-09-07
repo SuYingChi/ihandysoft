@@ -13,6 +13,28 @@
     <color name="result_page_button_flash_light">#99ffffff</color>
     <color name="interstitial_gift_ad_background">#b3000000</color>
 
+    <!-- Charging Screen -->
+    <color name="charging_screen_high_white">#ffffffff</color>
+    <color name="charging_screen_84_white">#d6ffffff</color>
+    <color name="charging_screen_50_white">#7fffffff</color>
+    <color name="ripple_button">#42FFFFFF</color>
+    <color name="charging_screen_blue_background">#ff4285f4</color>
+    <color name="charging_screen_black_background">#ff000000</color>
+    <color name="charging_screen_blue_quantity_up">#33ffffff</color>
+    <color name="charging_screen_blue_quantity_bottom">#ffffffff</color>
+    <color name="charging_screen_blue_bubble">#8affffff</color>
+    <color name="charging_screen_black_quantity_up">#33ffffff</color>
+    <color name="charging_screen_black_quantity_bottom">#ff95ee4d</color>
+    <color name="charging_screen_black_bubble">#8a95ee4d</color>
+    <color name="charging_screen_wallpaper_quantity_up">#33ffffff</color>
+    <color name="charging_screen_wallpaper_quantity_bottom">#95ee4d</color>
+    <color name="charging_screen_wallpaper_bubble">#8a95ee4d</color>
+
+    <!-- Locker -->
+    <color name="clean_app_red">#ED5242</color>
+    <color name="clean_app_orange">#EB7019</color>
+    <color name="clean_app_green">#60bb1d</color>
+
     <color name="lucky_award_bg">#e5000000</color>
     <color name="material_text_white_primary">#deffffff</color>
     <color name="material_ripple_white">#33FFFFFF</color>
