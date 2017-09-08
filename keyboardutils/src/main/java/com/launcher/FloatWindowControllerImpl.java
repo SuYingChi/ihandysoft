@@ -15,6 +15,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
 
+import com.artw.lockscreen.DismissKeyguradActivity;
 import com.artw.lockscreen.LockerUtils;
 import com.ihs.commons.utils.HSLog;
 import com.ihs.keyboardutils.R;
