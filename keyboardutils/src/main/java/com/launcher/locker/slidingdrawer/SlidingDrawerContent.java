@@ -33,6 +33,7 @@ import android.widget.SeekBar;
 import com.artw.lockscreen.common.ConfigConstants;
 import com.artw.lockscreen.common.NavUtils;
 import com.artw.lockscreen.common.SystemSettingsManager;
+import com.ihs.app.analytics.HSAnalytics;
 import com.ihs.app.framework.HSApplication;
 import com.ihs.commons.config.HSConfig;
 import com.ihs.commons.notificationcenter.HSGlobalNotificationCenter;
@@ -107,9 +108,15 @@ public class SlidingDrawerContent extends FrameLayout
         public void handleMessage(Message msg) {
             switch (msg.what) {
                 case EVENT_SYSTEM_SETTING_WIFI:
+                    Map<String, String> params = new HashMap<>();
+                    params.put("type", "fail");
+                    HSAnalytics.logEvent("Locker_Toggle_Wifi_Clicked", params);
                     wifiState.setEnabled(true);
                     break;
                 case EVENT_SYSTEM_SETTING_BLUETOOTH:
+                    params = new HashMap<>();
+                    params.put("type", "fail");
+                    HSAnalytics.logEvent("Locker_Toggle_Bluetooth_Clicked", params);
                     bluetoothState.setEnabled(true);
                     break;
                 case EVENT_SYSTEM_SETTING_MOBILE_DATA:
@@ -422,7 +429,7 @@ public class SlidingDrawerContent extends FrameLayout
             handler.removeMessages(EVENT_SYSTEM_SETTING_MOBILE_DATA);
             handler.sendMessageDelayed(msg, SYSTEM_SETTING_CHECK_DELAY_LONG); // 比较耗时
             if (!Utils.setMobileDataStatus(getContext(),
-                    mSystemSettingsManager.getSystemSettingsItemState(SystemSettingsManager.SettingsItem.MOBILE_DATA) == 1 ? false : true)) {
+                    mSystemSettingsManager.getSystemSettingsItemState(SystemSettingsManager.SettingsItem.MOBILE_DATA) != 1)) {
                 NavUtils.startSystemDataUsageSetting(getContext());
                 HSGlobalNotificationCenter.sendNotification(Locker.EVENT_FINISH_SELF);
             } else {
@@ -433,6 +440,7 @@ public class SlidingDrawerContent extends FrameLayout
             if (FlashlightManager.getInstance().isOn()) {
                 FlashlightManager.getInstance().turnOff();
                 FlashlightManager.getInstance().release();
+                HSAnalytics.logEvent("Locker_Toggle_Flashlight_Clicked", "type", "off");
             } else {
                 try {
                     FlashlightManager.getInstance().init();
@@ -440,6 +448,7 @@ public class SlidingDrawerContent extends FrameLayout
                 } catch (Exception e) {
                     isCameraUsageAccess = false;
                 }
+                HSAnalytics.logEvent("Locker_Toggle_Flashlight_Clicked", "type", "on");
             }
             flashlight.setImageResource(FlashlightManager.getInstance().isOn() ?
                     R.drawable.locker_flashlight_on : R.drawable.locker_flashlight_off);
@@ -447,6 +456,7 @@ public class SlidingDrawerContent extends FrameLayout
         } else if (i == R.id.calculator) {
             if (startCalculator()) {
                 HSGlobalNotificationCenter.sendNotification(Locker.EVENT_FINISH_SELF);
+                HSAnalytics.logEvent("Locker_Toggle_Calculator_Clicked");
             }
         } else {
         }
@@ -468,8 +478,10 @@ public class SlidingDrawerContent extends FrameLayout
                             params.put("type", "success");
                             if (currentState == 1) {
                                 params.put("state", "on");
+                                HSAnalytics.logEvent("Locker_Toggle_MobileData_Clicked", params);
                             } else {
                                 params.put("state", "off");
+                                HSAnalytics.logEvent("Locker_Toggle_MobileData_Clicked", params);
                             }
                             mobileDataLastState = currentState;
                         }
@@ -486,9 +498,15 @@ public class SlidingDrawerContent extends FrameLayout
         switch (toggle) {
             case BLUETOOTH:
                 if (handler.hasMessages(EVENT_SYSTEM_SETTING_BLUETOOTH)) {
+                    Map<String, String> params = new HashMap<>();
+                    params.put("type", "success");
                     if (state == 1) {
+                        params.put("state", "on");
+                        HSAnalytics.logEvent("Locker_Toggle_Bluetooth_Clicked", params);
                         handler.removeMessages(EVENT_SYSTEM_SETTING_BLUETOOTH);
                     } else if (state == 0) {
+                        params.put("state", "off");
+                        HSAnalytics.logEvent("Locker_Toggle_Bluetooth_Clicked", params);
                         handler.removeMessages(EVENT_SYSTEM_SETTING_BLUETOOTH);
                     }
                 }
@@ -498,9 +516,14 @@ public class SlidingDrawerContent extends FrameLayout
             case WIFI:
                 if (handler.hasMessages(EVENT_SYSTEM_SETTING_WIFI)) {
                     Map<String, String> params = new HashMap<>();
+                    params.put("type", "success");
                     if (state == 1) {
+                        params.put("state", "on");
+                        HSAnalytics.logEvent("Locker_Toggle_Wifi_Clicked", params);
                         handler.removeMessages(EVENT_SYSTEM_SETTING_WIFI);
                     } else if (state == 0) {
+                        params.put("state", "off");
+                        HSAnalytics.logEvent("Locker_Toggle_Wifi_Clicked", params);
                         handler.removeMessages(EVENT_SYSTEM_SETTING_WIFI);
                     }
                 }
@@ -515,6 +538,13 @@ public class SlidingDrawerContent extends FrameLayout
                 break;
             case RINGMODE:
                 if (handler.hasMessages(EVENT_SYSTEM_SETTING_SOUND_PROFILE)) {
+                    if (state == 2) {
+                        HSAnalytics.logEvent("Locker_Toggle_Sound_Clicked", "type", "sound");
+                    } else if (state == 1) {
+                        HSAnalytics.logEvent("Locker_Toggle_Sound_Clicked", "type", "vibrate");
+                    } else {
+                        HSAnalytics.logEvent("Locker_Toggle_Sound_Clicked", "type", "silence");
+                    }
                     handler.removeMessages(EVENT_SYSTEM_SETTING_SOUND_PROFILE);
                 }
                 soundProfileState.setImageResource(soundStateRes[state]);
@@ -536,6 +566,7 @@ public class SlidingDrawerContent extends FrameLayout
     @Override
     public void onStartTrackingTouch(SeekBar seekBar) {
         brightnessValue = seekBar.getProgress();
+        HSAnalytics.logEvent("Locker_Toggle_Brightness_Draged");
     }
 
     @Override
