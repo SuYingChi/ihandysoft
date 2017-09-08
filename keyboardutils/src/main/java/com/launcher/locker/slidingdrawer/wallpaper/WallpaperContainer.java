@@ -51,7 +51,7 @@ import java.util.Random;
 
 import static android.view.animation.Animation.INFINITE;
 import static android.view.animation.Animation.RESTART;
-import static com.ihs.feature.common.LauncherFiles.LOCKER_PREFS;
+import static com.artw.lockscreen.LockerSettings.LOCKER_PREFS;
 
 
 public class WallpaperContainer extends LinearLayout implements View.OnClickListener, INotificationObserver {
@@ -134,7 +134,7 @@ public class WallpaperContainer extends LinearLayout implements View.OnClickList
     private static final String PREF_KEY_WALLPAPER_THIRD_VIEW_LAST_SUCCEED_HD = "wallpaper_third_view_hd_url";
     private static final String PREF_KEY_WALLPAPER_FOURTH_VIEW_LAST_SUCCEED_HD = "wallpaper_fourth_view_hd_url";
 
-    private static final String PREFIX_RESOURCE_DRAWABLE = "android.resource://" + HSApplication.getContext().getPackageName() + "/";
+    private static final String PREFIX_RESOURCE_DRAWABLE = "drawable://";
 
     private static final String WALLPAPER_THUMB = "thumb";
     private static final String WALLPAPER_HD = "HD";
