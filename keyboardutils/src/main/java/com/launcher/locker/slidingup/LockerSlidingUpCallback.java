@@ -13,11 +13,13 @@ import android.view.animation.Interpolator;
 import android.widget.ImageView;
 
 import com.artw.lockscreen.common.NavUtils;
+import com.ihs.app.analytics.HSAnalytics;
 import com.ihs.app.framework.HSApplication;
 import com.ihs.commons.notificationcenter.HSGlobalNotificationCenter;
 import com.ihs.feature.common.Thunk;
 import com.ihs.keyboardutils.R;
 import com.ihs.keyboardutils.utils.CommonUtils;
+import com.ihs.keyboardutils.utils.PublisherUtils;
 import com.launcher.locker.Locker;
 
 import static com.ihs.app.framework.HSApplication.getContext;
@@ -146,6 +148,7 @@ public class LockerSlidingUpCallback implements SlidingUpCallback {
                     HSGlobalNotificationCenter.sendNotification(Locker.EVENT_FINISH_SELF);
                 } else {
                     if (NavUtils.startCameraFromLockerScreen(HSApplication.getContext())) {
+                        HSAnalytics.logEvent("Locker_Camera_Opened", "install_type", PublisherUtils.getInstallType());
                         HSGlobalNotificationCenter.sendNotification(Locker.EVENT_FINISH_SELF);
                     }
                 }
