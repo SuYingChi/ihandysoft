@@ -29,6 +29,7 @@ import com.ihs.commons.config.HSConfig;
 import com.ihs.commons.notificationcenter.HSGlobalNotificationCenter;
 import com.ihs.commons.notificationcenter.INotificationObserver;
 import com.ihs.commons.utils.HSBundle;
+import com.ihs.commons.utils.HSLog;
 import com.ihs.feature.boost.BoostSource;
 import com.ihs.feature.boost.animation.BlackHoleLayout;
 import com.ihs.feature.common.ScreenStatusReceiver;
@@ -242,12 +243,14 @@ public class LockerMainFrame extends RelativeLayout implements INotificationObse
 
     public void onResume() {
         if (expressAdView != null && HSConfig.optBoolean(false, "Application", "LockerAutoRefreshAdsEnable")) {
+            HSLog.d("LockerMainFrame expressAdView resumeDisplayNewAd");
             expressAdView.resumeDisplayNewAd();
         }
     }
 
     public void onPause() {
         if (expressAdView != null && HSConfig.optBoolean(false, "Application", "LockerAutoRefreshAdsEnable")) {
+            HSLog.d("LockerMainFrame expressAdView pauseDisplayNewAd");
             expressAdView.pauseDisplayNewAd();
         }
     }

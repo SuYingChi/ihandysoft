@@ -14,6 +14,7 @@ import com.ihs.chargingscreen.utils.ChargingPrefsUtil;
 import com.ihs.chargingscreen.utils.FeatureDelayReleaseUtil;
 import com.ihs.commons.config.HSConfig;
 import com.ihs.commons.notificationcenter.HSGlobalNotificationCenter;
+import com.ihs.commons.utils.HSLog;
 import com.launcher.FloatWindowController;
 
 public class LockerChargingScreenUtils {
@@ -85,13 +86,14 @@ public class LockerChargingScreenUtils {
             return;
         }
 
-        // TODO: 读配置决定
-        if (false) {
+        if (!HSConfig.optBoolean(false, "Application", "UseNewLockScreen")) {
+            HSLog.d("config use past screen locker");
             Intent intent = new Intent(HSApplication.getContext(), LockerActivity.class);
             intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK
                     | Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NO_ANIMATION);
             HSApplication.getContext().startActivity(intent);
         } else {
+            HSLog.d("config use new screen locker");
             FloatWindowController.getInstance().showLockScreen();
         }
     }
