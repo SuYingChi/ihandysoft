@@ -20,6 +20,8 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.acb.expressads.AcbExpressAdView;
+import com.artw.lockscreen.shimmer.Shimmer;
+import com.artw.lockscreen.shimmer.ShimmerTextView;
 import com.ihs.app.analytics.HSAnalytics;
 import com.ihs.app.framework.HSApplication;
 import com.ihs.chargingscreen.utils.ClickUtils;
@@ -39,8 +41,6 @@ import com.launcher.FloatWindowController;
 import com.launcher.LockScreen;
 import com.launcher.chargingscreen.view.PopupView;
 import com.launcher.chargingscreen.view.RipplePopupView;
-import com.launcher.locker.shimmer.Shimmer;
-import com.launcher.locker.shimmer.ShimmerTextView;
 import com.launcher.locker.slidingdrawer.SlidingDrawer;
 import com.launcher.locker.slidingdrawer.SlidingDrawerContent;
 import com.launcher.locker.slidingup.SlidingUpCallback;
