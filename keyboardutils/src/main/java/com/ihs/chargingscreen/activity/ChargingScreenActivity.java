@@ -420,10 +420,7 @@ public class ChargingScreenActivity extends Activity {
         super.onStart();
         HSAnalytics.startFlurry();
 
-        PowerManager powerManager = (PowerManager) getSystemService(Context.POWER_SERVICE);
-        if (powerManager.isScreenOn()) {
-            ChargeNotifyManager.getInstance().setIsChargingActivityAlive(true);
-        }
+        ChargeNotifyManager.getInstance().setIsChargingActivityAlive(true);
 
         // 为了解决ExpressAdView在灭屏亮屏时不刷新的补丁
         if (acbExpressAdView != null) {
@@ -880,7 +877,7 @@ public class ChargingScreenActivity extends Activity {
     private void updateTxtAndImgAndStartFlashAnim(@IntRange(from = 0, to = 4) int txtChargingStateStringIndex,
                                                   @IntRange(from = 0, to = 3) int imgChargingStateGreenDrawableCount) {
 
-        if (powerManager.isScreenOn() && txtChargingStateStringIndex <= 4) {
+        if ( txtChargingStateStringIndex <= 4) {
             bubbleView.start();
         } else {
             bubbleView.stop();

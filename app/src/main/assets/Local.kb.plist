@@ -538,7 +538,7 @@
 				<key>StateDescription</key>
 				<string>0: no charger; 1:charger enabled &amp; defalut off; 2:charger enable &amp; defalut on</string>
 				<key>state</key>
-				<integer>1</integer>
+				<integer>2</integer>
 			</dict>
 			<key>DownloadTheme</key>
 			<dict>

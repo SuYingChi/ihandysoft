@@ -73,7 +73,7 @@ public class MyApplication extends HSApplication {
             public boolean isItemDownloaded(NotificationBean notificationBean) {
                 return false;
             }
-        },true);
+        },false);
 
         AcbNativeAdManager.sharedInstance().activePlacementInProcess(getString(R.string.ad_placement_result_page));
         AcbNativeAdManager.sharedInstance().activePlacementInProcess("ColorCam_A(NativeAds)FilterDownload");
