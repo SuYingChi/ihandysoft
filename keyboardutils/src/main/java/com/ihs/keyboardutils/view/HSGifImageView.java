@@ -19,22 +19,20 @@ public class HSGifImageView extends FrameLayout {
     private GifImageView mGifImageView;
 
     public HSGifImageView(Context context) {
-        super(context);
-        initView(null);
+        this(context,null);
     }
 
     public HSGifImageView(Context context, AttributeSet attrs) {
         this(context, attrs,0);
-        initView(attrs);
     }
 
     public HSGifImageView(Context context, AttributeSet attrs, int defStyle) {
         super(context, attrs, defStyle);
-        initView(attrs);
+        initView();
     }
 
-    private void initView(AttributeSet attrs) {
-        mGifImageView = new GifImageView(getContext(),attrs);
+    private void initView() {
+        mGifImageView = new GifImageView(getContext());
         addView(mGifImageView,new LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
     }
 
