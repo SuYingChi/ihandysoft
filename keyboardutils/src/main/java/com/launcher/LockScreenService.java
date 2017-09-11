@@ -15,7 +15,7 @@ public class LockScreenService extends Service {
     private static final String TAG = LockScreenService.class.getSimpleName();
 
     private static final String KEYGUARD_LOCK_NAME = "KeyguardLock";
-    private static final String START_ACTION = "com.honeycomb.launcher.LockScreenService";
+    private static final String START_ACTION = "com.ihs.keyboard.LockScreenService";
 
     private boolean setForeground;
     private KeyguardLock keyguardLock;

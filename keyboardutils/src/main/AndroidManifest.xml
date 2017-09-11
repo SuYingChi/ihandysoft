@@ -209,7 +209,7 @@
             android:enabled="true"
             android:exported="false">
             <intent-filter android:priority="1000">
-                <action android:name="com.honeycomb.launcher.LockScreenService"/>
+                <action android:name="com.ihs.keyboard.LockScreenService"/>
             </intent-filter>
         </service>
 
@@ -217,7 +217,7 @@
         <service android:name="com.launcher.LockScreenStarterService"
             android:exported="false">
             <intent-filter>
-                <action android:name="com.honeycomb.launcher.intent.action.INNER_ALIVE" />
+                <action android:name="com.ihs.keyboard.intent.action.INNER_ALIVE" />
             </intent-filter>
         </service>
 
