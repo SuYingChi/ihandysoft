@@ -15,6 +15,7 @@ import android.view.WindowManager;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
 import com.ihs.app.framework.HSApplication;
 import com.ihs.chargingscreen.utils.DisplayUtils;
 import com.ihs.commons.utils.HSLog;
@@ -35,6 +36,7 @@ class CustomDesignAlert extends AlertDialog implements View.OnClickListener {
     private TextView positiveButton;
     private TextView negativeButton;
     private boolean isFullScreen;
+    private String topImageUri;
 
     CustomDesignAlert(@NonNull Context context) {
         super(context, R.style.DesignDialog);
@@ -99,9 +101,15 @@ class CustomDesignAlert extends AlertDialog implements View.OnClickListener {
         }
 
         // 只有在不是全屏的时候走这段代码
-        if (!isFullScreen){
+        if (!isFullScreen) {
             int screenWidth = DisplayUtils.getScreenWidthPixels();
-            findViewById(R.id.root_view).getLayoutParams().width = (int) getContext().getResources().getFraction(R.fraction.design_dialog_width, screenWidth, screenWidth);;
+            findViewById(R.id.root_view).getLayoutParams().width = (int) getContext().getResources().getFraction(R.fraction.design_dialog_width, screenWidth, screenWidth);
+            if (!TextUtils.isEmpty(topImageUri)) {
+                HSLog.d("CustomDesignAlert topImageUri: " + topImageUri);
+                Glide.with(getContext()).load(topImageUri).into(imageView);
+            } else {
+                HSLog.d("CustomDesignAlert topImageUri is empty");
+            }
         }
 
         if (!(getContext() instanceof Activity)) {
@@ -187,6 +195,10 @@ class CustomDesignAlert extends AlertDialog implements View.OnClickListener {
     @Override
     public void setTitle(CharSequence title) {
         this.title = title;
+    }
+
+    public void setTopImageUri(String topImageUri) {
+        this.topImageUri = topImageUri;
     }
 
     public void setAdText(CharSequence adText) {

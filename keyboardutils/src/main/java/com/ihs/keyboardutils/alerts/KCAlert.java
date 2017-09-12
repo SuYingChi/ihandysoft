@@ -4,7 +4,6 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.text.TextUtils;
 import android.view.View;
-import android.view.WindowManager;
 
 import com.ihs.app.framework.HSApplication;
 
@@ -44,6 +43,7 @@ public class KCAlert {
         private DialogInterface.OnDismissListener onDismissListener;
         private DialogInterface.OnCancelListener onCancelListener;
         private boolean isFullScreen;
+        private String imageUri;
 
         AlertParams() {
             cancelable = true;
@@ -69,6 +69,10 @@ public class KCAlert {
 
             if (!TextUtils.isEmpty(negativeButtonText)) {
                 alert.setNegativeButton(negativeButtonText, negativeButtonClickListener);
+            }
+
+            if (!TextUtils.isEmpty(imageUri)) {
+                alert.setTopImageUri(imageUri);
             }
 
             if (onDismissListener != null) {
@@ -162,6 +166,10 @@ public class KCAlert {
             return this;
         }
 
+        public Builder setImageUri(String imageUri) {
+            alertParams.imageUri = imageUri;
+            return this;
+        }
 
         public KCAlert build() {
             KCAlert alert = new KCAlert(context, alertParams.isFullScreen);
