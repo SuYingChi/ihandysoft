@@ -88,8 +88,10 @@ public class AdLoadingView extends RelativeLayout implements KCNativeAdView.OnAd
         LinearLayout rootView = (LinearLayout) findViewById(R.id.root_view);
         if (DisplayUtils.getScreenHeightPixels() <= 960) {
             rootView.getLayoutParams().height = (int) (DisplayUtils.getScreenHeightPixels() * 0.7);
-        } else {
+        } else if (DisplayUtils.getScreenHeightPixels() <= 1280) {
             rootView.getLayoutParams().height = (int) (DisplayUtils.getScreenHeightPixels() * 0.65);
+        } else {
+            rootView.getLayoutParams().height = (int) (DisplayUtils.getScreenHeightPixels() * 0.6);
         }
 
         FlashFrameLayout sponsoredContent = (FlashFrameLayout) findViewById(R.id.sponsored_content);

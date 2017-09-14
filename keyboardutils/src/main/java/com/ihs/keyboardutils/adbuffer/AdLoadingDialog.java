@@ -54,7 +54,7 @@ class AdLoadingDialog extends Dialog {
                     window.setType(WindowManager.LayoutParams.TYPE_SYSTEM_ERROR);
                 }
             }
-            window.setLayout((int) (DisplayUtils.getDisplay().getWidth() * 0.96), window.getAttributes().height);
+            window.setLayout((int) (DisplayUtils.getDisplay().getWidth() * 0.85), window.getAttributes().height);
             super.show();
         } catch (Exception e) {
             e.printStackTrace();
