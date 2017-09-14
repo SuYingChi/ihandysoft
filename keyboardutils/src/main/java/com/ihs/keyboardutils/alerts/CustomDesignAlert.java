@@ -16,6 +16,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.request.RequestOptions;
 import com.ihs.app.framework.HSApplication;
 import com.ihs.chargingscreen.utils.DisplayUtils;
 import com.ihs.commons.utils.HSLog;
@@ -106,7 +107,7 @@ class CustomDesignAlert extends AlertDialog implements View.OnClickListener {
             findViewById(R.id.root_view).getLayoutParams().width = (int) getContext().getResources().getFraction(R.fraction.design_dialog_width, screenWidth, screenWidth);
             if (!TextUtils.isEmpty(topImageUri)) {
                 HSLog.d("CustomDesignAlert topImageUri: " + topImageUri);
-                Glide.with(getContext()).load(topImageUri).into(imageView);
+                Glide.with(getContext()).load(topImageUri).apply(new RequestOptions().placeholder(imageResId)).into(imageView);
             } else {
                 HSLog.d("CustomDesignAlert topImageUri is empty");
             }
