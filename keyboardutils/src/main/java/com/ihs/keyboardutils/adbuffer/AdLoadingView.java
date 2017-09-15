@@ -184,9 +184,8 @@ public class AdLoadingView extends RelativeLayout implements KCNativeAdView.OnAd
             nativeAdView.load(adPlacementName);
 
             KCAnalyticUtil.logEvent("NativeAds_A(NativeAds)ApplyingItem_Load");
-            return this;
         }
-        throw new RuntimeException("ad loading 广告池名字未配置");
+        return this;
     }
 
     /**
@@ -270,6 +269,12 @@ public class AdLoadingView extends RelativeLayout implements KCNativeAdView.OnAd
         }
         this.onAdBufferingListener = onAdBufferingListener;
         this.hasPurchaseNoAds = hasPurchaseNoAds;
+        if (TextUtils.isEmpty(adPlacementName)) {
+            LinearLayout rootView = (LinearLayout) this.findViewById(R.id.root_view);
+            rootView.setLayoutParams(new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.MATCH_PARENT, RelativeLayout.LayoutParams.WRAP_CONTENT));
+            FrameLayout frameLayout = (FrameLayout) this.findViewById(R.id.out_ad_container);
+            frameLayout.setVisibility(View.GONE);
+        }
     }
 
     public void setIconImageVisibility(int visibility) {
