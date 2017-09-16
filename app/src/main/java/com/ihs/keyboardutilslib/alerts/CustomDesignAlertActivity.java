@@ -31,6 +31,7 @@ public class CustomDesignAlertActivity extends HSAppCompatActivity {
                 .setTitle("This is title")
                 .setMessage("This is message")
                 .setTopImageResource(R.drawable.keyboard_bg)
+                //.setImageUri("http://emojidevelop.s3.amazonaws.com/gif_test/fml.gif")
                 .setPositiveButton("Positive button", new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {

@@ -107,6 +107,9 @@ class CustomDesignAlert extends AlertDialog implements View.OnClickListener {
             findViewById(R.id.root_view).getLayoutParams().width = (int) getContext().getResources().getFraction(R.fraction.design_dialog_width, screenWidth, screenWidth);
             if (!TextUtils.isEmpty(topImageUri)) {
                 HSLog.d("CustomDesignAlert topImageUri: " + topImageUri);
+                if (imageView.getVisibility() != View.VISIBLE) {
+                    imageView.setVisibility(View.VISIBLE);
+                }
                 Glide.with(getContext()).load(topImageUri).apply(new RequestOptions().placeholder(imageResId)).into(imageView);
             } else {
                 HSLog.d("CustomDesignAlert topImageUri is empty");
