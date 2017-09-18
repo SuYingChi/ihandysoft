@@ -185,10 +185,12 @@ public class AdLoadingView extends RelativeLayout implements KCNativeAdView.OnAd
             nativeAdView.load(adPlacementName);
 
             KCAnalyticUtil.logEvent("NativeAds_A(NativeAds)ApplyingItem_Load");
+            return this;
         }
         if(BuildConfig.DEBUG){
             throw new RuntimeException("ad loading 广告池名字未配置");
         }
+        return this;
     }
 
     /**
