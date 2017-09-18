@@ -19,6 +19,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.ihs.chargingscreen.utils.DisplayUtils;
+import com.ihs.keyboardutils.BuildConfig;
 import com.ihs.keyboardutils.R;
 import com.ihs.keyboardutils.nativeads.KCNativeAdView;
 import com.ihs.keyboardutils.utils.KCAnalyticUtil;
@@ -185,7 +186,9 @@ public class AdLoadingView extends RelativeLayout implements KCNativeAdView.OnAd
 
             KCAnalyticUtil.logEvent("NativeAds_A(NativeAds)ApplyingItem_Load");
         }
-        return this;
+        if(BuildConfig.DEBUG){
+            throw new RuntimeException("ad loading 广告池名字未配置");
+        }
     }
 
     /**
@@ -269,7 +272,7 @@ public class AdLoadingView extends RelativeLayout implements KCNativeAdView.OnAd
         }
         this.onAdBufferingListener = onAdBufferingListener;
         this.hasPurchaseNoAds = hasPurchaseNoAds;
-        if (TextUtils.isEmpty(adPlacementName)) {
+        if (hasPurchaseNoAds) {
             LinearLayout rootView = (LinearLayout) this.findViewById(R.id.root_view);
             rootView.setLayoutParams(new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.MATCH_PARENT, RelativeLayout.LayoutParams.WRAP_CONTENT));
             FrameLayout frameLayout = (FrameLayout) this.findViewById(R.id.out_ad_container);
