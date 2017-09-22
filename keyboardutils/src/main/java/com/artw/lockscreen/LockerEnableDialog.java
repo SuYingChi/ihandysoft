@@ -15,10 +15,10 @@ import android.view.WindowManager;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.ihs.app.analytics.HSAnalytics;
 import com.ihs.app.framework.HSApplication;
 import com.ihs.keyboardutils.R;
 import com.ihs.keyboardutils.alerts.HSAlertDialog;
-import com.ihs.keyboardutils.utils.KCAnalyticUtil;
 import com.kc.commons.utils.KCCommonUtils;
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.nostra13.universalimageloader.core.assist.FailReason;
@@ -42,16 +42,14 @@ public class LockerEnableDialog extends Dialog {
     private Context context;
     private String bgUrl = "";
     private String appliedText = "";
-    private String showFrom = "";
 
-    public LockerEnableDialog(Context activity, BitmapDrawable bitmapDrawable, String url, String appliedText, String showFrom) {
+    public LockerEnableDialog(Context activity, BitmapDrawable bitmapDrawable, String url, String appliedText) {
         super(activity, R.style.LockerEnableDialogTheme);
         this.context = activity;
         init();
         rootView.setBackgroundDrawable(bitmapDrawable);
         bgUrl = url;
         this.appliedText = appliedText;
-        this.showFrom = showFrom;
     }
 
     public interface OnLockerBgLoadingListener {
@@ -81,7 +79,7 @@ public class LockerEnableDialog extends Dialog {
         enableButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                KCAnalyticUtil.logEvent("keyboard_lockeralert_ok_clicked", showFrom);
+                HSAnalytics.logEvent("keyboard_lockeralert_ok_clicked");
                 LockerSettings.setLockerEnabled(true);
                 LockerSettings.setLockerBgUrl(bgUrl);
                 dismiss();
@@ -129,13 +127,12 @@ public class LockerEnableDialog extends Dialog {
 
         }
 
-        KCAnalyticUtil.logEvent("keyboard_lockeralert_show", showFrom);
+        HSAnalytics.logEvent("keyboard_lockeralert_show");
         LockerSettings.addLockerEnableShowCount();
     }
 
 
-    public static void showLockerEnableDialog(Context activity, String url, String appliedText,
-                                              String showFrom, OnLockerBgLoadingListener bgLoadingListener) {
+    public static void showLockerEnableDialog(Context activity, String url, String appliedText, OnLockerBgLoadingListener bgLoadingListener) {
         if (TextUtils.isEmpty(url)) {
             if (bgLoadingListener != null) {
                 bgLoadingListener.onFinish();
@@ -175,7 +172,7 @@ public class LockerEnableDialog extends Dialog {
                 KCCommonUtils.dismissDialog(savingDialog);
 
                 LockerEnableDialog lockerEnableDialog = new LockerEnableDialog(activity, new BitmapDrawable(activity.getResources(), loadedImage),
-                        url, appliedText, showFrom);
+                        url, appliedText);
                 KCCommonUtils.showDialog(lockerEnableDialog);
                 lockerEnableDialog.setOnDismissListener(dialog -> {
                     if (bgLoadingListener != null) {

@@ -67,7 +67,6 @@ import com.ihs.commons.utils.HSBundle;
 import com.ihs.commons.utils.HSLog;
 import com.ihs.keyboardutils.R;
 import com.ihs.keyboardutils.iap.RemoveAdsManager;
-import com.ihs.keyboardutils.utils.KCAnalyticUtil;
 import com.ihs.keyboardutils.utils.RippleDrawableUtils;
 import com.kc.commons.utils.KCCommonUtils;
 
@@ -329,7 +328,7 @@ public class ChargingScreenActivity extends Activity {
                     return;
                 }
                 showPopupWindow(ChargingScreenActivity.this, imgSetting);
-                KCAnalyticUtil.logEvent("HSLib_chargingscreen_settings_clicked");
+                HSAnalytics.logEvent("HSLib_chargingscreen_settings_clicked");
 
             }
         });
@@ -646,7 +645,7 @@ public class ChargingScreenActivity extends Activity {
 
                     showAlert();
                     ChargingAnalytics.getInstance().chargingDisableTouchedOnce("activity");
-                    KCAnalyticUtil.logEvent("HSLib_chargingscreen_Charge_TurnOff_Clicked");
+                    HSAnalytics.logEvent("HSLib_chargingscreen_Charge_TurnOff_Clicked");
                 }
             });
 
@@ -701,7 +700,7 @@ public class ChargingScreenActivity extends Activity {
 
                     finish();
 
-                    KCAnalyticUtil.logEvent("HSLib_chargingscreen_Charge_Alert_Disable_Clicked");
+                    HSAnalytics.logEvent("HSLib_chargingscreen_Charge_Alert_Disable_Clicked");
                 }
             });
             btnCancel.setBackgroundDrawable(RippleDrawableUtils.getCompatRippleDrawable(Color.WHITE, 0, 0, 0, DisplayUtils.dip2px(8)));
@@ -923,23 +922,23 @@ public class ChargingScreenActivity extends Activity {
         long totalTime = (System.currentTimeMillis() - startDisplayTime) / 1000;
 
         if (totalTime < 1) {
-            KCAnalyticUtil.logEvent(key, "0~1s");
+            HSAnalytics.logEvent(key, key, "0~1s");
         } else if (totalTime < 2) {
-            KCAnalyticUtil.logEvent(key, "1~2s");
+            HSAnalytics.logEvent(key, key, "1~2s");
         } else if (totalTime < 3) {
-            KCAnalyticUtil.logEvent(key, "2~3s");
+            HSAnalytics.logEvent(key, key, "2~3s");
         } else if (totalTime < 4) {
-            KCAnalyticUtil.logEvent(key, "3~4s");
+            HSAnalytics.logEvent(key, key, "3~4s");
         } else if (totalTime < 5) {
-            KCAnalyticUtil.logEvent(key, "4~5s");
+            HSAnalytics.logEvent(key, key, "4~5s");
         } else if (totalTime < 6) {
-            KCAnalyticUtil.logEvent(key, "5~6s");
+            HSAnalytics.logEvent(key, key, "5~6s");
         } else if (totalTime < 7) {
-            KCAnalyticUtil.logEvent(key, "6~7s");
+            HSAnalytics.logEvent(key, key, "6~7s");
         } else if (totalTime < 8) {
-            KCAnalyticUtil.logEvent(key, "7~8s");
+            HSAnalytics.logEvent(key, key, "7~8s");
         } else {
-            KCAnalyticUtil.logEvent(key, "8s+");
+            HSAnalytics.logEvent(key, key, "8s+");
         }
     }
 

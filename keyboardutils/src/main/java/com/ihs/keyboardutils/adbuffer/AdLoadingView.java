@@ -18,11 +18,11 @@ import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.ihs.app.analytics.HSAnalytics;
 import com.ihs.chargingscreen.utils.DisplayUtils;
 import com.ihs.keyboardutils.BuildConfig;
 import com.ihs.keyboardutils.R;
 import com.ihs.keyboardutils.nativeads.KCNativeAdView;
-import com.ihs.keyboardutils.utils.KCAnalyticUtil;
 import com.ihs.keyboardutils.utils.RippleDrawableUtils;
 import com.ihs.keyboardutils.view.CustomProgressDrawable;
 import com.ihs.keyboardutils.view.FlashFrameLayout;
@@ -52,7 +52,7 @@ public class AdLoadingView extends RelativeLayout implements KCNativeAdView.OnAd
 
     @Override
     public void onAdClicked(KCNativeAdView adView) {
-        KCAnalyticUtil.logEvent("NativeAds_A(NativeAds)ApplyingItem_Click");
+        HSAnalytics.logEvent("NativeAds_A(NativeAds)ApplyingItem_Click");
         dismissSelf();
     }
 
@@ -184,7 +184,7 @@ public class AdLoadingView extends RelativeLayout implements KCNativeAdView.OnAd
             nativeAdView.setPrimaryViewSize((int) (DisplayUtils.getScreenWidthPixels() * 0.9), (int) (DisplayUtils.getScreenWidthPixels() * 0.9 / 1.9));
             nativeAdView.load(adPlacementName);
 
-            KCAnalyticUtil.logEvent("NativeAds_A(NativeAds)ApplyingItem_Load");
+            HSAnalytics.logEvent("NativeAds_A(NativeAds)ApplyingItem_Load");
             return this;
         }
         if(BuildConfig.DEBUG){
@@ -298,7 +298,7 @@ public class AdLoadingView extends RelativeLayout implements KCNativeAdView.OnAd
     }
 
     public void showInDialog() {
-        KCAnalyticUtil.logEvent("app_alert_applyingItem_show");
+        HSAnalytics.logEvent("app_alert_applyingItem_show");
         dialog = new AdLoadingDialog(getContext());
         dialog.setContentView(this);
         dialog.setCancelable(false);
@@ -315,7 +315,7 @@ public class AdLoadingView extends RelativeLayout implements KCNativeAdView.OnAd
 
     @Override
     public void onAdLoaded(KCNativeAdView adView) {
-        KCAnalyticUtil.logEvent("NativeAds_A(NativeAds)ApplyingItem_Show");
+        HSAnalytics.logEvent("NativeAds_A(NativeAds)ApplyingItem_Show");
     }
 
     public void dismissSelf() {

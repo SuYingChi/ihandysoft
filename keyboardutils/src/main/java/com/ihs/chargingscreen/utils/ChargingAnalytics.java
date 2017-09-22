@@ -2,8 +2,8 @@ package com.ihs.chargingscreen.utils;
 
 import android.content.Context;
 
+import com.ihs.app.analytics.HSAnalytics;
 import com.ihs.app.framework.HSApplication;
-import com.ihs.keyboardutils.utils.KCAnalyticUtil;
 import com.ihs.keyboardutils.utils.PublisherUtils;
 
 public class ChargingAnalytics {
@@ -41,40 +41,40 @@ public class ChargingAnalytics {
         if (!ChargingPrefsUtil.getInstance().getSpHelper().contains(app_chargingLocker_enable)) {
             ChargingPrefsUtil.getInstance().getSpHelper().putBoolean(app_chargingLocker_enable, true);
 
-            KCAnalyticUtil.logEvent(app_chargingLocker_enable, "enabledForm", PublisherUtils.getInstallType());
+            HSAnalytics.logEvent(app_chargingLocker_enable, app_chargingLocker_enable, "enabledForm", "intall_type", PublisherUtils.getInstallType());
         }
     }
 
     public void recordChargingDisableOnce() {
         if (!ChargingPrefsUtil.getInstance().getSpHelper().contains(app_chargingLocker_disable)) {
             ChargingPrefsUtil.getInstance().getSpHelper().putBoolean(app_chargingLocker_disable, true);
-            KCAnalyticUtil.logEvent(app_chargingLocker_disable, "enabledForm", PublisherUtils.getInstallType());
+            HSAnalytics.logEvent(app_chargingLocker_disable, app_chargingLocker_disable, "enabledForm", "install_type", PublisherUtils.getInstallType());
         }
     }
 
     public void chargingScreenShowed() {
-        KCAnalyticUtil.logEvent(app_chargingLocker_show, "install_type", PublisherUtils.getInstallType());
+        HSAnalytics.logEvent(app_chargingLocker_show, "install_type", PublisherUtils.getInstallType());
     }
 
     public void chargingEnableNotificationShowed() {
-        KCAnalyticUtil.logEvent(notification_chargingLocker_show);
+        HSAnalytics.logEvent(notification_chargingLocker_show);
     }
 
     public void chargingEnableNotificationClicked() {
-        KCAnalyticUtil.logEvent(notification_chargingLocker_click);
+        HSAnalytics.logEvent(notification_chargingLocker_click);
     }
 
     public void chargingDisableTouchedOnce(String from) {
         if (!ChargingPrefsUtil.getInstance().getSpHelper().contains(app_chargingLocker_disable_clicked)) {
             ChargingPrefsUtil.getInstance().getSpHelper().putBoolean(app_chargingLocker_disable_clicked, true);
-            KCAnalyticUtil.logEvent(app_chargingLocker_disable_clicked, from);
+            HSAnalytics.logEvent(app_chargingLocker_disable_clicked, app_chargingLocker_disable_clicked, from);
         }
     }
 
     public void chargingDisableConfirmedOnce(String from) {
         if (!ChargingPrefsUtil.getInstance().getSpHelper().contains(app_chargingLocker_disable)) {
             ChargingPrefsUtil.getInstance().getSpHelper().putBoolean(app_chargingLocker_disable, true);
-            KCAnalyticUtil.logEvent(app_chargingLocker_disable, "enabledForm", PublisherUtils.getInstallType());
+            HSAnalytics.logEvent(app_chargingLocker_disable, app_chargingLocker_disable, "enabledForm", "install_type", PublisherUtils.getInstallType());
         }
     }
 

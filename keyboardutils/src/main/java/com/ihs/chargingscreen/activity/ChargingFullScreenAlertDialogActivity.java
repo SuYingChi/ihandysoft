@@ -20,7 +20,6 @@ import com.ihs.commons.notificationcenter.HSGlobalNotificationCenter;
 import com.ihs.keyboardutils.R;
 import com.ihs.keyboardutils.alerts.KCAlert;
 import com.ihs.keyboardutils.utils.AlertShowingUtils;
-import com.ihs.keyboardutils.utils.KCAnalyticUtil;
 
 import java.util.HashMap;
 import java.util.Map;

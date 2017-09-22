@@ -140,7 +140,7 @@ public class CustomDesignAlertActivity extends HSAppCompatActivity {
     }
 
     public void showLockerEnableDialogNoText(View view) {
-        LockerEnableDialog.showLockerEnableDialog(HSApplication.getContext(), "http://pic1.win4000.com/wallpaper/5/587d8cc476942.jpg", "applied", "fromwhere", new LockerEnableDialog.OnLockerBgLoadingListener() {
+        LockerEnableDialog.showLockerEnableDialog(HSApplication.getContext(), "http://pic1.win4000.com/wallpaper/5/587d8cc476942.jpg", "applied", new LockerEnableDialog.OnLockerBgLoadingListener() {
             @Override
             public void onFinish() {
             }
@@ -148,7 +148,7 @@ public class CustomDesignAlertActivity extends HSAppCompatActivity {
     }
 
     public void showLockerEnableDialogWithText(View view) {
-        LockerEnableDialog.showLockerEnableDialog(HSApplication.getContext(), "http://pic1.win4000.com/wallpaper/5/587d8cc476942.jpg", null, "fromwhere", new LockerEnableDialog.OnLockerBgLoadingListener() {
+        LockerEnableDialog.showLockerEnableDialog(HSApplication.getContext(), "http://pic1.win4000.com/wallpaper/5/587d8cc476942.jpg", null, new LockerEnableDialog.OnLockerBgLoadingListener() {
             @Override
             public void onFinish() {
             }

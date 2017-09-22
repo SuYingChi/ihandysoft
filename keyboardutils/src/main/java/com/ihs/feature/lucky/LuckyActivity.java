@@ -31,7 +31,6 @@ import com.ihs.feature.lucky.view.AwardView;
 import com.ihs.feature.lucky.view.GameScene;
 import com.ihs.feature.lucky.view.GoButton;
 import com.ihs.keyboardutils.R;
-import com.ihs.keyboardutils.utils.KCAnalyticUtil;
 import com.ihs.keyboardutils.utils.ToastUtils;
 
 import java.util.Locale;
@@ -156,7 +155,7 @@ public class LuckyActivity extends HSAppCompatActivity
         mMusicHandler = new MusicPlayerHandler();
         initView(mute);
 
-        KCAnalyticUtil.logEvent("lucky_open");
+        HSAnalytics.logEvent("lucky_open");
     }
 
 
