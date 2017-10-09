@@ -101,9 +101,11 @@ public class NativeAdDialogView extends RelativeLayout implements KCNativeAdView
         return new ViewTreeObserver.OnGlobalLayoutListener() {
             @Override
             public void onGlobalLayout() {
-                if (nativeAdView.isAdLoaded() && !isAdFlashAnimationPlayed) {
-                    flashAdContainer.startShimmerAnimation();
-                    isAdFlashAnimationPlayed = true;
+                if (nativeAdView != null) {
+                    if (nativeAdView.isAdLoaded() && !isAdFlashAnimationPlayed) {
+                        flashAdContainer.startShimmerAnimation();
+                        isAdFlashAnimationPlayed = true;
+                    }
                 }
             }
         };
