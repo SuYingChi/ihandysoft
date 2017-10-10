@@ -2,7 +2,6 @@ package com.artw.lockscreen.slidingdrawer;
 
 import android.content.Context;
 import android.support.v4.view.PagerAdapter;
-import android.support.v4.view.ViewPager;
 import android.util.AttributeSet;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
@@ -11,6 +10,7 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 
 import com.ihs.keyboardutils.R;
+import com.ihs.keyboardutils.view.ViewPager;
 
 public class SlidingDrawerViewPager extends ViewPager {
 
