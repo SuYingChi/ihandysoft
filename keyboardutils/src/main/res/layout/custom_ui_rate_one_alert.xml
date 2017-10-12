@@ -18,7 +18,7 @@
             android:layout_height="wrap_content"
             android:adjustViewBounds="true"
             android:scaleType="centerCrop"
-            android:src="@drawable/rate_alert_top_image"/>
+            android:src="@drawable/rate_alert_dialog_top_image" />
 
         <LinearLayout
             style="@style/DesignDialogFrame"
@@ -51,25 +51,28 @@
                 <TextView
                     android:id="@+id/btn_yes"
                     style="@style/DesignDialogActionButtonHighlight"
+                    android:background="@color/blue"
                     android:text="YES" />
 
                 <TextView
                     android:id="@+id/btn_later"
                     style="@style/DesignDialogActionButton"
                     android:text="LATER"
-                    android:visibility="gone"/>
+                    android:visibility="gone" />
 
                 <TextView
                     android:id="@+id/btn_feedback"
                     style="@style/DesignDialogActionButtonHighlight"
+                    android:background="@color/blue"
                     android:text="FEEDBACK"
-                    android:visibility="gone"/>
+                    android:visibility="gone" />
 
                 <TextView
                     android:id="@+id/btn_full_star"
                     style="@style/DesignDialogActionButtonHighlight"
+                    android:background="@color/blue"
                     android:text="5-STAR"
-                    android:visibility="gone"/>
+                    android:visibility="gone" />
 
             </LinearLayout>
         </LinearLayout>
