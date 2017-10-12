@@ -4,66 +4,75 @@
     android:id="@+id/root_view"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:layout_gravity="center"
-    android:background="@color/white">
+    android:layout_gravity="center">
 
-    <RelativeLayout
+    <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:layout_gravity="center">
 
-        <LinearLayout
+        <ImageView
+            android:id="@+id/iv_image"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical">
+            android:adjustViewBounds="true"
+            android:scaleType="centerCrop"
+            android:src="@drawable/rate_alert_top_image"/>
 
-            <ImageView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:scaleType="fitXY"
-                android:src="@drawable/rate_alert_top_image"/>
+        <LinearLayout
+            style="@style/DesignDialogFrame"
+            android:layout_below="@+id/iv_image"
+            android:background="@android:color/white">
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Do you like our App?" />
+            <LinearLayout style="@style/DesignDialogContentArea">
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Do you like Beauty Cam ?Please let us know about your experience.Thanks for your feedback." />
+                <TextView
+                    android:id="@+id/rate_alert_title"
+                    style="@style/DesignDialogContentTitle"
+                    android:text="Do you like our App?" />
 
-            <RelativeLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+                <TextView
+                    android:id="@+id/rate_alert_subtitle"
+                    style="@style/DesignDialogContentBody"
+                    android:text="Do you like Beauty Cam ?Please let us know about your experience.Thanks for your feedback." />
 
-                <Button
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/ll_buttons"
+                style="@style/DesignDialogActionArea">
+
+                <TextView
+                    android:id="@+id/btn_nope"
+                    style="@style/DesignDialogActionButton"
+                    android:text="NOPE" />
+
+                <TextView
                     android:id="@+id/btn_yes"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentRight="true"
-                    android:background="@color/blue"
-                    android:text="YES"
-                    android:textColor="@color/white" />
+                    style="@style/DesignDialogActionButtonHighlight"
+                    android:text="YES" />
 
-                <Button
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_toLeftOf="@id/btn_yes"
-                    android:background="@color/transparent"
-                    android:text="NOPE"
-                    android:textColor="@color/blue" />
-            </RelativeLayout>
+                <TextView
+                    android:id="@+id/btn_later"
+                    style="@style/DesignDialogActionButton"
+                    android:text="LATER"
+                    android:visibility="gone"/>
+
+                <TextView
+                    android:id="@+id/btn_feedback"
+                    style="@style/DesignDialogActionButtonHighlight"
+                    android:text="FEEDBACK"
+                    android:visibility="gone"/>
+
+                <TextView
+                    android:id="@+id/btn_full_star"
+                    style="@style/DesignDialogActionButtonHighlight"
+                    android:text="5-STAR"
+                    android:visibility="gone"/>
+
+            </LinearLayout>
         </LinearLayout>
 
-        <android.support.v7.widget.AppCompatImageButton
-            android:id="@+id/iv_close"
-            android:layout_width="30dp"
-            android:layout_height="30dp"
-            android:layout_alignParentEnd="true"
-            android:layout_alignParentRight="true"
-            android:layout_alignParentTop="true"
-            android:padding="2dp"
-            android:scaleType="fitXY"
-            app:srcCompat="@drawable/ic_ad_loading_close" />
     </RelativeLayout>
 </FrameLayout>

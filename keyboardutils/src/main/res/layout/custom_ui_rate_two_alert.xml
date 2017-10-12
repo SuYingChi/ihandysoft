@@ -36,6 +36,7 @@
                 android:textStyle="normal" />
 
             <RelativeLayout
+                android:id="@+id/first_button_screen"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
@@ -56,6 +57,7 @@
                     android:textStyle="normal" />
 
                 <Button
+                    android:id="@+id/rate_alert_button_yes"
                     android:layout_width="120dp"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="37.7dp"
@@ -69,41 +71,65 @@
                     android:textSize="22sp"
                     android:textStyle="normal" />
             </RelativeLayout>
-        </LinearLayout>
 
-        <android.support.v7.widget.AppCompatImageButton
-            android:id="@+id/first_screen_close"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentEnd="true"
-            android:layout_alignParentRight="true"
-            android:layout_alignParentTop="true"
-            android:layout_marginRight="6.9dp"
-            android:layout_marginTop="6.9dp"
-            android:background="@color/transparent"
-            android:padding="2dp"
-            android:scaleType="fitXY"
-            app:srcCompat="@drawable/rate_alert_close_gray" />
+            <RelativeLayout
+                android:id="@+id/second_button_screen"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginBottom="25.6dp"
+                android:layout_marginTop="48.1dp"
+                android:visibility="gone">
+
+                <Button
+                    android:id="@+id/first_screen_btn_later"
+                    android:layout_width="120dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="30dp"
+                    android:background="@drawable/rate_alert_button_bg_nope"
+                    android:fontFamily="sans-serif-medium"
+                    android:lineSpacingExtra="-5.6sp"
+                    android:text="LATER"
+                    android:textColor="#ffffff"
+                    android:textSize="22sp"
+                    android:textStyle="normal" />
+
+                <Button
+                    android:id="@+id/rate_alert_button_feedback"
+                    android:layout_width="120dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="37.7dp"
+                    android:layout_marginRight="30dp"
+                    android:background="@drawable/rate_alert_button_bg_yes"
+                    android:layout_toRightOf="@id/first_screen_btn_later"
+                    android:fontFamily="sans-serif-medium"
+                    android:lineSpacingExtra="-5.6sp"
+                    android:text="FEEDBACK"
+                    android:textColor="#ffffff"
+                    android:textSize="22sp"
+                    android:textStyle="normal" />
+            </RelativeLayout>
+        </LinearLayout>
     </RelativeLayout>
 
     <RelativeLayout
         android:id="@+id/rate_second_screen"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:visibility="invisible">
+        android:visibility="gone">
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:layout_marginTop="40dp">
+            android:layout_marginTop="40dp"
+            android:orientation="vertical">
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:gravity="center"
                 android:layout_marginLeft="30dp"
-                android:layout_marginRight="30dp">
+                android:layout_marginRight="30dp"
+                android:gravity="center">
 
                 <ImageView
                     android:layout_width="54dp"
@@ -139,8 +165,8 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="50dp"
                 android:layout_gravity="center"
+                android:layout_marginTop="50dp"
                 android:fontFamily="sans-serif"
                 android:gravity="center_horizontal"
                 android:lineSpacingExtra="6.7sp"
@@ -152,9 +178,9 @@
             <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:gravity="center"
                 android:layout_marginBottom="25.6dp"
-                android:layout_marginTop="45.8dp">
+                android:layout_marginTop="45.8dp"
+                android:gravity="center">
 
                 <Button
                     android:id="@+id/second_screen_btn_later"
@@ -170,6 +196,7 @@
                     android:textStyle="normal" />
 
                 <Button
+                    android:id="@+id/second_screen_btn_star"
                     android:layout_width="120dp"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="37.7dp"
@@ -184,19 +211,5 @@
                     android:textStyle="normal" />
             </RelativeLayout>
         </LinearLayout>
-
-        <android.support.v7.widget.AppCompatImageButton
-            android:id="@+id/second_screen_close"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentEnd="true"
-            android:layout_alignParentRight="true"
-            android:layout_alignParentTop="true"
-            android:layout_marginRight="6.9dp"
-            android:layout_marginTop="6.9dp"
-            android:background="@color/transparent"
-            android:padding="2dp"
-            android:scaleType="fitXY"
-            app:srcCompat="@drawable/rate_alert_close_gray" />
     </RelativeLayout>
 </FrameLayout>
