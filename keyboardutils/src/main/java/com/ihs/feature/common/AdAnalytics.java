@@ -21,7 +21,6 @@ public class AdAnalytics {
         // boost ad, boost has been removed and this placement CAN NOT be used by others
         // boost plus ad, boost plus has been removed and this placement CAN NOT be used by others
         // battery ad, battery has been removed and this placement CAN NOT be used by others
-        // gift ad, gift has been removed and this placement CAN NOT be used by others
 
         // Events that add a prefix to event name "AcbAdNative_Viewed_In_App"
         // theme ad, theme has been removed and this placement CAN NOT be used by others

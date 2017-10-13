@@ -6,10 +6,6 @@
         <attr name="rcl_corner_radius" format="dimension"/>
     </declare-styleable>
 
-    <!--All apps interstitial ad view.-->
-    <declare-styleable name="AllAppsScaleLinearLayout">
-        <attr name="lengthWidthRatio"/>
-    </declare-styleable>
     <declare-styleable name="FlashFrameLayout">
         <attr name="flash_auto_start" format="boolean" />
         <attr name="flash_base_alpha" format="float" />

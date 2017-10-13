@@ -37,7 +37,6 @@ import com.ihs.feature.common.ViewUtils;
 import com.ihs.feature.resultpage.data.CardData;
 import com.ihs.feature.resultpage.data.ResultConstants;
 import com.ihs.keyboardutils.R;
-import com.ihs.keyboardutils.giftad.RevealFlashButton;
 import com.ihs.keyboardutils.utils.CommonUtils;
 import com.ihs.keyboardutils.utils.LauncherAnimationUtils;
 import com.ihs.keyboardutils.utils.ToastUtils;

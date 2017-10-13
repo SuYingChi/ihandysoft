@@ -966,18 +966,6 @@
 					<key>Show</key>
 					<false/>
 				</dict>
-				<key>KeyboardFunctionBarGiftAd</key>
-				<dict>
-					<key>SessionIndexOfDay</key>
-					<array>
-						<integer>2</integer>
-						<integer>15</integer>
-						<integer>30</integer>
-						<integer>40</integer>
-					</array>
-					<key>Show</key>
-					<true/>
-				</dict>
 				<key>KeyboardSettingsPanelAds</key>
 				<dict>
 					<key>CurrentContent</key>

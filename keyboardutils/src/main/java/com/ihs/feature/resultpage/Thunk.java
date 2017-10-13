@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package com.ihs.keyboardutils.giftad;
+package com.ihs.feature.resultpage;
 
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;

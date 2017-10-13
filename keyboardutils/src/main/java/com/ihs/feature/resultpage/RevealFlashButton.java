@@ -1,4 +1,4 @@
-package com.ihs.keyboardutils.giftad;
+package com.ihs.feature.resultpage;
 
 import android.animation.Animator;
 import android.animation.ValueAnimator;

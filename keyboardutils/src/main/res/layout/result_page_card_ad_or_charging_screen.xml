@@ -147,7 +147,7 @@
         android:layout_centerHorizontal="true"
         android:paddingBottom="30dp">
 
-        <com.ihs.keyboardutils.giftad.RevealFlashButton
+        <com.ihs.feature.resultpage.RevealFlashButton
             android:id="@+id/result_action_btn"
             android:layout_width="match_parent"
             android:layout_height="48dp"

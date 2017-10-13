@@ -53,13 +53,6 @@
         <receiver android:name=".notification.NotificationExecutionReceiver" />
 
         <activity
-            android:name=".giftad.InterstitialGiftActivity"
-            android:excludeFromRecents="true"
-            android:screenOrientation="portrait"
-            android:taskAffinity="com.ihs.keyboardutils.giftad.InterstitialGiftActivity"
-            android:theme="@style/FullScreenAnimationAd" />
-
-        <activity
             android:name="com.ihs.feature.boost.BoostActivity"
             android:excludeFromRecents="true"
             android:icon="@drawable/boost_icon"
