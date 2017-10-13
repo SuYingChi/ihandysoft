@@ -8,9 +8,13 @@ import android.support.annotation.NonNull;
 import android.support.v7.widget.AppCompatImageButton;
 import android.view.View;
 import android.widget.LinearLayout;
+import android.widget.TextView;
 
 import com.ihs.app.framework.HSApplication;
+import com.ihs.commons.config.HSConfig;
 import com.ihs.keyboardutils.R;
+
+import java.util.Locale;
 
 /**
  * Created by yang.liu on 2017/10/11.
@@ -20,7 +24,7 @@ public class CustomUIRateThreeAlert extends CustomUIRateBaseAlert {
 
     private LinearLayout buttonYes;
     private LinearLayout buttonNope;
-    private AppCompatImageButton closeAlert;
+    private AppCompatImageButton closeAlertIcon;
 
     public CustomUIRateThreeAlert (@NonNull Context context) {
         super(context);
@@ -31,12 +35,19 @@ public class CustomUIRateThreeAlert extends CustomUIRateBaseAlert {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.custom_ui_rate_three_alert);
 
+        String language = Locale.getDefault().getLanguage();
+
+        ((TextView)findViewById(R.id.yes_body)).setText(HSConfig.optString("YES!", "Application", "RateAlert", "Type3", "YES", "body", language));
+        ((TextView)findViewById(R.id.yes_title)).setText(HSConfig.optString("I give it a 5 star rating", "Application", "RateAlert", "Type3", "YES", "title", language));
+        ((TextView)findViewById(R.id.nope_body)).setText(HSConfig.optString("NOPE...", "Application", "RateAlert", "Type3", "NO", "body", language));
+        ((TextView)findViewById(R.id.nope_title)).setText(HSConfig.optString("I have some feedback", "Application", "RateAlert", "Type3", "NO", "title", language));
+
         buttonYes = (LinearLayout) findViewById(R.id.layout_yes);
         buttonYes.setOnClickListener(this);
         buttonNope = (LinearLayout) findViewById(R.id.layout_nope);
         buttonNope.setOnClickListener(this);
-        closeAlert = (AppCompatImageButton) findViewById(R.id.rate_alert_close);
-        closeAlert.setOnClickListener(this);
+        closeAlertIcon = (AppCompatImageButton) findViewById(R.id.rate_alert_close);
+        closeAlertIcon.setOnClickListener(this);
         setCancelable(false);
     }
 
@@ -44,6 +55,7 @@ public class CustomUIRateThreeAlert extends CustomUIRateBaseAlert {
     public void onClick(View v) {
         super.onClick(v);
         if (v == buttonYes) {
+            dismiss();
             final String appPackageName = getContext().getPackageName();
             try {
                 getContext().startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("market://details?id=" + appPackageName)).setFlags(Intent.FLAG_ACTIVITY_NEW_TASK));
@@ -51,6 +63,7 @@ public class CustomUIRateThreeAlert extends CustomUIRateBaseAlert {
                 getContext().startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("https://play.google.com/store/apps/details?id=" + appPackageName)).setFlags(Intent.FLAG_ACTIVITY_NEW_TASK));
             }
         } else if (v == buttonNope) {
+            dismiss();
             String email = HSApplication.getContext().getString(R.string.feedback_email);
             Intent emailIntent = new Intent(Intent.ACTION_SENDTO);
             emailIntent.setData(Uri.parse("mailto:" + email));
@@ -61,7 +74,7 @@ public class CustomUIRateThreeAlert extends CustomUIRateBaseAlert {
             } catch (Exception e) {
                 e.printStackTrace();
             }
-        } else if (v == closeAlert) {
+        } else if (v == closeAlertIcon) {
             dismiss();
         }
     }

@@ -8,6 +8,7 @@
 
     <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:id="@+id/dialog_root"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="center">
@@ -51,7 +52,7 @@
                 <TextView
                     android:id="@+id/btn_yes"
                     style="@style/DesignDialogActionButtonHighlight"
-                    android:background="@color/blue"
+                    android:background="@drawable/rate_alert_type_one_button_bg"
                     android:text="YES" />
 
                 <TextView
@@ -63,14 +64,14 @@
                 <TextView
                     android:id="@+id/btn_feedback"
                     style="@style/DesignDialogActionButtonHighlight"
-                    android:background="@color/blue"
+                    android:background="@drawable/rate_alert_type_one_button_bg"
                     android:text="FEEDBACK"
                     android:visibility="gone" />
 
                 <TextView
                     android:id="@+id/btn_full_star"
                     style="@style/DesignDialogActionButtonHighlight"
-                    android:background="@color/blue"
+                    android:background="@drawable/rate_alert_type_one_button_bg"
                     android:text="5-STAR"
                     android:visibility="gone" />
 

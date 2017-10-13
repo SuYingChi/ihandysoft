@@ -4,6 +4,7 @@
     android:id="@+id/root_view"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:layout_gravity="center"
     android:background="@drawable/rate_alert_dialog_bg_type_two"
     android:orientation="vertical">
 
@@ -18,62 +19,67 @@
             android:orientation="vertical">
 
             <ImageView
+                android:id="@+id/top_img"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="28.5dp"
+                android:layout_marginTop="21.4dp"
                 android:src="@drawable/rate_alert_ui_type_two" />
 
             <TextView
-                android:layout_width="wrap_content"
+                android:id="@+id/step_one_body"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:layout_marginTop="54dp"
+                android:layout_marginTop="40.3dp"
                 android:fontFamily="sans-serif-medium"
-                android:lineSpacingExtra="-13.6sp"
-                android:text="Do you like our App?"
+                android:gravity="center"
+                android:lineSpacingExtra="10sp"
+                android:paddingLeft="20dp"
+                android:paddingRight="20dp"
                 android:textColor="#000000"
-                android:textSize="30sp"
+                android:textSize="22.5sp"
                 android:textStyle="normal" />
 
             <RelativeLayout
-                android:id="@+id/first_button_screen"
+                android:id="@+id/first_button_layout"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
-                android:layout_marginBottom="25.6dp"
-                android:layout_marginTop="48.1dp">
+                android:layout_marginBottom="19.2dp"
+                android:layout_marginTop="36dp">
 
                 <Button
                     android:id="@+id/first_screen_btn_nope"
-                    android:layout_width="120dp"
-                    android:layout_height="wrap_content"
+                    style="?android:attr/borderlessButtonStyle"
+                    android:layout_width="114.5dp"
+                    android:layout_height="41.8dp"
                     android:layout_marginLeft="30dp"
                     android:background="@drawable/rate_alert_button_bg_nope"
                     android:fontFamily="sans-serif-medium"
-                    android:lineSpacingExtra="-5.6sp"
+                    android:lineSpacingExtra="-4.2sp"
                     android:text="NOPE"
                     android:textColor="#ffffff"
-                    android:textSize="22sp"
+                    android:textSize="16.5sp"
                     android:textStyle="normal" />
 
                 <Button
-                    android:id="@+id/rate_alert_button_yes"
-                    android:layout_width="120dp"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="37.7dp"
+                    android:id="@+id/first_screen_btn_yes"
+                    style="?android:attr/borderlessButtonStyle"
+                    android:layout_width="114.5dp"
+                    android:layout_height="41.8dp"
+                    android:layout_marginLeft="28.3dp"
                     android:layout_marginRight="30dp"
                     android:layout_toRightOf="@id/first_screen_btn_nope"
                     android:background="@drawable/rate_alert_button_bg_yes"
                     android:fontFamily="sans-serif-medium"
-                    android:lineSpacingExtra="-5.6sp"
+                    android:lineSpacingExtra="-4.2sp"
                     android:text="YES"
                     android:textColor="#ffffff"
-                    android:textSize="22sp"
+                    android:textSize="16.5sp"
                     android:textStyle="normal" />
             </RelativeLayout>
 
             <RelativeLayout
-                android:id="@+id/second_button_screen"
+                android:id="@+id/second_button_layout"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
@@ -88,25 +94,25 @@
                     android:layout_marginLeft="30dp"
                     android:background="@drawable/rate_alert_button_bg_nope"
                     android:fontFamily="sans-serif-medium"
-                    android:lineSpacingExtra="-5.6sp"
+                    android:lineSpacingExtra="-4.2sp"
                     android:text="LATER"
                     android:textColor="#ffffff"
-                    android:textSize="22sp"
+                    android:textSize="16.5sp"
                     android:textStyle="normal" />
 
                 <Button
-                    android:id="@+id/rate_alert_button_feedback"
+                    android:id="@+id/first_screen_btn_feedback"
                     android:layout_width="120dp"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="37.7dp"
                     android:layout_marginRight="30dp"
-                    android:background="@drawable/rate_alert_button_bg_yes"
                     android:layout_toRightOf="@id/first_screen_btn_later"
+                    android:background="@drawable/rate_alert_button_bg_yes"
                     android:fontFamily="sans-serif-medium"
-                    android:lineSpacingExtra="-5.6sp"
+                    android:lineSpacingExtra="-4.2sp"
                     android:text="FEEDBACK"
                     android:textColor="#ffffff"
-                    android:textSize="22sp"
+                    android:textSize="16.5sp"
                     android:textStyle="normal" />
             </RelativeLayout>
         </LinearLayout>
@@ -163,6 +169,7 @@
             </LinearLayout>
 
             <TextView
+                android:id="@+id/step_two_yes_title"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
@@ -189,10 +196,10 @@
                     android:layout_marginLeft="30dp"
                     android:background="@drawable/rate_alert_button_bg_nope"
                     android:fontFamily="sans-serif-medium"
-                    android:lineSpacingExtra="-5.6sp"
+                    android:lineSpacingExtra="-4.2sp"
                     android:text="LATER"
                     android:textColor="#ffffff"
-                    android:textSize="22sp"
+                    android:textSize="16.5sp"
                     android:textStyle="normal" />
 
                 <Button
@@ -204,10 +211,10 @@
                     android:layout_toRightOf="@id/second_screen_btn_later"
                     android:background="@drawable/rate_alert_button_bg_yes"
                     android:fontFamily="sans-serif-medium"
-                    android:lineSpacingExtra="-5.6sp"
+                    android:lineSpacingExtra="-4.2sp"
                     android:text="5-STAR"
                     android:textColor="#ffffff"
-                    android:textSize="22sp"
+                    android:textSize="16.5sp"
                     android:textStyle="normal" />
             </RelativeLayout>
         </LinearLayout>
