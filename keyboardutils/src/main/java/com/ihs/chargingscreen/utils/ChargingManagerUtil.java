@@ -155,7 +155,7 @@ public class ChargingManagerUtil {
     }
 
     public static void startChargingActivity() {
-        if (!HSConfig.optBoolean(false, "Application", "UseNewLockScreen")) {
+        if (!HSConfig.optBoolean(false, "Application", "Locker", "UseNewLockScreen")) {
             HSLog.d("config use past charging screen");
             Intent intent = new Intent(context, ChargingScreenActivity.class);
             intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NO_ANIMATION);

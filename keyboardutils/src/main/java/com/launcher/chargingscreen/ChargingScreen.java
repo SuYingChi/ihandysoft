@@ -819,7 +819,7 @@ public class ChargingScreen extends LockScreen implements INotificationObserver 
                 } else if (expressAdView.getParent() == null) {
                     showExpressAd();
                 } else {
-                    if (HSConfig.optBoolean(false, "Application", "LockerAutoRefreshAdsEnable")) {
+                    if (HSConfig.optBoolean(false, "Application", "Locker", "LockerAutoRefreshAdsEnable")) {
                         expressAdView.resumeDisplayNewAd();
                     }
                 }
@@ -856,7 +856,7 @@ public class ChargingScreen extends LockScreen implements INotificationObserver 
         HSGlobalNotificationCenter.removeObserver(this);
 
         // ======== onPause ========
-        if (expressAdView != null && HSConfig.optBoolean(false, "Application", "LockerAutoRefreshAdsEnable")) {
+        if (expressAdView != null && HSConfig.optBoolean(false, "Application", "Locker", "LockerAutoRefreshAdsEnable")) {
             expressAdView.pauseDisplayNewAd();
         }
 

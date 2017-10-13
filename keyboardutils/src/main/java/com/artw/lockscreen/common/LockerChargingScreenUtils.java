@@ -86,7 +86,7 @@ public class LockerChargingScreenUtils {
             return;
         }
 
-        if (!HSConfig.optBoolean(false, "Application", "UseNewLockScreen")) {
+        if (!HSConfig.optBoolean(false, "Application", "Locker", "UseNewLockScreen")) {
             HSLog.d("config use past screen locker");
             Intent intent = new Intent(HSApplication.getContext(), LockerActivity.class);
             intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK

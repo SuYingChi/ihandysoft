@@ -119,7 +119,7 @@ public class KCNotificationManager {
         }
         List<Object> list = new ArrayList<>();
         try {
-            list = (List<Object>) HSConfig.getList("Application", "LocalNotificationsPushTime");
+            list = (List<Object>) HSConfig.getList("Application", "LocalNotifications", "LocalNotificationsPushTime");
         } catch (Exception e) {
             e.printStackTrace();
             HSLog.e("没有配置通知时间");
@@ -186,7 +186,7 @@ public class KCNotificationManager {
 
         List<Map<String, ?>> configs = null;
         try {
-            configs = (List<Map<String, ?>>) HSConfig.getList("Application", "LocalNotifications");
+            configs = (List<Map<String, ?>>) HSConfig.getList("Application", "LocalNotifications", "Content");
         } catch (Exception e) {
             e.printStackTrace();
         }

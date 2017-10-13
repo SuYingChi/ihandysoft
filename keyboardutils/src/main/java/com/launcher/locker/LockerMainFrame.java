@@ -242,14 +242,14 @@ public class LockerMainFrame extends RelativeLayout implements INotificationObse
     }
 
     public void onResume() {
-        if (expressAdView != null && HSConfig.optBoolean(false, "Application", "LockerAutoRefreshAdsEnable")) {
+        if (expressAdView != null && HSConfig.optBoolean(false, "Application", "Locker", "LockerAutoRefreshAdsEnable")) {
             HSLog.d("LockerMainFrame expressAdView resumeDisplayNewAd");
             expressAdView.resumeDisplayNewAd();
         }
     }
 
     public void onPause() {
-        if (expressAdView != null && HSConfig.optBoolean(false, "Application", "LockerAutoRefreshAdsEnable")) {
+        if (expressAdView != null && HSConfig.optBoolean(false, "Application", "Locker", "LockerAutoRefreshAdsEnable")) {
             HSLog.d("LockerMainFrame expressAdView pauseDisplayNewAd");
             expressAdView.pauseDisplayNewAd();
         }
