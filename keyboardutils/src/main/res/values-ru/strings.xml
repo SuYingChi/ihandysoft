@@ -1,19 +1,5 @@
 <?xml version="1.0" encoding="utf-8" standalone="no"?>
 <resources xmlns:tools="http://schemas.android.com/tools">
-    <string name="lucky_game_award_boom_description"> раз(а) </string>
-    <string name="lucky_game_award_chances_description"> Поздравляем +3 раза </string>
-    <string name="lucky_game_award_chances_receive_btn"> Получить</string>
-    <string name="lucky_game_award_empty_action"> ПОВТОРИТЕ ПОПЫТКУ</string>
-    <string name="lucky_game_award_no_network_description"> Нет подключения к сети!</string>
-    <string name="no_network_connection"> Нет подключения к сети!</string>
-    <string name="lucky_game_award_theme_action"> УСТАНОВИТЬ</string>
-    <string name="lucky_game_award_theme_description">Найдена новая тема!</string>
-    <string name="lucky_game_award_wallpaper_description">Волшебные обои!</string>
-    <string name="lucky_game_award_wallpaper_action"> УСТАНОВИТЬ КАК ОБОИ</string>
-    <string name="lucky_game_chance_counter"> Шанс: %1$s</string>
-    <string name="lucky_game_award_ad_related_title">Вы выиграли приз!</string>
-    <string name="lucky_game_chance_restore_timer">Больше захватов через %1$s</string>
-
     <string name="charging_screen_charged_full">Полностью заряжен</string>
     <string formatted="false" name="charging_screen_charged_left_describe">Осталось заряда на %s</string>
     <string name="charging_screen_charging_continue_charging_state_tip_view">Смартфон не заряжен, \но его можно безопасно отключить от зарядного устройства</string>
@@ -436,7 +422,6 @@
     <string name="launcher_widget_launcher_settings_title">Настройки средства запуска</string>
     <string name="online_wallpaper_apply_btn">Установить в качестве обоев</string>
 
-    <string name="launcher_widget_lucky_title"> Повезло  </string>
     <string name="set_as_default">Установить главный экран Camera Pro.</string>
     <string name="notification_default_cleared_title"> Главный экран сброшен</string>
     <string name="set_as_default_boost_battery_body">Camera Pro ускоряет работу смартфона и экономит заряд аккумулятора! Установить главный экран Camera Pro?</string>
@@ -666,9 +651,6 @@
     <string name="weather_city_search_error_prompt">Ошибки сети</string>
     <string name="battery_low_tip_btn_cancel">ПОЗЖЕ</string>
 
-    <string name="moment_lucky_draw">Лотерея подарков Повезло</string>
-    <string name="moment_lucky_draw_tip">Угадайте, что в коробке! Тяните и получайте подарки от Повезло!</string>
-    <string name="moment_lucky_start">ТЯНУТЬ</string>
     <string name="accessibility_authorize_try_again_title">Попытаться еще раз?</string>
     <string name="accessibility_authorize_try_again_description">Не удалось предоставить доступ Ускорени+. Повторите попытку ускорения работы смартфона.</string>
     <string name="accessibility_authorize_try_again_positive">ПОВТОРИТЬ</string>

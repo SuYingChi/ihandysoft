@@ -80,7 +80,6 @@ import com.ihs.app.framework.HSApplication;
 import com.ihs.commons.config.HSConfig;
 import com.ihs.commons.utils.HSLog;
 import com.ihs.commons.utils.HSPreferenceHelper;
-import com.ihs.keyboardutils.R;
 import com.ihs.keyboardutils.utils.CommonUtils;
 import com.ihs.keyboardutils.utils.KCFeatureRestrictionConfig;
 import com.launcher.locker.LockerUtils;
@@ -1469,11 +1468,11 @@ public final class Utils {
     }
 
     public static Drawable getAppIcon(String packageName) {
-        Drawable icon;
+        Drawable icon = null;
         try {
             icon = HSApplication.getContext().getPackageManager().getApplicationIcon(packageName);
         } catch (Exception e) {
-            icon = HSApplication.getContext().getResources().getDrawable(R.drawable.ic_lucky);
+
         }
         return icon;
     }

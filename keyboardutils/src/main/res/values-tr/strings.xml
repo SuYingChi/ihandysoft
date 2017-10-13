@@ -1,22 +1,5 @@
 <?xml version="1.0" encoding="utf-8" standalone="no"?>
 <resources xmlns:tools="http://schemas.android.com/tools">
-    <string name="launcher_widget_lucky_title">Şanslı</string>
-    <string name="lucky_game_award_boom_description">İken.</string>
-    <string name="lucky_game_award_chances_description">Tebrikler +3 kez </string>
-    <string name="lucky_game_award_chances_receive_btn">Al</string>
-    <string name="lucky_game_award_empty_action">TEKRAR DENE</string>
-    <string name="lucky_game_award_no_network_description">Ağ bağlantısı yok! </string>
-    <string name="no_network_connection">Ağ bağlantısı yok! </string>
-    <string name="lucky_game_award_theme_action">KUR</string>
-    <string name="lucky_game_award_theme_description">Yeni bir tema buldum! </string>
-    <string name="lucky_game_award_wallpaper_description">Muhteşem Duvar Kâğıdı!</string>
-    <string name="lucky_game_award_wallpaper_action">DUVAR KADIĞI OLARAK AYARLA</string>
-    <string name="lucky_game_chance_counter">Şans: %1$s</string>
-
-    <string name="lucky_game_award_ad_related_title">Bir ödül kazandın!</string>
-    <string name="lucky_game_chance_restore_timer">%1$s içinde daha fazla al</string>
-
-
     <string name="charging_screen_charged_full">Tam dolu</string>
     <string formatted="false" name="charging_screen_charged_left_describe">Kalan tam şarj %s</string>
     <string name="charging_screen_charging_continue_charging_state_tip_view">Telefon şarj edilmedi ama şarj cihazını çıkarmak güvenli</string>
@@ -657,9 +640,6 @@
     <string name="weather_city_search_error_prompt">Ağ hataları</string>
     <string name="battery_low_tip_btn_cancel">Daha Sonra</string>
 
-    <string name="moment_lucky_draw">Şanslı Hediyesini Al</string>
-    <string name="moment_lucky_draw_tip">Kutuda ne olduğunu tahmin et! Şanslı’den sürpriz hediyeyi al ve keyfini sür!</string>
-    <string name="moment_lucky_start">HEMEN AL</string>
     <string name="accessibility_authorize_try_again_title">Tekrar dene?</string>
     <string name="accessibility_authorize_try_again_description">Yükselt+ için erişilebilirlik açılamadı. Telefonunuzu daha da hızlandırmak için tekrar deneyin.</string>
     <string name="accessibility_authorize_try_again_positive">HEMEN DENE</string>

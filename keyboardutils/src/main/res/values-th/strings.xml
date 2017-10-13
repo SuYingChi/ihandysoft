@@ -1,20 +1,5 @@
 <?xml version="1.0" encoding="utf-8" standalone="no"?>
 <resources xmlns:tools="http://schemas.android.com/tools">
-    <string name="launcher_widget_lucky_title">โชคดี</string>
-    <string name="lucky_game_award_boom_description"> ครั้ง</string>
-    <string name="lucky_game_award_chances_description"> ยินดีด้วย +3 ครั้ง</string>
-    <string name="lucky_game_award_chances_receive_btn"> รับ</string>
-    <string name="lucky_game_award_empty_action"> ลองอีกครั้ง</string>
-    <string name="lucky_game_award_no_network_description"> ไม่มีการเชื่อมต่อเครือข่าย!</string>
-    <string name="no_network_connection"> ไม่มีการเชื่อมต่อเครือข่าย!</string>
-    <string name="lucky_game_award_theme_action"> ติดตั้ง</string>
-    <string name="lucky_game_award_theme_description"> พบธีมใหม่!</string>
-    <string name="lucky_game_award_wallpaper_description">ภาพพื้นหลังแสนสวย!</string>
-    <string name="lucky_game_award_wallpaper_action"> ตั้งเป็นภาพพื้นหลัง</string>
-    <string name="lucky_game_chance_counter"> สิทธิ: %1$s</string>
-    <string name="lucky_game_award_ad_related_title">คุณได้รับรางวัล!</string>
-    <string name="lucky_game_chance_restore_timer">มีให้รับอีกใน %1$s</string>
-
     <string name="charging_screen_charged_full">ชาร์จเต็มที่แล้ว</string>
     <string formatted="false" name="charging_screen_charged_left_describe">ชาร์จเต็มที่ในอีก %s</string>
     <string name="charging_screen_charging_continue_charging_state_tip_view">โทรศัพท์ไม่ได้ชาร์จ แต่สามารถถอดปลั๊กได้อย่างปลอดภัย</string>
@@ -661,9 +646,6 @@
     <string name="weather_city_search_error_prompt">เครือข่ายขัดข้อง</string>
     <string name="battery_low_tip_btn_cancel">ภายหลัง</string>
 
-    <string name="moment_lucky_draw">โชคดี Gift Grab</string>
-    <string name="moment_lucky_draw_tip">ทายดูสิว่าคุณจะได้อะไรจากในกล่อง จับให้ได้แล้วเพลิดเพลินไปกับเซอร์ไพรส์ต่างๆ จาก โชคดี!</string>
-    <string name="moment_lucky_start">จับเลย</string>
     <string name="accessibility_authorize_try_again_title">ต้องการลองใหม่อีกครั้งหรือไม่</string>
     <string name="accessibility_authorize_try_again_description">การเปิดการเข้าถึงสำหรับบูสต์+ ล้มเหลว ลองใหม่อีกครั้งเพื่อทำให้โทรศัพท์ของคุณทำงานได้เร็วขึ้น   </string>
     <string name="accessibility_authorize_try_again_positive">ลองเลย</string>

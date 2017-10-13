@@ -19,7 +19,6 @@ public class AdAnalytics {
 
         // Events that uses AcbNativeAdAnalytics#logAppViewEvent directly
         // boost ad, boost has been removed and this placement CAN NOT be used by others
-        // lucky ad, lucky has been removed and this placement CAN NOT be used by others
         // boost plus ad, boost plus has been removed and this placement CAN NOT be used by others
         // battery ad, battery has been removed and this placement CAN NOT be used by others
         // gift ad, gift has been removed and this placement CAN NOT be used by others

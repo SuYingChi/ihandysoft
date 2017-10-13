@@ -39,21 +39,6 @@
     <string name="charging_module_cut_off_charger_tip">Ups, o seu telemóvel ainda não carregou completamente. A bateria foi danificada.</string>
 
 
-    <string name="launcher_widget_lucky_title">Sortudo</string>
-    <string name="lucky_game_award_boom_description">Vezes</string>
-    <string name="lucky_game_award_chances_description">Parabéns +3 vezes</string>
-    <string name="lucky_game_award_chances_receive_btn">Receber</string>
-    <string name="lucky_game_award_empty_action">TENTAR NOVAMENTE</string>
-    <string name="lucky_game_award_no_network_description">Sem ligação à rede!</string>
-    <string name="no_network_connection">Sem ligação à rede!</string>
-    <string name="lucky_game_award_theme_action">INSTALAR</string>
-    <string name="lucky_game_award_theme_description">Encontrado um novo tema!</string>
-    <string name="lucky_game_award_wallpaper_description">Papel de parede incrível!</string>
-    <string name="lucky_game_award_wallpaper_action">DEFINIR COMO PAPEL DE PAREDE</string>
-    <string name="lucky_game_chance_counter">Hipótese: %1$s</string>
-    <string name="lucky_game_award_ad_related_title">Ganhaste um prémio!</string>
-    <string name="lucky_game_chance_restore_timer">Mais prémios em %1$s</string>
-
     <string name="charging_screen_charged_full">Completamente carregado</string>
     <string formatted="false" name="charging_screen_charged_left_describe">Carga completa restante %s</string>
     <string name="charging_screen_charging_continue_charging_state_tip_view">O telemóvel não está carregado, mas é seguro remover o carregador</string>
@@ -699,9 +684,6 @@
     <string name="weather_city_search_error_prompt">Falha na rede</string>
     <string name="battery_low_tip_btn_cancel">Depois</string>
 
-    <string name="moment_lucky_draw">Presente sortudo da Lucky</string>
-    <string name="moment_lucky_draw_tip">Adivinhe o que pode receber com a caixa! Ganhe o presente e disfrute da surpresa da LUCKY!</string>
-    <string name="moment_lucky_start">RECOLHER PRESENTE</string>
     <string name="accessibility_authorize_try_again_title">Tentar novamente?</string>
     <string name="accessibility_authorize_try_again_description">Falha ao abrir a acessibilidade para a Impulsionar+. Tente novamente para tornar o seu telemóvel mais rápido.</string>
     <string name="accessibility_authorize_try_again_positive">TENTAR AGORA</string>

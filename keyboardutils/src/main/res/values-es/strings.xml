@@ -64,22 +64,6 @@
     <string name="charging_module_battery_doctor_tip">Carga durante otros 10 minutos para aumentar la capacidad de la batería.</string>
     <string name="charging_module_cut_off_charger">¡Cargador desenchufado!</string>
     <string name="charging_module_cut_off_charger_tip">Vaya, tu teléfono no se ha cargado del todo. La batería ha sufrido daños.</string>
-
-    <string name="launcher_widget_lucky_title">Afortunado</string>
-    <string name="lucky_game_award_boom_description"> veces</string>
-    <string name="lucky_game_award_chances_description"> Enhorabuena +3 veces</string>
-    <string name="lucky_game_award_chances_receive_btn"> Recibir</string>
-    <string name="lucky_game_award_empty_action"> INTÉNTALO DE NUEVO</string>
-    <string name="lucky_game_award_no_network_description"> ¡No te has conectado a internet!</string>
-    <string name="no_network_connection"> ¡No te has conectado a internet!</string>
-    <string name="lucky_game_award_theme_action"> INSTALAR</string>
-    <string name="lucky_game_award_theme_description"> ¡Hemos encontrado un nuevo tema!</string>
-    <string name="lucky_game_award_wallpaper_description"> ¡Qué fondo de pantalla tan genial!</string>
-    <string name="lucky_game_award_wallpaper_action"> FIJAR COMO FONDO DE PANTALLA </string>
-    <string name="lucky_game_chance_counter"> Intento: %1$s</string>
-    <string name="lucky_game_award_ad_related_title">¡Has ganado un premio!</string>
-    <string name="lucky_game_chance_restore_timer">Más oportunidades en %1$s</string>
-
     <string name="empty_folder_name">Carpeta nueva</string>
     <string name="activity_not_found">La app no está instalada</string>
     <string name="activity_not_available">La app no está disponible</string>
@@ -700,9 +684,6 @@
     <string name="weather_city_search_error_prompt">Errores de red</string>
     <string name="battery_low_tip_btn_cancel">Más Tarde</string>
 
-    <string name="moment_lucky_draw">Consigue un regalo sorpresa</string>
-    <string name="moment_lucky_draw_tip">¡Adivina lo que va a salir en la caja! Consigue una caja y disfruta de un regalo Afortunado.</string>
-    <string name="moment_lucky_start">CONSEGUIR AHORA</string>
     <string name="accessibility_authorize_try_again_title">¿Quieres volver a intentarlo?</string>
     <string name="accessibility_authorize_try_again_description">No se ha podido iniciar la accesibilidad de Acelerar+. Reinténtalo para que tu teléfono vaya más rápido.</string>
     <string name="accessibility_authorize_try_again_positive">AHORA</string>

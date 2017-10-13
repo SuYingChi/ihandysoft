@@ -362,18 +362,6 @@
     <string name="launcher_widget_launcher_settings_title">إعدادات Launcher</string>
     <string name="online_wallpaper_apply_btn">تعيين كخلفية</string>
 
-    <string name="launcher_widget_lucky_title"> محظوظ</string>
-    <string name="lucky_game_award_boom_description">مرات</string>
-    <string name="lucky_game_award_chances_description">تهانينا +3 مرات</string>
-    <string name="lucky_game_award_chances_receive_btn">استلام</string>
-    <string name="lucky_game_award_empty_action">حاول مرة أخرى</string>
-    <string name="lucky_game_award_no_network_description">  لا يوجد اتصال بالشبكة!</string>
-    <string name="no_network_connection">  لا يوجد اتصال بالشبكة!</string>
-    <string name="lucky_game_award_theme_action">تثبيت</string>
-    <string name="lucky_game_award_theme_description">وجدنا نسقاً جديداً</string>
-    <string name="lucky_game_award_wallpaper_description">خلفية رائعة!</string>
-    <string name="lucky_game_award_wallpaper_action">تعيين كخلفية</string>
-    <string name="lucky_game_chance_counter">%1$s فرصة </string>
     <string name="set_as_default">تعيين Air Launcher   كرئيسي</string>
     <string name="notification_clear_default_title">تم مسح تعيين الشاشة الرئيسية</string>
     <string name="set_as_default_info_2">Air Launcher يمكّنك من تخصيص شكل شاشة هاتفك بتصميمه الأنيق! تعيين Air Launcher كرئيسي؟</string>
@@ -406,8 +394,6 @@
     <string name="search_bar_remove_confirm_dialog_title">إزالة شريط البحث هذا؟</string>
     <string name="search_bar_remove_confirm_dialog_description">يمكنك الوصول إلى البحث عن طريق: \n1. تشغيله من إعدادات المشغل-&gt;إعدادات البحث \n2.تشغيله من القائمة-&gt; الودجات</string>
     <string name="search_bar_widget">شريط البحث</string>
-    <string name="lucky_game_award_ad_related_title">لقد حصلت على جائزة!</string>
-    <string name="lucky_game_chance_restore_timer">المزيد من المكافآت في %1$s</string>
     <string name="search_contacts">جهات الاتصال</string>
 
     <string name="wallpaper_network_error_reload">إعادة التحميل</string>
@@ -589,9 +575,6 @@
     <string name="battery_low_tip_btn_cancel">فيما بعد</string>
 
 
-    <string name="moment_lucky_draw">فز بهدية المحظوظين</string>
-    <string name="moment_lucky_draw_tip">خمّن ما يمكن أن تحصل عليه من الصندوق! فز وتمتع بالمفاجأة أيها المحظوظ!</string>
-    <string name="moment_lucky_start">فز بالهدية الآن</string>
     <string name="news_load_more_re_try">انقر لإعادة المحاولة</string>
     <string name="boost_plus_authorize_title">هل تريد تشغيل إمكانية الوصول؟</string>
     <string name="boost_plus_authorize_desc">لتوقيف هذه التطبيقات، يحتاج التسريع+ إلى الحصول على إمكانية الوصول. وهو يسرّع الهاتف 80\%%  أو أكثر ويطيل عمر البطارية 200\%% ! 93\%% من المستخدمين قاموا بتشغيله.</string>

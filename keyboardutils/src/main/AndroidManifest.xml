@@ -67,7 +67,7 @@
             android:launchMode="singleTask"
             android:noHistory="true"
             android:screenOrientation="portrait"
-            android:taskAffinity=".lucky.boost"
+            android:taskAffinity=".boost"
             android:theme="@android:style/Theme.Translucent.NoTitleBar.Fullscreen">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
