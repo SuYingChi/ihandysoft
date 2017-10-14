@@ -4,6 +4,7 @@
     android:id="@+id/root_view"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:layout_gravity="center"
     android:background="@drawable/rate_alert_bg_type_three"
     android:orientation="vertical">
 
@@ -15,15 +16,15 @@
             android:id="@+id/dialog_title"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="#4589f3"
+            android:background="@drawable/rate_alert_type_three_title_bg"
             android:fontFamily="sans-serif-medium"
             android:gravity="center"
-            android:lineSpacingExtra="-10.3sp"
-            android:paddingBottom="17dp"
-            android:paddingTop="22dp"
+            android:lineSpacingExtra="-7.7sp"
+            android:paddingBottom="13.2dp"
+            android:paddingTop="17.1dp"
             android:text="Do you like our App?"
             android:textColor="#fefefe"
-            android:textSize="26.7sp"
+            android:textSize="20sp"
             android:textStyle="normal" />
 
         <LinearLayout
@@ -36,7 +37,7 @@
                 android:id="@+id/img_yes"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:padding="25dp"
+                android:padding="20dp"
                 android:src="@drawable/rate_alert_ui_yes" />
 
             <LinearLayout
@@ -50,10 +51,10 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:fontFamily="sans-serif-medium"
-                    android:lineSpacingExtra="-11.2sp"
+                    android:lineSpacingExtra="-8.4sp"
                     android:text="YES!"
                     android:textColor="#000000"
-                    android:textSize="44.1sp"
+                    android:textSize="33.1sp"
                     android:textStyle="normal" />
 
                 <TextView
@@ -61,10 +62,10 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:fontFamily="sans-serif"
-                    android:lineSpacingExtra="12.9sp"
+                    android:lineSpacingExtra="9.7sp"
                     android:text="I give it a 5 star rating"
                     android:textColor="#3b3b3b"
-                    android:textSize="20sp"
+                    android:textSize="15sp"
                     android:textStyle="normal" />
             </LinearLayout>
         </LinearLayout>
@@ -74,7 +75,7 @@
             android:layout_width="match_parent"
             android:layout_height="1dp"
             android:layout_below="@id/layout_yes"
-            android:background="@color/black_gray"
+            android:background="#e5e5e5"
             android:orientation="horizontal">
 
         </LinearLayout>
@@ -89,7 +90,7 @@
                 android:id="@+id/img_nope"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:padding="25dp"
+                android:padding="20dp"
                 android:src="@drawable/rate_alert_ui_nope" />
 
             <LinearLayout
@@ -103,10 +104,10 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:fontFamily="sans-serif-medium"
-                    android:lineSpacingExtra="-11.2sp"
+                    android:lineSpacingExtra="-8.4sp"
                     android:text="NOPE..."
                     android:textColor="#7f000000"
-                    android:textSize="44.1sp"
+                    android:textSize="33.1sp"
                     android:textStyle="normal" />
 
                 <TextView
@@ -114,10 +115,10 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:fontFamily="sans-serif"
-                    android:lineSpacingExtra="12.9sp"
+                    android:lineSpacingExtra="9.7sp"
                     android:text="I have some feedback"
                     android:textColor="#7f3b3b3b"
-                    android:textSize="20sp"
+                    android:textSize="15sp"
                     android:textStyle="normal" />
             </LinearLayout>
         </LinearLayout>

@@ -39,6 +39,23 @@
                 android:textSize="22.5sp"
                 android:textStyle="normal" />
 
+            <TextView
+                android:id="@+id/step_two_nope_body"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginTop="40.3dp"
+                android:fontFamily="sans-serif"
+                android:gravity="center_horizontal"
+                android:lineSpacingExtra="6.7sp"
+                android:paddingLeft="20dp"
+                android:paddingRight="20dp"
+                android:text="xxx"
+                android:textColor="#000000"
+                android:textSize="18sp"
+                android:textStyle="normal"
+                android:visibility="gone" />
+
             <RelativeLayout
                 android:id="@+id/first_button_layout"
                 android:layout_width="wrap_content"
@@ -83,14 +100,15 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
-                android:layout_marginBottom="25.6dp"
-                android:layout_marginTop="48.1dp"
+                android:layout_marginBottom="19.2dp"
+                android:layout_marginTop="36dp"
                 android:visibility="gone">
 
                 <Button
                     android:id="@+id/first_screen_btn_later"
-                    android:layout_width="120dp"
-                    android:layout_height="wrap_content"
+                    style="?android:attr/borderlessButtonStyle"
+                    android:layout_width="114.5dp"
+                    android:layout_height="41.8dp"
                     android:layout_marginLeft="30dp"
                     android:background="@drawable/rate_alert_button_bg_nope"
                     android:fontFamily="sans-serif-medium"
@@ -102,9 +120,10 @@
 
                 <Button
                     android:id="@+id/first_screen_btn_feedback"
-                    android:layout_width="120dp"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="37.7dp"
+                    style="?android:attr/borderlessButtonStyle"
+                    android:layout_width="114.5dp"
+                    android:layout_height="41.8dp"
+                    android:layout_marginLeft="28.3dp"
                     android:layout_marginRight="30dp"
                     android:layout_toRightOf="@id/first_screen_btn_later"
                     android:background="@drawable/rate_alert_button_bg_yes"
@@ -127,7 +146,7 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="40dp"
+            android:layout_marginTop="36.4dp"
             android:orientation="vertical">
 
             <LinearLayout
@@ -173,26 +192,29 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
-                android:layout_marginTop="50dp"
+                android:layout_marginTop="35dp"
                 android:fontFamily="sans-serif"
                 android:gravity="center_horizontal"
                 android:lineSpacingExtra="6.7sp"
-                android:text="Your 5-Star is better than all the money in the world!"
+                android:paddingLeft="20dp"
+                android:paddingRight="20dp"
+                android:text="Then how about a rating for hard-working teams?"
                 android:textColor="#000000"
-                android:textSize="20sp"
+                android:textSize="18sp"
                 android:textStyle="normal" />
 
             <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="25.6dp"
-                android:layout_marginTop="45.8dp"
+                android:layout_marginBottom="19.2dp"
+                android:layout_marginTop="36dp"
                 android:gravity="center">
 
                 <Button
                     android:id="@+id/second_screen_btn_later"
-                    android:layout_width="120dp"
-                    android:layout_height="wrap_content"
+                    style="?android:attr/borderlessButtonStyle"
+                    android:layout_width="114.5dp"
+                    android:layout_height="41.8dp"
                     android:layout_marginLeft="30dp"
                     android:background="@drawable/rate_alert_button_bg_nope"
                     android:fontFamily="sans-serif-medium"
@@ -204,9 +226,10 @@
 
                 <Button
                     android:id="@+id/second_screen_btn_star"
-                    android:layout_width="120dp"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="37.7dp"
+                    style="?android:attr/borderlessButtonStyle"
+                    android:layout_width="114.5dp"
+                    android:layout_height="41.8dp"
+                    android:layout_marginLeft="28.3dp"
                     android:layout_marginRight="30dp"
                     android:layout_toRightOf="@id/second_screen_btn_later"
                     android:background="@drawable/rate_alert_button_bg_yes"

@@ -10,6 +10,7 @@ import android.view.View;
 import android.widget.TextView;
 
 import com.ihs.app.framework.HSApplication;
+import com.ihs.chargingscreen.utils.DisplayUtils;
 import com.ihs.commons.config.HSConfig;
 import com.ihs.keyboardutils.R;
 
@@ -35,6 +36,10 @@ public class CustomUIRateOneAlert extends CustomUIRateBaseAlert {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.custom_ui_rate_one_alert);
+
+        int screenWidth = DisplayUtils.getScreenWidthPixels();
+        int width = (int) getContext().getResources().getFraction(R.fraction.design_dialog_width, screenWidth, screenWidth);
+        findViewById(R.id.root_view).getLayoutParams().width = width;
 
         language = Locale.getDefault().getLanguage();
 
@@ -69,7 +74,7 @@ public class CustomUIRateOneAlert extends CustomUIRateBaseAlert {
             public void run() {
                 rootView.setVisibility(View.VISIBLE);
             }
-        }, 1000);
+        }, 400);
     }
 
     @Override

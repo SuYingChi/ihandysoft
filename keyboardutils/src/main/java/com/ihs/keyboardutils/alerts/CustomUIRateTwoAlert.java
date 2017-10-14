@@ -12,6 +12,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.ihs.app.framework.HSApplication;
+import com.ihs.chargingscreen.utils.DisplayUtils;
 import com.ihs.commons.config.HSConfig;
 import com.ihs.keyboardutils.R;
 
@@ -40,6 +41,13 @@ public class CustomUIRateTwoAlert extends CustomUIRateBaseAlert {
         setContentView(R.layout.custom_ui_rate_two_alert);
 
         language = Locale.getDefault().getLanguage();
+
+//        ((TextView)findViewById(R.id.step_one_body)).setText("Do you like our App?");
+
+        int screenWidth = DisplayUtils.getScreenWidthPixels();
+        int width = (int) getContext().getResources().getFraction(R.fraction.design_dialog_width, screenWidth, screenWidth);
+        findViewById(R.id.root_view).getLayoutParams().width = width;
+
         ((TextView)findViewById(R.id.step_one_body)).setText(HSConfig.optString("", "Application", "RateAlert", "Type2", "Step1", "body", language));
 
         buttonYes = (Button) findViewById(R.id.first_screen_btn_yes);
@@ -65,13 +73,15 @@ public class CustomUIRateTwoAlert extends CustomUIRateBaseAlert {
                     show();
                     (findViewById(R.id.rate_second_screen)).setVisibility(View.VISIBLE);
                 }
-            }, 500);
+            }, 400);
             buttonLater = (Button) findViewById(R.id.second_screen_btn_later);
             buttonLater.setOnClickListener(this);
             ((TextView)findViewById(R.id.step_two_yes_title)).setText(HSConfig.optString("", "Application", "RateAlert", "Type2", "Step2", "YES", "title", language));
         } else if (v == buttonNope) {
             ((ImageView)findViewById(R.id.top_img)).setImageResource(R.drawable.rate_alert_type_two_nope);
-            ((TextView)findViewById(R.id.step_one_body)).setText(HSConfig.optString("", "Application", "RateAlert", "Type2", "Step2", "NO", "body", language));
+            (findViewById(R.id.step_one_body)).setVisibility(View.GONE);
+            (findViewById(R.id.step_two_nope_body)).setVisibility(View.VISIBLE);
+            ((TextView)findViewById(R.id.step_two_nope_body)).setText(HSConfig.optString("", "Application", "RateAlert", "Type2", "Step2", "NO", "body", language));
             buttonLater = (Button) findViewById(R.id.first_screen_btn_later);
             buttonLater.setOnClickListener(this);
             dismiss();
@@ -82,7 +92,7 @@ public class CustomUIRateTwoAlert extends CustomUIRateBaseAlert {
                 public void run() {
                     show();
                 }
-            }, 500);
+            }, 400);
         } else if (v == buttonLater) {
             dismiss();
         } else if (v == buttonFullStar) {

@@ -4,8 +4,7 @@
 
     <solid android:color="#4589f3"/>
 
-    <padding android:left="10dp"
-        android:right="10dp"/>
+    <corners android:topLeftRadius="2.5dp"
+        android:topRightRadius="2.5dp"/>
 
-    <corners android:radius="2dp"/>
 </shape>

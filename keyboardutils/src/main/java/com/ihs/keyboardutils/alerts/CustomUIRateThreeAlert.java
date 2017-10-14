@@ -11,6 +11,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.ihs.app.framework.HSApplication;
+import com.ihs.chargingscreen.utils.DisplayUtils;
 import com.ihs.commons.config.HSConfig;
 import com.ihs.keyboardutils.R;
 
@@ -34,6 +35,10 @@ public class CustomUIRateThreeAlert extends CustomUIRateBaseAlert {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.custom_ui_rate_three_alert);
+
+        int screenWidth = DisplayUtils.getScreenWidthPixels();
+        int width = (int) getContext().getResources().getFraction(R.fraction.design_dialog_width, screenWidth, screenWidth);
+        findViewById(R.id.root_view).getLayoutParams().width = width;
 
         String language = Locale.getDefault().getLanguage();
 
