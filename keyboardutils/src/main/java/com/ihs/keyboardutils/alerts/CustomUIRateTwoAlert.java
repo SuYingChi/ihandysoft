@@ -42,8 +42,6 @@ public class CustomUIRateTwoAlert extends CustomUIRateBaseAlert {
 
         language = Locale.getDefault().getLanguage();
 
-//        ((TextView)findViewById(R.id.step_one_body)).setText("Do you like our App?");
-
         int screenWidth = DisplayUtils.getScreenWidthPixels();
         int width = (int) getContext().getResources().getFraction(R.fraction.design_dialog_width, screenWidth, screenWidth);
         findViewById(R.id.root_view).getLayoutParams().width = width;

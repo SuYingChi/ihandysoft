@@ -277,6 +277,4 @@
     <dimen name="notification_cleaner_notification_icon_height">40dp</dimen>
     <dimen name="notification_cleaner_notification_bar_margin">12dp</dimen>
     <dimen name="notification_cleaner_block_icon_distance">10dp</dimen>
-
-    <dimen name="rate_alert_type_two_body_text_size">18sp</dimen>
 </resources>
