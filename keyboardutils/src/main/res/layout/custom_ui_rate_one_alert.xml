@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/root_view"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_gravity="center">
+
+    <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:id="@+id/dialog_root"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center">
+
+        <ImageView
+            android:id="@+id/iv_image"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:adjustViewBounds="true"
+            android:scaleType="centerCrop"
+            android:src="@drawable/rate_alert_dialog_top_image" />
+
+        <LinearLayout
+            style="@style/DesignDialogFrame"
+            android:layout_below="@+id/iv_image"
+            android:background="@android:color/white">
+
+            <LinearLayout style="@style/DesignDialogContentArea">
+
+                <TextView
+                    android:id="@+id/rate_alert_title"
+                    style="@style/DesignDialogContentTitle"
+                    android:text="Do you like our App?" />
+
+                <TextView
+                    android:id="@+id/rate_alert_subtitle"
+                    style="@style/DesignDialogContentBody"
+                    android:text="Do you like Beauty Cam ?Please let us know about your experience.Thanks for your feedback." />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/ll_buttons"
+                style="@style/DesignDialogActionArea">
+
+                <TextView
+                    android:id="@+id/btn_nope"
+                    style="@style/DesignDialogActionButton"
+                    android:text="NOPE" />
+
+                <TextView
+                    android:id="@+id/btn_yes"
+                    style="@style/DesignDialogActionButtonHighlight"
+                    android:background="@drawable/rate_alert_type_one_button_bg"
+                    android:text="YES" />
+
+                <TextView
+                    android:id="@+id/btn_later"
+                    style="@style/DesignDialogActionButton"
+                    android:text="LATER"
+                    android:visibility="gone" />
+
+                <TextView
+                    android:id="@+id/btn_feedback"
+                    style="@style/DesignDialogActionButtonHighlight"
+                    android:background="@drawable/rate_alert_type_one_button_bg"
+                    android:text="FEEDBACK"
+                    android:visibility="gone" />
+
+                <TextView
+                    android:id="@+id/btn_full_star"
+                    style="@style/DesignDialogActionButtonHighlight"
+                    android:background="@drawable/rate_alert_type_one_button_bg"
+                    android:text="5-STAR"
+                    android:visibility="gone" />
+
+            </LinearLayout>
+        </LinearLayout>
+
+    </RelativeLayout>
+</FrameLayout>

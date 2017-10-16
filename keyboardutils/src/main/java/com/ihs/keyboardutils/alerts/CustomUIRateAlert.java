@@ -7,7 +7,6 @@ import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
-import android.support.v7.app.AlertDialog;
 import android.view.View;
 import android.view.WindowManager;
 import android.view.animation.AlphaAnimation;
@@ -22,7 +21,7 @@ import com.ihs.chargingscreen.utils.DisplayUtils;
 import com.ihs.keyboardutils.R;
 import com.ihs.keyboardutils.utils.RippleDrawableUtils;
 
-public class CustomUIRateAlert extends AlertDialog implements View.OnClickListener {
+public class CustomUIRateAlert extends CustomUIRateBaseAlert {
     private View.OnClickListener positiveButtonClickListener;
     private View.OnClickListener negativeButtonClickListener;
     private View.OnClickListener neutralButtonClickListener;
@@ -31,7 +30,7 @@ public class CustomUIRateAlert extends AlertDialog implements View.OnClickListen
     private int rateStarNumber;
 
     public CustomUIRateAlert(@NonNull Context context) {
-        super(context, R.style.DesignDialog);
+        super(context);
     }
 
     @Override
@@ -101,6 +100,7 @@ public class CustomUIRateAlert extends AlertDialog implements View.OnClickListen
 
     @Override
     public void onClick(View v) {
+        super.onClick(v);
         if (v == positiveButton) {
             dismiss();
 
