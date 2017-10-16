@@ -64,10 +64,10 @@ public class CustomUIRateTwoAlert extends CustomUIRateBaseAlert {
         super.onClick(v);
         if (v == buttonYes) {
             (findViewById(R.id.root_view)).setVisibility(View.INVISIBLE);
-            (findViewById(R.id.rate_first_screen)).setVisibility(View.INVISIBLE);
             new Handler().postDelayed(new Runnable() {
                 @Override
                 public void run() {
+                    (findViewById(R.id.rate_first_screen)).setVisibility(View.GONE);
                     (findViewById(R.id.rate_second_screen)).setVisibility(View.VISIBLE);
                     (findViewById(R.id.root_view)).setVisibility(View.VISIBLE);
                 }
