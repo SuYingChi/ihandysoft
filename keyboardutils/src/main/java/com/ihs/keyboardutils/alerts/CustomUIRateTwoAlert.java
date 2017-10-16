@@ -31,7 +31,7 @@ public class CustomUIRateTwoAlert extends CustomUIRateBaseAlert {
     private Button buttonFeedback;
     private String language;
 
-    public CustomUIRateTwoAlert (@NonNull Context context) {
+    public CustomUIRateTwoAlert(@NonNull Context context) {
         super(context);
     }
 
@@ -46,7 +46,7 @@ public class CustomUIRateTwoAlert extends CustomUIRateBaseAlert {
         int width = (int) getContext().getResources().getFraction(R.fraction.design_dialog_width, screenWidth, screenWidth);
         findViewById(R.id.root_view).getLayoutParams().width = width;
 
-        ((TextView)findViewById(R.id.step_one_body)).setText(HSConfig.optString("", "Application", "RateAlert", "Type2", "Step1", "body", language));
+        ((TextView) findViewById(R.id.step_one_body)).setText(HSConfig.optString("", "Application", "RateAlert", "Type2", "Step1", "body", language));
 
         buttonYes = (Button) findViewById(R.id.first_screen_btn_yes);
         buttonYes.setOnClickListener(this);
@@ -63,32 +63,34 @@ public class CustomUIRateTwoAlert extends CustomUIRateBaseAlert {
     public void onClick(View v) {
         super.onClick(v);
         if (v == buttonYes) {
-            dismiss();
-            (findViewById(R.id.rate_first_screen)).setVisibility(View.GONE);
+            (findViewById(R.id.root_view)).setVisibility(View.INVISIBLE);
+            (findViewById(R.id.rate_first_screen)).setVisibility(View.INVISIBLE);
             new Handler().postDelayed(new Runnable() {
                 @Override
                 public void run() {
-                    show();
                     (findViewById(R.id.rate_second_screen)).setVisibility(View.VISIBLE);
+                    (findViewById(R.id.root_view)).setVisibility(View.VISIBLE);
                 }
             }, 400);
             buttonLater = (Button) findViewById(R.id.second_screen_btn_later);
             buttonLater.setOnClickListener(this);
-            ((TextView)findViewById(R.id.step_two_yes_title)).setText(HSConfig.optString("", "Application", "RateAlert", "Type2", "Step2", "YES", "title", language));
+            ((TextView) findViewById(R.id.step_two_yes_title)).setText(HSConfig.optString("", "Application", "RateAlert", "Type2", "Step2", "YES", "title", language));
         } else if (v == buttonNope) {
-            ((ImageView)findViewById(R.id.top_img)).setImageResource(R.drawable.rate_alert_type_two_nope);
+            ((ImageView) findViewById(R.id.top_img)).setImageResource(R.drawable.rate_alert_type_two_nope);
             (findViewById(R.id.step_one_body)).setVisibility(View.GONE);
             (findViewById(R.id.step_two_nope_body)).setVisibility(View.VISIBLE);
-            ((TextView)findViewById(R.id.step_two_nope_body)).setText(HSConfig.optString("", "Application", "RateAlert", "Type2", "Step2", "NO", "body", language));
+            ((TextView) findViewById(R.id.step_two_nope_body)).setText(HSConfig.optString("", "Application", "RateAlert", "Type2", "Step2", "NO", "body", language));
             buttonLater = (Button) findViewById(R.id.first_screen_btn_later);
             buttonLater.setOnClickListener(this);
-            dismiss();
+            (findViewById(R.id.root_view)).setVisibility(View.INVISIBLE);
+            (findViewById(R.id.rate_first_screen)).setVisibility(View.INVISIBLE);
             findViewById(R.id.first_button_layout).setVisibility(View.GONE);
             findViewById(R.id.second_button_layout).setVisibility(View.VISIBLE);
             new Handler().postDelayed(new Runnable() {
                 @Override
                 public void run() {
-                    show();
+                    (findViewById(R.id.rate_first_screen)).setVisibility(View.VISIBLE);
+                    (findViewById(R.id.root_view)).setVisibility(View.VISIBLE);
                 }
             }, 400);
         } else if (v == buttonLater) {

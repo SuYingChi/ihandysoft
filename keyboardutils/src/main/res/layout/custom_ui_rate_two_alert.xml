@@ -8,238 +8,228 @@
     android:background="@drawable/rate_alert_dialog_bg_type_two"
     android:orientation="vertical">
 
-    <RelativeLayout
+    <LinearLayout
         android:id="@+id/rate_first_screen"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
 
-        <LinearLayout
+        <ImageView
+            android:id="@+id/top_img"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical">
+            android:layout_marginTop="21.4dp"
+            android:src="@drawable/rate_alert_ui_type_two" />
 
-            <ImageView
-                android:id="@+id/top_img"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="21.4dp"
-                android:src="@drawable/rate_alert_ui_type_two" />
+        <TextView
+            android:id="@+id/step_one_body"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="40.3dp"
+            android:fontFamily="sans-serif-medium"
+            android:gravity="center"
+            android:lineSpacingExtra="10sp"
+            android:paddingLeft="20dp"
+            android:paddingRight="20dp"
+            android:textColor="#000000"
+            android:textSize="22.5sp"
+            android:textStyle="normal" />
 
-            <TextView
-                android:id="@+id/step_one_body"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="40.3dp"
+        <TextView
+            android:id="@+id/step_two_nope_body"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginTop="40.3dp"
+            android:fontFamily="sans-serif"
+            android:gravity="center_horizontal"
+            android:lineSpacingExtra="6.7sp"
+            android:paddingLeft="20dp"
+            android:paddingRight="20dp"
+            android:text="xxx"
+            android:textColor="#000000"
+            android:textSize="18sp"
+            android:textStyle="normal"
+            android:visibility="gone" />
+
+        <RelativeLayout
+            android:id="@+id/first_button_layout"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginBottom="19.2dp"
+            android:layout_marginTop="36dp">
+
+            <Button
+                android:id="@+id/first_screen_btn_nope"
+                style="?android:attr/borderlessButtonStyle"
+                android:layout_width="114.5dp"
+                android:layout_height="41.8dp"
+                android:layout_marginLeft="30dp"
+                android:background="@drawable/rate_alert_button_bg_nope"
                 android:fontFamily="sans-serif-medium"
-                android:gravity="center"
-                android:lineSpacingExtra="10sp"
-                android:paddingLeft="20dp"
-                android:paddingRight="20dp"
-                android:textColor="#000000"
-                android:textSize="22.5sp"
+                android:lineSpacingExtra="-4.2sp"
+                android:text="NOPE"
+                android:textColor="#ffffff"
+                android:textSize="16.5sp"
                 android:textStyle="normal" />
 
-            <TextView
-                android:id="@+id/step_two_nope_body"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:layout_marginTop="40.3dp"
-                android:fontFamily="sans-serif"
-                android:gravity="center_horizontal"
-                android:lineSpacingExtra="6.7sp"
-                android:paddingLeft="20dp"
-                android:paddingRight="20dp"
-                android:text="xxx"
-                android:textColor="#000000"
-                android:textSize="18sp"
-                android:textStyle="normal"
-                android:visibility="gone" />
+            <Button
+                android:id="@+id/first_screen_btn_yes"
+                style="?android:attr/borderlessButtonStyle"
+                android:layout_width="114.5dp"
+                android:layout_height="41.8dp"
+                android:layout_marginLeft="28.3dp"
+                android:layout_marginRight="30dp"
+                android:layout_toRightOf="@id/first_screen_btn_nope"
+                android:background="@drawable/rate_alert_button_bg_yes"
+                android:fontFamily="sans-serif-medium"
+                android:lineSpacingExtra="-4.2sp"
+                android:text="YES"
+                android:textColor="#ffffff"
+                android:textSize="16.5sp"
+                android:textStyle="normal" />
+        </RelativeLayout>
 
-            <RelativeLayout
-                android:id="@+id/first_button_layout"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:layout_marginBottom="19.2dp"
-                android:layout_marginTop="36dp">
+        <RelativeLayout
+            android:id="@+id/second_button_layout"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginBottom="19.2dp"
+            android:layout_marginTop="36dp"
+            android:visibility="gone">
 
-                <Button
-                    android:id="@+id/first_screen_btn_nope"
-                    style="?android:attr/borderlessButtonStyle"
-                    android:layout_width="114.5dp"
-                    android:layout_height="41.8dp"
-                    android:layout_marginLeft="30dp"
-                    android:background="@drawable/rate_alert_button_bg_nope"
-                    android:fontFamily="sans-serif-medium"
-                    android:lineSpacingExtra="-4.2sp"
-                    android:text="NOPE"
-                    android:textColor="#ffffff"
-                    android:textSize="16.5sp"
-                    android:textStyle="normal" />
+            <Button
+                android:id="@+id/first_screen_btn_later"
+                style="?android:attr/borderlessButtonStyle"
+                android:layout_width="114.5dp"
+                android:layout_height="41.8dp"
+                android:layout_marginLeft="30dp"
+                android:background="@drawable/rate_alert_button_bg_nope"
+                android:fontFamily="sans-serif-medium"
+                android:lineSpacingExtra="-4.2sp"
+                android:text="LATER"
+                android:textColor="#ffffff"
+                android:textSize="16.5sp"
+                android:textStyle="normal" />
 
-                <Button
-                    android:id="@+id/first_screen_btn_yes"
-                    style="?android:attr/borderlessButtonStyle"
-                    android:layout_width="114.5dp"
-                    android:layout_height="41.8dp"
-                    android:layout_marginLeft="28.3dp"
-                    android:layout_marginRight="30dp"
-                    android:layout_toRightOf="@id/first_screen_btn_nope"
-                    android:background="@drawable/rate_alert_button_bg_yes"
-                    android:fontFamily="sans-serif-medium"
-                    android:lineSpacingExtra="-4.2sp"
-                    android:text="YES"
-                    android:textColor="#ffffff"
-                    android:textSize="16.5sp"
-                    android:textStyle="normal" />
-            </RelativeLayout>
+            <Button
+                android:id="@+id/first_screen_btn_feedback"
+                style="?android:attr/borderlessButtonStyle"
+                android:layout_width="114.5dp"
+                android:layout_height="41.8dp"
+                android:layout_marginLeft="28.3dp"
+                android:layout_marginRight="30dp"
+                android:layout_toRightOf="@id/first_screen_btn_later"
+                android:background="@drawable/rate_alert_button_bg_yes"
+                android:fontFamily="sans-serif-medium"
+                android:lineSpacingExtra="-4.2sp"
+                android:text="FEEDBACK"
+                android:textColor="#ffffff"
+                android:textSize="16.5sp"
+                android:textStyle="normal" />
+        </RelativeLayout>
+    </LinearLayout>
 
-            <RelativeLayout
-                android:id="@+id/second_button_layout"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:layout_marginBottom="19.2dp"
-                android:layout_marginTop="36dp"
-                android:visibility="gone">
-
-                <Button
-                    android:id="@+id/first_screen_btn_later"
-                    style="?android:attr/borderlessButtonStyle"
-                    android:layout_width="114.5dp"
-                    android:layout_height="41.8dp"
-                    android:layout_marginLeft="30dp"
-                    android:background="@drawable/rate_alert_button_bg_nope"
-                    android:fontFamily="sans-serif-medium"
-                    android:lineSpacingExtra="-4.2sp"
-                    android:text="LATER"
-                    android:textColor="#ffffff"
-                    android:textSize="16.5sp"
-                    android:textStyle="normal" />
-
-                <Button
-                    android:id="@+id/first_screen_btn_feedback"
-                    style="?android:attr/borderlessButtonStyle"
-                    android:layout_width="114.5dp"
-                    android:layout_height="41.8dp"
-                    android:layout_marginLeft="28.3dp"
-                    android:layout_marginRight="30dp"
-                    android:layout_toRightOf="@id/first_screen_btn_later"
-                    android:background="@drawable/rate_alert_button_bg_yes"
-                    android:fontFamily="sans-serif-medium"
-                    android:lineSpacingExtra="-4.2sp"
-                    android:text="FEEDBACK"
-                    android:textColor="#ffffff"
-                    android:textSize="16.5sp"
-                    android:textStyle="normal" />
-            </RelativeLayout>
-        </LinearLayout>
-    </RelativeLayout>
-
-    <RelativeLayout
+    <LinearLayout
         android:id="@+id/rate_second_screen"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginTop="36.4dp"
+        android:orientation="vertical"
         android:visibility="gone">
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="36.4dp"
-            android:orientation="vertical">
+            android:layout_marginLeft="30dp"
+            android:layout_marginRight="30dp"
+            android:gravity="center">
 
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+            <ImageView
+                android:layout_width="54dp"
+                android:layout_height="57dp"
+                android:padding="7.5dp"
+                android:src="@drawable/rate_alert_ui_star" />
+
+            <ImageView
+                android:layout_width="54dp"
+                android:layout_height="57dp"
+                android:padding="7.5dp"
+                android:src="@drawable/rate_alert_ui_star" />
+
+            <ImageView
+                android:layout_width="54dp"
+                android:layout_height="57dp"
+                android:padding="7.5dp"
+                android:src="@drawable/rate_alert_ui_star" />
+
+            <ImageView
+                android:layout_width="54dp"
+                android:layout_height="57dp"
+                android:padding="7.5dp"
+                android:src="@drawable/rate_alert_ui_star" />
+
+            <ImageView
+                android:layout_width="54dp"
+                android:layout_height="57dp"
+                android:padding="7.5dp"
+                android:src="@drawable/rate_alert_ui_star" />
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/step_two_yes_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginTop="35dp"
+            android:fontFamily="sans-serif"
+            android:gravity="center_horizontal"
+            android:lineSpacingExtra="6.7sp"
+            android:paddingLeft="20dp"
+            android:paddingRight="20dp"
+            android:text="Then how about a rating for hard-working teams?"
+            android:textColor="#000000"
+            android:textSize="18sp"
+            android:textStyle="normal" />
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="19.2dp"
+            android:layout_marginTop="36dp"
+            android:gravity="center">
+
+            <Button
+                android:id="@+id/second_screen_btn_later"
+                style="?android:attr/borderlessButtonStyle"
+                android:layout_width="114.5dp"
+                android:layout_height="41.8dp"
                 android:layout_marginLeft="30dp"
-                android:layout_marginRight="30dp"
-                android:gravity="center">
-
-                <ImageView
-                    android:layout_width="54dp"
-                    android:layout_height="57dp"
-                    android:padding="7.5dp"
-                    android:src="@drawable/rate_alert_ui_star" />
-
-                <ImageView
-                    android:layout_width="54dp"
-                    android:layout_height="57dp"
-                    android:padding="7.5dp"
-                    android:src="@drawable/rate_alert_ui_star" />
-
-                <ImageView
-                    android:layout_width="54dp"
-                    android:layout_height="57dp"
-                    android:padding="7.5dp"
-                    android:src="@drawable/rate_alert_ui_star" />
-
-                <ImageView
-                    android:layout_width="54dp"
-                    android:layout_height="57dp"
-                    android:padding="7.5dp"
-                    android:src="@drawable/rate_alert_ui_star" />
-
-                <ImageView
-                    android:layout_width="54dp"
-                    android:layout_height="57dp"
-                    android:padding="7.5dp"
-                    android:src="@drawable/rate_alert_ui_star" />
-            </LinearLayout>
-
-            <TextView
-                android:id="@+id/step_two_yes_title"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:layout_marginTop="35dp"
-                android:fontFamily="sans-serif"
-                android:gravity="center_horizontal"
-                android:lineSpacingExtra="6.7sp"
-                android:paddingLeft="20dp"
-                android:paddingRight="20dp"
-                android:text="Then how about a rating for hard-working teams?"
-                android:textColor="#000000"
-                android:textSize="18sp"
+                android:background="@drawable/rate_alert_button_bg_nope"
+                android:fontFamily="sans-serif-medium"
+                android:lineSpacingExtra="-4.2sp"
+                android:text="LATER"
+                android:textColor="#ffffff"
+                android:textSize="16.5sp"
                 android:textStyle="normal" />
 
-            <RelativeLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="19.2dp"
-                android:layout_marginTop="36dp"
-                android:gravity="center">
-
-                <Button
-                    android:id="@+id/second_screen_btn_later"
-                    style="?android:attr/borderlessButtonStyle"
-                    android:layout_width="114.5dp"
-                    android:layout_height="41.8dp"
-                    android:layout_marginLeft="30dp"
-                    android:background="@drawable/rate_alert_button_bg_nope"
-                    android:fontFamily="sans-serif-medium"
-                    android:lineSpacingExtra="-4.2sp"
-                    android:text="LATER"
-                    android:textColor="#ffffff"
-                    android:textSize="16.5sp"
-                    android:textStyle="normal" />
-
-                <Button
-                    android:id="@+id/second_screen_btn_star"
-                    style="?android:attr/borderlessButtonStyle"
-                    android:layout_width="114.5dp"
-                    android:layout_height="41.8dp"
-                    android:layout_marginLeft="28.3dp"
-                    android:layout_marginRight="30dp"
-                    android:layout_toRightOf="@id/second_screen_btn_later"
-                    android:background="@drawable/rate_alert_button_bg_yes"
-                    android:fontFamily="sans-serif-medium"
-                    android:lineSpacingExtra="-4.2sp"
-                    android:text="5-STAR"
-                    android:textColor="#ffffff"
-                    android:textSize="16.5sp"
-                    android:textStyle="normal" />
-            </RelativeLayout>
-        </LinearLayout>
-    </RelativeLayout>
+            <Button
+                android:id="@+id/second_screen_btn_star"
+                style="?android:attr/borderlessButtonStyle"
+                android:layout_width="114.5dp"
+                android:layout_height="41.8dp"
+                android:layout_marginLeft="28.3dp"
+                android:layout_marginRight="30dp"
+                android:layout_toRightOf="@id/second_screen_btn_later"
+                android:background="@drawable/rate_alert_button_bg_yes"
+                android:fontFamily="sans-serif-medium"
+                android:lineSpacingExtra="-4.2sp"
+                android:text="5-STAR"
+                android:textColor="#ffffff"
+                android:textSize="16.5sp"
+                android:textStyle="normal" />
+        </RelativeLayout>
+    </LinearLayout>
 </FrameLayout>
