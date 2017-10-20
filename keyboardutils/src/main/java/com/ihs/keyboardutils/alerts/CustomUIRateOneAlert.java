@@ -28,6 +28,7 @@ public class CustomUIRateOneAlert extends CustomUIRateBaseAlert {
     private TextView buttonFeedback;
     private TextView buttonFullStar;
     private String language;
+    private boolean useDefaultLanguage = false;
     public CustomUIRateOneAlert (@NonNull Context context) {
         super(context);
     }
@@ -43,8 +44,17 @@ public class CustomUIRateOneAlert extends CustomUIRateBaseAlert {
 
         language = Locale.getDefault().getLanguage();
 
-        ((TextView)findViewById(R.id.rate_alert_title)).setText(HSConfig.optString("Do you like our App?", "Application", "RateAlert", "Type1", "Step1", "title", language));
-        ((TextView)findViewById(R.id.rate_alert_subtitle)).setText(HSConfig.optString("Do you like Beauty Cam ?Please let us know about your experience.Thanks for your feedback.", "Application", "RateAlert", "Type1", "Step1", "body", language));
+        if (!HSConfig.optBoolean(false, "Application", "RateAlert", "Language", language)) {
+            useDefaultLanguage = true;
+        }
+        if (!useDefaultLanguage) {
+            ((TextView)findViewById(R.id.rate_alert_title)).setText(HSConfig.optString("default", "Application", "RateAlert", "Type1", "Step1", "title", language));
+            ((TextView)findViewById(R.id.rate_alert_subtitle)).setText(HSConfig.optString("default", "Application", "RateAlert", "Type1", "Step1", "body", language));
+        } else {
+            ((TextView)findViewById(R.id.rate_alert_title)).setText(HSConfig.optString("default", "Application", "RateAlert", "Type1", "Step1", "title", "en"));
+            ((TextView)findViewById(R.id.rate_alert_subtitle)).setText(HSConfig.optString("default", "Application", "RateAlert", "Type1", "Step1", "body", "en"));
+        }
+
 
         buttonYes = (TextView) findViewById(R.id.btn_yes);
         buttonYes.setOnClickListener(this);
@@ -84,14 +94,24 @@ public class CustomUIRateOneAlert extends CustomUIRateBaseAlert {
             updateButton();
             switchScreenAnimation();
             buttonFullStar.setVisibility(View.VISIBLE);
-            ((TextView)findViewById(R.id.rate_alert_title)).setText(HSConfig.optString("", "Application", "RateAlert", "Type1", "Step2", "YES", "body", language));
-            ((TextView)findViewById(R.id.rate_alert_subtitle)).setText(HSConfig.optString("", "Application", "RateAlert", "Type1", "Step2", "YES", "title", language));
+            if (!useDefaultLanguage) {
+                ((TextView)findViewById(R.id.rate_alert_title)).setText(HSConfig.optString("", "Application", "RateAlert", "Type1", "Step2", "YES", "body", language));
+                ((TextView)findViewById(R.id.rate_alert_subtitle)).setText(HSConfig.optString("", "Application", "RateAlert", "Type1", "Step2", "YES", "title", language));
+            } else {
+                ((TextView)findViewById(R.id.rate_alert_title)).setText(HSConfig.optString("", "Application", "RateAlert", "Type1", "Step2", "YES", "body", "en"));
+                ((TextView)findViewById(R.id.rate_alert_subtitle)).setText(HSConfig.optString("", "Application", "RateAlert", "Type1", "Step2", "YES", "title", "en"));
+            }
         } else if (v == buttonNope) {
             updateButton();
             switchScreenAnimation();
             buttonFeedback.setVisibility(View.VISIBLE);
-            ((TextView)findViewById(R.id.rate_alert_title)).setText(HSConfig.optString("", "Application", "RateAlert", "Type1", "Step2", "NO", "body", language));
-            ((TextView)findViewById(R.id.rate_alert_subtitle)).setText(HSConfig.optString("", "Application", "RateAlert", "Type1", "Step2", "NO", "title", language));
+            if (!useDefaultLanguage) {
+                ((TextView)findViewById(R.id.rate_alert_title)).setText(HSConfig.optString("", "Application", "RateAlert", "Type1", "Step2", "NO", "body", language));
+                ((TextView)findViewById(R.id.rate_alert_subtitle)).setText(HSConfig.optString("", "Application", "RateAlert", "Type1", "Step2", "NO", "title", language));
+            } else {
+                ((TextView)findViewById(R.id.rate_alert_title)).setText(HSConfig.optString("", "Application", "RateAlert", "Type1", "Step2", "NO", "body", "en"));
+                ((TextView)findViewById(R.id.rate_alert_subtitle)).setText(HSConfig.optString("", "Application", "RateAlert", "Type1", "Step2", "NO", "title", "en"));
+            }
         } else if (v == buttonLater) {
             dismiss();
             if (dismissListener != null) {

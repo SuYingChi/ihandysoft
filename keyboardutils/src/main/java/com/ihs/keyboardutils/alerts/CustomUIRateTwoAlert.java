@@ -30,6 +30,7 @@ public class CustomUIRateTwoAlert extends CustomUIRateBaseAlert {
     private Button buttonFullStar;
     private Button buttonFeedback;
     private String language;
+    private boolean useDefaultLanguage = false;
 
     public CustomUIRateTwoAlert(@NonNull Context context) {
         super(context);
@@ -46,7 +47,16 @@ public class CustomUIRateTwoAlert extends CustomUIRateBaseAlert {
         int width = (int) getContext().getResources().getFraction(R.fraction.design_dialog_width, screenWidth, screenWidth);
         findViewById(R.id.root_view).getLayoutParams().width = width;
 
-        ((TextView) findViewById(R.id.step_one_body)).setText(HSConfig.optString("", "Application", "RateAlert", "Type2", "Step1", "body", language));
+        if (!HSConfig.optBoolean(false, "Application", "RateAlert", "Language", language)) {
+            useDefaultLanguage = true;
+        }
+
+        if (!useDefaultLanguage) {
+            ((TextView) findViewById(R.id.step_one_body)).setText(HSConfig.optString("", "Application", "RateAlert", "Type2", "Step1", "body", language));
+        } else {
+            ((TextView) findViewById(R.id.step_one_body)).setText(HSConfig.optString("", "Application", "RateAlert", "Type2", "Step1", "body", "en"));
+        }
+
 
         buttonYes = (Button) findViewById(R.id.first_screen_btn_yes);
         buttonYes.setOnClickListener(this);
@@ -74,12 +84,20 @@ public class CustomUIRateTwoAlert extends CustomUIRateBaseAlert {
             }, 400);
             buttonLater = (Button) findViewById(R.id.second_screen_btn_later);
             buttonLater.setOnClickListener(this);
-            ((TextView) findViewById(R.id.step_two_yes_title)).setText(HSConfig.optString("", "Application", "RateAlert", "Type2", "Step2", "YES", "title", language));
+            if (!useDefaultLanguage) {
+                ((TextView) findViewById(R.id.step_two_yes_title)).setText(HSConfig.optString("", "Application", "RateAlert", "Type2", "Step2", "YES", "title", language));
+            } else {
+                ((TextView) findViewById(R.id.step_two_yes_title)).setText(HSConfig.optString("", "Application", "RateAlert", "Type2", "Step2", "YES", "title", "en"));
+            }
         } else if (v == buttonNope) {
             ((ImageView) findViewById(R.id.top_img)).setImageResource(R.drawable.rate_alert_type_two_nope);
             (findViewById(R.id.step_one_body)).setVisibility(View.GONE);
             (findViewById(R.id.step_two_nope_body)).setVisibility(View.VISIBLE);
-            ((TextView) findViewById(R.id.step_two_nope_body)).setText(HSConfig.optString("", "Application", "RateAlert", "Type2", "Step2", "NO", "body", language));
+            if (!useDefaultLanguage) {
+                ((TextView) findViewById(R.id.step_two_nope_body)).setText(HSConfig.optString("", "Application", "RateAlert", "Type2", "Step2", "NO", "body", language));
+            } else {
+                ((TextView) findViewById(R.id.step_two_nope_body)).setText(HSConfig.optString("", "Application", "RateAlert", "Type2", "Step2", "NO", "body", "en"));
+            }
             buttonLater = (Button) findViewById(R.id.first_screen_btn_later);
             buttonLater.setOnClickListener(this);
             (findViewById(R.id.root_view)).setVisibility(View.INVISIBLE);

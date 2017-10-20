@@ -42,10 +42,18 @@ public class CustomUIRateThreeAlert extends CustomUIRateBaseAlert {
 
         String language = Locale.getDefault().getLanguage();
 
-        ((TextView)findViewById(R.id.yes_body)).setText(HSConfig.optString("YES!", "Application", "RateAlert", "Type3", "YES", "body", language));
-        ((TextView)findViewById(R.id.yes_title)).setText(HSConfig.optString("I give it a 5 star rating", "Application", "RateAlert", "Type3", "YES", "title", language));
-        ((TextView)findViewById(R.id.nope_body)).setText(HSConfig.optString("NOPE...", "Application", "RateAlert", "Type3", "NO", "body", language));
-        ((TextView)findViewById(R.id.nope_title)).setText(HSConfig.optString("I have some feedback", "Application", "RateAlert", "Type3", "NO", "title", language));
+        if (HSConfig.optBoolean(false, "Application", "RateAlert", "Language", language)) {
+            ((TextView)findViewById(R.id.yes_body)).setText(HSConfig.optString("", "Application", "RateAlert", "Type3", "YES", "body", language));
+            ((TextView)findViewById(R.id.yes_title)).setText(HSConfig.optString("", "Application", "RateAlert", "Type3", "YES", "title", language));
+            ((TextView)findViewById(R.id.nope_body)).setText(HSConfig.optString("", "Application", "RateAlert", "Type3", "NO", "body", language));
+            ((TextView)findViewById(R.id.nope_title)).setText(HSConfig.optString("", "Application", "RateAlert", "Type3", "NO", "title", language));
+        } else {
+            ((TextView)findViewById(R.id.yes_body)).setText(HSConfig.optString("", "Application", "RateAlert", "Type3", "YES", "body", "en"));
+            ((TextView)findViewById(R.id.yes_title)).setText(HSConfig.optString("", "Application", "RateAlert", "Type3", "YES", "title", "en"));
+            ((TextView)findViewById(R.id.nope_body)).setText(HSConfig.optString("", "Application", "RateAlert", "Type3", "NO", "body", "en"));
+            ((TextView)findViewById(R.id.nope_title)).setText(HSConfig.optString("", "Application", "RateAlert", "Type3", "NO", "title", "en"));
+        }
+
 
         buttonYes = (LinearLayout) findViewById(R.id.layout_yes);
         buttonYes.setOnClickListener(this);
