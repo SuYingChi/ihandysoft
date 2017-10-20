@@ -58,7 +58,7 @@
                 <TextView
                     android:id="@+id/btn_later"
                     style="@style/DesignDialogActionButton"
-                    android:text="LATER"
+                    android:text="NEVER"
                     android:visibility="gone" />
 
                 <TextView

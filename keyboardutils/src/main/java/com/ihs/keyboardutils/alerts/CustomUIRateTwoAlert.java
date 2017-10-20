@@ -95,8 +95,14 @@ public class CustomUIRateTwoAlert extends CustomUIRateBaseAlert {
             }, 400);
         } else if (v == buttonLater) {
             dismiss();
+            if (dismissListener != null) {
+                dismissListener.onClick(v);
+            }
         } else if (v == buttonFullStar) {
             dismiss();
+            if (dismissListener != null) {
+                dismissListener.onClick(v);
+            }
             final String appPackageName = getContext().getPackageName();
             try {
                 getContext().startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("market://details?id=" + appPackageName)).setFlags(Intent.FLAG_ACTIVITY_NEW_TASK));
@@ -105,6 +111,9 @@ public class CustomUIRateTwoAlert extends CustomUIRateBaseAlert {
             }
         } else if (v == buttonFeedback) {
             dismiss();
+            if (dismissListener != null) {
+                dismissListener.onClick(v);
+            }
             String email = HSApplication.getContext().getString(R.string.feedback_email);
             Intent emailIntent = new Intent(Intent.ACTION_SENDTO);
             emailIntent.setData(Uri.parse("mailto:" + email));

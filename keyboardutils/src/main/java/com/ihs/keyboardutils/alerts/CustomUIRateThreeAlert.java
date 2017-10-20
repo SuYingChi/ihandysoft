@@ -61,6 +61,9 @@ public class CustomUIRateThreeAlert extends CustomUIRateBaseAlert {
         super.onClick(v);
         if (v == buttonYes) {
             dismiss();
+            if (dismissListener != null) {
+                dismissListener.onClick(v);
+            }
             final String appPackageName = getContext().getPackageName();
             try {
                 getContext().startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("market://details?id=" + appPackageName)).setFlags(Intent.FLAG_ACTIVITY_NEW_TASK));
@@ -69,6 +72,9 @@ public class CustomUIRateThreeAlert extends CustomUIRateBaseAlert {
             }
         } else if (v == buttonNope) {
             dismiss();
+            if (dismissListener != null) {
+                dismissListener.onClick(v);
+            }
             String email = HSApplication.getContext().getString(R.string.feedback_email);
             Intent emailIntent = new Intent(Intent.ACTION_SENDTO);
             emailIntent.setData(Uri.parse("mailto:" + email));
@@ -81,6 +87,9 @@ public class CustomUIRateThreeAlert extends CustomUIRateBaseAlert {
             }
         } else if (v == closeAlertIcon) {
             dismiss();
+            if (dismissListener != null) {
+                dismissListener.onClick(v);
+            }
         }
     }
 }

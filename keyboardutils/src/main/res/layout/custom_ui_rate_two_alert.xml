@@ -113,7 +113,7 @@
                     android:background="@drawable/rate_alert_button_bg_nope"
                     android:fontFamily="sans-serif-medium"
                     android:lineSpacingExtra="-4.2sp"
-                    android:text="LATER"
+                    android:text="NEVER"
                     android:textColor="#ffffff"
                     android:textSize="16.5sp"
                     android:textStyle="normal" />
@@ -219,7 +219,7 @@
                     android:background="@drawable/rate_alert_button_bg_nope"
                     android:fontFamily="sans-serif-medium"
                     android:lineSpacingExtra="-4.2sp"
-                    android:text="LATER"
+                    android:text="NEVER"
                     android:textColor="#ffffff"
                     android:textSize="16.5sp"
                     android:textStyle="normal" />

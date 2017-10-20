@@ -13,12 +13,18 @@ import com.ihs.keyboardutils.R;
 
 public class CustomUIRateBaseAlert extends AlertDialog implements View.OnClickListener{
 
+    protected View.OnClickListener dismissListener;
+
     public CustomUIRateBaseAlert(@NonNull Context context) {
         super(context, R.style.DesignDialog);
     }
 
     public void show() {
         super.show();
+    }
+
+    public void setDismissListener(View.OnClickListener listener) {
+        this.dismissListener = listener;
     }
 
     @Override
