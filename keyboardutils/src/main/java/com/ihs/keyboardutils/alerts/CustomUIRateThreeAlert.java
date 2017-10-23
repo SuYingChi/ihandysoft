@@ -42,7 +42,7 @@ public class CustomUIRateThreeAlert extends CustomUIRateBaseAlert {
 
         String language = Locale.getDefault().getLanguage();
 
-        if (HSConfig.optBoolean(false, "Application", "RateAlert", "Language", language)) {
+        if (!HSConfig.optString("No such language!", "Application", "RateAlert", "Type3", "YES", "body", language).equals("No such language!")) {
             ((TextView)findViewById(R.id.yes_body)).setText(HSConfig.optString("", "Application", "RateAlert", "Type3", "YES", "body", language));
             ((TextView)findViewById(R.id.yes_title)).setText(HSConfig.optString("", "Application", "RateAlert", "Type3", "YES", "title", language));
             ((TextView)findViewById(R.id.nope_body)).setText(HSConfig.optString("", "Application", "RateAlert", "Type3", "NO", "body", language));

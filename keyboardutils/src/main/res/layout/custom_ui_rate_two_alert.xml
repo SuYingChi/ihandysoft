@@ -105,7 +105,7 @@
                 android:visibility="gone">
 
                 <Button
-                    android:id="@+id/first_screen_btn_later"
+                    android:id="@+id/first_screen_btn_never"
                     style="?android:attr/borderlessButtonStyle"
                     android:layout_width="114.5dp"
                     android:layout_height="41.8dp"
@@ -125,7 +125,7 @@
                     android:layout_height="41.8dp"
                     android:layout_marginLeft="28.3dp"
                     android:layout_marginRight="30dp"
-                    android:layout_toRightOf="@id/first_screen_btn_later"
+                    android:layout_toRightOf="@id/first_screen_btn_never"
                     android:background="@drawable/rate_alert_button_bg_yes"
                     android:fontFamily="sans-serif-medium"
                     android:lineSpacingExtra="-4.2sp"
@@ -211,7 +211,7 @@
                 android:gravity="center">
 
                 <Button
-                    android:id="@+id/second_screen_btn_later"
+                    android:id="@+id/second_screen_btn_never"
                     style="?android:attr/borderlessButtonStyle"
                     android:layout_width="114.5dp"
                     android:layout_height="41.8dp"
@@ -231,7 +231,7 @@
                     android:layout_height="41.8dp"
                     android:layout_marginLeft="28.3dp"
                     android:layout_marginRight="30dp"
-                    android:layout_toRightOf="@id/second_screen_btn_later"
+                    android:layout_toRightOf="@id/second_screen_btn_never"
                     android:background="@drawable/rate_alert_button_bg_yes"
                     android:fontFamily="sans-serif-medium"
                     android:lineSpacingExtra="-4.2sp"

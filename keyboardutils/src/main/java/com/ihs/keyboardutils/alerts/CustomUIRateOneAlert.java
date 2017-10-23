@@ -24,7 +24,7 @@ public class CustomUIRateOneAlert extends CustomUIRateBaseAlert {
 
     private TextView buttonYes;
     private TextView buttonNope;
-    private TextView buttonLater;
+    private TextView buttonNever;
     private TextView buttonFeedback;
     private TextView buttonFullStar;
     private String language;
@@ -42,37 +42,46 @@ public class CustomUIRateOneAlert extends CustomUIRateBaseAlert {
         int width = (int) getContext().getResources().getFraction(R.fraction.design_dialog_width, screenWidth, screenWidth);
         findViewById(R.id.root_view).getLayoutParams().width = width;
 
-        language = Locale.getDefault().getLanguage();
-
-        if (!HSConfig.optBoolean(false, "Application", "RateAlert", "Language", language)) {
-            useDefaultLanguage = true;
-        }
-        if (!useDefaultLanguage) {
-            ((TextView)findViewById(R.id.rate_alert_title)).setText(HSConfig.optString("default", "Application", "RateAlert", "Type1", "Step1", "title", language));
-            ((TextView)findViewById(R.id.rate_alert_subtitle)).setText(HSConfig.optString("default", "Application", "RateAlert", "Type1", "Step1", "body", language));
-        } else {
-            ((TextView)findViewById(R.id.rate_alert_title)).setText(HSConfig.optString("default", "Application", "RateAlert", "Type1", "Step1", "title", "en"));
-            ((TextView)findViewById(R.id.rate_alert_subtitle)).setText(HSConfig.optString("default", "Application", "RateAlert", "Type1", "Step1", "body", "en"));
-        }
-
-
         buttonYes = (TextView) findViewById(R.id.btn_yes);
         buttonYes.setOnClickListener(this);
         buttonNope = (TextView) findViewById(R.id.btn_nope);
         buttonNope.setOnClickListener(this);
-        buttonLater = (TextView) findViewById(R.id.btn_later);
-        buttonLater.setOnClickListener(this);
+        buttonNever = (TextView) findViewById(R.id.btn_never);
+        buttonNever.setOnClickListener(this);
         buttonFeedback = (TextView) findViewById(R.id.btn_feedback);
         buttonFeedback.setOnClickListener(this);
         buttonFullStar = (TextView) findViewById(R.id.btn_full_star);
         buttonFullStar.setOnClickListener(this);
         setCancelable(false);
+
+        language = Locale.getDefault().getLanguage();
+
+        if (HSConfig.optString("No such language!", "Application", "RateAlert", "Type1", "Step1", "title", language).equals("No such language!")) {
+            useDefaultLanguage = true;
+        }
+        if (!useDefaultLanguage) {
+            ((TextView)findViewById(R.id.rate_alert_title)).setText(HSConfig.optString("default", "Application", "RateAlert", "Type1", "Step1", "title", language));
+            ((TextView)findViewById(R.id.rate_alert_subtitle)).setText(HSConfig.optString("default", "Application", "RateAlert", "Type1", "Step1", "body", language));
+            buttonYes.setText(HSConfig.optString("", "Application", "RateAlert", "Type1", "Step1", "button2", language));
+            buttonNope.setText(HSConfig.optString("", "Application", "RateAlert", "Type1", "Step1", "button1", language));
+            buttonNever.setText(HSConfig.optString("", "Application", "RateAlert", "Type1", "Step2", "NO", "button1", language));
+            buttonFeedback.setText(HSConfig.optString("", "Application", "RateAlert", "Type1", "Step2", "NO", "button2", language));
+            buttonFullStar.setText(HSConfig.optString("", "Application", "RateAlert", "Type1", "Step2", "YES", "button2", language));
+        } else {
+            ((TextView)findViewById(R.id.rate_alert_title)).setText(HSConfig.optString("default", "Application", "RateAlert", "Type1", "Step1", "title", "en"));
+            ((TextView)findViewById(R.id.rate_alert_subtitle)).setText(HSConfig.optString("default", "Application", "RateAlert", "Type1", "Step1", "body", "en"));
+            buttonYes.setText(HSConfig.optString("", "Application", "RateAlert", "Type1", "Step1", "button2", "en"));
+            buttonNope.setText(HSConfig.optString("", "Application", "RateAlert", "Type1", "Step1", "button1", "en"));
+            buttonNever.setText(HSConfig.optString("", "Application", "RateAlert", "Type1", "Step2", "NO", "button1", "en"));
+            buttonFeedback.setText(HSConfig.optString("", "Application", "RateAlert", "Type1", "Step2", "NO", "button2", "en"));
+            buttonFullStar.setText(HSConfig.optString("", "Application", "RateAlert", "Type1", "Step2", "YES", "button2", "en"));
+        }
     }
 
     private void updateButton () {
         buttonYes.setVisibility(View.GONE);
         buttonNope.setVisibility(View.GONE);
-        buttonLater.setVisibility(View.VISIBLE);
+        buttonNever.setVisibility(View.VISIBLE);
     }
 
     private void switchScreenAnimation() {
@@ -112,7 +121,7 @@ public class CustomUIRateOneAlert extends CustomUIRateBaseAlert {
                 ((TextView)findViewById(R.id.rate_alert_title)).setText(HSConfig.optString("", "Application", "RateAlert", "Type1", "Step2", "NO", "body", "en"));
                 ((TextView)findViewById(R.id.rate_alert_subtitle)).setText(HSConfig.optString("", "Application", "RateAlert", "Type1", "Step2", "NO", "title", "en"));
             }
-        } else if (v == buttonLater) {
+        } else if (v == buttonNever) {
             dismiss();
             if (dismissListener != null) {
                 dismissListener.onClick(v);

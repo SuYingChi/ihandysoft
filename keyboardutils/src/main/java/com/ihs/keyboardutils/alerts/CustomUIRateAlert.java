@@ -18,8 +18,11 @@ import android.widget.TextView;
 
 import com.ihs.app.framework.HSApplication;
 import com.ihs.chargingscreen.utils.DisplayUtils;
+import com.ihs.commons.config.HSConfig;
 import com.ihs.keyboardutils.R;
 import com.ihs.keyboardutils.utils.RippleDrawableUtils;
+
+import java.util.Locale;
 
 public class CustomUIRateAlert extends CustomUIRateBaseAlert {
     private View.OnClickListener positiveButtonClickListener;
@@ -28,6 +31,8 @@ public class CustomUIRateAlert extends CustomUIRateBaseAlert {
     private TextView positiveButton;
     private TextView negativeButton;
     private int rateStarNumber;
+    private boolean useDefaultLanguage = false;
+    private String language;
 
     public CustomUIRateAlert(@NonNull Context context) {
         super(context);
@@ -37,6 +42,12 @@ public class CustomUIRateAlert extends CustomUIRateBaseAlert {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.custom_ui_rate_alert);
+
+        language = Locale.getDefault().getLanguage();
+
+        if (HSConfig.optString("No such language!", "Application", "RateAlert", "Type0", "Step1", "title", language).equals("No such language!")) {
+            useDefaultLanguage = true;
+        }
 
         initViews();
 
@@ -60,7 +71,14 @@ public class CustomUIRateAlert extends CustomUIRateBaseAlert {
 
     private void initFirstScreen() {
         TextView titleTextView = (TextView) findViewById(R.id.tv_first_screen_title);
-        titleTextView.setText(getContext().getString(R.string.custom_ui_rate_alert_title, getContext().getString(R.string.english_ime_name)));
+        if (!useDefaultLanguage) {
+            titleTextView.setText(HSConfig.optString("", "Application", "RateAlert", "Type0", "Step1", "title", language));
+            ((TextView) findViewById(R.id.first_screen_body)).setText(HSConfig.optString("", "Application", "RateAlert", "Type0", "Step1", "body", language));
+        } else {
+            titleTextView.setText(HSConfig.optString("", "Application", "RateAlert", "Type0", "Step1", "title", "en"));
+            ((TextView) findViewById(R.id.first_screen_body)).setText(HSConfig.optString("", "Application", "RateAlert", "Type0", "Step1", "body", "en"));
+        }
+
 
         int starIds[] = {R.id.start_1, R.id.start_2, R.id.start_3, R.id.start_4, R.id.start_5};
         for (int id : starIds) {
@@ -80,7 +98,11 @@ public class CustomUIRateAlert extends CustomUIRateBaseAlert {
         }
 
         if (negativeButton != null) {
-            negativeButton.setText(getContext().getString(R.string.custom_ui_rate_alert_negative_button));
+            if (!useDefaultLanguage) {
+                negativeButton.setText(HSConfig.optString("", "Application", "RateAlert", "Type0", "Step2", "NO", "button1", language));
+            } else {
+                negativeButton.setText(HSConfig.optString("", "Application", "RateAlert", "Type0", "Step2", "NO", "button1", "en"));
+            }
             negativeButton.setOnClickListener(this);
             negativeButton.setBackgroundDrawable(RippleDrawableUtils.getCompatRippleDrawable(Color.WHITE, radius));
         }
@@ -90,11 +112,21 @@ public class CustomUIRateAlert extends CustomUIRateBaseAlert {
         TextView titleTextView = (TextView) findViewById(R.id.tv_second_screen_title);
 
         if (rateStarNumber < 5) {
-            titleTextView.setText(getContext().getString(R.string.custom_ui_rate_alert_title_rate_less_than_five));
-            positiveButton.setText(getContext().getString(R.string.custom_ui_rate_alert_positive_button_rate_less_than_five));
+            if (!useDefaultLanguage) {
+                titleTextView.setText(HSConfig.optString("", "Application", "RateAlert", "Type0", "Step2", "NO", "body", language));
+                positiveButton.setText(HSConfig.optString("", "Application", "RateAlert", "Type0", "Step2", "NO", "button2", language));
+            } else {
+                titleTextView.setText(HSConfig.optString("", "Application", "RateAlert", "Type0", "Step2", "NO", "body", "en"));
+                positiveButton.setText(HSConfig.optString("", "Application", "RateAlert", "Type0", "Step2", "NO", "button2", "en"));
+            }
         } else {
-            titleTextView.setText(getContext().getString(R.string.custom_ui_rate_alert_title_rate_five));
-            positiveButton.setText(getContext().getString(R.string.custom_ui_rate_alert_positive_button_rate_five));
+            if (!useDefaultLanguage) {
+                titleTextView.setText(HSConfig.optString("", "Application", "RateAlert", "Type0", "Step2", "YES", "body", language));
+                positiveButton.setText(HSConfig.optString("", "Application", "RateAlert", "Type0", "Step2", "YES", "button2", language));
+            } else {
+                titleTextView.setText(HSConfig.optString("", "Application", "RateAlert", "Type0", "Step2", "YES", "body", "en"));
+                positiveButton.setText(HSConfig.optString("", "Application", "RateAlert", "Type0", "Step2", "YES", "button2", "en"));
+            }
         }
     }
 
