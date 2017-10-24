@@ -13,6 +13,8 @@ import android.text.TextUtils;
 import android.view.View;
 import android.widget.RemoteViews;
 
+import com.acb.autopilot.AutopilotConfig;
+import com.acb.autopilot.AutopilotEvent;
 import com.artw.lockscreen.LockerSettings;
 import com.ihs.app.analytics.HSAnalytics;
 import com.ihs.app.framework.HSApplication;
@@ -57,6 +59,7 @@ public class KCNotificationManager {
     private static final String PREFS_NEXT_EVENT_TIME = "prefs_next_event_time";
     public static final String PREFS_NOTIFICATION_ENABLE = HSApplication.getContext().getString(R.string.prefs_notification_enable);
     private static final String PREFS_NEXT_NOTIFICATION_INDEX_IN_PLIST = "next_notification_index";
+    private static final String AUTOPILOT_TEST_FILTER_NAME = "redcolor";
 
     private static final int NOTIFICATION_ID = Math.abs(HSApplication.getContext().getPackageName().hashCode() / 100000);
 
@@ -69,6 +72,8 @@ public class KCNotificationManager {
     private Class eventReceiverClass;
     private NotificationAvailabilityCallBack notificationCallBack;
     private boolean testSend = false;
+    private boolean useAutoPilot = false;
+
     private INotificationObserver notificationObserver = new INotificationObserver() {
         @Override
         public void onReceive(String s, HSBundle hsBundle) {
@@ -86,11 +91,20 @@ public class KCNotificationManager {
         return instance;
     }
 
-    public void init(Class eventReceiverClass, NotificationAvailabilityCallBack notificationAvaliablilityCallBack, boolean testSend) {
-        notificationCallBack = notificationAvaliablilityCallBack;
+    public void init(Class eventReceiverClass, NotificationAvailabilityCallBack notificationAvailabilityCallBack, boolean testSend) {
+        notificationCallBack = notificationAvailabilityCallBack;
         HSGlobalNotificationCenter.addObserver(HSNotificationConstant.HS_CONFIG_CHANGED, notificationObserver);
         this.eventReceiverClass = eventReceiverClass;
         this.testSend = testSend;
+        scheduleNextEventTime();
+    }
+
+    public void init(Class eventReceiverClass, NotificationAvailabilityCallBack notificationAvailabilityCallBack, boolean testSend, boolean useAutoPilot) {
+        notificationCallBack = notificationAvailabilityCallBack;
+        HSGlobalNotificationCenter.addObserver(HSNotificationConstant.HS_CONFIG_CHANGED, notificationObserver);
+        this.eventReceiverClass = eventReceiverClass;
+        this.testSend = testSend;
+        this.useAutoPilot = useAutoPilot;
         scheduleNextEventTime();
     }
 
@@ -119,7 +133,20 @@ public class KCNotificationManager {
         }
         List<Object> list = new ArrayList<>();
         try {
-            list = (List<Object>) HSConfig.getList("Application", "LocalNotifications", "LocalNotificationsPushTime");
+            if (useAutoPilot) {
+                /**
+                 * 使用 topic-1508315967034 - push_time 远程配置
+                 * ---------------------------------------------
+                 * Topic 名称:           Push Test
+                 * Topic 描述:           Push方案的测试
+                 * Topic.x 可能值:       [11, 17]
+                 * Topic.x 描述:         push时间 11am或17pm
+                 */
+                double pushTimeDouble = AutopilotConfig.getDoubleToTestNow("topic-1508315967034", "push_time", 11);
+                list.add((int) pushTimeDouble);
+            } else {
+                list = (List<Object>) HSConfig.getList("Application", "LocalNotifications", "LocalNotificationsPushTime");
+            }
         } catch (Exception e) {
             e.printStackTrace();
             HSLog.e("没有配置通知时间");
@@ -233,7 +260,20 @@ public class KCNotificationManager {
         contentView.setTextColor(R.id.notification_action, notificationToSend.getButtonTextColor());
         contentView.setInt(R.id.notification_action, "setBackgroundResource", R.drawable.notification_action_bg);
 
-        switch (notificationToSend.getStyle()) {
+        int style = notificationToSend.getStyle();
+
+        if (useAutoPilot && TextUtils.equals(notificationToSend.getName(), AUTOPILOT_TEST_FILTER_NAME)) {
+            /**
+             * 使用 topic-1508315967034 - push_style 远程配置
+             * ---------------------------------------------
+             * Topic 名称:           Push Test
+             * Topic 描述:           Push方案的测试
+             * Topic.x 可能值:       [1, 2]
+             * Topic.x 描述:         push的样式
+             */
+            style = (int) AutopilotConfig.getDoubleToTestNow("topic-1508315967034", "push_style", 1);
+        }
+        switch (style) {
             //系统默认样式
             case 0:
             default:
@@ -289,10 +329,10 @@ public class KCNotificationManager {
                     requestCount++;
                 }
 
-                if (notificationToSend.getStyle() == 1) {
+                if (style == 1) {
                     contentView.setViewVisibility(R.id.notification_action, GONE);
                     HSLog.e("notification 自定义除button");
-                } else if (notificationToSend.getStyle() == 2) {
+                } else {
                     HSLog.e("notification 完全自定义");
                 }
 
@@ -453,8 +493,34 @@ public class KCNotificationManager {
             e.printStackTrace();
             return;
         }
+        if (useAutoPilot) {
+            uploadAutopilotShow();
+            uploadAutopilotShowForSpecificName(notificationBean.getName());
+        }
         HSAnalytics.logEvent("local_push_showed", "local_push_showed", notificationBean.getActionType());
         HSAnalytics.logEvent("local_push_showed_content_name", "local_push_showed_content_name", notificationBean.getName());
+    }
+
+    private void uploadAutopilotShow() {
+        /**
+         *  上传日志: topic-1508315967034 - push_showed
+         *  ---------------------------------------------
+         *  Topic.Event 名称:     push_showed
+         *  Topic.Event 描述:     push show
+         */
+        AutopilotEvent.logTopicEvent("topic-1508315967034", "push_showed");
+    }
+
+    private void uploadAutopilotShowForSpecificName(String name) {
+        if (TextUtils.equals(name, AUTOPILOT_TEST_FILTER_NAME)) {
+            /**
+             *  上传日志: topic-1508315967034 - filter_red_color_push_show
+             *  ---------------------------------------------
+             *  Topic.Event 名称:     filter_red_color_push_show
+             *  Topic.Event 描述:     filter_red_color_push_show
+             */
+            AutopilotEvent.logTopicEvent("topic-1508315967034", "filter_red_color_push_show");
+        }
     }
 
     public static void logNotificationClick(String actionType, String name) {
@@ -480,6 +546,4 @@ public class KCNotificationManager {
             e.printStackTrace();
         }
     }
-
-
 }
