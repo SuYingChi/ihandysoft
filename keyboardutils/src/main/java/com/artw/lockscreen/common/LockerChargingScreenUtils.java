@@ -15,6 +15,7 @@ import com.ihs.chargingscreen.utils.FeatureDelayReleaseUtil;
 import com.ihs.commons.config.HSConfig;
 import com.ihs.commons.notificationcenter.HSGlobalNotificationCenter;
 import com.ihs.commons.utils.HSLog;
+import com.ihs.keyboardutils.utils.KCFeatureRestrictionConfig;
 import com.launcher.FloatWindowController;
 
 public class LockerChargingScreenUtils {
@@ -86,7 +87,7 @@ public class LockerChargingScreenUtils {
             return;
         }
 
-        if (!HSConfig.optBoolean(false, "Application", "Locker", "UseNewLockScreen")) {
+        if (KCFeatureRestrictionConfig.isFeatureRestricted("UseNewLockScreen") || !HSConfig.optBoolean(false, "Application", "Locker", "UseNewLockScreen")) {
             HSLog.d("config use past screen locker");
             Intent intent = new Intent(HSApplication.getContext(), LockerActivity.class);
             intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK
