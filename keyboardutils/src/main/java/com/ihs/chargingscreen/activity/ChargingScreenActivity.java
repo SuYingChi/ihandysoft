@@ -487,14 +487,6 @@ public class ChargingScreenActivity extends Activity {
     }
 
     @Override
-    public void onBackPressed() {
-        super.onBackPressed();
-
-        finish();
-    }
-
-
-    @Override
     public void onDestroy() {
         unregisterReceiver(broadcastReceiver);
 
