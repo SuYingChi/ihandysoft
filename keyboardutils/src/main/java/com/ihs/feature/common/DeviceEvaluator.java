@@ -20,16 +20,24 @@ public class DeviceEvaluator {
 
     private static final String TAG = DeviceEvaluator.class.getSimpleName();
 
-    /** Good device. All animations on. */
+    /**
+     * Good device. All animations on.
+     */
     public static final int DEVICE_EVALUATION_GOOD = 3;
 
-    /** Average device. Enable most animations and effects that are not very expensive. */
+    /**
+     * Average device. Enable most animations and effects that are not very expensive.
+     */
     public static final int DEVICE_EVALUATION_DEFAULT = 2;
 
-    /** Below-average device. Only enable animations that are not expensive at all. */
+    /**
+     * Below-average device. Only enable animations that are not expensive at all.
+     */
     public static final int DEVICE_EVALUATION_BELOW_AVERAGE = 1;
 
-    /** Poor device. Disable all animations that can be disabled. */
+    /**
+     * Poor device. Disable all animations that can be disabled.
+     */
     public static final int DEVICE_EVALUATION_POOR = 0;
 
     public static final int DEVICE_EVALUATION_UNKNOWN = -1;
@@ -68,7 +76,7 @@ public class DeviceEvaluator {
         } catch (SecurityException e) {
             return DEVICE_EVALUATION_DEFAULT;
         }
-        long totalMem = memoryInfo.totalMem;
+        long totalMem = DeviceManager.getInstance().getTotalRam();
 
         int evaluation;
         if (totalMem < 1024 * MB) {
@@ -88,7 +96,7 @@ public class DeviceEvaluator {
         if (DEBUG_EVALUATION != -1) {
             return;
         }
-       return;
+        return;
 
 //        sMonitor = new FrameSaturationMonitor();
 //        Looper.getMainLooper().setMessageLogging(sMonitor);

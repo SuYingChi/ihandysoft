@@ -5,6 +5,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.os.BatteryManager;
+import android.os.Build;
 import android.os.SystemClock;
 import android.support.annotation.Nullable;
 
@@ -15,7 +16,10 @@ import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
+import java.io.RandomAccessFile;
 import java.util.Random;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 /**
  * Class for getting battery level, CPU temperature and RAM usage.
@@ -128,7 +132,9 @@ public class DeviceManager {
      *
      * @return {@link Intent} containing battery data or {@code null} on failure.
      */
-    private @Nullable Intent refreshAndGetBatteryData() {
+    private
+    @Nullable
+    Intent refreshAndGetBatteryData() {
         long now = SystemClock.elapsedRealtime();
         long sinceLastRefresh = now - mBatteryDataRefreshTime;
         HSLog.d(TAG, "refreshAndGetBatteryData(): " + sinceLastRefresh + " ms since last refresh");
@@ -240,8 +246,7 @@ public class DeviceManager {
         }
 
         // Percentage can be calculated for API 16+
-        int usage = 100 - Math.round(100f * mMemoryInfo.availMem / mMemoryInfo.totalMem);
-
+        int usage = 100 - Math.round(100f * mMemoryInfo.availMem / getTotalRam());
         if (usage <= 5 || usage > 100) {
             // It's inferred that sometimes {@link ActivityManager#getMemoryInfo()} could give absurd result.
             // Default to 60 in that case.
@@ -254,6 +259,31 @@ public class DeviceManager {
      * @return Total RAM size in byte.
      */
     public long getTotalRam() {
-        return mMemoryInfo.totalMem;
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
+            return mMemoryInfo.totalMem;
+        } else {
+            RandomAccessFile reader = null;
+            String load = null;
+            double totRam = 1;
+            String lastValue = "";
+            try {
+                reader = new RandomAccessFile("/proc/meminfo", "r");
+                load = reader.readLine();
+
+                // Get the Number value from the string
+                Pattern p = Pattern.compile("(\\d+)");
+                Matcher m = p.matcher(load);
+                String value = "";
+                while (m.find()) {
+                    value = m.group(1);
+                    // System.out.println("Ram : " + value);
+                }
+                reader.close();
+                totRam = Double.parseDouble(value);
+            } catch (IOException ex) {
+                ex.printStackTrace();
+            }
+            return (long) totRam;
+        }
     }
 }

@@ -44,7 +44,7 @@ public class BoostUtils {
         ActivityManager am = (ActivityManager) context.getSystemService(Context.ACTIVITY_SERVICE);
         ActivityManager.MemoryInfo memoryInfo = new ActivityManager.MemoryInfo();
         am.getMemoryInfo(memoryInfo);
-        int boostedSizeBytes = Math.round(memoryInfo.totalMem *
+        int boostedSizeBytes = Math.round(DeviceManager.getInstance().getTotalRam() *
                 // Dither the percentage to make it looks real
                 (boostedPercentage + mRand.nextFloat() - 0.5f) / 100f);
         if (boostedSizeBytes <= 0) {
