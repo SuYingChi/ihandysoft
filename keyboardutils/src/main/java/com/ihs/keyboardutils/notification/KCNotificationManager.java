@@ -271,7 +271,7 @@ public class KCNotificationManager {
              * Topic.x 可能值:       [1, 2]
              * Topic.x 描述:         push的样式
              */
-            style = (int) AutopilotConfig.getDoubleToTestNow("topic-1508315967034", "push_style", 1);
+            style = (int) AutopilotConfig.getDoubleToTestNow("topic-1508315967034", "push_style", style);
         }
         switch (style) {
             //系统默认样式
