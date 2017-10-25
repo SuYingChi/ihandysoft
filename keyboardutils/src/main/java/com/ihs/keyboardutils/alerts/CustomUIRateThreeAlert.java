@@ -12,7 +12,6 @@ import android.widget.TextView;
 
 import com.ihs.app.framework.HSApplication;
 import com.ihs.chargingscreen.utils.DisplayUtils;
-import com.ihs.commons.config.HSConfig;
 import com.ihs.keyboardutils.R;
 
 import java.util.Locale;
@@ -42,18 +41,10 @@ public class CustomUIRateThreeAlert extends CustomUIRateBaseAlert {
 
         String language = Locale.getDefault().getLanguage();
 
-        if (!HSConfig.optString("No such language!", "Application", "RateAlert", "Type3", "YES", "body", language).equals("No such language!")) {
-            ((TextView)findViewById(R.id.yes_body)).setText(HSConfig.optString("", "Application", "RateAlert", "Type3", "YES", "body", language));
-            ((TextView)findViewById(R.id.yes_title)).setText(HSConfig.optString("", "Application", "RateAlert", "Type3", "YES", "title", language));
-            ((TextView)findViewById(R.id.nope_body)).setText(HSConfig.optString("", "Application", "RateAlert", "Type3", "NO", "body", language));
-            ((TextView)findViewById(R.id.nope_title)).setText(HSConfig.optString("", "Application", "RateAlert", "Type3", "NO", "title", language));
-        } else {
-            ((TextView)findViewById(R.id.yes_body)).setText(HSConfig.optString("", "Application", "RateAlert", "Type3", "YES", "body", "en"));
-            ((TextView)findViewById(R.id.yes_title)).setText(HSConfig.optString("", "Application", "RateAlert", "Type3", "YES", "title", "en"));
-            ((TextView)findViewById(R.id.nope_body)).setText(HSConfig.optString("", "Application", "RateAlert", "Type3", "NO", "body", "en"));
-            ((TextView)findViewById(R.id.nope_title)).setText(HSConfig.optString("", "Application", "RateAlert", "Type3", "NO", "title", "en"));
-        }
-
+        setTextWithRightLanguage((TextView)findViewById(R.id.yes_body), "en", "Application", "RateAlert", "Type3", "YES", "body", language);
+        setTextWithRightLanguage((TextView)findViewById(R.id.yes_title), "en", "Application", "RateAlert", "Type3", "YES", "title", language);
+        setTextWithRightLanguage((TextView)findViewById(R.id.nope_body), "en", "Application", "RateAlert", "Type3", "NO", "body", language);
+        setTextWithRightLanguage((TextView)findViewById(R.id.nope_title), "en", "Application", "RateAlert", "Type3", "NO", "title", language);
 
         buttonYes = (LinearLayout) findViewById(R.id.layout_yes);
         buttonYes.setOnClickListener(this);

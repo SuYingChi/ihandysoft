@@ -4,7 +4,9 @@ import android.content.Context;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AlertDialog;
 import android.view.View;
+import android.widget.TextView;
 
+import com.ihs.commons.config.HSConfig;
 import com.ihs.keyboardutils.R;
 
 /**
@@ -29,4 +31,14 @@ public class CustomUIRateBaseAlert extends AlertDialog implements View.OnClickLi
 
     @Override
     public void onClick(View v) {}
+
+    public void setTextWithRightLanguage(TextView textView, String defaultLanguage, String... path) {
+        final String noSuchLanguage = "No such language!";
+        if (!HSConfig.optString(noSuchLanguage, path).equals(noSuchLanguage)) {
+            textView.setText(HSConfig.optString("", path));
+        } else {
+            path[path.length - 1] = defaultLanguage;
+            textView.setText(HSConfig.optString("", path));
+        }
+    }
 }

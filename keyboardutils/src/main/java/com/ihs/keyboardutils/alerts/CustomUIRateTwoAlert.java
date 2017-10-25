@@ -13,7 +13,6 @@ import android.widget.TextView;
 
 import com.ihs.app.framework.HSApplication;
 import com.ihs.chargingscreen.utils.DisplayUtils;
-import com.ihs.commons.config.HSConfig;
 import com.ihs.keyboardutils.R;
 
 import java.util.Locale;
@@ -30,7 +29,6 @@ public class CustomUIRateTwoAlert extends CustomUIRateBaseAlert {
     private Button buttonFullStar;
     private Button buttonFeedback;
     private String language;
-    private boolean useDefaultLanguage = false;
 
     public CustomUIRateTwoAlert(@NonNull Context context) {
         super(context);
@@ -57,23 +55,11 @@ public class CustomUIRateTwoAlert extends CustomUIRateBaseAlert {
         buttonFeedback.setOnClickListener(this);
         setCancelable(false);
 
-        if (HSConfig.optString("No such language!", "Application", "RateAlert", "Type2", "Step1", "body", language).equals("No such language!")) {
-            useDefaultLanguage = true;
-        }
-
-        if (!useDefaultLanguage) {
-            ((TextView) findViewById(R.id.step_one_body)).setText(HSConfig.optString("", "Application", "RateAlert", "Type2", "Step1", "body", language));
-            buttonYes.setText(HSConfig.optString("", "Application", "RateAlert", "Type2", "Step1", "button2", language));
-            buttonNope.setText(HSConfig.optString("", "Application", "RateAlert", "Type2", "Step1", "button1", language));
-            buttonFeedback.setText(HSConfig.optString("", "Application", "RateAlert", "Type2",  "Step2", "NO", "button2", language));
-            buttonFullStar.setText(HSConfig.optString("", "Application", "RateAlert", "Type2",  "Step2", "YES", "button2", language));
-        } else {
-            ((TextView) findViewById(R.id.step_one_body)).setText(HSConfig.optString("", "Application", "RateAlert", "Type2", "Step1", "body", "en"));
-            buttonYes.setText(HSConfig.optString("", "Application", "RateAlert", "Type2", "Step1", "button2", "en"));
-            buttonNope.setText(HSConfig.optString("", "Application", "RateAlert", "Type2", "Step1", "button1", "en"));
-            buttonFeedback.setText(HSConfig.optString("", "Application", "RateAlert", "Type2",  "Step2", "NO", "button2", "en"));
-            buttonFullStar.setText(HSConfig.optString("", "Application", "RateAlert", "Type2",  "Step2", "YES", "button2", "en"));
-        }
+        setTextWithRightLanguage((TextView) findViewById(R.id.step_one_body), "en", "Application", "RateAlert", "Type2", "Step1", "body", language);
+        setTextWithRightLanguage(buttonYes, "en", "Application", "RateAlert", "Type2", "Step1", "button2", language);
+        setTextWithRightLanguage(buttonNope, "en", "Application", "RateAlert", "Type2", "Step1", "button1", language);
+        setTextWithRightLanguage(buttonFeedback, "en", "Application", "RateAlert", "Type2",  "Step2", "NO", "button2", language);
+        setTextWithRightLanguage(buttonFullStar, "en", "Application", "RateAlert", "Type2",  "Step2", "YES", "button2", language);
     }
 
     @Override
@@ -90,32 +76,16 @@ public class CustomUIRateTwoAlert extends CustomUIRateBaseAlert {
                 }
             }, 400);
             buttonNever = (Button) findViewById(R.id.second_screen_btn_never);
-            if (!useDefaultLanguage) {
-                buttonNever.setText(HSConfig.optString("", "Application", "RateAlert", "Type2", "Step2", "YES", "button1", language));
-            } else {
-                buttonNever.setText(HSConfig.optString("", "Application", "RateAlert", "Type2", "Step2", "YES", "button1", "en"));
-            }
+            setTextWithRightLanguage(buttonNever, "en", "Application", "RateAlert", "Type2", "Step2", "YES", "button1", language);
             buttonNever.setOnClickListener(this);
-            if (!useDefaultLanguage) {
-                ((TextView) findViewById(R.id.step_two_yes_title)).setText(HSConfig.optString("", "Application", "RateAlert", "Type2", "Step2", "YES", "title", language));
-            } else {
-                ((TextView) findViewById(R.id.step_two_yes_title)).setText(HSConfig.optString("", "Application", "RateAlert", "Type2", "Step2", "YES", "title", "en"));
-            }
+            setTextWithRightLanguage((TextView) findViewById(R.id.step_two_yes_title), "en", "Application", "RateAlert", "Type2", "Step2", "YES", "title", language);
         } else if (v == buttonNope) {
             ((ImageView) findViewById(R.id.top_img)).setImageResource(R.drawable.rate_alert_type_two_nope);
             (findViewById(R.id.step_one_body)).setVisibility(View.GONE);
             (findViewById(R.id.step_two_nope_body)).setVisibility(View.VISIBLE);
-            if (!useDefaultLanguage) {
-                ((TextView) findViewById(R.id.step_two_nope_body)).setText(HSConfig.optString("", "Application", "RateAlert", "Type2", "Step2", "NO", "body", language));
-            } else {
-                ((TextView) findViewById(R.id.step_two_nope_body)).setText(HSConfig.optString("", "Application", "RateAlert", "Type2", "Step2", "NO", "body", "en"));
-            }
+            setTextWithRightLanguage((TextView) findViewById(R.id.step_two_nope_body), "en", "Application", "RateAlert", "Type2", "Step2", "NO", "body", language);
             buttonNever = (Button) findViewById(R.id.first_screen_btn_never);
-            if (!useDefaultLanguage) {
-                buttonNever.setText(HSConfig.optString("", "Application", "RateAlert", "Type2", "Step2", "NO", "button1", language));
-            } else {
-                buttonNever.setText(HSConfig.optString("", "Application", "RateAlert", "Type2", "Step2", "NO", "button1", "en"));
-            }
+            setTextWithRightLanguage(buttonNever, "en", "Application", "RateAlert", "Type2", "Step2", "NO", "button1", language);
             buttonNever.setOnClickListener(this);
             (findViewById(R.id.root_view)).setVisibility(View.INVISIBLE);
             (findViewById(R.id.rate_first_screen)).setVisibility(View.INVISIBLE);
