@@ -6,8 +6,6 @@ import android.support.v4.view.animation.PathInterpolatorCompat;
 import android.view.View;
 import android.widget.TextView;
 
-import com.acb.adadapter.AcbAd;
-import com.acb.adadapter.AcbNativeAd;
 import com.ihs.app.analytics.HSAnalytics;
 import com.ihs.feature.common.AdPlacements;
 import com.ihs.feature.common.ViewUtils;
@@ -15,6 +13,9 @@ import com.ihs.feature.resultpage.data.CardData;
 import com.ihs.feature.resultpage.data.ResultConstants;
 import com.ihs.feature.ui.FlashCircleView;
 import com.ihs.keyboardutils.R;
+
+import net.appcloudbox.ads.base.AcbAd;
+import net.appcloudbox.ads.base.AcbNativeAd;
 
 import java.util.List;
 

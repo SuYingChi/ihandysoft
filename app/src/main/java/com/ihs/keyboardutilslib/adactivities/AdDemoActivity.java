@@ -10,12 +10,13 @@ import android.widget.LinearLayout;
 import android.widget.Spinner;
 import android.widget.Toast;
 
-import com.acb.nativeads.AcbNativeAdManager;
 import com.ihs.app.framework.activity.HSActivity;
 import com.ihs.commons.config.HSConfig;
 import com.ihs.keyboardutils.ads.KCInterstitialAd;
 import com.ihs.keyboardutils.nativeads.KCNativeAdView;
 import com.ihs.keyboardutilslib.R;
+
+import net.appcloudbox.ads.nativeads.AcbNativeAdManager;
 
 import java.util.ArrayList;
 import java.util.HashMap;

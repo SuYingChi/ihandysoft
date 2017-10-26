@@ -4,7 +4,6 @@ import android.content.Context;
 import android.os.Handler;
 import android.os.Looper;
 
-import com.acb.adadapter.AcbNativeAd;
 import com.ihs.commons.notificationcenter.HSGlobalNotificationCenter;
 import com.ihs.commons.notificationcenter.INotificationObserver;
 import com.ihs.commons.utils.HSBundle;
@@ -21,6 +20,8 @@ import com.ihs.feature.common.PreferenceHelper;
 import com.ihs.feature.common.Thunk;
 import com.ihs.feature.ui.LauncherFloatWindowManager;
 import com.ihs.keyboardutils.utils.CommonUtils;
+
+import net.appcloudbox.ads.base.AcbNativeAd;
 
 import java.util.ArrayList;
 import java.util.Arrays;

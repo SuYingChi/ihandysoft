@@ -27,11 +27,6 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.acb.adadapter.AcbAd;
-import com.acb.adadapter.AcbNativeAd;
-import com.acb.adadapter.ContainerView.AcbNativeAdContainerView;
-import com.acb.adadapter.ContainerView.AcbNativeAdIconView;
-import com.acb.adadapter.ContainerView.AcbNativeAdPrimaryView;
 import com.artw.lockscreen.LockerSettings;
 import com.ihs.app.analytics.HSAnalytics;
 import com.ihs.chargingscreen.utils.ChargingManagerUtil;
@@ -53,6 +48,12 @@ import com.ihs.feature.ui.SafeWindowManager;
 import com.ihs.keyboardutils.R;
 import com.ihs.keyboardutils.utils.CommonUtils;
 import com.ihs.keyboardutils.utils.LauncherAnimationUtils;
+
+import net.appcloudbox.ads.base.AcbAd;
+import net.appcloudbox.ads.base.AcbNativeAd;
+import net.appcloudbox.ads.base.ContainerView.AcbNativeAdContainerView;
+import net.appcloudbox.ads.base.ContainerView.AcbNativeAdIconView;
+import net.appcloudbox.ads.base.ContainerView.AcbNativeAdPrimaryView;
 
 
 /**

@@ -11,7 +11,6 @@ import android.support.v4.content.ContextCompat;
 import android.view.MenuItem;
 import android.view.View;
 
-import com.acb.adadapter.AcbNativeAd;
 import com.ihs.app.analytics.HSAnalytics;
 import com.ihs.app.framework.activity.HSAppCompatActivity;
 import com.ihs.chargingscreen.utils.ChargingPrefsUtil;
@@ -34,6 +33,8 @@ import com.ihs.feature.resultpage.data.CardData;
 import com.ihs.feature.resultpage.data.ResultConstants;
 import com.ihs.keyboardutils.R;
 import com.ihs.keyboardutils.utils.CommonUtils;
+
+import net.appcloudbox.ads.base.AcbNativeAd;
 
 import java.util.List;
 

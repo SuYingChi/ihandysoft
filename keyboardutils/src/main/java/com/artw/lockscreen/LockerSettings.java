@@ -1,6 +1,6 @@
 package com.artw.lockscreen;
 
-import com.acb.expressads.AcbExpressAdManager;
+import net.appcloudbox.ads.expressads.AcbExpressAdManager;
 import com.ihs.app.analytics.HSAnalytics;
 import com.ihs.app.framework.HSApplication;
 import com.ihs.commons.config.HSConfig;

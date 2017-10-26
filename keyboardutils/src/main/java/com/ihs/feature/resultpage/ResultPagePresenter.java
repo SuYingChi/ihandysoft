@@ -3,7 +3,6 @@ package com.ihs.feature.resultpage;
 import android.support.annotation.NonNull;
 import android.text.format.DateUtils;
 
-import com.acb.adadapter.AcbNativeAd;
 import com.annimon.stream.Stream;
 import com.ihs.chargingscreen.utils.ChargingPrefsUtil;
 import com.ihs.commons.config.HSConfig;
@@ -14,6 +13,8 @@ import com.ihs.feature.common.Utils;
 import com.ihs.feature.resultpage.data.CardData;
 import com.ihs.feature.resultpage.data.ResultConstants;
 import com.ihs.keyboardutils.permission.PermissionUtils;
+
+import net.appcloudbox.ads.base.AcbNativeAd;
 
 import java.util.ArrayList;
 import java.util.Collections;

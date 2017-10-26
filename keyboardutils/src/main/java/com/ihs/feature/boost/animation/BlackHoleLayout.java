@@ -19,10 +19,7 @@ import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
-import com.acb.adadapter.AcbNativeAd;
-import com.acb.nativeads.AcbNativeAdLoader;
 import com.ihs.app.framework.HSApplication;
-import com.ihs.commons.utils.HSError;
 import com.ihs.commons.utils.HSLog;
 import com.ihs.feature.boost.BoostConditionManager;
 import com.ihs.feature.boost.BoostSource;
@@ -34,8 +31,14 @@ import com.ihs.feature.tip.LauncherTipManager;
 import com.ihs.keyboardutils.R;
 import com.ihs.keyboardutils.utils.CommonUtils;
 
+import net.appcloudbox.ads.base.AcbNativeAd;
+import net.appcloudbox.ads.nativeads.AcbNativeAdLoader;
+import net.appcloudbox.common.utils.AcbError;
+
 import java.util.List;
 import java.util.Random;
+
+;
 
 public class BlackHoleLayout extends RelativeLayout {
 
@@ -194,7 +197,7 @@ public class BlackHoleLayout extends RelativeLayout {
                 }
 
                 @Override
-                public void onAdFinished(AcbNativeAdLoader acbNativeAdLoader, HSError hsError) {
+                public void onAdFinished(AcbNativeAdLoader acbNativeAdLoader, AcbError hsError) {
                     if (hsError != null) {
                         HSLog.d(TAG, "loadAds fail. reason is " + hsError);
                     }

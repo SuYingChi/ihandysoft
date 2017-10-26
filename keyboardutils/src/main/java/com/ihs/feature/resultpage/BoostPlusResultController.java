@@ -13,8 +13,6 @@ import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
-import com.acb.adadapter.AcbAd;
-import com.acb.adadapter.AcbNativeAd;
 import com.ihs.app.analytics.HSAnalytics;
 import com.ihs.commons.utils.HSLog;
 import com.ihs.feature.boost.plus.BoostBgImageView;
@@ -28,6 +26,9 @@ import com.ihs.feature.resultpage.data.CardData;
 import com.ihs.feature.resultpage.data.ResultConstants;
 import com.ihs.keyboardutils.R;
 import com.ihs.keyboardutils.utils.LauncherAnimationUtils;
+
+import net.appcloudbox.ads.base.AcbAd;
+import net.appcloudbox.ads.base.AcbNativeAd;
 
 import java.util.List;
 

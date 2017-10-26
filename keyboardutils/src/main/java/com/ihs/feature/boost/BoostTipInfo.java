@@ -1,9 +1,10 @@
 package com.ihs.feature.boost;
 
-import com.acb.adadapter.AcbNativeAd;
 import com.ihs.feature.common.ITipInfo;
 import com.ihs.feature.tip.LauncherTipManager;
 import com.ihs.feature.ui.LauncherFloatWindowManager;
+
+import net.appcloudbox.ads.base.AcbNativeAd;
 
 
 public class BoostTipInfo implements ITipInfo {

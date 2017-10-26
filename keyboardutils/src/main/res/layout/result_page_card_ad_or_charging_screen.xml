@@ -34,7 +34,7 @@
 
     <!-- For ads only, set to INVISIBLE when charging screen view is shown -->
     <!-- Background is added dynamically to handle compatibility issue -->
-    <com.acb.adadapter.ContainerView.AcbNativeAdPrimaryView
+    <net.appcloudbox.ads.base.ContainerView.AcbNativeAdPrimaryView
         android:id="@+id/result_image_container_ad"
         style="@style/ResultPagePrimaryImage"
         tools:background="@drawable/result_page_image_frame"/>
@@ -66,7 +66,7 @@
         android:layout_alignTop="@id/result_image_container_ad"
         android:src="@mipmap/ad_engine_ad_mark"/>
 
-    <com.acb.adadapter.ContainerView.AcbNativeAdIconView
+    <net.appcloudbox.ads.base.ContainerView.AcbNativeAdIconView
         android:id="@+id/result_ad_icon"
         android:layout_width="24dp"
         android:layout_height="24dp"
