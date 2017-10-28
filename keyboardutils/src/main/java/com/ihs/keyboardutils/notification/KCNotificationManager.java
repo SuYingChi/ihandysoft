@@ -8,6 +8,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.os.Build;
 import android.support.v4.app.NotificationCompat;
 import android.text.TextUtils;
 import android.view.View;
@@ -27,6 +28,7 @@ import com.ihs.commons.notificationcenter.INotificationObserver;
 import com.ihs.commons.utils.HSBundle;
 import com.ihs.commons.utils.HSLog;
 import com.ihs.commons.utils.HSPreferenceHelper;
+import com.ihs.feature.common.DeviceUtils;
 import com.ihs.keyboardutils.R;
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.nostra13.universalimageloader.core.assist.FailReason;
@@ -272,6 +274,10 @@ public class KCNotificationManager {
              * Topic.x 描述:         push的样式
              */
             style = (int) AutopilotConfig.getDoubleToTestNow("topic-1508315967034", "push_style", style);
+        }
+
+        if (DeviceUtils.getDeviceBrand().toLowerCase().contains("tcl") && Build.VERSION.SDK_INT == 19) {
+            style = 0;
         }
         switch (style) {
             //系统默认样式
