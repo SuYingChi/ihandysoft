@@ -27,7 +27,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.acb.expressads.AcbExpressAdView;
+import net.appcloudbox.ads.expressads.AcbExpressAdView;
 import com.artw.lockscreen.common.LockerChargingScreenUtils;
 import com.artw.lockscreen.shimmer.Shimmer;
 import com.artw.lockscreen.shimmer.ShimmerTextView;

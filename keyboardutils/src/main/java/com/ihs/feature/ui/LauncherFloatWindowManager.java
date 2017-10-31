@@ -11,7 +11,6 @@ import android.view.View;
 import android.view.WindowManager;
 import android.view.WindowManager.LayoutParams;
 
-import com.acb.adadapter.AcbNativeAd;
 import com.ihs.app.framework.HSApplication;
 import com.ihs.commons.utils.HSLog;
 import com.ihs.feature.boost.BoostSource;
@@ -25,6 +24,8 @@ import com.ihs.feature.tip.JunkCleanInstallTip;
 import com.ihs.feature.tip.JunkCleanUninstallTip;
 import com.ihs.feature.tip.LauncherTipManager;
 import com.ihs.keyboardutils.utils.CommonUtils;
+
+import net.appcloudbox.ads.base.AcbNativeAd;
 
 public class LauncherFloatWindowManager extends FloatWindowManager {
 

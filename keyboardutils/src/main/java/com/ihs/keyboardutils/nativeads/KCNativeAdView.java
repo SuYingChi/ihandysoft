@@ -17,17 +17,18 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.acb.adadapter.AcbAd;
-import com.acb.adadapter.AcbNativeAd;
-import com.acb.adadapter.ContainerView.AcbNativeAdContainerView;
-import com.acb.adadapter.ContainerView.AcbNativeAdIconView;
-import com.acb.adadapter.ContainerView.AcbNativeAdPrimaryView;
-import com.acb.nativeads.AcbNativeAdLoader;
 import com.ihs.app.analytics.HSAnalytics;
 import com.ihs.app.framework.HSApplication;
-import com.ihs.commons.utils.HSError;
 import com.ihs.commons.utils.HSLog;
 import com.ihs.keyboardutils.iap.RemoveAdsManager;
+
+import net.appcloudbox.ads.base.AcbAd;
+import net.appcloudbox.ads.base.AcbNativeAd;
+import net.appcloudbox.ads.base.ContainerView.AcbNativeAdContainerView;
+import net.appcloudbox.ads.base.ContainerView.AcbNativeAdIconView;
+import net.appcloudbox.ads.base.ContainerView.AcbNativeAdPrimaryView;
+import net.appcloudbox.ads.nativeads.AcbNativeAdLoader;
+import net.appcloudbox.common.utils.AcbError;
 
 import java.util.List;
 
@@ -256,7 +257,7 @@ public class KCNativeAdView extends FrameLayout {
             }
 
             @Override
-            public void onAdFinished(AcbNativeAdLoader acbNativeAdLoader, HSError hsError) {
+            public void onAdFinished(AcbNativeAdLoader acbNativeAdLoader, AcbError hsError) {
                 if (hsError != null) {
                     HSLog.e("Load native ad failed: " + hsError);
                     try {

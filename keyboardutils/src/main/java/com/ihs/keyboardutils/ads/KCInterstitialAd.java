@@ -8,13 +8,14 @@ import android.os.Looper;
 import android.text.TextUtils;
 import android.widget.Toast;
 
-import com.acb.adadapter.AcbInterstitialAd;
-import com.acb.interstitialads.AcbInterstitialAdLoader;
 import com.ihs.app.analytics.HSAnalytics;
 import com.ihs.app.framework.HSApplication;
-import com.ihs.commons.utils.HSError;
 import com.ihs.commons.utils.HSLog;
 import com.ihs.keyboardutils.iap.RemoveAdsManager;
+
+import net.appcloudbox.ads.base.AcbInterstitialAd;
+import net.appcloudbox.ads.interstitialads.AcbInterstitialAdLoader;
+import net.appcloudbox.common.utils.AcbError;
 
 import java.util.List;
 
@@ -67,7 +68,7 @@ public class KCInterstitialAd {
             }
 
             @Override
-            public void onAdFinished(AcbInterstitialAdLoader acbInterstitialAdLoader, HSError hsError) {
+            public void onAdFinished(AcbInterstitialAdLoader acbInterstitialAdLoader, AcbError hsError) {
                 if (hsError != null) {
                     HSLog.e("Load interstitial ad failed: " + hsError);
                     try {

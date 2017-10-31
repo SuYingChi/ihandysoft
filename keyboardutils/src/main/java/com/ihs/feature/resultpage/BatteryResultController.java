@@ -14,8 +14,6 @@ import android.view.animation.AnimationSet;
 import android.view.animation.TranslateAnimation;
 import android.widget.TextView;
 
-import com.acb.adadapter.AcbAd;
-import com.acb.adadapter.AcbNativeAd;
 import com.ihs.app.analytics.HSAnalytics;
 import com.ihs.feature.common.AdPlacements;
 import com.ihs.feature.common.AnimatorListenerAdapter;
@@ -25,6 +23,9 @@ import com.ihs.feature.resultpage.data.ResultConstants;
 import com.ihs.keyboardutils.R;
 import com.ihs.keyboardutils.utils.CommonUtils;
 import com.ihs.keyboardutils.utils.LauncherAnimationUtils;
+
+import net.appcloudbox.ads.base.AcbAd;
+import net.appcloudbox.ads.base.AcbNativeAd;
 
 import java.util.List;
 @SuppressLint("NewApi")

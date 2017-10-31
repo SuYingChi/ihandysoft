@@ -1,6 +1,5 @@
 package com.ihs.chargingscreen.utils;
 
-import com.acb.expressads.AcbExpressAdManager;
 import com.ihs.app.framework.HSApplication;
 import com.ihs.chargingscreen.HSChargingScreenManager;
 import com.ihs.commons.config.HSConfig;
@@ -8,6 +7,8 @@ import com.ihs.commons.utils.HSLog;
 import com.ihs.commons.utils.HSPreferenceHelper;
 import com.ihs.feature.common.PreferenceHelper;
 import com.ihs.keyboardutils.iap.RemoveAdsManager;
+
+import net.appcloudbox.ads.expressads.AcbExpressAdManager;
 
 import static com.ihs.chargingscreen.utils.ChargingAnalytics.app_chargingLocker_enable;
 

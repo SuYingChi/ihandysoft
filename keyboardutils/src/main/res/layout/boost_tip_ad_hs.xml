@@ -13,7 +13,7 @@
         android:layout_alignParentTop="true"
         android:background="@color/quantum_panel_bg_color">
 
-        <com.acb.adadapter.ContainerView.AcbNativeAdPrimaryView
+        <net.appcloudbox.ads.base.ContainerView.AcbNativeAdPrimaryView
             android:id="@+id/boost_ad_image_container"
             android:layout_width="match_parent"
             android:layout_height="163dp"
@@ -43,7 +43,7 @@
             android:gravity="center_vertical"
             android:orientation="horizontal">
             <!-- ad icon Image -->
-            <com.acb.adadapter.ContainerView.AcbNativeAdIconView
+            <net.appcloudbox.ads.base.ContainerView.AcbNativeAdIconView
                 android:id="@+id/boost_ad_icon"
                 android:layout_width="31dp"
                 android:layout_height="31dp"

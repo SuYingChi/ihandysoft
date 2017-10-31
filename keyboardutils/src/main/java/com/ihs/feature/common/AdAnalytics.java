@@ -1,8 +1,9 @@
 package com.ihs.feature.common;
 
-import com.acb.nativeads.AcbNativeAdAnalytics;
 import com.ihs.app.analytics.HSAnalytics;
 import com.ihs.keyboardutils.BuildConfig;
+
+import net.appcloudbox.ads.nativeads.AcbNativeAdAnalytics;
 
 import java.util.HashMap;
 

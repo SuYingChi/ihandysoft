@@ -1,14 +1,15 @@
 package com.ihs.feature.resultpage;
 
 
-import com.acb.adadapter.AcbNativeAd;
-import com.acb.nativeads.AcbNativeAdLoader;
 import com.ihs.app.framework.HSApplication;
-import com.ihs.commons.utils.HSError;
 import com.ihs.commons.utils.HSLog;
 import com.ihs.feature.common.AdAnalytics;
 import com.ihs.feature.common.AdPlacements;
 import com.ihs.keyboardutils.R;
+
+import net.appcloudbox.ads.base.AcbNativeAd;
+import net.appcloudbox.ads.nativeads.AcbNativeAdLoader;
+import net.appcloudbox.common.utils.AcbError;
 
 import java.util.List;
 
@@ -47,7 +48,7 @@ public class ResultPageAdsManager {
             }
 
             @Override
-            public void onAdFinished(AcbNativeAdLoader acbNativeAdLoader, HSError hsError) {
+            public void onAdFinished(AcbNativeAdLoader acbNativeAdLoader, AcbError hsError) {
                 if (hsError != null) {
                     AdAnalytics.logAppViewEvent(AdPlacements.SHARED_POOL_NATIVE_AD_FLURRY_KEY_VIEW_IN_APP_RESULT_PAGE, false);
                     HSLog.d(TAG, "result page load ad failed, error = " + hsError);

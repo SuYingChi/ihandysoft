@@ -19,7 +19,6 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.acb.expressads.AcbExpressAdView;
 import com.artw.lockscreen.shimmer.Shimmer;
 import com.artw.lockscreen.shimmer.ShimmerTextView;
 import com.ihs.app.analytics.HSAnalytics;
@@ -46,6 +45,8 @@ import com.launcher.locker.slidingdrawer.SlidingDrawer;
 import com.launcher.locker.slidingdrawer.SlidingDrawerContent;
 import com.launcher.locker.slidingup.SlidingUpCallback;
 import com.launcher.locker.slidingup.SlidingUpTouchListener;
+
+import net.appcloudbox.ads.expressads.AcbExpressAdView;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;

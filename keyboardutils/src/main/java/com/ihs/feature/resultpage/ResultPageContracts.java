@@ -2,8 +2,9 @@ package com.ihs.feature.resultpage;
 
 import android.support.annotation.Nullable;
 
-import com.acb.adadapter.AcbNativeAd;
 import com.ihs.feature.resultpage.data.CardData;
+
+import net.appcloudbox.ads.base.AcbNativeAd;
 
 import java.util.List;
 

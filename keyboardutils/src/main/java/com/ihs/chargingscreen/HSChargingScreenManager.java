@@ -1,10 +1,5 @@
 package com.ihs.chargingscreen;
 
-import android.content.Intent;
-
-import com.acb.expressads.AcbExpressAdManager;
-import com.acb.nativeads.AcbNativeAdManager;
-import com.ihs.app.framework.HSApplication;
 import com.ihs.charging.HSChargingManager;
 import com.ihs.charging.HSChargingManager.HSChargingState;
 import com.ihs.charging.HSChargingManager.IChargingListener;
@@ -18,6 +13,9 @@ import com.ihs.commons.notificationcenter.INotificationObserver;
 import com.ihs.commons.utils.HSBundle;
 import com.ihs.commons.utils.HSLog;
 import com.ihs.keyboardutils.iap.RemoveAdsManager;
+
+import net.appcloudbox.ads.expressads.AcbExpressAdManager;
+import net.appcloudbox.ads.nativeads.AcbNativeAdManager;
 
 import static com.ihs.charging.HSChargingManager.HSChargingState.STATE_CHARGING_FULL;
 import static com.ihs.charging.HSChargingManager.HSChargingState.STATE_DISCHARGING;

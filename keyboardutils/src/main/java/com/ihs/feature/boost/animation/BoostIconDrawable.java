@@ -19,10 +19,7 @@ import android.view.animation.AccelerateDecelerateInterpolator;
 import android.view.animation.AccelerateInterpolator;
 import android.view.animation.OvershootInterpolator;
 
-import com.acb.adadapter.AcbNativeAd;
-import com.acb.nativeads.AcbNativeAdLoader;
 import com.ihs.app.framework.HSApplication;
-import com.ihs.commons.utils.HSError;
 import com.ihs.commons.utils.HSLog;
 import com.ihs.feature.boost.BoostConditionManager;
 import com.ihs.feature.boost.BoostIcon;
@@ -35,12 +32,16 @@ import com.ihs.feature.common.BitmapUtils;
 import com.ihs.feature.common.ConcurrentUtils;
 import com.ihs.feature.common.DeviceEvaluator;
 import com.ihs.feature.common.LauncherAnimUtils;
-import com.ihs.feature.tip.LauncherTipManager;
 import com.ihs.feature.common.Utils;
 import com.ihs.feature.common.ViewUtils;
+import com.ihs.feature.tip.LauncherTipManager;
 import com.ihs.keyboardutils.BuildConfig;
 import com.ihs.keyboardutils.R;
 import com.ihs.keyboardutils.utils.CommonUtils;
+
+import net.appcloudbox.ads.base.AcbNativeAd;
+import net.appcloudbox.ads.nativeads.AcbNativeAdLoader;
+import net.appcloudbox.common.utils.AcbError;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -332,7 +333,7 @@ public class BoostIconDrawable extends AnimatedIconDrawable implements RamUsageD
                 }
 
                 @Override
-                public void onAdFinished(AcbNativeAdLoader acbNativeAdLoader, HSError hsError) {
+                public void onAdFinished(AcbNativeAdLoader acbNativeAdLoader, AcbError hsError) {
                     if (hsError != null) {
                         HSLog.d(TAG, "loadAds fail. reason is " + hsError);
                     }

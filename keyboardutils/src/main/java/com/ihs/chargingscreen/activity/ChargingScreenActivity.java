@@ -44,7 +44,6 @@ import android.widget.ImageView;
 import android.widget.PopupWindow;
 import android.widget.TextView;
 
-import com.acb.expressads.AcbExpressAdView;
 import com.artw.lockscreen.LockerUtils;
 import com.ihs.app.analytics.HSAnalytics;
 import com.ihs.app.framework.HSApplication;
@@ -69,6 +68,8 @@ import com.ihs.keyboardutils.R;
 import com.ihs.keyboardutils.iap.RemoveAdsManager;
 import com.ihs.keyboardutils.utils.RippleDrawableUtils;
 import com.kc.commons.utils.KCCommonUtils;
+
+import net.appcloudbox.ads.expressads.AcbExpressAdView;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
