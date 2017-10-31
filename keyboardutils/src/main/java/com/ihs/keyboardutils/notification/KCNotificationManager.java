@@ -183,8 +183,7 @@ public class KCNotificationManager {
             requestTime.set(Calendar.SECOND, 0);
 
             long timeInMillis = requestTime.getTimeInMillis();
-            if (timeInMillis - lastPushTime < 1000 || timeInMillis < now ||
-                    (useAutoPilot && isSameDate(timeInMillis, lastPushTime))) {
+            if (timeInMillis - lastPushTime < 1000 || timeInMillis < now) {
                 timeInMillis = timeInMillis + TimeUnit.DAYS.toMillis(1);
             }
 
@@ -198,15 +197,6 @@ public class KCNotificationManager {
         HSLog.e("下次通知时间 " + calendar.getTime().toString());
         spHelper.putLong(PREFS_NEXT_EVENT_TIME, nextEventTime);
         setNextTriggerTime(nextEventTime);
-    }
-
-    private boolean isSameDate(long currentTime, long lastTime) {
-        Calendar cal1 = Calendar.getInstance();
-        Calendar cal2 = Calendar.getInstance();
-        cal1.setTimeInMillis(currentTime);
-        cal2.setTimeInMillis(lastTime);
-        return cal1.get(Calendar.YEAR) == cal2.get(Calendar.YEAR) &&
-                cal1.get(Calendar.DAY_OF_YEAR) == cal2.get(Calendar.DAY_OF_YEAR);
     }
 
     public void sendNotification() {
