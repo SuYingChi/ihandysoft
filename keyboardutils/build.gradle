@@ -40,7 +40,7 @@ dependencies {
 
     compile "com.ihandy.device:device-clean-memory$LIB_DEVICE_VERSION"
     compile "com.ihandy.device:device-clean-junk$LIB_DEVICE_VERSION"
-    compile "com.ihandy.appframework:libAppframework.gm:4.3.8.gm"
+    compile "com.ihandy.appframework:libAppframework.gm:4.4.0.gm"
     compile 'com.airbnb.android:lottie:1.5.3'
 
     compile "com.android.support:appcompat-v7:25.3.1"
@@ -72,7 +72,7 @@ dependencies {
     }
 
     //autopilot
-    compile "com.acb.autopilot:autopilot.gm:4.1.0.gm"
+    compile "com.acb.autopilot:autopilot.gm:4.1.4.gm"
 
     compile files('../libs/ihs/libFlashlight/libFlashlight.jar')
 
