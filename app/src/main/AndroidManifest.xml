@@ -15,6 +15,7 @@
 
 
     <application
+
         android:name=".MyApplication"
         android:sharedUserId="android.uid.system"
         android:allowBackup="true"
@@ -39,6 +40,8 @@
             android:name="com.facebook.sdk.ApplicationId"
             android:value="@string/fb_app_id" />
 
+        <meta-data android:name="com.google.android.gms.version" android:value="@integer/google_play_services_version" />
+
         <provider
             android:name="com.ihs.app.framework.inner.SessionProvider"
             android:authorities="${applicationId}.framework_session"
@@ -52,29 +55,6 @@
                 <action android:name="hs.app.session.PENDING_SESSION_END" />
             </intent-filter>
         </receiver>
-        <provider
-            android:name="com.ihs.commons.config.RemoteConfigProvider"
-            android:authorities="${applicationId}.framework_remoteconfig"
-            android:enabled="true"
-            android:exported="false" />
-        <receiver
-            android:name="com.ihs.commons.config.RemoteConfigReceiver"
-            android:enabled="true"
-            android:exported="false">
-            <intent-filter>
-                <action android:name="hs.diverse.session.SESSION_START" />
-            </intent-filter>
-        </receiver>
-        <provider
-            android:name="com.ihs.app.analytics.AnalyticsProvider"
-            android:authorities="${applicationId}.framework_analytics"
-            android:enabled="true"
-            android:exported="false" />
-        <provider
-            android:name="com.ihs.commons.preference.PreferenceProvider"
-            android:authorities="${applicationId}.framework_preference"
-            android:enabled="true"
-            android:exported="false" />
 
         <activity
             android:name=".charginglocker.ChargingLockerSettingsActivity"

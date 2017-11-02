@@ -27,7 +27,6 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import net.appcloudbox.ads.expressads.AcbExpressAdView;
 import com.artw.lockscreen.common.LockerChargingScreenUtils;
 import com.artw.lockscreen.shimmer.Shimmer;
 import com.artw.lockscreen.shimmer.ShimmerTextView;
@@ -48,6 +47,8 @@ import com.ihs.keyboardutils.R;
 import com.ihs.keyboardutils.iap.RemoveAdsManager;
 import com.ihs.keyboardutils.utils.CommonUtils;
 import com.ihs.keyboardutils.utils.RippleDrawableUtils;
+
+import net.appcloudbox.ads.expressads.AcbExpressAdView;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
@@ -90,10 +91,12 @@ public class LockerMainFrame extends RelativeLayout implements INotificationObse
 
     private TextView mTvTime;
     private TextView mTvDate;
+    private Context activity;
 
     public LockerMainFrame(Context context) {
         this(context, null);
     }
+
 
     public LockerMainFrame(Context context, AttributeSet attrs) {
         this(context, attrs, 0);
@@ -102,8 +105,6 @@ public class LockerMainFrame extends RelativeLayout implements INotificationObse
     public LockerMainFrame(Context context, AttributeSet attrs, int defStyle) {
         super(context, attrs, defStyle);
     }
-
-
 
 
     public void onBackPressed() {
@@ -188,8 +189,7 @@ public class LockerMainFrame extends RelativeLayout implements INotificationObse
         if (!RemoveAdsManager.getInstance().isRemoveAdsPurchased()) {
             removeAds = (ImageView) findViewById(R.id.remove_ads);
             removeAds.setVisibility(GONE);
-
-            acbExpressAdView = new AcbExpressAdView(HSApplication.getContext(), getContext().getString(R.string.ad_placement_locker));
+            acbExpressAdView = new AcbExpressAdView(activity == null ? HSApplication.getContext() : activity, getContext().getString(R.string.ad_placement_locker));
             acbExpressAdView.setExpressAdViewListener(new AcbExpressAdView.AcbExpressAdViewListener() {
                 @Override
                 public void onAdClicked(AcbExpressAdView acbExpressAdView) {
@@ -340,6 +340,10 @@ public class LockerMainFrame extends RelativeLayout implements INotificationObse
             }
         }
         return super.dispatchTouchEvent(ev);
+    }
+
+    public void setActivityContext(Context activity) {
+        this.activity = activity;
     }
 
     public void setSlidingUpCallback(SlidingUpCallback callback) {

@@ -23,6 +23,7 @@ import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
 import com.nostra13.universalimageloader.core.assist.QueueProcessingType;
 import com.squareup.leakcanary.LeakCanary;
 
+import net.appcloudbox.ads.expressads.AcbExpressAdManager;
 import net.appcloudbox.ads.nativeads.AcbNativeAdManager;
 
 
@@ -59,7 +60,7 @@ public class MyApplication extends HSApplication {
             return;
         }
         LeakCanary.install(this);
-
+        AcbExpressAdManager.getInstance().init(this);
         HSChargingScreenManager.init(true, "Master_A(NativeAds)Charging");
 
         HSGlobalNotificationCenter.addObserver(HSNotificationConstant.HS_SESSION_START, sessionEventObserver);
@@ -75,6 +76,8 @@ public class MyApplication extends HSApplication {
                 return false;
             }
         },false);
+
+
 
         AcbNativeAdManager.sharedInstance().activePlacementInProcess(getString(R.string.ad_placement_result_page));
         AcbNativeAdManager.sharedInstance().activePlacementInProcess("ColorCam_A(NativeAds)FilterDownload");

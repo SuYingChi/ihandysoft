@@ -75,6 +75,7 @@ class LockerAdapter extends PagerAdapter {
     @SuppressLint("InflateParams")
     private void createMainFrame() {
         lockerMainFrame = (LockerMainFrame) LayoutInflater.from(mContext).inflate(R.layout.locker_main_frame, null);
+        lockerMainFrame.setActivityContext(mContext);
         lockerMainFrame.setSlidingUpCallback(mSlidingUpCallback);
     }
 }

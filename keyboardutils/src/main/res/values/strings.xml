@@ -873,7 +873,7 @@
 
     <string name="locker_switcher">locker_screen_enabled</string>
     <string name="enable_locker_detail">Open camera directly from lock screen and never miss a shot again. Contains sponsored contents.</string>
-    <string name="ad_placement_locker">ColorCam_A(NativeAds)ScreenLocker</string>
+    <string name="ad_placement_locker">Colorkey_A(NativeAds)Fuse</string>
     <string name="screen_locker_enable_alert_toast">Screen Locker Enabled</string>
 
     <!--guide-->
