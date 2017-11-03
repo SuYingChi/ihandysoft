@@ -68,11 +68,6 @@ dependencies {
 
     compile 'pl.droidsonroids.gif:android-gif-drawable:1.2.2'
 
-    //flurry
-    compile ('com.flurry.android:ads:6.2.0') {
-        transitive = false //由于AppFramework中也包含Flurry, 所以需要在这里去除引用传递
-    }
-
     //autopilot
     compile "com.acb.autopilot:autopilot.gm:4.1.4.gm"
 
