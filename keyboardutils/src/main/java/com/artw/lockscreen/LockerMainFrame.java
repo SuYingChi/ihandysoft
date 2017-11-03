@@ -14,13 +14,13 @@ import android.text.SpannableString;
 import android.text.Spanned;
 import android.text.style.ForegroundColorSpan;
 import android.util.AttributeSet;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewTreeObserver;
 import android.view.ViewTreeObserver.OnGlobalLayoutListener;
 import android.widget.Button;
-import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.PopupWindow;
 import android.widget.RelativeLayout;
@@ -82,7 +82,7 @@ public class LockerMainFrame extends RelativeLayout implements INotificationObse
     private View mBottomOperationArea;
     private View mCameraContainer;
     private View mWallpaperContainer;
-    private FrameLayout mAdContainer;
+    private RelativeLayout mAdContainer;
 
     private View mMenuMore;
 
@@ -190,6 +190,7 @@ public class LockerMainFrame extends RelativeLayout implements INotificationObse
             removeAds = (ImageView) findViewById(R.id.remove_ads);
             removeAds.setVisibility(GONE);
             acbExpressAdView = new AcbExpressAdView(activity == null ? HSApplication.getContext() : activity, getContext().getString(R.string.ad_placement_locker));
+            acbExpressAdView.setGravity(Gravity.BOTTOM);
             acbExpressAdView.setExpressAdViewListener(new AcbExpressAdView.AcbExpressAdViewListener() {
                 @Override
                 public void onAdClicked(AcbExpressAdView acbExpressAdView) {

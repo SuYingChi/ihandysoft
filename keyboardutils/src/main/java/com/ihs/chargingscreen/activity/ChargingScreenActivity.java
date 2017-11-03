@@ -31,6 +31,7 @@ import android.telephony.PhoneStateListener;
 import android.telephony.TelephonyManager;
 import android.text.TextUtils;
 import android.util.DisplayMetrics;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.VelocityTracker;
@@ -39,9 +40,9 @@ import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.view.Window;
 import android.view.WindowManager.LayoutParams;
-import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.PopupWindow;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.artw.lockscreen.LockerUtils;
@@ -210,7 +211,7 @@ public class ChargingScreenActivity extends Activity {
     private BubbleView bubbleView;
     private PowerManager powerManager = (PowerManager) HSApplication.getContext().getSystemService(Context.POWER_SERVICE);
     private AcbExpressAdView acbExpressAdView;
-    private FrameLayout adContainer;
+    private RelativeLayout adContainer;
     private ImageView removeAds;
     private long createTime;
 
@@ -346,7 +347,7 @@ public class ChargingScreenActivity extends Activity {
         } catch (Exception e) {
         }
 
-        adContainer = (FrameLayout) findViewById(R.id.ad_container);
+        adContainer = (RelativeLayout) findViewById(R.id.ad_container);
         txtBatteryLevelPercent = (TextView) findViewById(R.id.txt_battery_level);
         Typeface tf = Typeface.createFromAsset(getAssets(), "fonts/dincond_medium.otf");
         txtBatteryLevelPercent.setTypeface(tf);
@@ -386,7 +387,7 @@ public class ChargingScreenActivity extends Activity {
                     showRemoveAdsDialog();
                 }
             });
-
+            acbExpressAdView.setGravity(Gravity.BOTTOM);
             acbExpressAdView.setExpressAdViewListener(new AcbExpressAdView.AcbExpressAdViewListener() {
                 @Override
                 public void onAdClicked(AcbExpressAdView acbExpressAdView) {
