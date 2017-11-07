@@ -11,6 +11,7 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.ihs.app.analytics.HSAnalytics;
 import com.ihs.app.framework.HSApplication;
 import com.ihs.chargingscreen.utils.DisplayUtils;
 import com.ihs.keyboardutils.R;
@@ -66,6 +67,7 @@ public class CustomUIRateTwoAlert extends CustomUIRateBaseAlert {
     public void onClick(View v) {
         super.onClick(v);
         if (v == buttonYes) {
+            HSAnalytics.logEvent("rate_alert_like_clicked");
             (findViewById(R.id.root_view)).setVisibility(View.INVISIBLE);
             new Handler().postDelayed(new Runnable() {
                 @Override
@@ -104,6 +106,7 @@ public class CustomUIRateTwoAlert extends CustomUIRateBaseAlert {
                 dismissListener.onClick(v);
             }
         } else if (v == buttonFullStar) {
+            HSAnalytics.logEvent("rate_alert_to_GP");
             dismiss();
             if (dismissListener != null) {
                 dismissListener.onClick(v);

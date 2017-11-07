@@ -10,6 +10,7 @@ import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.ihs.app.analytics.HSAnalytics;
 import com.ihs.app.framework.HSApplication;
 import com.ihs.chargingscreen.utils.DisplayUtils;
 import com.ihs.keyboardutils.R;
@@ -59,6 +60,7 @@ public class CustomUIRateThreeAlert extends CustomUIRateBaseAlert {
     public void onClick(View v) {
         super.onClick(v);
         if (v == buttonYes) {
+            HSAnalytics.logEvent("rate_alert_to_GP");
             dismiss();
             if (dismissListener != null) {
                 dismissListener.onClick(v);
