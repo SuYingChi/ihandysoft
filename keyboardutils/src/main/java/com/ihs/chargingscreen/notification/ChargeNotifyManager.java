@@ -151,7 +151,12 @@ public class ChargeNotifyManager {
     }
 
     public void unregisterScreenOffReceiver() {
-        HSApplication.getContext().unregisterReceiver(receiver);
+        //预防特殊情况没有注册却unregister
+        try {
+            HSApplication.getContext().unregisterReceiver(receiver);
+        }catch (Exception e){
+            e.printStackTrace();
+        }
     }
 
     public void setIsChargingActivityAlive(boolean isAlive) {
