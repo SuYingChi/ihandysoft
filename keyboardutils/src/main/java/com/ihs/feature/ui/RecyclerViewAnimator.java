@@ -15,8 +15,9 @@
  */
 package com.ihs.feature.ui;
 
+import android.animation.TimeInterpolator;
+import android.animation.ValueAnimator;
 import android.support.annotation.NonNull;
-import android.support.v4.animation.AnimatorCompatHelper;
 import android.support.v4.view.ViewCompat;
 import android.support.v4.view.ViewPropertyAnimatorCompat;
 import android.support.v4.view.ViewPropertyAnimatorListener;
@@ -515,8 +516,13 @@ public class RecyclerViewAnimator extends SimpleItemAnimator {
         dispatchFinishedWhenDone();
     }
 
+    private TimeInterpolator mDefaultInterpolator;
+
     private void resetAnimation(ViewHolder holder) {
-        AnimatorCompatHelper.clearInterpolator(holder.itemView);
+        if (mDefaultInterpolator == null) {
+            mDefaultInterpolator = new ValueAnimator().getInterpolator();
+        }
+        holder.itemView.animate().setInterpolator(mDefaultInterpolator);
         endAnimation(holder);
     }
 
