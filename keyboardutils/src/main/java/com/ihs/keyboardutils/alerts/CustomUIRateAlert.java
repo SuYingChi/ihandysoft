@@ -16,6 +16,7 @@ import android.view.animation.TranslateAnimation;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.ihs.app.analytics.HSAnalytics;
 import com.ihs.app.framework.HSApplication;
 import com.ihs.chargingscreen.utils.DisplayUtils;
 import com.ihs.keyboardutils.R;
@@ -46,8 +47,7 @@ public class CustomUIRateAlert extends CustomUIRateBaseAlert {
         initViews();
 
         int screenWidth = DisplayUtils.getScreenWidthPixels();
-        int width = (int) getContext().getResources().getFraction(R.fraction.design_dialog_width, screenWidth, screenWidth);
-        findViewById(R.id.root_view).getLayoutParams().width = width;
+        findViewById(R.id.root_view).getLayoutParams().width = (int) getContext().getResources().getFraction(R.fraction.design_dialog_width, screenWidth, screenWidth);
 
         if (!(getContext() instanceof Activity)) {
             if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.M && !android.provider.Settings.canDrawOverlays(HSApplication.getContext())) {
@@ -108,6 +108,7 @@ public class CustomUIRateAlert extends CustomUIRateBaseAlert {
     public void onClick(View v) {
         super.onClick(v);
         if (v == positiveButton) {
+            HSAnalytics.logEvent("rate_alert_to_GP");
             dismiss();
 
             if (rateStarNumber != 5) {
@@ -136,6 +137,7 @@ public class CustomUIRateAlert extends CustomUIRateBaseAlert {
             rate(4);
         } else if (v.getId() == R.id.start_5) {
             rate(5);
+            HSAnalytics.logEvent("rate_alert_like_clicked");
         }
     }
 
