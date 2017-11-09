@@ -11,10 +11,12 @@ import android.view.Window;
 import android.view.WindowManager;
 
 import com.acb.autopilot.AutopilotEvent;
+import com.artw.lockscreen.LockerSettings;
 import com.ihs.app.analytics.HSAnalytics;
 import com.ihs.app.framework.HSApplication;
 import com.ihs.charging.HSChargingManager;
 import com.ihs.chargingscreen.utils.ChargingManagerUtil;
+import com.ihs.chargingscreen.utils.ChargingPrefsUtil;
 import com.ihs.commons.config.HSConfig;
 import com.ihs.commons.notificationcenter.HSGlobalNotificationCenter;
 import com.ihs.keyboardutils.R;
@@ -144,6 +146,10 @@ public class ChargingFullScreenAlertDialogActivity extends Activity {
     }
 
     public static void startChargingAlert() {
+        if(ChargingPrefsUtil.isChargingMuted()){
+            return;
+        }
+
         Intent intent = new Intent(HSApplication.getContext(), ChargingFullScreenAlertDialogActivity.class);
         intent.putExtra("type", "charging");
         intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
@@ -151,6 +157,10 @@ public class ChargingFullScreenAlertDialogActivity extends Activity {
     }
 
     public static void startLockerAlert() {
+        if(LockerSettings.isLockerMuted()){
+            return;
+        }
+
         Intent intent = new Intent(HSApplication.getContext(), ChargingFullScreenAlertDialogActivity.class);
         intent.putExtra("type", "charging");
         intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);

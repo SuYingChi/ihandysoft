@@ -232,7 +232,7 @@ abstract class ResultController implements View.OnClickListener {
             mImageFrameShadow2.setBackground(imageFrame);
         }
 
-        if (ChargingPrefsUtil.getChargingEnableStates() == ChargingPrefsUtil.CHARGING_DEFAULT_ACTIVE) {
+        if (ChargingPrefsUtil.getChargingEnableStates() == ChargingPrefsUtil.CHARGING_DEFAULT_DISABLED) {
             mType = AD;
         }
 
