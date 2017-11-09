@@ -19,8 +19,6 @@ import com.ihs.keyboardutils.BuildConfig;
 import com.ihs.keyboardutils.R;
 import com.ihs.keyboardutils.permission.PermissionUtils;
 
-import hugo.weaving.DebugLog;
-
 
 public class BoostPlusSettingsActivity extends BaseSettingsActivity implements
         View.OnClickListener, SwitchCompat.OnCheckedChangeListener {
@@ -44,7 +42,6 @@ public class BoostPlusSettingsActivity extends BaseSettingsActivity implements
         return R.string.launcher_widget_boost_plus_title;
     }
 
-    @DebugLog
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         if (BuildConfig.DEBUG) {

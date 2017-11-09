@@ -2,8 +2,8 @@ apply plugin: 'com.android.application'
 apply from: 'tasks.gradle'
 
 android {
-    compileSdkVersion 25
-    buildToolsVersion "25.0.2"
+    compileSdkVersion 26
+    buildToolsVersion "26.0.2"
     defaultConfig {
         applicationId "com.ihs.keyboardutilslib"
         minSdkVersion 14
@@ -22,13 +22,18 @@ android {
     lintOptions {
         abortOnError false
     }
+
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
 }
 
 dependencies {
 
-    compile "com.android.support:appcompat-v7:25.3.1"
-    compile "com.android.support:recyclerview-v7:25.3.1"
-    compile 'com.squareup.leakcanary:leakcanary-android:1.5'
+    compile "com.android.support:appcompat-v7:26.1.0"
+    compile "com.android.support:recyclerview-v7:26.1.0"
+    compile 'com.squareup.leakcanary:leakcanary-android:1.5.1'
     compile 'com.android.support:multidex:1.0.1'
 
     // Native Ads

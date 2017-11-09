@@ -48,7 +48,6 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Random;
 
-import hugo.weaving.DebugLog;
 
 /**
  * Drawable for animated boost icon.
@@ -384,7 +383,6 @@ public class BoostIconDrawable extends AnimatedIconDrawable implements RamUsageD
         return mState == State.BOOSTING;
     }
 
-    @DebugLog
     private synchronized void initAnimationResources() {
         HSLog.d(TAG, "Init animation resources");
 

@@ -73,7 +73,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.Queue;
 
-import hugo.weaving.DebugLog;
 
 import static android.content.IntentFilter.SYSTEM_HIGH_PRIORITY;
 
@@ -162,7 +161,6 @@ public class BoostPlusActivity extends BasePermissionActivity
 
     @SuppressWarnings("unchecked")
     @Override
-    @DebugLog
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_boost_plus);
