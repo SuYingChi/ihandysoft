@@ -71,6 +71,7 @@ import com.ihs.keyboardutils.utils.LauncherAnimationUtils;
 import java.util.List;
 
 import static android.content.IntentFilter.SYSTEM_HIGH_PRIORITY;
+import static android.view.View.GONE;
 
 
 public class BatteryActivity extends BaseCenterActivity implements View.OnClickListener {
@@ -327,7 +328,7 @@ public class BatteryActivity extends BaseCenterActivity implements View.OnClickL
 
     private boolean resumeManualToolBar() {
         if (mToolBarView.getVisibility() == View.VISIBLE) {
-            mToolBarView.setVisibility(View.GONE);
+            mToolBarView.setVisibility(GONE);
             mManualToolBarLl.setVisibility(View.VISIBLE);
             return true;
         }
@@ -395,6 +396,11 @@ public class BatteryActivity extends BaseCenterActivity implements View.OnClickL
         if (!ChargingPrefsUtil.getInstance().isChargingEnabledBefore()
                 && !ChargingPrefsUtil.isBatteryTipShown()) {
             mMenuIv.setImageResource(R.drawable.ic_battery_menu_tip);
+        }
+
+
+        if(ChargingPrefsUtil.isChargingMuted()){
+            mMenuIv.setVisibility(GONE);
         }
 
         Drawable drawable = mChargingContinueIv.getDrawable();
@@ -514,7 +520,7 @@ public class BatteryActivity extends BaseCenterActivity implements View.OnClickL
             case LOW_BATTERY:
                 mStatusTitleTv.setText(getString(R.string.battery_low));
                 mStatusContentTv.setText(getString(R.string.battery_low_content));
-                mBatteryChargingLl.setVisibility(View.GONE);
+                mBatteryChargingLl.setVisibility(GONE);
                 mPowerRemainingTv.setText(getString(R.string.battery_power_remaining));
                 VectorCompat.setImageViewVectorResource(this, mStatusTitleIv, R.drawable.battery_careful_svg);
                 VectorCompat.setImageViewVectorResource(this, mPowerRemainingPercentIv, R.drawable.battery_light_svg);
@@ -523,7 +529,7 @@ public class BatteryActivity extends BaseCenterActivity implements View.OnClickL
             case CAREFUL:
                 mStatusTitleTv.setText(getString(R.string.battery_careful));
                 mStatusContentTv.setText(getString(R.string.battery_careful_content));
-                mBatteryChargingLl.setVisibility(View.GONE);
+                mBatteryChargingLl.setVisibility(GONE);
                 mPowerRemainingTv.setText(getString(R.string.battery_power_remaining));
                 VectorCompat.setImageViewVectorResource(this, mStatusTitleIv, R.drawable.battery_careful_svg);
                 VectorCompat.setImageViewVectorResource(this, mPowerRemainingPercentIv, R.drawable.battery_light_svg);
@@ -532,7 +538,7 @@ public class BatteryActivity extends BaseCenterActivity implements View.OnClickL
             case EXCELLENT:
                 mStatusTitleTv.setText(getString(R.string.battery_excellent));
                 mStatusContentTv.setText(getString(R.string.battery_excellent_content));
-                mBatteryChargingLl.setVisibility(View.GONE);
+                mBatteryChargingLl.setVisibility(GONE);
                 mPowerRemainingTv.setText(getString(R.string.battery_power_remaining));
                 VectorCompat.setImageViewVectorResource(this, mStatusTitleIv, R.drawable.battery_excellent_svg);
                 VectorCompat.setImageViewVectorResource(this, mPowerRemainingPercentIv, R.drawable.battery_light_svg);
@@ -896,7 +902,7 @@ public class BatteryActivity extends BaseCenterActivity implements View.OnClickL
     private void startCleaningAnimation() {
         HSLog.d(TAG, "startCleaningAnimation ***");
         if (null != mManualToolBarLl) {
-            mManualToolBarLl.setVisibility(View.GONE);
+            mManualToolBarLl.setVisibility(GONE);
         }
 
         if (null != mToolBarView) {
@@ -904,9 +910,9 @@ public class BatteryActivity extends BaseCenterActivity implements View.OnClickL
         }
 
         if (null != mMenuLl) {
-            mMenuLl.setVisibility(View.GONE);
+            mMenuLl.setVisibility(GONE);
         }
-        mOptimizeBtn.setVisibility(View.GONE);
+        mOptimizeBtn.setVisibility(GONE);
 
         mIsCleanAnimating = true;
         mIsCleaningToCharging = true;
@@ -1048,7 +1054,7 @@ public class BatteryActivity extends BaseCenterActivity implements View.OnClickL
         if (null != mCleanProgressRunnable) {
             mHandler.removeCallbacks(mCleanProgressRunnable);
         }
-        mCleaningContentRl.setVisibility(View.GONE);
+        mCleaningContentRl.setVisibility(GONE);
         mBatteryContentLl.setVisibility(View.VISIBLE);
         mBatteryContentLl.clearAnimation();
         mCleaningBallIv.clearAnimation();
@@ -1077,9 +1083,9 @@ public class BatteryActivity extends BaseCenterActivity implements View.OnClickL
         mScanRightSymbolIv.setScaleX(1.0f);
         mScanRightSymbolIv.setScaleY(1.0f);
         mScanRightSymbolIv.clearAnimation();
-        mScanRightSymbolIv.setVisibility(View.GONE);
+        mScanRightSymbolIv.setVisibility(GONE);
         mCleanResultLl.clearAnimation();
-        mCleanResultLl.setVisibility(View.GONE);
+        mCleanResultLl.setVisibility(GONE);
         mCleaningBallIv.clearAnimation();
         mCleaningBallIv.setVisibility(View.INVISIBLE);
         mHandler.removeCallbacksAndMessages(null);
@@ -1147,7 +1153,7 @@ public class BatteryActivity extends BaseCenterActivity implements View.OnClickL
         String extendMinute = "";
         if (isCleanTimeFrozen) {
             mExtendDescriptionLineOTv.setText(getString(R.string.battery_already_optimal));
-            mExtendDescriptionLineITv.setVisibility(View.GONE);
+            mExtendDescriptionLineITv.setVisibility(GONE);
             mExtendTimeLl.setVisibility(View.INVISIBLE);
         } else {
             // Clean result appear
@@ -1157,7 +1163,7 @@ public class BatteryActivity extends BaseCenterActivity implements View.OnClickL
 
             if (hour == 0 && minute == 0) {
                 mExtendDescriptionLineOTv.setText(getString(R.string.battery_excellent_content));
-                mExtendDescriptionLineITv.setVisibility(View.GONE);
+                mExtendDescriptionLineITv.setVisibility(GONE);
                 mExtendTimeLl.setVisibility(View.INVISIBLE);
             } else {
                 mExtendDescriptionLineOTv.setText(getString(R.string.battery_clean_finished_line_o));
@@ -1333,7 +1339,7 @@ public class BatteryActivity extends BaseCenterActivity implements View.OnClickL
         ResultPageAdsManager.getInstance().preloadAd();
 
         if (mBatteryChargingLl.getVisibility() == View.VISIBLE) {
-            mBatteryChargingLl.setVisibility(View.GONE);
+            mBatteryChargingLl.setVisibility(GONE);
         }
         startCleaningAnimation();
         startBoost();
