@@ -137,14 +137,15 @@ public class KCNotificationManager {
         try {
             if (useAutoPilot) {
                 /**
-                 * 使用 topic-1508315967034 - push_time 远程配置
+                 * 使用 topic-1509605838590 - push time 远程配置
                  * ---------------------------------------------
-                 * Topic 名称:           Push Test
-                 * Topic 描述:           Push方案的测试
+                 * Topic 名称:           Push Time
+                 * Topic 描述:           Push Time Test
                  * Topic.x 可能值:       [11, 17]
-                 * Topic.x 描述:         push时间 11am或17pm
+                 * Topic.x 描述:         push time
                  */
-                double pushTimeDouble = AutopilotConfig.getDoubleToTestNow("topic-1508315967034", "push_time", 11);
+                double pushTimeDouble = AutopilotConfig.getDoubleToTestNow("topic-1509605838590", "push time", 11);
+                HSLog.e("下次获取时间", pushTimeDouble + "");
                 list.add((int) pushTimeDouble);
             } else {
                 list = (List<Object>) HSConfig.getList("Application", "LocalNotifications", "LocalNotificationsPushTime");
@@ -183,7 +184,7 @@ public class KCNotificationManager {
             requestTime.set(Calendar.SECOND, 0);
 
             long timeInMillis = requestTime.getTimeInMillis();
-            if (timeInMillis - lastPushTime < 1000 || timeInMillis < now) {
+            if (timeInMillis - lastPushTime < 1000 || timeInMillis < now || (isSameDate(timeInMillis, lastPushTime))) {
                 timeInMillis = timeInMillis + TimeUnit.DAYS.toMillis(1);
             }
 
@@ -198,6 +199,16 @@ public class KCNotificationManager {
         spHelper.putLong(PREFS_NEXT_EVENT_TIME, nextEventTime);
         setNextTriggerTime(nextEventTime);
     }
+
+    private boolean isSameDate(long currentTime, long lastTime) {
+        Calendar cal1 = Calendar.getInstance();
+        Calendar cal2 = Calendar.getInstance();
+        cal1.setTimeInMillis(currentTime);
+        cal2.setTimeInMillis(lastTime);
+        return cal1.get(Calendar.YEAR) == cal2.get(Calendar.YEAR) &&
+                cal1.get(Calendar.DAY_OF_YEAR) == cal2.get(Calendar.DAY_OF_YEAR);
+    }
+
 
     public void sendNotification() {
         if (!HSPreferenceHelper.getDefault().getBoolean(PREFS_NOTIFICATION_ENABLE, true)) {
@@ -266,14 +277,14 @@ public class KCNotificationManager {
 
         if (useAutoPilot && TextUtils.equals(notificationToSend.getName(), AUTOPILOT_TEST_FILTER_NAME)) {
             /**
-             * 使用 topic-1508315967034 - push_style 远程配置
+             * 使用 topic-1509605981871 - push_style 远程配置
              * ---------------------------------------------
-             * Topic 名称:           Push Test
-             * Topic 描述:           Push方案的测试
+             * Topic 名称:           Push Style
+             * Topic 描述:           push style test for filter red color
              * Topic.x 可能值:       [1, 2]
-             * Topic.x 描述:         push的样式
+             * Topic.x 描述:         push style
              */
-            style = (int) AutopilotConfig.getDoubleToTestNow("topic-1508315967034", "push_style", style);
+            style = (int) AutopilotConfig.getDoubleToTestNow("topic-1509605981871", "push_style", style);
         }
 
         if (DeviceUtils.getDeviceBrand().toLowerCase().contains("tcl") && Build.VERSION.SDK_INT == 19) {
@@ -473,6 +484,10 @@ public class KCNotificationManager {
         intent.putExtra("actionType", notificationBean.getActionType());
         intent.putExtra("name", notificationBean.getName());
         PendingIntent resultPendingIntent;
+        if (useAutoPilot) {
+            uploadAutopilotShow();
+            uploadAutopilotShowForSpecificName(notificationBean.getName());
+        }
 
         resultPendingIntent = PendingIntent.getBroadcast(
                 getContext(),
@@ -497,41 +512,66 @@ public class KCNotificationManager {
             }
         } catch (Exception e) {
             e.printStackTrace();
+            HSLog.e("下次", "notify error");
             return;
         }
-        if (useAutoPilot) {
-            uploadAutopilotShow();
-            uploadAutopilotShowForSpecificName(notificationBean.getName());
-        }
+
         HSAnalytics.logEvent("local_push_showed", "local_push_showed", notificationBean.getActionType());
         HSAnalytics.logEvent("local_push_showed_content_name", "local_push_showed_content_name", notificationBean.getName());
     }
 
     private void uploadAutopilotShow() {
         /**
-         *  上传日志: topic-1508315967034 - push_showed
+         *  上传日志: topic-1509605838590 - push_show
          *  ---------------------------------------------
-         *  Topic.Event 名称:     push_showed
-         *  Topic.Event 描述:     push show
+         *  Topic.Event 名称:     push_show
+         *  Topic.Event 描述:     push showed
          */
-        AutopilotEvent.logTopicEvent("topic-1508315967034", "push_showed");
+        AutopilotEvent.logTopicEvent("topic-1509605838590", "push_show");
+    }
+
+    private static void uploadAutopilotClick() {
+        /**
+         *  上传日志: topic-1509605838590 - push_click
+         *  ---------------------------------------------
+         *  Topic.Event 名称:     push_click
+         *  Topic.Event 描述:     push clicked
+         */
+        AutopilotEvent.logTopicEvent("topic-1509605838590", "push_click");
+    }
+
+    private static void uploadAutopilotRedColorClick() {
+        /**
+         *  上传日志: topic-1509605981871 - push_click
+         *  ---------------------------------------------
+         *  Topic.Event 名称:     push_click
+         *  Topic.Event 描述:     push clicked
+         */
+        AutopilotEvent.logTopicEvent("topic-1509605981871", "push_click");
     }
 
     private void uploadAutopilotShowForSpecificName(String name) {
         if (TextUtils.equals(name, AUTOPILOT_TEST_FILTER_NAME)) {
             /**
-             *  上传日志: topic-1508315967034 - filter_red_color_push_show
+             *  上传日志: topic-1509605981871 - push_show
              *  ---------------------------------------------
-             *  Topic.Event 名称:     filter_red_color_push_show
-             *  Topic.Event 描述:     filter_red_color_push_show
+             *  Topic.Event 名称:     push_show
+             *  Topic.Event 描述:     push showed
              */
-            AutopilotEvent.logTopicEvent("topic-1508315967034", "filter_red_color_push_show");
+            AutopilotEvent.logTopicEvent("topic-1509605981871", "push_show");
         }
     }
 
     public static void logNotificationClick(String actionType, String name) {
         HSAnalytics.logEvent("local_push_clicked", "local_push_clicked", actionType);
         HSAnalytics.logEvent("local_push_clicked_content_name", "local_push_clicked_content_name", name);
+    }
+
+    public static void uploadPushAutopilotEvent(String actionType, String name) {
+        uploadAutopilotClick();
+        if (TextUtils.equals("Filter", actionType) && TextUtils.equals(name, AUTOPILOT_TEST_FILTER_NAME)) {
+            uploadAutopilotRedColorClick();
+        }
     }
 
     private boolean isChargingEnabled() {
