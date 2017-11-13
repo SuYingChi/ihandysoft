@@ -683,6 +683,11 @@ public class NotificationManager {
     }
 
     public void notify(final int id, final int type, final Notification notification) {
+        //过滤4.4 notification
+        if(Build.VERSION.SDK_INT == 19){
+            return;
+        }
+
         if (id == NotificationCondition.NOTIFICATION_ID_CLEAR_DEFAULT) {
             lastClearDefaultNotificationId = NotificationCondition.NOTIFICATION_ID_CLEAR_DEFAULT;
         }
@@ -697,7 +702,6 @@ public class NotificationManager {
                 android.app.NotificationManager notifyMgr = (android.app.NotificationManager)
                         HSApplication.getContext().getSystemService(Context.NOTIFICATION_SERVICE);
                 try {
-                    HSLog.d(TAG, "notify()");
                     notifyMgr.notify(id, notification);
                 } catch (Exception e) {
                 }

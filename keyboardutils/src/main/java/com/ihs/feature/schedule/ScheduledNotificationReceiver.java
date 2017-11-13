@@ -4,6 +4,7 @@ import android.app.PendingIntent;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
+import android.os.Build;
 import android.support.v7.app.NotificationCompat;
 import android.widget.RemoteViews;
 
@@ -67,6 +68,9 @@ public class ScheduledNotificationReceiver extends BroadcastReceiver {
     }
 
     public static void showNotification(Context context) {
+        if (Build.VERSION.SDK_INT == 19) {
+            return;
+        }
         int notificationId = NotificationCondition.NOTIFICATION_ID_SET_AS_DEFAULT;
         int smallIconId = R.drawable.notification_home_small_icon;
         int lastUsedIndex = HSPreferenceHelper.getDefault().getInt(PREF_KEY_LAST_USED_DESCRIPTION_INDEX, -1);

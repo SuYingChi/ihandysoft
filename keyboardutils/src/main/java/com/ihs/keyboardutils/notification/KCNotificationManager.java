@@ -28,7 +28,6 @@ import com.ihs.commons.notificationcenter.INotificationObserver;
 import com.ihs.commons.utils.HSBundle;
 import com.ihs.commons.utils.HSLog;
 import com.ihs.commons.utils.HSPreferenceHelper;
-import com.ihs.feature.common.DeviceUtils;
 import com.ihs.keyboardutils.R;
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.nostra13.universalimageloader.core.assist.FailReason;
@@ -287,7 +286,7 @@ public class KCNotificationManager {
             style = (int) AutopilotConfig.getDoubleToTestNow("topic-1509605981871", "push_style", style);
         }
 
-        if (DeviceUtils.getDeviceBrand().toLowerCase().contains("tcl") && Build.VERSION.SDK_INT == 19) {
+        if (Build.VERSION.SDK_INT == 19) {
             style = 0;
         }
         switch (style) {

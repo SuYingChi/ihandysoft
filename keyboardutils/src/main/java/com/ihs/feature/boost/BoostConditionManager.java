@@ -1,5 +1,6 @@
 package com.ihs.feature.boost;
 
+import android.os.Build;
 import android.support.annotation.NonNull;
 import android.text.format.DateUtils;
 
@@ -8,9 +9,9 @@ import com.ihs.commons.utils.HSLog;
 import com.ihs.commons.utils.HSPreferenceHelper;
 import com.ihs.feature.common.ConcurrentUtils;
 import com.ihs.feature.common.LauncherFiles;
-import com.ihs.feature.tip.LauncherTipManager;
 import com.ihs.feature.common.PreferenceHelper;
 import com.ihs.feature.common.Utils;
+import com.ihs.feature.tip.LauncherTipManager;
 import com.ihs.keyboardutils.BuildConfig;
 
 import java.util.ArrayList;
@@ -148,6 +149,10 @@ public class BoostConditionManager {
             }
             return false;
         }
+        if (Build.VERSION.SDK_INT == 19) {
+            return false;
+        }
+
         setCurrentBoostType(deviceNeedBoost ? type : null);
 
         LauncherTipManager.getInstance().showTip(HSApplication.getContext(),
