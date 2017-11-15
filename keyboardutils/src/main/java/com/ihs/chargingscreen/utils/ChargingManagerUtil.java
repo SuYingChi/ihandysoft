@@ -8,6 +8,8 @@ import android.content.pm.PackageManager.NameNotFoundException;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.Bundle;
+import android.support.v4.content.ContextCompat;
+import android.util.AndroidRuntimeException;
 
 import com.artw.lockscreen.common.LockerChargingScreenUtils;
 import com.ihs.app.framework.HSApplication;
@@ -25,8 +27,6 @@ import com.launcher.chargingscreen.ChargingScreen;
  * Created by zhixiangxiao on 5/17/16.
  */
 public class ChargingManagerUtil {
-
-    private static Context context = HSApplication.getContext();
 
     private static final int[] BATTERY_LEVELS = {20, 40, 60, 80, 100};
 
@@ -157,9 +157,13 @@ public class ChargingManagerUtil {
     public static void startChargingActivity() {
         if (!HSConfig.optBoolean(false, "Application", "Locker", "UseNewLockScreen")) {
             HSLog.d("config use past charging screen");
-            Intent intent = new Intent(context, ChargingScreenActivity.class);
-            intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NO_ANIMATION);
-            context.startActivity(intent);
+            try {
+                Intent intent = new Intent(HSApplication.getContext(), ChargingScreenActivity.class);
+                intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NO_ANIMATION);
+                ContextCompat.startActivity(HSApplication.getContext(), intent, null);
+            } catch (AndroidRuntimeException e) {
+                HSLog.e(e.getMessage());
+            }
         } else {
             HSLog.d("config use new charging screen");
             if (LockerChargingScreenUtils.isCalling()) {

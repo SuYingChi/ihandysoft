@@ -108,7 +108,7 @@ public class ChargingLockerSettingsActivity extends AppCompatPreferenceActivity 
                 getPreferenceScreen().removePreference(findPreference(getString(R.string.pref_header_key)));
             } else {
                 SwitchPreference chargingSwitcher = (SwitchPreference) findPreference(getString(R.string.pref_header_key));
-                int chargingEnableStates = ChargingPrefsUtil.getInstance().getChargingEnableStates();
+                int chargingEnableStates = ChargingPrefsUtil.getChargingEnableStates();
                 switch (chargingEnableStates) {
                     case ChargingPrefsUtil.CHARGING_DEFAULT_DISABLED:
                         chargingSwitcher.setChecked(false);
