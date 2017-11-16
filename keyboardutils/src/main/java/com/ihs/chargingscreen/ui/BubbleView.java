@@ -37,7 +37,6 @@ public class BubbleView extends View {
     }
 
     private void init() {
-        setLayerType(LAYER_TYPE_HARDWARE, null);
         paint = new Paint();
         paint.setColor(0Xffffff);//灰白色
         paint.setAlpha(25);//设置不透明度：透明为0，完全不透明为255
