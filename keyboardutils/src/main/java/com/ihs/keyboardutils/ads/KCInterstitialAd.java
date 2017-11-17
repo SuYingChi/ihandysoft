@@ -5,7 +5,6 @@ import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.Handler;
 import android.os.Looper;
-import android.os.SystemClock;
 import android.text.TextUtils;
 import android.widget.Toast;
 
@@ -39,25 +38,21 @@ public class KCInterstitialAd {
     }
 
     public static AcbInterstitialAdLoader loadAndShow(final String placement, final String title, final String subTitle, final OnAdShowListener onAdShowListener, final OnAdCloseListener onAdCloseListener) {
-        return loadAndShow(placement, title, subTitle, false, onAdShowListener, onAdCloseListener, 0);
+        return loadAndShow(placement, title, subTitle, false, onAdShowListener, onAdCloseListener);
     }
-
 
     /**
      * 加载插页广告，并在加载完成后显示，使用这种方式时需要在合适的时机去 Cancel 返回的 Loader
-     *
-     * @param placement         广告位
+     * @param placement 广告位
      * @param onAdCloseListener 广告关闭时的回调
-     * @param showQuietly       是否使用安静模式
-     * @param timeOutLimit      请求超时限制时间，超时之后不展示。单位ms
+     * @param showQuietly 是否使用安静模式
      * @return 广告的Loader，需要在合适的时机去 Cancel
      */
-    public static AcbInterstitialAdLoader loadAndShow(final String placement, final String title, final String subTitle, final boolean showQuietly, final OnAdShowListener onAdShowListener, final OnAdCloseListener onAdCloseListener,
-                                                      long timeOutLimit) {
+    public static AcbInterstitialAdLoader loadAndShow(final String placement, final String title, final String subTitle, final boolean showQuietly, final OnAdShowListener onAdShowListener, final OnAdCloseListener onAdCloseListener) {
         if (RemoveAdsManager.getInstance().isRemoveAdsPurchased()) {
             return null;
         }
-        long startLoadingTime = SystemClock.currentThreadTimeMillis();
+
         logAnalyticsEvent(placement, "Load");
         AcbInterstitialAdLoader loader = new AcbInterstitialAdLoader(HSApplication.getContext(), placement);
         loader.load(1, new AcbInterstitialAdLoader.AcbInterstitialAdLoadListener() {
@@ -65,11 +60,6 @@ public class KCInterstitialAd {
 
             @Override
             public void onAdReceived(AcbInterstitialAdLoader acbInterstitialAdLoader, List<AcbInterstitialAd> list) {
-                if (timeOutLimit > 0 && SystemClock.currentThreadTimeMillis() - startLoadingTime >= timeOutLimit) {
-                    return;
-                }
-
-
                 boolean success = show(list, placement, title, subTitle, showQuietly, onAdCloseListener);
                 if (listener != null) {
                     listener.onAdShow(success);
