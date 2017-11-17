@@ -98,8 +98,6 @@
 
     <dimen name="activity_horizontal_margin">16dp</dimen>
 
-    <integer name="google_play_services_version">11400000</integer>
-
 
     <!-- Battery -->
     <dimen name="battery_bottom_height">82dp</dimen>
