@@ -6,11 +6,13 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.pm.PackageManager;
+import android.preference.PreferenceManager;
 
 import com.artw.lockscreen.statusbar.CustomDesignAlert;
 import com.ihs.app.analytics.HSAnalytics;
 import com.ihs.app.framework.HSApplication;
 import com.ihs.app.utils.HSMarketUtils;
+import com.ihs.commons.config.HSConfig;
 import com.ihs.keyboardutils.R;
 import com.ihs.keyboardutils.utils.CommonUtils;
 
@@ -48,8 +50,14 @@ public class LockerAppGuideManager {
             intentFilter.addAction(Intent.ACTION_PACKAGE_ADDED);
             intentFilter.addDataScheme("package");
 
-            PackageInstallReceiver packageInstallReceiver = new PackageInstallReceiver();
+            PackageInstallReceiver packageInstallReceiver = new PackageInstallReceiver(pkgName);
             HSApplication.getContext().registerReceiver(packageInstallReceiver, intentFilter);
+
+            intentFilter = new IntentFilter();
+            intentFilter.addAction(Intent.ACTION_USER_PRESENT);
+
+            UnlockScreenReceiver unlockScreenReceiver = new UnlockScreenReceiver();
+            HSApplication.getContext().registerReceiver(unlockScreenReceiver, intentFilter);
         }
         lockerAppPkgName = pkgName;
         this.shouldGuideToLockerApp = shouldGuideToLockerApp;
@@ -70,7 +78,7 @@ public class LockerAppGuideManager {
 
     private void setLockerInstall() {
         isLockerInstall = true;
-        if (lockerInstallStatusChangeListeners == null) {
+        if (lockerInstallStatusChangeListeners != null) {
             for (ILockerInstallStatusChangeListener lockerInstallStatusChangeListener : lockerInstallStatusChangeListeners) {
                 lockerInstallStatusChangeListener.onLockerInstallStatusChange();
             }
@@ -86,7 +94,7 @@ public class LockerAppGuideManager {
     }
 
     public boolean shouldGuideToDownloadLocker() {
-        return isLockerInstall && shouldGuideToLockerApp;
+        return !isLockerInstall && shouldGuideToLockerApp;
     }
 
 
@@ -113,15 +121,34 @@ public class LockerAppGuideManager {
     }
 
     private static class PackageInstallReceiver extends BroadcastReceiver {
-        private PackageInstallReceiver() {
+        private String pkgName;
+        private PackageInstallReceiver(String pkgName) {
+            this.pkgName = pkgName;
         }
 
         public void onReceive(Context context, Intent intent) {
             String action = intent.getAction();
             final String packageName = intent.getData().getEncodedSchemeSpecificPart();
             if (Intent.ACTION_PACKAGE_ADDED.equals(action)) {
-                if (HSApplication.getContext().getResources().getString(R.string.smart_locker_app_package_name).endsWith(packageName)) {
+                if (pkgName.endsWith(packageName)) {
                     LockerAppGuideManager.getInstance().setLockerInstall();
+                }
+            }
+        }
+    }
+
+    private static class UnlockScreenReceiver extends BroadcastReceiver {
+
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            Context ctx = HSApplication.getContext();
+            boolean downloadLockerAlert = HSConfig.optBoolean(false,"Application","DownloadLockerAlert");
+            if (downloadLockerAlert) {
+                int alertIntervalInHour = HSConfig.optInteger(24,"Application","AlertIntervalInHour");
+                long lastShowDownloadLockerAlertTime = PreferenceManager.getDefaultSharedPreferences(ctx).getLong("lastShowDownloadLockerAlertTime", 0);
+                if (lastShowDownloadLockerAlertTime - System.currentTimeMillis() > alertIntervalInHour * 60 * 60 * 1000) {
+                    PreferenceManager.getDefaultSharedPreferences(ctx).edit().putLong("lastShowDownloadLockerAlertTime", System.currentTimeMillis()).apply();
+                    LockerAppGuideManager.getInstance().showDownloadLockerAlert(ctx, ctx.getResources().getString(R.string.unlock_screen_guide_to_download_locker_message));
                 }
             }
         }

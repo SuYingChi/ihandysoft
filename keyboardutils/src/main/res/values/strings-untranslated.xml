@@ -1,4 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="wallpaper_network_error">Network errors. Please try again.</string>
+    <string name="unlock_screen_guide_to_download_locker_message">Show Notification on Lock Screen
+Show Weather on Lock Screen
+Try More Lock Screen Themes</string>
 </resources>
