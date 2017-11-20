@@ -1,21 +1,18 @@
 package com.artw.lockscreen;
 
-import android.app.Dialog;
 import android.content.ActivityNotFoundException;
 import android.content.BroadcastReceiver;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.pm.PackageManager;
 
 import com.artw.lockscreen.statusbar.CustomDesignAlert;
+import com.ihs.app.analytics.HSAnalytics;
 import com.ihs.app.framework.HSApplication;
 import com.ihs.app.utils.HSMarketUtils;
 import com.ihs.keyboardutils.R;
-import com.ihs.keyboardutils.alerts.HSAlertDialog;
 import com.ihs.keyboardutils.utils.CommonUtils;
-import com.kc.commons.utils.KCCommonUtils;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -103,21 +100,11 @@ public class LockerAppGuideManager {
         lockerDialog.setMessage(msg);
         lockerDialog.setImageResource(R.drawable.enable_tripple_alert_top_image);//locker image
         lockerDialog.setCancelable(true);
-
-        HSAlertDialog.build(context, R.style.AppCompactDialogStyle).setTitle(context.getString(R.string.locker_guide_unlock_for_free_dialog_title))
-                .setPositiveButton(context.getString(R.string.enable), new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialogInterface, int i) {
-                        HSMarketUtils.browseAPP(lockerAppPkgName);
-                        KCCommonUtils.dismissDialog((Dialog) dialogInterface);
-                    }
-                })
-                .setNegativeButton(context.getString(R.string.cancel), new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialogInterface, int i) {
-                        KCCommonUtils.dismissDialog((Dialog) dialogInterface);
-                    }
-                }).create().show();
+        lockerDialog.setPositiveButton(context.getString(R.string.download_capital), view -> {
+            HSAnalytics.logEvent("alert_locker_click", "size", "half_screen", "occasion", "open_app");
+            HSMarketUtils.browseAPP(context.getString(R.string.smart_locker_app_package_name));
+        });
+        lockerDialog.show();
     }
 
     private static class PackageInstallReceiver extends BroadcastReceiver {
