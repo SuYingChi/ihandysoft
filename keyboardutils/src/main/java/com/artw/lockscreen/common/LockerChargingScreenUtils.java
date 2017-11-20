@@ -5,7 +5,6 @@ import android.content.Intent;
 import android.os.Build;
 import android.os.SystemClock;
 import android.telephony.TelephonyManager;
-import android.util.AndroidRuntimeException;
 
 import com.artw.lockscreen.LockerActivity;
 import com.artw.lockscreen.LockerSettings;
@@ -94,7 +93,7 @@ public class LockerChargingScreenUtils {
                 intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK
                         | Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NO_ANIMATION);
                 HSApplication.getContext().startActivity(intent);
-            } catch (AndroidRuntimeException e) {
+            } catch (Exception e) {
                 e.printStackTrace();
             }
         } else {

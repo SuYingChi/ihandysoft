@@ -161,7 +161,7 @@ public class ChargingManagerUtil {
                 Intent intent = new Intent(HSApplication.getContext(), ChargingScreenActivity.class);
                 intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NO_ANIMATION);
                 ContextCompat.startActivity(HSApplication.getContext(), intent, null);
-            } catch (AndroidRuntimeException e) {
+            } catch (Exception e) {
                 HSLog.e(e.getMessage());
             }
         } else {
