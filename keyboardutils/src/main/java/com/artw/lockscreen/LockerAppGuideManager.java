@@ -25,6 +25,10 @@ public class LockerAppGuideManager {
     private static final LockerAppGuideManager ourInstance = new LockerAppGuideManager();
     private String lockerAppPkgName = "";
     private boolean shouldGuideToLockerApp = false;
+    public static final String FLURRY_ALERT_OPEN_APP = "alertOpenApp";
+    public static final String FLURRY_ALERT_WALL_PAPER = "alertWallpaper";
+    public static final String FLURRY_ALERT_UNLOCK = "alertUnlock";
+    public static final String FLURRY_ALERT_FROM_LOCKER = "alertFromLocker";
 
     public static LockerAppGuideManager getInstance() {
         return ourInstance;
@@ -94,17 +98,18 @@ public class LockerAppGuideManager {
         }
     }
 
-    public void showDownloadLockerAlert(Context context, String msg) {
+    public void showDownloadLockerAlert(Context context, String msg, String from) {
         CustomDesignAlert lockerDialog = new CustomDesignAlert(HSApplication.getContext());
         lockerDialog.setTitle(context.getString(R.string.locker_alert_title));
         lockerDialog.setMessage(msg);
         lockerDialog.setImageResource(R.drawable.enable_tripple_alert_top_image);//locker image
         lockerDialog.setCancelable(true);
         lockerDialog.setPositiveButton(context.getString(R.string.download_capital), view -> {
-            HSAnalytics.logEvent("alert_locker_click", "size", "half_screen", "occasion", "open_app");
             HSMarketUtils.browseAPP(context.getString(R.string.smart_locker_app_package_name));
+            HSAnalytics.logEvent("app_lockerAlert_button_clicked","app_lockerAlert_button_clicked",from);
         });
         lockerDialog.show();
+        HSAnalytics.logEvent("app_lockerAlert_show","app_lockerAlert_show",from);
     }
 
     private static class PackageInstallReceiver extends BroadcastReceiver {
