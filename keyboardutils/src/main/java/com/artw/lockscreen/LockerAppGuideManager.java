@@ -154,7 +154,7 @@ public class LockerAppGuideManager {
                 long lastShowDownloadLockerAlertTime = PreferenceManager.getDefaultSharedPreferences(ctx).getLong("lastShowDownloadLockerAlertTime", 0);
                 if (lastShowDownloadLockerAlertTime - System.currentTimeMillis() > alertIntervalInHour * 60 * 60 * 1000) {
                     PreferenceManager.getDefaultSharedPreferences(ctx).edit().putLong("lastShowDownloadLockerAlertTime", System.currentTimeMillis()).apply();
-                    LockerAppGuideManager.getInstance().showDownloadLockerAlert(ctx, ctx.getResources().getString(R.string.unlock_screen_guide_to_download_locker_message));
+                    LockerAppGuideManager.getInstance().showDownloadLockerAlert(ctx, ctx.getResources().getString(R.string.unlock_screen_guide_to_download_locker_message),FLURRY_ALERT_FROM_LOCKER);
                 }
             }
         }

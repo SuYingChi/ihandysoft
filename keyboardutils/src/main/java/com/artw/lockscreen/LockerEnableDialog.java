@@ -81,7 +81,7 @@ public class LockerEnableDialog extends Dialog {
             enableButton.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    LockerAppGuideManager.getInstance().downloadOrRedirectToLockerApp();
+                    LockerAppGuideManager.getInstance().downloadOrRedirectToLockerApp(LockerAppGuideManager.FLURRY_SET_AS_LOCK_SCREEN);
                 }
             });
         }else{
