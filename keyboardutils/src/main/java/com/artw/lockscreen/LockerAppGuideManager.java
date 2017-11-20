@@ -24,13 +24,16 @@ import java.util.List;
  */
 
 public class LockerAppGuideManager {
-    private static final LockerAppGuideManager ourInstance = new LockerAppGuideManager();
-    private String lockerAppPkgName = "";
-    private boolean shouldGuideToLockerApp = false;
     public static final String FLURRY_ALERT_OPEN_APP = "alertOpenApp";
     public static final String FLURRY_ALERT_WALL_PAPER = "alertWallpaper";
     public static final String FLURRY_ALERT_UNLOCK = "alertUnlock";
     public static final String FLURRY_ALERT_FROM_LOCKER = "alertFromLocker";
+    public static final String FLURRY_SET_AS_LOCK_SCREEN = "setAsLockScreenButton";
+
+    private static final LockerAppGuideManager ourInstance = new LockerAppGuideManager();
+    private String lockerAppPkgName = "";
+    private boolean shouldGuideToLockerApp = false;
+    private String lockerAppInstalledFrom = "";
 
     public static LockerAppGuideManager getInstance() {
         return ourInstance;
@@ -83,6 +86,7 @@ public class LockerAppGuideManager {
                 lockerInstallStatusChangeListener.onLockerInstallStatusChange();
             }
         }
+        HSAnalytics.logEvent("googlePlay_smartLocker_installed", "googlePlay_smartLocker_installed", lockerAppInstalledFrom);
     }
 
     public boolean isLockerInstall() {
@@ -98,11 +102,12 @@ public class LockerAppGuideManager {
     }
 
 
-    public void downloadOrRedirectToLockerApp() {
+    public void downloadOrRedirectToLockerApp(String from) {
         if (isLockerInstall) {
             openApp(lockerAppPkgName);
         } else {
             HSMarketUtils.browseAPP(lockerAppPkgName);
+            lockerAppInstalledFrom = from;
         }
     }
 
@@ -113,11 +118,12 @@ public class LockerAppGuideManager {
         lockerDialog.setImageResource(R.drawable.enable_tripple_alert_top_image);//locker image
         lockerDialog.setCancelable(true);
         lockerDialog.setPositiveButton(context.getString(R.string.download_capital), view -> {
-            HSMarketUtils.browseAPP(context.getString(R.string.smart_locker_app_package_name));
-            HSAnalytics.logEvent("app_lockerAlert_button_clicked","app_lockerAlert_button_clicked",from);
+            HSMarketUtils.browseAPP(lockerAppPkgName);
+            lockerAppInstalledFrom = from;
+            HSAnalytics.logEvent("app_lockerAlert_button_clicked", "app_lockerAlert_button_clicked", from);
         });
         lockerDialog.show();
-        HSAnalytics.logEvent("app_lockerAlert_show","app_lockerAlert_show",from);
+        HSAnalytics.logEvent("app_lockerAlert_show", "app_lockerAlert_show", from);
     }
 
     private static class PackageInstallReceiver extends BroadcastReceiver {
