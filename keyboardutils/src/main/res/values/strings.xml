@@ -1145,4 +1145,10 @@
     <string name="locker_enable_title_has_text">Applied successfully! \nSet as your lockscreen as well?</string>
 
     <string name="ad_loading_text">Sponsored Content</string>
+    <string name="smart_locker_app_package_name" translatable="false">com.wallpaper.theme.privacy.smart.lock.screen</string>
+    <string name="locker_guide_unlock_for_free_dialog_title">Download Smart Locker to unlock for free</string>
+    <string name="locker_item_applied_guide_installed">Open Smart Locker To Use It</string>
+    <string name="locker_item_applied_guide_not_install">Download Smart Locker To Use It</string>
+    <string name="text_privacy_policy">Privacy Policy</string>
+    <string name="locker_alert_title">Screen Locker</string>
 </resources>

@@ -4,6 +4,7 @@ import android.content.Context;
 import android.support.multidex.MultiDex;
 import android.text.TextUtils;
 
+import com.artw.lockscreen.LockerAppGuideManager;
 import com.artw.lockscreen.ScreenLockerManager;
 import com.ihs.app.alerts.HSAlertMgr;
 import com.ihs.app.framework.HSApplication;
@@ -82,6 +83,7 @@ public class MyApplication extends HSApplication {
         AcbNativeAdManager.sharedInstance().activePlacementInProcess(getString(R.string.ad_placement_result_page));
         AcbNativeAdManager.sharedInstance().activePlacementInProcess("ColorCam_A(NativeAds)FilterDownload");
         FloatWindowCompat.initLockScreen(this);
+        LockerAppGuideManager.getInstance().init(HSApplication.getContext().getString(R.string.smart_locker_app_package_name),true);
     }
 
 

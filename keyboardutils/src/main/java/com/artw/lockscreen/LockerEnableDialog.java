@@ -76,15 +76,26 @@ public class LockerEnableDialog extends Dialog {
             }
         });
         TextView enableButton = (TextView) findViewById(R.id.enable_btn);
-        enableButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                HSAnalytics.logEvent("keyboard_lockeralert_ok_clicked");
-                LockerSettings.setLockerEnabled(true);
-                LockerSettings.setLockerBgUrl(bgUrl);
-                dismiss();
-            }
-        });
+
+        if(LockerAppGuideManager.getInstance().isShouldGuideToLockerApp()){
+            enableButton.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    LockerAppGuideManager.getInstance().downloadOrRedirectToLockerApp();
+                }
+            });
+        }else{
+            enableButton.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    HSAnalytics.logEvent("keyboard_lockeralert_ok_clicked");
+                    LockerSettings.setLockerEnabled(true);
+                    LockerSettings.setLockerBgUrl(bgUrl);
+                    dismiss();
+                }
+            });
+        }
+
 //        enableButton.setBackgroundDrawable(RippleDrawableUtils.getButtonRippleBackground(Color.parseColor("#536dfe")));
 
         mTvTime = (TextView) findViewById(R.id.locker_enable_time_tv);
@@ -140,8 +151,17 @@ public class LockerEnableDialog extends Dialog {
             return;
         }
 
+        if(LockerAppGuideManager.getInstance().isShouldGuideToLockerApp()){
+            if(LockerAppGuideManager.getInstance().isLockerInstall()){
+                appliedText = activity.getString(R.string.locker_item_applied_guide_installed);
+            }else{
+                appliedText = activity.getString(R.string.locker_item_applied_guide_not_install);
+            }
+        }
+
         AlertDialog savingDialog = HSAlertDialog.build(activity, 0).setView(R.layout.layout_dialog_applying).setCancelable(false).create();
         savingDialog.setCanceledOnTouchOutside(false);
+        String finalAppliedText = appliedText;
         ImageLoader.getInstance().loadImage(url, LockerActivity.lockerBgOption, new ImageLoadingListener() {
             private boolean isImgLoaded = false;
             Handler handler = new Handler();
@@ -172,7 +192,7 @@ public class LockerEnableDialog extends Dialog {
                 KCCommonUtils.dismissDialog(savingDialog);
 
                 LockerEnableDialog lockerEnableDialog = new LockerEnableDialog(activity, new BitmapDrawable(activity.getResources(), loadedImage),
-                        url, appliedText);
+                        url, finalAppliedText);
                 KCCommonUtils.showDialog(lockerEnableDialog);
                 lockerEnableDialog.setOnDismissListener(dialog -> {
                     if (bgLoadingListener != null) {
