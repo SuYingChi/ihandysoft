@@ -5,12 +5,10 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.text.TextUtils;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
 
-import com.acb.autopilot.AutopilotEvent;
 import com.artw.lockscreen.LockerSettings;
 import com.ihs.app.analytics.HSAnalytics;
 import com.ihs.app.framework.HSApplication;
@@ -74,7 +72,6 @@ public class ChargingFullScreenAlertDialogActivity extends Activity {
                 .setPositiveButton(chargingMap.get("Button"), new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
-                        autopilotLogTopicEvent();
                         HSGlobalNotificationCenter.sendNotification(NOTIFICATION_LOCKER_ENABLED);
                     }
                 })
@@ -101,7 +98,6 @@ public class ChargingFullScreenAlertDialogActivity extends Activity {
                 .setPositiveButton(chargingMap.get("Button"), new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
-                        autopilotLogTopicEvent();
                         ChargingManagerUtil.enableCharging(HSChargingManager.getInstance().getChargingState() != HSChargingManager.HSChargingState.STATE_DISCHARGING);
                         HSAnalytics.logEvent("alert_charging_click", "size", "full_screen");
                     }
@@ -117,17 +113,6 @@ public class ChargingFullScreenAlertDialogActivity extends Activity {
                 .setFullScreen(true)
                 .setAdText(chargingMap.get("AdText"))
                 .show();
-    }
-
-    private void autopilotLogTopicEvent() {
-        Intent intent = getIntent();
-        if (intent != null) {
-            String topicID = intent.getStringExtra("topicID");
-            String topicEvent = intent.getStringExtra("topicEvent");
-            if (!TextUtils.isEmpty(topicID) && !TextUtils.isEmpty(topicEvent)) {
-                AutopilotEvent.logTopicEvent(topicID, topicEvent);
-            }
-        }
     }
 
     private Map<String, String> getAlertConfigMap(String keyLowercase) {

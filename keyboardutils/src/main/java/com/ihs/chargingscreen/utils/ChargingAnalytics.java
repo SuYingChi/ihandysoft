@@ -54,6 +54,7 @@ public class ChargingAnalytics {
 
     public void chargingScreenShowed() {
         HSAnalytics.logEvent(app_chargingLocker_show, "install_type", PublisherUtils.getInstallType());
+        HSAnalytics.logEvent("app_locker_and_charging_show", "type", "charging_show");
     }
 
     public void chargingEnableNotificationShowed() {

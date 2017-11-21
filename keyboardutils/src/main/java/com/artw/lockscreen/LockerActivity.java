@@ -74,6 +74,7 @@ public class LockerActivity extends AppCompatActivity implements INotificationOb
             if (intent.getAction().equals(Intent.ACTION_SCREEN_ON)) {
                 if (!ClickUtils.isFastDoubleClick()) {
                     HSAnalytics.logEvent("app_screen_locker_show", "install_type", PublisherUtils.getInstallType());
+                    HSAnalytics.logEvent("app_locker_and_charging_show", "type", "locker_show");
                 }
             }
         }

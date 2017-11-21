@@ -69,8 +69,9 @@ dependencies {
 
     compile 'pl.droidsonroids.gif:android-gif-drawable:1.2.7'
 
-    //autopilot
-    compile "com.acb.autopilot:autopilot.gm:4.1.4.gm"
+    // autopilot
+    compile "net.appcloudbox.common:libAcbHSFrameworkAdapter.gm:+"
+    compile "net.appcloudbox.autopilot:libAutoPilot.gm:5.0.0.gm"
 
     compile files('../libs/ihs/libFlashlight/libFlashlight.jar')
 
