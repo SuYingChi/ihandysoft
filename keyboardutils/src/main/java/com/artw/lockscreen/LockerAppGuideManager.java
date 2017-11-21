@@ -148,9 +148,9 @@ public class LockerAppGuideManager {
         @Override
         public void onReceive(Context context, Intent intent) {
             Context ctx = HSApplication.getContext();
-            boolean downloadLockerAlert = HSConfig.optBoolean(false,"Application","DownloadLockerAlert");
+            boolean downloadLockerAlert = HSConfig.optBoolean(false,"Application","DownloadLockerAlert","ShowUnlockScreenAlert");
             if (downloadLockerAlert) {
-                int alertIntervalInHour = HSConfig.optInteger(24,"Application","AlertIntervalInHour");
+                int alertIntervalInHour = HSConfig.optInteger(24,"Application","DownloadLockerAlert","AlertIntervalInHour");
                 long lastShowDownloadLockerAlertTime = PreferenceManager.getDefaultSharedPreferences(ctx).getLong("lastShowDownloadLockerAlertTime", 0);
                 if (lastShowDownloadLockerAlertTime - System.currentTimeMillis() > alertIntervalInHour * 60 * 60 * 1000) {
                     PreferenceManager.getDefaultSharedPreferences(ctx).edit().putLong("lastShowDownloadLockerAlertTime", System.currentTimeMillis()).apply();
