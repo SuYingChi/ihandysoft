@@ -31,6 +31,9 @@ public class LockerAppGuideManager {
     public static final String FLURRY_SET_AS_LOCK_SCREEN = "setAsLockScreenButton";
 
     private static final LockerAppGuideManager ourInstance = new LockerAppGuideManager();
+
+
+
     private String lockerAppPkgName = "";
     private boolean shouldGuideToLockerApp = false;
     private String lockerAppInstalledFrom = "";
@@ -42,7 +45,9 @@ public class LockerAppGuideManager {
     private boolean isLockerInstall = false;
     private List<ILockerInstallStatusChangeListener> lockerInstallStatusChangeListeners;
 
-
+    public String getLockerAppPkgName() {
+        return lockerAppPkgName;
+    }
     private LockerAppGuideManager() {
     }
 
