@@ -35,7 +35,6 @@ public class LockerAppGuideManager {
 
 
 
-    private String lockerAppPkgName = "";
     private boolean shouldGuideToLockerApp = false;
     private String lockerAppInstalledFrom = "";
 
@@ -47,7 +46,7 @@ public class LockerAppGuideManager {
     private List<ILockerInstallStatusChangeListener> lockerInstallStatusChangeListeners;
 
     public String getLockerAppPkgName() {
-        return lockerAppPkgName;
+        return HSConfig.optString("","Application","DownloadScreenLocker","LockerApp");
     }
     private LockerAppGuideManager() {
     }
@@ -68,7 +67,6 @@ public class LockerAppGuideManager {
             UnlockScreenReceiver unlockScreenReceiver = new UnlockScreenReceiver();
             HSApplication.getContext().registerReceiver(unlockScreenReceiver, intentFilter);
         }
-        lockerAppPkgName = pkgName;
         this.shouldGuideToLockerApp = shouldGuideToLockerApp;
     }
 
@@ -110,9 +108,9 @@ public class LockerAppGuideManager {
 
     public void downloadOrRedirectToLockerApp(String from) {
         if (isLockerInstall) {
-            openApp(lockerAppPkgName);
+            openApp(getLockerAppPkgName());
         } else {
-            HSMarketUtils.browseAPP(lockerAppPkgName);
+            HSMarketUtils.browseAPP(getLockerAppPkgName());
             lockerAppInstalledFrom = from;
         }
     }
@@ -143,7 +141,7 @@ public class LockerAppGuideManager {
         lockerDialog.setImageResource(R.drawable.enable_tripple_alert_top_image);//locker image
         lockerDialog.setCancelable(true);
         lockerDialog.setPositiveButton(bean.getButton(), view -> {
-            HSMarketUtils.browseAPP(lockerAppPkgName);
+            HSMarketUtils.browseAPP(getLockerAppPkgName());
             lockerAppInstalledFrom = from;
             HSAnalytics.logEvent("app_lockerAlert_button_clicked", "app_lockerAlert_button_clicked", from);
         });
