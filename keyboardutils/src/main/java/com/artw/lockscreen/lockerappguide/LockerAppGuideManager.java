@@ -1,4 +1,4 @@
-package com.artw.lockscreen;
+package com.artw.lockscreen.lockerappguide;
 
 import android.content.ActivityNotFoundException;
 import android.content.BroadcastReceiver;
@@ -8,7 +8,6 @@ import android.content.IntentFilter;
 import android.content.pm.PackageManager;
 import android.preference.PreferenceManager;
 
-import com.artw.lockscreen.statusbar.CustomDesignAlert;
 import com.ihs.app.analytics.HSAnalytics;
 import com.ihs.app.framework.HSApplication;
 import com.ihs.app.utils.HSMarketUtils;
@@ -18,6 +17,7 @@ import com.ihs.keyboardutils.utils.CommonUtils;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 /**
  * Created by jixiang on 17/11/17.
@@ -111,13 +111,32 @@ public class LockerAppGuideManager {
         }
     }
 
-    public void showDownloadLockerAlert(Context context, String msg, String from) {
-        CustomDesignAlert lockerDialog = new CustomDesignAlert(HSApplication.getContext());
-        lockerDialog.setTitle(context.getString(R.string.locker_alert_title));
-        lockerDialog.setMessage(msg);
+    public void showDownloadLockerAlert(Context context, String from) {
+        Map<String, ?> alertMap = null;
+        switch (from) {
+            case FLURRY_ALERT_FROM_LOCKER:
+                alertMap = HSConfig.getMap("Application", "DownloadScreenLocker", "UnlockScreen");
+                break;
+            case FLURRY_ALERT_OPEN_APP:
+                alertMap = HSConfig.getMap("Application", "DownloadScreenLocker", "AppOpen");
+                break;
+            case FLURRY_ALERT_UNLOCK:
+                alertMap = HSConfig.getMap("Application", "DownloadScreenLocker", "UnlockForFree");
+                break;
+            case FLURRY_ALERT_WALL_PAPER:
+                alertMap = HSConfig.getMap("Application", "DownloadScreenLocker", "Wallpaper");
+                break;
+        }
+        if (alertMap.size() < 1) {
+            return;
+        }
+        LockerGuideAlertBean bean = new LockerGuideAlertBean((String) alertMap.get("title"), (String) alertMap.get("body"), (String) alertMap.get("button"));
+        CustomDesignAlert lockerDialog = new CustomDesignAlert(context);
+        lockerDialog.setTitle(bean.getTitle());
+        lockerDialog.setMessage(bean.getBody());
         lockerDialog.setImageResource(R.drawable.enable_tripple_alert_top_image);//locker image
         lockerDialog.setCancelable(true);
-        lockerDialog.setPositiveButton(context.getString(R.string.download_capital), view -> {
+        lockerDialog.setPositiveButton(bean.getButton(), view -> {
             HSMarketUtils.browseAPP(lockerAppPkgName);
             lockerAppInstalledFrom = from;
             HSAnalytics.logEvent("app_lockerAlert_button_clicked", "app_lockerAlert_button_clicked", from);
@@ -128,6 +147,7 @@ public class LockerAppGuideManager {
 
     private static class PackageInstallReceiver extends BroadcastReceiver {
         private String pkgName;
+
         private PackageInstallReceiver(String pkgName) {
             this.pkgName = pkgName;
         }
@@ -149,13 +169,13 @@ public class LockerAppGuideManager {
         public void onReceive(Context context, Intent intent) {
             if (!LockerAppGuideManager.getInstance().isLockerInstall) {
                 Context ctx = HSApplication.getContext();
-                boolean downloadLockerAlert = HSConfig.optBoolean(false, "Application", "DownloadLockerAlert", "ShowUnlockScreenAlert");
+                boolean downloadLockerAlert = HSConfig.optBoolean(false, "Application", "DownloadScreenLocker", "UnlockScreen", "ShowUnlockScreenAlert");
                 if (downloadLockerAlert) {
-                    int alertIntervalInHour = HSConfig.optInteger(24, "Application", "DownloadLockerAlert", "AlertIntervalInHour");
+                    int alertIntervalInHour = HSConfig.optInteger(24, "Application", "DownloadScreenLocker", "UnlockScreen", "AlertIntervalInHour");
                     long lastShowDownloadLockerAlertTime = PreferenceManager.getDefaultSharedPreferences(ctx).getLong("lastShowDownloadLockerAlertTime", 0);
                     if (System.currentTimeMillis() - lastShowDownloadLockerAlertTime > alertIntervalInHour * 60 * 60 * 1000) {
                         PreferenceManager.getDefaultSharedPreferences(ctx).edit().putLong("lastShowDownloadLockerAlertTime", System.currentTimeMillis()).apply();
-                        LockerAppGuideManager.getInstance().showDownloadLockerAlert(ctx, ctx.getResources().getString(R.string.unlock_screen_guide_to_download_locker_message), FLURRY_ALERT_FROM_LOCKER);
+                        LockerAppGuideManager.getInstance().showDownloadLockerAlert(ctx, FLURRY_ALERT_FROM_LOCKER);
                     }
                 }
             }
@@ -181,4 +201,6 @@ public class LockerAppGuideManager {
             return false;
         }
     }
+
+
 }

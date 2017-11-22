@@ -1,4 +1,4 @@
-package com.artw.lockscreen.statusbar;
+package com.artw.lockscreen.lockerappguide;
 
 import android.app.Activity;
 import android.content.Context;
