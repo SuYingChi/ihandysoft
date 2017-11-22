@@ -32,54 +32,54 @@ android {
 final LIB_DEVICE_VERSION = '.gm:4.2.0.gm'
 
 dependencies {
-    compile 'net.appcloudbox.adadapter:libAdNexageBannerAdapter.gm:5.1.0.gm'
+    implementation 'net.appcloudbox.adadapter:libAdNexageBannerAdapter.gm:5.1.0.gm'
 
-    compile (name: 'libKeyboardCommons/libKeyboardCommons', ext: 'aar')
+    implementation (name: 'libKeyboardCommons/libKeyboardCommons', ext: 'aar')
 
-    compile 'net.appcloudbox.ads:libAcbAds.gm:1.1.1.gm'
-    compile "com.ihandy.iap:iap.gm:4.0.+"
+    implementation 'net.appcloudbox.ads:libAcbAds.gm:1.1.1.gm'
+    implementation "com.ihandy.iap:iap.gm:4.0.+"
 
-    compile "com.ihandy.device:device-clean-memory$LIB_DEVICE_VERSION"
-    compile "com.ihandy.device:device-clean-junk$LIB_DEVICE_VERSION"
-    compile "com.ihandy.appframework:libAppframework.gm:4.5.0.gm"
-    compile 'com.airbnb.android:lottie:2.0.0'
+    implementation "com.ihandy.device:device-clean-memory$LIB_DEVICE_VERSION"
+    implementation "com.ihandy.device:device-clean-junk$LIB_DEVICE_VERSION"
+    implementation "com.ihandy.appframework:libAppframework.gm:4.5.0.gm"
+    implementation 'com.airbnb.android:lottie:2.0.0'
 
-    compile "com.android.support:appcompat-v7:26.1.0"
-    compile "com.android.support:recyclerview-v7:26.1.0"
-    compile "com.android.support:cardview-v7:26.1.0"
-    compile "com.android.support:percent:26.1.0"
-    compile "com.android.support:design:26.1.0"
-    compile("com.android.support:gridlayout-v7:26.1.0")
-    compile("com.android.support:support-vector-drawable:26.1.0")
-    compile "com.android.support:customtabs:26.1.0"
-
-
-    compile "com.google.android.gms:play-services-analytics:11.4.2"
-    compile "com.google.android.gms:play-services-gcm:11.4.2"
-    compile "com.google.android.gms:play-services-ads:11.4.2"
+    implementation "com.android.support:appcompat-v7:$android_support_version"
+    implementation "com.android.support:recyclerview-v7:$android_support_version"
+    implementation "com.android.support:cardview-v7:$android_support_version"
+    implementation "com.android.support:percent:$android_support_version"
+    implementation "com.android.support:design:$android_support_version"
+    implementation "com.android.support:gridlayout-v7:$android_support_version"
+    implementation "com.android.support:support-vector-drawable:$android_support_version"
+    implementation "com.android.support:customtabs:$android_support_version"
 
 
-    compile 'com.facebook.shimmer:shimmer:0.1.0@aar'
-    compile "com.facebook.android:audience-network-sdk:4.23.0"
-    compile "com.facebook.android:facebook-android-sdk:4.23.0"
-    compile(name: 'ihs/libCharging/libcharging', ext: 'aar')
-    compile 'com.nostra13.universalimageloader:universal-image-loader:1.9.5'
-    compile 'com.github.bumptech.glide:glide:4.0.0'
+    implementation "com.google.android.gms:play-services-analytics:$play_services_version"
+    implementation "com.google.android.gms:play-services-gcm:$play_services_version"
+    implementation "com.google.android.gms:play-services-ads:$play_services_version"
+
+
+    implementation 'com.facebook.shimmer:shimmer:0.1.0@aar'
+    implementation "com.facebook.android:audience-network-sdk:4.23.0"
+    implementation "com.facebook.android:facebook-android-sdk:4.23.0"
+    implementation (name: 'ihs/libCharging/libcharging', ext: 'aar')
+    implementation 'com.nostra13.universalimageloader:universal-image-loader:1.9.5'
+    implementation 'com.github.bumptech.glide:glide:4.0.0'
     annotationProcessor 'com.github.bumptech.glide:compiler:4.0.0'
 
-    compile 'pl.droidsonroids.gif:android-gif-drawable:1.2.7'
+    implementation 'pl.droidsonroids.gif:android-gif-drawable:1.2.7'
 
     // autopilot
-    compile "net.appcloudbox.common:libAcbHSFrameworkAdapter.gm:+"
-    compile "net.appcloudbox.autopilot:libAutoPilot.gm:5.0.0.gm"
+    implementation "net.appcloudbox.common:libAcbHSFrameworkAdapter.gm:+"
+    implementation "net.appcloudbox.autopilot:libAutoPilot.gm:5.0.0.gm"
 
-    compile files('../libs/ihs/libFlashlight/libFlashlight.jar')
+    implementation files('../libs/ihs/libFlashlight/libFlashlight.jar')
 
-    compile 'com.annimon:stream:1.1.7'
-    compile 'eu.davidea:flexible-adapter:5.0.0-rc1'
+    implementation 'com.annimon:stream:1.1.7'
+    implementation 'eu.davidea:flexible-adapter:5.0.0-rc1'
 
-    compile('com.crashlytics.sdk.android:crashlytics:2.6.4@aar') {
+    implementation ('com.crashlytics.sdk.android:crashlytics:2.6.4@aar') {
         transitive = true;
     }
-    compile 'com.makeramen:roundedimageview:2.2.1'
+    implementation 'com.makeramen:roundedimageview:2.2.1'
 }

@@ -31,17 +31,17 @@ android {
 
 dependencies {
 
-    compile "com.android.support:appcompat-v7:26.1.0"
-    compile "com.android.support:recyclerview-v7:26.1.0"
-    compile 'com.squareup.leakcanary:leakcanary-android:1.5.1'
-    compile 'com.android.support:multidex:1.0.1'
+    implementation "com.android.support:appcompat-v7:$android_support_version"
+    implementation "com.android.support:recyclerview-v7:$android_support_version"
+    implementation 'com.squareup.leakcanary:leakcanary-android:1.5.1'
+    implementation 'com.android.support:multidex:1.0.2'
 
     // Native Ads
-//    compile 'com.ihandy.3rdadadapter:libAdAdmobNativeAdapter.gm:4.1.2.gm'
-    compile 'com.ihandy.3rdadadapter:libAdAdmobNativeAdapter.gm:+'
-    compile 'com.ihandy.3rdadadapter:libAdMopubNativeAdapter.gm:+'
-    compile 'com.ihandy.3rdadadapter:libAdAdxExpressAdapter.gm:+'
-    compile 'com.ihandy.3rdadadapter:libAdAdmobExpressAdapter.gm:+'
+//    implementation 'com.ihandy.3rdadadapter:libAdAdmobNativeAdapter.gm:4.1.2.gm'
+    implementation 'com.ihandy.3rdadadapter:libAdAdmobNativeAdapter.gm:+'
+    implementation 'com.ihandy.3rdadadapter:libAdMopubNativeAdapter.gm:+'
+    implementation 'com.ihandy.3rdadadapter:libAdAdxExpressAdapter.gm:+'
+    implementation 'com.ihandy.3rdadadapter:libAdAdmobExpressAdapter.gm:+'
 
-    compile project(':keyboardutils')
+    implementation project(':keyboardutils')
 }
