@@ -36,6 +36,7 @@ import java.util.Locale;
  */
 
 public class LockerEnableDialog extends Dialog {
+    private String themeName;
     private TextView mTvTime;
     private TextView mTvDate;
     private View rootView;
@@ -44,13 +45,14 @@ public class LockerEnableDialog extends Dialog {
     private String bgUrl = "";
     private String appliedText = "";
 
-    public LockerEnableDialog(Context activity, BitmapDrawable bitmapDrawable, String url, String appliedText) {
+    public LockerEnableDialog(Context activity, BitmapDrawable bitmapDrawable, String url, String appliedText, String themeName) {
         super(activity, R.style.LockerEnableDialogTheme);
         this.context = activity;
         init();
         rootView.setBackgroundDrawable(bitmapDrawable);
         bgUrl = url;
         this.appliedText = appliedText;
+        this.themeName = themeName;
     }
 
     public interface OnLockerBgLoadingListener {
@@ -78,14 +80,20 @@ public class LockerEnableDialog extends Dialog {
         });
         TextView enableButton = (TextView) findViewById(R.id.enable_btn);
 
-        if(LockerAppGuideManager.getInstance().isShouldGuideToLockerApp()){
+        if (LockerAppGuideManager.getInstance().isShouldGuideToLockerApp()) {
+            findViewById(R.id.tv_warning).setVisibility(View.INVISIBLE);
             enableButton.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
+                    if (LockerAppGuideManager.getInstance().isLockerInstall()) {
+                        HSAnalytics.logEvent("app_theme_setAsLockScreen_apply_okButton","app_theme_setAsLockScreen_apply_okButton", themeName);
+                    } else {
+                        HSAnalytics.logEvent("app_theme_setAsLockScreen_download_okButton","app_theme_setAsLockScreen_apply_okButton", themeName);
+                    }
                     LockerAppGuideManager.getInstance().downloadOrRedirectToLockerApp(LockerAppGuideManager.FLURRY_SET_AS_LOCK_SCREEN);
                 }
             });
-        }else{
+        } else {
             enableButton.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -143,8 +151,11 @@ public class LockerEnableDialog extends Dialog {
         LockerSettings.addLockerEnableShowCount();
     }
 
-
     public static void showLockerEnableDialog(Context activity, String url, String appliedText, OnLockerBgLoadingListener bgLoadingListener) {
+        showLockerEnableDialog(activity, url, appliedText, "", bgLoadingListener);
+    }
+
+    public static void showLockerEnableDialog(Context activity, String url, String appliedText, String themeName, OnLockerBgLoadingListener bgLoadingListener) {
         if (TextUtils.isEmpty(url)) {
             if (bgLoadingListener != null) {
                 bgLoadingListener.onFinish();
@@ -152,10 +163,10 @@ public class LockerEnableDialog extends Dialog {
             return;
         }
 
-        if(LockerAppGuideManager.getInstance().isShouldGuideToLockerApp()){
-            if(LockerAppGuideManager.getInstance().isLockerInstall()){
+        if (LockerAppGuideManager.getInstance().isShouldGuideToLockerApp()) {
+            if (LockerAppGuideManager.getInstance().isLockerInstall()) {
                 appliedText = activity.getString(R.string.locker_item_applied_guide_installed);
-            }else{
+            } else {
                 appliedText = activity.getString(R.string.locker_item_applied_guide_not_install);
             }
         }
@@ -193,7 +204,7 @@ public class LockerEnableDialog extends Dialog {
                 KCCommonUtils.dismissDialog(savingDialog);
 
                 LockerEnableDialog lockerEnableDialog = new LockerEnableDialog(activity, new BitmapDrawable(activity.getResources(), loadedImage),
-                        url, finalAppliedText);
+                        url, finalAppliedText, themeName);
                 KCCommonUtils.showDialog(lockerEnableDialog);
                 lockerEnableDialog.setOnDismissListener(dialog -> {
                     if (bgLoadingListener != null) {
@@ -213,4 +224,6 @@ public class LockerEnableDialog extends Dialog {
             }
         });
     }
+
+
 }

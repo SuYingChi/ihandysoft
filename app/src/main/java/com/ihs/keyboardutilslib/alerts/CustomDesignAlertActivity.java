@@ -6,6 +6,7 @@ import android.view.View;
 import android.widget.Toast;
 
 import com.artw.lockscreen.LockerEnableDialog;
+import com.artw.lockscreen.lockerappguide.LockerAppGuideManager;
 import com.ihs.app.framework.HSApplication;
 import com.ihs.app.framework.activity.HSAppCompatActivity;
 import com.ihs.chargingscreen.activity.ChargingFullScreenAlertDialogActivity;
@@ -27,18 +28,19 @@ public class CustomDesignAlertActivity extends HSAppCompatActivity {
     }
 
     public void showOneButtonAlert(View view) {
-        new KCAlert.Builder(this)
-                .setTitle("This is title")
-                .setMessage("This is message")
-                .setTopImageResource(R.drawable.keyboard_bg)
-                //.setImageUri("http://emojidevelop.s3.amazonaws.com/gif_test/fml.gif")
-                .setPositiveButton("Positive button", new View.OnClickListener() {
-                    @Override
-                    public void onClick(View view) {
-                        Toast.makeText(CustomDesignAlertActivity.this, "Positive button clicked", Toast.LENGTH_SHORT).show();
-                    }
-                })
-                .show();
+//        new KCAlert.Builder(this)
+//                .setTitle("This is title")
+//                .setMessage("This is message")
+//                .setTopImageResource(R.drawable.keyboard_bg)
+//                //.setImageUri("http://emojidevelop.s3.amazonaws.com/gif_test/fml.gif")
+//                .setPositiveButton("Positive button", new View.OnClickListener() {
+//                    @Override
+//                    public void onClick(View view) {
+//                        Toast.makeText(CustomDesignAlertActivity.this, "Positive button clicked", Toast.LENGTH_SHORT).show();
+//                    }
+//                })
+//                .show();
+        LockerAppGuideManager.getInstance().showDownloadLockerAlert(this,LockerAppGuideManager.FLURRY_ALERT_FROM_LOCKER);
     }
 
     public void showTwoButtonAlert(View view) {

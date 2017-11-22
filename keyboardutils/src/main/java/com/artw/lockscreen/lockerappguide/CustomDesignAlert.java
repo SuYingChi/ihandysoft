@@ -44,6 +44,7 @@ public class CustomDesignAlert extends AlertDialog implements View.OnClickListen
         titleTextView.setText(title);
 
         TextView messageTextView = (TextView) findViewById(R.id.tv_message);
+        messageTextView.setSingleLine(false);
         messageTextView.setText(message);
 
         ImageView imageView = (ImageView) findViewById(R.id.iv_image);

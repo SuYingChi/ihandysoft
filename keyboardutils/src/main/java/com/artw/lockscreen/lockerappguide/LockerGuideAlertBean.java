@@ -11,7 +11,7 @@ public class LockerGuideAlertBean {
 
     public LockerGuideAlertBean(String title, String body, String button) {
         this.title = title;
-        this.body = body;
+        this.body = body.replace("\\n","\n");
         this.button = button;
     }
 
