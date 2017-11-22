@@ -16,6 +16,7 @@ import com.ihs.keyboardutils.R;
 import com.ihs.keyboardutils.utils.CommonUtils;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -53,7 +54,7 @@ public class LockerAppGuideManager {
 
     public void init(String pkgName, boolean shouldGuideToLockerApp) {
         isLockerInstall = CommonUtils.isPackageInstalled(pkgName);
-        if (!isLockerInstall) {
+        if (!isLockerInstall && shouldGuideToLockerApp) {
             IntentFilter intentFilter = new IntentFilter();
             intentFilter.addAction(Intent.ACTION_PACKAGE_ADDED);
             intentFilter.addDataScheme("package");
@@ -117,7 +118,7 @@ public class LockerAppGuideManager {
     }
 
     public void showDownloadLockerAlert(Context context, String from) {
-        Map<String, ?> alertMap = null;
+        Map<String, ?> alertMap = new HashMap<>();
         switch (from) {
             case FLURRY_ALERT_FROM_LOCKER:
                 alertMap = HSConfig.getMap("Application", "DownloadScreenLocker", "UnlockScreen");
