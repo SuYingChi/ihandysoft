@@ -218,6 +218,7 @@ public class LockerMainFrame extends RelativeLayout implements INotificationObse
     private void requestAds() {
         if (FloatWindowController.getInstance().isLockScreenShown()) {
             expressAdView = new AcbExpressAdView(getContext(), getContext().getString(R.string.ad_placement_locker));
+            expressAdView.setAutoSwitchAd(false);
             expressAdView.setExpressAdViewListener(new AcbExpressAdView.AcbExpressAdViewListener() {
                 @Override
                 public void onAdShown(AcbExpressAdView acbExpressAdView) {
@@ -245,15 +246,11 @@ public class LockerMainFrame extends RelativeLayout implements INotificationObse
     public void onResume() {
         if (expressAdView != null && HSConfig.optBoolean(false, "Application", "Locker", "LockerAutoRefreshAdsEnable")) {
             HSLog.d("LockerMainFrame expressAdView resumeDisplayNewAd");
-            expressAdView.resumeDisplayNewAd();
+            expressAdView.switchAd();
         }
     }
 
     public void onPause() {
-        if (expressAdView != null && HSConfig.optBoolean(false, "Application", "Locker", "LockerAutoRefreshAdsEnable")) {
-            HSLog.d("LockerMainFrame expressAdView pauseDisplayNewAd");
-            expressAdView.pauseDisplayNewAd();
-        }
     }
 
     public void onStop() {

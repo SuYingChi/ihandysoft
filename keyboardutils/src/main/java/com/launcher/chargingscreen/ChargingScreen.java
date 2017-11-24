@@ -31,7 +31,6 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import net.appcloudbox.ads.expressads.AcbExpressAdView;
 import com.ihs.app.framework.HSApplication;
 import com.ihs.charging.HSChargingManager;
 import com.ihs.charging.HSChargingManager.HSChargingState;
@@ -64,6 +63,8 @@ import com.launcher.chargingscreen.view.ChargingQuantityView;
 import com.launcher.chargingscreen.view.PopupView;
 import com.launcher.chargingscreen.view.RipplePopupView;
 import com.launcher.chargingscreen.view.SlidingFinishRelativeLayout;
+
+import net.appcloudbox.ads.expressads.AcbExpressAdView;
 
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
@@ -388,6 +389,7 @@ public class ChargingScreen extends LockScreen implements INotificationObserver 
 
     private void requestAds() {
         expressAdView = new AcbExpressAdView(getContext(), HSChargingScreenManager.getInstance().getNaitveAdsPlacementName());
+        expressAdView.setAutoSwitchAd(false);
         expressAdView.setExpressAdViewListener(new AcbExpressAdView.AcbExpressAdViewListener() {
             @Override
             public void onAdShown(AcbExpressAdView acbExpressAdView) {
@@ -820,7 +822,7 @@ public class ChargingScreen extends LockScreen implements INotificationObserver 
                     showExpressAd();
                 } else {
                     if (HSConfig.optBoolean(false, "Application", "Locker", "LockerAutoRefreshAdsEnable")) {
-                        expressAdView.resumeDisplayNewAd();
+                        expressAdView.switchAd();
                     }
                 }
 
@@ -829,10 +831,6 @@ public class ChargingScreen extends LockScreen implements INotificationObserver 
                 }
                 break;
             case ScreenStatusReceiver.NOTIFICATION_SCREEN_OFF:
-                if (expressAdView != null && expressAdView.getParent() != null) {
-                    expressAdView.pauseDisplayNewAd();
-                }
-
                 if (System.currentTimeMillis() - onStartTime > DateUtils.SECOND_IN_MILLIS) {
                     mAdShown = false;
                 }
@@ -854,11 +852,6 @@ public class ChargingScreen extends LockScreen implements INotificationObserver 
         mIsSetup = false;
         // ======== onDetachFromWindow ========
         HSGlobalNotificationCenter.removeObserver(this);
-
-        // ======== onPause ========
-        if (expressAdView != null && HSConfig.optBoolean(false, "Application", "Locker", "LockerAutoRefreshAdsEnable")) {
-            expressAdView.pauseDisplayNewAd();
-        }
 
         if (chargingBubbleView != null) {
             chargingBubbleView.pauseAnim();

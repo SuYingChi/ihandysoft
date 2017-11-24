@@ -5,31 +5,29 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_gravity="center"
-    android:orientation="vertical"
-    android:background="@drawable/round_rectangle_white_bg">
+    android:background="@drawable/round_rectangle_white_bg"
+    android:orientation="vertical">
 
     <com.ihs.feature.common.RoundCornerImageView
         android:id="@+id/iv_image"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:scaleType="centerCrop"
+        android:visibility="gone"
         app:round_left_top_corner_radius="@dimen/design_base_corner_radius"
-        app:round_right_top_corner_radius="@dimen/design_base_corner_radius"
-        android:visibility="gone"/>
+        app:round_right_top_corner_radius="@dimen/design_base_corner_radius" />
 
-    <LinearLayout
-        style="@style/DesignDialogFrame">
+    <LinearLayout style="@style/DesignDialogFrame">
 
-        <LinearLayout
-            style="@style/DesignDialogContentArea">
+        <LinearLayout style="@style/DesignDialogContentArea">
 
             <TextView
                 android:id="@+id/tv_title"
-                style="@style/DesignDialogContentTitle"/>
+                style="@style/DesignDialogContentTitle" />
 
             <TextView
                 android:id="@+id/tv_message"
-                style="@style/DesignDialogContentBody"/>
+                style="@style/DesignDialogContentBody" />
 
         </LinearLayout>
 
@@ -39,11 +37,11 @@
 
             <TextView
                 android:id="@+id/btn_negative"
-                style="@style/DesignDialogActionButton"/>
+                style="@style/DesignDialogActionButton" />
 
             <TextView
                 android:id="@+id/btn_positive"
-                style="@style/DesignDialogActionButtonHighlight"/>
+                style="@style/DesignDialogActionButtonHighlight" />
 
         </LinearLayout>
 
@@ -73,7 +71,7 @@
 
             <TextView
                 android:id="@+id/btn_positive_single"
-                style="@style/DesignDialogSingleActionButton"/>
+                style="@style/DesignDialogSingleActionButton" />
 
         </LinearLayout>
     </LinearLayout>

@@ -36,12 +36,12 @@ dependencies {
 
     implementation (name: 'libKeyboardCommons/libKeyboardCommons', ext: 'aar')
 
-    implementation 'net.appcloudbox.ads:libAcbAds.gm:1.1.1.gm'
+    implementation 'net.appcloudbox.ads:libAcbAds.gm:1.2.0.gm'
     implementation "com.ihandy.iap:iap.gm:4.0.+"
 
     implementation "com.ihandy.device:device-clean-memory$LIB_DEVICE_VERSION"
     implementation "com.ihandy.device:device-clean-junk$LIB_DEVICE_VERSION"
-    implementation "com.ihandy.appframework:libAppframework.gm:4.5.0.gm"
+    implementation "com.ihandy.appframework:libAppframework.gm:4.5.1.gm"
     implementation 'com.airbnb.android:lottie:2.0.0'
 
     implementation "com.android.support:appcompat-v7:$android_support_version"
@@ -81,5 +81,4 @@ dependencies {
     implementation ('com.crashlytics.sdk.android:crashlytics:2.6.4@aar') {
         transitive = true;
     }
-    implementation 'com.makeramen:roundedimageview:2.2.1'
 }

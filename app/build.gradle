@@ -36,8 +36,8 @@ dependencies {
     implementation 'com.squareup.leakcanary:leakcanary-android:1.5.1'
     implementation 'com.android.support:multidex:1.0.2'
 
-    implementation "com.ihandy.appframework:libAppframework.gm:4.5.0.gm"
-    implementation 'net.appcloudbox.ads:libAcbAds.gm:1.1.1.gm'
+    implementation "com.ihandy.appframework:libAppframework.gm:4.5.1.gm"
+    implementation 'net.appcloudbox.ads:libAcbAds.gm:1.2.0.gm'
     implementation 'com.nostra13.universalimageloader:universal-image-loader:1.9.5'
     implementation (name: 'libKeyboardCommons/libKeyboardCommons', ext: 'aar')
 
