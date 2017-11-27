@@ -83,7 +83,7 @@ public class MyApplication extends HSApplication {
         AcbNativeAdManager.sharedInstance().activePlacementInProcess(getString(R.string.ad_placement_result_page));
         AcbNativeAdManager.sharedInstance().activePlacementInProcess("ColorCam_A(NativeAds)FilterDownload");
         FloatWindowCompat.initLockScreen(this);
-        LockerAppGuideManager.getInstance().init(HSApplication.getContext().getString(R.string.smart_locker_app_package_name),true);
+        LockerAppGuideManager.getInstance().init(true);
     }
 
 

@@ -87,10 +87,11 @@ public class LockerEnableDialog extends Dialog {
                 public void onClick(View v) {
                     if (LockerAppGuideManager.getInstance().isLockerInstall()) {
                         HSAnalytics.logEvent("app_theme_setAsLockScreen_apply_okButton","app_theme_setAsLockScreen_apply_okButton", themeName);
+                        LockerAppGuideManager.setLockerAppWallpaper(context,bgUrl,"");
                     } else {
                         HSAnalytics.logEvent("app_theme_setAsLockScreen_download_okButton","app_theme_setAsLockScreen_apply_okButton", themeName);
+                        LockerAppGuideManager.getInstance().downloadOrRedirectToLockerApp(LockerAppGuideManager.FLURRY_SET_AS_LOCK_SCREEN);
                     }
-                    LockerAppGuideManager.getInstance().downloadOrRedirectToLockerApp(LockerAppGuideManager.FLURRY_SET_AS_LOCK_SCREEN);
                 }
             });
         } else {

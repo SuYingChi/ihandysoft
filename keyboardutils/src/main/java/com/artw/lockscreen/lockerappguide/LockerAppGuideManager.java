@@ -1,5 +1,6 @@
 package com.artw.lockscreen.lockerappguide;
 
+import android.app.Activity;
 import android.content.ActivityNotFoundException;
 import android.content.BroadcastReceiver;
 import android.content.Context;
@@ -47,7 +48,6 @@ public class LockerAppGuideManager {
         return ourInstance;
     }
 
-    private boolean isLockerInstall = false;
     private List<ILockerInstallStatusChangeListener> lockerInstallStatusChangeListeners;
 
     public String getLockerAppPkgName() {
@@ -56,14 +56,13 @@ public class LockerAppGuideManager {
     private LockerAppGuideManager() {
     }
 
-    public void init(String pkgName, boolean shouldGuideToLockerApp) {
-        isLockerInstall = CommonUtils.isPackageInstalled(pkgName);
-        if (!isLockerInstall && shouldGuideToLockerApp) {
+    public void init(boolean shouldGuideToLockerApp) {
+        if (shouldGuideToLockerApp && !CommonUtils.isPackageInstalled(getLockerAppPkgName())) {
             IntentFilter intentFilter = new IntentFilter();
             intentFilter.addAction(Intent.ACTION_PACKAGE_ADDED);
             intentFilter.addDataScheme("package");
 
-            PackageInstallReceiver packageInstallReceiver = new PackageInstallReceiver(pkgName);
+            PackageInstallReceiver packageInstallReceiver = new PackageInstallReceiver(getLockerAppPkgName());
             HSApplication.getContext().registerReceiver(packageInstallReceiver, intentFilter);
 
             intentFilter = new IntentFilter();
@@ -89,7 +88,6 @@ public class LockerAppGuideManager {
     }
 
     private void setLockerInstall() {
-        isLockerInstall = true;
         if (lockerInstallStatusChangeListeners != null) {
             for (ILockerInstallStatusChangeListener lockerInstallStatusChangeListener : lockerInstallStatusChangeListeners) {
                 lockerInstallStatusChangeListener.onLockerInstallStatusChange();
@@ -99,7 +97,7 @@ public class LockerAppGuideManager {
     }
 
     public boolean isLockerInstall() {
-        return isLockerInstall;
+        return CommonUtils.isPackageInstalled(getLockerAppPkgName());
     }
 
     public boolean isShouldGuideToLockerApp() {
@@ -107,12 +105,12 @@ public class LockerAppGuideManager {
     }
 
     public boolean shouldGuideToDownloadLocker() {
-        return !isLockerInstall && shouldGuideToLockerApp;
+        return !CommonUtils.isPackageInstalled(getLockerAppPkgName()) && shouldGuideToLockerApp;
     }
 
 
     public void downloadOrRedirectToLockerApp(String from) {
-        if (isLockerInstall) {
+        if (CommonUtils.isPackageInstalled(getLockerAppPkgName())) {
             openApp(getLockerAppPkgName());
         } else {
             directToMarket(null,null,getLockerAppPkgName());
@@ -211,7 +209,7 @@ public class LockerAppGuideManager {
 
         @Override
         public void onReceive(Context context, Intent intent) {
-            if (!LockerAppGuideManager.getInstance().isLockerInstall) {
+            if (!LockerAppGuideManager.getInstance().isLockerInstall()) {
                 Context ctx = HSApplication.getContext();
                 boolean downloadLockerAlert = HSConfig.optBoolean(false, "Application", "DownloadScreenLocker", "UnlockScreen", "ShowUnlockScreenAlert");
                 if (downloadLockerAlert) {
@@ -228,6 +226,16 @@ public class LockerAppGuideManager {
 
     public interface ILockerInstallStatusChangeListener {
         void onLockerInstallStatusChange();
+    }
+
+    public static void setLockerAppWallpaper(Context context, String picUrl,String thumb){
+        Intent intent = new Intent("com.keyboard.setwallpaper");
+        intent.putExtra("imgUrl",picUrl);
+        intent.putExtra("thumb",thumb);
+        if (!(context instanceof Activity)) {
+            intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        }
+        context.startActivity(intent);
     }
 
     public static boolean openApp(String packageName) {
