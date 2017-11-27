@@ -6,14 +6,19 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.pm.PackageManager;
+import android.net.Uri;
 import android.preference.PreferenceManager;
+import android.text.TextUtils;
 
 import com.ihs.app.analytics.HSAnalytics;
 import com.ihs.app.framework.HSApplication;
 import com.ihs.app.utils.HSMarketUtils;
 import com.ihs.commons.config.HSConfig;
+import com.ihs.commons.utils.HSLog;
+import com.ihs.keyboardutils.BuildConfig;
 import com.ihs.keyboardutils.R;
 import com.ihs.keyboardutils.utils.CommonUtils;
+import com.kc.commons.utils.KCCommonUtils;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -110,8 +115,43 @@ public class LockerAppGuideManager {
         if (isLockerInstall) {
             openApp(getLockerAppPkgName());
         } else {
-            HSMarketUtils.browseAPP(getLockerAppPkgName());
+            directToMarket(null,null,getLockerAppPkgName());
             lockerAppInstalledFrom = from;
+        }
+    }
+
+    /**
+     * 用于跳转到 google play 下载 locker 的界面
+     *
+     * @param feature           字符串不包含特殊字符，例如 GuideView
+     * @param viewType          字符串不包含特殊字符串，例如 ButtonOK，ButtonDownload
+     * @param lockerPackageName 要跳转的 locker 的包名
+     */
+    public static void directToMarket(String feature, String viewType, String lockerPackageName) {
+        Map<String, String> paras = new HashMap<>();
+        StringBuilder parametersStr = new StringBuilder();
+        parametersStr.append("packageName=" + BuildConfig.APPLICATION_ID);
+        paras.put("TargetPackageName", lockerPackageName);
+        if (!TextUtils.isEmpty(feature)) {
+            parametersStr.append("&feature=").append(feature);
+            paras.put("feature", feature);
+        }
+        if (!TextUtils.isEmpty(viewType)) {
+            parametersStr.append("&viewType=").append(viewType);
+            paras.put("viewType", viewType);
+        }
+        parametersStr.append("&versionName=" + BuildConfig.VERSION_NAME);
+        parametersStr.append("&internal=" + BuildConfig.APPLICATION_ID);
+        Intent intent = new Intent(Intent.ACTION_VIEW);
+        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        try {
+            intent.setData(Uri.parse("market://details?id=" + lockerPackageName + "&referrer=" + Uri.encode(parametersStr.toString())));
+            HSApplication.getContext().startActivity(intent);
+            HSLog.d("cjx" + ">>>market  " + intent.getDataString());
+        } catch (Exception e) {
+            intent.setData(Uri.parse("https://play.google.com/store/apps/details?id=" + lockerPackageName + "&referrer=" + Uri.encode(parametersStr.toString())));
+            HSApplication.getContext().startActivity(intent);
+            HSLog.d("cjx" + ">>>web  " + intent.getDataString());
         }
     }
 
@@ -145,7 +185,7 @@ public class LockerAppGuideManager {
             lockerAppInstalledFrom = from;
             HSAnalytics.logEvent("app_lockerAlert_button_clicked", "app_lockerAlert_button_clicked", from);
         });
-        lockerDialog.show();
+        KCCommonUtils.showDialog(lockerDialog);
         HSAnalytics.logEvent("app_lockerAlert_show", "app_lockerAlert_show", from);
     }
 
