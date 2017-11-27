@@ -26,6 +26,7 @@ import com.ihs.keyboardutils.nativeads.KCNativeAdView;
 import com.ihs.keyboardutils.utils.RippleDrawableUtils;
 import com.ihs.keyboardutils.view.CustomProgressDrawable;
 import com.ihs.keyboardutils.view.FlashFrameLayout;
+import com.kc.commons.utils.KCCommonUtils;
 
 import static java.lang.System.currentTimeMillis;
 
@@ -302,7 +303,6 @@ public class AdLoadingView extends RelativeLayout implements KCNativeAdView.OnAd
         dialog = new AdLoadingDialog(getContext());
         dialog.setContentView(this);
         dialog.setCancelable(false);
-        dialog.show();
         dialog.setOnDismissListener(new DialogInterface.OnDismissListener() {
             @Override
             public void onDismiss(DialogInterface dialog) {
@@ -311,6 +311,7 @@ public class AdLoadingView extends RelativeLayout implements KCNativeAdView.OnAd
                 }
             }
         });
+        KCCommonUtils.showDialog(dialog);
     }
 
     @Override
@@ -329,7 +330,7 @@ public class AdLoadingView extends RelativeLayout implements KCNativeAdView.OnAd
         if (dialog == null) {
             onAdBufferingListener.onDismiss(progressComplete);
         } else {
-            dialog.dismiss();
+            KCCommonUtils.dismissDialog(dialog);
         }
     }
 

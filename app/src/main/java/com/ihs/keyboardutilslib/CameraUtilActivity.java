@@ -13,6 +13,7 @@ import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.ihs.app.framework.activity.HSActivity;
+import com.kc.commons.utils.KCCommonUtils;
 
 import java.io.File;
 
@@ -119,6 +120,6 @@ public class CameraUtilActivity extends HSActivity {
         ImageView imageView = (ImageView) contentView.findViewById(R.id.image_view);
         imageView.setImageBitmap(bitmap);
         imageDialog.setContentView(contentView);
-        imageDialog.show();
+        KCCommonUtils.showDialog(imageDialog);
     }
 }

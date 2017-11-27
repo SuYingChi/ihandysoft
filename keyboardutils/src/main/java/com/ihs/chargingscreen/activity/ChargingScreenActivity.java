@@ -504,7 +504,7 @@ public class ChargingScreenActivity extends Activity {
         cancelAllAnimators();
         handler.removeCallbacksAndMessages(null);
         if (null != closeDialog) {
-            closeDialog.dismiss();
+            KCCommonUtils.dismissDialog(closeDialog);
         }
         super.onDestroy();
         KCCommonUtils.fixInputMethodManagerLeak(this);
@@ -672,7 +672,7 @@ public class ChargingScreenActivity extends Activity {
                     if (closeDialog == null) {
                         return;
                     }
-                    closeDialog.dismiss();
+                    KCCommonUtils.dismissDialog(closeDialog);
                     closeDialog = null;
                 }
             });
@@ -683,7 +683,7 @@ public class ChargingScreenActivity extends Activity {
                     if (closeDialog == null) {
                         return;
                     }
-                    closeDialog.dismiss();
+                    KCCommonUtils.dismissDialog(closeDialog);
                     closeDialog = null;
 
                     ChargingAnalytics.getInstance().chargingDisableConfirmedOnce("activity");
@@ -701,7 +701,7 @@ public class ChargingScreenActivity extends Activity {
             btnClose.setBackgroundDrawable(RippleDrawableUtils.getCompatRippleDrawable(Color.WHITE, 0, 0, DisplayUtils.dip2px(8), 0));
 
         }
-        closeDialog.show();
+        KCCommonUtils.showDialog(closeDialog);
     }
 
     private void initStringListAndDrawableList() {
@@ -946,8 +946,7 @@ public class ChargingScreenActivity extends Activity {
         btnJustOnce.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
-                removeAdsDialog.dismiss();
-
+                KCCommonUtils.dismissDialog(removeAdsDialog);
                 adContainer.removeView(acbExpressAdView);
                 removeAds.setVisibility(View.GONE);
             }
@@ -956,7 +955,7 @@ public class ChargingScreenActivity extends Activity {
         btnForever.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
-                removeAdsDialog.dismiss();
+                KCCommonUtils.dismissDialog(removeAdsDialog);
 
                 RemoveAdsManager.getInstance().purchaseRemoveAds();
 
@@ -978,7 +977,6 @@ public class ChargingScreenActivity extends Activity {
         });
         btnForever.setBackgroundDrawable(RippleDrawableUtils.getCompatRippleDrawable(Color.WHITE, 0, 0, 0, DisplayUtils.dip2px(8)));
         btnJustOnce.setBackgroundDrawable(RippleDrawableUtils.getCompatRippleDrawable(Color.WHITE, 0, 0, DisplayUtils.dip2px(8), 0));
-
-        removeAdsDialog.show();
+        KCCommonUtils.showDialog(removeAdsDialog);
     }
 }

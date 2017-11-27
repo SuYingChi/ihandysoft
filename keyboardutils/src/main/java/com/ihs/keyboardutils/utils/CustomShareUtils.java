@@ -34,6 +34,7 @@ import com.ihs.keyboardutils.R;
 import com.ihs.keyboardutils.alerts.HSAlertDialog;
 import com.ihs.keyboardutils.iap.RemoveAdsManager;
 import com.ihs.keyboardutils.nativeads.KCNativeAdView;
+import com.kc.commons.utils.KCCommonUtils;
 import com.nostra13.universalimageloader.core.ImageLoader;
 
 import java.util.ArrayList;
@@ -152,13 +153,7 @@ public class CustomShareUtils {
             shareAdView.setVisibility(View.GONE);
         }
 
-        if (context!=null && context instanceof Activity){
-            if (!((Activity) context).isFinishing()){
-                dialog.show();
-            }
-        }else {
-            dialog.show();
-        }
+        KCCommonUtils.showDialog(dialog);
         return dialog;
     }
 

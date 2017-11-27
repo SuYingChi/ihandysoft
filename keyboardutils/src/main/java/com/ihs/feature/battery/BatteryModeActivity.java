@@ -24,6 +24,7 @@ import com.ihs.feature.common.VectorCompat;
 import com.ihs.feature.common.ViewUtils;
 import com.ihs.keyboardutils.R;
 import com.ihs.keyboardutils.utils.CommonUtils;
+import com.kc.commons.utils.KCCommonUtils;
 
 import java.util.HashMap;
 
@@ -239,7 +240,7 @@ public class BatteryModeActivity extends BaseSettingsActivity implements View.On
                 }
             }
         });
-        dialog.show();
+        KCCommonUtils.showDialog(dialog);
     }
 
     private int getDialogTitleRes(ModeType type) {

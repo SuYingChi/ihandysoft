@@ -17,6 +17,7 @@ import com.ihs.keyboardutils.R;
 import com.ihs.keyboardutils.nativeads.KCNativeAdView;
 import com.ihs.keyboardutils.utils.RippleDrawableUtils;
 import com.ihs.keyboardutils.view.FlashFrameLayout;
+import com.kc.commons.utils.KCCommonUtils;
 
 public class NativeAdDialogView extends RelativeLayout implements KCNativeAdView.OnAdLoadedListener, KCNativeAdView.OnAdClickedListener {
     private NativeAdDialog dialog;
@@ -132,7 +133,6 @@ public class NativeAdDialogView extends RelativeLayout implements KCNativeAdView
         //KCAnalyticUtil.logEvent("app_alert_applyingItem_show");
         dialog = new NativeAdDialog(getContext());
         dialog.setContentView(this);
-        dialog.show();
         dialog.setOnDismissListener(new DialogInterface.OnDismissListener() {
             @Override
             public void onDismiss(DialogInterface dialog) {
@@ -141,6 +141,7 @@ public class NativeAdDialogView extends RelativeLayout implements KCNativeAdView
                 }
             }
         });
+        KCCommonUtils.showDialog(dialog);
     }
 
     @Override
@@ -164,7 +165,7 @@ public class NativeAdDialogView extends RelativeLayout implements KCNativeAdView
         if (dialog == null) {
             onAdBufferingListener.onDismiss();
         } else {
-            dialog.dismiss();
+            KCCommonUtils.dismissDialog(dialog);
         }
     }
 

@@ -14,6 +14,7 @@ import com.ihs.keyboardutils.adbuffer.AdLoadingView;
 import com.ihs.keyboardutils.alerts.CustomUIRateAlert;
 import com.ihs.keyboardutils.alerts.KCAlert;
 import com.ihs.keyboardutilslib.R;
+import com.kc.commons.utils.KCCommonUtils;
 
 /**
  * Created by jixiang on 16/11/3.
@@ -117,7 +118,7 @@ public class CustomDesignAlertActivity extends HSAppCompatActivity {
             }
         });
 
-        dialog.show();
+        KCCommonUtils.showDialog(dialog);
     }
 
     public void showFullScreenChargingAlert(View view) {

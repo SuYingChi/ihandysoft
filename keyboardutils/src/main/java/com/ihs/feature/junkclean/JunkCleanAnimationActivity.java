@@ -57,6 +57,7 @@ import com.ihs.feature.ui.TouchableRecycleView;
 import com.ihs.keyboardutils.R;
 import com.ihs.keyboardutils.permission.PermissionUtils;
 import com.ihs.keyboardutils.utils.CommonUtils;
+import com.kc.commons.utils.KCCommonUtils;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -396,7 +397,7 @@ public class JunkCleanAnimationActivity extends BasePermissionActivity {
 
     private void onSkipButtonClick() {
         mIsBottomSkipButtonClicked = true;
-        mBottomSheetDialog.dismiss();
+        KCCommonUtils.dismissDialog(mBottomSheetDialog);
         startToResultPageActivity();
     }
 

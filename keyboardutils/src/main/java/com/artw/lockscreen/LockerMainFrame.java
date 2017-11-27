@@ -47,6 +47,7 @@ import com.ihs.keyboardutils.R;
 import com.ihs.keyboardutils.iap.RemoveAdsManager;
 import com.ihs.keyboardutils.utils.CommonUtils;
 import com.ihs.keyboardutils.utils.RippleDrawableUtils;
+import com.kc.commons.utils.KCCommonUtils;
 
 import net.appcloudbox.ads.expressads.AcbExpressAdView;
 
@@ -457,17 +458,10 @@ public class LockerMainFrame extends RelativeLayout implements INotificationObse
     }
 
     private boolean showDialog(Dialog dialog) {
-        hideDialog();
+        KCCommonUtils.dismissDialog(dialog);
         this.dialog = dialog;
-        this.dialog.show();
+        KCCommonUtils.showDialog(dialog);
         return true;
-    }
-
-    private void hideDialog() {
-        if (this.dialog != null) {
-            this.dialog.dismiss();
-            this.dialog = null;
-        }
     }
 
     private void showRemoveAdsDialog() {
@@ -480,8 +474,7 @@ public class LockerMainFrame extends RelativeLayout implements INotificationObse
         btnJustOnce.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
-                removeAdsDialog.dismiss();
-
+                KCCommonUtils.dismissDialog(removeAdsDialog);
                 mAdContainer.removeView(acbExpressAdView);
                 removeAds.setVisibility(GONE);
             }
@@ -490,7 +483,7 @@ public class LockerMainFrame extends RelativeLayout implements INotificationObse
         btnForever.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
-                removeAdsDialog.dismiss();
+                KCCommonUtils.dismissDialog(removeAdsDialog);
 
                 RemoveAdsManager.getInstance().purchaseRemoveAds();
 
@@ -513,7 +506,7 @@ public class LockerMainFrame extends RelativeLayout implements INotificationObse
         btnForever.setBackgroundDrawable(RippleDrawableUtils.getCompatRippleDrawable(Color.WHITE, 0, 0, 0, DisplayUtils.dip2px(8)));
         btnJustOnce.setBackgroundDrawable(RippleDrawableUtils.getCompatRippleDrawable(Color.WHITE, 0, 0, DisplayUtils.dip2px(8), 0));
 
-        removeAdsDialog.show();
+        KCCommonUtils.showDialog(removeAdsDialog);
     }
 
     public View getAdView() {
