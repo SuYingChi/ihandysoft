@@ -169,12 +169,9 @@ public class LockerActivity extends AppCompatActivity implements INotificationOb
         super.onStart();
         HSAnalytics.startFlurry();
 
-        // ExpressAd灭屏亮屏刷新补丁
+        // 刷新广告
         if (mLockerAdapter != null && mLockerAdapter.lockerMainFrame != null) {
-            View adView = mLockerAdapter.lockerMainFrame.getAdView();
-            if (adView != null) {
-                adView.setVisibility(View.VISIBLE);
-            }
+            mLockerAdapter.lockerMainFrame.refreshAd();
         }
     }
 
@@ -183,14 +180,6 @@ public class LockerActivity extends AppCompatActivity implements INotificationOb
         super.onStop();
         if (!HSSessionMgr.isSessionStarted()) {
             HSAnalytics.stopFlurry();
-        }
-
-        // ExpressAd灭屏亮屏刷新补丁
-        if (mLockerAdapter != null && mLockerAdapter.lockerMainFrame != null) {
-            View adView = mLockerAdapter.lockerMainFrame.getAdView();
-            if (adView != null) {
-                adView.setVisibility(View.INVISIBLE);
-            }
         }
     }
 

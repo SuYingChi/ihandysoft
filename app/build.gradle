@@ -48,5 +48,5 @@ dependencies {
     implementation 'com.ihandy.3rdadadapter:libAdAdxExpressAdapter.gm:+'
     implementation 'com.ihandy.3rdadadapter:libAdAdmobExpressAdapter.gm:+'
 
-    implementation project(':keyboardutils')
+    api project(':keyboardutils')
 }
