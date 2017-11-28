@@ -29,10 +29,10 @@ public class MainActivity extends HSActivity {
             "KCConfig Demo",
             "Custom Alert Demo",
             "Custom Share Demo",
-            "Charging Locker Settings",
-            "Camera Utils",
+            "Lock Screen & Charging Screen",
+            "Camera Intents",
             "Country Code Parser",
-            "Send Boost Related Notification"
+            "Send Boost Notifications"
     };
 
     Class[] activityClassArray = {
