@@ -25,6 +25,7 @@ import com.artw.lockscreen.statusbar.StatusBar;
 import com.ihs.app.analytics.HSAnalytics;
 import com.ihs.app.framework.HSSessionMgr;
 import com.ihs.chargingscreen.activity.ChargingScreenActivity;
+import com.ihs.chargingscreen.utils.ChargingAnalytics;
 import com.ihs.chargingscreen.utils.ClickUtils;
 import com.ihs.commons.notificationcenter.HSGlobalNotificationCenter;
 import com.ihs.commons.notificationcenter.INotificationObserver;
@@ -32,7 +33,6 @@ import com.ihs.commons.utils.HSBundle;
 import com.ihs.feature.common.Thunk;
 import com.ihs.keyboardutils.R;
 import com.ihs.keyboardutils.utils.CommonUtils;
-import com.ihs.keyboardutils.utils.PublisherUtils;
 import com.kc.commons.utils.KCCommonUtils;
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.ImageLoader;
@@ -73,8 +73,8 @@ public class LockerActivity extends AppCompatActivity implements INotificationOb
         public void onReceive(Context context, Intent intent) {
             if (intent.getAction().equals(Intent.ACTION_SCREEN_ON)) {
                 if (!ClickUtils.isFastDoubleClick()) {
-                    HSAnalytics.logEvent("app_screen_locker_show", "install_type", PublisherUtils.getInstallType());
-                    HSAnalytics.logEvent("app_locker_and_charging_show", "type", "locker_show");
+                    ChargingAnalytics.logLockScreenShow();
+                    ChargingAnalytics.logLockeScreenOrChargingScreenShow();
                 }
             }
         }

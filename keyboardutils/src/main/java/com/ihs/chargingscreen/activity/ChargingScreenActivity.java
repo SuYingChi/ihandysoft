@@ -219,7 +219,8 @@ public class ChargingScreenActivity extends Activity {
         public void onReceive(Context context, Intent intent) {
             if (intent.getAction().equals(Intent.ACTION_SCREEN_ON)) {
                 if (!ClickUtils.isFastDoubleClick()) {
-                    ChargingAnalytics.getInstance().chargingScreenShowed();
+                    ChargingAnalytics.logChargingScreenShow();
+                    ChargingAnalytics.logLockeScreenOrChargingScreenShow();
                 }
             }
         }

@@ -1,6 +1,8 @@
 package com.ihs.chargingscreen.utils;
 
+import android.app.KeyguardManager;
 import android.content.Context;
+import android.os.Build;
 
 import com.ihs.app.analytics.HSAnalytics;
 import com.ihs.app.framework.HSApplication;
@@ -52,9 +54,24 @@ public class ChargingAnalytics {
         }
     }
 
-    public void chargingScreenShowed() {
+    public static void logChargingScreenShow() {
         HSAnalytics.logEvent(app_chargingLocker_show, "install_type", PublisherUtils.getInstallType());
-        HSAnalytics.logEvent("app_locker_and_charging_show", "type", "charging_show");
+    }
+
+    public static void logLockScreenShow() {
+        HSAnalytics.logEvent("app_screen_locker_show", "install_type", PublisherUtils.getInstallType());
+    }
+
+    public static void logLockeScreenOrChargingScreenShow() {
+        KeyguardManager keyguardManager = (KeyguardManager) context.getSystemService(Context.KEYGUARD_SERVICE);
+        String isKeyguardSecure = "unknown";
+        if (keyguardManager != null) {
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
+                isKeyguardSecure = keyguardManager.isKeyguardSecure() ? "yes" : "no";
+            }
+        }
+
+        HSAnalytics.logEvent("app_locker_and_charging_show", "type", "charging_show", "isKeyguardSecure", isKeyguardSecure);
     }
 
     public void chargingEnableNotificationShowed() {
