@@ -1,6 +1,6 @@
 <resources xmlns:tools="http://schemas.android.com/tools" tools:ignore="MissingTranslation">
 
-    <string name="app_name">KeyboardUtilsLib</string>
+    <string name="app_name">KC Utils</string>
     <string name="fb_app_id">910238615719294</string>
     <string name="title_activity_charging_locker_settings">Settings</string>
 

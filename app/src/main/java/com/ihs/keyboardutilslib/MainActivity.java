@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.content.pm.ActivityInfo;
 import android.net.Uri;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -82,7 +83,10 @@ public class MainActivity extends HSActivity {
                     from = "AddNewPhotoToPrivate";
                     break;
             }
-            Toast.makeText(getApplicationContext(), from, Toast.LENGTH_LONG).show();
+            if (!TextUtils.isEmpty(from)) {
+                Toast.makeText(getApplicationContext(), "Intent from=" + from, Toast.LENGTH_LONG).show();
+            }
+
         }
     }
 
