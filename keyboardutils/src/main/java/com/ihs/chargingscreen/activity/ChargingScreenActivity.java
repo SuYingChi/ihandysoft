@@ -377,6 +377,7 @@ public class ChargingScreenActivity extends Activity {
         if (!RemoveAdsManager.getInstance().isRemoveAdsPurchased()) {
             acbExpressAdView = new AcbExpressAdView(HSApplication.getContext(), HSChargingScreenManager.getInstance().getNaitveAdsPlacementName());
             acbExpressAdView.setAutoSwitchAd(false);
+            acbExpressAdView.preloadAd();
             adContainer.addView(acbExpressAdView);
 
             // 单次关闭广告或永久删除广告

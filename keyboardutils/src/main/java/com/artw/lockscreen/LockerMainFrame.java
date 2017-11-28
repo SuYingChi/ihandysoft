@@ -192,6 +192,7 @@ public class LockerMainFrame extends RelativeLayout implements INotificationObse
             removeAds.setVisibility(GONE);
             acbExpressAdView = new AcbExpressAdView(activity == null ? HSApplication.getContext() : activity, getContext().getString(R.string.ad_placement_locker));
             acbExpressAdView.setAutoSwitchAd(false);
+            acbExpressAdView.preloadAd();
             acbExpressAdView.setGravity(Gravity.CENTER_HORIZONTAL | Gravity.BOTTOM);
             acbExpressAdView.setExpressAdViewListener(new AcbExpressAdView.AcbExpressAdViewListener() {
                 @Override

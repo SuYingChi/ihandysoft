@@ -219,6 +219,7 @@ public class LockerMainFrame extends RelativeLayout implements INotificationObse
         if (FloatWindowController.getInstance().isLockScreenShown()) {
             expressAdView = new AcbExpressAdView(getContext(), getContext().getString(R.string.ad_placement_locker));
             expressAdView.setAutoSwitchAd(false);
+            expressAdView.switchAd();
             expressAdView.setExpressAdViewListener(new AcbExpressAdView.AcbExpressAdViewListener() {
                 @Override
                 public void onAdShown(AcbExpressAdView acbExpressAdView) {
