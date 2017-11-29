@@ -342,7 +342,7 @@ public class KCNotificationManager {
                 }
 
                 //bg为空则默认bg 否则网络请求次数加一
-                if (!TextUtils.isEmpty(notificationToSend.getBgUrl())) {
+                if (style == 1 && !TextUtils.isEmpty(notificationToSend.getBgUrl())) {
                     requestCount++;
                 }
 
