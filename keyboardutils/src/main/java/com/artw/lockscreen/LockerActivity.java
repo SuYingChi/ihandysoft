@@ -3,10 +3,6 @@ package com.artw.lockscreen;
 import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
 import android.animation.ObjectAnimator;
-import android.content.BroadcastReceiver;
-import android.content.Context;
-import android.content.Intent;
-import android.content.IntentFilter;
 import android.graphics.Bitmap;
 import android.os.Build;
 import android.os.Bundle;
@@ -30,6 +26,7 @@ import com.ihs.chargingscreen.utils.ClickUtils;
 import com.ihs.commons.notificationcenter.HSGlobalNotificationCenter;
 import com.ihs.commons.notificationcenter.INotificationObserver;
 import com.ihs.commons.utils.HSBundle;
+import com.ihs.feature.common.ScreenStatusReceiver;
 import com.ihs.feature.common.Thunk;
 import com.ihs.keyboardutils.R;
 import com.ihs.keyboardutils.utils.CommonUtils;
@@ -67,18 +64,6 @@ public class LockerActivity extends AppCompatActivity implements INotificationOb
             .imageScaleType(ImageScaleType.EXACTLY)
             .bitmapConfig(Bitmap.Config.RGB_565)
             .build();
-
-    private BroadcastReceiver broadcastReceiver = new BroadcastReceiver() {
-        @Override
-        public void onReceive(Context context, Intent intent) {
-            if (intent.getAction().equals(Intent.ACTION_SCREEN_ON)) {
-                if (!ClickUtils.isFastDoubleClick()) {
-                    ChargingAnalytics.logLockScreenShow();
-                    ChargingAnalytics.logLockeScreenOrChargingScreenShow();
-                }
-            }
-        }
-    };
 
 
     @Override
@@ -135,9 +120,7 @@ public class LockerActivity extends AppCompatActivity implements INotificationOb
 
         LockerSettings.increaseLockerShowCount();
 
-        IntentFilter filter = new IntentFilter();
-        filter.addAction(Intent.ACTION_SCREEN_ON);
-        registerReceiver(broadcastReceiver, filter);
+        HSGlobalNotificationCenter.addObserver(ScreenStatusReceiver.NOTIFICATION_SCREEN_ON, this);
     }
 
     @Override
@@ -185,8 +168,6 @@ public class LockerActivity extends AppCompatActivity implements INotificationOb
 
     @Override
     protected void onDestroy() {
-        unregisterReceiver(broadcastReceiver);
-
         super.onDestroy();
         HSGlobalNotificationCenter.removeObserver(this);
 
@@ -286,6 +267,12 @@ public class LockerActivity extends AppCompatActivity implements INotificationOb
         switch (s) {
             case EVENT_FINISH_SELF:
                 finishSelf();
+                break;
+            case ScreenStatusReceiver.NOTIFICATION_SCREEN_ON:
+                if (!ClickUtils.isFastDoubleClick()) {
+                    ChargingAnalytics.logLockScreenShow();
+                    ChargingAnalytics.logLockeScreenOrChargingScreenShow();
+                }
                 break;
             default:
                 break;
