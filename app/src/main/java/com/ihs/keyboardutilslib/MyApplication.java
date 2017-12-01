@@ -76,7 +76,7 @@ public class MyApplication extends HSApplication {
             public boolean isItemDownloaded(NotificationBean notificationBean) {
                 return false;
             }
-        },false);
+        }, null, false);
 
 
 

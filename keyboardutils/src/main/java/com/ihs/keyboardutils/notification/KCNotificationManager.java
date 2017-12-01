@@ -56,6 +56,10 @@ public class KCNotificationManager {
         boolean isItemDownloaded(NotificationBean notificationBean);
     }
 
+    public interface NotificationSentListener {
+        void onNotificationSent(NotificationBean notificationBean);
+    }
+
     private static final String PREFS_FILE_NAME = "notification_prefs";
     private static final String PREFS_FINISHED_EVENT = "prefs_finished_event";
     private static final String PREFS_NEXT_EVENT_TIME = "prefs_next_event_time";
@@ -73,6 +77,7 @@ public class KCNotificationManager {
     private HSPreferenceHelper spHelper;
     private Class eventReceiverClass;
     private NotificationAvailabilityCallBack notificationCallBack;
+    private NotificationSentListener notificationSentListener;
     private boolean testSend = false;
     private boolean useAutoPilot = false;
 
@@ -93,17 +98,19 @@ public class KCNotificationManager {
         return instance;
     }
 
-    public void init(Class eventReceiverClass, NotificationAvailabilityCallBack notificationAvailabilityCallBack, boolean testSend) {
+    public void init(Class eventReceiverClass, NotificationAvailabilityCallBack notificationAvailabilityCallBack, NotificationSentListener notificationSentListener, boolean testSend) {
         notificationCallBack = notificationAvailabilityCallBack;
         HSGlobalNotificationCenter.addObserver(HSNotificationConstant.HS_CONFIG_CHANGED, notificationObserver);
+        this.notificationSentListener = notificationSentListener;
         this.eventReceiverClass = eventReceiverClass;
         this.testSend = testSend;
         scheduleNextEventTime();
     }
 
-    public void init(Class eventReceiverClass, NotificationAvailabilityCallBack notificationAvailabilityCallBack, boolean testSend, boolean useAutoPilot) {
+    public void init(Class eventReceiverClass, NotificationAvailabilityCallBack notificationAvailabilityCallBack, NotificationSentListener notificationSentListener, boolean testSend, boolean useAutoPilot) {
         notificationCallBack = notificationAvailabilityCallBack;
         HSGlobalNotificationCenter.addObserver(HSNotificationConstant.HS_CONFIG_CHANGED, notificationObserver);
+        this.notificationSentListener = notificationSentListener;
         this.eventReceiverClass = eventReceiverClass;
         this.testSend = testSend;
         this.useAutoPilot = useAutoPilot;
@@ -514,6 +521,10 @@ public class KCNotificationManager {
             e.printStackTrace();
             HSLog.e("下次", "notify error");
             return;
+        }
+
+        if (notificationSentListener != null) {
+            notificationSentListener.onNotificationSent(notificationBean);
         }
 
         HSAnalytics.logEvent("local_push_showed", "local_push_showed", notificationBean.getActionType());
