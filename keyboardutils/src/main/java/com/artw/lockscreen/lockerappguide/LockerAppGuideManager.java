@@ -62,7 +62,7 @@ public class LockerAppGuideManager {
             intentFilter.addAction(Intent.ACTION_PACKAGE_ADDED);
             intentFilter.addDataScheme("package");
 
-            PackageInstallReceiver packageInstallReceiver = new PackageInstallReceiver(getLockerAppPkgName());
+            PackageInstallReceiver packageInstallReceiver = new PackageInstallReceiver();
             HSApplication.getContext().registerReceiver(packageInstallReceiver, intentFilter);
 
             intentFilter = new IntentFilter();
@@ -188,19 +188,12 @@ public class LockerAppGuideManager {
     }
 
     private static class PackageInstallReceiver extends BroadcastReceiver {
-        private String pkgName;
-
-        private PackageInstallReceiver(String pkgName) {
-            this.pkgName = pkgName;
-        }
-
         public void onReceive(Context context, Intent intent) {
             String action = intent.getAction();
             final String packageName = intent.getData().getEncodedSchemeSpecificPart();
             if (Intent.ACTION_PACKAGE_ADDED.equals(action)) {
-                if (pkgName.endsWith(packageName)) {
+                if (packageName != null && packageName.equals(LockerAppGuideManager.getInstance().getLockerAppPkgName()))
                     LockerAppGuideManager.getInstance().setLockerInstall();
-                }
             }
         }
     }
