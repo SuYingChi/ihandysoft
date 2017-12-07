@@ -51,7 +51,7 @@ public class LockerChargingSpecialConfig {
     }
 
     public boolean canShowAd() {
-        return noAdsVersionUserType == SPECIAL_USER_NEW && HSConfig.optBoolean(false, "Application", "Locker", "Ads", "NewUserShowAd");
+        return noAdsVersionUserType != SPECIAL_USER_NEW || HSConfig.optBoolean(false, "Application", "Locker", "Ads", "NewUserShowAd");
     }
 
 
