@@ -1,16 +1,12 @@
 package com.ihs.chargingscreen.utils;
 
 import android.content.ComponentName;
-import android.content.Intent;
 import android.content.ServiceConnection;
 import android.os.IBinder;
 import android.os.RemoteException;
 
 import com.fasttrack.lockscreen.ICustomizeInterface;
-import com.ihs.app.framework.HSApplication;
 import com.ihs.commons.config.HSConfig;
-
-import static android.content.Context.BIND_AUTO_CREATE;
 
 /**
  * Created by Arthur on 17/12/7.
@@ -42,28 +38,31 @@ public class LockerChargingSpecialConfig {
         if (instance == null) {
             instance = new LockerChargingSpecialConfig();
         }
-        Intent lockerIntent = new Intent(ACTION_BIND_SERVICE);
-        lockerIntent.setPackage(BOUND_SERVICE_PACKAGE);
-        LockerConnection lockerConnection = new LockerConnection();
-        HSApplication.getContext().bindService(lockerIntent, lockerConnection, BIND_AUTO_CREATE);
+//        Intent lockerIntent = new Intent(ACTION_BIND_SERVICE);
+//        lockerIntent.setPackage(BOUND_SERVICE_PACKAGE);
+//        LockerConnection lockerConnection = new LockerConnection();
+//        HSApplication.getContext().bindService(lockerIntent, lockerConnection, BIND_AUTO_CREATE);
         return instance;
     }
 
     public void init(int noAdsVersionUserType) {
         this.noAdsVersionUserType = noAdsVersionUserType;
+
     }
 
     public boolean canShowAd() {
         return noAdsVersionUserType == SPECIAL_USER_NEW && HSConfig.optBoolean(false, "Application", "Locker", "Ads", "NewUserShowAd");
     }
 
+
     private static class LockerConnection implements ServiceConnection {
+        private boolean isLockerEnable = false;
 
         @Override
         public void onServiceConnected(ComponentName componentName, IBinder iBinder) {
             ICustomizeInterface iCustomizeInterface = ICustomizeInterface.Stub.asInterface(iBinder);
             try {
-                boolean isLockerEnable = iCustomizeInterface.isLockerEnable();
+                isLockerEnable = iCustomizeInterface.isLockerEnable();
             } catch (RemoteException e) {
                 e.printStackTrace();
             }
@@ -71,6 +70,11 @@ public class LockerChargingSpecialConfig {
 
         @Override
         public void onServiceDisconnected(ComponentName componentName) {
+            isLockerEnable = false;
+        }
+
+        public boolean isLockerEnable() {
+            return isLockerEnable;
         }
     }
 }
