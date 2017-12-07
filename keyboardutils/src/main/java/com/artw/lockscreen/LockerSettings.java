@@ -1,14 +1,16 @@
 package com.artw.lockscreen;
 
-import net.appcloudbox.ads.expressads.AcbExpressAdManager;
 import com.ihs.app.analytics.HSAnalytics;
 import com.ihs.app.framework.HSApplication;
+import com.ihs.chargingscreen.utils.LockerChargingSpecialConfig;
 import com.ihs.commons.config.HSConfig;
 import com.ihs.commons.utils.HSLog;
 import com.ihs.commons.utils.HSPreferenceHelper;
 import com.ihs.keyboardutils.R;
 import com.ihs.keyboardutils.iap.RemoveAdsManager;
 import com.ihs.keyboardutils.utils.PublisherUtils;
+
+import net.appcloudbox.ads.expressads.AcbExpressAdManager;
 
 import static com.artw.lockscreen.LockerActivity.PREF_KEY_CURRENT_WALLPAPER_HD_URL;
 
@@ -90,7 +92,7 @@ public class LockerSettings {
         LockerSettings.refreshLockerRecord();
 
         if (isLockerEnabled()) {
-            if (!RemoveAdsManager.getInstance().isRemoveAdsPurchased()) {
+            if (!RemoveAdsManager.getInstance().isRemoveAdsPurchased() && LockerChargingSpecialConfig.getInstance().canShowAd()) {
                 AcbExpressAdManager.getInstance().activePlacementInProcess(HSApplication.getContext().getString(R.string.ad_placement_locker));
             }
         } else {
