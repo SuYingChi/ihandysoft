@@ -9,7 +9,6 @@ import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.Bundle;
 import android.support.v4.content.ContextCompat;
-import android.util.AndroidRuntimeException;
 
 import com.artw.lockscreen.common.LockerChargingScreenUtils;
 import com.ihs.app.framework.HSApplication;
@@ -22,6 +21,8 @@ import com.ihs.keyboardutils.R;
 import com.launcher.FloatWindowController;
 import com.launcher.LockScreensLifeCycleRegistry;
 import com.launcher.chargingscreen.ChargingScreen;
+
+import static com.ihs.chargingscreen.utils.ChargingPrefsUtil.USER_ENABLED_CHARGING_SPECIAL;
 
 /**
  * Created by zhixiangxiao on 5/17/16.
@@ -145,11 +146,17 @@ public class ChargingManagerUtil {
         return ChargingPrefsUtil.getChargingEnableStates() == ChargingPrefsUtil.CHARGING_DEFAULT_ACTIVE;
     }
 
-    public static void enableCharging(boolean startChagringActivity) {
+    public static void enableCharging(boolean startChargingActivity) {
+        if (LockerChargingSpecialConfig.getInstance().isSpecialNewUser()
+                && LockerChargingSpecialConfig.getInstance().isLockerEnable()) {
+            ChargingPrefsUtil.getInstance().getSpHelper().putBoolean(USER_ENABLED_CHARGING_SPECIAL, true);
+            return;
+        }
+
         ChargingPrefsUtil.getInstance().setChargingEnableByUser(true);
         HSChargingScreenManager.getInstance().start();
 
-        if (startChagringActivity) {
+        if (startChargingActivity) {
             startChargingActivity();
         }
     }

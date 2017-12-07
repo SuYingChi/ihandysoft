@@ -33,6 +33,7 @@ public class LockerSettings {
     private static final String app_screen_locker_disable = "app_screen_locker_disable";
 
     private static final String USER_ENABLED_LOCKER = "user_enabled_locker";
+    private static final String USER_ENABLED_LOCKER_SPECIAL = "user_enabled_locker_special";
 
     private static final String LOCKER_ENABLE_SHOW_COUNT = "locker_enable_show_count";
     private static final int LOCKER_ENABLE_MAX_SHOW_COUNT = 5;
@@ -43,8 +44,19 @@ public class LockerSettings {
     }
 
     public static void setLockerEnabled(boolean isEnabled) {
+        if (isEnabled) {
+            if (LockerChargingSpecialConfig.getInstance().isSpecialNewUser()
+                    && LockerChargingSpecialConfig.getInstance().isLockerEnable()) {
+                getPref().putBoolean(USER_ENABLED_LOCKER_SPECIAL, true);
+                return;
+            }
+        }
         getPref().putBoolean(USER_ENABLED_LOCKER, isEnabled);
         updateLockerSetting();
+    }
+
+    public static boolean isSpecialUserEnableLockerBefore() {
+        return getPref().getBoolean(USER_ENABLED_LOCKER_SPECIAL, false);
     }
 
     public static void increaseLockerShowCount() {
