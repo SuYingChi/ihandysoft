@@ -60,14 +60,14 @@ public class AdLoadingView extends RelativeLayout implements KCNativeAdView.OnAd
     }
 
 
-    public interface OnDownloadAlertDismissListener {
+    public interface OnAdBufferingListener {
         void onDismiss(boolean progressComplete, boolean dismissManually);
     }
 
     private String[] onLoadingText = {"Applying...", "Applying SuccessFully"};
     private KCNativeAdView nativeAdView;
     private FlashFrameLayout flashAdContainer;
-    private OnDownloadAlertDismissListener onDownloadAlertDismissListener;
+    private OnAdBufferingListener onAdBufferingListener;
 
     public AdLoadingView(Context context) {
         super(context);
@@ -270,13 +270,13 @@ public class AdLoadingView extends RelativeLayout implements KCNativeAdView.OnAd
         valueAnimator.start();
     }
 
-    public void configParams(Drawable bg, Drawable icon, String loadingText, String loadComplete, String adPlacementName, OnDownloadAlertDismissListener onDownloadAlertDismissListener
+    public void configParams(Drawable bg, Drawable icon, String loadingText, String loadComplete, String adPlacementName, OnAdBufferingListener onAdBufferingListener
             , int delayAfterDownloadComplete, boolean hasPurchaseNoAds) {
         setBackgroundPreview(bg).setIcon(icon).setAdPlacementName(adPlacementName).setOnLoadingText(loadingText, loadComplete);
         if(leastDownloadingTime < delayAfterDownloadComplete){
             this.leastDownloadingTime = delayAfterDownloadComplete;
         }
-        this.onDownloadAlertDismissListener = onDownloadAlertDismissListener;
+        this.onAdBufferingListener = onAdBufferingListener;
         this.hasPurchaseNoAds = hasPurchaseNoAds;
         if (hasPurchaseNoAds) {
             LinearLayout rootView = (LinearLayout) this.findViewById(R.id.root_view);
@@ -309,8 +309,8 @@ public class AdLoadingView extends RelativeLayout implements KCNativeAdView.OnAd
         dialog.setOnDismissListener(new DialogInterface.OnDismissListener() {
             @Override
             public void onDismiss(DialogInterface dialog) {
-                if (onDownloadAlertDismissListener != null) {
-                    onDownloadAlertDismissListener.onDismiss(progressComplete, alertDismissManually);
+                if (onAdBufferingListener != null) {
+                    onAdBufferingListener.onDismiss(progressComplete, alertDismissManually);
                 }
             }
         });
@@ -331,7 +331,7 @@ public class AdLoadingView extends RelativeLayout implements KCNativeAdView.OnAd
         }
 
         if (dialog == null) {
-            onDownloadAlertDismissListener.onDismiss(progressComplete, alertDismissManually);
+            onAdBufferingListener.onDismiss(progressComplete, alertDismissManually);
         } else {
             KCCommonUtils.dismissDialog(dialog);
         }
