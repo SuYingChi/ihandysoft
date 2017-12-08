@@ -6,6 +6,7 @@ import android.content.ServiceConnection;
 import android.os.IBinder;
 import android.os.RemoteException;
 
+import com.artw.lockscreen.LockerSettings;
 import com.fasttrack.lockscreen.ICustomizeInterface;
 import com.ihs.app.framework.HSApplication;
 import com.ihs.commons.config.HSConfig;
@@ -75,6 +76,18 @@ public class LockerChargingSpecialConfig {
             ICustomizeInterface iCustomizeInterface = ICustomizeInterface.Stub.asInterface(iBinder);
             try {
                 isLockerEnable = iCustomizeInterface.isLockerEnable();
+                if (!isLockerEnable) {
+                    if (LockerSettings.isSpecialUserEnableLockerBefore()) {
+                        LockerSettings.setLockerEnabled(true);
+                    }
+                    if (ChargingPrefsUtil.getInstance().isChargingEnableBySpecialUSer()) {
+                        ChargingManagerUtil.enableCharging(false);
+                    }
+                } else {
+                    if (!canShowAd()) {
+                        
+                    }
+                }
             } catch (RemoteException e) {
                 e.printStackTrace();
             }
