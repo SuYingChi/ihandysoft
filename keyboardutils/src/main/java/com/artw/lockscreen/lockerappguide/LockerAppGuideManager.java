@@ -22,6 +22,8 @@ import com.ihs.keyboardutils.R;
 import com.ihs.keyboardutils.utils.CommonUtils;
 import com.kc.commons.utils.KCCommonUtils;
 
+import net.appcloudbox.autopilot.AutopilotEvent;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -95,6 +97,9 @@ public class LockerAppGuideManager {
             }
         }
         HSAnalytics.logEvent("googlePlay_smartLocker_installed", "googlePlay_smartLocker_installed", lockerAppInstalledFrom);
+        if (FLURRY_ALERT_OPEN_APP.equals(lockerAppInstalledFrom)) {
+            AutopilotEvent.logTopicEvent("topic-1512033355055", "locker_installed");
+        }
     }
 
     public boolean isLockerInstall() {
