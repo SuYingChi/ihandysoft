@@ -50,22 +50,24 @@ public class AdLoadingView extends RelativeLayout implements KCNativeAdView.OnAd
     private boolean isAdFlashAnimationPlayed = false;
     private ViewTreeObserver.OnGlobalLayoutListener mGlobalLayoutListener;
     private View closeButton;
+    private boolean alertDismissManually = false;
 
     @Override
     public void onAdClicked(KCNativeAdView adView) {
         HSAnalytics.logEvent("NativeAds_A(NativeAds)ApplyingItem_Click");
+        alertDismissManually = false;
         dismissSelf();
     }
 
 
-    public interface OnAdBufferingListener {
-        void onDismiss(boolean progressComplete);
+    public interface OnDownloadAlertDismissListener {
+        void onDismiss(boolean progressComplete, boolean dismissManually);
     }
 
     private String[] onLoadingText = {"Applying...", "Applying SuccessFully"};
     private KCNativeAdView nativeAdView;
     private FlashFrameLayout flashAdContainer;
-    private OnAdBufferingListener onAdBufferingListener;
+    private OnDownloadAlertDismissListener onDownloadAlertDismissListener;
 
     public AdLoadingView(Context context) {
         super(context);
@@ -113,6 +115,7 @@ public class AdLoadingView extends RelativeLayout implements KCNativeAdView.OnAd
         closeButton.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
+                alertDismissManually = true;
                 dismissSelf();
             }
         });
@@ -267,13 +270,13 @@ public class AdLoadingView extends RelativeLayout implements KCNativeAdView.OnAd
         valueAnimator.start();
     }
 
-    public void configParams(Drawable bg, Drawable icon, String loadingText, String loadComplete, String adPlacementName, OnAdBufferingListener onAdBufferingListener
+    public void configParams(Drawable bg, Drawable icon, String loadingText, String loadComplete, String adPlacementName, OnDownloadAlertDismissListener onDownloadAlertDismissListener
             , int delayAfterDownloadComplete, boolean hasPurchaseNoAds) {
         setBackgroundPreview(bg).setIcon(icon).setAdPlacementName(adPlacementName).setOnLoadingText(loadingText, loadComplete);
         if(leastDownloadingTime < delayAfterDownloadComplete){
             this.leastDownloadingTime = delayAfterDownloadComplete;
         }
-        this.onAdBufferingListener = onAdBufferingListener;
+        this.onDownloadAlertDismissListener = onDownloadAlertDismissListener;
         this.hasPurchaseNoAds = hasPurchaseNoAds;
         if (hasPurchaseNoAds) {
             LinearLayout rootView = (LinearLayout) this.findViewById(R.id.root_view);
@@ -306,8 +309,8 @@ public class AdLoadingView extends RelativeLayout implements KCNativeAdView.OnAd
         dialog.setOnDismissListener(new DialogInterface.OnDismissListener() {
             @Override
             public void onDismiss(DialogInterface dialog) {
-                if (onAdBufferingListener != null) {
-                    onAdBufferingListener.onDismiss(progressComplete);
+                if (onDownloadAlertDismissListener != null) {
+                    onDownloadAlertDismissListener.onDismiss(progressComplete, alertDismissManually);
                 }
             }
         });
@@ -328,7 +331,7 @@ public class AdLoadingView extends RelativeLayout implements KCNativeAdView.OnAd
         }
 
         if (dialog == null) {
-            onAdBufferingListener.onDismiss(progressComplete);
+            onDownloadAlertDismissListener.onDismiss(progressComplete, alertDismissManually);
         } else {
             KCCommonUtils.dismissDialog(dialog);
         }
