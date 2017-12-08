@@ -27,6 +27,7 @@ public class LockerChargingSpecialConfig {
     private static LockerChargingSpecialConfig instance;
 
     private LockerConnection lockerConnection;
+    private Intent lockerIntent;
     
     static final String BOUND_SERVICE_PACKAGE = HSConfig.getString("Application", "Locker", "AppName");
     private static final String ACTION_BIND_SERVICE = "action.customize.service";
@@ -50,14 +51,45 @@ public class LockerChargingSpecialConfig {
 
     public void init(int noAdsVersionUserType) {
         this.noAdsVersionUserType = noAdsVersionUserType;
-        Intent lockerIntent = new Intent(ACTION_BIND_SERVICE);
+        lockerIntent = new Intent(ACTION_BIND_SERVICE);
         lockerIntent.setPackage(BOUND_SERVICE_PACKAGE);
         lockerConnection = new LockerConnection();
-        HSApplication.getContext().bindService(lockerIntent, lockerConnection, BIND_AUTO_CREATE);
+        boolean success = HSApplication.getContext().bindService(lockerIntent, lockerConnection, BIND_AUTO_CREATE);
+        if (!success) {
+            enableLockerForSpecialUser();
+        }
+    }
+
+    public void rebindService() {
+        if (!isSpecialNewUser()) {
+            return;
+        }
+        HSApplication.getContext().unbindService(lockerConnection);
+        lockerConnection = new LockerConnection();
+        boolean success = HSApplication.getContext().bindService(lockerIntent, lockerConnection, BIND_AUTO_CREATE);
+        if (!success) {
+            enableLockerForSpecialUser();
+        }
     }
 
     public boolean canShowAd() {
         return noAdsVersionUserType != SPECIAL_USER_NEW || HSConfig.optBoolean(false, "Application", "Locker", "Ads", "NewUserShowAd");
+    }
+
+    private void enableLockerForSpecialUser() {
+        if (LockerSettings.isSpecialUserEnableLockerBefore()) { //仅special user 才有可能返回true
+            LockerSettings.setLockerEnabled(true);
+        }
+        if (ChargingPrefsUtil.getInstance().isChargingEnableBySpecialUSer()) { //同上
+            ChargingManagerUtil.enableCharging(false);
+        }
+    }
+
+    private void disableLockerForSpecialUser() {
+        if (!canShowAd()) {
+            LockerSettings.setLockerEnabled(false);
+            ChargingManagerUtil.disableCharging();
+        }
     }
 
     public boolean isSpecialNewUser() {
@@ -77,16 +109,9 @@ public class LockerChargingSpecialConfig {
             try {
                 isLockerEnable = iCustomizeInterface.isLockerEnable();
                 if (!isLockerEnable) {
-                    if (LockerSettings.isSpecialUserEnableLockerBefore()) {
-                        LockerSettings.setLockerEnabled(true);
-                    }
-                    if (ChargingPrefsUtil.getInstance().isChargingEnableBySpecialUSer()) {
-                        ChargingManagerUtil.enableCharging(false);
-                    }
+                    enableLockerForSpecialUser();
                 } else {
-                    if (!canShowAd()) {
-                        
-                    }
+                    disableLockerForSpecialUser();
                 }
             } catch (RemoteException e) {
                 e.printStackTrace();
