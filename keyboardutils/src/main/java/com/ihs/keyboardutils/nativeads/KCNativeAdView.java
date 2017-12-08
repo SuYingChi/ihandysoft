@@ -30,6 +30,7 @@ import net.appcloudbox.ads.base.ContainerView.AcbNativeAdPrimaryView;
 import net.appcloudbox.ads.nativeads.AcbNativeAdLoader;
 import net.appcloudbox.common.utils.AcbError;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class KCNativeAdView extends FrameLayout {
@@ -122,30 +123,37 @@ public class KCNativeAdView extends FrameLayout {
         int iconId = getResources().getIdentifier("ad_icon", "id", getContext().getPackageName());
         int subtitleId = getResources().getIdentifier("ad_subtitle", "id", getContext().getPackageName());
 
+        List<View> clickableViews = new ArrayList<>();
         View view = groupView.findViewById(actionId);
         if (view != null) {
             nativeAdContainerView.setAdActionView(view);
+            clickableViews.add(view);
         }
         view = groupView.findViewById(titleId);
         if (view != null) {
             nativeAdContainerView.setAdTitleView((TextView) view);
+            clickableViews.add(view);
         }
         view = groupView.findViewById(subtitleId);
         if (view != null) {
             nativeAdContainerView.setAdSubTitleView((TextView) view);
+            clickableViews.add(view);
         }
         view = groupView.findViewById(iconId);
         if (view != null) {
             nativeAdContainerView.setAdIconView((AcbNativeAdIconView) view);
+            clickableViews.add(view);
         }
         view = groupView.findViewById(coverImgId);
         if (view != null) {
             nativeAdContainerView.setAdPrimaryView((AcbNativeAdPrimaryView) view);
+            clickableViews.add(view);
         }
         view = groupView.findViewById(choiceId);
         if (view != null) {
             nativeAdContainerView.setAdChoiceView((FrameLayout) view);
         }
+        nativeAdContainerView.setClickViewList(clickableViews);
         addView(nativeAdContainerView);
     }
 
