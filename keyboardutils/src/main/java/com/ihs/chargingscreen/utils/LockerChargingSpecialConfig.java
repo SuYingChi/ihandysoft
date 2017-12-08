@@ -1,12 +1,17 @@
 package com.ihs.chargingscreen.utils;
 
 import android.content.ComponentName;
+import android.content.Intent;
 import android.content.ServiceConnection;
 import android.os.IBinder;
 import android.os.RemoteException;
 
+import com.artw.lockscreen.LockerSettings;
 import com.fasttrack.lockscreen.ICustomizeInterface;
+import com.ihs.app.framework.HSApplication;
 import com.ihs.commons.config.HSConfig;
+
+import static android.content.Context.BIND_AUTO_CREATE;
 
 /**
  * Created by Arthur on 17/12/7.
@@ -21,6 +26,8 @@ public class LockerChargingSpecialConfig {
 
     private static LockerChargingSpecialConfig instance;
 
+    private LockerConnection lockerConnection;
+    
     static final String BOUND_SERVICE_PACKAGE = HSConfig.getString("Application", "Locker", "AppName");
     private static final String ACTION_BIND_SERVICE = "action.customize.service";
 
@@ -38,24 +45,30 @@ public class LockerChargingSpecialConfig {
         if (instance == null) {
             instance = new LockerChargingSpecialConfig();
         }
-//        Intent lockerIntent = new Intent(ACTION_BIND_SERVICE);
-//        lockerIntent.setPackage(BOUND_SERVICE_PACKAGE);
-//        LockerConnection lockerConnection = new LockerConnection();
-//        HSApplication.getContext().bindService(lockerIntent, lockerConnection, BIND_AUTO_CREATE);
         return instance;
     }
 
     public void init(int noAdsVersionUserType) {
         this.noAdsVersionUserType = noAdsVersionUserType;
-
+        Intent lockerIntent = new Intent(ACTION_BIND_SERVICE);
+        lockerIntent.setPackage(BOUND_SERVICE_PACKAGE);
+        lockerConnection = new LockerConnection();
+        HSApplication.getContext().bindService(lockerIntent, lockerConnection, BIND_AUTO_CREATE);
     }
 
     public boolean canShowAd() {
         return noAdsVersionUserType != SPECIAL_USER_NEW || HSConfig.optBoolean(false, "Application", "Locker", "Ads", "NewUserShowAd");
     }
 
+    public boolean isSpecialNewUser() {
+        return noAdsVersionUserType == SPECIAL_USER_NEW;
+    }
 
-    private static class LockerConnection implements ServiceConnection {
+    public boolean isLockerEnable() {
+        return lockerConnection != null && lockerConnection.isLockerEnable();
+    }
+
+    private class LockerConnection implements ServiceConnection {
         private boolean isLockerEnable = false;
 
         @Override
@@ -63,6 +76,18 @@ public class LockerChargingSpecialConfig {
             ICustomizeInterface iCustomizeInterface = ICustomizeInterface.Stub.asInterface(iBinder);
             try {
                 isLockerEnable = iCustomizeInterface.isLockerEnable();
+                if (!isLockerEnable) {
+                    if (LockerSettings.isSpecialUserEnableLockerBefore()) {
+                        LockerSettings.setLockerEnabled(true);
+                    }
+                    if (ChargingPrefsUtil.getInstance().isChargingEnableBySpecialUSer()) {
+                        ChargingManagerUtil.enableCharging(false);
+                    }
+                } else {
+                    if (!canShowAd()) {
+                        
+                    }
+                }
             } catch (RemoteException e) {
                 e.printStackTrace();
             }
@@ -73,7 +98,7 @@ public class LockerChargingSpecialConfig {
             isLockerEnable = false;
         }
 
-        public boolean isLockerEnable() {
+        private boolean isLockerEnable() {
             return isLockerEnable;
         }
     }

@@ -34,6 +34,8 @@ public class ChargingPrefsUtil {
     private static ChargingPrefsUtil instance;
 
     public static final String USER_ENABLED_CHARGING = "user_enabled_charging";
+    public static final String USER_ENABLED_CHARGING_SPECIAL = "user_enabled_charging_special";
+
 
     //这个值是为了让老用户使用现在的
     private static final String
@@ -115,6 +117,10 @@ public class ChargingPrefsUtil {
         return spHelper.getBoolean(USER_ENABLED_CHARGING, false);
     }
 
+    public boolean isChargingEnableBySpecialUSer() {
+        return spHelper.getBoolean(USER_ENABLED_CHARGING_SPECIAL, false);
+    }
+
 
     //用户每次更改设置都要记录值，以便下次直接读取。
     public void setChargingEnableByUser(boolean isEnable) {
@@ -159,7 +165,7 @@ public class ChargingPrefsUtil {
         PreferenceHelper.getDefault().putBoolean(PREF_KEY_CHARGING_SCREEN_BATTERY_MENU_TIP_SHOWN, true);
     }
 
-    public static boolean isUserTouchedChargingSetting(){
+    public static boolean isUserTouchedChargingSetting() {
         return spHelper.contains(USER_ENABLED_CHARGING);
     }
 }
