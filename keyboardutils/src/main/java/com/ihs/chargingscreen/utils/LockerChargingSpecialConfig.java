@@ -76,7 +76,7 @@ public class LockerChargingSpecialConfig {
         return noAdsVersionUserType != SPECIAL_USER_NEW || HSConfig.optBoolean(false, "Application", "Locker", "Ads", "NewUserShowAd");
     }
 
-    private void enableLockerForSpecialUser() {
+    public void enableLockerForSpecialUser() {
         if (LockerSettings.isSpecialUserEnableLockerBefore()) { //仅special user 才有可能返回true
             LockerSettings.setLockerEnabled(true);
         }

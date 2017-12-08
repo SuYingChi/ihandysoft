@@ -12,6 +12,7 @@ import com.ihs.app.framework.HSApplication;
 import com.ihs.charging.HSChargingManager;
 import com.ihs.chargingscreen.utils.ChargingPrefsUtil;
 import com.ihs.chargingscreen.utils.FeatureDelayReleaseUtil;
+import com.ihs.chargingscreen.utils.LockerChargingSpecialConfig;
 import com.ihs.commons.config.HSConfig;
 import com.ihs.commons.notificationcenter.HSGlobalNotificationCenter;
 import com.ihs.commons.utils.HSLog;
@@ -46,6 +47,7 @@ public class LockerChargingScreenUtils {
     }
 
     public static void onScreenOff() {
+        LockerChargingSpecialConfig.getInstance().rebindService();
         if (HSChargingManager.getInstance().isCharging() && ChargingPrefsUtil.getChargingEnableStates() == ChargingPrefsUtil.CHARGING_DEFAULT_ACTIVE) {
             finishLockerActivity();
         } else if (LockerSettings.isLockerEnabled() && !shouldBlockLockerForNewUser()) {

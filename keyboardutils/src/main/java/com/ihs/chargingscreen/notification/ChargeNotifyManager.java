@@ -22,6 +22,7 @@ import com.ihs.chargingscreen.notification.push.WarningPush;
 import com.ihs.chargingscreen.utils.ChargingManagerUtil;
 import com.ihs.chargingscreen.utils.ChargingPrefsUtil;
 import com.ihs.chargingscreen.utils.FeatureDelayReleaseUtil;
+import com.ihs.chargingscreen.utils.LockerChargingSpecialConfig;
 import com.ihs.commons.config.HSConfig;
 import com.ihs.commons.notificationcenter.HSGlobalNotificationCenter;
 import com.ihs.commons.notificationcenter.INotificationObserver;
@@ -108,6 +109,7 @@ public class ChargeNotifyManager {
             if (Intent.ACTION_SCREEN_OFF.equals(intent.getAction())) {
                 int delayHours = HSConfig.optInteger(0, "Application", "ChargeLocker", "HoursFromFirstUse");
                 boolean chargingReadyToWork = isReady(PREF_APP_FIRST_TRY_TO_CHARGING, delayHours);
+                LockerChargingSpecialConfig.getInstance().rebindService();
                 if (HSChargingManager.getInstance().isCharging() && chargingReadyToWork) {
                     ChargingManagerUtil.startChargingActivity();
                 }
@@ -154,7 +156,7 @@ public class ChargeNotifyManager {
         //预防特殊情况没有注册却unregister
         try {
             HSApplication.getContext().unregisterReceiver(receiver);
-        }catch (Exception e){
+        } catch (Exception e) {
             e.printStackTrace();
         }
     }
