@@ -21,7 +21,6 @@ import com.ihs.chargingscreen.notification.push.FullChargedPush;
 import com.ihs.chargingscreen.notification.push.WarningPush;
 import com.ihs.chargingscreen.utils.ChargingManagerUtil;
 import com.ihs.chargingscreen.utils.ChargingPrefsUtil;
-import com.ihs.chargingscreen.utils.FeatureDelayReleaseUtil;
 import com.ihs.chargingscreen.utils.LockerChargingSpecialConfig;
 import com.ihs.commons.config.HSConfig;
 import com.ihs.commons.notificationcenter.HSGlobalNotificationCenter;
@@ -29,6 +28,7 @@ import com.ihs.commons.notificationcenter.INotificationObserver;
 import com.ihs.commons.utils.HSBundle;
 import com.ihs.commons.utils.HSLog;
 import com.ihs.keyboardutils.R;
+import com.kc.utils.FeatureDelayReleaseUtils;
 
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
@@ -118,7 +118,7 @@ public class ChargeNotifyManager {
     };
 
     private boolean isReady(String key, int delayHours) {
-        boolean chargingReadyToWork = FeatureDelayReleaseUtil.checkFeatureReadyToWork(key, delayHours);
+        boolean chargingReadyToWork = FeatureDelayReleaseUtils.isFeatureAvailable(HSApplication.getContext(), key, delayHours);
         if (ChargingPrefsUtil.getInstance().isChargingEnableByUser()) {
             return true;
         }

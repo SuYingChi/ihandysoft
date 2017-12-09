@@ -11,11 +11,11 @@ import com.artw.lockscreen.LockerSettings;
 import com.ihs.app.framework.HSApplication;
 import com.ihs.charging.HSChargingManager;
 import com.ihs.chargingscreen.utils.ChargingPrefsUtil;
-import com.ihs.chargingscreen.utils.FeatureDelayReleaseUtil;
 import com.ihs.chargingscreen.utils.LockerChargingSpecialConfig;
 import com.ihs.commons.config.HSConfig;
 import com.ihs.commons.notificationcenter.HSGlobalNotificationCenter;
 import com.ihs.commons.utils.HSLog;
+import com.kc.utils.FeatureDelayReleaseUtils;
 import com.launcher.FloatWindowController;
 
 public class LockerChargingScreenUtils {
@@ -59,14 +59,14 @@ public class LockerChargingScreenUtils {
     private static boolean shouldBlockLockerForNewUser() {
         if (LockerSettings.getLockerEnableStates() == LockerSettings.LOCKER_DEFAULT_ACTIVE) {
             int delayHours = HSConfig.optInteger(0, "Application", "Locker", "HoursFromFirstUse");
-            return !FeatureDelayReleaseUtil.checkFeatureReadyToWork(PREF_APP_FIRST_TRY_TO_LOCKER, delayHours);
+            return !FeatureDelayReleaseUtils.isFeatureAvailable(HSApplication.getContext(), PREF_APP_FIRST_TRY_TO_LOCKER, delayHours);
         } else {
             return false;
         }
     }
 
     private static boolean isReady(String key, int delayHours) {
-        boolean lockerReadyToWork = FeatureDelayReleaseUtil.checkFeatureReadyToWork(key, delayHours);
+        boolean lockerReadyToWork = FeatureDelayReleaseUtils.isFeatureAvailable(HSApplication.getContext(), key, delayHours);
         if (LockerSettings.isLockerEnabledBefore()) {
             return true;
         }

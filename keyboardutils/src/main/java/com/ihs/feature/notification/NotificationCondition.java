@@ -303,13 +303,14 @@ public class NotificationCondition implements INotificationObserver {
         }
 
         KeyguardManager km = (KeyguardManager) context.getSystemService(Context.KEYGUARD_SERVICE);
+
         if (!isUnlock && km.isKeyguardLocked()) {
-            HSLog.d(TAG, "没有解锁。" + !isUnlock + "  km: " + km.isKeyguardLocked());
+            // 没有解锁
             return;
         }
 
+        // 新用户一段时间内不提示。
         if (Utils.isNewUserInDNDStatus()) {
-            HSLog.d(TAG, "新用户 2 小时内不提示。");
             return;
         }
 
@@ -324,13 +325,13 @@ public class NotificationCondition implements INotificationObserver {
                 if (lastHolder == null || now - lastHolder.sendTime > CHECK_NOTIFICATION_INTERVAL) {
                     trySendNotificationInOrder();
                 } else {
-                    HSLog.d(TAG, "1 小时内发送过消息");
+                    // 1 小时内发送过消息
                 }
             } else {
-                HSLog.d(TAG, "24 小时，超过 6 个");
+                // 24小时，超过6个
             }
         } else {
-            HSLog.d(TAG, "亮屏不超过 1 分钟 或者 本次亮屏已经判断过通知");
+            // 亮屏不超过 1 分钟 或者 本次亮屏已经判断过通知
         }
     }
 

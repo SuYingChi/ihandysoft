@@ -81,7 +81,7 @@ import com.ihs.commons.config.HSConfig;
 import com.ihs.commons.utils.HSLog;
 import com.ihs.commons.utils.HSPreferenceHelper;
 import com.ihs.keyboardutils.utils.CommonUtils;
-import com.ihs.keyboardutils.utils.KCFeatureRestrictionConfig;
+import com.kc.utils.FeatureDelayReleaseUtils;
 import com.launcher.locker.LockerUtils;
 import com.nostra13.universalimageloader.core.ImageLoader;
 
@@ -1477,7 +1477,7 @@ public final class Utils {
         return icon;
     }
     public static boolean isNewUserInDNDStatus() {
-        return KCFeatureRestrictionConfig.isFeatureRestricted("BoostNotification");
+        return FeatureDelayReleaseUtils.isFeatureAvailable(HSApplication.getContext(), "BoostNotification", 5);
     }
 
     public static long getAppInstallTimeMillis() {
