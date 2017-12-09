@@ -18,7 +18,6 @@ import com.ihs.keyboardutils.utils.CustomShareUtils;
 import com.ihs.keyboardutilslib.adactivities.AdDemoActivity;
 import com.ihs.keyboardutilslib.alerts.CustomDesignAlertActivity;
 import com.ihs.keyboardutilslib.charginglocker.ChargingLockerSettingsActivity;
-import com.ihs.keyboardutilslib.configfile.ReadConfigSampleActivity;
 import com.ihs.keyboardutilslib.gif.GifViewDemoActivity;
 
 public class MainActivity extends HSActivity {
@@ -26,7 +25,6 @@ public class MainActivity extends HSActivity {
     String[] displayNameArray = {
             "Ad Demo",
             "Gif Demo",
-            "KCConfig Demo",
             "Custom Alert Demo",
             "Custom Share Demo",
             "Lock Screen & Charging Screen",
@@ -38,7 +36,6 @@ public class MainActivity extends HSActivity {
     Class[] activityClassArray = {
             AdDemoActivity.class,
             GifViewDemoActivity.class,
-            ReadConfigSampleActivity.class,
             CustomDesignAlertActivity.class,
             null,
             ChargingLockerSettingsActivity.class,
@@ -111,7 +108,7 @@ public class MainActivity extends HSActivity {
 
     // TOOD: should use better way than hard-coded numbers
     private void handleItemClick(int position) {
-        if (position == 4) {
+        if (position == 3) {
             Uri uri = Uri.parse("file:///storage/emulated/0/DCIM/Camera/IMG_20170412_014232854.jpg");
             CustomShareUtils.shareImage(this, uri, "Colorkey_A(NativeAds)CardAd", new CustomShareUtils.OnShareItemClickedListener() {
                 @Override
