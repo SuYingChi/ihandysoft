@@ -1476,9 +1476,6 @@ public final class Utils {
         }
         return icon;
     }
-    public static boolean isNewUserInDNDStatus() {
-        return FeatureDelayReleaseUtils.isFeatureAvailable(HSApplication.getContext(), "BoostNotification", 5);
-    }
 
     public static long getAppInstallTimeMillis() {
         if (sInstallTime <= 0) {
