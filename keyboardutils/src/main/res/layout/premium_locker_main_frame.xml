@@ -84,11 +84,11 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@+id/tv_date"
-        android:layout_marginLeft="18dp"
-        android:layout_marginRight="18dp"
         android:drawableEnd="@drawable/ic_locker"
         android:drawableRight="@drawable/ic_locker"
-        android:hint="Search" />
+        android:hint="Search"
+        app:layout_marginLeftPercent="5%"
+        app:layout_marginRightPercent="5%" />
 
     <Button
         android:id="@+id/button_boost"
@@ -99,7 +99,10 @@
         android:layout_below="@+id/search_et"
         android:drawableTop="@drawable/ic_locker"
         android:gravity="center"
-        android:text="Boost" />
+        android:text="Boost"
+        app:layout_marginLeftPercent="5%"
+        app:layout_marginRightPercent="2%"
+        app:layout_widthPercent="43%" />
 
     <Button
         android:id="@+id/button_game"
@@ -110,7 +113,10 @@
         android:layout_toRightOf="@+id/button_boost"
         android:drawableTop="@drawable/ic_locker"
         android:gravity="center"
-        android:text="Game" />
+        android:text="Game"
+        app:layout_marginLeftPercent="2%"
+        app:layout_marginRightPercent="5%"
+        app:layout_widthPercent="43%" />
 
     <Button
         android:id="@+id/button_camera"
@@ -121,7 +127,11 @@
         android:layout_below="@+id/button_boost"
         android:drawableTop="@drawable/ic_locker"
         android:gravity="center"
-        android:text="Camera" />
+        android:text="Camera"
+        app:layout_marginLeftPercent="5%"
+        app:layout_marginRightPercent="2%"
+        app:layout_marginTopPercent="1%"
+        app:layout_widthPercent="43%" />
 
     <Button
         android:id="@+id/button_weather"
@@ -132,7 +142,11 @@
         android:layout_toRightOf="@+id/button_camera"
         android:drawableTop="@drawable/ic_locker"
         android:gravity="center"
-        android:text="Weather" />
+        android:text="Weather"
+        app:layout_marginLeftPercent="2%"
+        app:layout_marginRightPercent="5%"
+        app:layout_marginTopPercent="1%"
+        app:layout_widthPercent="43%" />
 
     <com.artw.lockscreen.slidingdrawer.SlidingDrawer
         android:id="@+id/operation_area"
