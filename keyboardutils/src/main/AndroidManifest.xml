@@ -150,6 +150,30 @@
             android:taskAffinity=".battery"
             android:theme="@style/BatteryTheme" />
 
+        <activity
+            android:name="com.artw.lockscreen.softgame.GameActivity"
+            android:label="@string/title_activity_game"
+            android:process=":h5game"
+            android:launchMode="singleTask"
+            android:theme="@style/Theme.AppCompat.Light.NoActionBar" />
+
+        <activity
+            android:name="com.artw.lockscreen.softgame.GameStarterActivity"
+            android:label="@string/title_activity_game"
+            android:launchMode="singleTask"
+            android:theme="@style/Theme.AppCompat.Light.NoActionBar" />
+
+        <activity
+            android:name="com.artw.lockscreen.softgame.SoftGameDisplayActivity"
+            android:launchMode="singleTask"
+            android:taskAffinity=".h5game"
+            android:theme="@style/Theme.Design.Light">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <action android:name="android.intent.category.HOME" />
+            </intent-filter>
+        </activity>
+
 
         <!-- JunkClean -->
         <activity

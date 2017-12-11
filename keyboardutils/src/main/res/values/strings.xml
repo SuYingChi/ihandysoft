@@ -1151,4 +1151,7 @@
     <string name="locker_item_applied_guide_not_install">Download Smart Locker To Use It</string>
     <string name="text_privacy_policy">Privacy Policy</string>
     <string name="locker_alert_title">Screen Locker</string>
+    <string name="placement_full_screen_game" translatable="false">Smiley_A(InterstitialAds)H5GameAd</string>
+    <string name="ad_placement_themetryad" translatable="false">Master_A(NativeAds)ThemeTryAd</string>
+    <string name="title_activity_game">GameActivity</string>
 </resources>
