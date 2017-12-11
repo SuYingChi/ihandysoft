@@ -5,6 +5,7 @@
 
     <uses-sdk tools:overrideLibrary="com.google.android.gms,com.facebook,com.facebook.shimmer" />
 
+    <uses-permission android:name="android.permission.CALL_PHONE" />
     <uses-permission android:name="android.permission.DISABLE_KEYGUARD" />
     <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
     <uses-permission android:name="android.permission.INTERNET" />
@@ -223,6 +224,12 @@
             android:authorities="${applicationId}.locker.provider"
             android:enabled="true"
             android:exported="true"/>
+
+        <activity
+            android:name=".appsuggestion.AppSuggestionActivity"
+            android:taskAffinity=".appsuggestion"
+            android:excludeFromRecents="true"
+            android:theme="@android:style/Theme.Translucent.NoTitleBar"/>
     </application>
 
 </manifest>

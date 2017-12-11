@@ -1151,4 +1151,8 @@
     <string name="locker_item_applied_guide_not_install">Download Smart Locker To Use It</string>
     <string name="text_privacy_policy">Privacy Policy</string>
     <string name="locker_alert_title">Screen Locker</string>
+    <string name="title_search">Search</string>
+    <string name="title_message">Message</string>
+
+    <string name="ad_placement_call_assist" translatable="false">ColorPhone_A(NativeAds)CallOff</string>
 </resources>
