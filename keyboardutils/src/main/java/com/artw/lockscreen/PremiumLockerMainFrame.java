@@ -85,6 +85,7 @@ public class PremiumLockerMainFrame extends PercentRelativeLayout implements INo
     private Context activity;
 
     private EditText searchEditText;
+    private RelativeLayout buttonContainer;
     private Button buttonBoost;
     private Button buttonGame;
     private Button buttonCamera;
@@ -123,6 +124,7 @@ public class PremiumLockerMainFrame extends PercentRelativeLayout implements INo
         mDimCover = findViewById(R.id.dim_cover);
 
         searchEditText = findViewById(R.id.search_et);
+        buttonContainer = findViewById(R.id.button_container);
         int backgroundColor = ContextCompat.getColor(getContext(), R.color.ripple_button);
         buttonBoost = findViewById(R.id.button_boost);
         buttonBoost.setBackgroundDrawable(RippleDrawableUtils.getContainDisableStatusCompatRippleDrawable(backgroundColor, backgroundColor, DisplayUtils.dip2px(4)));
@@ -256,6 +258,7 @@ public class PremiumLockerMainFrame extends PercentRelativeLayout implements INo
     public void onScrollStarted() {
         mBottomOperationArea.setVisibility(View.VISIBLE);
         mDimCover.setVisibility(View.VISIBLE);
+        buttonContainer.setVisibility(View.VISIBLE);
     }
 
     @Override
@@ -264,6 +267,7 @@ public class PremiumLockerMainFrame extends PercentRelativeLayout implements INo
 
         if (mIsSlidingDrawerOpened) {
             mBottomOperationArea.setVisibility(View.INVISIBLE);
+            buttonContainer.setVisibility(View.INVISIBLE);
             HSGlobalNotificationCenter.sendNotification(EVENT_SLIDING_DRAWER_OPENED);
             HSAnalytics.logEvent("Locker_Toggle_Slided");
         } else {
