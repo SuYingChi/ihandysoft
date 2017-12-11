@@ -25,6 +25,7 @@ import android.widget.ImageView;
 import android.widget.SeekBar;
 
 import com.artw.lockscreen.LockerActivity;
+import com.artw.lockscreen.PremiumLockerActivity;
 import com.artw.lockscreen.common.ConfigConstants;
 import com.artw.lockscreen.common.NavUtils;
 import com.artw.lockscreen.common.SystemSettingsManager;
@@ -279,7 +280,14 @@ public class SlidingDrawerContent extends FrameLayout
     private void refreshDrawerBg() {
         if (isDrawerBgInitial) return;
         isDrawerBgInitial = true;
-        Drawable currentWallpaper = ((LockerActivity) getContext()).getIvLockerWallpaper().getDrawable();
+        Drawable currentWallpaper;
+        if (getContext() instanceof LockerActivity) {
+            currentWallpaper = ((LockerActivity) getContext()).getIvLockerWallpaper().getDrawable();
+        } else if (getContext() instanceof PremiumLockerActivity) {
+            currentWallpaper = ((PremiumLockerActivity) getContext()).getIvLockerWallpaper().getDrawable();
+        } else {
+            currentWallpaper = getContext().getResources().getDrawable(R.drawable.wallpaper_locker);
+        }
         if (currentWallpaper != null && currentWallpaper instanceof BitmapDrawable) {
             Bitmap bitmap = ((BitmapDrawable) currentWallpaper).getBitmap();
             if (bitmap != null) {
