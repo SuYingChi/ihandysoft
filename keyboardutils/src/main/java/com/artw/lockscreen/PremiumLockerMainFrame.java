@@ -34,12 +34,14 @@ import com.artw.lockscreen.slidingup.SlidingUpCallback;
 import com.artw.lockscreen.slidingup.SlidingUpTouchListener;
 import com.ihs.app.analytics.HSAnalytics;
 import com.ihs.app.framework.HSApplication;
+import com.ihs.chargingscreen.utils.DisplayUtils;
 import com.ihs.commons.notificationcenter.HSGlobalNotificationCenter;
 import com.ihs.commons.notificationcenter.INotificationObserver;
 import com.ihs.commons.utils.HSBundle;
 import com.ihs.feature.common.ScreenStatusReceiver;
 import com.ihs.keyboardutils.R;
 import com.ihs.keyboardutils.utils.CommonUtils;
+import com.ihs.keyboardutils.utils.RippleDrawableUtils;
 import com.kc.commons.utils.KCCommonUtils;
 
 
@@ -120,10 +122,15 @@ public class PremiumLockerMainFrame extends RelativeLayout implements INotificat
         mDimCover = findViewById(R.id.dim_cover);
 
         searchEditText = findViewById(R.id.search_et);
+        int backgroundColor = ContextCompat.getColor(getContext(), R.color.ripple_button);
         buttonBoost = findViewById(R.id.button_boost);
+        buttonBoost.setBackgroundDrawable(RippleDrawableUtils.getContainDisableStatusCompatRippleDrawable(backgroundColor, backgroundColor, DisplayUtils.dip2px(4)));
         buttonGame = findViewById(R.id.button_game);
+        buttonGame.setBackgroundDrawable(RippleDrawableUtils.getContainDisableStatusCompatRippleDrawable(backgroundColor, backgroundColor, DisplayUtils.dip2px(4)));
         buttonCamera = findViewById(R.id.button_camera);
+        buttonCamera.setBackgroundDrawable(RippleDrawableUtils.getContainDisableStatusCompatRippleDrawable(backgroundColor, backgroundColor, DisplayUtils.dip2px(4)));
         buttonWeather = findViewById(R.id.button_weather);
+        buttonWeather.setBackgroundDrawable(RippleDrawableUtils.getContainDisableStatusCompatRippleDrawable(backgroundColor, backgroundColor, DisplayUtils.dip2px(4)));
 
         mSlidingDrawerContent = (SlidingDrawerContent) findViewById(R.id.sliding_drawer_content);
         mDrawerHandle = findViewById(R.id.blank_handle);
