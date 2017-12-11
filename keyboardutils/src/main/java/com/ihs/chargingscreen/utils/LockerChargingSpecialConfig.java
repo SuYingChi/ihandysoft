@@ -10,6 +10,7 @@ import com.artw.lockscreen.LockerSettings;
 import com.fasttrack.lockscreen.ICustomizeInterface;
 import com.ihs.app.framework.HSApplication;
 import com.ihs.commons.config.HSConfig;
+import com.ihs.commons.utils.HSLog;
 
 import static android.content.Context.BIND_AUTO_CREATE;
 
@@ -29,7 +30,7 @@ public class LockerChargingSpecialConfig {
     private LockerConnection lockerConnection;
     private Intent lockerIntent;
     
-    static final String BOUND_SERVICE_PACKAGE = HSConfig.getString("Application", "Locker", "AppName");
+    static final String BOUND_SERVICE_PACKAGE = "com.wallpaper.theme.privacy.camera.lock.screen";
     private static final String ACTION_BIND_SERVICE = "action.customize.service";
 
     /**
@@ -64,11 +65,10 @@ public class LockerChargingSpecialConfig {
         if (!isSpecialNewUser()) {
             return;
         }
-        HSApplication.getContext().unbindService(lockerConnection);
-        lockerConnection = new LockerConnection();
-        boolean success = HSApplication.getContext().bindService(lockerIntent, lockerConnection, BIND_AUTO_CREATE);
-        if (!success) {
+        if (!isLockerEnable()) {
             enableLockerForSpecialUser();
+        } else {
+            disableLockerForSpecialUser();
         }
     }
 
@@ -86,7 +86,7 @@ public class LockerChargingSpecialConfig {
     }
 
     private void disableLockerForSpecialUser() {
-        if (!canShowAd()) {
+        if (isSpecialNewUser()) {
             LockerSettings.setLockerEnabled(false);
             ChargingManagerUtil.disableCharging();
         }
@@ -102,12 +102,14 @@ public class LockerChargingSpecialConfig {
 
     private class LockerConnection implements ServiceConnection {
         private boolean isLockerEnable = false;
+        private ICustomizeInterface iCustomizeInterface;
 
         @Override
         public void onServiceConnected(ComponentName componentName, IBinder iBinder) {
-            ICustomizeInterface iCustomizeInterface = ICustomizeInterface.Stub.asInterface(iBinder);
+            iCustomizeInterface = ICustomizeInterface.Stub.asInterface(iBinder);
             try {
                 isLockerEnable = iCustomizeInterface.isLockerEnable();
+                HSLog.e("xunling", String.valueOf(isLockerEnable));
                 if (!isLockerEnable) {
                     enableLockerForSpecialUser();
                 } else {
@@ -124,7 +126,14 @@ public class LockerChargingSpecialConfig {
         }
 
         private boolean isLockerEnable() {
-            return isLockerEnable;
+            try {
+                isLockerEnable = iCustomizeInterface.isLockerEnable();
+                HSLog.e("xunling", String.valueOf(isLockerEnable));
+                return isLockerEnable;
+            } catch (RemoteException e) {
+                e.printStackTrace();
+                return false;
+            }
         }
     }
 }
