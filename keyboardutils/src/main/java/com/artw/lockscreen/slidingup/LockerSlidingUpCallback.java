@@ -3,6 +3,7 @@ package com.artw.lockscreen.slidingup;
 import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
 import android.animation.ObjectAnimator;
+import android.app.Activity;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.AccelerateDecelerateInterpolator;
@@ -38,7 +39,7 @@ public class LockerSlidingUpCallback implements SlidingUpCallback {
     private ImageView mBottomIcon;
     private int mNavigationBarHeight;
 
-    public LockerSlidingUpCallback(LockerActivity activity) {
+    public LockerSlidingUpCallback(Activity activity) {
         mTransitionContainer = (ViewGroup) activity.findViewById(R.id.transition_container);
         mBottomLayer = (ViewGroup) activity.findViewById(R.id.bottom_layer);
         mBottomIcon = (ImageView) activity.findViewById(R.id.bottom_icon);
