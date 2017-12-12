@@ -22,6 +22,7 @@ import android.widget.Toast;
 
 import com.artw.lockscreen.LockerActivity;
 import com.artw.lockscreen.LockerMainFrame;
+import com.artw.lockscreen.PremiumLockerActivity;
 import com.artw.lockscreen.common.NetworkChangeReceiver;
 import com.artw.lockscreen.slidingdrawer.SlidingDrawerContent;
 import com.ihs.app.analytics.HSAnalytics;
@@ -267,7 +268,14 @@ public class WallpaperContainer extends LinearLayout implements View.OnClickList
 
         @Override
         public void onLoadingComplete(String s, View view, final Bitmap bitmap) {
-            final ImageView wallpaperView = ((LockerActivity) getContext()).getIvLockerWallpaper();
+            final ImageView wallpaperView;
+            if (getContext() instanceof LockerActivity) {
+                wallpaperView = ((LockerActivity) getContext()).getIvLockerWallpaper();
+            } else if (getContext() instanceof PremiumLockerActivity) {
+                wallpaperView = ((PremiumLockerActivity) getContext()).getIvLockerWallpaper();
+            } else {
+                wallpaperView = new ImageView(getContext());
+            }
             SlidingDrawerContent silde = (SlidingDrawerContent) getParent().getParent();
             if (wallpaperView == null || silde == null) {
                 mIsDownloadingWallpaper = false;
