@@ -101,6 +101,17 @@
             android:theme="@style/ChargingScreenTransparentTheme" />
 
         <activity
+            android:name="com.artw.lockscreen.PremiumLockerSearchActivity"
+            android:autoRemoveFromRecents="true"
+            android:configChanges="keyboardHidden|orientation|screenSize"
+            android:excludeFromRecents="true"
+            android:exported="true"
+            android:launchMode="singleTop"
+            android:screenOrientation="portrait"
+            android:taskAffinity=".air_locker"
+            android:theme="@style/ChargingScreenTransparentTheme" />
+
+        <activity
             android:name="com.artw.lockscreen.DismissKeyguradActivity"
             android:configChanges="keyboard|keyboardHidden|orientation"
             android:excludeFromRecents="true"
