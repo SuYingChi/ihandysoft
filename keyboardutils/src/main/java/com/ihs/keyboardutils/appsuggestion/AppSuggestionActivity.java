@@ -2,6 +2,8 @@ package com.ihs.keyboardutils.appsuggestion;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.content.pm.ApplicationInfo;
+import android.content.pm.PackageManager;
 import android.os.Build;
 import android.os.Bundle;
 import android.provider.Telephony;
@@ -18,10 +20,15 @@ import android.widget.TextView;
 
 import com.ihs.app.framework.HSApplication;
 import com.ihs.commons.utils.HSLog;
+import com.ihs.device.common.AppFilter;
+import com.ihs.device.common.HSAppRunningInfo;
+import com.ihs.device.common.utils.AppRunningUtils;
 import com.ihs.keyboardutils.R;
 import com.ihs.keyboardutils.nativeads.KCNativeAdView;
 import com.ihs.keyboardutils.utils.RippleDrawableUtils;
 import com.ihs.keyboardutils.utils.ToastUtils;
+
+import java.util.List;
 
 /**
  * Created by Arthur on 17/12/9.
@@ -29,7 +36,14 @@ import com.ihs.keyboardutils.utils.ToastUtils;
 
 public class AppSuggestionActivity extends Activity {
 
-    private RecyclerView.Adapter adapter = new RecyclerView.Adapter() {
+    private static final int RECENT_APP_SIZE = 5;
+
+    private class RecentAppAdapter extends RecyclerView.Adapter {
+        List<HSAppRunningInfo> appRunningInfoList;
+
+        public RecentAppAdapter(List<HSAppRunningInfo> appRunningInfoList) {
+            this.appRunningInfoList = appRunningInfoList;
+        }
 
         @Override
         public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
@@ -39,8 +53,27 @@ public class AppSuggestionActivity extends Activity {
 
         @Override
         public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
-            ((itemHolder) holder).getTitle().setText("app" + position);
-            ((itemHolder) holder).getIcon().setImageResource(R.drawable.boost_icon);
+            String packageName = appRunningInfoList.get(position).getPackageName();
+            try {
+                PackageManager packageManager = HSApplication.getContext().getPackageManager();
+                ApplicationInfo applicationInfo = packageManager.getApplicationInfo(packageName, 0);
+                String appName = packageManager.getApplicationLabel(applicationInfo).toString();
+                appName = appName.trim().replace(" ", "");
+
+                ((itemHolder) holder).getTitle().setText(appName);
+                ((itemHolder) holder).getIcon().setImageDrawable(packageManager.getApplicationIcon(packageName));
+            } catch (PackageManager.NameNotFoundException e) {
+                e.printStackTrace();
+            }
+
+            holder.itemView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Intent LaunchIntent = getPackageManager().getLaunchIntentForPackage(packageName);
+                    startActivity(LaunchIntent);
+                    finish();
+                }
+            });
         }
 
         @Override
@@ -50,7 +83,7 @@ public class AppSuggestionActivity extends Activity {
 
         @Override
         public int getItemCount() {
-            return 5;
+            return appRunningInfoList != null ? appRunningInfoList.size() > RECENT_APP_SIZE ? RECENT_APP_SIZE : appRunningInfoList.size() : 0;
         }
 
         class itemHolder extends RecyclerView.ViewHolder {
@@ -71,7 +104,9 @@ public class AppSuggestionActivity extends Activity {
                 return icon;
             }
         }
-    };
+    }
+
+    ;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -86,8 +121,10 @@ public class AppSuggestionActivity extends Activity {
 
         RecyclerView listView = mainView.findViewById(R.id.recycler_view);
 //        listView.setLayoutManager(new LinearLayoutManager(this,LinearLayoutManager.HORIZONTAL,false));
-        listView.setLayoutManager(new GridLayoutManager(this,5));
-        listView.setAdapter(adapter);
+        List<HSAppRunningInfo> appRunningInfoList = AppRunningUtils.getAppRunningInfoList(HSAppRunningInfo.class, new AppFilter(), true, true, true, true);
+        RecentAppAdapter recentAppAdapter = new RecentAppAdapter(appRunningInfoList);
+        listView.setLayoutManager(new GridLayoutManager(this, RECENT_APP_SIZE));
+        listView.setAdapter(recentAppAdapter);
         listView.setOverScrollMode(View.OVER_SCROLL_NEVER);
 
         ImageView ivClose = mainView.findViewById(R.id.iv_close);
@@ -118,7 +155,7 @@ public class AppSuggestionActivity extends Activity {
         tvMsg.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-              sendSMS();
+                sendSMS();
             }
         });
 
@@ -133,7 +170,7 @@ public class AppSuggestionActivity extends Activity {
 
 
         KCNativeAdView nativeAdView = new KCNativeAdView(HSApplication.getContext());
-        nativeAdView.setAdLayoutView(View.inflate(this,R.layout.locker_ad_card,null));
+        nativeAdView.setAdLayoutView(View.inflate(this, R.layout.locker_ad_card, null));
         nativeAdView.load(getString(R.string.ad_placement_call_assist));
 
         FrameLayout adContainer = findViewById(R.id.alert_ad_container);
@@ -154,8 +191,7 @@ public class AppSuggestionActivity extends Activity {
             Intent sendIntent = new Intent();
             sendIntent.setPackage(defaultSmsPackageName);
             startActivity(sendIntent);
-        }
-        else // For early versions, do what worked for you before.
+        } else // For early versions, do what worked for you before.
         {
             Intent smsIntent = new Intent(android.content.Intent.ACTION_VIEW);
             smsIntent.setType("vnd.android-dir/mms-sms");
