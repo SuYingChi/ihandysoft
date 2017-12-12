@@ -76,6 +76,5 @@ class PremiumLockerAdapter extends PagerAdapter {
     private void createMainFrame() {
         lockerMainFrame = (PremiumLockerMainFrame) LayoutInflater.from(mContext).inflate(R.layout.premium_locker_main_frame, null);
         lockerMainFrame.setActivityContext(mContext);
-        lockerMainFrame.setSlidingUpCallback(mSlidingUpCallback);
     }
 }

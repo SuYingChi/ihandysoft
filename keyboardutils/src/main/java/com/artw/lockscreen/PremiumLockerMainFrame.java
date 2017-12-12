@@ -73,7 +73,6 @@ public class PremiumLockerMainFrame extends PercentRelativeLayout implements INo
     private ShimmerTextView mUnlockText;
 
     private View mBottomOperationArea;
-    private View mWallpaperContainer;
 
     private View mMenuMore;
 
@@ -143,7 +142,6 @@ public class PremiumLockerMainFrame extends PercentRelativeLayout implements INo
         mDrawerHandleDown = findViewById(R.id.handle_action_down);
         mBottomOperationArea = findViewById(R.id.bottom_operation_area);
         mSlidingDrawer = (SlidingDrawer) findViewById(R.id.operation_area);
-        mWallpaperContainer = findViewById(R.id.wallpaper_container);
         mMenuMore = findViewById(R.id.ic_menu);
         mMenuMore.setOnClickListener(new OnClickListener() {
             @Override
@@ -305,17 +303,6 @@ public class PremiumLockerMainFrame extends PercentRelativeLayout implements INo
 
     public void setActivityContext(Context activity) {
         this.activity = activity;
-    }
-
-    public void setSlidingUpCallback(SlidingUpCallback callback) {
-        final SlidingUpTouchListener leftListener = new SlidingUpTouchListener(SlidingUpTouchListener.TYPE_LEFT, callback);
-        mWallpaperContainer.setOnTouchListener(new OnTouchListener() {
-            @Override
-            public boolean onTouch(View v, MotionEvent event) {
-                leftListener.onTouch(v, event);
-                return true;
-            }
-        });
     }
 
     private void showMenuPopupWindow(Context context, View parentView) {
