@@ -126,8 +126,9 @@ public class WeatherManager {
     private BroadcastReceiver weatherReceiver = new BroadcastReceiver() {
         @Override
         public void onReceive(Context context, Intent intent) {
-            if (intent != null && ACTION_WEATHER_CHANGE.equals(intent.getAction())) {
-//                updateWeatherView(intent);
+            HSLog.d("weather intent == " + intent);
+            if (intent != null && ACTION_WEATHER_REQUEST.equals(intent.getAction())) {
+                updateIfNeeded();
             }
         }
     };
@@ -172,7 +173,6 @@ public class WeatherManager {
                 } else {
                     status = WeatherStatus.FAILED;
                 }
-//                GA_EVENT_WEATHER_LOAD
                 HSGlobalNotificationCenter.sendNotification(NOTIFICATION_WEATHER_CONDITION_CHANGED);
                 sendBroadcast();
             }

@@ -16,6 +16,7 @@ import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.Toolbar;
 import android.text.SpannableString;
 import android.text.Spanned;
+import android.text.TextUtils;
 import android.text.style.ForegroundColorSpan;
 import android.util.AttributeSet;
 import android.view.LayoutInflater;
@@ -253,7 +254,6 @@ public class PremiumLockerMainFrame extends RelativeLayout implements INotificat
 
     private void initButtons() {
         initWeather();
-
     }
 
     private void initWeather() {
@@ -262,7 +262,6 @@ public class PremiumLockerMainFrame extends RelativeLayout implements INotificat
 
     private void requestWeather() {
         Intent intent = new Intent(WeatherManager.ACTION_WEATHER_REQUEST);
-//        intent.setPackage(ThemeConstants.LOCKER_PACKAGE_NAME);
         getContext().sendBroadcast(intent);
     }
 
@@ -273,6 +272,7 @@ public class PremiumLockerMainFrame extends RelativeLayout implements INotificat
             getContext().registerReceiver(weatherReceiver, intentFilter);
             isReceiverRegistered = true;
 
+            WeatherManager.init(getContext());
             requestWeather();
         }
     }
@@ -285,11 +285,18 @@ public class PremiumLockerMainFrame extends RelativeLayout implements INotificat
     }
 
     private void updateWeatherView(Intent intent) {
-        String weather = intent.getIntExtra(BUNDLE_KEY_WEATHER_TEMPERATURE_INT, 0) + intent.getStringExtra(BUNDLE_KEY_WEATHER_TEMPERATURE_FORMAT);
+        int temp = intent.getIntExtra(BUNDLE_KEY_WEATHER_TEMPERATURE_INT, 0);
+        String tempFormat = intent.getStringExtra(BUNDLE_KEY_WEATHER_TEMPERATURE_FORMAT);
+        String tempStr;
+        if (!TextUtils.isEmpty(tempFormat)) {
+            tempStr = String.format(tempFormat, temp);
+        } else {
+            tempStr = String.valueOf(temp);
+        }
         int weatherResId = intent.getIntExtra(BUNDLE_KEY_WEATHER_ICON_ID, R.drawable.battery_rank_svg);
         Drawable weatherDrawable = ContextCompat.getDrawable(getContext(), weatherResId);
         weatherDrawable.setBounds(0, 0, weatherDrawable.getMinimumWidth(), weatherDrawable.getMinimumHeight());
-        buttonWeather.setText(weather);
+        buttonWeather.setText(tempStr);
         buttonWeather.setCompoundDrawablesWithIntrinsicBounds(null, weatherDrawable, null, null);
     }
 
