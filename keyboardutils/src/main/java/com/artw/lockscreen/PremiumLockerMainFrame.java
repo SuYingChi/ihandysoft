@@ -35,6 +35,7 @@ import com.ihs.chargingscreen.utils.DisplayUtils;
 import com.ihs.commons.notificationcenter.HSGlobalNotificationCenter;
 import com.ihs.commons.notificationcenter.INotificationObserver;
 import com.ihs.commons.utils.HSBundle;
+import com.ihs.commons.utils.HSLog;
 import com.ihs.feature.common.ScreenStatusReceiver;
 import com.ihs.keyboardutils.R;
 import com.ihs.keyboardutils.utils.CommonUtils;
@@ -111,6 +112,28 @@ public class PremiumLockerMainFrame extends PercentRelativeLayout implements INo
         }
     }
 
+    private View.OnClickListener clickListener = new View.OnClickListener() {
+        /**
+         * Called when a view has been clicked.
+         *
+         * @param v The view that was clicked.
+         */
+        @Override
+        public void onClick(View v) {
+            if (v.getId() == R.id.search_button) {
+                HSLog.d("");
+            } else if (v.getId() == R.id.button_boost) {
+                HSLog.d("");
+            } else if (v.getId() == R.id.button_game) {
+                HSLog.d("");
+            } else if (v.getId() == R.id.button_camera) {
+                HSLog.d("");
+            } else if (v.getId() == R.id.button_weather) {
+                HSLog.d("");
+            }
+        }
+    };
+
     @Override
     protected void onFinishInflate() {
         super.onFinishInflate();
@@ -120,14 +143,19 @@ public class PremiumLockerMainFrame extends PercentRelativeLayout implements INo
         int backgroundColor = ContextCompat.getColor(getContext(), R.color.locker_button_bg);
 
         buttonSearch = findViewById(R.id.search_button);
+        buttonSearch.setOnClickListener(clickListener);
         buttonSearch.setBackgroundDrawable(RippleDrawableUtils.getContainDisableStatusCompatRippleDrawable(backgroundColor, backgroundColor, DisplayUtils.dip2px(2)));
         buttonBoost = findViewById(R.id.button_boost);
+        buttonBoost.setOnClickListener(clickListener);
         buttonBoost.setBackgroundDrawable(RippleDrawableUtils.getContainDisableStatusCompatRippleDrawable(backgroundColor, backgroundColor, DisplayUtils.dip2px(4)));
         buttonGame = findViewById(R.id.button_game);
+        buttonGame.setOnClickListener(clickListener);
         buttonGame.setBackgroundDrawable(RippleDrawableUtils.getContainDisableStatusCompatRippleDrawable(backgroundColor, backgroundColor, DisplayUtils.dip2px(4)));
         buttonCamera = findViewById(R.id.button_camera);
+        buttonCamera.setOnClickListener(clickListener);
         buttonCamera.setBackgroundDrawable(RippleDrawableUtils.getContainDisableStatusCompatRippleDrawable(backgroundColor, backgroundColor, DisplayUtils.dip2px(4)));
         buttonWeather = findViewById(R.id.button_weather);
+        buttonWeather.setOnClickListener(clickListener);
         buttonWeather.setBackgroundDrawable(RippleDrawableUtils.getContainDisableStatusCompatRippleDrawable(backgroundColor, backgroundColor, DisplayUtils.dip2px(4)));
 
         mSlidingDrawerContent = (SlidingDrawerContent) findViewById(R.id.sliding_drawer_content);
