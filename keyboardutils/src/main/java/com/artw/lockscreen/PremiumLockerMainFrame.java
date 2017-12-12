@@ -123,9 +123,11 @@ public class PremiumLockerMainFrame extends PercentRelativeLayout implements INo
 
         mDimCover = findViewById(R.id.dim_cover);
 
+        int backgroundColor = ContextCompat.getColor(getContext(), R.color.material_ripple_white);
+
         searchEditText = findViewById(R.id.search_et);
+        searchEditText.setBackgroundDrawable(RippleDrawableUtils.getContainDisableStatusCompatRippleDrawable(backgroundColor, backgroundColor, DisplayUtils.dip2px(2)));
         buttonContainer = findViewById(R.id.button_container);
-        int backgroundColor = ContextCompat.getColor(getContext(), R.color.ripple_button);
         buttonBoost = findViewById(R.id.button_boost);
         buttonBoost.setBackgroundDrawable(RippleDrawableUtils.getContainDisableStatusCompatRippleDrawable(backgroundColor, backgroundColor, DisplayUtils.dip2px(4)));
         buttonGame = findViewById(R.id.button_game);

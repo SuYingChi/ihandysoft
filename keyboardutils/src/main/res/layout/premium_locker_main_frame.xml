@@ -96,7 +96,8 @@
         android:layout_height="wrap_content"
         android:layout_below="@+id/search_et"
         app:layout_marginLeftPercent="5%"
-        app:layout_marginRightPercent="5%">
+        app:layout_marginRightPercent="5%"
+        app:layout_marginTopPercent="1%">
 
         <Button
             android:id="@+id/button_boost"
