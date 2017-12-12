@@ -11,10 +11,12 @@ import android.os.Bundle;
 import android.support.v4.content.ContextCompat;
 
 import com.artw.lockscreen.common.LockerChargingScreenUtils;
+import com.ihs.app.analytics.HSAnalytics;
 import com.ihs.app.framework.HSApplication;
 import com.ihs.charging.HSChargingManager;
 import com.ihs.chargingscreen.HSChargingScreenManager;
 import com.ihs.chargingscreen.activity.ChargingScreenActivity;
+import com.ihs.chargingscreen.activity.ChargingScreenAlertActivity;
 import com.ihs.commons.config.HSConfig;
 import com.ihs.commons.utils.HSLog;
 import com.ihs.keyboardutils.R;
@@ -23,6 +25,7 @@ import com.launcher.LockScreensLifeCycleRegistry;
 import com.launcher.chargingscreen.ChargingScreen;
 
 import static com.ihs.chargingscreen.utils.ChargingPrefsUtil.USER_ENABLED_CHARGING_SPECIAL;
+import static com.ihs.chargingscreen.utils.ChargingPrefsUtil.isChargingAlertEnabled;
 
 /**
  * Created by zhixiangxiao on 5/17/16.
@@ -162,7 +165,17 @@ public class ChargingManagerUtil {
     }
 
     public static void startChargingActivity() {
-        if (!HSConfig.optBoolean(false, "Application", "Locker", "UseNewLockScreen")) {
+        if (isChargingAlertEnabled()){
+            try {
+                Intent intent = new Intent(HSApplication.getContext(), ChargingScreenAlertActivity.class);
+                intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NO_ANIMATION);
+                ContextCompat.startActivity(HSApplication.getContext(), intent, null);
+
+                HSAnalytics.logEvent("chargeAlert_show");
+            } catch (Exception e) {
+                HSLog.e(e.getMessage());
+            }
+        } else if (!HSConfig.optBoolean(false, "Application", "Locker", "UseNewLockScreen")) {
             HSLog.d("config use past charging screen");
             try {
                 Intent intent = new Intent(HSApplication.getContext(), ChargingScreenActivity.class);

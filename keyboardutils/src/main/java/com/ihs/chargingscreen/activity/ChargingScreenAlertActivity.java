@@ -1,0 +1,661 @@
+package com.ihs.chargingscreen.activity;
+
+import android.animation.Animator;
+import android.animation.AnimatorListenerAdapter;
+import android.animation.AnimatorSet;
+import android.animation.ObjectAnimator;
+import android.animation.ValueAnimator;
+import android.app.Activity;
+import android.app.Dialog;
+import android.content.BroadcastReceiver;
+import android.content.Context;
+import android.content.Intent;
+import android.content.IntentFilter;
+import android.content.pm.PackageManager;
+import android.content.res.Configuration;
+import android.content.res.Resources;
+import android.graphics.Color;
+import android.graphics.Typeface;
+import android.graphics.drawable.Drawable;
+import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
+import android.support.annotation.IntRange;
+import android.support.graphics.drawable.VectorDrawableCompat;
+import android.telephony.PhoneStateListener;
+import android.telephony.TelephonyManager;
+import android.text.TextUtils;
+import android.util.DisplayMetrics;
+import android.view.Gravity;
+import android.view.View;
+import android.view.View.OnClickListener;
+import android.view.Window;
+import android.widget.ImageView;
+import android.widget.RelativeLayout;
+import android.widget.TextView;
+
+import com.artw.lockscreen.LockerUtils;
+import com.ihs.app.analytics.HSAnalytics;
+import com.ihs.app.framework.HSApplication;
+import com.ihs.app.framework.HSSessionMgr;
+import com.ihs.charging.HSChargingManager;
+import com.ihs.charging.HSChargingManager.HSChargingState;
+import com.ihs.chargingscreen.HSChargingScreenManager;
+import com.ihs.chargingscreen.notification.ChargeNotifyManager;
+import com.ihs.chargingscreen.ui.BubbleView;
+import com.ihs.chargingscreen.utils.ChargingAnalytics;
+import com.ihs.chargingscreen.utils.ChargingManagerUtil;
+import com.ihs.chargingscreen.utils.ClickUtils;
+import com.ihs.chargingscreen.utils.DisplayUtils;
+import com.ihs.commons.config.HSConfig;
+import com.ihs.commons.notificationcenter.HSGlobalNotificationCenter;
+import com.ihs.commons.notificationcenter.INotificationObserver;
+import com.ihs.commons.utils.HSBundle;
+import com.ihs.commons.utils.HSLog;
+import com.ihs.keyboardutils.R;
+import com.ihs.keyboardutils.iap.RemoveAdsManager;
+import com.ihs.keyboardutils.utils.RippleDrawableUtils;
+import com.kc.commons.utils.KCCommonUtils;
+
+import net.appcloudbox.ads.expressads.AcbExpressAdView;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Locale;
+
+import static android.view.WindowManager.LayoutParams.FLAG_DISMISS_KEYGUARD;
+import static com.ihs.chargingscreen.HSChargingScreenManager.getChargingState;
+import static com.ihs.keyboardutils.iap.RemoveAdsManager.NOTIFICATION_REMOVEADS_PURCHASED;
+
+/**
+ * Created by zhixiangxiao on 5/4/16.
+ */
+public class ChargingScreenAlertActivity extends Activity {
+
+    public static final String NOTIFICATION_CHARGING_ACTIVITY_STARTED = "notification_charging_activity_started";
+
+    private static final int EVENT_START_SCROLL_UP_ANIMATOR = 101;
+
+    private TextView txtBatteryLevelPercent;
+
+    private TextView txtLeftTime;
+    private TextView txtLeftTimeIndicator;
+    private TextView txtChargingIndicator;
+
+    private ImageView[] imgChargingStateList;
+
+    private String[] txtLeftTimeIndicatorStrings;
+    private String[] txtChargingIndicatorStrings;
+
+    private List<Drawable> imgChargingStateGreenDrawables = new ArrayList<>();
+    private List<Drawable> imgChargingStateDarkDrawables = new ArrayList<>();
+
+    private long startDisplayTime;
+
+    private TelephonyManager telephonyManager;
+
+    private Handler handler = new Handler() {
+        @Override
+        public void handleMessage(Message msg) {
+
+            switch (msg.what) {
+                case EVENT_START_SCROLL_UP_ANIMATOR:
+                    handler.removeMessages(EVENT_START_SCROLL_UP_ANIMATOR);
+                    handler.sendEmptyMessageDelayed(EVENT_START_SCROLL_UP_ANIMATOR, 5000);
+                    break;
+
+                default:
+                    break;
+            }
+
+        }
+    };
+
+    private HSChargingManager.IChargingListener chargingListener = new HSChargingManager.IChargingListener() {
+        @Override
+        public void onBatteryLevelChanged(int preBatteryLevel, int curBatteryLevel) {
+
+        }
+
+        @Override
+        public void onChargingStateChanged(HSChargingState preChargingState, HSChargingState curChargingState) {
+            updateInfo();
+        }
+
+        @Override
+        public void onChargingRemainingTimeChanged(int chargingRemainingMinutes) {
+            txtLeftTime.setText(ChargingManagerUtil.getChargingLeftTimeString(chargingRemainingMinutes));
+        }
+
+        @Override
+        public void onBatteryTemperatureChanged(float preBatteryTemperature, float curBatteryTemperature) {
+        }
+    };
+
+    private PhoneStateListener phoneStateListener = new PhoneStateListener() {
+
+        public void onCallStateChanged(int state, String incomingNumber) {
+            switch (state) {
+
+                case TelephonyManager.CALL_STATE_IDLE:
+                    break;
+
+                case TelephonyManager.CALL_STATE_RINGING:
+                    ChargingScreenAlertActivity.this.finish();
+                    return;
+
+                case TelephonyManager.CALL_STATE_OFFHOOK:
+                    break;
+
+                default:
+                    break;
+            }
+        }
+    };
+
+    private BubbleView bubbleView;
+    private AcbExpressAdView acbExpressAdView;
+    private RelativeLayout adContainer;
+    private ImageView removeAds;
+    private long createTime;
+
+    private BroadcastReceiver broadcastReceiver = new BroadcastReceiver() {
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            if (intent.getAction().equals(Intent.ACTION_SCREEN_ON)) {
+                if (!ClickUtils.isFastDoubleClick()) {
+                    ChargingAnalytics.logChargingScreenShow();
+                    ChargingAnalytics.logLockeScreenOrChargingScreenShow();
+                }
+            }
+        }
+    };
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        createTime = System.currentTimeMillis();
+        HSGlobalNotificationCenter.sendNotification(NOTIFICATION_CHARGING_ACTIVITY_STARTED);
+        super.onCreate(savedInstanceState);
+        ChargingManagerUtil.enableCharging(false);
+
+        ChargingAnalytics.getInstance().recordChargingEnableOnce();
+
+        Window window = getWindow();
+
+        boolean keyguardSecure = LockerUtils.isKeyguardSecure(this);
+
+        if (!keyguardSecure) {
+            window.addFlags(FLAG_DISMISS_KEYGUARD);
+        }
+
+        Resources resources = getResources();
+        Configuration config = resources.getConfiguration();
+        DisplayMetrics dm = resources.getDisplayMetrics();
+
+        String language = Locale.getDefault().getDisplayLanguage(Locale.ENGLISH);
+        if (HSConfig.optBoolean(true, "libChargingScreen", "MultiLanguage", language)) {
+            config.locale = Locale.getDefault();
+        } else {
+            String defaultLanguage = HSConfig.optString("", "libChargingScreen", "MultiLanguage", "DefaultLanguage");
+            if (TextUtils.isEmpty(defaultLanguage) || defaultLanguage.equalsIgnoreCase("English")) {
+                config.locale = Locale.ENGLISH;
+            } else if (defaultLanguage.equalsIgnoreCase("Dutch")) {
+                config.locale = new Locale("nl");
+            } else if (defaultLanguage.equalsIgnoreCase("Chinese")) {
+                config.locale = Locale.CHINESE;
+            } else if (defaultLanguage.equalsIgnoreCase("French")) {
+                config.locale = Locale.FRENCH;
+            } else if (defaultLanguage.equalsIgnoreCase("German")) {
+                config.locale = Locale.GERMAN;
+            } else if (defaultLanguage.equalsIgnoreCase("Italian")) {
+                config.locale = Locale.ITALIAN;
+            } else if (defaultLanguage.equalsIgnoreCase("Japanese")) {
+                config.locale = Locale.JAPANESE;
+            } else if (defaultLanguage.equalsIgnoreCase("Korean")) {
+                config.locale = Locale.KOREA;
+            } else if (defaultLanguage.equalsIgnoreCase("Spanish")) {
+                config.locale = new Locale("es");
+            } else if (defaultLanguage.equalsIgnoreCase("Portuguese")) {
+                config.locale = new Locale("pt");
+            }
+        }
+        resources.updateConfiguration(config, dm);
+
+        HSChargingManager.getInstance().addChargingListener(chargingListener);
+
+        if (ChargingManagerUtil.hasPermission("android.permission.READ_PHONE_STATE")) {
+
+            telephonyManager = (TelephonyManager) getSystemService(Context.TELEPHONY_SERVICE);
+            if (telephonyManager != null) {
+                telephonyManager.listen(phoneStateListener, PhoneStateListener.LISTEN_CALL_STATE);
+            }
+
+        }
+
+        setContentView(R.layout.charging_module_alert_activity);
+
+
+        findViewById(R.id.view_spac1).setBackgroundDrawable(VectorDrawableCompat.create(getResources(), R.drawable.shape_wihte_dot, null));
+        findViewById(R.id.view_spac2).setBackgroundDrawable(VectorDrawableCompat.create(getResources(), R.drawable.shape_wihte_dot, null));
+
+        bubbleView = ((BubbleView) findViewById(R.id.bubbleView));
+
+        findViewById(R.id.close_btn).setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+            }
+        });
+
+        txtLeftTime = (TextView) findViewById(R.id.txt_left_time);
+        txtLeftTimeIndicator = (TextView) findViewById(R.id.txt_left_time_indicator);
+        txtChargingIndicator = (TextView) findViewById(R.id.txt_charging_indicator);
+
+        ImageView appIcon = (ImageView) findViewById(R.id.app_icon);
+        TextView appName = (TextView) findViewById(R.id.app_name);
+        try {
+            appName.setText(getPackageManager().getApplicationLabel(getPackageManager().getApplicationInfo(getPackageName(), PackageManager.GET_META_DATA)));
+            appIcon.setImageDrawable(getPackageManager().getApplicationIcon(getPackageName()));
+        } catch (Exception e) {
+        }
+
+        adContainer = (RelativeLayout) findViewById(R.id.ad_container);
+        txtBatteryLevelPercent = (TextView) findViewById(R.id.txt_battery_level);
+        Typeface tf = Typeface.createFromAsset(getAssets(), "fonts/dincond_medium.otf");
+        txtBatteryLevelPercent.setTypeface(tf);
+
+        imgChargingStateList = new ImageView[]{
+                (ImageView) findViewById(R.id.img_charging_state1),
+                (ImageView) findViewById(R.id.img_charging_state2),
+                (ImageView) findViewById(R.id.img_charging_state3),
+        };
+
+
+        handler.sendEmptyMessageDelayed(EVENT_START_SCROLL_UP_ANIMATOR, 3000);
+
+        initStringListAndDrawableList();
+        updateInfo();
+
+
+        if (!HSConfig.optBoolean(true, "Application", "ChargeLocker", "ShowAppInfo")) {
+            findViewById(R.id.ll_info).setVisibility(View.INVISIBLE);
+        }
+
+        if (!HSConfig.optBoolean(true, "Application", "ChargeLocker", "ShowSettingIcon")) {
+            findViewById(R.id.img_setting).setVisibility(View.INVISIBLE);
+        }
+
+        if (!RemoveAdsManager.getInstance().isRemoveAdsPurchased()) {
+            acbExpressAdView = new AcbExpressAdView(HSApplication.getContext(), HSChargingScreenManager.getInstance().getNaitveAdsPlacementName());
+            acbExpressAdView.setAutoSwitchAd(false);
+            acbExpressAdView.preloadAd();
+            adContainer.addView(acbExpressAdView);
+
+            // 单次关闭广告或永久删除广告
+            removeAds = (ImageView) findViewById(R.id.remove_ads);
+            removeAds.setOnClickListener(new OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    showRemoveAdsDialog();
+                }
+            });
+            acbExpressAdView.setGravity(Gravity.CENTER_HORIZONTAL | Gravity.BOTTOM);
+            acbExpressAdView.setExpressAdViewListener(new AcbExpressAdView.AcbExpressAdViewListener() {
+                @Override
+                public void onAdClicked(AcbExpressAdView acbExpressAdView) {
+                    finish();
+                }
+
+                @Override
+                public void onAdShown(AcbExpressAdView acbExpressAdView) {
+//                    removeAds.setVisibility(View.VISIBLE);
+                }
+            });
+        }
+
+        IntentFilter filter = new IntentFilter();
+        filter.addAction(Intent.ACTION_SCREEN_ON);
+        registerReceiver(broadcastReceiver, filter);
+    }
+
+    private void showChargingIndicatorText() {
+        final HSChargingState chargingState = HSChargingManager.getInstance().getChargingState();
+        if (chargingState == HSChargingState.STATE_CHARGING_SPEED || chargingState == HSChargingState.STATE_CHARGING_CONTINUOUS
+                || chargingState == HSChargingState.STATE_CHARGING_TRICKLE) {
+            txtChargingIndicator.setVisibility(View.VISIBLE);
+        } else {
+            txtChargingIndicator.setVisibility(View.INVISIBLE);
+        }
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+        HSAnalytics.startFlurry();
+
+        ChargeNotifyManager.getInstance().setIsChargingActivityAlive(true);
+
+        acbExpressAdView.switchAd();
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        if (getChargingState() > 0) {
+            bubbleView.start();
+        }
+        if (System.currentTimeMillis() - startDisplayTime > 1000) {
+            startDisplayTime = System.currentTimeMillis();
+        } else {
+            startDisplayTime = -1;
+        }
+        HSLog.d("chargingtest onResume");
+
+        long duration = System.currentTimeMillis() - createTime;
+
+        HSLog.d("Charging activity display duration: " + duration + "ms");
+
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+        if (!HSSessionMgr.isSessionStarted()) {
+            HSAnalytics.stopFlurry();
+        }
+        HSLog.d("chargingtest onStop");
+
+        bubbleView.stop();
+        showChargingIndicatorText();
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        HSLog.d("chargingtest onPause");
+
+        ChargeNotifyManager.getInstance().setIsChargingActivityAlive(false);
+
+        if (startDisplayTime != -1) {
+            logDisplayTime("app_chargingLocker_displaytime", startDisplayTime);
+        }
+    }
+
+    @Override
+    public void onDestroy() {
+        unregisterReceiver(broadcastReceiver);
+
+        if (acbExpressAdView != null) {
+            acbExpressAdView.destroy();
+        }
+        acbExpressAdView = null;
+        if (telephonyManager != null) {
+            telephonyManager.listen(phoneStateListener, PhoneStateListener.LISTEN_NONE);
+            telephonyManager = null;
+        }
+        HSChargingManager.getInstance().removeChargingListener(chargingListener);
+        cancelAllAnimators();
+        handler.removeCallbacksAndMessages(null);
+        super.onDestroy();
+        KCCommonUtils.fixInputMethodManagerLeak(this);
+    }
+
+    private void initStringListAndDrawableList() {
+
+        Resources resources = getResources();
+
+        txtLeftTimeIndicatorStrings = new String[]{
+                resources.getString(R.string.charging_module_speed_charging_left_time_indicator),
+                resources.getString(R.string.charging_module_continuous_charging_left_time_indicator),
+                resources.getString(R.string.charging_module_trickle_charging_left_time_indicator),
+                resources.getString(R.string.charging_module_finish_charging_left_time_indicator),
+                resources.getString(R.string.charging_module_charging_state_unknown),
+        };
+
+        txtChargingIndicatorStrings = new String[]{
+                resources.getString(R.string.charging_module_charging_state_speed_charging_indicator),
+                resources.getString(R.string.charging_module_charging_state_continuous_charging_indicator),
+                resources.getString(R.string.charging_module_charging_state_trickle_charging_indicator),
+        };
+
+        imgChargingStateGreenDrawables.add(getCompatDrawable(R.drawable.ic_charging_speed));
+        imgChargingStateGreenDrawables.add(getCompatDrawable(R.drawable.ic_charging_continue));
+        imgChargingStateGreenDrawables.add(getCompatDrawable(R.drawable.ic_charging_trickle));
+
+        imgChargingStateDarkDrawables.add(getCompatDrawable(R.drawable.ic_charging_speed_dark));
+        imgChargingStateDarkDrawables.add(getCompatDrawable(R.drawable.ic_charging_continue_dark));
+        imgChargingStateDarkDrawables.add(getCompatDrawable(R.drawable.ic_charging_trickle_dark));
+    }
+
+    private Drawable getCompatDrawable(int drawableRes) {
+        return VectorDrawableCompat.create(getResources(), drawableRes, null);
+    }
+
+    private void cancelAllAnimators() {
+        cancelAnimator(flashAnimatorSet);
+        flashAnimatorSet = null;
+    }
+
+    private void cancelAnimator(Animator animator) {
+        if (animator == null) {
+            return;
+        }
+        animator.removeAllListeners();
+        animator.cancel();
+    }
+
+    private boolean isImgChargingStateFlash() {
+
+        HSChargingState chargingState = HSChargingManager.getInstance().getChargingState();
+
+        return chargingState != HSChargingState.STATE_DISCHARGING
+                && chargingState != HSChargingState.STATE_CHARGING_FULL;
+    }
+
+    private AnimatorSet flashAnimatorSet;
+
+    private void startFlashAnimation(final int imgChargingStateGreenDrawableCount) {
+
+        cancelAnimator(flashAnimatorSet);
+        flashAnimatorSet = null;
+
+        if (!isImgChargingStateFlash()) {
+            return;
+        }
+
+        if (imgChargingStateGreenDrawableCount <= 0) {
+            return;
+        }
+
+        final int ANIMATION_DURATION = 700;
+        final int ANIMATION_START_DELAY = 150;
+
+        ValueAnimator imgChargingStateDisAppearAnimator = ObjectAnimator.ofInt(imgChargingStateList[imgChargingStateGreenDrawableCount - 1],
+                "alpha", 255, 125);
+        imgChargingStateDisAppearAnimator.setDuration(ANIMATION_DURATION);
+        imgChargingStateDisAppearAnimator.setStartDelay(ANIMATION_START_DELAY);
+
+
+        ValueAnimator imgChargingStateAppearAnimator = ObjectAnimator.ofInt(imgChargingStateList[imgChargingStateGreenDrawableCount - 1],
+                "alpha", 125, 255);
+        imgChargingStateAppearAnimator.setDuration(500);
+        imgChargingStateAppearAnimator.setStartDelay(ANIMATION_START_DELAY);
+
+        flashAnimatorSet = new AnimatorSet();
+        flashAnimatorSet.play(imgChargingStateAppearAnimator).after(imgChargingStateDisAppearAnimator);
+
+        flashAnimatorSet.start();
+        flashAnimatorSet.addListener(new AnimatorListenerAdapter() {
+            @Override
+            public void onAnimationEnd(Animator animation) {
+                super.onAnimationEnd(animation);
+                if (flashAnimatorSet != null) {
+                    flashAnimatorSet.start();
+                }
+            }
+
+            @Override
+            public void onAnimationCancel(Animator animation) {
+                imgChargingStateList[imgChargingStateGreenDrawableCount - 1].setAlpha(255);
+            }
+        });
+
+    }
+
+    private void updateInfo() {
+        txtBatteryLevelPercent.setText(new StringBuilder(String.valueOf((HSChargingManager.getInstance().getBatteryRemainingPercent())))
+                .toString());
+
+
+        for (ImageView imgChargingState : imgChargingStateList) {
+            imgChargingState.clearAnimation();
+            imgChargingState.setAlpha(255);
+        }
+
+
+        switch (HSChargingManager.getInstance().getChargingState()) {
+
+            case STATE_CHARGING_SPEED:
+
+                updateTxtAndImgAndStartFlashAnim(0, 1);
+                break;
+            case STATE_CHARGING_CONTINUOUS:
+
+                updateTxtAndImgAndStartFlashAnim(1, 2);
+                break;
+            case STATE_CHARGING_TRICKLE:
+
+                updateTxtAndImgAndStartFlashAnim(2, 3);
+                break;
+            case STATE_CHARGING_FULL:
+
+                updateTxtAndImgAndStartFlashAnim(3, 3);
+                break;
+            case STATE_DISCHARGING:
+
+                unplugged();
+                break;
+            default:
+                break;
+        }
+    }
+
+    private void unplugged() {
+        startFlashAnimation(0);
+
+        txtLeftTimeIndicator.setText(txtLeftTimeIndicatorStrings[4]);
+        txtLeftTime.setVisibility(View.GONE);
+        bubbleView.stop();
+        for (int i = 0; i < imgChargingStateList.length; i++) {
+            imgChargingStateList[i].setImageDrawable(imgChargingStateDarkDrawables.get(i));
+        }
+    }
+
+    private void updateTxtAndImgAndStartFlashAnim(@IntRange(from = 0, to = 4) int txtChargingStateStringIndex,
+                                                  @IntRange(from = 0, to = 3) int imgChargingStateGreenDrawableCount) {
+
+        if ( txtChargingStateStringIndex <= 4) {
+            bubbleView.start();
+        } else {
+            bubbleView.stop();
+        }
+
+
+        if (txtChargingStateStringIndex != 4 && txtChargingStateStringIndex != 3) {
+            txtChargingIndicator.setVisibility(View.VISIBLE);
+            txtChargingIndicator.setText(txtChargingIndicatorStrings[txtChargingStateStringIndex]);
+        }
+        txtLeftTimeIndicator.setVisibility(View.VISIBLE);
+        txtLeftTimeIndicator.setText(txtLeftTimeIndicatorStrings[txtChargingStateStringIndex]);
+
+        txtLeftTime.setVisibility(View.VISIBLE);
+        txtLeftTime.setText(ChargingManagerUtil.getChargingLeftTimeString(HSChargingManager.getInstance().getChargingLeftMinutes()));
+
+        for (int i = 0; i < imgChargingStateList.length; i++) {
+            ImageView imgChargingState = imgChargingStateList[i];
+
+            if (i < imgChargingStateGreenDrawableCount) {
+                imgChargingState.setImageDrawable(imgChargingStateGreenDrawables.get(i));
+            } else {
+                imgChargingState.setImageDrawable(imgChargingStateDarkDrawables.get(i));
+            }
+
+
+        }
+
+        if (txtChargingStateStringIndex == 4) {
+            imgChargingStateList[0].setImageDrawable(imgChargingStateDarkDrawables.get(0));
+        }
+
+        startFlashAnimation(imgChargingStateGreenDrawableCount);
+    }
+
+
+    public static void logDisplayTime(String key, long startDisplayTime) {
+        long totalTime = (System.currentTimeMillis() - startDisplayTime) / 1000;
+
+        if (totalTime < 1) {
+            HSAnalytics.logEvent(key, key, "0~1s");
+        } else if (totalTime < 2) {
+            HSAnalytics.logEvent(key, key, "1~2s");
+        } else if (totalTime < 3) {
+            HSAnalytics.logEvent(key, key, "2~3s");
+        } else if (totalTime < 4) {
+            HSAnalytics.logEvent(key, key, "3~4s");
+        } else if (totalTime < 5) {
+            HSAnalytics.logEvent(key, key, "4~5s");
+        } else if (totalTime < 6) {
+            HSAnalytics.logEvent(key, key, "5~6s");
+        } else if (totalTime < 7) {
+            HSAnalytics.logEvent(key, key, "6~7s");
+        } else if (totalTime < 8) {
+            HSAnalytics.logEvent(key, key, "7~8s");
+        } else {
+            HSAnalytics.logEvent(key, key, "8s+");
+        }
+    }
+
+    private void showRemoveAdsDialog() {
+        final Dialog removeAdsDialog = new Dialog(this, R.style.dialog);
+        removeAdsDialog.setContentView(R.layout.remove_ads_dialog);
+
+        View btnJustOnce = removeAdsDialog.findViewById(R.id.btn_just_once);
+        View btnForever = removeAdsDialog.findViewById(R.id.btn_forever);
+
+        btnJustOnce.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                KCCommonUtils.dismissDialog(removeAdsDialog);
+                adContainer.removeView(acbExpressAdView);
+                removeAds.setVisibility(View.GONE);
+            }
+        });
+
+        btnForever.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                KCCommonUtils.dismissDialog(removeAdsDialog);
+
+                RemoveAdsManager.getInstance().purchaseRemoveAds();
+
+                HSGlobalNotificationCenter.addObserver(NOTIFICATION_REMOVEADS_PURCHASED, new INotificationObserver() {
+                    @Override
+                    public void onReceive(String s, HSBundle hsBundle) {
+                        HSGlobalNotificationCenter.removeObserver(this);
+                        if (removeAds != null) {
+                            removeAds.setVisibility(View.GONE);
+                        }
+                        if (acbExpressAdView != null) {
+                            adContainer.removeView(acbExpressAdView);
+                            acbExpressAdView.destroy();
+                            acbExpressAdView = null;
+                        }
+                    }
+                });
+            }
+        });
+        btnForever.setBackgroundDrawable(RippleDrawableUtils.getCompatRippleDrawable(Color.WHITE, 0, 0, 0, DisplayUtils.dip2px(8)));
+        btnJustOnce.setBackgroundDrawable(RippleDrawableUtils.getCompatRippleDrawable(Color.WHITE, 0, 0, DisplayUtils.dip2px(8), 0));
+        KCCommonUtils.showDialog(removeAdsDialog);
+    }
+}

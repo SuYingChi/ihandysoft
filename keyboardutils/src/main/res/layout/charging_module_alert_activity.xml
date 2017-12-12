@@ -1,0 +1,225 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/root_view"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <TextView
+        android:id="@+id/app_name"
+        android:layout_marginBottom="5dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerVertical="true"
+        android:fontFamily="sans-serif-light"
+        android:textColor="#767676"
+        android:textSize="16sp" />
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/charging_alert_bg"
+        android:padding="9dp">
+
+        <com.ihs.chargingscreen.ui.BubbleView
+            android:id="@+id/bubbleView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:visibility="gone" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentTop="true"
+            android:background="@null"
+            android:orientation="vertical">
+
+            <ImageView
+                android:id="@+id/close_btn"
+                android:layout_width="16dp"
+                android:layout_height="16dp"
+                android:layout_alignParentRight="true"
+                android:layout_gravity="right"
+                android:src="@drawable/ad_close_button" />
+
+            <LinearLayout
+                android:id="@+id/ll_info"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:layout_marginLeft="10dp"
+                android:layout_marginStart="10dp"
+                android:orientation="horizontal">
+
+                <ImageView
+                    android:id="@+id/app_icon"
+                    android:layout_width="14dp"
+                    android:layout_height="14dp"
+                    android:layout_gravity="center_vertical"
+                    android:src="@mipmap/ic_launcher"
+                    android:visibility="gone" />
+
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center_horizontal"
+                android:orientation="vertical">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center_horizontal"
+                    android:orientation="horizontal"
+                    android:paddingLeft="8dp"
+                    android:paddingStart="8dp">
+
+                    <TextView
+                        android:id="@+id/txt_battery_level"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="sans-serif-light"
+                        android:lineSpacingExtra="0dp"
+                        android:text="84"
+                        android:textColor="#ffffff"
+                        android:textSize="100sp"
+                        android:typeface="monospace" />
+
+                    <TextView
+                        android:id="@+id/txt_percent"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="sans-serif-light"
+                        android:text="%"
+                        android:textColor="#ffffff"
+                        android:textSize="33dp"
+                        android:typeface="monospace" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/layout_left_time"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_above="@id/layout_charging_state"
+                    android:layout_centerHorizontal="true"
+                    android:layout_marginBottom="20dp"
+                    android:layout_marginTop="5dp"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:id="@+id/txt_left_time_indicator"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="sans-serif"
+                        android:text="@string/charging_module_speed_charging_left_time_indicator"
+                        android:textColor="#ffffff"
+                        android:textSize="@dimen/charging_module_left_time_text_size" />
+
+                    <TextView
+                        android:id="@+id/txt_left_time"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="3dp"
+                        android:layout_marginStart="3dp"
+                        android:fontFamily="sans-serif"
+                        android:text="1H 20Min"
+                        android:textColor="#ffffffff"
+                        android:textSize="@dimen/charging_module_left_time_text_size" />
+                </LinearLayout>
+
+
+                <LinearLayout
+                    android:id="@+id/layout_charging_state"
+                    android:layout_width="186dp"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentBottom="true"
+                    android:layout_centerHorizontal="true"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal">
+
+                    <ImageView
+                        android:id="@+id/img_charging_state1"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        app:srcCompat="@drawable/ic_charging_speed" />
+
+                    <View
+                        android:id="@+id/view_spac1"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_marginEnd="@dimen/white_dots_margins"
+                        android:layout_marginLeft="@dimen/white_dots_margins"
+                        android:layout_marginRight="@dimen/white_dots_margins"
+                        android:layout_marginStart="@dimen/white_dots_margins"
+                        android:layout_weight="1"
+                        android:layerType="software" />
+
+                    <ImageView
+                        android:id="@+id/img_charging_state2"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        app:srcCompat="@drawable/ic_charging_continue" />
+
+                    <View
+                        android:id="@+id/view_spac2"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_marginEnd="@dimen/white_dots_margins"
+                        android:layout_marginLeft="@dimen/white_dots_margins"
+                        android:layout_marginRight="@dimen/white_dots_margins"
+                        android:layout_marginStart="@dimen/white_dots_margins"
+                        android:layout_weight="1"
+                        android:layerType="software" />
+
+                    <ImageView
+                        android:id="@+id/img_charging_state3"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        app:srcCompat="@drawable/ic_charging_trickle" />
+                </LinearLayout>
+
+
+            </LinearLayout>
+
+            <android.support.percent.PercentRelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:clipChildren="false">
+
+                <ImageView
+                    android:id="@+id/remove_ads"
+                    android:layout_width="16dp"
+                    android:layout_height="16dp"
+                    android:layout_alignParentRight="true"
+                    android:src="@drawable/ad_close_button"
+                    android:visibility="gone" />
+
+                <RelativeLayout
+                    android:id="@+id/ad_container"
+                    android:layout_height="0dp"
+                    android:layout_marginTop="16dp"
+                    app:layout_aspectRatio="190%"
+                    app:layout_widthPercent="100%">
+
+                    <TextView
+                        android:id="@+id/txt_charging_indicator"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:fontFamily="sans-serif-thin"
+                        android:gravity="center"
+                        android:text="@string/charging_module_charging_state_speed_charging_indicator"
+                        android:textColor="#88ffffff"
+                        android:textSize="12sp" />
+                </RelativeLayout>
+
+            </android.support.percent.PercentRelativeLayout>
+
+        </LinearLayout>
+    </RelativeLayout>
+
+</LinearLayout>

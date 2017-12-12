@@ -9,7 +9,6 @@ import android.content.IntentFilter;
 import android.content.pm.PackageManager;
 import android.content.pm.ResolveInfo;
 import android.net.Uri;
-import android.preference.PreferenceManager;
 import android.text.TextUtils;
 
 import com.ihs.app.analytics.HSAnalytics;
@@ -67,12 +66,6 @@ public class LockerAppGuideManager {
 
             PackageInstallReceiver packageInstallReceiver = new PackageInstallReceiver();
             HSApplication.getContext().registerReceiver(packageInstallReceiver, intentFilter);
-
-            intentFilter = new IntentFilter();
-            intentFilter.addAction(Intent.ACTION_USER_PRESENT);
-
-            UnlockScreenReceiver unlockScreenReceiver = new UnlockScreenReceiver();
-            HSApplication.getContext().registerReceiver(unlockScreenReceiver, intentFilter);
         }
         this.shouldGuideToLockerApp = shouldGuideToLockerApp;
     }
@@ -200,25 +193,6 @@ public class LockerAppGuideManager {
             if (Intent.ACTION_PACKAGE_ADDED.equals(action)) {
                 if (packageName != null && packageName.equals(LockerAppGuideManager.getInstance().getLockerAppPkgName()))
                     LockerAppGuideManager.getInstance().setLockerInstall();
-            }
-        }
-    }
-
-    private static class UnlockScreenReceiver extends BroadcastReceiver {
-
-        @Override
-        public void onReceive(Context context, Intent intent) {
-            if (!LockerAppGuideManager.getInstance().isLockerInstall()) {
-                Context ctx = HSApplication.getContext();
-                boolean downloadLockerAlert = HSConfig.optBoolean(false, "Application", "DownloadScreenLocker", "UnlockScreen", "ShowUnlockScreenAlert");
-                if (downloadLockerAlert) {
-                    int alertIntervalInHour = HSConfig.optInteger(24, "Application", "DownloadScreenLocker", "UnlockScreen", "AlertIntervalInHour");
-                    long lastShowDownloadLockerAlertTime = PreferenceManager.getDefaultSharedPreferences(ctx).getLong("lastShowDownloadLockerAlertTime", 0);
-                    if (System.currentTimeMillis() - lastShowDownloadLockerAlertTime > alertIntervalInHour * 60 * 60 * 1000) {
-                        PreferenceManager.getDefaultSharedPreferences(ctx).edit().putLong("lastShowDownloadLockerAlertTime", System.currentTimeMillis()).apply();
-                        LockerAppGuideManager.getInstance().showDownloadLockerAlert(ctx, FLURRY_ALERT_FROM_LOCKER);
-                    }
-                }
             }
         }
     }

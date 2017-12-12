@@ -128,6 +128,12 @@
         <item name="android:windowExitAnimation">@null</item>
     </style>
 
+    <style name="ChargingScreenAlertActivityTheme" parent="Theme.AppCompat.Dialog.Alert">
+        <item name="android:backgroundDimEnabled">true</item>-->
+        <item name="android:backgroundDimAmount">0.72</item>
+        <item name="android:windowBackground">@color/transparent</item>
+    </style>
+
     <!-- LockerEnableDialog -->
     <style name="LockerEnableDialogTheme" parent="Theme.AppCompat.Light.NoActionBar">
         <item name="android:windowBackground">@android:color/transparent</item>

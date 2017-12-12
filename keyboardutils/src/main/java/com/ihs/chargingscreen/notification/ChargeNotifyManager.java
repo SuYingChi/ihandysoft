@@ -110,7 +110,7 @@ public class ChargeNotifyManager {
                 int delayHours = HSConfig.optInteger(0, "Application", "ChargeLocker", "HoursFromFirstUse");
                 boolean chargingReadyToWork = isReady(PREF_APP_FIRST_TRY_TO_CHARGING, delayHours);
                 LockerChargingSpecialConfig.getInstance().rebindService();
-                if (HSChargingManager.getInstance().isCharging() && chargingReadyToWork) {
+                if (HSChargingManager.getInstance().isCharging() && chargingReadyToWork && !ChargingPrefsUtil.isChargingAlertEnabled()) {
                     ChargingManagerUtil.startChargingActivity();
                 }
             }

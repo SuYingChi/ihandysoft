@@ -33,14 +33,20 @@ public class ChargingPrefsUtil {
     private static HSPreferenceHelper spHelper;
     private static ChargingPrefsUtil instance;
 
-    public static final String USER_ENABLED_CHARGING = "user_enabled_charging";
-    public static final String USER_ENABLED_CHARGING_SPECIAL = "user_enabled_charging_special";
-
-
-    //这个值是为了让老用户使用现在的
-    private static final String
+    public static final String USER_ENABLED_CHARGING;
+    public static final String USER_ENABLED_CHARGING_SPECIAL;
+    private static final String RECORD_CURRENT_PLIST_SETTING;    //这个值是为了让老用户使用现在的
+    static {
+        if (isChargingAlertEnabled()){
+            USER_ENABLED_CHARGING = "user_enabled_charging_alert";
+            USER_ENABLED_CHARGING_SPECIAL = "user_enabled_charging_alert_special";
+            RECORD_CURRENT_PLIST_SETTING = "charging_alert_record_current_plist_setting";
+        }else {
+            USER_ENABLED_CHARGING = "user_enabled_charging";
+            USER_ENABLED_CHARGING_SPECIAL = "user_enabled_charging_special";
             RECORD_CURRENT_PLIST_SETTING = "record_current_plist_setting";
-
+        }
+    }
 
     public static ChargingPrefsUtil getInstance() {
         if (instance == null) {
@@ -62,6 +68,11 @@ public class ChargingPrefsUtil {
         HSPreferenceHelper.create(HSApplication.getContext(), PREFS_FILE_NAME).putInt(PREFS_FULL_CHARGED_PUSH_SHOWED_COUNT, fullChargedPushShowedCount + 1);
     }
 
+    public static boolean isChargingAlertEnabled() {
+        return HSApplication.getFirstLaunchInfo().appVersionCode >= HSConfig.optInteger(Integer.MAX_VALUE,"Application","ChargeAlert","StartVersion") &&
+                HSConfig.optBoolean(false,"Application","ChargeAlert","ChargingAlertEnabled");
+    }
+
     /**
      * charging 是否已经被完全关闭
      *
@@ -70,7 +81,6 @@ public class ChargingPrefsUtil {
     public static boolean isChargingMuted() {
         return getChargingEnableStates() == CHARGING_MUTED;
     }
-
 
     public static int getChargingEnableStates() {
         if (spHelper == null) {
@@ -154,6 +164,9 @@ public class ChargingPrefsUtil {
 
 
     private static int getChargingPlistConfig() {
+        if (isChargingAlertEnabled()){
+            return HSConfig.optInteger(CHARGING_MUTED, "Application", "ChargeAlert", "State");
+        }
         return HSConfig.optInteger(CHARGING_MUTED, "Application", "ChargeLocker", "state");
     }
 

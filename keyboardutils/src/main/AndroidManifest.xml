@@ -40,6 +40,16 @@
             android:taskAffinity="com.ihs.chargingScreen"
             android:theme="@style/custom_titlebar_with_transparent_bg" />
 
+        <activity
+            android:name="com.ihs.chargingscreen.activity.ChargingScreenAlertActivity"
+            android:excludeFromRecents="true"
+            android:exported="true"
+            android:label="@string/app_name"
+            android:launchMode="singleTop"
+            android:screenOrientation="portrait"
+            android:taskAffinity="com.ihs.chargingscreen.activity.ChargingAlertHostActivity"
+            android:theme="@style/ChargingScreenAlertActivityTheme" />
+
 
         <activity
             android:name="com.ihs.chargingscreen.activity.ChargingFullScreenAlertDialogActivity"

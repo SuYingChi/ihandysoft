@@ -9,9 +9,9 @@ import android.os.Build;
 import android.os.Bundle;
 import android.preference.Preference;
 import android.preference.PreferenceActivity;
+import android.preference.PreferenceFragment;
 import android.preference.SwitchPreference;
 import android.support.v7.app.ActionBar;
-import android.preference.PreferenceFragment;
 import android.view.MenuItem;
 
 import com.artw.lockscreen.LockerSettings;
@@ -104,32 +104,14 @@ public class ChargingLockerSettingsActivity extends AppCompatPreferenceActivity 
             addPreferencesFromResource(R.xml.pref_general);
             setHasOptionsMenu(true);
 
-            if (ChargingPrefsUtil.isChargingMuted()) {
+            if (ChargingPrefsUtil.isChargingAlertEnabled()){
                 getPreferenceScreen().removePreference(findPreference(getString(R.string.pref_header_key)));
-            } else {
-                SwitchPreference chargingSwitcher = (SwitchPreference) findPreference(getString(R.string.pref_header_key));
-                int chargingEnableStates = ChargingPrefsUtil.getChargingEnableStates();
-                switch (chargingEnableStates) {
-                    case ChargingPrefsUtil.CHARGING_DEFAULT_DISABLED:
-                        chargingSwitcher.setChecked(false);
-                        break;
-                    case ChargingPrefsUtil.CHARGING_DEFAULT_ACTIVE:
-                        chargingSwitcher.setChecked(true);
-                        break;
-                }
-
-                chargingSwitcher.setOnPreferenceChangeListener(new Preference.OnPreferenceChangeListener() {
-                    @Override
-                    public boolean onPreferenceChange(Preference preference, Object newValue) {
-                        if ((Boolean) newValue) {
-                            ChargingManagerUtil.enableCharging(false);
-                        } else {
-                            ChargingManagerUtil.disableCharging();
-                        }
-                        return true;
-                    }
-                });
+                initChargingSetting(R.string.pref_charging_alert_key);
+            }else {
+                getPreferenceScreen().removePreference(findPreference(getString(R.string.pref_charging_alert_key)));
+                initChargingSetting(R.string.pref_header_key);
             }
+
             if (LockerSettings.isLockerMuted()) {
                 getPreferenceScreen().removePreference(findPreference(getString(R.string.pref_locker_key)));
             } else {
@@ -148,6 +130,35 @@ public class ChargingLockerSettingsActivity extends AppCompatPreferenceActivity 
                     @Override
                     public boolean onPreferenceChange(Preference preference, Object newValue) {
                         LockerSettings.setLockerEnabled((Boolean) newValue);
+                        return true;
+                    }
+                });
+            }
+        }
+
+        private void initChargingSetting(int preferenceKeyResId) {
+            if (ChargingPrefsUtil.isChargingMuted()) {
+                getPreferenceScreen().removePreference(findPreference(getString(preferenceKeyResId)));
+            } else {
+                SwitchPreference chargingSwitcher = (SwitchPreference) findPreference(getString(preferenceKeyResId));
+                int chargingEnableStates = ChargingPrefsUtil.getChargingEnableStates();
+                switch (chargingEnableStates) {
+                    case ChargingPrefsUtil.CHARGING_DEFAULT_DISABLED:
+                        chargingSwitcher.setChecked(false);
+                        break;
+                    case ChargingPrefsUtil.CHARGING_DEFAULT_ACTIVE:
+                        chargingSwitcher.setChecked(true);
+                        break;
+                }
+
+                chargingSwitcher.setOnPreferenceChangeListener(new Preference.OnPreferenceChangeListener() {
+                    @Override
+                    public boolean onPreferenceChange(Preference preference, Object newValue) {
+                        if ((Boolean) newValue) {
+                            ChargingManagerUtil.enableCharging(false);
+                        } else {
+                            ChargingManagerUtil.disableCharging();
+                        }
                         return true;
                     }
                 });
