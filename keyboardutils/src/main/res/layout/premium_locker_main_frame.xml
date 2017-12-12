@@ -91,7 +91,7 @@
         android:text="Search"
         android:textColor="#4cffffff"
         android:textSize="18sp"
-        app:layout_marginBottomPercent="1%"
+        app:layout_marginBottomPercent="0.78%"
         app:layout_marginLeftPercent="5.9%"
         app:layout_marginRightPercent="5.9%" />
 
@@ -102,7 +102,7 @@
         android:layout_alignParentStart="true"
         android:orientation="vertical"
         app:layout_aspectRatio="234.3%"
-        app:layout_marginBottomPercent="1%"
+        app:layout_marginBottomPercent="0.78%"
         app:layout_marginLeftPercent="5.9%"
         app:layout_widthPercent="43.4%">
 
@@ -110,6 +110,7 @@
             android:layout_width="wrap_content"
             android:layout_height="0dp"
             android:layout_gravity="center"
+            android:layout_marginTop="4dp"
             android:layout_weight="10"
             android:padding="4dp"
             android:src="@drawable/ic_locker_boost" />
@@ -138,6 +139,7 @@
             android:layout_width="wrap_content"
             android:layout_height="0dp"
             android:layout_gravity="center"
+            android:layout_marginTop="4dp"
             android:layout_weight="10"
             android:padding="4dp"
             android:src="@drawable/ic_locker_game" />
@@ -167,6 +169,7 @@
             android:layout_width="wrap_content"
             android:layout_height="0dp"
             android:layout_gravity="center"
+            android:layout_marginTop="4dp"
             android:layout_weight="10"
             android:padding="4dp"
             android:src="@drawable/ic_locker_camera" />
@@ -195,6 +198,7 @@
             android:layout_width="wrap_content"
             android:layout_height="0dp"
             android:layout_gravity="center"
+            android:layout_marginTop="4dp"
             android:layout_weight="10"
             android:padding="4dp"
             android:src="@drawable/ic_locker_weather" />
