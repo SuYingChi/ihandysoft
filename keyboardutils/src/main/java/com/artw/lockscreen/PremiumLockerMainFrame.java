@@ -4,6 +4,7 @@ import android.animation.ObjectAnimator;
 import android.app.Dialog;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.graphics.drawable.BitmapDrawable;
 import android.os.Build;
 import android.support.percent.PercentRelativeLayout;
@@ -127,7 +128,9 @@ public class PremiumLockerMainFrame extends PercentRelativeLayout implements INo
         @Override
         public void onClick(View v) {
             if (v.getId() == R.id.search_button) {
-                HSLog.d("");
+                Intent intent = new Intent(getContext(), PremiumLockerSearchActivity.class);
+                intent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
+                ContextCompat.startActivity(getContext(), intent, null);
             } else if (v.getId() == R.id.button_boost) {
                 HSLog.d("");
             } else if (v.getId() == R.id.button_game) {
@@ -427,7 +430,7 @@ public class PremiumLockerMainFrame extends PercentRelativeLayout implements INo
             @Override
             public void onClick(DialogInterface dialog, int i) {
                 LockerSettings.setLockerEnabled(false);
-                ((LockerActivity) getContext()).finishSelf();
+                ((PremiumLockerActivity) getContext()).finishSelf();
                 Toast.makeText(getContext(), R.string.locker_diabled_success, Toast.LENGTH_SHORT).show();
                 HSAnalytics.logEvent("Locker_DisableLocker_Alert_TurnOff_Clicked");
                 recordLockerDisableOnce();

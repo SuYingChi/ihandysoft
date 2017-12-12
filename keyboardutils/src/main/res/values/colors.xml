@@ -163,4 +163,5 @@
     <color name="sticker_download_button_color">#2cbcff</color>
 
     <color name="locker_button_bg">#80000000</color>
+    <color name="search_activity_bg">#cc000000</color>
 </resources>
