@@ -32,6 +32,7 @@ import com.artw.lockscreen.slidingdrawer.SlidingDrawerContent;
 import com.ihs.app.analytics.HSAnalytics;
 import com.ihs.app.framework.HSApplication;
 import com.ihs.chargingscreen.utils.DisplayUtils;
+import com.ihs.commons.config.HSConfig;
 import com.ihs.commons.notificationcenter.HSGlobalNotificationCenter;
 import com.ihs.commons.notificationcenter.INotificationObserver;
 import com.ihs.commons.utils.HSBundle;
@@ -80,11 +81,16 @@ public class PremiumLockerMainFrame extends PercentRelativeLayout implements INo
     private TextView mTvDate;
     private Context activity;
 
+    private View buttonUpgrade;
     private View buttonSearch;
     private View buttonBoost;
     private View buttonGame;
     private View buttonCamera;
     private View buttonWeather;
+
+    private boolean shouldShowButtonUpgrade;
+    private boolean shouldShowButtonSearch;
+    private boolean shouldShowButtons; //Boost, Game, Camera, Weather
 
     public PremiumLockerMainFrame(Context context) {
         this(context, null);
@@ -130,6 +136,8 @@ public class PremiumLockerMainFrame extends PercentRelativeLayout implements INo
                 HSLog.d("");
             } else if (v.getId() == R.id.button_weather) {
                 HSLog.d("");
+            } else if (v.getId() == R.id.icon_locker_upgrade) {
+                HSLog.d("");
             }
         }
     };
@@ -140,8 +148,14 @@ public class PremiumLockerMainFrame extends PercentRelativeLayout implements INo
 
         mDimCover = findViewById(R.id.dim_cover);
 
+        shouldShowButtonUpgrade = HSConfig.optBoolean(true, "");
+        shouldShowButtonSearch = HSConfig.optBoolean(true, "");
+        shouldShowButtons = HSConfig.optBoolean(true, "");
+
         int backgroundColor = ContextCompat.getColor(getContext(), R.color.locker_button_bg);
 
+        buttonUpgrade = findViewById(R.id.icon_locker_upgrade);
+        buttonUpgrade.setOnClickListener(clickListener);
         buttonSearch = findViewById(R.id.search_button);
         buttonSearch.setOnClickListener(clickListener);
         buttonSearch.setBackgroundDrawable(RippleDrawableUtils.getContainDisableStatusCompatRippleDrawable(backgroundColor, backgroundColor, DisplayUtils.dip2px(2)));
@@ -157,6 +171,19 @@ public class PremiumLockerMainFrame extends PercentRelativeLayout implements INo
         buttonWeather = findViewById(R.id.button_weather);
         buttonWeather.setOnClickListener(clickListener);
         buttonWeather.setBackgroundDrawable(RippleDrawableUtils.getContainDisableStatusCompatRippleDrawable(backgroundColor, backgroundColor, DisplayUtils.dip2px(4)));
+
+        if (!shouldShowButtonUpgrade) {
+            buttonUpgrade.setVisibility(View.INVISIBLE);
+        }
+        if (!shouldShowButtonSearch) {
+            buttonSearch.setVisibility(View.INVISIBLE);
+        }
+        if (!shouldShowButtons) {
+            buttonBoost.setVisibility(View.INVISIBLE);
+            buttonGame.setVisibility(View.INVISIBLE);
+            buttonCamera.setVisibility(View.INVISIBLE);
+            buttonWeather.setVisibility(View.INVISIBLE);
+        }
 
         mSlidingDrawerContent = (SlidingDrawerContent) findViewById(R.id.sliding_drawer_content);
         mDrawerHandle = findViewById(R.id.blank_handle);
@@ -280,10 +307,12 @@ public class PremiumLockerMainFrame extends PercentRelativeLayout implements INo
     public void onScrollStarted() {
         mBottomOperationArea.setVisibility(View.VISIBLE);
         mDimCover.setVisibility(View.VISIBLE);
-        buttonBoost.setVisibility(View.VISIBLE);
-        buttonGame.setVisibility(View.VISIBLE);
-        buttonCamera.setVisibility(View.VISIBLE);
-        buttonWeather.setVisibility(View.VISIBLE);
+        if (shouldShowButtons) {
+            buttonBoost.setVisibility(View.VISIBLE);
+            buttonGame.setVisibility(View.VISIBLE);
+            buttonCamera.setVisibility(View.VISIBLE);
+            buttonWeather.setVisibility(View.VISIBLE);
+        }
     }
 
     @Override
