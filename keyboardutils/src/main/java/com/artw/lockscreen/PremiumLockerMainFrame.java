@@ -20,9 +20,7 @@ import android.view.View;
 import android.view.ViewTreeObserver;
 import android.view.ViewTreeObserver.OnGlobalLayoutListener;
 import android.widget.Button;
-import android.widget.EditText;
 import android.widget.PopupWindow;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -31,8 +29,6 @@ import com.artw.lockscreen.shimmer.Shimmer;
 import com.artw.lockscreen.shimmer.ShimmerTextView;
 import com.artw.lockscreen.slidingdrawer.SlidingDrawer;
 import com.artw.lockscreen.slidingdrawer.SlidingDrawerContent;
-import com.artw.lockscreen.slidingup.SlidingUpCallback;
-import com.artw.lockscreen.slidingup.SlidingUpTouchListener;
 import com.ihs.app.analytics.HSAnalytics;
 import com.ihs.app.framework.HSApplication;
 import com.ihs.chargingscreen.utils.DisplayUtils;
@@ -83,12 +79,11 @@ public class PremiumLockerMainFrame extends PercentRelativeLayout implements INo
     private TextView mTvDate;
     private Context activity;
 
-    private EditText searchEditText;
-    private RelativeLayout buttonContainer;
-    private Button buttonBoost;
-    private Button buttonGame;
-    private Button buttonCamera;
-    private Button buttonWeather;
+    private View buttonSearch;
+    private View buttonBoost;
+    private View buttonGame;
+    private View buttonCamera;
+    private View buttonWeather;
 
     public PremiumLockerMainFrame(Context context) {
         this(context, null);
@@ -122,11 +117,10 @@ public class PremiumLockerMainFrame extends PercentRelativeLayout implements INo
 
         mDimCover = findViewById(R.id.dim_cover);
 
-        int backgroundColor = ContextCompat.getColor(getContext(), R.color.material_ripple_white);
+        int backgroundColor = ContextCompat.getColor(getContext(), R.color.locker_button_bg);
 
-        searchEditText = findViewById(R.id.search_et);
-        searchEditText.setBackgroundDrawable(RippleDrawableUtils.getContainDisableStatusCompatRippleDrawable(backgroundColor, backgroundColor, DisplayUtils.dip2px(2)));
-        buttonContainer = findViewById(R.id.button_container);
+        buttonSearch = findViewById(R.id.search_button);
+        buttonSearch.setBackgroundDrawable(RippleDrawableUtils.getContainDisableStatusCompatRippleDrawable(backgroundColor, backgroundColor, DisplayUtils.dip2px(2)));
         buttonBoost = findViewById(R.id.button_boost);
         buttonBoost.setBackgroundDrawable(RippleDrawableUtils.getContainDisableStatusCompatRippleDrawable(backgroundColor, backgroundColor, DisplayUtils.dip2px(4)));
         buttonGame = findViewById(R.id.button_game);
@@ -258,7 +252,10 @@ public class PremiumLockerMainFrame extends PercentRelativeLayout implements INo
     public void onScrollStarted() {
         mBottomOperationArea.setVisibility(View.VISIBLE);
         mDimCover.setVisibility(View.VISIBLE);
-        buttonContainer.setVisibility(View.VISIBLE);
+        buttonBoost.setVisibility(View.VISIBLE);
+        buttonGame.setVisibility(View.VISIBLE);
+        buttonCamera.setVisibility(View.VISIBLE);
+        buttonWeather.setVisibility(View.VISIBLE);
     }
 
     @Override
@@ -267,7 +264,10 @@ public class PremiumLockerMainFrame extends PercentRelativeLayout implements INo
 
         if (mIsSlidingDrawerOpened) {
             mBottomOperationArea.setVisibility(View.INVISIBLE);
-            buttonContainer.setVisibility(View.INVISIBLE);
+            buttonBoost.setVisibility(View.INVISIBLE);
+            buttonGame.setVisibility(View.INVISIBLE);
+            buttonCamera.setVisibility(View.INVISIBLE);
+            buttonWeather.setVisibility(View.INVISIBLE);
             HSGlobalNotificationCenter.sendNotification(EVENT_SLIDING_DRAWER_OPENED);
             HSAnalytics.logEvent("Locker_Toggle_Slided");
         } else {
