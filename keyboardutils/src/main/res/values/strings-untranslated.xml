@@ -4,4 +4,25 @@
     <string name="unlock_screen_guide_to_download_locker_message">Show Notification on Lock Screen
 Show Weather on Lock Screen
 Try More Lock Screen Themes</string>
+    <string name="unknown">Unknown</string>
+    <string name="snowshower">snowShower</string>
+    <string name="weather_unknown">snowShower</string>
+    <string name="weather_clear">snowShower</string>
+    <string name="weather_sunny">snowShower</string>
+    <string name="weather_cloudy_night">snowShower</string>
+    <string name="weather_cloudy">snowShower</string>
+    <string name="weather_rain">snowShower</string>
+    <string name="weather_drizzle">snowShower</string>
+    <string name="weather_rainshower">snowShower</string>
+    <string name="weather_snow">snowShower</string>
+    <string name="weather_snowshower">snowShower</string>
+    <string name="weather_sleet">snowShower</string>
+    <string name="weather_hazy">snowShower</string>
+    <string name="weather_dust">snowShower</string>
+    <string name="weather_thunderstorm">snowShower</string>
+    <string name="weather_cold">snowShower</string>
+    <string name="weather_windy">snowShower</string>
+    <string name="weather_hot">snowShower</string>
+    <string name="weather_overcast">snowShower</string>
+
 </resources>

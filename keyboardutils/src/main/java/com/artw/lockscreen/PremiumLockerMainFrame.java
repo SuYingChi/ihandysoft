@@ -2,12 +2,15 @@ package com.artw.lockscreen;
 
 import android.animation.ObjectAnimator;
 import android.app.Dialog;
+import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+
+import android.content.IntentFilter;
 import android.graphics.drawable.BitmapDrawable;
+import android.graphics.drawable.Drawable;
 import android.os.Build;
-import android.support.percent.PercentRelativeLayout;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.Toolbar;
@@ -25,6 +28,7 @@ import android.widget.PopupWindow;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.acb.weather.plugin.AcbWeatherManager;
 import com.artw.lockscreen.common.LockerChargingScreenUtils;
 import com.artw.lockscreen.shimmer.Shimmer;
 import com.artw.lockscreen.shimmer.ShimmerTextView;
@@ -39,11 +43,11 @@ import com.ihs.commons.notificationcenter.INotificationObserver;
 import com.ihs.commons.utils.HSBundle;
 import com.ihs.commons.utils.HSLog;
 import com.ihs.feature.common.ScreenStatusReceiver;
+import com.ihs.feature.weather.WeatherManager;
 import com.ihs.keyboardutils.R;
 import com.ihs.keyboardutils.utils.CommonUtils;
 import com.ihs.keyboardutils.utils.RippleDrawableUtils;
 import com.kc.commons.utils.KCCommonUtils;
-
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
@@ -53,8 +57,13 @@ import java.util.Locale;
 
 import static com.artw.lockscreen.LockerSettings.recordLockerDisableOnce;
 import static com.artw.lockscreen.common.TimeTickReceiver.NOTIFICATION_CLOCK_TIME_CHANGED;
+import static com.ihs.feature.weather.WeatherManager.BUNDLE_KEY_WEATHER_ICON_ID;
+import static com.ihs.feature.weather.WeatherManager.BUNDLE_KEY_WEATHER_TEMPERATURE_FORMAT;
+import static com.ihs.feature.weather.WeatherManager.BUNDLE_KEY_WEATHER_TEMPERATURE_INT;
 
-public class PremiumLockerMainFrame extends PercentRelativeLayout implements INotificationObserver, SlidingDrawer.SlidingDrawerListener {
+
+public class PremiumLockerMainFrame extends RelativeLayout implements INotificationObserver,
+        SlidingDrawer.SlidingDrawerListener, View.OnClickListener {
 
     public static final String EVENT_SLIDING_DRAWER_OPENED = "EVENT_SLIDING_DRAWER_OPENED";
     public static final String EVENT_SLIDING_DRAWER_CLOSED = "EVENT_SLIDING_DRAWER_CLOSED";
@@ -92,6 +101,18 @@ public class PremiumLockerMainFrame extends PercentRelativeLayout implements INo
     private boolean shouldShowButtonUpgrade;
     private boolean shouldShowButtonSearch;
     private boolean shouldShowButtons; //Boost, Game, Camera, Weather
+
+    private BroadcastReceiver weatherReceiver = new BroadcastReceiver() {
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            HSLog.d("weather intent == " + intent);
+            if (intent != null && WeatherManager.ACTION_WEATHER_CHANGE.equals(intent.getAction())) {
+                updateWeatherView(intent);
+            }
+        }
+    };
+
+    private boolean isReceiverRegistered = false;
 
     public PremiumLockerMainFrame(Context context) {
         this(context, null);
@@ -173,6 +194,7 @@ public class PremiumLockerMainFrame extends PercentRelativeLayout implements INo
         buttonCamera.setBackgroundDrawable(RippleDrawableUtils.getContainDisableStatusCompatRippleDrawable(backgroundColor, backgroundColor, DisplayUtils.dip2px(4)));
         buttonWeather = findViewById(R.id.button_weather);
         buttonWeather.setOnClickListener(clickListener);
+        initButtons();
         buttonWeather.setBackgroundDrawable(RippleDrawableUtils.getContainDisableStatusCompatRippleDrawable(backgroundColor, backgroundColor, DisplayUtils.dip2px(4)));
 
         if (!shouldShowButtonUpgrade) {
@@ -229,6 +251,48 @@ public class PremiumLockerMainFrame extends PercentRelativeLayout implements INo
         refreshClock();
     }
 
+    private void initButtons() {
+        initWeather();
+
+    }
+
+    private void initWeather() {
+        registerDataReceiver();
+    }
+
+    private void requestWeather() {
+        Intent intent = new Intent(WeatherManager.ACTION_WEATHER_REQUEST);
+//        intent.setPackage(ThemeConstants.LOCKER_PACKAGE_NAME);
+        getContext().sendBroadcast(intent);
+    }
+
+    public void registerDataReceiver() {
+        if (!isReceiverRegistered) {
+            IntentFilter intentFilter = new IntentFilter();
+            intentFilter.addAction(WeatherManager.ACTION_WEATHER_CHANGE);
+            getContext().registerReceiver(weatherReceiver, intentFilter);
+            isReceiverRegistered = true;
+
+            requestWeather();
+        }
+    }
+
+    public void unregisterDataReceiver() {
+        if (isReceiverRegistered) {
+            getContext().unregisterReceiver(weatherReceiver);
+            isReceiverRegistered = false;
+        }
+    }
+
+    private void updateWeatherView(Intent intent) {
+        String weather = intent.getIntExtra(BUNDLE_KEY_WEATHER_TEMPERATURE_INT, 0) + intent.getStringExtra(BUNDLE_KEY_WEATHER_TEMPERATURE_FORMAT);
+        int weatherResId = intent.getIntExtra(BUNDLE_KEY_WEATHER_ICON_ID, R.drawable.battery_rank_svg);
+        Drawable weatherDrawable = ContextCompat.getDrawable(getContext(), weatherResId);
+        weatherDrawable.setBounds(0, 0, weatherDrawable.getMinimumWidth(), weatherDrawable.getMinimumHeight());
+        buttonWeather.setText(weather);
+        buttonWeather.setCompoundDrawablesWithIntrinsicBounds(null, weatherDrawable, null, null);
+    }
+
     @Override
     @SuppressWarnings("deprecation")
     protected void onAttachedToWindow() {
@@ -254,7 +318,6 @@ public class PremiumLockerMainFrame extends PercentRelativeLayout implements INo
 
         requestFocus();
 
-
         HSGlobalNotificationCenter.addObserver(ScreenStatusReceiver.NOTIFICATION_SCREEN_OFF, this);
         HSGlobalNotificationCenter.addObserver(ScreenStatusReceiver.NOTIFICATION_SCREEN_ON, this);
         HSGlobalNotificationCenter.addObserver(SlidingDrawerContent.EVENT_SHOW_BLACK_HOLE, this);
@@ -271,6 +334,7 @@ public class PremiumLockerMainFrame extends PercentRelativeLayout implements INo
         if (mShimmer != null) {
             mShimmer.cancel();
         }
+        unregisterDataReceiver();
     }
 
     @Override
@@ -457,5 +521,14 @@ public class PremiumLockerMainFrame extends PercentRelativeLayout implements INo
         this.dialog = dialog;
         KCCommonUtils.showDialog(dialog);
         return true;
+    }
+
+    @Override
+    public void onClick(View v) {
+        int i = v.getId();
+        if (i == R.id.button_weather) {
+            AcbWeatherManager.showWeatherInfo(getContext());
+        }
+
     }
 }

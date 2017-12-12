@@ -4,6 +4,7 @@ import android.content.Context;
 import android.support.multidex.MultiDex;
 import android.text.TextUtils;
 
+import com.acb.weather.plugin.AcbWeatherManager;
 import com.artw.lockscreen.lockerappguide.LockerAppGuideManager;
 import com.artw.lockscreen.ScreenLockerManager;
 import com.ihs.app.alerts.HSAlertMgr;
@@ -61,6 +62,7 @@ public class MyApplication extends HSApplication {
             return;
         }
         LeakCanary.install(this);
+        AcbWeatherManager.getInstance().init(this, R.drawable.icon_rain);
         AcbExpressAdManager.getInstance().init(this);
         HSChargingScreenManager.init(true, "Master_A(NativeAds)Charging");
 
