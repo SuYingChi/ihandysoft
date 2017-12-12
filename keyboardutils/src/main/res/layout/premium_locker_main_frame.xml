@@ -16,7 +16,7 @@
         android:textSize="18sp"
         app:typeface="@string/akrobat_light" />
 
-    <ImageView
+    <android.support.v7.widget.AppCompatImageView
         android:id="@+id/icon_locker_upgrade"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -26,7 +26,7 @@
         android:layout_toLeftOf="@+id/ic_menu"
         android:layout_toStartOf="@+id/ic_menu"
         android:padding="4dp"
-        android:src="@drawable/ic_locker" />
+        android:src="@drawable/ic_locker_upgrade" />
 
     <android.support.v7.widget.AppCompatImageView
         android:id="@+id/ic_menu"
@@ -35,7 +35,7 @@
         android:layout_alignParentEnd="true"
         android:layout_alignParentRight="true"
         android:layout_marginTop="41dp"
-        android:background="?attr/selectableItemBackground"
+        android:background="?android:attr/selectableItemBackground"
         android:paddingBottom="4dp"
         android:paddingLeft="12dp"
         android:paddingRight="12dp"
@@ -79,73 +79,135 @@
         android:background="#99000000"
         android:visibility="invisible" />
 
-    <EditText
-        android:id="@+id/search_et"
+    <TextView
+        android:id="@+id/search_button"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/tv_date"
-        android:drawableEnd="@drawable/ic_locker"
-        android:drawableRight="@drawable/ic_locker"
-        android:hint="Search"
-        app:layout_marginLeftPercent="5%"
-        app:layout_marginRightPercent="5%" />
+        android:layout_above="@+id/button_boost"
+        android:drawableEnd="@drawable/ic_locker_search"
+        android:drawableRight="@drawable/ic_locker_search"
+        android:gravity="start"
+        android:padding="10dp"
+        android:text="Search"
+        android:textColor="#4cffffff"
+        android:textSize="18sp"
+        app:layout_marginBottomPercent="1%"
+        app:layout_marginLeftPercent="5.9%"
+        app:layout_marginRightPercent="5.9%" />
 
-    <android.support.percent.PercentRelativeLayout
-        android:id="@+id/button_container"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/search_et"
-        app:layout_marginLeftPercent="5%"
-        app:layout_marginRightPercent="5%"
-        app:layout_marginTopPercent="1%">
+    <LinearLayout
+        android:id="@+id/button_boost"
+        android:layout_above="@+id/button_camera"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:orientation="vertical"
+        app:layout_aspectRatio="234.3%"
+        app:layout_marginBottomPercent="1%"
+        app:layout_marginLeftPercent="5.9%"
+        app:layout_widthPercent="43.4%">
 
-        <Button
-            android:id="@+id/button_boost"
+        <ImageView
             android:layout_width="wrap_content"
+            android:layout_height="0dp"
+            android:layout_gravity="center"
+            android:layout_weight="10"
+            android:padding="4dp"
+            android:src="@drawable/ic_locker_boost" />
+
+        <TextView
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_alignParentLeft="true"
-            android:layout_alignParentStart="true"
-            android:drawableTop="@drawable/ic_locker"
+            android:layout_weight="1"
             android:gravity="center"
             android:text="Boost"
-            app:layout_widthPercent="43%" />
+            android:textColor="#7fffffff"
+            android:textSize="12sp" />
+    </LinearLayout>
 
-        <Button
-            android:id="@+id/button_game"
+    <LinearLayout
+        android:id="@+id/button_game"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentRight="true"
+        android:layout_alignTop="@+id/button_boost"
+        android:orientation="vertical"
+        app:layout_aspectRatio="234.3%"
+        app:layout_marginRightPercent="5.9%"
+        app:layout_widthPercent="43.4%">
+
+        <ImageView
             android:layout_width="wrap_content"
+            android:layout_height="0dp"
+            android:layout_gravity="center"
+            android:layout_weight="10"
+            android:padding="4dp"
+            android:src="@drawable/ic_locker_game" />
+
+        <TextView
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_alignParentEnd="true"
-            android:layout_alignParentRight="true"
-            android:drawableTop="@drawable/ic_locker"
+            android:layout_weight="1"
             android:gravity="center"
             android:text="Game"
-            app:layout_widthPercent="43%" />
+            android:textColor="#7fffffff"
+            android:textSize="12sp" />
+    </LinearLayout>
 
-        <Button
-            android:id="@+id/button_camera"
+    <LinearLayout
+        android:id="@+id/button_camera"
+        android:layout_above="@+id/bottom_operation_area"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:orientation="vertical"
+        app:layout_aspectRatio="234.3%"
+        app:layout_marginBottomPercent="4%"
+        app:layout_marginLeftPercent="5.9%"
+        app:layout_widthPercent="43.4%">
+
+        <ImageView
             android:layout_width="wrap_content"
+            android:layout_height="0dp"
+            android:layout_gravity="center"
+            android:layout_weight="10"
+            android:padding="4dp"
+            android:src="@drawable/ic_locker_camera" />
+
+        <TextView
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_alignParentLeft="true"
-            android:layout_alignParentStart="true"
-            android:layout_below="@+id/button_boost"
-            android:drawableTop="@drawable/ic_locker"
+            android:layout_weight="1"
             android:gravity="center"
             android:text="Camera"
-            app:layout_marginTopPercent="1%"
-            app:layout_widthPercent="43%" />
+            android:textColor="#7fffffff"
+            android:textSize="12sp" />
+    </LinearLayout>
 
-        <Button
-            android:id="@+id/button_weather"
+    <LinearLayout
+        android:id="@+id/button_weather"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentRight="true"
+        android:layout_alignTop="@+id/button_camera"
+        android:orientation="vertical"
+        app:layout_aspectRatio="234.3%"
+        app:layout_marginRightPercent="5.9%"
+        app:layout_widthPercent="43.4%">
+
+        <ImageView
             android:layout_width="wrap_content"
+            android:layout_height="0dp"
+            android:layout_gravity="center"
+            android:layout_weight="10"
+            android:padding="4dp"
+            android:src="@drawable/ic_locker_weather" />
+
+        <TextView
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_alignParentEnd="true"
-            android:layout_alignParentRight="true"
-            android:layout_below="@+id/button_boost"
-            android:drawableTop="@drawable/ic_locker"
+            android:layout_weight="1"
             android:gravity="center"
             android:text="Weather"
-            app:layout_widthPercent="43%" />
-    </android.support.percent.PercentRelativeLayout>
+            android:textColor="#7fffffff"
+            android:textSize="12sp" />
+    </LinearLayout>
 
     <com.artw.lockscreen.slidingdrawer.SlidingDrawer
         android:id="@+id/operation_area"
@@ -202,7 +264,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
-        app:layout_heightPercent="12%">
+        app:layout_heightPercent="14%">
 
         <com.artw.lockscreen.shimmer.ShimmerTextView
             android:id="@+id/unlock_text"
@@ -212,7 +274,6 @@
             android:layout_centerHorizontal="true"
             android:text="@string/slide_to_unlock"
             android:textColor="#cc000000"
-            android:textSize="18sp"
-            app:layout_marginTopPercent="5%" />
+            android:textSize="18sp" />
     </android.support.percent.PercentRelativeLayout>
 </com.artw.lockscreen.PremiumLockerMainFrame>
