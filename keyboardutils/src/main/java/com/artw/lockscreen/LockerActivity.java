@@ -84,9 +84,8 @@ public class LockerActivity extends AppCompatActivity implements INotificationOb
         }
         window.addFlags(FLAG_SHOW_WHEN_LOCKED);
         window.setSoftInputMode(SOFT_INPUT_STATE_ALWAYS_HIDDEN);
-        if (!LockerUtils.isKeyguardSecure(this)) {
-            window.addFlags(FLAG_DISMISS_KEYGUARD);
-        }
+
+        window.addFlags(FLAG_DISMISS_KEYGUARD);
 
         setContentView(R.layout.activity_locker);
 
@@ -243,6 +242,7 @@ public class LockerActivity extends AppCompatActivity implements INotificationOb
         fadeOutAnim.addListener(new AnimatorListenerAdapter() {
             @Override
             public void onAnimationEnd(Animator animation) {
+                DismissKeyguradActivity.startSelfIfKeyguardSecure(getApplicationContext());
                 finish();
                 overridePendingTransition(0, 0);
 
