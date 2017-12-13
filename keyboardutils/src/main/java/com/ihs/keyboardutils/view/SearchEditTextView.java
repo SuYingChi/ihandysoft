@@ -96,14 +96,22 @@ public class SearchEditTextView extends LinearLayout {
         dividerView = findViewById(R.id.search_divider_view);
         searchImageView = findViewById(R.id.search_button_image);
         editText.addTextChangedListener(mTextWatcher);
-        editText.postDelayed(new Runnable() {
+        editText.setOnFocusChangeListener(new OnFocusChangeListener() {
             @Override
-            public void run() {
-                editText.requestFocus();
-                InputMethodManager imm = (InputMethodManager) context.getSystemService(Context.INPUT_METHOD_SERVICE);
-                imm.showSoftInput(editText, InputMethodManager.SHOW_IMPLICIT);
+            public void onFocusChange(View v, boolean hasFocus) {
+                if (hasFocus) {
+                    post(new Runnable() {
+                        @Override
+                        public void run() {
+                            InputMethodManager imm = (InputMethodManager) context.getSystemService(Context.INPUT_METHOD_SERVICE);
+                            if (imm != null) {
+                                imm.showSoftInput(editText, InputMethodManager.SHOW_IMPLICIT);
+                            }
+                        }
+                    });
+                }
             }
-        }, 200);
+        });
 
         searchDeleteImageView.setOnClickListener(mOnClickListener);
         searchImageView.setOnClickListener(mOnClickListener);
