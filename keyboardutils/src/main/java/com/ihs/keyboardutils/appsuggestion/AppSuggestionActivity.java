@@ -10,6 +10,7 @@ import android.provider.Telephony;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -28,6 +29,7 @@ import com.ihs.keyboardutils.nativeads.KCNativeAdView;
 import com.ihs.keyboardutils.utils.RippleDrawableUtils;
 import com.ihs.keyboardutils.utils.ToastUtils;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -37,6 +39,7 @@ import java.util.List;
 public class AppSuggestionActivity extends Activity {
 
     private static final int RECENT_APP_SIZE = 5;
+    private static List<HSAppRunningInfo> appRunningInfoList;
 
     private class RecentAppAdapter extends RecyclerView.Adapter {
         List<HSAppRunningInfo> appRunningInfoList;
@@ -106,7 +109,6 @@ public class AppSuggestionActivity extends Activity {
         }
     }
 
-    ;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -121,8 +123,7 @@ public class AppSuggestionActivity extends Activity {
 
         RecyclerView listView = mainView.findViewById(R.id.recycler_view);
 //        listView.setLayoutManager(new LinearLayoutManager(this,LinearLayoutManager.HORIZONTAL,false));
-        List<HSAppRunningInfo> appRunningInfoList = AppRunningUtils.getAppRunningInfoList(HSAppRunningInfo.class, new AppFilter(), true, true, true, true);
-        RecentAppAdapter recentAppAdapter = new RecentAppAdapter(appRunningInfoList);
+        RecentAppAdapter recentAppAdapter = new RecentAppAdapter(getAppRunningInfoList());
         listView.setLayoutManager(new GridLayoutManager(this, RECENT_APP_SIZE));
         listView.setAdapter(recentAppAdapter);
         listView.setOverScrollMode(View.OVER_SCROLL_NEVER);
@@ -175,6 +176,62 @@ public class AppSuggestionActivity extends Activity {
 
         FrameLayout adContainer = findViewById(R.id.alert_ad_container);
         adContainer.addView(nativeAdView);
+    }
+
+    private static List<HSAppRunningInfo> getAppRunningInfoList() {
+        List<HSAppRunningInfo> currentAppRunningInfoList = AppRunningUtils.getAppRunningInfoList(HSAppRunningInfo.class, new AppFilter(), true, true, true, true);
+
+        StringBuilder stringBuilder = new StringBuilder();
+        for (HSAppRunningInfo hsAppRunningInfo : currentAppRunningInfoList){
+            stringBuilder.append(hsAppRunningInfo.getPackageName()+",");
+        }
+
+        if (appRunningInfoList == null) {
+            appRunningInfoList = currentAppRunningInfoList;
+        }else {
+            List<HSAppRunningInfo> newAppRunningInfoList = new ArrayList<>();
+            List<HSAppRunningInfo> removeRunningInfoList = new ArrayList<>();
+            for (HSAppRunningInfo hsAppRunningInfo : currentAppRunningInfoList) {
+                boolean contains = false;
+                for (HSAppRunningInfo appRunningInfo : appRunningInfoList){
+                    if (TextUtils.equals(hsAppRunningInfo.getAppName(),appRunningInfo.getAppName())){
+                        contains = true;
+                        break;
+                    }
+                }
+                if (!contains) {
+                    newAppRunningInfoList.add(hsAppRunningInfo);
+                }
+            }
+
+            for (HSAppRunningInfo hsAppRunningInfo : appRunningInfoList){
+                boolean contains = false;
+                for (HSAppRunningInfo appRunningInfo : currentAppRunningInfoList){
+                    if (TextUtils.equals(hsAppRunningInfo.getAppName(),appRunningInfo.getAppName())){
+                        contains = true;
+                        break;
+                    }
+                }
+                if (!contains) {
+                    removeRunningInfoList.add(hsAppRunningInfo);
+                }
+            }
+
+            if (newAppRunningInfoList.size() != 0){
+                appRunningInfoList.addAll(0,newAppRunningInfoList);
+            }
+            if (removeRunningInfoList.size() != 0){
+                appRunningInfoList.removeAll(removeRunningInfoList);
+            }
+        }
+
+        stringBuilder = new StringBuilder();
+        for (HSAppRunningInfo hsAppRunningInfo : appRunningInfoList){
+            stringBuilder.append(hsAppRunningInfo.getPackageName()+",");
+        }
+
+
+        return appRunningInfoList;
     }
 
     public static void showAppSuggestion() {
