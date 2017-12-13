@@ -97,18 +97,20 @@
 
         <Button
             android:id="@+id/upgrade_button"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_below="@id/mid_text"
             android:layout_centerHorizontal="true"
             android:layout_marginBottom="20dp"
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="20dp"
             android:layout_marginTop="20dp"
             android:background="@drawable/locker_upgrade_button_background"
             android:fontFamily="sans-serif-medium"
             android:lineSpacingExtra="-0.7sp"
             android:text="UPGRADE"
             android:textColor="#ffffff"
-            android:textSize="13sp"
+            android:textSize="15sp"
             android:textStyle="normal" />
 
         <TextView
