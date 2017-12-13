@@ -41,6 +41,7 @@ import com.ihs.commons.utils.HSBundle;
 import com.ihs.commons.utils.HSLog;
 import com.ihs.feature.common.ScreenStatusReceiver;
 import com.ihs.keyboardutils.R;
+import com.ihs.keyboardutils.alerts.LockerUpgradeAlert;
 import com.ihs.keyboardutils.utils.CommonUtils;
 import com.ihs.keyboardutils.utils.RippleDrawableUtils;
 import com.kc.commons.utils.KCCommonUtils;
@@ -143,7 +144,9 @@ public class PremiumLockerMainFrame extends PercentRelativeLayout implements INo
                 if (LockerAppGuideManager.getInstance().isLockerInstall() && !LockerChargingSpecialConfig.getInstance().isLockerEnable()) {
                     LockerAppGuideManager.openApp("com.wallpaper.theme.privacy.camera.lock.screen");
                 } else {
-                    Toast.makeText(getContext(), "GP", Toast.LENGTH_LONG).show();
+                    final LockerUpgradeAlert alert = new LockerUpgradeAlert(getContext());
+                    alert.show();
+                    alert.getWindow().setBackgroundDrawable(getContext().getResources().getDrawable(R.drawable.locker_upgrade_alert_background));
                 }
             }
         }

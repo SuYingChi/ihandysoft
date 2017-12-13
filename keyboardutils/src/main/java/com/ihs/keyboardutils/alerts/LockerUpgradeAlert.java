@@ -1,7 +1,6 @@
 package com.ihs.keyboardutils.alerts;
 
 import android.content.Context;
-import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AlertDialog;
@@ -11,7 +10,6 @@ import android.widget.FrameLayout;
 import android.widget.ImageView;
 
 import com.artw.lockscreen.lockerappguide.LockerAppGuideManager;
-import com.ihs.chargingscreen.utils.LockerChargingSpecialConfig;
 import com.ihs.keyboardutils.R;
 
 /**
@@ -31,7 +29,7 @@ public class LockerUpgradeAlert extends AlertDialog implements View.OnClickListe
         FrameLayout rootView = findViewById(R.id.root_view);
 
         Button upgradeButton = rootView.findViewById(R.id.upgrade_button);
-        upgradeButton.setOnClickListener(view -> LockerAppGuideManager.directToMarket(null, null, LockerChargingSpecialConfig.BOUND_SERVICE_PACKAGE));
+        upgradeButton.setOnClickListener(view -> LockerAppGuideManager.directToMarket(null, null, "com.wallpaper.theme.privacy.camera.lock.screen"));
 
         setCancelable(false);
 
