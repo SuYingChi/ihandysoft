@@ -23,6 +23,8 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewTreeObserver;
 import android.view.ViewTreeObserver.OnGlobalLayoutListener;
+import android.view.animation.AlphaAnimation;
+import android.view.animation.Animation;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.PopupWindow;
@@ -296,10 +298,33 @@ public class PremiumLockerMainFrame extends PercentRelativeLayout implements INo
         }
         String tempDesc = intent.getStringExtra(BUNDLE_KEY_WEATHER_DESCRIPTION);
         int weatherResId = intent.getIntExtra(BUNDLE_KEY_WEATHER_ICON_ID, R.drawable.weather_unknown);
-        ((ImageView)buttonWeather.findViewById(R.id.weather_image)).setImageResource(weatherResId);
-        ((TextView)buttonWeather.findViewById(R.id.weather_desc)).setText(getContext().getString(R.string.weather_description, tempStr, tempDesc));
-//        buttonWeather.setText(getContext().getString(R.string.weather_description, tempStr, tempDesc));
-//        buttonWeather.setCompoundDrawablesWithIntrinsicBounds(null, weatherDrawable, null, null);
+        ImageView weatherImageView = buttonWeather.findViewById(R.id.weather_image);
+        TextView weatherTextView = buttonWeather.findViewById(R.id.weather_desc);
+        AlphaAnimation mShowAction = new AlphaAnimation(0, 1);
+        mShowAction.setDuration(1000);
+        AlphaAnimation mHiddenAction = new AlphaAnimation(1, 0);
+        mHiddenAction.setDuration(1000);
+        mHiddenAction.setAnimationListener(new Animation.AnimationListener() {
+            @Override
+            public void onAnimationStart(Animation animation) {
+
+            }
+
+            @Override
+            public void onAnimationEnd(Animation animation) {
+                weatherImageView.setVisibility(GONE);
+                weatherImageView.setImageResource(weatherResId);
+                weatherTextView.setText(getContext().getString(R.string.weather_description, tempStr, tempDesc));
+                weatherImageView.startAnimation(mShowAction);
+                weatherImageView.setVisibility(View.VISIBLE);
+            }
+
+            @Override
+            public void onAnimationRepeat(Animation animation) {
+
+            }
+        });
+        weatherImageView.startAnimation(mHiddenAction);
     }
 
     @Override
