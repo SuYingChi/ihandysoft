@@ -6,10 +6,11 @@ import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.view.Window;
 import android.view.WindowManager;
-import android.widget.SearchView;
 
 import com.artw.lockscreen.common.LockerChargingScreenUtils;
+import com.ihs.commons.utils.HSLog;
 import com.ihs.keyboardutils.R;
+import com.ihs.keyboardutils.view.SearchEditTextView;
 
 /**
  * Created by yanxia on 2017/12/12.
@@ -17,7 +18,7 @@ import com.ihs.keyboardutils.R;
 
 public class PremiumLockerSearchActivity extends AppCompatActivity {
 
-    private SearchView searchView;
+    private SearchEditTextView searchEditTextView;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -36,5 +37,12 @@ public class PremiumLockerSearchActivity extends AppCompatActivity {
             window.addFlags(WindowManager.LayoutParams.FLAG_DISMISS_KEYGUARD);
         }
         setContentView(R.layout.activity_premium_locker_search);
+        searchEditTextView = findViewById(R.id.search_view);
+        searchEditTextView.setSearchButtonClickListener(new SearchEditTextView.OnSearchButtonClickListener() {
+            @Override
+            public void onSearchButtonClick(String searchText) {
+                HSLog.d(searchText);
+            }
+        });
     }
 }

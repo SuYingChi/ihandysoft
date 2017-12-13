@@ -15,7 +15,7 @@ import com.ihs.commons.utils.HSLog;
 import com.ihs.keyboardutils.R;
 
 /**
- *  Created by yan.xia, similar to SearchView
+ * Created by yan.xia, similar to SearchView
  */
 
 public class SearchEditTextView extends LinearLayout {
@@ -26,6 +26,12 @@ public class SearchEditTextView extends LinearLayout {
     private ImageView searchDeleteImageView;
     private View dividerView;
     private ImageView searchImageView;
+
+    public interface OnSearchButtonClickListener {
+        void onSearchButtonClick(String searchText);
+    }
+
+    private OnSearchButtonClickListener searchButtonClickListener;
 
     /**
      * Callback to watch the text field for empty/non-empty
@@ -68,6 +74,9 @@ public class SearchEditTextView extends LinearLayout {
 
     private void onSearchClicked() {
         editText.requestFocus();
+        if (searchButtonClickListener != null) {
+            searchButtonClickListener.onSearchButtonClick(editText.getText().toString());
+        }
     }
 
     public SearchEditTextView(Context context) {
@@ -101,5 +110,9 @@ public class SearchEditTextView extends LinearLayout {
         }
         HSLog.d(TAG, "onTextChanged: " + s);
         invalidate();
+    }
+
+    public void setSearchButtonClickListener(OnSearchButtonClickListener searchButtonClickListener) {
+        this.searchButtonClickListener = searchButtonClickListener;
     }
 }
