@@ -7,6 +7,7 @@ import android.text.TextWatcher;
 import android.util.AttributeSet;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -95,6 +96,14 @@ public class SearchEditTextView extends LinearLayout {
         dividerView = findViewById(R.id.search_divider_view);
         searchImageView = findViewById(R.id.search_button_image);
         editText.addTextChangedListener(mTextWatcher);
+        editText.postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                editText.requestFocus();
+                InputMethodManager imm = (InputMethodManager) context.getSystemService(Context.INPUT_METHOD_SERVICE);
+                imm.showSoftInput(editText, InputMethodManager.SHOW_IMPLICIT);
+            }
+        }, 200);
 
         searchDeleteImageView.setOnClickListener(mOnClickListener);
         searchImageView.setOnClickListener(mOnClickListener);
