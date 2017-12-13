@@ -1,5 +1,6 @@
 package com.artw.lockscreen;
 
+import android.content.Context;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -9,11 +10,11 @@ import android.view.Window;
 import android.view.WindowManager;
 import android.view.animation.AlphaAnimation;
 import android.view.animation.Animation;
+import android.view.inputmethod.InputMethodManager;
 
 import com.artw.lockscreen.common.LockerChargingScreenUtils;
 import com.ihs.commons.utils.HSLog;
 import com.ihs.keyboardutils.R;
-import com.ihs.keyboardutils.utils.LauncherAnimationUtils;
 import com.ihs.keyboardutils.view.SearchEditTextView;
 
 /**
@@ -43,6 +44,13 @@ public class PremiumLockerSearchActivity extends AppCompatActivity {
             window.addFlags(WindowManager.LayoutParams.FLAG_DISMISS_KEYGUARD);
         }
         setContentView(R.layout.activity_premium_locker_search);
+        View rootView = findViewById(R.id.search_root_view);
+        rootView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                doHideAnimation();
+            }
+        });
         searchEditTextView = findViewById(R.id.search_view);
         searchEditTextView.setSearchButtonClickListener(new SearchEditTextView.OnSearchButtonClickListener() {
             @Override
@@ -81,7 +89,6 @@ public class PremiumLockerSearchActivity extends AppCompatActivity {
         if (alphaAnimation == null) {
             alphaAnimation = new AlphaAnimation(0.0f, 1.0f);
             alphaAnimation.setDuration(500);
-            alphaAnimation.setAnimationListener(new LauncherAnimationUtils.AnimationListenerAdapter());
             alphaAnimation.setFillAfter(true);
             alphaAnimation.setAnimationListener(new Animation.AnimationListener() {
                 @Override
@@ -102,5 +109,34 @@ public class PremiumLockerSearchActivity extends AppCompatActivity {
             });
         }
         searchEditTextView.startAnimation(alphaAnimation);
+    }
+
+    private void doHideAnimation() {
+        AlphaAnimation hideAnimation = new AlphaAnimation(1.0f, 0.0f);
+        hideAnimation.setDuration(500);
+        hideAnimation.setFillAfter(true);
+        hideAnimation.setAnimationListener(new Animation.AnimationListener() {
+            @Override
+            public void onAnimationStart(Animation animation) {
+                View view = getCurrentFocus();
+                if (view != null) {
+                    InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+                    if (imm != null) {
+                        imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
+                    }
+                }
+            }
+
+            @Override
+            public void onAnimationEnd(Animation animation) {
+                finish();
+            }
+
+            @Override
+            public void onAnimationRepeat(Animation animation) {
+
+            }
+        });
+        searchEditTextView.startAnimation(hideAnimation);
     }
 }
