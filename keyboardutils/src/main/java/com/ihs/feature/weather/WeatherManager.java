@@ -419,7 +419,7 @@ public class WeatherManager {
         if (currentWeatherCondition == null
                 || currentWeatherCondition.getCondition() == HSWeatherQueryResult.Condition.UNKNOWN
                 || currentWeatherCondition.getCondition() == null)
-            return R.drawable.ic_locker;
+            return R.drawable.weather_unknown_s;
         switch (currentWeatherCondition.getCondition()) {
             case SUNNY:
             case MOSTLY_SUNNY:
@@ -427,56 +427,56 @@ public class WeatherManager {
             case WARM:
             case FAIR:
             case CLEAR:
-                return isNight() ? R.drawable.ic_locker : R.drawable.ic_locker;
+                return isNight() ? R.drawable.weather_clear_s : R.drawable.weather_sunny_s;
             case OVERCAST:
-                return R.drawable.ic_locker;
+                return R.drawable.weather_overcast_s;
             case CLOUDY:
             case MOSTLY_CLOUDY:
             case PARTLY_CLOUDY:
-                return isNight() ? R.drawable.ic_locker : R.drawable.ic_locker;
+                return isNight() ? R.drawable.weather_cloudy_night_s : R.drawable.weather_cloudy_s;
             case RAIN:
             case CHANCE_OF_RAIN:
             case RAIN_SHOWER:
-                return R.drawable.ic_locker;
+                return R.drawable.weather_rain_s;
             case DRIZZLE:
             case CHANCE_OF_DRIZZLE:
-                return R.drawable.ic_locker;
+                return R.drawable.weather_drizzle_s;
             case STORM:
             case CHANCE_OF_STORM:
-                return R.drawable.ic_locker;
+                return R.drawable.weather_rainshower_s;
             case SNOW:
             case CHANCE_OF_SNOW:
             case FLURRIES:
             case CHANCE_OF_FLURRY:
-                return R.drawable.ic_locker;
+                return R.drawable.weather_snow_s;
             case SNOW_SHOWER:
-                return R.drawable.ic_locker;
+                return R.drawable.weather_snowshower_s;
             case SLEET:
             case RAIN_SNOW:
             case CHANCE_OF_SLEET:
-                return R.drawable.ic_locker;
+                return R.drawable.weather_sleet_s;
             case HAZY:
             case SMOKE:
             case FOG:
             case MIST:
-                return R.drawable.ic_locker;
+                return R.drawable.weather_hazy_s;
             case DUST:
-                return R.drawable.ic_locker;
+                return R.drawable.weather_dust_s;
             case THUNDERSTORM:
             case CHANCE_OF_THUNDERSTORM:
             case SCATTERED_THUNDERSTORM:
-                return R.drawable.ic_locker;
+                return R.drawable.weather_thunderstorm_s;
             case COLD:
             case FROZEN_MIX:
             case CHANCE_OF_FROZEN_MIX:
             case ICY:
-                return R.drawable.ic_locker;
+                return R.drawable.weather_cold_s;
             case WINDY:
-                return R.drawable.ic_locker;
+                return R.drawable.weather_windy_s;
             case HOT:
-                return R.drawable.ic_locker;
+                return R.drawable.weather_hot_s;
         }
-        return R.drawable.ic_locker;
+        return R.drawable.weather_unknown_s;
     }
 
     public String getWeatherConditionIconName() {

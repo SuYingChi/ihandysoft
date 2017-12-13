@@ -58,6 +58,7 @@ import java.util.Locale;
 
 import static com.artw.lockscreen.LockerSettings.recordLockerDisableOnce;
 import static com.artw.lockscreen.common.TimeTickReceiver.NOTIFICATION_CLOCK_TIME_CHANGED;
+import static com.ihs.feature.weather.WeatherManager.BUNDLE_KEY_WEATHER_DESCRIPTION;
 import static com.ihs.feature.weather.WeatherManager.BUNDLE_KEY_WEATHER_ICON_ID;
 import static com.ihs.feature.weather.WeatherManager.BUNDLE_KEY_WEATHER_TEMPERATURE_FORMAT;
 import static com.ihs.feature.weather.WeatherManager.BUNDLE_KEY_WEATHER_TEMPERATURE_INT;
@@ -293,10 +294,11 @@ public class PremiumLockerMainFrame extends RelativeLayout implements INotificat
         } else {
             tempStr = String.valueOf(temp);
         }
+        String tempDesc = intent.getStringExtra(BUNDLE_KEY_WEATHER_DESCRIPTION);
         int weatherResId = intent.getIntExtra(BUNDLE_KEY_WEATHER_ICON_ID, R.drawable.battery_rank_svg);
         Drawable weatherDrawable = ContextCompat.getDrawable(getContext(), weatherResId);
         weatherDrawable.setBounds(0, 0, weatherDrawable.getMinimumWidth(), weatherDrawable.getMinimumHeight());
-        buttonWeather.setText(tempStr);
+        buttonWeather.setText(getContext().getString(R.string.weather_description, tempStr, tempDesc));
         buttonWeather.setCompoundDrawablesWithIntrinsicBounds(null, weatherDrawable, null, null);
     }
 

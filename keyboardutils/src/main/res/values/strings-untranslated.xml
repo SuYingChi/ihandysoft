@@ -24,5 +24,6 @@ Try More Lock Screen Themes</string>
     <string name="weather_windy">snowShower</string>
     <string name="weather_hot">snowShower</string>
     <string name="weather_overcast">snowShower</string>
+    <string name="weather_description" translatable="false">%1$s %2$s</string>
 
 </resources>
