@@ -81,7 +81,6 @@ import com.ihs.commons.config.HSConfig;
 import com.ihs.commons.utils.HSLog;
 import com.ihs.commons.utils.HSPreferenceHelper;
 import com.ihs.keyboardutils.utils.CommonUtils;
-import com.kc.utils.FeatureDelayReleaseUtils;
 import com.launcher.locker.LockerUtils;
 import com.nostra13.universalimageloader.core.ImageLoader;
 

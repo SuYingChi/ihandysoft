@@ -46,7 +46,7 @@ import com.ihs.feature.resultpage.data.ResultConstants;
 import com.ihs.feature.schedule.ScheduledNotificationReceiver;
 import com.ihs.keyboardutils.BuildConfig;
 import com.ihs.keyboardutils.R;
-import com.kc.utils.FeatureDelayReleaseUtils;
+import com.kc.utils.KCFeatureControlUtils;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -313,7 +313,7 @@ public class NotificationCondition implements INotificationObserver {
         // 新用户一段时间内不提示。
         boolean featureEnabled = HSConfig.optBoolean(false, "Application", "BoostNotification", "Enabled");
         int delayHours = HSConfig.optInteger(0, "Application", "BoostNotification", "HoursFromFirstUse");
-        if (!featureEnabled || ! FeatureDelayReleaseUtils.isFeatureAvailable(HSApplication.getContext(), "BoostNotification", delayHours)) {
+        if (!featureEnabled || ! KCFeatureControlUtils.isFeatureReleased(HSApplication.getContext(), "BoostNotification", delayHours)) {
             return;
         }
 

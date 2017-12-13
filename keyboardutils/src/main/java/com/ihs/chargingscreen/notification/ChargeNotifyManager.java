@@ -28,7 +28,7 @@ import com.ihs.commons.notificationcenter.INotificationObserver;
 import com.ihs.commons.utils.HSBundle;
 import com.ihs.commons.utils.HSLog;
 import com.ihs.keyboardutils.R;
-import com.kc.utils.FeatureDelayReleaseUtils;
+import com.kc.utils.KCFeatureControlUtils;
 
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
@@ -118,7 +118,7 @@ public class ChargeNotifyManager {
     };
 
     private boolean isReady(String key, int delayHours) {
-        boolean chargingReadyToWork = FeatureDelayReleaseUtils.isFeatureAvailable(HSApplication.getContext(), key, delayHours);
+        boolean chargingReadyToWork = KCFeatureControlUtils.isFeatureReleased(HSApplication.getContext(), key, delayHours);
         if (ChargingPrefsUtil.getInstance().isChargingEnableByUser()) {
             return true;
         }
