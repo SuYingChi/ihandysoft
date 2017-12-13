@@ -6,6 +6,7 @@ import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.view.Window;
 import android.view.WindowManager;
+import android.widget.SearchView;
 
 import com.artw.lockscreen.common.LockerChargingScreenUtils;
 import com.ihs.keyboardutils.R;
@@ -15,6 +16,8 @@ import com.ihs.keyboardutils.R;
  */
 
 public class PremiumLockerSearchActivity extends AppCompatActivity {
+
+    private SearchView searchView;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
