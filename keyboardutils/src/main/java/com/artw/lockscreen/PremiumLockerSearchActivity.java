@@ -36,5 +36,9 @@ public class PremiumLockerSearchActivity extends AppCompatActivity {
             window.addFlags(WindowManager.LayoutParams.FLAG_DISMISS_KEYGUARD);
         }
         setContentView(R.layout.activity_premium_locker_search);
+        searchView = findViewById(R.id.search_view);
+        searchView.setIconified(false);
+        searchView.setSubmitButtonEnabled(true);
+        searchView.onActionViewExpanded();
     }
 }
