@@ -3,6 +3,7 @@ package com.ihs.keyboardutils.view;
 import android.content.Context;
 import android.content.res.TypedArray;
 import android.graphics.Color;
+import android.support.v4.content.ContextCompat;
 import android.text.Editable;
 import android.text.TextUtils;
 import android.text.TextWatcher;
@@ -14,6 +15,8 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 
+import com.ihs.chargingscreen.ui.RippleDrawableUtils;
+import com.ihs.chargingscreen.utils.DisplayUtils;
 import com.ihs.commons.utils.HSLog;
 import com.ihs.keyboardutils.R;
 
@@ -93,6 +96,9 @@ public class SearchEditTextView extends LinearLayout {
     public SearchEditTextView(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
         LayoutInflater.from(context).inflate(R.layout.search_edit_view, this, true);
+        View rootView = findViewById(R.id.search_edit_text_root_view);
+        int color = ContextCompat.getColor(getContext(), R.color.search_bg);
+        rootView.setBackgroundDrawable(RippleDrawableUtils.getCompatRippleDrawable(color, color, DisplayUtils.dip2px(2)));
         editText = findViewById(R.id.search_edit_text);
         searchDeleteImageView = findViewById(R.id.search_delete_icon);
         dividerView = findViewById(R.id.search_divider_view);

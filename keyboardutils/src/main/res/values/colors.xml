@@ -162,4 +162,5 @@
     <color name="locker_button_bg">#80000000</color>
     <color name="search_activity_bg">#cc000000</color>
     <color name="search_divider">#33ffffff</color>
+    <color name="search_bg">#7FFFFFFF</color>
 </resources>
