@@ -25,6 +25,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.artw.lockscreen.common.LockerChargingScreenUtils;
+import com.artw.lockscreen.lockerappguide.LockerAppGuideManager;
 import com.artw.lockscreen.shimmer.Shimmer;
 import com.artw.lockscreen.shimmer.ShimmerTextView;
 import com.artw.lockscreen.slidingdrawer.SlidingDrawer;
@@ -138,6 +139,11 @@ public class PremiumLockerMainFrame extends PercentRelativeLayout implements INo
                 HSLog.d("");
             } else if (v.getId() == R.id.icon_locker_upgrade) {
                 HSLog.d("");
+                if (LockerAppGuideManager.getInstance().isLockerInstall() && !LockerAppGuideManager.getInstance().isLockerAppRunning()) {
+                    LockerAppGuideManager.openApp(LockerAppGuideManager.getInstance().getLockerAppPkgName());
+                } else {
+                    Toast.makeText(getContext(), "GP", Toast.LENGTH_LONG).show();
+                }
             }
         }
     };

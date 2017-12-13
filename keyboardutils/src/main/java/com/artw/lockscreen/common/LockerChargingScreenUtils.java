@@ -8,6 +8,7 @@ import android.telephony.TelephonyManager;
 
 import com.artw.lockscreen.LockerActivity;
 import com.artw.lockscreen.LockerSettings;
+import com.artw.lockscreen.lockerappguide.LockerAppGuideManager;
 import com.ihs.app.framework.HSApplication;
 import com.ihs.charging.HSChargingManager;
 import com.ihs.chargingscreen.utils.ChargingPrefsUtil;
@@ -85,6 +86,10 @@ public class LockerChargingScreenUtils {
 
     public static void startLockerActivity() {
         if (isCalling()) {
+            return;
+        }
+
+        if (LockerAppGuideManager.getInstance().isLockerInstall() && LockerAppGuideManager.getInstance().isLockerAppRunning()) {
             return;
         }
 

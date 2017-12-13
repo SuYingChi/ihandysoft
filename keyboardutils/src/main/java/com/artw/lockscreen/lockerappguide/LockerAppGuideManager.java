@@ -1,6 +1,7 @@
 package com.artw.lockscreen.lockerappguide;
 
 import android.app.Activity;
+import android.app.ActivityManager;
 import android.content.ActivityNotFoundException;
 import android.content.BroadcastReceiver;
 import android.content.Context;
@@ -257,5 +258,15 @@ public class LockerAppGuideManager {
         }
     }
 
+    public boolean isLockerAppRunning () {
+        ActivityManager activityManager = (ActivityManager) HSApplication.getContext().getSystemService(Context.ACTIVITY_SERVICE);
+        List<ActivityManager.RunningAppProcessInfo> processInfos = activityManager.getRunningAppProcesses();
+        for (ActivityManager.RunningAppProcessInfo processInfo:processInfos) {
+            if (processInfo.processName.equals(getLockerAppPkgName())) {
+                return true;
+            }
+        }
+        return false;
+    }
 
 }
