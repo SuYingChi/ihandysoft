@@ -128,5 +128,7 @@
         <attr name="seekBarTriangleEnable" format="boolean" />
     </declare-styleable>
 
-
+    <declare-styleable name="SearchEditTextView">
+        <attr name="ic_delete" format="reference" />
+    </declare-styleable>
 </resources>
