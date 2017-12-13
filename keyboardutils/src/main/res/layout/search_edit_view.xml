@@ -13,9 +13,11 @@
         android:background="@null"
         android:hint="Search"
         android:inputType="text"
-        android:paddingBottom="6dp"
-        android:paddingTop="6dp"
-        android:textSize="14sp" />
+        android:paddingBottom="8dp"
+        android:paddingLeft="6dp"
+        android:paddingStart="6dp"
+        android:paddingTop="8dp"
+        android:textSize="18sp" />
 
     <ImageView
         android:id="@+id/search_delete_icon"
@@ -31,12 +33,13 @@
         android:layout_height="match_parent"
         android:layout_marginBottom="4dp"
         android:layout_marginTop="4dp"
-        android:background="@color/boost_plus_red" />
+        android:background="@color/search_divider" />
 
     <ImageView
         android:id="@+id/search_button_image"
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
+        android:background="?android:attr/selectableItemBackground"
         android:paddingLeft="10dp"
         android:paddingRight="10dp"
         android:src="@drawable/ic_locker_search" />
