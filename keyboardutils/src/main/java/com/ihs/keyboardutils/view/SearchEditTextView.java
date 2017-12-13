@@ -1,6 +1,8 @@
 package com.ihs.keyboardutils.view;
 
 import android.content.Context;
+import android.content.res.TypedArray;
+import android.graphics.Color;
 import android.text.Editable;
 import android.text.TextUtils;
 import android.text.TextWatcher;
@@ -103,6 +105,7 @@ public class SearchEditTextView extends LinearLayout {
                     post(new Runnable() {
                         @Override
                         public void run() {
+                            onTextChanged(editText.getText());
                             InputMethodManager imm = (InputMethodManager) context.getSystemService(Context.INPUT_METHOD_SERVICE);
                             if (imm != null) {
                                 imm.showSoftInput(editText, InputMethodManager.SHOW_IMPLICIT);
@@ -115,6 +118,26 @@ public class SearchEditTextView extends LinearLayout {
 
         searchDeleteImageView.setOnClickListener(mOnClickListener);
         searchImageView.setOnClickListener(mOnClickListener);
+
+        if (attrs != null) {
+            TypedArray a = context.obtainStyledAttributes(attrs, R.styleable.SearchEditTextView, 0, 0);
+            try {
+                if (a.hasValue(R.styleable.SearchEditTextView_ic_delete)) {
+                    int ic_delete = a.getResourceId(R.styleable.SearchEditTextView_ic_delete, R.drawable.ic_close_button_circle);
+                    searchDeleteImageView.setImageResource(ic_delete);
+                }
+                if (a.hasValue(R.styleable.SearchEditTextView_ic_search)) {
+                    int ic_search = a.getResourceId(R.styleable.SearchEditTextView_ic_search, R.drawable.ic_locker_search);
+                    searchImageView.setImageResource(ic_search);
+                }
+                if (a.hasValue(R.styleable.SearchEditTextView_search_background_color)) {
+                    int backgroundColor = a.getColor(R.styleable.SearchEditTextView_search_background_color, Color.GRAY);
+                    setBackgroundColor(backgroundColor);
+                }
+            } finally {
+                a.recycle();
+            }
+        }
     }
 
     private void onTextChanged(CharSequence s) {
