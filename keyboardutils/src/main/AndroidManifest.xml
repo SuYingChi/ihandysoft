@@ -109,6 +109,7 @@
             android:launchMode="singleTop"
             android:screenOrientation="portrait"
             android:taskAffinity=".air_locker"
+            android:windowSoftInputMode="stateVisible|adjustResize"
             android:theme="@style/ChargingScreenTransparentTheme" />
 
         <activity
