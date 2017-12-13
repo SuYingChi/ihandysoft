@@ -33,6 +33,7 @@ import android.widget.Toast;
 
 import com.acb.weather.plugin.AcbWeatherManager;
 import com.artw.lockscreen.common.LockerChargingScreenUtils;
+import com.artw.lockscreen.common.NavUtils;
 import com.artw.lockscreen.shimmer.Shimmer;
 import com.artw.lockscreen.shimmer.ShimmerTextView;
 import com.artw.lockscreen.slidingdrawer.SlidingDrawer;
@@ -45,7 +46,9 @@ import com.ihs.commons.notificationcenter.HSGlobalNotificationCenter;
 import com.ihs.commons.notificationcenter.INotificationObserver;
 import com.ihs.commons.utils.HSBundle;
 import com.ihs.commons.utils.HSLog;
+import com.ihs.feature.boost.plus.BoostPlusActivity;
 import com.ihs.feature.common.ScreenStatusReceiver;
+import com.ihs.feature.softgame.SoftGameDisplayActivity;
 import com.ihs.feature.weather.WeatherManager;
 import com.ihs.keyboardutils.R;
 import com.ihs.keyboardutils.utils.CommonUtils;
@@ -157,13 +160,16 @@ public class PremiumLockerMainFrame extends PercentRelativeLayout implements INo
                 intent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
                 ContextCompat.startActivity(getContext(), intent, null);
             } else if (v.getId() == R.id.button_boost) {
-                HSLog.d("");
+                Intent intent = new Intent(getContext(), BoostPlusActivity.class);
+                intent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
+                ContextCompat.startActivity(getContext(), intent, null);
             } else if (v.getId() == R.id.button_game) {
-                HSLog.d("");
+                Intent intent = new Intent(getContext(), SoftGameDisplayActivity.class);
+                ContextCompat.startActivity(getContext(), intent, null);
             } else if (v.getId() == R.id.button_camera) {
+                NavUtils.startCameraFromLockerScreen(getContext());
                 HSLog.d("");
             } else if (v.getId() == R.id.button_weather) {
-                HSLog.d("");
                 AcbWeatherManager.showWeatherInfo(getContext());
             } else if (v.getId() == R.id.icon_locker_upgrade) {
                 HSLog.d("");

@@ -62,7 +62,7 @@ public class MyApplication extends HSApplication {
             return;
         }
         LeakCanary.install(this);
-        AcbWeatherManager.getInstance().init(this, R.drawable.icon_rain);
+        AcbWeatherManager.getInstance().init(this, R.mipmap.ic_launcher);
         AcbExpressAdManager.getInstance().init(this);
         HSChargingScreenManager.init(true, "Master_A(NativeAds)Charging");
 
