@@ -89,7 +89,7 @@ public class LockerChargingScreenUtils {
             return;
         }
 
-        if (LockerAppGuideManager.getInstance().isLockerInstall() && LockerAppGuideManager.getInstance().isLockerAppRunning()) {
+        if (LockerAppGuideManager.getInstance().isLockerInstall() && LockerChargingSpecialConfig.getInstance().isLockerEnable()) {
             return;
         }
 

@@ -33,6 +33,7 @@ import com.artw.lockscreen.slidingdrawer.SlidingDrawerContent;
 import com.ihs.app.analytics.HSAnalytics;
 import com.ihs.app.framework.HSApplication;
 import com.ihs.chargingscreen.utils.DisplayUtils;
+import com.ihs.chargingscreen.utils.LockerChargingSpecialConfig;
 import com.ihs.commons.config.HSConfig;
 import com.ihs.commons.notificationcenter.HSGlobalNotificationCenter;
 import com.ihs.commons.notificationcenter.INotificationObserver;
@@ -139,8 +140,8 @@ public class PremiumLockerMainFrame extends PercentRelativeLayout implements INo
                 HSLog.d("");
             } else if (v.getId() == R.id.icon_locker_upgrade) {
                 HSLog.d("");
-                if (LockerAppGuideManager.getInstance().isLockerInstall() && !LockerAppGuideManager.getInstance().isLockerAppRunning()) {
-                    LockerAppGuideManager.openApp(LockerAppGuideManager.getInstance().getLockerAppPkgName());
+                if (LockerAppGuideManager.getInstance().isLockerInstall() && !LockerChargingSpecialConfig.getInstance().isLockerEnable()) {
+                    LockerAppGuideManager.openApp("com.wallpaper.theme.privacy.camera.lock.screen");
                 } else {
                     Toast.makeText(getContext(), "GP", Toast.LENGTH_LONG).show();
                 }
