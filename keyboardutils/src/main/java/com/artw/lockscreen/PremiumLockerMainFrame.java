@@ -6,11 +6,10 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
-
 import android.content.IntentFilter;
 import android.graphics.drawable.BitmapDrawable;
-import android.graphics.drawable.Drawable;
 import android.os.Build;
+import android.support.percent.PercentRelativeLayout;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.Toolbar;
@@ -25,6 +24,7 @@ import android.view.View;
 import android.view.ViewTreeObserver;
 import android.view.ViewTreeObserver.OnGlobalLayoutListener;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.PopupWindow;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -64,7 +64,7 @@ import static com.ihs.feature.weather.WeatherManager.BUNDLE_KEY_WEATHER_TEMPERAT
 import static com.ihs.feature.weather.WeatherManager.BUNDLE_KEY_WEATHER_TEMPERATURE_INT;
 
 
-public class PremiumLockerMainFrame extends RelativeLayout implements INotificationObserver,
+public class PremiumLockerMainFrame extends PercentRelativeLayout implements INotificationObserver,
         SlidingDrawer.SlidingDrawerListener, View.OnClickListener {
 
     public static final String EVENT_SLIDING_DRAWER_OPENED = "EVENT_SLIDING_DRAWER_OPENED";
@@ -295,11 +295,11 @@ public class PremiumLockerMainFrame extends RelativeLayout implements INotificat
             tempStr = String.valueOf(temp);
         }
         String tempDesc = intent.getStringExtra(BUNDLE_KEY_WEATHER_DESCRIPTION);
-        int weatherResId = intent.getIntExtra(BUNDLE_KEY_WEATHER_ICON_ID, R.drawable.battery_rank_svg);
-        Drawable weatherDrawable = ContextCompat.getDrawable(getContext(), weatherResId);
-        weatherDrawable.setBounds(0, 0, weatherDrawable.getMinimumWidth(), weatherDrawable.getMinimumHeight());
-        buttonWeather.setText(getContext().getString(R.string.weather_description, tempStr, tempDesc));
-        buttonWeather.setCompoundDrawablesWithIntrinsicBounds(null, weatherDrawable, null, null);
+        int weatherResId = intent.getIntExtra(BUNDLE_KEY_WEATHER_ICON_ID, R.drawable.weather_unknown);
+        ((ImageView)buttonWeather.findViewById(R.id.weather_image)).setImageResource(weatherResId);
+        ((TextView)buttonWeather.findViewById(R.id.weather_desc)).setText(getContext().getString(R.string.weather_description, tempStr, tempDesc));
+//        buttonWeather.setText(getContext().getString(R.string.weather_description, tempStr, tempDesc));
+//        buttonWeather.setCompoundDrawablesWithIntrinsicBounds(null, weatherDrawable, null, null);
     }
 
     @Override

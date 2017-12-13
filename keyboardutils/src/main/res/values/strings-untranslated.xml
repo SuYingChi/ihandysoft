@@ -6,7 +6,7 @@ Show Weather on Lock Screen
 Try More Lock Screen Themes</string>
     <string name="unknown">Unknown</string>
     <string name="snowshower">snowShower</string>
-    <string name="weather_unknown">snowShower</string>
+    <string name="weather_unknown">Unknown</string>
     <string name="weather_clear">snowShower</string>
     <string name="weather_sunny">snowShower</string>
     <string name="weather_cloudy_night">snowShower</string>

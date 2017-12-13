@@ -195,20 +195,22 @@
         app:layout_widthPercent="43.4%">
 
         <ImageView
+            android:id="@+id/weather_image"
             android:layout_width="wrap_content"
             android:layout_height="0dp"
             android:layout_gravity="center"
             android:layout_marginTop="4dp"
             android:layout_weight="10"
             android:padding="4dp"
-            android:src="@drawable/ic_locker_weather" />
+            android:src="@drawable/weather_unknown" />
 
         <TextView
+            android:id="@+id/weather_desc"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:gravity="center"
-            android:text="Weather"
+            android:text="@string/weather_unknown"
             android:textColor="#7fffffff"
             android:textSize="12sp" />
     </LinearLayout>
