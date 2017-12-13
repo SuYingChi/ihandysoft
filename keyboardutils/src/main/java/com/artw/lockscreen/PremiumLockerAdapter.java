@@ -8,6 +8,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.artw.lockscreen.slidingup.SlidingUpCallback;
+import com.ihs.commons.utils.HSLog;
 import com.ihs.keyboardutils.R;
 
 

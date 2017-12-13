@@ -267,17 +267,16 @@ public class PremiumLockerMainFrame extends PercentRelativeLayout implements INo
     }
 
     private void initWeather() {
-        WeatherManager.init(getContext());
         if (WeatherManager.getInstance().getCurrentWeatherCondition() != null) {
             ImageView weatherImageView = buttonWeather.findViewById(R.id.weather_image);
             TextView weatherTextView = buttonWeather.findViewById(R.id.weather_desc);
+            weatherImageView.setImageResource(WeatherManager.getInstance().getWeatherConditionIconResourceID());
+            weatherTextView.setText(getContext().getString(R.string.weather_description,
+                    WeatherManager.getInstance().getTemperatureDescription(),
+                    WeatherManager.getInstance().getLocalSimpleConditionDescription()));
+            return;
         }
         registerDataReceiver();
-    }
-
-    private void requestWeather() {
-        Intent intent = new Intent(WeatherManager.ACTION_WEATHER_REQUEST);
-        getContext().sendBroadcast(intent);
     }
 
     public void registerDataReceiver() {
@@ -287,7 +286,7 @@ public class PremiumLockerMainFrame extends PercentRelativeLayout implements INo
             getContext().registerReceiver(weatherReceiver, intentFilter);
             isReceiverRegistered = true;
 
-            requestWeather();
+            WeatherManager.getInstance().requestWeather();
         }
     }
 

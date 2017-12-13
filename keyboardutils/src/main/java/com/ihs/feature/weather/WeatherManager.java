@@ -143,6 +143,11 @@ public class WeatherManager {
         }
     }
 
+    public void requestWeather() {
+        Intent intent = new Intent(WeatherManager.ACTION_WEATHER_REQUEST);
+        context.sendBroadcast(intent);
+    }
+
     public CurrentCondition getCurrentWeatherCondition() {
         return currentWeatherCondition;
     }
