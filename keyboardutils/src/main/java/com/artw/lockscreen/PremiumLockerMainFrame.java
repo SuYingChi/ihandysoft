@@ -67,7 +67,7 @@ import static com.ihs.feature.weather.WeatherManager.BUNDLE_KEY_WEATHER_TEMPERAT
 
 
 public class PremiumLockerMainFrame extends PercentRelativeLayout implements INotificationObserver,
-        SlidingDrawer.SlidingDrawerListener, View.OnClickListener {
+        SlidingDrawer.SlidingDrawerListener {
 
     public static final String EVENT_SLIDING_DRAWER_OPENED = "EVENT_SLIDING_DRAWER_OPENED";
     public static final String EVENT_SLIDING_DRAWER_CLOSED = "EVENT_SLIDING_DRAWER_CLOSED";
@@ -164,6 +164,7 @@ public class PremiumLockerMainFrame extends PercentRelativeLayout implements INo
                 HSLog.d("");
             } else if (v.getId() == R.id.button_weather) {
                 HSLog.d("");
+                AcbWeatherManager.showWeatherInfo(getContext());
             } else if (v.getId() == R.id.icon_locker_upgrade) {
                 HSLog.d("");
             }
@@ -260,6 +261,11 @@ public class PremiumLockerMainFrame extends PercentRelativeLayout implements INo
     }
 
     private void initWeather() {
+        WeatherManager.init(getContext());
+        if (WeatherManager.getInstance().getCurrentWeatherCondition() != null) {
+            ImageView weatherImageView = buttonWeather.findViewById(R.id.weather_image);
+            TextView weatherTextView = buttonWeather.findViewById(R.id.weather_desc);
+        }
         registerDataReceiver();
     }
 
@@ -275,7 +281,6 @@ public class PremiumLockerMainFrame extends PercentRelativeLayout implements INo
             getContext().registerReceiver(weatherReceiver, intentFilter);
             isReceiverRegistered = true;
 
-            WeatherManager.init(getContext());
             requestWeather();
         }
     }
@@ -555,14 +560,5 @@ public class PremiumLockerMainFrame extends PercentRelativeLayout implements INo
         this.dialog = dialog;
         KCCommonUtils.showDialog(dialog);
         return true;
-    }
-
-    @Override
-    public void onClick(View v) {
-        int i = v.getId();
-        if (i == R.id.button_weather) {
-            AcbWeatherManager.showWeatherInfo(getContext());
-        }
-
     }
 }
