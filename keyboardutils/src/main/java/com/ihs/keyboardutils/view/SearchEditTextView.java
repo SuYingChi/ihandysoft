@@ -1,7 +1,9 @@
 package com.ihs.keyboardutils.view;
 
 import android.content.Context;
-import android.graphics.Rect;
+import android.text.Editable;
+import android.text.TextUtils;
+import android.text.TextWatcher;
 import android.util.AttributeSet;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -9,10 +11,11 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 
+import com.ihs.commons.utils.HSLog;
 import com.ihs.keyboardutils.R;
 
 /**
- * Copy from https://github.com/Carson-Ho/SuperEditText
+ *  Created by yan.xia, similar to SearchView
  */
 
 public class SearchEditTextView extends LinearLayout {
@@ -23,6 +26,49 @@ public class SearchEditTextView extends LinearLayout {
     private ImageView searchDeleteImageView;
     private View dividerView;
     private ImageView searchImageView;
+
+    /**
+     * Callback to watch the text field for empty/non-empty
+     */
+    private TextWatcher mTextWatcher = new TextWatcher() {
+
+        public void beforeTextChanged(CharSequence s, int start, int before, int after) {
+
+        }
+
+        public void onTextChanged(CharSequence s, int start, int before, int after) {
+            SearchEditTextView.this.onTextChanged(s);
+        }
+
+        public void afterTextChanged(Editable s) {
+
+        }
+    };
+
+    private final OnClickListener mOnClickListener = new OnClickListener() {
+
+        public void onClick(View v) {
+            if (v == searchImageView) {
+                onSearchClicked();
+            } else if (v == searchDeleteImageView) {
+                onCloseClicked();
+            }
+        }
+    };
+
+    private void onCloseClicked() {
+        CharSequence text = editText.getText();
+        if (TextUtils.isEmpty(text)) {
+            clearFocus();
+        } else {
+            editText.setText("");
+            editText.requestFocus();
+        }
+    }
+
+    private void onSearchClicked() {
+        editText.requestFocus();
+    }
 
     public SearchEditTextView(Context context) {
         this(context, null);
@@ -39,6 +85,21 @@ public class SearchEditTextView extends LinearLayout {
         searchDeleteImageView = findViewById(R.id.search_delete_icon);
         dividerView = findViewById(R.id.search_divider_view);
         searchImageView = findViewById(R.id.search_button_image);
+        editText.addTextChangedListener(mTextWatcher);
+
+        searchDeleteImageView.setOnClickListener(mOnClickListener);
+        searchImageView.setOnClickListener(mOnClickListener);
     }
 
+    private void onTextChanged(CharSequence s) {
+        if (TextUtils.isEmpty(s)) {
+            searchDeleteImageView.setVisibility(GONE);
+            dividerView.setVisibility(GONE);
+        } else {
+            searchDeleteImageView.setVisibility(VISIBLE);
+            dividerView.setVisibility(VISIBLE);
+        }
+        HSLog.d(TAG, "onTextChanged: " + s);
+        invalidate();
+    }
 }

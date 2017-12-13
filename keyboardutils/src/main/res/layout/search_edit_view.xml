@@ -10,8 +10,11 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_weight="1"
+        android:background="@null"
         android:hint="Search"
         android:inputType="text"
+        android:paddingBottom="6dp"
+        android:paddingTop="6dp"
         android:textSize="14sp" />
 
     <ImageView
@@ -24,7 +27,7 @@
 
     <View
         android:id="@+id/search_divider_view"
-        android:layout_width="2dp"
+        android:layout_width="1dp"
         android:layout_height="match_parent"
         android:layout_marginBottom="4dp"
         android:layout_marginTop="4dp"
