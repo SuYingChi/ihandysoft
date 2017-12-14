@@ -142,7 +142,7 @@ public class PremiumLockerMainFrame extends PercentRelativeLayout implements INo
             } else if (v.getId() == R.id.icon_locker_upgrade) {
                 HSLog.d("");
                 if (LockerAppGuideManager.getInstance().isLockerInstall() && !LockerChargingSpecialConfig.getInstance().isLockerEnable()) {
-                    LockerAppGuideManager.openApp("com.wallpaper.theme.privacy.camera.lock.screen");
+                    LockerAppGuideManager.openApp(LockerAppGuideManager.getInstance().getLockerAppPkgName());
                 } else {
                     final LockerUpgradeAlert alert = new LockerUpgradeAlert(getContext());
                     alert.show();

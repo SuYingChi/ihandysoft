@@ -29,7 +29,7 @@ public class LockerUpgradeAlert extends AlertDialog implements View.OnClickListe
         FrameLayout rootView = findViewById(R.id.root_view);
 
         Button upgradeButton = rootView.findViewById(R.id.upgrade_button);
-        upgradeButton.setOnClickListener(view -> LockerAppGuideManager.directToMarket(null, null, "com.wallpaper.theme.privacy.camera.lock.screen"));
+        upgradeButton.setOnClickListener(view -> LockerAppGuideManager.directToMarket(null, null, LockerAppGuideManager.getInstance().getLockerAppPkgName()));
 
         setCancelable(false);
 
