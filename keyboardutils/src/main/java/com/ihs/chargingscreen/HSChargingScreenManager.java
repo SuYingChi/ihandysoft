@@ -209,9 +209,9 @@ public class HSChargingScreenManager {
 
             if (!hasDone){
                 if (HSChargingManager.getInstance().isCharging() && ChargingPrefsUtil.isChargingAlertEnabled()) {
-                    int alertIntervalInHour = HSConfig.optInteger(24, "Application", "ChargeAlert", "MiniInterval");
+                    int alertIntervalInHour = HSConfig.optInteger(5, "Application", "ChargeAlert", "MiniInterval");
                     long lastShowDownloadLockerAlertTime = PreferenceManager.getDefaultSharedPreferences(ctx).getLong("lastShowChargingAlertTime", 0);
-                    if (System.currentTimeMillis() - lastShowDownloadLockerAlertTime > alertIntervalInHour * 60 * 60 * 1000) {
+                    if (System.currentTimeMillis() - lastShowDownloadLockerAlertTime > alertIntervalInHour * 60 * 1000) {
                         PreferenceManager.getDefaultSharedPreferences(ctx).edit().putLong("lastShowChargingAlertTime", System.currentTimeMillis()).apply();
                         ChargingManagerUtil.startChargingActivity();
                         hasDone = true;
