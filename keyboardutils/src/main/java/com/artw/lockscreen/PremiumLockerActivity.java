@@ -28,6 +28,7 @@ import com.ihs.commons.notificationcenter.INotificationObserver;
 import com.ihs.commons.utils.HSBundle;
 import com.ihs.feature.common.ScreenStatusReceiver;
 import com.ihs.feature.common.Thunk;
+import com.ihs.feature.weather.WeatherManager;
 import com.ihs.keyboardutils.R;
 import com.ihs.keyboardutils.utils.CommonUtils;
 import com.kc.commons.utils.KCCommonUtils;
@@ -115,6 +116,7 @@ public class PremiumLockerActivity extends AppCompatActivity implements INotific
 //            mIsHomeKeyClicked = false;
 //            mLockerAdapter.lockerMainFrame.closeDrawer();
 //        }
+        WeatherManager.getInstance().requestWeather();
         long current = System.currentTimeMillis();
         if (current - startDisplayTime > 1000) {
             startDisplayTime = current;
@@ -187,6 +189,8 @@ public class PremiumLockerActivity extends AppCompatActivity implements INotific
     }
 
     private void configLockViewPager() {
+
+        WeatherManager.init(this);
         mViewPager = (ViewPager) findViewById(R.id.locker_pager);
         mLockerAdapter = new PremiumLockerAdapter(this, new LockerSlidingUpCallback(PremiumLockerActivity.this));
         mViewPager.setAdapter(mLockerAdapter);

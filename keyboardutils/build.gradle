@@ -57,6 +57,7 @@ dependencies {
     implementation "com.google.android.gms:play-services-analytics:$play_services_version"
     implementation "com.google.android.gms:play-services-gcm:$play_services_version"
     implementation "com.google.android.gms:play-services-ads:$play_services_version"
+    implementation "com.google.android.gms:play-services-location:$play_services_version"
 
 
     implementation 'com.facebook.shimmer:shimmer:0.1.0@aar'
@@ -79,6 +80,14 @@ dependencies {
     implementation 'eu.davidea:flexible-adapter:5.0.0-rc1'
 
     implementation ('com.crashlytics.sdk.android:crashlytics:2.6.4@aar') {
-        transitive = true;
+        transitive = true
+    }
+
+    //weather
+    implementation "net.appcloudbox.weather:acbWeatherPlugin.gm:4.0.1.gm"
+    implementation "net.appcloudbox.weather:libWeather.gm:[4.0.0.gm, 4.1.0.gm)"
+
+    implementation ("com.ihandy.appframework:libAppframework.gm:4.5.1.gm") {
+        transitive = true
     }
 }

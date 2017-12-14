@@ -5,6 +5,11 @@ import android.app.Dialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.BroadcastReceiver;
+import android.content.Context;
+import android.content.DialogInterface;
+import android.content.Intent;
+import android.content.IntentFilter;
 import android.graphics.drawable.BitmapDrawable;
 import android.os.Build;
 import android.support.percent.PercentRelativeLayout;
@@ -13,6 +18,8 @@ import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.Toolbar;
 import android.text.SpannableString;
 import android.text.Spanned;
+
+import android.text.TextUtils;
 import android.text.style.ForegroundColorSpan;
 import android.util.AttributeSet;
 import android.view.LayoutInflater;
@@ -21,11 +28,18 @@ import android.view.View;
 import android.view.ViewTreeObserver;
 import android.view.ViewTreeObserver.OnGlobalLayoutListener;
 import android.widget.Button;
+import android.view.animation.AlphaAnimation;
+import android.view.animation.Animation;
+import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.PopupWindow;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.artw.lockscreen.common.LockerChargingScreenUtils;
+import com.acb.weather.plugin.AcbWeatherManager;
+import com.artw.lockscreen.common.LockerChargingScreenUtils;
+import com.artw.lockscreen.common.NavUtils;
 import com.artw.lockscreen.shimmer.Shimmer;
 import com.artw.lockscreen.shimmer.ShimmerTextView;
 import com.artw.lockscreen.slidingdrawer.SlidingDrawer;
@@ -39,10 +53,18 @@ import com.ihs.commons.notificationcenter.INotificationObserver;
 import com.ihs.commons.utils.HSBundle;
 import com.ihs.commons.utils.HSLog;
 import com.ihs.feature.common.ScreenStatusReceiver;
+import com.ihs.feature.boost.plus.BoostPlusActivity;
+import com.ihs.feature.common.ScreenStatusReceiver;
+import com.ihs.feature.softgame.SoftGameDisplayActivity;
+import com.ihs.feature.weather.WeatherManager;
 import com.ihs.keyboardutils.R;
 import com.ihs.keyboardutils.utils.CommonUtils;
 import com.ihs.keyboardutils.utils.RippleDrawableUtils;
 import com.kc.commons.utils.KCCommonUtils;
+import static com.ihs.feature.weather.WeatherManager.BUNDLE_KEY_WEATHER_DESCRIPTION;
+import static com.ihs.feature.weather.WeatherManager.BUNDLE_KEY_WEATHER_ICON_ID;
+import static com.ihs.feature.weather.WeatherManager.BUNDLE_KEY_WEATHER_TEMPERATURE_FORMAT;
+import static com.ihs.feature.weather.WeatherManager.BUNDLE_KEY_WEATHER_TEMPERATURE_INT;
 
 
 import java.text.DateFormat;
@@ -55,6 +77,7 @@ import static com.artw.lockscreen.LockerSettings.recordLockerDisableOnce;
 import static com.artw.lockscreen.common.TimeTickReceiver.NOTIFICATION_CLOCK_TIME_CHANGED;
 
 public class PremiumLockerMainFrame extends PercentRelativeLayout implements INotificationObserver, SlidingDrawer.SlidingDrawerListener {
+
 
     public static final String EVENT_SLIDING_DRAWER_OPENED = "EVENT_SLIDING_DRAWER_OPENED";
     public static final String EVENT_SLIDING_DRAWER_CLOSED = "EVENT_SLIDING_DRAWER_CLOSED";
@@ -92,6 +115,19 @@ public class PremiumLockerMainFrame extends PercentRelativeLayout implements INo
     private boolean shouldShowButtonUpgrade;
     private boolean shouldShowButtonSearch;
     private boolean shouldShowCommonUseButtons; //Boost, Game, Camera, Weather
+    private boolean shouldShowButtons; //Boost, Game, Camera, Weather
+
+    private BroadcastReceiver weatherReceiver = new BroadcastReceiver() {
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            HSLog.d("weather intent == " + intent);
+            if (intent != null && WeatherManager.ACTION_WEATHER_CHANGE.equals(intent.getAction())) {
+                updateWeatherView(intent);
+            }
+        }
+    };
+
+    private boolean isReceiverRegistered = false;
 
     public PremiumLockerMainFrame(Context context) {
         this(context, null);
@@ -132,13 +168,17 @@ public class PremiumLockerMainFrame extends PercentRelativeLayout implements INo
                 intent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
                 ContextCompat.startActivity(getContext(), intent, null);
             } else if (v.getId() == R.id.button_boost) {
-                HSLog.d("");
+                Intent intent = new Intent(getContext(), BoostPlusActivity.class);
+                intent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
+                ContextCompat.startActivity(getContext(), intent, null);
             } else if (v.getId() == R.id.button_game) {
-                HSLog.d("");
+                Intent intent = new Intent(getContext(), SoftGameDisplayActivity.class);
+                ContextCompat.startActivity(getContext(), intent, null);
             } else if (v.getId() == R.id.button_camera) {
+                NavUtils.startCameraFromLockerScreen(getContext());
                 HSLog.d("");
             } else if (v.getId() == R.id.button_weather) {
-                HSLog.d("");
+                AcbWeatherManager.showWeatherInfo(getContext());
             } else if (v.getId() == R.id.icon_locker_upgrade) {
                 HSLog.d("");
             }
@@ -182,6 +222,7 @@ public class PremiumLockerMainFrame extends PercentRelativeLayout implements INo
             buttonSearch.setVisibility(View.INVISIBLE);
         }
         if (!shouldShowCommonUseButtons) {
+
             buttonBoost.setVisibility(View.INVISIBLE);
             buttonGame.setVisibility(View.INVISIBLE);
             buttonCamera.setVisibility(View.INVISIBLE);
@@ -229,6 +270,78 @@ public class PremiumLockerMainFrame extends PercentRelativeLayout implements INo
         refreshClock();
     }
 
+    private void initButtons() {
+        initWeather();
+    }
+
+    private void initWeather() {
+        if (WeatherManager.getInstance().getCurrentWeatherCondition() != null) {
+            ImageView weatherImageView = buttonWeather.findViewById(R.id.weather_image);
+            TextView weatherTextView = buttonWeather.findViewById(R.id.weather_desc);
+            weatherImageView.setImageResource(WeatherManager.getInstance().getWeatherConditionIconResourceID());
+            weatherTextView.setText(getContext().getString(R.string.weather_description,
+                    WeatherManager.getInstance().getTemperatureDescription(),
+                    WeatherManager.getInstance().getLocalSimpleConditionDescription()));
+        }
+        registerDataReceiver();
+    }
+
+    public void registerDataReceiver() {
+        if (!isReceiverRegistered) {
+            IntentFilter intentFilter = new IntentFilter();
+            intentFilter.addAction(WeatherManager.ACTION_WEATHER_CHANGE);
+            getContext().registerReceiver(weatherReceiver, intentFilter);
+            isReceiverRegistered = true;
+        }
+    }
+
+    public void unregisterDataReceiver() {
+        if (isReceiverRegistered) {
+            getContext().unregisterReceiver(weatherReceiver);
+            isReceiverRegistered = false;
+        }
+    }
+
+    private void updateWeatherView(Intent intent) {
+        int temp = intent.getIntExtra(BUNDLE_KEY_WEATHER_TEMPERATURE_INT, 0);
+        String tempFormat = intent.getStringExtra(BUNDLE_KEY_WEATHER_TEMPERATURE_FORMAT);
+        String tempStr;
+        if (!TextUtils.isEmpty(tempFormat)) {
+            tempStr = String.format(tempFormat, temp);
+        } else {
+            tempStr = String.valueOf(temp);
+        }
+        String tempDesc = intent.getStringExtra(BUNDLE_KEY_WEATHER_DESCRIPTION);
+        int weatherResId = intent.getIntExtra(BUNDLE_KEY_WEATHER_ICON_ID, R.drawable.weather_unknown);
+        ImageView weatherImageView = buttonWeather.findViewById(R.id.weather_image);
+        TextView weatherTextView = buttonWeather.findViewById(R.id.weather_desc);
+        AlphaAnimation mShowAction = new AlphaAnimation(0, 1);
+        mShowAction.setDuration(1000);
+        AlphaAnimation mHiddenAction = new AlphaAnimation(1, 0);
+        mHiddenAction.setDuration(1000);
+        mHiddenAction.setAnimationListener(new Animation.AnimationListener() {
+            @Override
+            public void onAnimationStart(Animation animation) {
+
+            }
+
+            @Override
+            public void onAnimationEnd(Animation animation) {
+                weatherImageView.setVisibility(GONE);
+                weatherImageView.setImageResource(weatherResId);
+                weatherTextView.setText(getContext().getString(R.string.weather_description, tempStr, tempDesc));
+                weatherImageView.startAnimation(mShowAction);
+                weatherImageView.setVisibility(View.VISIBLE);
+            }
+
+            @Override
+            public void onAnimationRepeat(Animation animation) {
+
+            }
+        });
+        weatherImageView.startAnimation(mHiddenAction);
+    }
+
     @Override
     @SuppressWarnings("deprecation")
     protected void onAttachedToWindow() {
@@ -252,8 +365,8 @@ public class PremiumLockerMainFrame extends PercentRelativeLayout implements INo
             }
         });
 
+        initButtons();
         requestFocus();
-
 
         HSGlobalNotificationCenter.addObserver(ScreenStatusReceiver.NOTIFICATION_SCREEN_OFF, this);
         HSGlobalNotificationCenter.addObserver(ScreenStatusReceiver.NOTIFICATION_SCREEN_ON, this);
@@ -271,6 +384,7 @@ public class PremiumLockerMainFrame extends PercentRelativeLayout implements INo
         if (mShimmer != null) {
             mShimmer.cancel();
         }
+        unregisterDataReceiver();
     }
 
     @Override

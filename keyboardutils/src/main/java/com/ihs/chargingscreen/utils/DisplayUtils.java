@@ -1,6 +1,7 @@
 package com.ihs.chargingscreen.utils;
 
 import android.content.Context;
+import android.content.res.Resources;
 import android.graphics.Point;
 import android.os.Build;
 import android.util.DisplayMetrics;
@@ -151,4 +152,7 @@ public class DisplayUtils {
         return size;
     }
 
+    public static int getScreenWidthForContent() {
+        return Resources.getSystem().getDisplayMetrics().widthPixels;
+    }
 }

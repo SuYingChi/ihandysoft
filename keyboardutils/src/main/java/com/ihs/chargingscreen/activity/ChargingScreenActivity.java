@@ -425,7 +425,9 @@ public class ChargingScreenActivity extends Activity {
 
         ChargeNotifyManager.getInstance().setIsChargingActivityAlive(true);
 
-        acbExpressAdView.switchAd();
+        if (acbExpressAdView != null) {
+            acbExpressAdView.switchAd();
+        }
     }
 
     @Override

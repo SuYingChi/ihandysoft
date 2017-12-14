@@ -29,6 +29,7 @@ public class PremiumLockerSearchActivity extends AppCompatActivity {
     private boolean animationPlayed;
     private AlphaAnimation alphaAnimation;
 
+
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -147,5 +148,6 @@ public class PremiumLockerSearchActivity extends AppCompatActivity {
             }
         });
         searchEditTextView.startAnimation(hideAnimation);
+
     }
 }
