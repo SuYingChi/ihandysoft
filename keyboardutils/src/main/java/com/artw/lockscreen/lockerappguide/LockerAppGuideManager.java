@@ -52,7 +52,7 @@ public class LockerAppGuideManager {
 
     private List<ILockerInstallStatusChangeListener> lockerInstallStatusChangeListeners;
 
-    public String getLockerAppPkgName() {
+    public static String getLockerAppPkgName() {
         return HSConfig.optString("","Application","DownloadScreenLocker","LockerApp");
     }
     private LockerAppGuideManager() {

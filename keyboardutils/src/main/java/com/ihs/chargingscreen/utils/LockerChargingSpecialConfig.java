@@ -7,6 +7,7 @@ import android.os.IBinder;
 import android.os.RemoteException;
 
 import com.artw.lockscreen.LockerSettings;
+import com.artw.lockscreen.lockerappguide.LockerAppGuideManager;
 import com.fasttrack.lockscreen.ICustomizeInterface;
 import com.ihs.app.framework.HSApplication;
 import com.ihs.commons.config.HSConfig;
@@ -28,9 +29,7 @@ public class LockerChargingSpecialConfig {
     private static LockerChargingSpecialConfig instance;
 
     private LockerConnection lockerConnection;
-    private Intent lockerIntent;
-    
-    static final String BOUND_SERVICE_PACKAGE = "com.wallpaper.theme.privacy.camera.lock.screen";
+
     private static final String ACTION_BIND_SERVICE = "action.customize.service";
 
     /**
@@ -52,8 +51,8 @@ public class LockerChargingSpecialConfig {
 
     public void init(int noAdsVersionUserType) {
         this.noAdsVersionUserType = noAdsVersionUserType;
-        lockerIntent = new Intent(ACTION_BIND_SERVICE);
-        lockerIntent.setPackage(BOUND_SERVICE_PACKAGE);
+        Intent lockerIntent = new Intent(ACTION_BIND_SERVICE);
+        lockerIntent.setPackage(LockerAppGuideManager.getLockerAppPkgName());
         lockerConnection = new LockerConnection();
         boolean success = HSApplication.getContext().bindService(lockerIntent, lockerConnection, BIND_AUTO_CREATE);
         if (!success) {
