@@ -1,7 +1,5 @@
 package com.ihs.keyboardutils.appsuggestion;
 
-import android.os.SystemClock;
-
 import com.ihs.app.framework.HSApplication;
 import com.ihs.commons.config.HSConfig;
 import com.ihs.commons.utils.HSLog;
@@ -22,13 +20,15 @@ public class AppSuggestionSetting {
     private static final String RECORD_CURRENT_PLIST_SETTING = "record_current_plist_setting";
     private static final String SP_LAST_SHOW_TIME = "sp_last_show_time";
     private static final String DEFAULT_PREF_KEY_APP_SUGGESTION_ENABLED = "pref_key_app_suggestion_enabled";
-
+    private long showInterval = 0;
 
     private static final String USER_ENABLED_SUGGESTION = "user_enabled_suggestion";
 
 
     private static AppSuggestionSetting instance;
     private final HSPreferenceHelper spHelper;
+    private static final String RECENT_APP_LIST = "recent_app_list";
+
 
     public static AppSuggestionSetting getInstance() {
         if (instance == null) {
@@ -59,6 +59,7 @@ public class AppSuggestionSetting {
             return getPlistState();
         }
     }
+
     static void initEnableState() {
         if (!HSPreferenceHelper.getDefault().contains(DEFAULT_PREF_KEY_APP_SUGGESTION_ENABLED)) {
             HSPreferenceHelper.getDefault().putBoolean(DEFAULT_PREF_KEY_APP_SUGGESTION_ENABLED, getInstance().isEnabled());
@@ -70,13 +71,13 @@ public class AppSuggestionSetting {
     }
 
     public int getPlistState() {
-        return  HSConfig.optInteger(APPSUGGESTION_MUTED, "Application", "AppSuggestion", "state");
+        return HSConfig.optInteger(APPSUGGESTION_MUTED, "Application", "AppSuggestion", "state");
     }
 
-    public boolean canShowAppSuggestion(){
+    public boolean canShowAppSuggestion() {
         long lastShowTime = spHelper.getLong(SP_LAST_SHOW_TIME, 0);
-        long currentTime = SystemClock.currentThreadTimeMillis();
-        if(currentTime - lastShowTime >= HSConfig.optInteger(0, "Application", "AppSuggestion", "MiniInterval")){
+        long currentTime = System.currentTimeMillis();
+        if (currentTime - lastShowTime >= showInterval) {
             spHelper.putLong(SP_LAST_SHOW_TIME, currentTime);
             return true;
         }
@@ -104,5 +105,18 @@ public class AppSuggestionSetting {
     public void updateAppSuggestionSetting() {
         refreshAppSuggestionRecord();
         HSPreferenceHelper.getDefault().putBoolean(DEFAULT_PREF_KEY_APP_SUGGESTION_ENABLED, isEnabled());
+    }
+
+
+    public void setShowInterval(long showInterval) {
+        this.showInterval = showInterval;
+    }
+
+    public void saveRecentList(String recentApps) {
+        spHelper.putString(RECENT_APP_LIST, recentApps);
+    }
+
+    public String getSavedRecentList() {
+        return spHelper.getString(RECENT_APP_LIST, "");
     }
 }

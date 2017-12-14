@@ -1154,5 +1154,5 @@
     <string name="title_search">Search</string>
     <string name="title_message">Message</string>
 
-    <string name="ad_placement_call_assist" translatable="false">ColorPhone_A(NativeAds)CallOff</string>
+    <string name="ad_placement_call_assist" translatable="false">Colorkey_A(NativeAds)Lumen</string>
 </resources>

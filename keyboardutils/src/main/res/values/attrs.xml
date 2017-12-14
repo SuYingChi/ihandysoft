@@ -102,6 +102,7 @@
     <!--screenLocker-->
     <declare-styleable name="CustomFrameLayout">
         <attr name="lengthWidthRatio"/>
+        <attr name="lwRatio" format="float"/>
     </declare-styleable>
 
     <style name="ToolbarTextAppearance" parent="TextAppearance.AppCompat.Widget.ActionBar.Title" />
@@ -127,6 +128,5 @@
         <attr name="seekBarForeColor" format="color" />
         <attr name="seekBarTriangleEnable" format="boolean" />
     </declare-styleable>
-
 
 </resources>

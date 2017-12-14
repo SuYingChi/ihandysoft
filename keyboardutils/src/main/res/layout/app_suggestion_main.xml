@@ -3,8 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/acb_phone_alert_call_bg"
-    >
+    android:background="@color/acb_phone_alert_call_bg">
 
     <ImageView
         android:id="@+id/customize_app_name"
@@ -12,9 +11,9 @@
         android:layout_height="wrap_content"
         android:layout_above="@+id/alert_call_container"
         android:layout_marginBottom="8dp"
-        android:alpha="0.35"
         android:layout_marginLeft="18dp"
         android:layout_marginRight="18dp"
+        android:alpha="0.35"
         android:src="@drawable/ic_charging_screen_logo" />
 
     <RelativeLayout
@@ -22,8 +21,6 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_centerInParent="true"
-        android:layout_marginLeft="16dp"
-        android:layout_marginRight="16dp"
         android:background="@drawable/acb_alert_dialog_normal_bg"
         android:clipChildren="false">
 
@@ -56,11 +53,10 @@
 
                 <android.support.v7.widget.RecyclerView
                     android:id="@+id/recycler_view"
-                    android:layout_gravity="center"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginBottom="16dp"
-                    />
+                    android:layout_gravity="center"
+                    android:layout_marginBottom="16dp" />
 
                 <LinearLayout
                     android:id="@+id/alert_callback_btn"
@@ -70,42 +66,111 @@
                     android:orientation="horizontal"
                     android:visibility="visible">
 
-                    <TextView
+                    <RelativeLayout
                         android:id="@+id/tv_call"
                         android:layout_width="0dp"
                         android:layout_height="match_parent"
-                        android:layout_weight="1"
-                        android:gravity="center"
-                        android:text="@string/title_call"
-                        android:textColor="@color/white" />
+                        android:layout_weight="1">
+
+                        <LinearLayout
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_centerInParent="true"
+                            android:orientation="horizontal">
+
+                            <ImageView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginEnd="2dp"
+                                android:layout_marginRight="2dp"
+                                android:src="@drawable/app_sugg_ic_phone" />
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:fontFamily="sans-serif-black"
+                                android:text="@string/title_call"
+                                android:textColor="@color/white"
+                                android:textSize="11sp" />
+                        </LinearLayout>
+
+
+                    </RelativeLayout>
+
 
                     <TextView
                         android:layout_width="0dp"
                         android:layout_height="match_parent"
-                        android:layout_weight="0.2" />
+                        android:layout_weight="0.1" />
 
-                    <TextView
+
+                    <RelativeLayout
                         android:id="@+id/tv_msg"
                         android:layout_width="0dp"
                         android:layout_height="match_parent"
-                        android:layout_weight="1"
-                        android:gravity="center"
-                        android:text="@string/title_message"
-                        android:textColor="@color/white" />
+                        android:layout_weight="1">
+
+
+                        <LinearLayout
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_centerInParent="true"
+                            android:orientation="horizontal">
+
+                            <ImageView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginEnd="2dp"
+                                android:layout_marginRight="2dp"
+                                android:src="@drawable/app_sugg_ic_message" />
+
+                            <TextView
+                                android:id="@+id/tvv_msg"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:fontFamily="sans-serif-black"
+                                android:text="@string/title_message"
+                                android:textColor="@color/white"
+                                android:textSize="11sp" />
+                        </LinearLayout>
+                    </RelativeLayout>
+
 
                     <TextView
                         android:layout_width="0dp"
                         android:layout_height="match_parent"
-                        android:layout_weight="0.2" />
+                        android:layout_weight="0.1" />
 
-                    <TextView
+                    <RelativeLayout
                         android:id="@+id/tv_search"
                         android:layout_width="0dp"
                         android:layout_height="match_parent"
-                        android:layout_weight="1"
-                        android:gravity="center"
-                        android:text="@string/title_search"
-                        android:textColor="@color/white" />
+                        android:layout_weight="1">
+
+                        <LinearLayout
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_centerInParent="true"
+                            android:orientation="horizontal">
+
+                            <ImageView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginEnd="2dp"
+                                android:layout_marginRight="2dp"
+                                android:src="@drawable/app_sugg_ic_search" />
+
+                            <TextView
+                                android:id="@+id/tvv_search"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:fontFamily="sans-serif-black"
+                                android:text="@string/title_search"
+                                android:textColor="@color/white"
+                                android:textSize="11sp" />
+                        </LinearLayout>
+
+                    </RelativeLayout>
 
                 </LinearLayout>
 
@@ -119,10 +184,7 @@
                 android:layout_marginBottom="10dp"
                 android:layout_marginTop="10dp"
                 android:clipChildren="false"
-                android:paddingEnd="16dp"
-                android:paddingLeft="16dp"
-                android:paddingRight="16dp"
-                android:paddingStart="16dp"/>
+                />
 
         </LinearLayout>
 
