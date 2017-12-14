@@ -6,10 +6,15 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.pm.PackageManager;
 import android.content.pm.ResolveInfo;
+import android.preference.PreferenceManager;
 import android.text.TextUtils;
 
+import com.artw.lockscreen.lockerappguide.LockerAppGuideManager;
 import com.ihs.app.framework.HSApplication;
 import com.ihs.app.framework.HSNotificationConstant;
+import com.ihs.charging.HSChargingManager;
+import com.ihs.chargingscreen.utils.ChargingManagerUtil;
+import com.ihs.chargingscreen.utils.ChargingPrefsUtil;
 import com.ihs.commons.config.HSConfig;
 import com.ihs.commons.notificationcenter.HSGlobalNotificationCenter;
 import com.ihs.commons.notificationcenter.INotificationObserver;
@@ -52,8 +57,37 @@ public class AppSuggestionManager {
         @Override
         public void onReceive(Context context, Intent intent) {
             if (Intent.ACTION_USER_PRESENT.equals(intent.getAction())) {
-                if (AppSuggestionSetting.getInstance().canShowAppSuggestion()) {
-                    showAppSuggestion();
+                boolean hasDone = false;
+                Context ctx = HSApplication.getContext();
+                if (!LockerAppGuideManager.getInstance().isLockerInstall()) {
+                    boolean downloadLockerAlert = HSConfig.optBoolean(false, "Application", "DownloadScreenLocker", "UnlockScreen", "ShowUnlockScreenAlert");
+                    if (downloadLockerAlert) {
+                        int alertIntervalInHour = HSConfig.optInteger(24, "Application", "DownloadScreenLocker", "UnlockScreen", "AlertIntervalInHour");
+                        long lastShowDownloadLockerAlertTime = PreferenceManager.getDefaultSharedPreferences(ctx).getLong("lastShowDownloadLockerAlertTime", 0);
+                        if (System.currentTimeMillis() - lastShowDownloadLockerAlertTime > alertIntervalInHour * 60 * 60 * 1000) {
+                            PreferenceManager.getDefaultSharedPreferences(ctx).edit().putLong("lastShowDownloadLockerAlertTime", System.currentTimeMillis()).apply();
+                            LockerAppGuideManager.getInstance().showDownloadLockerAlert(ctx, LockerAppGuideManager.FLURRY_ALERT_FROM_LOCKER);
+                            hasDone = true;
+                        }
+                    }
+                }
+
+                if (!hasDone) {
+                    if (HSChargingManager.getInstance().isCharging() && ChargingPrefsUtil.isChargingAlertEnabled()) {
+                        int alertIntervalInMinute = HSConfig.optInteger(5, "Application", "ChargeAlert", "MiniInterval");
+                        long lastShowDownloadLockerAlertTime = PreferenceManager.getDefaultSharedPreferences(ctx).getLong("lastShowChargingAlertTime", 0);
+                        if (System.currentTimeMillis() - lastShowDownloadLockerAlertTime > alertIntervalInMinute * 60 * 1000) {
+                            PreferenceManager.getDefaultSharedPreferences(ctx).edit().putLong("lastShowChargingAlertTime", System.currentTimeMillis()).apply();
+                            ChargingManagerUtil.startChargingActivity();
+                            hasDone = true;
+                        }
+                    }
+                }
+
+                if (!hasDone) {
+                    if (AppSuggestionSetting.getInstance().canShowAppSuggestion()) {
+                        showAppSuggestion();
+                    }
                 }
             } else if (Intent.ACTION_SCREEN_OFF.equals(intent.getAction())) {
                 currentLauncherPkg = getDefaultLauncher();
