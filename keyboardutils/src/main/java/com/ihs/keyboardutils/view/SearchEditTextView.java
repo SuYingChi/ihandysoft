@@ -3,17 +3,21 @@ package com.ihs.keyboardutils.view;
 import android.content.Context;
 import android.content.res.TypedArray;
 import android.graphics.Color;
+import android.os.Build;
 import android.support.v4.content.ContextCompat;
 import android.text.Editable;
 import android.text.TextUtils;
 import android.text.TextWatcher;
 import android.util.AttributeSet;
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.inputmethod.EditorInfo;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.TextView;
 
 import com.ihs.chargingscreen.ui.RippleDrawableUtils;
 import com.ihs.chargingscreen.utils.DisplayUtils;
@@ -53,6 +57,19 @@ public class SearchEditTextView extends LinearLayout {
 
         public void afterTextChanged(Editable s) {
 
+        }
+    };
+
+    private final TextView.OnEditorActionListener editorActionListener = new TextView.OnEditorActionListener() {
+
+        /**
+         * Called when the input method default action key is pressed.
+         */
+        public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
+            if (actionId == EditorInfo.IME_ACTION_SEARCH) {
+                onSearchClicked();
+            }
+            return true;
         }
     };
 
@@ -103,6 +120,10 @@ public class SearchEditTextView extends LinearLayout {
         dividerView = findViewById(R.id.search_divider_view);
         searchImageView = findViewById(R.id.search_button_image);
         editText.addTextChangedListener(mTextWatcher);
+        editText.setOnEditorActionListener(editorActionListener);
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            editText.setShowSoftInputOnFocus(true);
+        }
         editText.setOnFocusChangeListener(new OnFocusChangeListener() {
             @Override
             public void onFocusChange(View v, boolean hasFocus) {
