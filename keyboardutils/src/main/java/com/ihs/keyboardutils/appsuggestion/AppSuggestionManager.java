@@ -17,6 +17,7 @@ import com.ihs.commons.utils.HSBundle;
 import com.ihs.device.common.AppFilter;
 import com.ihs.device.common.HSAppRunningInfo;
 import com.ihs.device.common.utils.AppRunningUtils;
+import com.kc.utils.KCFeatureControlUtils;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -35,6 +36,7 @@ public class AppSuggestionManager {
     private String currentLauncherPkg = "";
     private List<String> exceptAppList = new ArrayList<>();
     private PackageManager packageManager;
+    private static final String FEATURE_NAME = "AppSuggestion";
 
 
     public static AppSuggestionManager getInstance() {
@@ -94,9 +96,9 @@ public class AppSuggestionManager {
             public void onReceive(String s, HSBundle hsBundle) {
                 if (s.equals(HSNotificationConstant.HS_CONFIG_CHANGED)) {
                     AppSuggestionSetting.getInstance().updateAppSuggestionSetting();
-                    AppSuggestionSetting.getInstance().setShowInterval(HSConfig.optInteger(0, "Application", "AppSuggestion", "MiniInterval"));
+                    AppSuggestionSetting.getInstance().setShowInterval(HSConfig.optInteger(0, "Application", FEATURE_NAME, "MiniInterval"));
                     try {
-                        exceptAppList = (List<String>) HSConfig.getList("Application", "AppSuggestion", "ApkException");
+                        exceptAppList = (List<String>) HSConfig.getList("Application", FEATURE_NAME, "ApkException");
                     } catch (Exception e) {
                         exceptAppList = new ArrayList<>();
                     }
@@ -135,7 +137,8 @@ public class AppSuggestionManager {
                 TextUtils.isEmpty(packageName) ||
                 TextUtils.equals(packageName, currentLauncherPkg) ||
                 exceptAppList.contains(packageName) ||
-                packageManager.getLaunchIntentForPackage(packageName) == null) {
+                packageManager.getLaunchIntentForPackage(packageName) == null ||
+                !isFeatureEnabled()) {
             return;
         }
 
@@ -203,5 +206,11 @@ public class AppSuggestionManager {
         }
 
         return appRunningInfoList;
+    }
+
+    private boolean isFeatureEnabled() {
+        return KCFeatureControlUtils.isFeatureReleased(HSApplication.getContext(),
+                FEATURE_NAME,
+                HSConfig.optInteger(0, "Application", FEATURE_NAME, "HoursFromFirstUse"));
     }
 }
