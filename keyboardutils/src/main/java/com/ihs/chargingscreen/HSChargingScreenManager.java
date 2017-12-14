@@ -209,9 +209,9 @@ public class HSChargingScreenManager {
 
             if (!hasDone){
                 if (HSChargingManager.getInstance().isCharging() && ChargingPrefsUtil.isChargingAlertEnabled()) {
-                    int alertIntervalInHour = HSConfig.optInteger(5, "Application", "ChargeAlert", "MiniInterval");
+                    int alertIntervalInMinute = HSConfig.optInteger(5, "Application", "ChargeAlert", "MiniInterval");
                     long lastShowDownloadLockerAlertTime = PreferenceManager.getDefaultSharedPreferences(ctx).getLong("lastShowChargingAlertTime", 0);
-                    if (System.currentTimeMillis() - lastShowDownloadLockerAlertTime > alertIntervalInHour * 60 * 1000) {
+                    if (System.currentTimeMillis() - lastShowDownloadLockerAlertTime > alertIntervalInMinute * 60 * 1000) {
                         PreferenceManager.getDefaultSharedPreferences(ctx).edit().putLong("lastShowChargingAlertTime", System.currentTimeMillis()).apply();
                         ChargingManagerUtil.startChargingActivity();
                         hasDone = true;
@@ -264,7 +264,7 @@ public class HSChargingScreenManager {
             case CHARGING_DEFAULT_ACTIVE:
                 if (!RemoveAdsManager.getInstance().isRemoveAdsPurchased()){
                     if (ChargingPrefsUtil.isChargingAlertEnabled()) {
-                        AcbExpressAdManager.getInstance().activePlacementInProcess(HSChargingScreenManager.getInstance().getChargingAlertAdsPlacementName());
+                        AcbNativeAdManager.sharedInstance().activePlacementInProcess(HSChargingScreenManager.getInstance().getChargingAlertAdsPlacementName());
                     }else {
                         if (LockerChargingSpecialConfig.getInstance().canShowAd()) {
                             AcbExpressAdManager.getInstance().activePlacementInProcess(HSChargingScreenManager.getInstance().getChargingActivityAdsPlacementName());

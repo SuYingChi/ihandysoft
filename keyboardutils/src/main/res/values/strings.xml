@@ -1138,7 +1138,7 @@
 
     <string name="workspace_loading">Loading your desktop…</string>
 
-    <string name="ad_placement_result_page">Colorkey_A(NativeAds)ThemeTryAd</string>
+
     <string name="boost_notification_key">boost_noti_key</string>
     <string name="locker_enable_loading_dialog_text">Applying</string>
     <string name="locker_enable_title_no_desc">Set as your lockscreen?</string>
@@ -1158,7 +1158,5 @@
 
     <string name="title_search">Search</string>
     <string name="title_message">Message</string>
-
-    <string name="ad_placement_call_assist" translatable="false">Colorkey_A(NativeAds)Lumen</string>
 
 </resources>

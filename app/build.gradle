@@ -36,17 +36,36 @@ dependencies {
     implementation 'com.squareup.leakcanary:leakcanary-android:1.5.1'
     implementation 'com.android.support:multidex:1.0.2'
 
-    implementation "com.ihandy.appframework:libAppframework.gm:4.5.1.gm"
-    implementation 'net.appcloudbox.ads:libAcbAds.gm:1.2.0.gm'
     implementation 'com.nostra13.universalimageloader:universal-image-loader:1.9.5'
     implementation (name: 'libKeyboardCommons/libKeyboardCommons', ext: 'aar')
 
-    // Native Ads
-//    implementation 'com.ihandy.3rdadadapter:libAdAdmobNativeAdapter.gm:4.1.2.gm'
-    implementation 'com.ihandy.3rdadadapter:libAdAdmobNativeAdapter.gm:+'
-    implementation 'com.ihandy.3rdadadapter:libAdMopubNativeAdapter.gm:+'
-    implementation 'com.ihandy.3rdadadapter:libAdAdxExpressAdapter.gm:+'
-    implementation 'com.ihandy.3rdadadapter:libAdAdmobExpressAdapter.gm:+'
+    // App Framework
+    implementation "com.ihandy.appframework:libAppframework.gm:4.5.2.gm"
+    // Ads
+    implementation 'net.appcloudbox.ads:libAcbAds.gm:1.2.1.gm'
+    implementation 'net.appcloudbox.common:libAcbCommonUtils.gm:1.1.5.gm'
+
+    // Native Ad Adapters
+    //AdAvocarrot 编译不过，报找不到3.8.3sdk，估计是maven远端有问题，等一会再打开注释
+//    implementation 'net.appcloudbox.adadapter:libAdAvocarrotNativeAdapter.gm:5.0.0.gm'
+    implementation 'net.appcloudbox.adadapter:libAdFBNativeAdapter.gm:5.0.0.gm'
+    implementation 'net.appcloudbox.adadapter:libAdYeahmobiNativeAdapter.gm:5.1.0.gm'
+    implementation 'net.appcloudbox.adadapter:libAdMopubNativeAdapter.gm:5.0.0.gm'
+    implementation 'net.appcloudbox.adadapter:libAdAdmobNativeAdapter.gm:5.1.0.gm'
+    implementation 'net.appcloudbox.adadapter:libAdAdxNativeAdapter.gm:5.1.0.gm'
+    implementation 'net.appcloudbox.adadapter:libAdFlurryNativeAdapter.gm:5.1.1.gm'
+    implementation 'net.appcloudbox.adadapter:libAdBaiduNativeAdapter.gm:5.0.0.gm'
+
+    // Interstitial Ad Adapters
+    implementation 'net.appcloudbox.adadapter:libAdAdmobInterstitialAdapter.gm:5.1.0.gm'
+    implementation 'net.appcloudbox.adadapter:libAdAdxInterstitialAdapter.gm:5.1.0.gm'
+    implementation 'net.appcloudbox.adadapter:libAdFBInterstitialAdapter.gm:5.0.0.gm'
+
+    // Express Ad Adapters
+    implementation 'net.appcloudbox.adadapter:libAdMopubBannerAdapter.gm:5.0.1.gm'
+    implementation 'net.appcloudbox.adadapter:libAdAdxBannerAdapter.gm:5.1.0.gm'
+    implementation 'net.appcloudbox.adadapter:libAdAdmobBannerAdapter.gm:5.1.0.gm'
+    implementation 'net.appcloudbox.adadapter:libAdNexageBannerAdapter.gm:5.1.0.gm'
 
     api project(':keyboardutils')
 }

@@ -22,8 +22,7 @@
         android:id="@+id/content_layout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@drawable/charging_alert_bg"
-        android:padding="9dp">
+        android:background="@drawable/charging_alert_bg">
 
         <com.ihs.chargingscreen.ui.BubbleView
             android:id="@+id/bubbleView"
@@ -40,8 +39,9 @@
 
             <ImageView
                 android:id="@+id/close_btn"
-                android:layout_width="16dp"
-                android:layout_height="16dp"
+                android:padding="@dimen/ad_style_charging_alert_content_margin"
+                android:layout_width="34dp"
+                android:layout_height="34dp"
                 android:layout_alignParentRight="true"
                 android:layout_gravity="right"
                 android:src="@drawable/ad_close_button" />
@@ -188,6 +188,9 @@
             </LinearLayout>
 
             <android.support.percent.PercentRelativeLayout
+                android:layout_marginLeft="@dimen/ad_style_charging_alert_content_margin"
+                android:layout_marginRight="@dimen/ad_style_charging_alert_content_margin"
+                android:layout_marginBottom="@dimen/ad_style_charging_alert_content_margin"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:clipChildren="false">

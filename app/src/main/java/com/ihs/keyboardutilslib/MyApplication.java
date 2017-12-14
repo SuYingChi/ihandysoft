@@ -63,7 +63,7 @@ public class MyApplication extends HSApplication {
         }
         LeakCanary.install(this);
         AcbExpressAdManager.getInstance().init(this);
-        HSChargingScreenManager.init(true, "Master_A(NativeAds)Charging",null);
+        HSChargingScreenManager.init(true, "Master_A(NativeAds)Charging",getString(R.string.ad_placement_filter_download));
 
         HSGlobalNotificationCenter.addObserver(HSNotificationConstant.HS_SESSION_START, sessionEventObserver);
         HSGlobalNotificationCenter.addObserver(HSNotificationConstant.HS_SESSION_END, sessionEventObserver);
@@ -83,7 +83,7 @@ public class MyApplication extends HSApplication {
 
         AcbNativeAdManager.sharedInstance().activePlacementInProcess(getString(R.string.ad_placement_result_page));
         AcbNativeAdManager.sharedInstance().activePlacementInProcess(getString(R.string.ad_placement_call_assist));
-        AcbNativeAdManager.sharedInstance().activePlacementInProcess("ColorCam_A(NativeAds)FilterDownload");
+        AcbNativeAdManager.sharedInstance().activePlacementInProcess(getString(R.string.ad_placement_filter_download));
         FloatWindowCompat.initLockScreen(this);
         LockerAppGuideManager.getInstance().init(true);
         AppSuggestionManager.getInstance().init(false);
