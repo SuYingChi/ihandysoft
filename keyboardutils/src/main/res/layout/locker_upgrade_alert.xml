@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/root_view"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
@@ -8,14 +9,16 @@
 
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        tools:ignore="UselessParent">
 
         <ImageView
             android:id="@+id/head_img"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:scaleType="centerCrop"
-            android:src="@drawable/upgrade_head_page" />
+            android:src="@drawable/upgrade_head_page"
+            tools:ignore="ContentDescription" />
 
         <LinearLayout
             android:id="@+id/mid_text"
@@ -29,13 +32,15 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal">
+                android:orientation="horizontal"
+                tools:ignore="UseCompoundDrawables">
 
                 <ImageView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="20dp"
-                    android:src="@drawable/upgrade_check" />
+                    android:src="@drawable/upgrade_check"
+                    tools:ignore="ContentDescription,RtlHardcoded" />
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -45,20 +50,23 @@
                     android:text="@string/locker_upgrade_alert_text_one"
                     android:textColor="#8a8a8a"
                     android:textSize="14sp"
-                    android:textStyle="normal" />
+                    android:textStyle="normal"
+                    tools:ignore="RtlHardcoded,UnusedAttribute" />
             </LinearLayout>
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="20dp"
-                android:orientation="horizontal">
+                android:orientation="horizontal"
+                tools:ignore="UseCompoundDrawables">
 
                 <ImageView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="20dp"
-                    android:src="@drawable/upgrade_check" />
+                    android:src="@drawable/upgrade_check"
+                    tools:ignore="ContentDescription,RtlHardcoded" />
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -68,20 +76,23 @@
                     android:text="@string/locker_upgrade_alert_text_two"
                     android:textColor="#8a8a8a"
                     android:textSize="14sp"
-                    android:textStyle="normal" />
+                    android:textStyle="normal"
+                    tools:ignore="RtlHardcoded,UnusedAttribute" />
             </LinearLayout>
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="20dp"
-                android:orientation="horizontal">
+                android:orientation="horizontal"
+                tools:ignore="UseCompoundDrawables">
 
                 <ImageView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="20dp"
-                    android:src="@drawable/upgrade_check" />
+                    android:src="@drawable/upgrade_check"
+                    tools:ignore="ContentDescription,RtlHardcoded" />
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -91,7 +102,8 @@
                     android:text="@string/locker_upgrade_alert_text_three"
                     android:textColor="#8a8a8a"
                     android:textSize="14sp"
-                    android:textStyle="normal" />
+                    android:textStyle="normal"
+                    tools:ignore="RtlHardcoded,UnusedAttribute" />
             </LinearLayout>
         </LinearLayout>
 
@@ -111,7 +123,8 @@
             android:text="@string/locker_upgrade_alert_button_text"
             android:textColor="#ffffff"
             android:textSize="15sp"
-            android:textStyle="normal" />
+            android:textStyle="normal"
+            tools:ignore="UnusedAttribute" />
 
         <TextView
             android:layout_width="wrap_content"
@@ -122,7 +135,8 @@
             android:text="@string/locker_upgrade_alert_head_text"
             android:textColor="#ffffff"
             android:textSize="17.5sp"
-            android:textStyle="normal" />
+            android:textStyle="normal"
+            tools:ignore="RelativeOverlap,RtlHardcoded,UnusedAttribute" />
 
         <ImageView
             android:id="@+id/close_icon"
@@ -131,7 +145,8 @@
             android:layout_alignParentRight="true"
             android:layout_marginRight="20dp"
             android:layout_marginTop="17dp"
-            android:src="@drawable/rate_alert_ui_close" />
+            android:src="@drawable/rate_alert_ui_close"
+            tools:ignore="ContentDescription,RtlHardcoded" />
     </RelativeLayout>
 
 </FrameLayout>

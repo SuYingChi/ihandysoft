@@ -146,6 +146,7 @@ public class PremiumLockerMainFrame extends PercentRelativeLayout implements INo
                 } else {
                     final LockerUpgradeAlert alert = new LockerUpgradeAlert(getContext());
                     alert.show();
+                    //noinspection ConstantConditions
                     alert.getWindow().setBackgroundDrawable(getContext().getResources().getDrawable(R.drawable.locker_upgrade_alert_background));
                 }
             }
