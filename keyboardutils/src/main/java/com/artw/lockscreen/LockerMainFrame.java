@@ -1,6 +1,7 @@
 package com.artw.lockscreen;
 
 import android.animation.ObjectAnimator;
+import android.app.Activity;
 import android.app.Dialog;
 import android.content.Context;
 import android.content.DialogInterface;
@@ -34,6 +35,7 @@ import com.artw.lockscreen.slidingdrawer.SlidingDrawer;
 import com.artw.lockscreen.slidingdrawer.SlidingDrawerContent;
 import com.artw.lockscreen.slidingup.SlidingUpCallback;
 import com.artw.lockscreen.slidingup.SlidingUpTouchListener;
+import com.crashlytics.android.Crashlytics;
 import com.ihs.app.analytics.HSAnalytics;
 import com.ihs.app.framework.HSApplication;
 import com.ihs.chargingscreen.utils.DisplayUtils;
@@ -373,40 +375,47 @@ public class LockerMainFrame extends RelativeLayout implements INotificationObse
     }
 
     private void showMenuPopupWindow(Context context, View parentView) {
-        if (menuPopupWindow == null) {
-            View view = LayoutInflater.from(context).inflate(R.layout.charging_screen_popup_window, null);
-            TextView txtCloseChargingBoost = (TextView) view.findViewById(R.id.txt_close_charging_boost);
-            txtCloseChargingBoost.setText(getResources().getString(R.string.locker_menu_disable));
-            txtCloseChargingBoost.requestLayout();
-            txtCloseChargingBoost.setOnClickListener(new OnClickListener() {
+        if (context instanceof Activity && !((Activity) context).isFinishing()) {
+            if (menuPopupWindow == null) {
+                View view = LayoutInflater.from(context).inflate(R.layout.charging_screen_popup_window, null);
+                TextView txtCloseChargingBoost = (TextView) view.findViewById(R.id.txt_close_charging_boost);
+                txtCloseChargingBoost.setText(getResources().getString(R.string.locker_menu_disable));
+                txtCloseChargingBoost.requestLayout();
+                txtCloseChargingBoost.setOnClickListener(new OnClickListener() {
 
-                @Override
-                public void onClick(View v) {
-                    if (LockerChargingScreenUtils.isFastDoubleClick()) {
-                        return;
+                    @Override
+                    public void onClick(View v) {
+                        if (LockerChargingScreenUtils.isFastDoubleClick()) {
+                            return;
+                        }
+                        if (menuPopupWindow != null) {
+                            menuPopupWindow.dismiss();
+                        }
+                        HSAnalytics.logEvent("Locker_DisableLocker_Clicked");
+                        showLockerCloseDialog();
                     }
-                    if (menuPopupWindow != null) {
-                        menuPopupWindow.dismiss();
-                    }
-                    HSAnalytics.logEvent("Locker_DisableLocker_Clicked");
-                    showLockerCloseDialog();
-                }
-            });
+                });
 
-            menuPopupWindow = new PopupWindow(view);
-            menuPopupWindow.setWidth(Toolbar.LayoutParams.WRAP_CONTENT);
-            menuPopupWindow.setHeight(Toolbar.LayoutParams.WRAP_CONTENT);
-            menuPopupWindow.setFocusable(true);
-            menuPopupWindow.setOutsideTouchable(true);
-            menuPopupWindow.setBackgroundDrawable(new BitmapDrawable());
-            menuPopupWindow.update();
-        }
+                menuPopupWindow = new PopupWindow(view);
+                menuPopupWindow.setWidth(Toolbar.LayoutParams.WRAP_CONTENT);
+                menuPopupWindow.setHeight(Toolbar.LayoutParams.WRAP_CONTENT);
+                menuPopupWindow.setFocusable(true);
+                menuPopupWindow.setOutsideTouchable(true);
+                menuPopupWindow.setBackgroundDrawable(new BitmapDrawable());
+                menuPopupWindow.update();
+            }
 
-        if (menuPopupWindow.isShowing()) {
-            return;
+            if (menuPopupWindow.isShowing()) {
+                return;
+            }
+            try {
+                menuPopupWindow.showAsDropDown(parentView, -getResources().getDimensionPixelSize(R.dimen.charging_popmenu_margin_right),
+                        -(getResources().getDimensionPixelOffset(R.dimen.charging_screen_menu_to_top_height) + parentView.getHeight()) >> 1);
+            }catch (Exception e) {
+                Crashlytics.setString("position", "LockerMainFrame showMenuPopupWindow");
+                Crashlytics.logException(e);
+            }
         }
-        menuPopupWindow.showAsDropDown(parentView, -getResources().getDimensionPixelSize(R.dimen.charging_popmenu_margin_right),
-                -(getResources().getDimensionPixelOffset(R.dimen.charging_screen_menu_to_top_height) + parentView.getHeight()) >> 1);
     }
 
 

@@ -45,6 +45,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.artw.lockscreen.LockerUtils;
+import com.crashlytics.android.Crashlytics;
 import com.ihs.app.analytics.HSAnalytics;
 import com.ihs.app.framework.HSApplication;
 import com.ihs.app.framework.HSSessionMgr;
@@ -613,37 +614,44 @@ public class ChargingScreenActivity extends Activity {
     }
 
     private void showPopupWindow(Context context, View parentView) {
-        if (popupWindow == null) {
-            LayoutInflater layoutInflater = LayoutInflater.from(context);
-            View view = layoutInflater.inflate(R.layout.charging_module_popup_window, null);
-            TextView txtCloseChargingBoost = (TextView) view.findViewById(R.id.txt_close_charging_boost);
-            txtCloseChargingBoost.setOnClickListener(new OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    if (ClickUtils.isFastDoubleClick()) {
-                        return;
+        if (!isFinishing()) {
+            if (popupWindow == null) {
+                LayoutInflater layoutInflater = LayoutInflater.from(context);
+                View view = layoutInflater.inflate(R.layout.charging_module_popup_window, null);
+                TextView txtCloseChargingBoost = (TextView) view.findViewById(R.id.txt_close_charging_boost);
+                txtCloseChargingBoost.setOnClickListener(new OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        if (ClickUtils.isFastDoubleClick()) {
+                            return;
+                        }
+
+                        if (popupWindow != null) {
+                            popupWindow.dismiss();
+                        }
+
+                        showAlert();
+                        ChargingAnalytics.getInstance().chargingDisableTouchedOnce("activity");
+                        HSAnalytics.logEvent("HSLib_chargingscreen_Charge_TurnOff_Clicked");
                     }
+                });
 
-                    if (popupWindow != null) {
-                        popupWindow.dismiss();
-                    }
+                popupWindow = new PopupWindow(view);
+                popupWindow.setWidth(LayoutParams.WRAP_CONTENT);
+                popupWindow.setHeight(LayoutParams.WRAP_CONTENT);
+                popupWindow.setFocusable(true);
+                popupWindow.setOutsideTouchable(true);
+                popupWindow.setBackgroundDrawable(getResources().getDrawable(R.drawable.charging_module_popup_window_bg));
+                popupWindow.update();
+            }
 
-                    showAlert();
-                    ChargingAnalytics.getInstance().chargingDisableTouchedOnce("activity");
-                    HSAnalytics.logEvent("HSLib_chargingscreen_Charge_TurnOff_Clicked");
-                }
-            });
-
-            popupWindow = new PopupWindow(view);
-            popupWindow.setWidth(LayoutParams.WRAP_CONTENT);
-            popupWindow.setHeight(LayoutParams.WRAP_CONTENT);
-            popupWindow.setFocusable(true);
-            popupWindow.setOutsideTouchable(true);
-            popupWindow.setBackgroundDrawable(getResources().getDrawable(R.drawable.charging_module_popup_window_bg));
-            popupWindow.update();
+            try {
+                popupWindow.showAsDropDown(parentView, -30, -20);
+            }catch (Exception e) {
+                Crashlytics.setString("position", "ChargingScreenActivity showPopupWindow");
+                Crashlytics.logException(e);
+            }
         }
-
-        popupWindow.showAsDropDown(parentView, -30, -20);
     }
 
     private void showAlert() {
