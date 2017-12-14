@@ -169,6 +169,7 @@ public class SearchEditTextView extends LinearLayout {
                     post(new Runnable() {
                         @Override
                         public void run() {
+                            onTextChanged(editText.getText());
                             imm.showSoftInput(editText, InputMethodManager.SHOW_IMPLICIT);
                         }
                     });
