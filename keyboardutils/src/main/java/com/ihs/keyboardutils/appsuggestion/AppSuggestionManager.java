@@ -130,7 +130,7 @@ public class AppSuggestionManager {
             public void onReceive(String s, HSBundle hsBundle) {
                 if (s.equals(HSNotificationConstant.HS_CONFIG_CHANGED)) {
                     AppSuggestionSetting.getInstance().updateAppSuggestionSetting();
-                    AppSuggestionSetting.getInstance().setShowInterval(HSConfig.optInteger(0, "Application", FEATURE_NAME, "MiniInterval"));
+                    AppSuggestionSetting.getInstance().setShowInterval(HSConfig.optInteger(0, "Application", FEATURE_NAME, "MiniInterval") * 60 * 1000);
                     try {
                         exceptAppList = (List<String>) HSConfig.getList("Application", FEATURE_NAME, "ApkException");
                     } catch (Exception e) {
