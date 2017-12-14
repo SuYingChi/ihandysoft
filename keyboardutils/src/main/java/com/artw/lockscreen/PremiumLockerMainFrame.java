@@ -40,6 +40,7 @@ import com.artw.lockscreen.common.LockerChargingScreenUtils;
 import com.acb.weather.plugin.AcbWeatherManager;
 import com.artw.lockscreen.common.LockerChargingScreenUtils;
 import com.artw.lockscreen.common.NavUtils;
+import com.artw.lockscreen.lockerappguide.LockerAppGuideManager;
 import com.artw.lockscreen.shimmer.Shimmer;
 import com.artw.lockscreen.shimmer.ShimmerTextView;
 import com.artw.lockscreen.slidingdrawer.SlidingDrawer;
@@ -47,6 +48,7 @@ import com.artw.lockscreen.slidingdrawer.SlidingDrawerContent;
 import com.ihs.app.analytics.HSAnalytics;
 import com.ihs.app.framework.HSApplication;
 import com.ihs.chargingscreen.utils.DisplayUtils;
+import com.ihs.chargingscreen.utils.LockerChargingSpecialConfig;
 import com.ihs.commons.config.HSConfig;
 import com.ihs.commons.notificationcenter.HSGlobalNotificationCenter;
 import com.ihs.commons.notificationcenter.INotificationObserver;
@@ -58,6 +60,7 @@ import com.ihs.feature.common.ScreenStatusReceiver;
 import com.ihs.feature.softgame.SoftGameDisplayActivity;
 import com.ihs.feature.weather.WeatherManager;
 import com.ihs.keyboardutils.R;
+import com.ihs.keyboardutils.alerts.LockerUpgradeAlert;
 import com.ihs.keyboardutils.utils.CommonUtils;
 import com.ihs.keyboardutils.utils.RippleDrawableUtils;
 import com.kc.commons.utils.KCCommonUtils;
@@ -181,6 +184,14 @@ public class PremiumLockerMainFrame extends PercentRelativeLayout implements INo
                 AcbWeatherManager.showWeatherInfo(getContext());
             } else if (v.getId() == R.id.icon_locker_upgrade) {
                 HSLog.d("");
+                if (LockerAppGuideManager.getInstance().isLockerInstall() && !LockerChargingSpecialConfig.getInstance().isLockerEnable()) {
+                    LockerAppGuideManager.openApp(LockerAppGuideManager.getInstance().getLockerAppPkgName());
+                } else {
+                    final LockerUpgradeAlert alert = new LockerUpgradeAlert(getContext());
+                    alert.show();
+                    //noinspection ConstantConditions
+                    alert.getWindow().setBackgroundDrawable(getContext().getResources().getDrawable(R.drawable.locker_upgrade_alert_background));
+                }
             }
         }
     };

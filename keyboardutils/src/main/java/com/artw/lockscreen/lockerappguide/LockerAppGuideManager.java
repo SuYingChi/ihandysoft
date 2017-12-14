@@ -256,6 +256,4 @@ public class LockerAppGuideManager {
             return false;
         }
     }
-
-
 }
