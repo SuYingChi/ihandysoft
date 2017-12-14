@@ -1,6 +1,7 @@
 package com.artw.lockscreen;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -55,7 +56,11 @@ public class PremiumLockerSearchActivity extends AppCompatActivity {
         searchEditTextView.setSearchButtonClickListener(new SearchEditTextView.OnSearchButtonClickListener() {
             @Override
             public void onSearchButtonClick(String searchText) {
-                HSLog.d(searchText);
+                String url = WebContentSearchManager.getInstance().queryText(searchText);
+                HSLog.d("search url: " + url);
+                Intent intent = new Intent(PremiumLockerSearchActivity.this, BrowserActivity.class);
+                intent.putExtra(BrowserActivity.SEARCH_URL_EXTRA, url);
+                startActivity(intent);
             }
         });
     }
