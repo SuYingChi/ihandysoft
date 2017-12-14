@@ -17,8 +17,8 @@ public class AppSuggestionSetting {
     private static final String PREFS_FILE_NAME = "pref_appsuggestion";
 
     private static final int APPSUGGESTION_MUTED = 0;
-    private static final int APPSUGGESTION_DEFAULT_ACTIVE = 1;
-    private static final int APPSUGGESTION_DEFAULT_DISABLED = 2;
+    private static final int APPSUGGESTION_DEFAULT_DISABLED = 1;
+    private static final int APPSUGGESTION_DEFAULT_ACTIVE = 2;
     private static final String RECORD_CURRENT_PLIST_SETTING = "record_current_plist_setting";
     private static final String SP_LAST_SHOW_TIME = "sp_last_show_time";
     private static final String DEFAULT_PREF_KEY_APP_SUGGESTION_ENABLED = "pref_key_app_suggestion_enabled";
