@@ -241,4 +241,6 @@
     <dimen name="notification_cleaner_notification_bar_margin">12dp</dimen>
     <dimen name="notification_cleaner_block_icon_distance">10dp</dimen>
     <dimen name="common_round_corner">2dp</dimen>
+
+    <dimen name="ad_style_charging_alert_bottom_container_height">65dp</dimen>
 </resources>

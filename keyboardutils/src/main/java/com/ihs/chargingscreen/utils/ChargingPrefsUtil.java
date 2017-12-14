@@ -135,11 +135,17 @@ public class ChargingPrefsUtil {
     //用户每次更改设置都要记录值，以便下次直接读取。
     public void setChargingEnableByUser(boolean isEnable) {
         if (isEnable) {
-            if (!RemoveAdsManager.getInstance().isRemoveAdsPurchased() && LockerChargingSpecialConfig.getInstance().canShowAd()) {
-                AcbExpressAdManager.getInstance().activePlacementInProcess(HSChargingScreenManager.getInstance().getNaitveAdsPlacementName());
+            if (!RemoveAdsManager.getInstance().isRemoveAdsPurchased() ){
+                if (ChargingPrefsUtil.isChargingAlertEnabled()) {
+                    AcbExpressAdManager.getInstance().activePlacementInProcess(HSChargingScreenManager.getInstance().getChargingAlertAdsPlacementName());
+                }else {
+                    if (LockerChargingSpecialConfig.getInstance().canShowAd()) {
+                        AcbExpressAdManager.getInstance().activePlacementInProcess(HSChargingScreenManager.getInstance().getChargingActivityAdsPlacementName());
+                    }
+                }
             }
         } else {
-            AcbExpressAdManager.getInstance().deactivePlacementInProcess(HSChargingScreenManager.getInstance().getNaitveAdsPlacementName());
+            AcbExpressAdManager.getInstance().deactivePlacementInProcess(HSChargingScreenManager.getInstance().getChargingAdsPlacementName());
         }
         spHelper.putBoolean(USER_ENABLED_CHARGING, isEnable);
     }

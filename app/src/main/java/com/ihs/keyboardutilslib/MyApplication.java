@@ -62,7 +62,7 @@ public class MyApplication extends HSApplication {
         }
         LeakCanary.install(this);
         AcbExpressAdManager.getInstance().init(this);
-        HSChargingScreenManager.init(true, "Master_A(NativeAds)Charging");
+        HSChargingScreenManager.init(true, "Master_A(NativeAds)Charging",null);
 
         HSGlobalNotificationCenter.addObserver(HSNotificationConstant.HS_SESSION_START, sessionEventObserver);
         HSGlobalNotificationCenter.addObserver(HSNotificationConstant.HS_SESSION_END, sessionEventObserver);

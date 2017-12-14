@@ -58,7 +58,7 @@
             android:noHistory="true"
             android:screenOrientation="portrait"
             android:taskAffinity="com.ihs.chargingScreen.ChargingFullScreenAlertDialogActivity"
-            android:theme="@style/Transparent" />
+            android:theme="@style/LockerEnableDialogTheme" />
 
         <receiver android:name=".notification.NotificationExecutionReceiver" />
 

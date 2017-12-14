@@ -41,8 +41,19 @@ import static com.ihs.chargingscreen.utils.ChargingPrefsUtil.USER_ENABLED_CHARGI
  */
 public class HSChargingScreenManager {
 
-    public String getNaitveAdsPlacementName() {
-        return naitveAdsPlacementName;
+    public String getChargingActivityAdsPlacementName() {
+        return chargingActivityAdsPlacementName;
+    }
+
+    public String getChargingAlertAdsPlacementName() {
+        return chargingAlertAdsPlacementName;
+    }
+
+    public String getChargingAdsPlacementName() {
+        if (ChargingPrefsUtil.isChargingAlertEnabled()) {
+            return chargingAlertAdsPlacementName;
+        }
+        return chargingActivityAdsPlacementName;
     }
 
     private static HSChargingScreenManager instance;
@@ -50,15 +61,16 @@ public class HSChargingScreenManager {
     private boolean isChargingModuleOpened;
     private boolean showNativeAd;
 
-    private String naitveAdsPlacementName;
+    private String chargingActivityAdsPlacementName;
+    private String chargingAlertAdsPlacementName;
 
     public static HSChargingScreenManager getInstance() {
         return instance;
     }
 
-    public synchronized static void init(boolean showNativeAd, String naitveAdsPlacementName) {
+    public synchronized static void init(boolean showNativeAd, String chargingActivityAdsPlacementName , String chargingAlertAdsPlacementName) {
         if (instance == null) {
-            instance = new HSChargingScreenManager(showNativeAd, naitveAdsPlacementName);
+            instance = new HSChargingScreenManager(showNativeAd, chargingActivityAdsPlacementName,chargingAlertAdsPlacementName);
 
             registerChargingService();
 
@@ -76,10 +88,11 @@ public class HSChargingScreenManager {
     }
 
 
-    private HSChargingScreenManager(boolean showNativeAd, String placementName) {
+    private HSChargingScreenManager(boolean showNativeAd, String chargingActivityAdsPlacementName, String chargingAlertAdsPlacementName) {
 
         AcbNativeAdManager.sharedInstance();
-        this.naitveAdsPlacementName = placementName;
+        this.chargingActivityAdsPlacementName = chargingActivityAdsPlacementName;
+        this.chargingAlertAdsPlacementName = chargingAlertAdsPlacementName;
         this.showNativeAd = showNativeAd;
 
         HSChargingManager.getInstance().addChargingListener(new IChargingListener() {
@@ -245,12 +258,18 @@ public class HSChargingScreenManager {
             case CHARGING_MUTED:
             case CHARGING_DEFAULT_DISABLED:
             default:
-                AcbExpressAdManager.getInstance().deactivePlacementInProcess(HSChargingScreenManager.getInstance().getNaitveAdsPlacementName());
+                AcbExpressAdManager.getInstance().deactivePlacementInProcess(HSChargingScreenManager.getInstance().getChargingAdsPlacementName());
                 HSChargingScreenManager.getInstance().stop();
                 break;
             case CHARGING_DEFAULT_ACTIVE:
-                if (!RemoveAdsManager.getInstance().isRemoveAdsPurchased() && LockerChargingSpecialConfig.getInstance().canShowAd()) {
-                    AcbExpressAdManager.getInstance().activePlacementInProcess(HSChargingScreenManager.getInstance().getNaitveAdsPlacementName());
+                if (!RemoveAdsManager.getInstance().isRemoveAdsPurchased()){
+                    if (ChargingPrefsUtil.isChargingAlertEnabled()) {
+                        AcbExpressAdManager.getInstance().activePlacementInProcess(HSChargingScreenManager.getInstance().getChargingAlertAdsPlacementName());
+                    }else {
+                        if (LockerChargingSpecialConfig.getInstance().canShowAd()) {
+                            AcbExpressAdManager.getInstance().activePlacementInProcess(HSChargingScreenManager.getInstance().getChargingActivityAdsPlacementName());
+                        }
+                    }
                 }
                 HSChargingScreenManager.getInstance().start();
                 break;

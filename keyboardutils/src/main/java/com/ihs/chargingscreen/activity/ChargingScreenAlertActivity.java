@@ -26,11 +26,12 @@ import android.telephony.PhoneStateListener;
 import android.telephony.TelephonyManager;
 import android.text.TextUtils;
 import android.util.DisplayMetrics;
-import android.view.Gravity;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.Window;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
@@ -54,10 +55,9 @@ import com.ihs.commons.utils.HSBundle;
 import com.ihs.commons.utils.HSLog;
 import com.ihs.keyboardutils.R;
 import com.ihs.keyboardutils.iap.RemoveAdsManager;
+import com.ihs.keyboardutils.nativeads.KCNativeAdView;
 import com.ihs.keyboardutils.utils.RippleDrawableUtils;
 import com.kc.commons.utils.KCCommonUtils;
-
-import net.appcloudbox.ads.expressads.AcbExpressAdView;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -154,7 +154,7 @@ public class ChargingScreenAlertActivity extends Activity {
     };
 
     private BubbleView bubbleView;
-    private AcbExpressAdView acbExpressAdView;
+//    private AcbExpressAdView acbExpressAdView;
     private RelativeLayout adContainer;
     private ImageView removeAds;
     private long createTime;
@@ -170,12 +170,14 @@ public class ChargingScreenAlertActivity extends Activity {
             }
         }
     };
+    private KCNativeAdView nativeAdView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         createTime = System.currentTimeMillis();
         HSGlobalNotificationCenter.sendNotification(NOTIFICATION_CHARGING_ACTIVITY_STARTED);
         super.onCreate(savedInstanceState);
+
         ChargingManagerUtil.enableCharging(false);
 
         ChargingAnalytics.getInstance().recordChargingEnableOnce();
@@ -234,14 +236,23 @@ public class ChargingScreenAlertActivity extends Activity {
 
         setContentView(R.layout.charging_module_alert_activity);
 
+        View contentView = findViewById(R.id.content_layout);
+
 
         findViewById(R.id.view_spac1).setBackgroundDrawable(VectorDrawableCompat.create(getResources(), R.drawable.shape_wihte_dot, null));
         findViewById(R.id.view_spac2).setBackgroundDrawable(VectorDrawableCompat.create(getResources(), R.drawable.shape_wihte_dot, null));
 
         bubbleView = ((BubbleView) findViewById(R.id.bubbleView));
+        bubbleView.post(new Runnable() {
+            @Override
+            public void run() {
+                if (contentView.getWidth() > 0 && contentView.getHeight() > 0){
+                    bubbleView.setLayoutParams(new RelativeLayout.LayoutParams(contentView.getWidth() - contentView.getPaddingLeft() - contentView.getPaddingRight(),contentView.getHeight() - contentView.getPaddingTop() - contentView.getPaddingBottom()));
+                }
+            }
+        });
 
         findViewById(R.id.close_btn).setOnClickListener(new OnClickListener() {
-            @Override
             public void onClick(View v) {
                 finish();
             }
@@ -286,10 +297,18 @@ public class ChargingScreenAlertActivity extends Activity {
         }
 
         if (!RemoveAdsManager.getInstance().isRemoveAdsPurchased()) {
-            acbExpressAdView = new AcbExpressAdView(HSApplication.getContext(), HSChargingScreenManager.getInstance().getNaitveAdsPlacementName());
-            acbExpressAdView.setAutoSwitchAd(false);
-            acbExpressAdView.preloadAd();
-            adContainer.addView(acbExpressAdView);
+            View view = LayoutInflater.from(HSApplication.getContext()).inflate(R.layout.ad_style_charging_alert, null);
+            int width = (int) (DisplayUtils.getScreenWidthPixels() * 0.9);
+            View loadingView = new View(HSApplication.getContext());
+            LinearLayout.LayoutParams loadingLP = new LinearLayout.LayoutParams(width,(int)(width / 1.9f + HSApplication.getContext().getResources().getDimensionPixelOffset(R.dimen.ad_style_charging_alert_bottom_container_height)));
+            loadingView.setLayoutParams(loadingLP);
+            nativeAdView = new KCNativeAdView(HSApplication.getContext());
+            nativeAdView.setLoadingView(loadingView);
+            nativeAdView.setAdLayoutView(view);
+            nativeAdView.setPrimaryViewSize(width, (int)(width / 1.9f));
+            nativeAdView.load(HSChargingScreenManager.getInstance().getChargingAlertAdsPlacementName());
+            adContainer.addView(nativeAdView);
+
 
             // 单次关闭广告或永久删除广告
             removeAds = (ImageView) findViewById(R.id.remove_ads);
@@ -297,18 +316,6 @@ public class ChargingScreenAlertActivity extends Activity {
                 @Override
                 public void onClick(View view) {
                     showRemoveAdsDialog();
-                }
-            });
-            acbExpressAdView.setGravity(Gravity.CENTER_HORIZONTAL | Gravity.BOTTOM);
-            acbExpressAdView.setExpressAdViewListener(new AcbExpressAdView.AcbExpressAdViewListener() {
-                @Override
-                public void onAdClicked(AcbExpressAdView acbExpressAdView) {
-                    finish();
-                }
-
-                @Override
-                public void onAdShown(AcbExpressAdView acbExpressAdView) {
-//                    removeAds.setVisibility(View.VISIBLE);
                 }
             });
         }
@@ -335,7 +342,6 @@ public class ChargingScreenAlertActivity extends Activity {
 
         ChargeNotifyManager.getInstance().setIsChargingActivityAlive(true);
 
-        acbExpressAdView.switchAd();
     }
 
     @Override
@@ -364,7 +370,6 @@ public class ChargingScreenAlertActivity extends Activity {
             HSAnalytics.stopFlurry();
         }
         HSLog.d("chargingtest onStop");
-
         bubbleView.stop();
         showChargingIndicatorText();
     }
@@ -385,10 +390,6 @@ public class ChargingScreenAlertActivity extends Activity {
     public void onDestroy() {
         unregisterReceiver(broadcastReceiver);
 
-        if (acbExpressAdView != null) {
-            acbExpressAdView.destroy();
-        }
-        acbExpressAdView = null;
         if (telephonyManager != null) {
             telephonyManager.listen(phoneStateListener, PhoneStateListener.LISTEN_NONE);
             telephonyManager = null;
@@ -626,7 +627,7 @@ public class ChargingScreenAlertActivity extends Activity {
             @Override
             public void onClick(View v) {
                 KCCommonUtils.dismissDialog(removeAdsDialog);
-                adContainer.removeView(acbExpressAdView);
+                adContainer.removeView(nativeAdView);
                 removeAds.setVisibility(View.GONE);
             }
         });
@@ -645,10 +646,10 @@ public class ChargingScreenAlertActivity extends Activity {
                         if (removeAds != null) {
                             removeAds.setVisibility(View.GONE);
                         }
-                        if (acbExpressAdView != null) {
-                            adContainer.removeView(acbExpressAdView);
-                            acbExpressAdView.destroy();
-                            acbExpressAdView = null;
+                        if (nativeAdView != null) {
+                            adContainer.removeView(nativeAdView);
+                            nativeAdView.release();
+                            nativeAdView = null;
                         }
                     }
                 });
