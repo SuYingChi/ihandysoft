@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="ad_placement_call_assist" translatable="false">Colorkey_A(NativeAds)Lumen</string>
+    <string name="ad_placement_call_assist" translatable="false">ColorCam_A(NativeAds)FilterDownload</string>
     <string name="ad_placement_filter_download" translatable="false">ColorCam_A(NativeAds)FilterDownload</string>
     <string name="ad_placement_result_page" translatable="false">Colorkey_A(NativeAds)ThemeTryAd</string>
 </resources>

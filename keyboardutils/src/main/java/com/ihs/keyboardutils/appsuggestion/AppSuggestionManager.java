@@ -151,7 +151,11 @@ public class AppSuggestionManager {
         AppSuggestionSetting.getInstance().saveRecentList(stringBuilder.toString());
     }
 
-    private void getSavedRecentList() {
+    public void getSavedRecentList() {
+        if (recentAppPackName.size() >= 5) {
+            return;
+        }
+
         String[] split = AppSuggestionSetting.getInstance().getSavedRecentList().split(",");
         if (split.length < 5) {
             addNewRecentApp("com.whatsapp");

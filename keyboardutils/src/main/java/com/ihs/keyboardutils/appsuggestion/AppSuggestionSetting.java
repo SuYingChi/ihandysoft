@@ -97,6 +97,9 @@ public class AppSuggestionSetting {
     public void setEnabled(boolean isEnabled) {
         spHelper.putBoolean(USER_ENABLED_SUGGESTION, isEnabled);
         updateAppSuggestionSetting();
+        if(isEnabled){
+            AppSuggestionManager.getInstance().getSavedRecentList();
+        }
     }
 
     public void refreshAppSuggestionRecord() {
