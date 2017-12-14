@@ -8,6 +8,7 @@ import android.telephony.TelephonyManager;
 
 import com.artw.lockscreen.LockerActivity;
 import com.artw.lockscreen.LockerSettings;
+import com.artw.lockscreen.PremiumLockerActivity;
 import com.ihs.app.framework.HSApplication;
 import com.ihs.charging.HSChargingManager;
 import com.ihs.chargingscreen.utils.ChargingPrefsUtil;
@@ -91,7 +92,7 @@ public class LockerChargingScreenUtils {
         if (!HSConfig.optBoolean(false, "Application", "Locker", "UseNewLockScreen")) {
             HSLog.d("config use past screen locker");
             try {
-                Intent intent = new Intent(HSApplication.getContext(), LockerActivity.class);
+                Intent intent = new Intent(HSApplication.getContext(), PremiumLockerActivity.class);
                 intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK
                         | Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NO_ANIMATION);
                 HSApplication.getContext().startActivity(intent);

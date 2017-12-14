@@ -801,6 +801,12 @@
 			<dict>
 				<key>UseNewLockScreen</key>
 				<false/>
+				<key>ShowUpgradeButton</key>
+				<true/>
+				<key>ShowSearchButton</key>
+				<string></string>
+				<key>ShowCommonUseButton</key>
+				<string></string>
 				<key>Ads</key>
 				<dict>
 					<key>MinCountToShowAds</key>

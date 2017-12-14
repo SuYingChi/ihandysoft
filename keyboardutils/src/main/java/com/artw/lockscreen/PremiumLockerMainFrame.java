@@ -91,7 +91,7 @@ public class PremiumLockerMainFrame extends PercentRelativeLayout implements INo
 
     private boolean shouldShowButtonUpgrade;
     private boolean shouldShowButtonSearch;
-    private boolean shouldShowButtons; //Boost, Game, Camera, Weather
+    private boolean shouldShowCommonUseButtons; //Boost, Game, Camera, Weather
 
     public PremiumLockerMainFrame(Context context) {
         this(context, null);
@@ -151,9 +151,9 @@ public class PremiumLockerMainFrame extends PercentRelativeLayout implements INo
 
         mDimCover = findViewById(R.id.dim_cover);
 
-        shouldShowButtonUpgrade = HSConfig.optBoolean(true, "");
-        shouldShowButtonSearch = HSConfig.optBoolean(true, "");
-        shouldShowButtons = HSConfig.optBoolean(true, "");
+        shouldShowButtonUpgrade = HSConfig.optBoolean(true, "Application", "Locker", "ShowUpgradeButton");
+        shouldShowButtonSearch = HSConfig.optBoolean(true, "Application", "Locker", "ShowSearchButton");
+        shouldShowCommonUseButtons = HSConfig.optBoolean(true, "Application", "Locker", "ShowCommonUseButton");
 
         int backgroundColor = ContextCompat.getColor(getContext(), R.color.locker_button_bg);
 
@@ -181,7 +181,7 @@ public class PremiumLockerMainFrame extends PercentRelativeLayout implements INo
         if (!shouldShowButtonSearch) {
             buttonSearch.setVisibility(View.INVISIBLE);
         }
-        if (!shouldShowButtons) {
+        if (!shouldShowCommonUseButtons) {
             buttonBoost.setVisibility(View.INVISIBLE);
             buttonGame.setVisibility(View.INVISIBLE);
             buttonCamera.setVisibility(View.INVISIBLE);
@@ -310,7 +310,7 @@ public class PremiumLockerMainFrame extends PercentRelativeLayout implements INo
     public void onScrollStarted() {
         mBottomOperationArea.setVisibility(View.VISIBLE);
         mDimCover.setVisibility(View.VISIBLE);
-        if (shouldShowButtons) {
+        if (shouldShowCommonUseButtons) {
             buttonBoost.setVisibility(View.VISIBLE);
             buttonGame.setVisibility(View.VISIBLE);
             buttonCamera.setVisibility(View.VISIBLE);
