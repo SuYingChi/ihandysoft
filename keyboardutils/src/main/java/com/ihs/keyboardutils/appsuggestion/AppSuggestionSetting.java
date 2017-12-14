@@ -15,7 +15,6 @@ import static com.ihs.keyboardutils.appsuggestion.AppSuggestionManager.FEATURE_N
 public class AppSuggestionSetting {
 
     private static final String PREFS_FILE_NAME = "pref_appsuggestion";
-    private static final String USER_ENABLED_APPSUGGESTION = "user_enabled_appsuggestion";
 
     private static final int APPSUGGESTION_MUTED = 0;
     private static final int APPSUGGESTION_DEFAULT_ACTIVE = 1;
@@ -46,9 +45,9 @@ public class AppSuggestionSetting {
 
     public int getAppSuggestionEnableStates() {
         //用户设置过的话，直接返回用户设置的状态。不管plist任何值，包括静默。
-        if (spHelper.contains(USER_ENABLED_APPSUGGESTION)) {
+        if (spHelper.contains(USER_ENABLED_SUGGESTION)) {
             HSLog.e("appsuggestion 获取用户设置");
-            return spHelper.getBoolean(USER_ENABLED_APPSUGGESTION, false) ? APPSUGGESTION_DEFAULT_ACTIVE : APPSUGGESTION_DEFAULT_DISABLED;
+            return spHelper.getBoolean(USER_ENABLED_SUGGESTION, false) ? APPSUGGESTION_DEFAULT_ACTIVE : APPSUGGESTION_DEFAULT_DISABLED;
         }
 
         //老用户会记录 RECORD_CURRENT_PLIST_SETTING 这个值，这里我们可以用来判断是否对他们使用新逻辑
@@ -78,6 +77,10 @@ public class AppSuggestionSetting {
     }
 
     public boolean canShowAppSuggestion() {
+        if (!isEnabled()) {
+            return false;
+        }
+
         long lastShowTime = spHelper.getLong(SP_LAST_SHOW_TIME, 0);
         long currentTime = System.currentTimeMillis();
         if (currentTime - lastShowTime >= showInterval) {
