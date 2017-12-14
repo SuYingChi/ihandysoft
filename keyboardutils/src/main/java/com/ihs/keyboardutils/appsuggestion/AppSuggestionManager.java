@@ -22,7 +22,6 @@ import com.ihs.commons.utils.HSBundle;
 import com.ihs.device.common.AppFilter;
 import com.ihs.device.common.HSAppRunningInfo;
 import com.ihs.device.common.utils.AppRunningUtils;
-import com.kc.utils.KCFeatureControlUtils;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -41,7 +40,7 @@ public class AppSuggestionManager {
     private String currentLauncherPkg = "";
     private List<String> exceptAppList = new ArrayList<>();
     private PackageManager packageManager;
-    private static final String FEATURE_NAME = "AppSuggestion";
+    protected static final String FEATURE_NAME = "AppSuggestion";
 
 
     public static AppSuggestionManager getInstance() {
@@ -57,6 +56,10 @@ public class AppSuggestionManager {
         @Override
         public void onReceive(Context context, Intent intent) {
             if (Intent.ACTION_USER_PRESENT.equals(intent.getAction())) {
+<<<<<<< HEAD
+                if (AppSuggestionSetting.getInstance().canShowAppSuggestion() && AppSuggestionSetting.getInstance().isFeatureEnabled()) {
+                    showAppSuggestion();
+=======
                 boolean hasDone = false;
                 Context ctx = HSApplication.getContext();
                 if (!LockerAppGuideManager.getInstance().isLockerInstall()) {
@@ -88,6 +91,7 @@ public class AppSuggestionManager {
                     if (AppSuggestionSetting.getInstance().canShowAppSuggestion()) {
                         showAppSuggestion();
                     }
+>>>>>>> c808db4dcdc3d3e3bf52da3a7d313d3d64657e27
                 }
             } else if (Intent.ACTION_SCREEN_OFF.equals(intent.getAction())) {
                 currentLauncherPkg = getDefaultLauncher();
@@ -101,6 +105,7 @@ public class AppSuggestionManager {
                         }
                     }
                 }
+                saveRecentList();
             }
         }
     };
@@ -171,8 +176,7 @@ public class AppSuggestionManager {
                 TextUtils.isEmpty(packageName) ||
                 TextUtils.equals(packageName, currentLauncherPkg) ||
                 exceptAppList.contains(packageName) ||
-                packageManager.getLaunchIntentForPackage(packageName) == null ||
-                !isFeatureEnabled()) {
+                packageManager.getLaunchIntentForPackage(packageName) == null) {
             return;
         }
 
@@ -240,11 +244,5 @@ public class AppSuggestionManager {
         }
 
         return appRunningInfoList;
-    }
-
-    private boolean isFeatureEnabled() {
-        return KCFeatureControlUtils.isFeatureReleased(HSApplication.getContext(),
-                FEATURE_NAME,
-                HSConfig.optInteger(0, "Application", FEATURE_NAME, "HoursFromFirstUse"));
     }
 }

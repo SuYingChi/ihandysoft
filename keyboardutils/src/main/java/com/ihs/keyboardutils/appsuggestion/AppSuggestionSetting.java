@@ -4,6 +4,9 @@ import com.ihs.app.framework.HSApplication;
 import com.ihs.commons.config.HSConfig;
 import com.ihs.commons.utils.HSLog;
 import com.ihs.commons.utils.HSPreferenceHelper;
+import com.kc.utils.KCFeatureControlUtils;
+
+import static com.ihs.keyboardutils.appsuggestion.AppSuggestionManager.FEATURE_NAME;
 
 /**
  * Created by Arthur on 17/12/11.
@@ -71,7 +74,7 @@ public class AppSuggestionSetting {
     }
 
     public int getPlistState() {
-        return HSConfig.optInteger(APPSUGGESTION_MUTED, "Application", "AppSuggestion", "state");
+        return HSConfig.optInteger(APPSUGGESTION_DEFAULT_ACTIVE, "Application", "AppSuggestion", "state");
     }
 
     public boolean canShowAppSuggestion() {
@@ -118,5 +121,11 @@ public class AppSuggestionSetting {
 
     public String getSavedRecentList() {
         return spHelper.getString(RECENT_APP_LIST, "");
+    }
+
+    public boolean isFeatureEnabled() {
+        return KCFeatureControlUtils.isFeatureReleased(HSApplication.getContext(),
+                FEATURE_NAME,
+                HSConfig.optInteger(0, "Application", FEATURE_NAME, "HoursFromFirstUse"));
     }
 }

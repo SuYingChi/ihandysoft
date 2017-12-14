@@ -8,7 +8,6 @@ import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageManager;
 import android.os.Build;
 import android.os.Bundle;
-import android.provider.Telephony;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -158,8 +157,7 @@ public class AppSuggestionActivity extends Activity {
         tvMsg.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-//                sendSMS();
-                tryOpenSMSConversation();
+                sendSMS();
             }
         });
 
@@ -192,10 +190,13 @@ public class AppSuggestionActivity extends Activity {
     private void sendSMS() {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) // At least KitKat
         {
-            String defaultSmsPackageName = Telephony.Sms.getDefaultSmsPackage(this); // Need to change the build to API 19
-            Intent sendIntent = new Intent();
-            sendIntent.setPackage(defaultSmsPackageName);
-            startActivity(sendIntent);
+            Intent intent = new Intent(Intent.ACTION_MAIN);
+            intent.addCategory(Intent.CATEGORY_APP_MESSAGING);
+            try {
+                startActivity(intent);
+            } catch (Exception e) {
+
+            }
         } else // For early versions, do what worked for you before.
         {
             Intent smsIntent = new Intent(android.content.Intent.ACTION_VIEW);
