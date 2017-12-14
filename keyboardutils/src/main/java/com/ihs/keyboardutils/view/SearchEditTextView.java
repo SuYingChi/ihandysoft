@@ -17,7 +17,6 @@ import android.widget.LinearLayout;
 
 import com.ihs.chargingscreen.ui.RippleDrawableUtils;
 import com.ihs.chargingscreen.utils.DisplayUtils;
-import com.ihs.commons.utils.HSLog;
 import com.ihs.keyboardutils.R;
 
 /**
@@ -129,12 +128,12 @@ public class SearchEditTextView extends LinearLayout {
             TypedArray a = context.obtainStyledAttributes(attrs, R.styleable.SearchEditTextView, 0, 0);
             try {
                 if (a.hasValue(R.styleable.SearchEditTextView_ic_delete)) {
-                    int ic_delete = a.getResourceId(R.styleable.SearchEditTextView_ic_delete, R.drawable.ic_close_button_circle);
-                    searchDeleteImageView.setImageResource(ic_delete);
+                    int icDelete = a.getResourceId(R.styleable.SearchEditTextView_ic_delete, R.drawable.ic_close_button_circle);
+                    searchDeleteImageView.setImageResource(icDelete);
                 }
                 if (a.hasValue(R.styleable.SearchEditTextView_ic_search)) {
-                    int ic_search = a.getResourceId(R.styleable.SearchEditTextView_ic_search, R.drawable.ic_locker_search);
-                    searchImageView.setImageResource(ic_search);
+                    int icSearch = a.getResourceId(R.styleable.SearchEditTextView_ic_search, R.drawable.ic_locker_search);
+                    searchImageView.setImageResource(icSearch);
                 }
                 if (a.hasValue(R.styleable.SearchEditTextView_search_background_color)) {
                     int backgroundColor = a.getColor(R.styleable.SearchEditTextView_search_background_color, Color.GRAY);
@@ -154,7 +153,6 @@ public class SearchEditTextView extends LinearLayout {
             searchDeleteImageView.setVisibility(VISIBLE);
             dividerView.setVisibility(VISIBLE);
         }
-        HSLog.d(TAG, "onTextChanged: " + s);
         invalidate();
     }
 
