@@ -64,7 +64,7 @@ public class WebContentSearchManager {
                 googleAdId,
                 HSCountryCodeManager.getInstance().getCountryCode(),
                 content);
-        HSLog.d("search", query);
+        HSLog.d("search url: ", query);
         return query;
     }
 }

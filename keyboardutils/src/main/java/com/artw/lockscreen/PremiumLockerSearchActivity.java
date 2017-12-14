@@ -6,6 +6,7 @@ import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
+import android.text.TextUtils;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
@@ -56,8 +57,11 @@ public class PremiumLockerSearchActivity extends AppCompatActivity {
         searchEditTextView.setSearchButtonClickListener(new SearchEditTextView.OnSearchButtonClickListener() {
             @Override
             public void onSearchButtonClick(String searchText) {
+                HSLog.d("searchText: " + searchText);
+                if (TextUtils.isEmpty(searchText)) {
+                    return;
+                }
                 String url = WebContentSearchManager.getInstance().queryText(searchText);
-                HSLog.d("search url: " + url);
                 Intent intent = new Intent(PremiumLockerSearchActivity.this, BrowserActivity.class);
                 intent.putExtra(BrowserActivity.SEARCH_URL_EXTRA, url);
                 startActivity(intent);
