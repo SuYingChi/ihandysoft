@@ -56,10 +56,6 @@ public class AppSuggestionManager {
         @Override
         public void onReceive(Context context, Intent intent) {
             if (Intent.ACTION_USER_PRESENT.equals(intent.getAction())) {
-<<<<<<< HEAD
-                if (AppSuggestionSetting.getInstance().canShowAppSuggestion() && AppSuggestionSetting.getInstance().isFeatureEnabled()) {
-                    showAppSuggestion();
-=======
                 boolean hasDone = false;
                 Context ctx = HSApplication.getContext();
                 if (!LockerAppGuideManager.getInstance().isLockerInstall()) {
@@ -88,10 +84,9 @@ public class AppSuggestionManager {
                 }
 
                 if (!hasDone) {
-                    if (AppSuggestionSetting.getInstance().canShowAppSuggestion()) {
+                    if (AppSuggestionSetting.getInstance().canShowAppSuggestion() && AppSuggestionSetting.getInstance().isFeatureEnabled()) {
                         showAppSuggestion();
                     }
->>>>>>> c808db4dcdc3d3e3bf52da3a7d313d3d64657e27
                 }
             } else if (Intent.ACTION_SCREEN_OFF.equals(intent.getAction())) {
                 currentLauncherPkg = getDefaultLauncher();
