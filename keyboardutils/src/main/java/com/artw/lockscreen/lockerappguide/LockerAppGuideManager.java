@@ -103,7 +103,7 @@ public class LockerAppGuideManager {
     }
 
     public boolean isLockerInstall() {
-        return CommonUtils.isPackageInstalled("com.wallpaper.theme.privacy.camera.lock.screen");
+        return CommonUtils.isPackageInstalled(getLockerAppPkgName());
     }
 
     public boolean isShouldGuideToLockerApp() {
