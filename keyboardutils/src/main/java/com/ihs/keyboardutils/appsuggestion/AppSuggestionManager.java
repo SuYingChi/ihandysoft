@@ -19,7 +19,6 @@ import com.ihs.device.common.HSAppRunningInfo;
 import com.ihs.device.common.utils.AppRunningUtils;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 import static com.ihs.keyboardutils.appsuggestion.AppSuggestionActivity.showAppSuggestion;
@@ -119,18 +118,21 @@ public class AppSuggestionManager {
     private void getSavedRecentList() {
         String[] split = AppSuggestionSetting.getInstance().getSavedRecentList().split(",");
         if (split.length < 5) {
-            recentAppPackName.add("com.whatsapp");
-            recentAppPackName.add("com.facebook.orca");
-            recentAppPackName.add("com.facebook.katana");
-            recentAppPackName.add("com.instagram.android");
-            recentAppPackName.add("com.snapchat.android");
+            addNewRecentApp("com.whatsapp");
+            addNewRecentApp("com.facebook.orca");
+            addNewRecentApp("com.facebook.katana");
+            addNewRecentApp("com.instagram.android");
+            addNewRecentApp("com.snapchat.android");
         } else {
-            recentAppPackName.addAll(Arrays.asList(split));
+            for (String s : split) {
+                addNewRecentApp(s);
+            }
         }
     }
 
     public void addNewRecentApp(String packageName) {
-        if (TextUtils.isEmpty(packageName) ||
+        if (!AppSuggestionSetting.getInstance().isEnabled() ||
+                TextUtils.isEmpty(packageName) ||
                 TextUtils.equals(packageName, currentLauncherPkg) ||
                 exceptAppList.contains(packageName) ||
                 packageManager.getLaunchIntentForPackage(packageName) == null) {
