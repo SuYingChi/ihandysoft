@@ -9,6 +9,7 @@ import android.graphics.drawable.ShapeDrawable;
 import android.graphics.drawable.StateListDrawable;
 import android.graphics.drawable.shapes.RoundRectShape;
 import android.os.Build;
+import android.support.annotation.ColorRes;
 
 import com.ihs.app.framework.HSApplication;
 import com.ihs.chargingscreen.utils.DisplayUtils;
@@ -27,7 +28,7 @@ public class RippleDrawableUtils {
      * @param normalColorID id for normal color
      * @return backgroundDrawable
      */
-    public static Drawable getButtonRippleBackground(
+    public static Drawable getButtonRippleBackground(@ColorRes
             int normalColorID) {
 
         float radius = DisplayUtils.dip2px(2);

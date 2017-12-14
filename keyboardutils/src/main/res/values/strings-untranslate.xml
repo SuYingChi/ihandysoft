@@ -4,4 +4,6 @@
     <string name="unlock_screen_guide_to_download_locker_message">Show Notification on Lock Screen
 Show Weather on Lock Screen
 Try More Lock Screen Themes</string>
+    <string name="title_recent_apps">Recent Apps</string>
+    <string name="title_call">Call</string>
 </resources>

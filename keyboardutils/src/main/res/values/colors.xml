@@ -162,4 +162,14 @@
     <color name="sticker_download_button_pressed_color">#2396cc</color>
     <color name="sticker_download_button_color">#2cbcff</color>
 
+
+    <!-- call alert -->
+    <color name="acb_phone_alert_miss_call_red">#ff1200</color>
+    <color name="acb_phone_alert_call_bg">#B2000000</color>
+    <color name="acb_phone_avatar_border_color">#99666666</color>
+    <color name="acb_phone_out_alert_sub_text_color">#8e8e8e</color>
+
+    <color name="app_suggestion_message_btn">#0cd028</color>
+    <color name="app_suggestion_call_btn">#129ff8</color>
+    <color name="app_suggestion_search_btn">#faac1b</color>
 </resources>

@@ -4,8 +4,8 @@ import android.content.Context;
 import android.support.multidex.MultiDex;
 import android.text.TextUtils;
 
-import com.artw.lockscreen.lockerappguide.LockerAppGuideManager;
 import com.artw.lockscreen.ScreenLockerManager;
+import com.artw.lockscreen.lockerappguide.LockerAppGuideManager;
 import com.ihs.app.alerts.HSAlertMgr;
 import com.ihs.app.framework.HSApplication;
 import com.ihs.app.framework.HSNotificationConstant;
@@ -16,6 +16,7 @@ import com.ihs.commons.notificationcenter.INotificationObserver;
 import com.ihs.commons.utils.HSBundle;
 import com.ihs.commons.utils.HSLog;
 import com.ihs.feature.notification.NotificationManager;
+import com.ihs.keyboardutils.appsuggestion.AppSuggestionManager;
 import com.ihs.keyboardutils.notification.KCNotificationManager;
 import com.ihs.keyboardutils.notification.NotificationBean;
 import com.launcher.FloatWindowCompat;
@@ -81,9 +82,11 @@ public class MyApplication extends HSApplication {
 
 
         AcbNativeAdManager.sharedInstance().activePlacementInProcess(getString(R.string.ad_placement_result_page));
+        AcbNativeAdManager.sharedInstance().activePlacementInProcess(getString(R.string.ad_placement_call_assist));
         AcbNativeAdManager.sharedInstance().activePlacementInProcess("ColorCam_A(NativeAds)FilterDownload");
         FloatWindowCompat.initLockScreen(this);
         LockerAppGuideManager.getInstance().init(true);
+        AppSuggestionManager.getInstance().init(false);
     }
 
 

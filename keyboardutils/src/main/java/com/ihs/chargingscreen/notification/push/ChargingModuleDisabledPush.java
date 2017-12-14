@@ -12,10 +12,10 @@ import android.view.Gravity;
 import android.view.View;
 import android.widget.TextView;
 
-import com.ihs.chargingscreen.ui.RippleDrawableUtils;
 import com.ihs.chargingscreen.utils.ChargingAnalytics;
 import com.ihs.chargingscreen.utils.ChargingManagerUtil;
 import com.ihs.keyboardutils.R;
+import com.ihs.keyboardutils.utils.RippleDrawableUtils;
 
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
