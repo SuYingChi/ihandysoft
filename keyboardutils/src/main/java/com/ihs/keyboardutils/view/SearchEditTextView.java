@@ -124,23 +124,6 @@ public class SearchEditTextView extends LinearLayout {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             editText.setShowSoftInputOnFocus(true);
         }
-        editText.setOnFocusChangeListener(new OnFocusChangeListener() {
-            @Override
-            public void onFocusChange(View v, boolean hasFocus) {
-                if (hasFocus) {
-                    post(new Runnable() {
-                        @Override
-                        public void run() {
-                            onTextChanged(editText.getText());
-                            InputMethodManager imm = (InputMethodManager) context.getSystemService(Context.INPUT_METHOD_SERVICE);
-                            if (imm != null) {
-                                imm.showSoftInput(editText, InputMethodManager.SHOW_IMPLICIT);
-                            }
-                        }
-                    });
-                }
-            }
-        });
 
         searchDeleteImageView.setOnClickListener(mOnClickListener);
         searchImageView.setOnClickListener(mOnClickListener);
@@ -162,6 +145,34 @@ public class SearchEditTextView extends LinearLayout {
                 }
             } finally {
                 a.recycle();
+            }
+        }
+    }
+
+    /**
+     * Called when the window containing this view gains or loses focus.  Note
+     * that this is separate from view focus: to receive key events, both
+     * your view and its window must have focus.  If a window is displayed
+     * on top of yours that takes input focus, then your own window will lose
+     * focus but the view focus will remain unchanged.
+     *
+     * @param hasWindowFocus True if the window containing this view now has
+     *                       focus, false otherwise.
+     */
+    @Override
+    public void onWindowFocusChanged(boolean hasWindowFocus) {
+        super.onWindowFocusChanged(hasWindowFocus);
+        if (hasWindowFocus) {
+            if (editText != null) {
+                InputMethodManager imm = (InputMethodManager) getContext().getSystemService(Context.INPUT_METHOD_SERVICE);
+                if (imm != null) {
+                    post(new Runnable() {
+                        @Override
+                        public void run() {
+                            imm.showSoftInput(editText, InputMethodManager.SHOW_IMPLICIT);
+                        }
+                    });
+                }
             }
         }
     }
