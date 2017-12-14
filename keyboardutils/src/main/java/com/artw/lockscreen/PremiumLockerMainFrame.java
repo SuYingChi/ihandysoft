@@ -205,7 +205,6 @@ public class PremiumLockerMainFrame extends PercentRelativeLayout implements INo
         buttonCamera.setBackgroundDrawable(RippleDrawableUtils.getContainDisableStatusCompatRippleDrawable(backgroundColor, backgroundColor, DisplayUtils.dip2px(4)));
         buttonWeather = findViewById(R.id.button_weather);
         buttonWeather.setOnClickListener(clickListener);
-        initButtons();
         buttonWeather.setBackgroundDrawable(RippleDrawableUtils.getContainDisableStatusCompatRippleDrawable(backgroundColor, backgroundColor, DisplayUtils.dip2px(4)));
 
         if (!shouldShowButtonUpgrade) {
@@ -274,7 +273,6 @@ public class PremiumLockerMainFrame extends PercentRelativeLayout implements INo
             weatherTextView.setText(getContext().getString(R.string.weather_description,
                     WeatherManager.getInstance().getTemperatureDescription(),
                     WeatherManager.getInstance().getLocalSimpleConditionDescription()));
-            return;
         }
         registerDataReceiver();
     }
@@ -285,8 +283,6 @@ public class PremiumLockerMainFrame extends PercentRelativeLayout implements INo
             intentFilter.addAction(WeatherManager.ACTION_WEATHER_CHANGE);
             getContext().registerReceiver(weatherReceiver, intentFilter);
             isReceiverRegistered = true;
-
-            WeatherManager.getInstance().requestWeather();
         }
     }
 
@@ -359,7 +355,7 @@ public class PremiumLockerMainFrame extends PercentRelativeLayout implements INo
                 alphaInAnim.start();
             }
         });
-
+        initButtons();
         requestFocus();
 
         HSGlobalNotificationCenter.addObserver(ScreenStatusReceiver.NOTIFICATION_SCREEN_OFF, this);

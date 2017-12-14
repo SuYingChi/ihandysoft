@@ -287,8 +287,8 @@ public class WeatherManager {
         } else {
             HSLog.w("updateIfNeeded status == " + status);
         }
-        HSGlobalNotificationCenter.sendNotification(NOTIFICATION_WEATHER_CONDITION_CHANGED);
-        sendBroadcast();
+//        HSGlobalNotificationCenter.sendNotification(NOTIFICATION_WEATHER_CONDITION_CHANGED);
+//        sendBroadcast();
     }
 
     public String getWeatherText(int type) {
