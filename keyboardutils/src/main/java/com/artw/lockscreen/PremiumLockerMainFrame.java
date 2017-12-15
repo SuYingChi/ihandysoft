@@ -6,9 +6,6 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.BroadcastReceiver;
-import android.content.Context;
-import android.content.DialogInterface;
-import android.content.Intent;
 import android.content.IntentFilter;
 import android.graphics.drawable.BitmapDrawable;
 import android.os.Build;
@@ -30,7 +27,6 @@ import android.view.ViewTreeObserver.OnGlobalLayoutListener;
 import android.widget.Button;
 import android.view.animation.AlphaAnimation;
 import android.view.animation.Animation;
-import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.PopupWindow;
 import android.widget.TextView;
@@ -38,7 +34,6 @@ import android.widget.Toast;
 
 import com.artw.lockscreen.common.LockerChargingScreenUtils;
 import com.acb.weather.plugin.AcbWeatherManager;
-import com.artw.lockscreen.common.LockerChargingScreenUtils;
 import com.artw.lockscreen.common.NavUtils;
 import com.artw.lockscreen.lockerappguide.LockerAppGuideManager;
 import com.artw.lockscreen.shimmer.Shimmer;
@@ -56,7 +51,6 @@ import com.ihs.commons.utils.HSBundle;
 import com.ihs.commons.utils.HSLog;
 import com.ihs.feature.common.ScreenStatusReceiver;
 import com.ihs.feature.boost.plus.BoostPlusActivity;
-import com.ihs.feature.common.ScreenStatusReceiver;
 import com.ihs.feature.softgame.SoftGameDisplayActivity;
 import com.ihs.feature.weather.WeatherManager;
 import com.ihs.keyboardutils.R;
@@ -167,9 +161,11 @@ public class PremiumLockerMainFrame extends PercentRelativeLayout implements INo
         @Override
         public void onClick(View v) {
             if (v.getId() == R.id.search_button) {
-                Intent intent = new Intent(getContext(), PremiumLockerSearchActivity.class);
-                intent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
-                ContextCompat.startActivity(getContext(), intent, null);
+                //Intent intent = new Intent(getContext(), PremiumLockerSearchActivity.class);
+                //intent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
+                //ContextCompat.startActivity(getContext(), intent, null);
+                PremiumSearchDialog dialog = new PremiumSearchDialog(getContext());
+                dialog.show();
             } else if (v.getId() == R.id.button_boost) {
                 Intent intent = new Intent(getContext(), BoostPlusActivity.class);
                 intent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
