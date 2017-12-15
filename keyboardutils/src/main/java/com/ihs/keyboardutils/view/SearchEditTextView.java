@@ -3,7 +3,6 @@ package com.ihs.keyboardutils.view;
 import android.content.Context;
 import android.content.res.TypedArray;
 import android.graphics.Color;
-import android.os.Build;
 import android.support.v4.content.ContextCompat;
 import android.text.Editable;
 import android.text.TextUtils;
@@ -121,9 +120,6 @@ public class SearchEditTextView extends LinearLayout {
         searchImageView = findViewById(R.id.search_button_image);
         editText.addTextChangedListener(mTextWatcher);
         editText.setOnEditorActionListener(editorActionListener);
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-            editText.setShowSoftInputOnFocus(true);
-        }
 
         searchDeleteImageView.setOnClickListener(mOnClickListener);
         searchImageView.setOnClickListener(mOnClickListener);
@@ -141,7 +137,7 @@ public class SearchEditTextView extends LinearLayout {
                 }
                 if (a.hasValue(R.styleable.SearchEditTextView_search_background_color)) {
                     int backgroundColor = a.getColor(R.styleable.SearchEditTextView_search_background_color, Color.GRAY);
-                    setBackgroundColor(backgroundColor);
+                    rootView.setBackgroundDrawable(RippleDrawableUtils.getCompatRippleDrawable(backgroundColor, backgroundColor, DisplayUtils.dip2px(2)));
                 }
             } finally {
                 a.recycle();
