@@ -35,19 +35,9 @@ public class WeatherManager {
         SUCCEEDED
     }
 
-    public static final String LOCKER_PACKAGE_NAME = "com.fasttrack.lockscreen";
-    public static final String CHARGING_PACKAGE_NAME = "com.fasttrack.lock";
-    public static final String LAUNCHER_THEME_PACKAGE_NAME = "com.honeycomb.launcher";
-
-    public static final String RES_NAME_MINIMUM_LOCKER_VERSION_CODE = "minimum_lock_screen_version_code";
-    public static final String RES_NAME_MINIMUM_CHARGING_VERSION_CODE = "minimum_speed_charging_version_code";
-
-    public static final int THEME_REPORT_EVENT_UNLOCK = 0;
-    public static final int THEME_REPORT_EVENT_LONG_CLICK = 1;
-
     public static final String ACTION_CUSTOMIZE_SERVICE = "action.customize.service";
-    public static final String ACTION_WEATHER_REQUEST = "com.fasttrack.lockscreen.WEATHER_REQUEST";
-    public static final String ACTION_WEATHER_CHANGE = "com.fasttrack.lockscreen.WEATHER_CHANGE";
+    public static final String ACTION_WEATHER_REQUEST = "com.keyboard.utils.WEATHER_REQUEST";
+    public static final String ACTION_WEATHER_CHANGE = "com.keyboard.utils.WEATHER_CHANGE";
 
     public static final String BUNDLE_KEY_WEATHER_TEMPERATURE_INT = "temperature_int";
     public static final String BUNDLE_KEY_WEATHER_TEMPERATURE_FORMAT = "temperature_format";
@@ -208,6 +198,7 @@ public class WeatherManager {
     private void sendBroadcast() {
         if (currentWeatherCondition != null && currentWeatherCondition.getCondition() != HSWeatherQueryResult.Condition.UNKNOWN) {
             Intent intent = new Intent(ACTION_WEATHER_CHANGE);
+            intent.setPackage(context.getPackageName());
 
             if (!WeatherSettings.shouldDisplayFahrenheit()) {
 //                currentWeatherCondition.getCelsius() + "°C";
