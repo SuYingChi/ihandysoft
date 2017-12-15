@@ -208,12 +208,13 @@
 
         <TextView
             android:id="@+id/weather_desc"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_alignTop="@+id/weather_image"
             android:layout_marginLeft="2dp"
             android:layout_toEndOf="@+id/weather_image"
             android:layout_toRightOf="@+id/weather_image"
+            android:ellipsize="end"
             android:gravity="left|start"
             android:maxLines="1"
             android:text="@string/weather_unknown"

@@ -286,9 +286,7 @@ public class PremiumLockerMainFrame extends PercentRelativeLayout implements INo
             ImageView weatherImageView = buttonWeather.findViewById(R.id.weather_image);
             TextView weatherTextView = buttonWeather.findViewById(R.id.weather_desc);
             weatherImageView.setImageResource(WeatherManager.getInstance().getWeatherConditionIconResourceID());
-            weatherTextView.setText(getContext().getString(R.string.weather_description,
-                    WeatherManager.getInstance().getTemperatureDescription(),
-                    WeatherManager.getInstance().getLocalSimpleConditionDescription()));
+            weatherTextView.setText(WeatherManager.getInstance().getTemperatureDescription());
         }
         registerDataReceiver();
     }
@@ -336,7 +334,7 @@ public class PremiumLockerMainFrame extends PercentRelativeLayout implements INo
             public void onAnimationEnd(Animation animation) {
                 weatherImageView.setVisibility(GONE);
                 weatherImageView.setImageResource(weatherResId);
-                weatherTextView.setText(getContext().getString(R.string.weather_description, tempStr, tempDesc));
+                weatherTextView.setText(tempStr);
                 weatherImageView.startAnimation(mShowAction);
                 weatherImageView.setVisibility(View.VISIBLE);
             }
