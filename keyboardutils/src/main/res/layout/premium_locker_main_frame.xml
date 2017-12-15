@@ -16,17 +16,18 @@
         android:textSize="18sp"
         app:typeface="@string/akrobat_light" />
 
-    <android.support.v7.widget.AppCompatImageView
+    <com.ihs.keyboardutils.view.HSGifImageView
         android:id="@+id/icon_locker_upgrade"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignTop="@+id/ic_menu"
+        android:layout_width="25dp"
+        android:layout_height="25dp"
+        android:layout_alignBottom="@id/ic_menu"
+        android:layout_alignTop="@id/ic_menu"
+        android:layout_centerVertical="true"
         android:layout_marginEnd="6dp"
         android:layout_marginRight="6dp"
         android:layout_toLeftOf="@+id/ic_menu"
         android:layout_toStartOf="@+id/ic_menu"
-        android:padding="4dp"
-        android:src="@drawable/ic_locker_upgrade" />
+        android:padding="4dp" />
 
     <android.support.v7.widget.AppCompatImageView
         android:id="@+id/ic_menu"

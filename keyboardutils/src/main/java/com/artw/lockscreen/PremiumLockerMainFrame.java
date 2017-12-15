@@ -57,6 +57,7 @@ import com.ihs.keyboardutils.R;
 import com.ihs.keyboardutils.alerts.LockerUpgradeAlert;
 import com.ihs.keyboardutils.utils.CommonUtils;
 import com.ihs.keyboardutils.utils.RippleDrawableUtils;
+import com.ihs.keyboardutils.view.HSGifImageView;
 import com.kc.commons.utils.KCCommonUtils;
 import static com.ihs.feature.weather.WeatherManager.BUNDLE_KEY_WEATHER_DESCRIPTION;
 import static com.ihs.feature.weather.WeatherManager.BUNDLE_KEY_WEATHER_ICON_ID;
@@ -102,7 +103,7 @@ public class PremiumLockerMainFrame extends PercentRelativeLayout implements INo
     private TextView mTvDate;
     private Context activity;
 
-    private View buttonUpgrade;
+    private HSGifImageView buttonUpgrade;
     private View buttonSearch;
     private View buttonBoost;
     private View buttonGame;
@@ -205,6 +206,7 @@ public class PremiumLockerMainFrame extends PercentRelativeLayout implements INo
         int backgroundColor = ContextCompat.getColor(getContext(), R.color.locker_button_bg);
 
         buttonUpgrade = findViewById(R.id.icon_locker_upgrade);
+        buttonUpgrade.setImageResource(R.raw.upgrade_icon);
         buttonUpgrade.setOnClickListener(clickListener);
         buttonSearch = findViewById(R.id.search_button);
         buttonSearch.setOnClickListener(clickListener);
