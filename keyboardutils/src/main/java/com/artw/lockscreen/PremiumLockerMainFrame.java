@@ -2,10 +2,10 @@ package com.artw.lockscreen;
 
 import android.animation.ObjectAnimator;
 import android.app.Dialog;
+import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.content.BroadcastReceiver;
 import android.content.IntentFilter;
 import android.graphics.drawable.BitmapDrawable;
 import android.os.Build;
@@ -15,7 +15,6 @@ import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.Toolbar;
 import android.text.SpannableString;
 import android.text.Spanned;
-
 import android.text.TextUtils;
 import android.text.style.ForegroundColorSpan;
 import android.util.AttributeSet;
@@ -24,16 +23,16 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewTreeObserver;
 import android.view.ViewTreeObserver.OnGlobalLayoutListener;
-import android.widget.Button;
 import android.view.animation.AlphaAnimation;
 import android.view.animation.Animation;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.PopupWindow;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.artw.lockscreen.common.LockerChargingScreenUtils;
 import com.acb.weather.plugin.AcbWeatherManager;
+import com.artw.lockscreen.common.LockerChargingScreenUtils;
 import com.artw.lockscreen.common.NavUtils;
 import com.artw.lockscreen.lockerappguide.LockerAppGuideManager;
 import com.artw.lockscreen.shimmer.Shimmer;
@@ -49,8 +48,8 @@ import com.ihs.commons.notificationcenter.HSGlobalNotificationCenter;
 import com.ihs.commons.notificationcenter.INotificationObserver;
 import com.ihs.commons.utils.HSBundle;
 import com.ihs.commons.utils.HSLog;
-import com.ihs.feature.common.ScreenStatusReceiver;
 import com.ihs.feature.boost.plus.BoostPlusActivity;
+import com.ihs.feature.common.ScreenStatusReceiver;
 import com.ihs.feature.softgame.SoftGameDisplayActivity;
 import com.ihs.feature.weather.WeatherManager;
 import com.ihs.keyboardutils.R;
@@ -59,11 +58,6 @@ import com.ihs.keyboardutils.utils.CommonUtils;
 import com.ihs.keyboardutils.utils.RippleDrawableUtils;
 import com.ihs.keyboardutils.view.HSGifImageView;
 import com.kc.commons.utils.KCCommonUtils;
-import static com.ihs.feature.weather.WeatherManager.BUNDLE_KEY_WEATHER_DESCRIPTION;
-import static com.ihs.feature.weather.WeatherManager.BUNDLE_KEY_WEATHER_ICON_ID;
-import static com.ihs.feature.weather.WeatherManager.BUNDLE_KEY_WEATHER_TEMPERATURE_FORMAT;
-import static com.ihs.feature.weather.WeatherManager.BUNDLE_KEY_WEATHER_TEMPERATURE_INT;
-
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
@@ -73,6 +67,10 @@ import java.util.Locale;
 
 import static com.artw.lockscreen.LockerSettings.recordLockerDisableOnce;
 import static com.artw.lockscreen.common.TimeTickReceiver.NOTIFICATION_CLOCK_TIME_CHANGED;
+import static com.ihs.feature.weather.WeatherManager.BUNDLE_KEY_WEATHER_DESCRIPTION;
+import static com.ihs.feature.weather.WeatherManager.BUNDLE_KEY_WEATHER_ICON_ID;
+import static com.ihs.feature.weather.WeatherManager.BUNDLE_KEY_WEATHER_TEMPERATURE_FORMAT;
+import static com.ihs.feature.weather.WeatherManager.BUNDLE_KEY_WEATHER_TEMPERATURE_INT;
 
 public class PremiumLockerMainFrame extends PercentRelativeLayout implements INotificationObserver, SlidingDrawer.SlidingDrawerListener {
 
@@ -161,28 +159,54 @@ public class PremiumLockerMainFrame extends PercentRelativeLayout implements INo
          */
         @Override
         public void onClick(View v) {
+            Context context = getContext().getApplicationContext();
+            boolean quickLaunch = HSConfig.optBoolean(false, "Application", "Locker", "QuickLaunch");
             if (v.getId() == R.id.search_button) {
                 //Intent intent = new Intent(getContext(), PremiumLockerSearchActivity.class);
                 //intent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
                 //ContextCompat.startActivity(getContext(), intent, null);
                 PremiumSearchDialog dialog = new PremiumSearchDialog(getContext());
+                dialog.setOnSearchListerner((searchDialog, searchText) -> {
+                    String url = WebContentSearchManager.getInstance().queryText(searchText);
+                    Intent intent = new Intent(getContext(), BrowserActivity.class);
+                    intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                    intent.putExtra(BrowserActivity.SEARCH_URL_EXTRA, url);
+                    if (quickLaunch) {
+                        intent.putExtra(BrowserActivity.SHOW_WHEN_LOCKED, true);
+                    }
+                    context.startActivity(intent);
+
+                    if (!quickLaunch) {
+                        HSGlobalNotificationCenter.sendNotification(PremiumLockerActivity.EVENT_FINISH_SELF);
+                    }
+                });
                 dialog.show();
             } else if (v.getId() == R.id.button_boost) {
-                Intent intent = new Intent(getContext(), BoostPlusActivity.class);
-                intent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
-                ContextCompat.startActivity(getContext(), intent, null);
+                Intent intent = new Intent(context, BoostPlusActivity.class);
+                intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                ContextCompat.startActivity(context, intent, null);
+                HSGlobalNotificationCenter.sendNotification(PremiumLockerActivity.EVENT_FINISH_SELF);
             } else if (v.getId() == R.id.button_game) {
-                Intent intent = new Intent(getContext(), SoftGameDisplayActivity.class);
-                ContextCompat.startActivity(getContext(), intent, null);
+                Intent intent = new Intent(context, SoftGameDisplayActivity.class);
+                intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                if (quickLaunch) {
+                    intent.putExtra(SoftGameDisplayActivity.SHOW_WHEN_LOCKED, true);
+                }
+                ContextCompat.startActivity(context, intent, null);
+
+                if (!quickLaunch) {
+                    HSGlobalNotificationCenter.sendNotification(PremiumLockerActivity.EVENT_FINISH_SELF);
+                }
             } else if (v.getId() == R.id.button_camera) {
-                NavUtils.startCameraFromLockerScreen(getContext());
-                HSLog.d("");
+                NavUtils.startCameraFromLockerScreen(context);
+                HSGlobalNotificationCenter.sendNotification(PremiumLockerActivity.EVENT_FINISH_SELF);
             } else if (v.getId() == R.id.button_weather) {
-                AcbWeatherManager.showWeatherInfo(getContext());
+                AcbWeatherManager.showWeatherInfo(context);
+                HSGlobalNotificationCenter.sendNotification(PremiumLockerActivity.EVENT_FINISH_SELF);
             } else if (v.getId() == R.id.icon_locker_upgrade) {
-                HSLog.d("");
                 if (LockerAppGuideManager.getInstance().isLockerInstall() && !LockerChargingSpecialConfig.getInstance().isLockerEnable()) {
                     LockerAppGuideManager.openApp(LockerAppGuideManager.getInstance().getLockerAppPkgName());
+                    HSGlobalNotificationCenter.sendNotification(PremiumLockerActivity.EVENT_FINISH_SELF);
                 } else {
                     final LockerUpgradeAlert alert = new LockerUpgradeAlert(getContext());
                     alert.show();

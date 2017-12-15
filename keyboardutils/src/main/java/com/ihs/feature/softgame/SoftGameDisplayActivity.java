@@ -6,12 +6,15 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
+import android.view.Window;
+import android.view.WindowManager;
 
 import com.ihs.app.analytics.HSAnalytics;
 import com.ihs.app.framework.activity.HSFragmentActivity;
 import com.ihs.keyboardutils.R;
 
 public class SoftGameDisplayActivity extends HSFragmentActivity implements ViewPager.OnPageChangeListener {
+    public static final String SHOW_WHEN_LOCKED = "show_when_locked";
     public static final String TOP_50_GAME = "http://api.famobi.com/feed?a=A-KCVWU&n=50&sort=top_games";
     public static final String TOP_NEW_GAME = "http://api.famobi.com/feed?a=A-KCVWU&n=50";
     private ViewPager mViewPager;
@@ -21,6 +24,11 @@ public class SoftGameDisplayActivity extends HSFragmentActivity implements ViewP
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        Window window = getWindow();
+        boolean showWhenLocked = getIntent().getBooleanExtra(SHOW_WHEN_LOCKED, false);
+        if (showWhenLocked) {
+            window.addFlags(WindowManager.LayoutParams.FLAG_SHOW_WHEN_LOCKED);
+        }
         setContentView(R.layout.activity_soft_game_display);
 
         if (getIntent() != null) {

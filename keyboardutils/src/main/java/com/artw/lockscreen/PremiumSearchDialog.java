@@ -2,7 +2,6 @@ package com.artw.lockscreen;
 
 import android.app.Dialog;
 import android.content.Context;
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.text.TextUtils;
@@ -27,6 +26,11 @@ public class PremiumSearchDialog extends Dialog {
     private SearchEditTextView searchEditTextView;
     private AlphaAnimation alphaAnimation;
 
+    public interface OnSearchListerner {
+        void onSearch(PremiumSearchDialog dialog, String searchText);
+    }
+    private OnSearchListerner onSearchListerner;
+
     public PremiumSearchDialog(@NonNull Context context) {
         this(context, R.style.SearchDialogTheme);
     }
@@ -34,6 +38,14 @@ public class PremiumSearchDialog extends Dialog {
     public PremiumSearchDialog(@NonNull Context context, int themeResId) {
         super(context, themeResId);
         init();
+    }
+
+    public void setOnSearchListerner(OnSearchListerner onSearchListerner) {
+        this.onSearchListerner = onSearchListerner;
+    }
+
+    public OnSearchListerner getOnSearchListerner() {
+        return onSearchListerner;
     }
 
     private void init() {
@@ -53,10 +65,9 @@ public class PremiumSearchDialog extends Dialog {
                 if (TextUtils.isEmpty(searchText)) {
                     return;
                 }
-                String url = WebContentSearchManager.getInstance().queryText(searchText);
-                Intent intent = new Intent(getContext(), BrowserActivity.class);
-                intent.putExtra(BrowserActivity.SEARCH_URL_EXTRA, url);
-                getContext().startActivity(intent);
+                if (onSearchListerner != null) {
+                    onSearchListerner.onSearch(PremiumSearchDialog.this, searchText);
+                }
             }
         });
         View rootView = findViewById(R.id.search_root_view);

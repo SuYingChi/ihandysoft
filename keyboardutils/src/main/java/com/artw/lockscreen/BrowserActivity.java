@@ -21,6 +21,7 @@ import com.ihs.keyboardutils.R;
  */
 
 public class BrowserActivity extends AppCompatActivity {
+    public static final String SHOW_WHEN_LOCKED = "show_when_locked";
     public static final String SEARCH_URL_EXTRA = "search_url";
     private static final String DEFAULT_SEARCH_URL = "http://www.google.com/";
     private WebView webView;
@@ -31,9 +32,9 @@ public class BrowserActivity extends AppCompatActivity {
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         Window window = getWindow();
-        window.addFlags(WindowManager.LayoutParams.FLAG_SHOW_WHEN_LOCKED);
-        if (!LockerUtils.isKeyguardSecure(this)) {
-            window.addFlags(WindowManager.LayoutParams.FLAG_DISMISS_KEYGUARD);
+        boolean showWhenLocked = getIntent().getBooleanExtra(SHOW_WHEN_LOCKED, false);
+        if (showWhenLocked) {
+            window.addFlags(WindowManager.LayoutParams.FLAG_SHOW_WHEN_LOCKED);
         }
         setContentView(R.layout.activity_browser);
         Intent intent = getIntent();

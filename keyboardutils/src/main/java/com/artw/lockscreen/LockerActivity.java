@@ -243,6 +243,8 @@ public class LockerActivity extends AppCompatActivity implements INotificationOb
         fadeOutAnim.addListener(new AnimatorListenerAdapter() {
             @Override
             public void onAnimationEnd(Animator animation) {
+                DismissKeyguradActivity.startSelfIfKeyguardSecure(getApplicationContext());
+
                 finish();
                 overridePendingTransition(0, 0);
 

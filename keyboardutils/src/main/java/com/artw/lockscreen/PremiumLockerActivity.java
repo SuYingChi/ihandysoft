@@ -3,6 +3,7 @@ package com.artw.lockscreen;
 import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
 import android.animation.ObjectAnimator;
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.os.Build;
 import android.os.Bundle;
@@ -46,14 +47,9 @@ import static android.view.WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS;
 import static android.view.WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN;
 
 public class PremiumLockerActivity extends AppCompatActivity implements INotificationObserver {
-
-    private static final String TAG = "LOCKER_ACTIVITY";
-
     public static final String EVENT_FINISH_SELF = "locker_event_finish_self";
-    public static final String EXTRA_SHOULD_DISMISS_KEYGUARD = "extra_should_dismiss_keyguard";
     public static final String PREF_KEY_CURRENT_WALLPAPER_HD_URL = "current_hd_wallpaper_url";
     private long startDisplayTime;
-
 
     @Thunk
     ViewPager mViewPager;
@@ -219,6 +215,13 @@ public class PremiumLockerActivity extends AppCompatActivity implements INotific
         });
     }
 
+    @Override
+    public void startActivity(Intent intent) {
+        // 从锁屏界面启动其它Activity时，应该先解锁再显示相应的界面
+
+        super.startActivity(intent);
+    }
+
     public void finishSelf() {
         findViewById(R.id.bottom_layer).setVisibility(View.GONE);
         ObjectAnimator fadeOutAnim = ObjectAnimator.ofFloat(mLockerWallpaper, View.ALPHA, 0f);
@@ -226,6 +229,7 @@ public class PremiumLockerActivity extends AppCompatActivity implements INotific
         fadeOutAnim.addListener(new AnimatorListenerAdapter() {
             @Override
             public void onAnimationEnd(Animator animation) {
+                DismissKeyguradActivity.startSelfIfKeyguardSecure(getApplicationContext());
                 finish();
                 overridePendingTransition(0, 0);
 
