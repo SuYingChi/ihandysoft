@@ -1,9 +1,11 @@
 package com.ihs.keyboardutils.appsuggestion;
 
+import com.ihs.app.analytics.HSAnalytics;
 import com.ihs.app.framework.HSApplication;
 import com.ihs.commons.config.HSConfig;
 import com.ihs.commons.utils.HSLog;
 import com.ihs.commons.utils.HSPreferenceHelper;
+import com.ihs.keyboardutils.utils.PublisherUtils;
 import com.kc.utils.KCFeatureControlUtils;
 
 import static com.ihs.keyboardutils.appsuggestion.AppSuggestionManager.FEATURE_NAME;
@@ -30,6 +32,8 @@ public class AppSuggestionSetting {
     private static AppSuggestionSetting instance;
     private final HSPreferenceHelper spHelper;
     private static final String RECENT_APP_LIST = "recent_app_list";
+    private final static String app_suggestion_enable = "appSuggestions_enabled";
+    private static final String appSuggestions_disabled = "appSuggestions_disabled";
 
 
     public static AppSuggestionSetting getInstance() {
@@ -97,8 +101,11 @@ public class AppSuggestionSetting {
     public void setEnabled(boolean isEnabled) {
         spHelper.putBoolean(USER_ENABLED_SUGGESTION, isEnabled);
         updateAppSuggestionSetting();
-        if(isEnabled){
+        if (isEnabled) {
             AppSuggestionManager.getInstance().getSavedRecentList();
+            recordEnableOnce();
+        }else{
+            recordDisableOnce();
         }
     }
 
@@ -134,4 +141,19 @@ public class AppSuggestionSetting {
                 FEATURE_NAME,
                 HSConfig.optInteger(0, "Application", FEATURE_NAME, "HoursFromFirstUse"));
     }
+
+    public void recordEnableOnce() {
+        if (!spHelper.contains(app_suggestion_enable)) {
+            spHelper.putBoolean(app_suggestion_enable, true);
+            HSAnalytics.logEvent(app_suggestion_enable, "install_type", PublisherUtils.getInstallType());
+        }
+    }
+
+    public void recordDisableOnce() {
+        if (!spHelper.contains(appSuggestions_disabled)) {
+            spHelper.putBoolean(appSuggestions_disabled, true);
+            HSAnalytics.logEvent(appSuggestions_disabled, "install_type", PublisherUtils.getInstallType());
+        }
+    }
+
 }

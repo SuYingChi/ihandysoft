@@ -19,6 +19,7 @@ import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.ihs.app.analytics.HSAnalytics;
 import com.ihs.app.framework.HSApplication;
 import com.ihs.commons.utils.HSLog;
 import com.ihs.keyboardutils.R;
@@ -54,11 +55,11 @@ public class AppSuggestionActivity extends Activity {
         public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
             if (recentAppPackName.size() > position) {
                 final String packageName = recentAppPackName.get(position);
+                String appName = "other";
                 try {
                     PackageManager packageManager = HSApplication.getContext().getPackageManager();
                     ApplicationInfo applicationInfo = packageManager.getApplicationInfo(packageName, 0);
-                    String appName = packageManager.getApplicationLabel(applicationInfo).toString();
-                    appName = appName.trim().replace(" ", "");
+                    appName = packageManager.getApplicationLabel(applicationInfo).toString().trim().replace(" ", "");
 
                     ((itemHolder) holder).getTitle().setText(appName);
                     ((itemHolder) holder).getIcon().setImageDrawable(packageManager.getApplicationIcon(packageName));
@@ -66,6 +67,7 @@ public class AppSuggestionActivity extends Activity {
                     e.printStackTrace();
                 }
                 holder.itemView.setBackgroundDrawable(RippleDrawableUtils.getButtonRippleBackground(R.color.white));
+                String finalAppName = appName;
                 holder.itemView.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
@@ -75,6 +77,7 @@ public class AppSuggestionActivity extends Activity {
                         } catch (Exception e) {
                             ToastUtils.showToast("Launcher app failed");
                         }
+                        HSAnalytics.logEvent("appSuggestions_app_clicked","appName", finalAppName);
                         finish();
                     }
                 });
@@ -146,6 +149,7 @@ public class AppSuggestionActivity extends Activity {
                 try {
                     Intent callIntent = new Intent(Intent.ACTION_DIAL, null);
                     startActivity(callIntent);
+                    HSAnalytics.logEvent("appSuggestions_app_clicked","appName", "DefaultPhone");
                 } catch (Exception e) {
                     HSLog.d("open call failed");
                 }
@@ -158,6 +162,7 @@ public class AppSuggestionActivity extends Activity {
             @Override
             public void onClick(View v) {
                 sendSMS();
+                HSAnalytics.logEvent("appSuggestions_app_clicked","appName", "DefaultMSG");
             }
         });
 
@@ -184,6 +189,7 @@ public class AppSuggestionActivity extends Activity {
         Intent intent = new Intent(HSApplication.getContext(), AppSuggestionActivity.class);
         intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
         HSApplication.getContext().startActivity(intent);
+        HSAnalytics.logEvent("appSuggestions_show");
     }
 
 
