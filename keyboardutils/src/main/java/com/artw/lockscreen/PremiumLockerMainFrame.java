@@ -95,11 +95,9 @@ public class PremiumLockerMainFrame extends PercentRelativeLayout implements INo
     private View mMenuMore;
 
     private PopupWindow menuPopupWindow;
-    private Dialog dialog;
 
     private TextView mTvTime;
     private TextView mTvDate;
-    private Context activity;
 
     private HSGifImageView buttonUpgrade;
     private View buttonSearch;
@@ -111,7 +109,6 @@ public class PremiumLockerMainFrame extends PercentRelativeLayout implements INo
     private boolean shouldShowButtonUpgrade;
     private boolean shouldShowButtonSearch;
     private boolean shouldShowCommonUseButtons; //Boost, Game, Camera, Weather
-    private boolean shouldShowButtons; //Boost, Game, Camera, Weather
 
     private BroadcastReceiver weatherReceiver = new BroadcastReceiver() {
         @Override
@@ -497,10 +494,6 @@ public class PremiumLockerMainFrame extends PercentRelativeLayout implements INo
         return super.dispatchTouchEvent(ev);
     }
 
-    public void setActivityContext(Context activity) {
-        this.activity = activity;
-    }
-
     private void showMenuPopupWindow(Context context, View parentView) {
         if (menuPopupWindow == null) {
             View view = LayoutInflater.from(context).inflate(R.layout.charging_screen_popup_window, null);
@@ -590,7 +583,6 @@ public class PremiumLockerMainFrame extends PercentRelativeLayout implements INo
 
     private boolean showDialog(Dialog dialog) {
         KCCommonUtils.dismissDialog(dialog);
-        this.dialog = dialog;
         KCCommonUtils.showDialog(dialog);
         return true;
     }

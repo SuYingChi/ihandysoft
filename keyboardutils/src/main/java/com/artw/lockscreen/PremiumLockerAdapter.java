@@ -7,8 +7,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.artw.lockscreen.slidingup.SlidingUpCallback;
-import com.ihs.commons.utils.HSLog;
 import com.ihs.keyboardutils.R;
 
 
@@ -18,13 +16,11 @@ class PremiumLockerAdapter extends PagerAdapter {
     public static final int PAGE_INDEX_MAINFRAME = 1;
 
     PremiumLockerMainFrame lockerMainFrame;
-    private SlidingUpCallback mSlidingUpCallback;
     private View unlockFrame;
     private Context mContext;
 
-    PremiumLockerAdapter(Context context, SlidingUpCallback callback) {
+    PremiumLockerAdapter(Context context) {
         mContext = context;
-        mSlidingUpCallback = callback;
     }
 
     @Override
@@ -76,6 +72,5 @@ class PremiumLockerAdapter extends PagerAdapter {
     @SuppressLint("InflateParams")
     private void createMainFrame() {
         lockerMainFrame = (PremiumLockerMainFrame) LayoutInflater.from(mContext).inflate(R.layout.premium_locker_main_frame, null);
-        lockerMainFrame.setActivityContext(mContext);
     }
 }

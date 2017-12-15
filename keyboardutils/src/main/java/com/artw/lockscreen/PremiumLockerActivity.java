@@ -17,7 +17,6 @@ import android.widget.ImageView;
 
 import com.artw.lockscreen.common.LockerChargingScreenUtils;
 import com.artw.lockscreen.slidingdrawer.SlidingDrawerContent;
-import com.artw.lockscreen.slidingup.LockerSlidingUpCallback;
 import com.artw.lockscreen.statusbar.StatusBar;
 import com.ihs.app.analytics.HSAnalytics;
 import com.ihs.app.framework.HSSessionMgr;
@@ -188,7 +187,7 @@ public class PremiumLockerActivity extends AppCompatActivity implements INotific
 
         WeatherManager.init(this);
         mViewPager = (ViewPager) findViewById(R.id.locker_pager);
-        mLockerAdapter = new PremiumLockerAdapter(this, new LockerSlidingUpCallback(PremiumLockerActivity.this));
+        mLockerAdapter = new PremiumLockerAdapter(this);
         mViewPager.setAdapter(mLockerAdapter);
         mViewPager.setOffscreenPageLimit(2);
         mViewPager.setPadding(0, 0, 0, CommonUtils.getNavigationBarHeightUnconcerned(this));
