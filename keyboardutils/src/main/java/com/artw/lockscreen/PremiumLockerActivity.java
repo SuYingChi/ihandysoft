@@ -106,11 +106,6 @@ public class PremiumLockerActivity extends AppCompatActivity implements INotific
     @Override
     protected void onResume() {
         super.onResume();
-        //// TODO: 17/3/31 增加home键事件处理
-//        if (mIsHomeKeyClicked && mLockerAdapter != null && mLockerAdapter.lockerMainFrame != null) {
-//            mIsHomeKeyClicked = false;
-//            mLockerAdapter.lockerMainFrame.closeDrawer();
-//        }
         WeatherManager.getInstance().requestWeather();
         long current = System.currentTimeMillis();
         if (current - startDisplayTime > 1000) {
@@ -184,7 +179,6 @@ public class PremiumLockerActivity extends AppCompatActivity implements INotific
     }
 
     private void configLockViewPager() {
-
         WeatherManager.init(this);
         mViewPager = (ViewPager) findViewById(R.id.locker_pager);
         mLockerAdapter = new PremiumLockerAdapter(this);
