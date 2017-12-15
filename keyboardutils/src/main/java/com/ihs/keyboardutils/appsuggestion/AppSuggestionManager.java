@@ -99,6 +99,7 @@ public class AppSuggestionManager {
                             break;
                         }
                     }
+                    addDefaultSuggestApps();
                 }
                 saveRecentList();
             }
@@ -158,16 +159,20 @@ public class AppSuggestionManager {
 
         String[] split = AppSuggestionSetting.getInstance().getSavedRecentList().split(",");
         if (split.length < 5) {
-            addNewRecentApp("com.whatsapp");
-            addNewRecentApp("com.facebook.orca");
-            addNewRecentApp("com.facebook.katana");
-            addNewRecentApp("com.instagram.android");
-            addNewRecentApp("com.snapchat.android");
+            addDefaultSuggestApps();
         } else {
             for (String s : split) {
                 addNewRecentApp(s);
             }
         }
+    }
+
+    private void addDefaultSuggestApps() {
+        addNewRecentApp("com.whatsapp");
+        addNewRecentApp("com.facebook.orca");
+        addNewRecentApp("com.facebook.katana");
+        addNewRecentApp("com.instagram.android");
+        addNewRecentApp("com.snapchat.android");
     }
 
     public void addNewRecentApp(String packageName) {
