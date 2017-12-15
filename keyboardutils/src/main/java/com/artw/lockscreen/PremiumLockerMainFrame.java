@@ -162,20 +162,14 @@ public class PremiumLockerMainFrame extends PercentRelativeLayout implements INo
             Context context = getContext().getApplicationContext();
             boolean quickLaunch = HSConfig.optBoolean(false, "Application", "Locker", "QuickLaunch");
             if (v.getId() == R.id.search_button) {
-                //Intent intent = new Intent(getContext(), PremiumLockerSearchActivity.class);
-                //intent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
-                //ContextCompat.startActivity(getContext(), intent, null);
                 PremiumSearchDialog dialog = new PremiumSearchDialog(getContext());
                 dialog.setOnSearchListerner((searchDialog, searchText) -> {
                     String url = WebContentSearchManager.getInstance().queryText(searchText);
                     Intent intent = new Intent(getContext(), BrowserActivity.class);
                     intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                     intent.putExtra(BrowserActivity.SEARCH_URL_EXTRA, url);
-                    if (quickLaunch) {
-                        intent.putExtra(BrowserActivity.SHOW_WHEN_LOCKED, true);
-                    }
+                    intent.putExtra(BrowserActivity.SHOW_WHEN_LOCKED, quickLaunch);
                     context.startActivity(intent);
-
                     if (!quickLaunch) {
                         HSGlobalNotificationCenter.sendNotification(PremiumLockerActivity.EVENT_FINISH_SELF);
                     }
@@ -184,16 +178,13 @@ public class PremiumLockerMainFrame extends PercentRelativeLayout implements INo
             } else if (v.getId() == R.id.button_boost) {
                 Intent intent = new Intent(context, BoostPlusActivity.class);
                 intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                ContextCompat.startActivity(context, intent, null);
+                context.startActivity(intent);
                 HSGlobalNotificationCenter.sendNotification(PremiumLockerActivity.EVENT_FINISH_SELF);
             } else if (v.getId() == R.id.button_game) {
                 Intent intent = new Intent(context, SoftGameDisplayActivity.class);
                 intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                if (quickLaunch) {
-                    intent.putExtra(SoftGameDisplayActivity.SHOW_WHEN_LOCKED, true);
-                }
-                ContextCompat.startActivity(context, intent, null);
-
+                intent.putExtra(SoftGameDisplayActivity.SHOW_WHEN_LOCKED, quickLaunch);
+                context.startActivity(intent);
                 if (!quickLaunch) {
                     HSGlobalNotificationCenter.sendNotification(PremiumLockerActivity.EVENT_FINISH_SELF);
                 }

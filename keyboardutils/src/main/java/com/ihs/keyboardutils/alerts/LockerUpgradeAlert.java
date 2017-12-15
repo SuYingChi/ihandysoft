@@ -8,7 +8,9 @@ import android.widget.Button;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 
+import com.artw.lockscreen.PremiumLockerActivity;
 import com.artw.lockscreen.lockerappguide.LockerAppGuideManager;
+import com.ihs.commons.notificationcenter.HSGlobalNotificationCenter;
 import com.ihs.keyboardutils.R;
 
 public class LockerUpgradeAlert extends AlertDialog {
@@ -25,7 +27,10 @@ public class LockerUpgradeAlert extends AlertDialog {
 
         assert rootView != null;
         Button upgradeButton = rootView.findViewById(R.id.upgrade_button);
-        upgradeButton.setOnClickListener(view -> LockerAppGuideManager.directToMarket(null, null, LockerAppGuideManager.getInstance().getLockerAppPkgName()));
+        upgradeButton.setOnClickListener(view -> {
+            LockerAppGuideManager.directToMarket(null, null, LockerAppGuideManager.getInstance().getLockerAppPkgName());
+            HSGlobalNotificationCenter.sendNotification(PremiumLockerActivity.EVENT_FINISH_SELF);
+        });
 
         setCancelable(false);
 
