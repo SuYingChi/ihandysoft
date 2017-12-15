@@ -88,7 +88,7 @@
         android:drawableRight="@drawable/ic_locker_search"
         android:gravity="start"
         android:padding="10dp"
-        android:text="Search"
+        android:text="@string/search_bar_default_text"
         android:textColor="#4cffffff"
         android:textSize="18sp"
         app:layout_marginBottomPercent="0.78%"
@@ -119,7 +119,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="center"
-            android:text="Boost"
+            android:text="@string/launcher_widget_boost_title"
             android:textColor="#7fffffff"
             android:textSize="12sp" />
     </LinearLayout>
@@ -147,7 +147,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="center"
-            android:text="Game"
+            android:text="@string/app_store_category_name_games"
             android:textColor="#7fffffff"
             android:textSize="12sp" />
     </LinearLayout>
@@ -176,7 +176,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="center"
-            android:text="Camera"
+            android:text="@string/icon_preview_camera_title"
             android:textColor="#7fffffff"
             android:textSize="12sp" />
     </LinearLayout>
@@ -225,7 +225,7 @@
             android:layout_alignParentBottom="true"
             android:layout_centerHorizontal="true"
             android:gravity="center"
-            android:text="Weather"
+            android:text="@string/weather_title"
             android:textColor="#7fffffff"
             android:textSize="12sp" />
     </android.support.percent.PercentRelativeLayout>
