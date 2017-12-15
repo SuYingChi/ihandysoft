@@ -111,14 +111,13 @@
             android:layout_height="0dp"
             android:layout_gravity="center"
             android:layout_marginTop="4dp"
-            android:layout_weight="10"
+            android:layout_weight="1"
             android:padding="4dp"
             android:src="@drawable/ic_locker_boost" />
 
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
             android:gravity="center"
             android:text="Boost"
             android:textColor="#7fffffff"
@@ -140,14 +139,13 @@
             android:layout_height="0dp"
             android:layout_gravity="center"
             android:layout_marginTop="4dp"
-            android:layout_weight="10"
+            android:layout_weight="1"
             android:padding="4dp"
             android:src="@drawable/ic_locker_game" />
 
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
             android:gravity="center"
             android:text="Game"
             android:textColor="#7fffffff"
@@ -170,14 +168,13 @@
             android:layout_height="0dp"
             android:layout_gravity="center"
             android:layout_marginTop="4dp"
-            android:layout_weight="10"
+            android:layout_weight="1"
             android:padding="4dp"
             android:src="@drawable/ic_locker_camera" />
 
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
             android:gravity="center"
             android:text="Camera"
             android:textColor="#7fffffff"
