@@ -416,11 +416,13 @@ public class PremiumLockerMainFrame extends PercentRelativeLayout implements INo
                 if (mShimmer.isAnimating()) {
                     mShimmer.cancel();
                 }
+                buttonUpgrade.clear();
                 break;
             case ScreenStatusReceiver.NOTIFICATION_SCREEN_ON:
                 if (!mShimmer.isAnimating()) {
                     mShimmer.start(mUnlockText);
                 }
+                buttonUpgrade.setImageResource(R.raw.upgrade_icon);
                 break;
             default:
                 break;
