@@ -193,7 +193,7 @@ public class PremiumLockerMainFrame extends PercentRelativeLayout implements INo
                 HSGlobalNotificationCenter.sendNotification(PremiumLockerActivity.EVENT_FINISH_SELF);
             } else if (v.getId() == R.id.icon_locker_upgrade) {
                 if (LockerAppGuideManager.getInstance().isLockerInstall() && !LockerChargingSpecialConfig.getInstance().isLockerEnable()) {
-                    LockerAppGuideManager.openApp(LockerAppGuideManager.getInstance().getLockerAppPkgName());
+                    LockerAppGuideManager.openApp(LockerAppGuideManager.getLockerAppPkgName());
                     HSGlobalNotificationCenter.sendNotification(PremiumLockerActivity.EVENT_FINISH_SELF);
                 } else {
                     final LockerUpgradeAlert alert = new LockerUpgradeAlert(getContext());
@@ -250,12 +250,12 @@ public class PremiumLockerMainFrame extends PercentRelativeLayout implements INo
             buttonWeather.setVisibility(View.INVISIBLE);
         }
 
-        mSlidingDrawerContent = (SlidingDrawerContent) findViewById(R.id.sliding_drawer_content);
+        mSlidingDrawerContent = findViewById(R.id.sliding_drawer_content);
         mDrawerHandle = findViewById(R.id.blank_handle);
         mDrawerHandleUp = findViewById(R.id.handle_action_up);
         mDrawerHandleDown = findViewById(R.id.handle_action_down);
         mBottomOperationArea = findViewById(R.id.bottom_operation_area);
-        mSlidingDrawer = (SlidingDrawer) findViewById(R.id.operation_area);
+        mSlidingDrawer = findViewById(R.id.operation_area);
         mMenuMore = findViewById(R.id.ic_menu);
         mMenuMore.setOnClickListener(new OnClickListener() {
             @Override
@@ -282,12 +282,12 @@ public class PremiumLockerMainFrame extends PercentRelativeLayout implements INo
             }
         });
 
-        mUnlockText = (ShimmerTextView) findViewById(R.id.unlock_text);
+        mUnlockText = findViewById(R.id.unlock_text);
         mShimmer = new Shimmer();
         mShimmer.setDuration(2000);
 
-        mTvTime = (TextView) findViewById(R.id.tv_time);
-        mTvDate = (TextView) findViewById(R.id.tv_date);
+        mTvTime = findViewById(R.id.tv_time);
+        mTvDate = findViewById(R.id.tv_date);
         refreshClock();
     }
 
@@ -499,7 +499,7 @@ public class PremiumLockerMainFrame extends PercentRelativeLayout implements INo
     private void showMenuPopupWindow(Context context, View parentView) {
         if (menuPopupWindow == null) {
             View view = LayoutInflater.from(context).inflate(R.layout.charging_screen_popup_window, null);
-            TextView txtCloseChargingBoost = (TextView) view.findViewById(R.id.txt_close_charging_boost);
+            TextView txtCloseChargingBoost = view.findViewById(R.id.txt_close_charging_boost);
             txtCloseChargingBoost.setText(getResources().getString(R.string.locker_menu_disable));
             txtCloseChargingBoost.requestLayout();
             txtCloseChargingBoost.setOnClickListener(new OnClickListener() {
