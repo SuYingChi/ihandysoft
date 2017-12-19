@@ -331,7 +331,7 @@ public class PremiumLockerMainFrame extends PercentRelativeLayout implements INo
             tempStr = String.valueOf(temp);
         }
         String tempDesc = intent.getStringExtra(BUNDLE_KEY_WEATHER_DESCRIPTION);
-        int weatherResId = intent.getIntExtra(BUNDLE_KEY_WEATHER_ICON_ID, R.drawable.weather_unknown);
+        int weatherResId = intent.getIntExtra(BUNDLE_KEY_WEATHER_ICON_ID, R.drawable.weather_unknown_s);
         ImageView weatherImageView = buttonWeather.findViewById(R.id.weather_image);
         TextView weatherTextView = buttonWeather.findViewById(R.id.weather_desc);
         AlphaAnimation mShowAction = new AlphaAnimation(0, 1);

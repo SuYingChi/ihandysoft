@@ -121,6 +121,7 @@
             android:layout_height="wrap_content"
             android:gravity="center"
             android:text="@string/launcher_widget_boost_title"
+            android:layout_marginBottom="4dp"
             android:textColor="#7fffffff"
             android:textSize="12sp" />
     </LinearLayout>
@@ -149,6 +150,7 @@
             android:layout_height="wrap_content"
             android:gravity="center"
             android:text="@string/app_store_category_name_games"
+            android:layout_marginBottom="4dp"
             android:textColor="#7fffffff"
             android:textSize="12sp" />
     </LinearLayout>
@@ -177,6 +179,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="center"
+            android:layout_marginBottom="4dp"
             android:text="@string/icon_preview_camera_title"
             android:textColor="#7fffffff"
             android:textSize="12sp" />
@@ -201,7 +204,7 @@
             android:layout_gravity="center"
             android:layout_marginTop="4dp"
             android:padding="4dp"
-            android:src="@drawable/weather_unknown"
+            android:src="@drawable/weather_unknown_s"
             app:layout_widthPercent="30%" />
 
         <TextView
@@ -226,6 +229,7 @@
             android:layout_height="wrap_content"
             android:layout_alignParentBottom="true"
             android:layout_centerHorizontal="true"
+            android:layout_marginBottom="4dp"
             android:gravity="center"
             android:text="@string/weather_title"
             android:textColor="#7fffffff"
