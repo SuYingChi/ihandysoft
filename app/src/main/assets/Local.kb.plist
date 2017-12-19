@@ -801,12 +801,14 @@
 			<dict>
 				<key>UseNewLockScreen</key>
 				<false/>
+				<key>QuickLaunch</key>
+				<false/>
 				<key>ShowUpgradeButton</key>
 				<true/>
 				<key>ShowSearchButton</key>
-				<string></string>
+				<true/>
 				<key>ShowCommonUseButton</key>
-				<string></string>
+				<true/>
 				<key>Ads</key>
 				<dict>
 					<key>MinCountToShowAds</key>
@@ -847,8 +849,6 @@
 				<integer>5</integer>
 				<key>HoursFromFirstUse</key>
 				<integer>0</integer>
-				<key>UseNewLockScreen</key>
-				<false/>
 				<key>Wallpapers</key>
 				<array>
 					<dict>
@@ -5131,7 +5131,7 @@
 							<key>Others</key>
 							<dict>
 								<key>cpm</key>
-								<real>2.0600000000000001</real>
+								<real>2.06</real>
 							</dict>
 						</dict>
 						<key>ids</key>
@@ -5157,7 +5157,7 @@
 							<key>Others</key>
 							<dict>
 								<key>cpm</key>
-								<real>8.7400000000000002</real>
+								<real>8.74</real>
 							</dict>
 						</dict>
 						<key>ids</key>
@@ -5211,7 +5211,7 @@
 							<key>Others</key>
 							<dict>
 								<key>cpm</key>
-								<real>4.3499999999999996</real>
+								<real>4.35</real>
 							</dict>
 						</dict>
 						<key>ids</key>
@@ -5237,7 +5237,7 @@
 							<key>Others</key>
 							<dict>
 								<key>cpm</key>
-								<real>1.1200000000000001</real>
+								<real>1.12</real>
 							</dict>
 						</dict>
 						<key>ids</key>
@@ -5263,7 +5263,7 @@
 							<key>Others</key>
 							<dict>
 								<key>cpm</key>
-								<real>0.10000000000000001</real>
+								<real>0.1</real>
 							</dict>
 						</dict>
 						<key>ids</key>
@@ -5729,7 +5729,7 @@
 							<key>Others</key>
 							<dict>
 								<key>cpm</key>
-								<real>0.10000000000000001</real>
+								<real>0.1</real>
 							</dict>
 						</dict>
 						<key>ids</key>
