@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Build;
 import android.os.SystemClock;
+import android.support.annotation.IntDef;
 import android.telephony.TelephonyManager;
 
 import com.artw.lockscreen.LockerActivity;
@@ -25,6 +26,17 @@ public class LockerChargingScreenUtils {
     private static final String PREF_APP_FIRST_TRY_TO_LOCKER = "pref_app_first_try_to_locker";
 
     private static volatile long lastClickTime;
+
+    public static final int LOCKER_STYLE_ACTIVITY_CLASSIC = 0;
+    public static final int LOCKER_STYLE_ACTIVITY_PREMIUM = 1;
+    public static final int LOCKER_STYLE_WINDOW = 2;
+
+    @IntDef({LOCKER_STYLE_ACTIVITY_CLASSIC, LOCKER_STYLE_ACTIVITY_PREMIUM, LOCKER_STYLE_WINDOW})
+    public @interface LockerStyle {
+
+    }
+
+    private static int lockerStyle = LOCKER_STYLE_ACTIVITY_PREMIUM;
 
     public static boolean isFastDoubleClick() {
 
@@ -84,24 +96,46 @@ public class LockerChargingScreenUtils {
         HSGlobalNotificationCenter.sendNotification(LockerActivity.EVENT_FINISH_SELF);
     }
 
+    public static int getLockerStyle() {
+        return lockerStyle;
+    }
+
+    public static void setLockerStyle(@LockerStyle int style) {
+        lockerStyle = style;
+    }
+
     public static void startLockerActivity() {
         if (isCalling()) {
             return;
         }
-
-        if (!HSConfig.optBoolean(false, "Application", "Locker", "UseNewLockScreen")) {
-            HSLog.d("config use past screen locker");
-            try {
-                Intent intent = new Intent(HSApplication.getContext(), PremiumLockerActivity.class);
-                intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK
-                        | Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NO_ANIMATION);
-                HSApplication.getContext().startActivity(intent);
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-        } else {
-            HSLog.d("config use new screen locker");
-            FloatWindowController.getInstance().showLockScreen();
+        HSLog.d("startLockerActivity lockerStyle: " + lockerStyle);
+        switch (lockerStyle) {
+            case LOCKER_STYLE_ACTIVITY_CLASSIC:
+                try {
+                    Intent intent = new Intent(HSApplication.getContext(), LockerActivity.class);
+                    intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK
+                            | Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NO_ANIMATION);
+                    HSApplication.getContext().startActivity(intent);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+                break;
+            case LOCKER_STYLE_ACTIVITY_PREMIUM:
+                try {
+                    Intent intent = new Intent(HSApplication.getContext(), PremiumLockerActivity.class);
+                    intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK
+                            | Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NO_ANIMATION);
+                    HSApplication.getContext().startActivity(intent);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+                break;
+            case LOCKER_STYLE_WINDOW:
+                FloatWindowController.getInstance().showLockScreen();
+                break;
+            default:
+                HSLog.e("startLockerActivity wrong style: " + lockerStyle);
+                break;
         }
     }
 
