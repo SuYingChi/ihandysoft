@@ -4,7 +4,7 @@
     android:layout_height="match_parent"
     android:background="#ffffff">
 
-    <com.ihs.inputmethod.uimodules.widget.MdProgressBar
+    <com.ihs.keyboardutils.view.MdProgressBar
         android:id="@+id/screenshot_loading"
         android:layout_gravity="center"
         android:layout_width="36dp"

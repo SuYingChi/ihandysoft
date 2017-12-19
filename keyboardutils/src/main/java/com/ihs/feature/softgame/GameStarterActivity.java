@@ -1,4 +1,4 @@
-package com.artw.lockscreen.softgame;
+package com.ihs.feature.softgame;
 
 import android.app.Activity;
 import android.content.Intent;

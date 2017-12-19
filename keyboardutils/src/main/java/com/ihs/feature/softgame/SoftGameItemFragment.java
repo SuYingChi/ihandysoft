@@ -1,4 +1,4 @@
-package com.artw.lockscreen.softgame;
+package com.ihs.feature.softgame;
 
 import android.os.Bundle;
 import android.os.Handler;

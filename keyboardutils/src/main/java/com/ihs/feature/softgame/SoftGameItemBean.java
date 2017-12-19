@@ -1,4 +1,4 @@
-package com.artw.lockscreen.softgame;
+package com.ihs.feature.softgame;
 
 /**
  * Created by Arthur on 17/11/7.

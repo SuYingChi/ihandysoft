@@ -5,7 +5,7 @@ android {
     compileSdkVersion 26
     buildToolsVersion "26.0.2"
     defaultConfig {
-        applicationId "com.ihs.keyboardutilslib"
+        applicationId "com.wallpaper.theme.privacy.camera.lock.screen"
         minSdkVersion 14
         targetSdkVersion 22
         versionCode 1
@@ -67,5 +67,11 @@ dependencies {
     implementation 'net.appcloudbox.adadapter:libAdAdmobBannerAdapter.gm:5.1.0.gm'
     implementation 'net.appcloudbox.adadapter:libAdNexageBannerAdapter.gm:5.1.0.gm'
 
+    //weather
+    implementation "net.appcloudbox.weather:acbWeatherPlugin.gm:4.0.1.gm"
+    implementation "net.appcloudbox.weather:libWeather.gm:[4.0.0.gm, 4.1.0.gm)"
+    implementation ("com.ihandy.appframework:libAppframework.gm:4.5.1.gm") {
+        transitive = true
+    }
     api project(':keyboardutils')
 }

@@ -11,6 +11,8 @@ import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.Toast;
 
+import com.artw.lockscreen.LockerActivity;
+import com.artw.lockscreen.PremiumLockerActivity;
 import com.ihs.app.framework.HSApplication;
 import com.ihs.app.framework.activity.HSActivity;
 import com.ihs.feature.notification.NotificationManager;
@@ -27,6 +29,8 @@ public class MainActivity extends HSActivity {
             "Gif Demo",
             "Custom Alert Demo",
             "Custom Share Demo",
+            "Launch PremiumLockerActivity",
+            "Launch LockerActivity",
             "Lock Screen & Charging Screen",
             "Camera Intents",
             "Country Code Parser",
@@ -38,6 +42,8 @@ public class MainActivity extends HSActivity {
             GifViewDemoActivity.class,
             CustomDesignAlertActivity.class,
             null,
+            PremiumLockerActivity.class,
+            LockerActivity.class,
             ChargingLockerSettingsActivity.class,
             CameraUtilActivity.class,
             CountryCodeUtil.class,

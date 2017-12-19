@@ -6,4 +6,32 @@ Show Weather on Lock Screen
 Try More Lock Screen Themes</string>
     <string name="title_recent_apps">Recent Apps</string>
     <string name="title_call">Call</string>
+
+    <string name="unknown">Unknown</string>
+    <string name="snowshower">snowShower</string>
+    <string name="weather_unknown">Unknown</string>
+    <string name="weather_clear">snowShower</string>
+    <string name="weather_sunny">snowShower</string>
+    <string name="weather_cloudy_night">snowShower</string>
+    <string name="weather_cloudy">snowShower</string>
+    <string name="weather_rain">snowShower</string>
+    <string name="weather_drizzle">snowShower</string>
+    <string name="weather_rainshower">snowShower</string>
+    <string name="weather_snow">snowShower</string>
+    <string name="weather_snowshower">snowShower</string>
+    <string name="weather_sleet">snowShower</string>
+    <string name="weather_hazy">snowShower</string>
+    <string name="weather_dust">snowShower</string>
+    <string name="weather_thunderstorm">snowShower</string>
+    <string name="weather_cold">snowShower</string>
+    <string name="weather_windy">snowShower</string>
+    <string name="weather_hot">snowShower</string>
+    <string name="weather_overcast">snowShower</string>
+    <string name="weather_description" translatable="false">%1$s %2$s</string>
+
+    <string name="locker_upgrade_alert_text_one">Thousands of fancy wallpapers for FREE</string>
+    <string name="locker_upgrade_alert_text_two">Display current status</string>
+    <string name="locker_upgrade_alert_text_three">Battery protection to avoid overcharge</string>
+    <string name="locker_upgrade_alert_button_text">UPGRADE</string>
+    <string name="locker_upgrade_alert_head_text">Upgrade Screen Locker</string>
 </resources>

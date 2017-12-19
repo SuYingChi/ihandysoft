@@ -16,8 +16,7 @@ import android.widget.RelativeLayout;
 import com.ihs.keyboardutils.R;
 
 
-public class
-MdProgressBar extends RelativeLayout {
+public class MdProgressBar extends RelativeLayout {
 
 
     final static String ANDROIDXML = "http://schemas.android.com/apk/res/android";

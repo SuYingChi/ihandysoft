@@ -1,4 +1,4 @@
-package com.artw.lockscreen.softgame;
+package com.ihs.feature.softgame;
 
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.RecyclerView.ViewHolder;

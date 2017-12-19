@@ -102,6 +102,35 @@
             android:theme="@style/ChargingScreenTransparentTheme" />
 
         <activity
+            android:name="com.artw.lockscreen.PremiumLockerActivity"
+            android:configChanges="keyboardHidden|orientation|screenSize"
+            android:excludeFromRecents="true"
+            android:exported="true"
+            android:launchMode="singleTop"
+            android:screenOrientation="portrait"
+            android:taskAffinity=".air_locker"
+            android:theme="@style/ChargingScreenTransparentTheme" />
+
+        <activity
+            android:name="com.artw.lockscreen.PremiumLockerSearchActivity"
+            android:configChanges="keyboardHidden|orientation|screenSize"
+            android:excludeFromRecents="true"
+            android:exported="true"
+            android:launchMode="singleTop"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="stateVisible|adjustResize|adjustPan"
+            android:theme="@style/ChargingScreenTransparentTheme" />
+
+        <activity
+            android:name="com.artw.lockscreen.BrowserActivity"
+            android:configChanges="keyboardHidden|orientation|screenSize"
+            android:excludeFromRecents="true"
+            android:exported="true"
+            android:launchMode="singleTop"
+            android:screenOrientation="portrait"
+            android:theme="@style/ChargingScreenTransparentTheme" />
+
+        <activity
             android:name="com.artw.lockscreen.DismissKeyguradActivity"
             android:configChanges="keyboard|keyboardHidden|orientation"
             android:excludeFromRecents="true"
@@ -162,20 +191,20 @@
             android:theme="@style/BatteryTheme" />
 
         <activity
-            android:name="com.artw.lockscreen.softgame.GameActivity"
+            android:name="com.ihs.feature.softgame.GameActivity"
             android:label="@string/title_activity_game"
             android:process=":h5game"
             android:launchMode="singleTask"
             android:theme="@style/Theme.AppCompat.Light.NoActionBar" />
 
         <activity
-            android:name="com.artw.lockscreen.softgame.GameStarterActivity"
+            android:name="com.ihs.feature.softgame.GameStarterActivity"
             android:label="@string/title_activity_game"
             android:launchMode="singleTask"
             android:theme="@style/Theme.AppCompat.Light.NoActionBar" />
 
         <activity
-            android:name="com.artw.lockscreen.softgame.SoftGameDisplayActivity"
+            android:name="com.ihs.feature.softgame.SoftGameDisplayActivity"
             android:launchMode="singleTask"
             android:taskAffinity=".h5game"
             android:theme="@style/Theme.Design.Light">

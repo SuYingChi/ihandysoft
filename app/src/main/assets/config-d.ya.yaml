@@ -11,6 +11,14 @@ libCommons:
       FlurryStoredMaxCount: 1000
   DiverseSession:
     AppManageDiverseSession: true
+  Domain: "https://service.appcloudbox.net"
+  AppID: "412"
+  Connection:
+      SigKey: "412_1"
+      HashKey: "_yLD]<chQABAgb+Hs}u_=YdCF#Y5uY3b"
+  LocationManager:
+      IPLocationServerURL: "http://geoip.asiatone.net/ip2location/mylocation/"
+      IPLocationKey: "79p2sm0slc2dy4qm"
 
   Market:
     DefaultMarket: "Google"
@@ -23,9 +31,9 @@ libCommons:
         AppPackage: "com.amazon.venezia"
         AppUrl: "amzn://apps/android?p="
         WebUrl: "http://www.amazon.com/gp/mas/dl/android?p="
-  Connection:
-    SigKey: "603_2"
-    HashKey: "x5UJ~fb}3_Dma>l B]YB/?'1As[\"E<I!"
+#  Connection:
+#    SigKey: "603_2"
+#    HashKey: "x5UJ~fb}3_Dma>l B]YB/?'1As[\"E<I!"
 libFramework:
   Push:
     SenderID: ""
@@ -33,6 +41,9 @@ libFramework:
   Alerts:
     LocalFile: "Alerts.kb"
     RemoteUrl: ""
+
+libWeather:
+  APIKey: "56:<4Zhdwkhu$CXF"
 
 libIAP:
   Verify:

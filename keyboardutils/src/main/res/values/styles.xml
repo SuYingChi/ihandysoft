@@ -304,4 +304,14 @@
 
     <style name="Theme" parent="@style/BaseWallpaperTheme" />
 
+    <style name="SearchDialogTheme" parent="Theme.AppCompat.Light.NoActionBar">
+        <item name="android:windowBackground">@android:color/transparent</item>
+        <item name="android:windowFullscreen">true</item>
+        <item name="android:windowNoTitle">true</item>
+        <item name="android:windowSoftInputMode">stateVisible|adjustResize|adjustPan</item>
+        <item name="android:windowActionBar">@null</item>
+        <item name="android:windowContentOverlay">@null</item>
+        <item name="android:windowIsTranslucent">true</item>
+    </style>
+
 </resources>

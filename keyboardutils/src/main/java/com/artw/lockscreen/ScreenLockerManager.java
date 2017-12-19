@@ -36,6 +36,7 @@ public class ScreenLockerManager {
         screenFilter.addAction(Intent.ACTION_SCREEN_OFF);
         screenFilter.addAction(Intent.ACTION_SCREEN_ON);
 
+        WebContentSearchManager.getInstance();
         HSApplication.getContext().registerReceiver(new BroadcastReceiver() {
             @Override
             public void onReceive(Context context, Intent intent) {
