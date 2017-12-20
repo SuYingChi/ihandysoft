@@ -436,7 +436,7 @@
 					<key>AlertIntervalInHour</key>
 					<integer>0</integer>
 					<key>ShowUnlockScreenAlert</key>
-					<true/>
+					<false/>
 					<key>body</key>
 					<string>1. 5000+ beautiful themes to choose\n2. Live weather forecas\n3. Secure your privacy</string>
 					<key>button</key>
