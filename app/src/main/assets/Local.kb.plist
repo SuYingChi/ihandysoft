@@ -391,49 +391,6 @@
 				<key>UnlockScreen</key>
 				<dict>
 					<key>AlertIntervalInHour</key>
-					<integer>4</integer>
-					<key>ShowUnlockScreenAlert</key>
-					<true/>
-					<key>body</key>
-					<string>1. 5000+ beautiful themes to choose\n2. Live weather forecas\n3. Secure your privacy</string>
-					<key>button</key>
-					<string>TRY NOW</string>
-					<key>title</key>
-					<string>Try New Screen Locker</string>
-				</dict>
-				<key>Wallpaper</key>
-				<dict>
-					<key>body</key>
-					<string>Because of policy constraints, you need to download Screen Locker app to apply this theme.</string>
-					<key>button</key>
-					<string>DOWNLOAD</string>
-					<key>title</key>
-					<string>Oops</string>
-				</dict>
-			</dict>
-			<key>DownloadScreenLocker</key>
-			<dict>
-				<key>AppOpen</key>
-				<dict>
-					<key>body</key>
-					<string>Download Screen Locker and add your favorite themes on lock screen!</string>
-					<key>button</key>
-					<string>DOWNLOAD</string>
-					<key>title</key>
-					<string>Screen Locker</string>
-				</dict>
-				<key>UnlockForFree</key>
-				<dict>
-					<key>body</key>
-					<string>Download Screen Locker and you can use this for free.</string>
-					<key>button</key>
-					<string>UNLOCK FOR FREE</string>
-					<key>title</key>
-					<string>Screen Locker</string>
-				</dict>
-				<key>UnlockScreen</key>
-				<dict>
-					<key>AlertIntervalInHour</key>
 					<integer>0</integer>
 					<key>ShowUnlockScreenAlert</key>
 					<false/>
@@ -647,6 +604,112 @@
 				<key>HideAdTitle</key>
 				<true/>
 			</dict>
+			<key>LocalNotifications</key>
+			<dict>
+				<key>Content</key>
+				<array>
+					<dict>
+						<key>ActionType</key>
+						<string>Filter</string>
+						<key>BgColor</key>
+						<string></string>
+						<key>BgUrl</key>
+						<string>http://emojidevelop.s3.amazonaws.com/colorcam/download/Screenpush_redcolor.png</string>
+						<key>ButtonColor</key>
+						<string>#fff333</string>
+						<key>ButtonText</key>
+						<string>CHECK</string>
+						<key>ButtonTextColor</key>
+						<string>#000000</string>
+						<key>IconUrl</key>
+						<string>http://emojidevelop.s3.amazonaws.com/colorcam/download/filternew/redcolor/redcolor-preview.jpg</string>
+						<key>Message</key>
+						<array>
+							<string>Specially designed for YOU!</string>
+						</array>
+						<key>MessageColor</key>
+						<string>#ffffff</string>
+						<key>Name</key>
+						<string>redcolor</string>
+						<key>Repeat</key>
+						<false/>
+						<key>Style</key>
+						<integer>2</integer>
+						<key>Title</key>
+						<string>🎄🎄A new Filter coming!</string>
+						<key>TitleColor</key>
+						<string>#ffffff</string>
+					</dict>
+					<dict>
+						<key>ActionType</key>
+						<string>LiveSticker</string>
+						<key>BgColor</key>
+						<string></string>
+						<key>BgUrl</key>
+						<string>http://emojidevelop.s3.amazonaws.com/colorcam/download/Screenpush-livestickerbackground.png</string>
+						<key>ButtonColor</key>
+						<string>#fff333</string>
+						<key>ButtonText</key>
+						<string>CHECK</string>
+						<key>ButtonTextColor</key>
+						<string>#000000</string>
+						<key>IconUrl</key>
+						<string>https://emojidevelop.s3.amazonaws.com/colorcam/download/livesticker/pumpkinfairy/pumpkinfairy_store_preview.jpg</string>
+						<key>Message</key>
+						<array>
+							<string>Pumpkin ghost for the Helloween，enjoy it now！</string>
+						</array>
+						<key>MessageColor</key>
+						<string>#ffffff</string>
+						<key>Name</key>
+						<string>pumpkinfairy</string>
+						<key>Repeat</key>
+						<false/>
+						<key>Style</key>
+						<integer>2</integer>
+						<key>Title</key>
+						<string>WOW! Pumpkin Fairy！😆🎉</string>
+						<key>TitleColor</key>
+						<string>#ffffff</string>
+					</dict>
+					<dict>
+						<key>ActionType</key>
+						<string>Sticker</string>
+						<key>BgColor</key>
+						<string></string>
+						<key>BgUrl</key>
+						<string>http://emojidevelop.s3.amazonaws.com/colorcam/download/Screenpush-livestickerbackground.png</string>
+						<key>ButtonColor</key>
+						<string>#fff333</string>
+						<key>ButtonText</key>
+						<string>CHECK</string>
+						<key>ButtonTextColor</key>
+						<string>#000000</string>
+						<key>IconUrl</key>
+						<string></string>
+						<key>Message</key>
+						<array>
+							<string>Cute stickers for Halloween, enjoy it now!</string>
+						</array>
+						<key>MessageColor</key>
+						<string>#ffffff</string>
+						<key>Name</key>
+						<string>cutehelloween</string>
+						<key>Repeat</key>
+						<false/>
+						<key>Style</key>
+						<integer>2</integer>
+						<key>Title</key>
+						<string>Cute Ghost!</string>
+						<key>TitleColor</key>
+						<string>#ffffff</string>
+					</dict>
+				</array>
+				<key>LocalNotificationsPushTime</key>
+				<array>
+					<integer>11</integer>
+				</array>
+			</dict>
 			<key>KeyboardToolBar</key>
 			<dict>
 				<key>GooglePlay</key>
@@ -668,189 +731,6 @@
 					<true/>
 				</dict>
 			</dict>
-			<key>LocalNotifications</key>
-			<array>
-				<dict>
-					<key>ActionType</key>
-					<string>Locker</string>
-					<key>BgColor</key>
-					<string>#00FFFF</string>
-					<key>ButtonColor</key>
-					<string>#FFD700</string>
-					<key>ButtonText</key>
-					<string>Download</string>
-					<key>ButtonTextColor</key>
-					<string>#FFFFFF</string>
-					<key>Message</key>
-					<array>
-						<string>Displaying your favourite themes on lock screen.</string>
-					</array>
-					<key>MessageColor</key>
-					<string>#D3D3D3</string>
-					<key>Repeat</key>
-					<true/>
-					<key>Style</key>
-					<integer>2</integer>
-					<key>Title</key>
-					<string>Enable Screen Locker</string>
-					<key>TitleColor</key>
-					<string>#00FF00</string>
-				</dict>
-				<dict>
-					<key>ActionType</key>
-					<string>Theme</string>
-					<key>BgColor</key>
-					<string>#000000</string>
-					<key>IconUrl</key>
-					<string>http://cdn.appcloudbox.net/keyboardarts/download/App_Theme_medium_preview/Graffiti.jpg</string>
-					<key>Message</key>
-					<array>
-						<string>Download and try now!</string>
-					</array>
-					<key>Name</key>
-					<string>com.keyboard.theme.graffiti</string>
-					<key>Repeat</key>
-					<true/>
-					<key>Style</key>
-					<integer>0</integer>
-					<key>Title</key>
-					<string>The theme Graffiti is available!</string>
-				</dict>
-				<dict>
-					<key>ActionType</key>
-					<string>CustomizedTheme</string>
-					<key>BgColor</key>
-					<string>#00BFFF</string>
-					<key>ButtonText</key>
-					<string>Download</string>
-					<key>IconUrl</key>
-					<string>http://cdn.appcloudbox.net/keyboardarts/download/custom_theme_click_sounds/Arcade Game.preview.png</string>
-					<key>Message</key>
-					<array>
-						<string>Check out！</string>
-					</array>
-					<key>Style</key>
-					<integer>1</integer>
-					<key>Title</key>
-					<string>New Click Sound available!</string>
-				</dict>
-				<dict>
-					<key>ActionType</key>
-					<string>Charging</string>
-					<key>IconUrl</key>
-					<string>https://emojidevelop.s3.amazonaws.com/colorcam/push/icon/Sakura.png</string>
-					<key>Message</key>
-					<array>
-						<string>Enable smart charging to prevent overcharging efficiently.</string>
-					</array>
-					<key>Title</key>
-					<string>Enable Smart Charging</string>
-				</dict>
-				<dict>
-					<key>ActionType</key>
-					<string>CustomizedTheme</string>
-					<key>IconUrl</key>
-					<string>https://emojidevelop.s3.amazonaws.com/colorcam/push/icon/Sakura.png</string>
-					<key>Message</key>
-					<array>
-						<string>Nice photo! Would you like to set it as background? </string>
-					</array>
-					<key>Name</key>
-					<string>name1</string>
-					<key>Title</key>
-					<string>Got new pictures?</string>
-				</dict>
-				<dict>
-					<key>ActionType</key>
-					<string>CustomizedTheme</string>
-					<key>IconUrl</key>
-					<string>https://emojidevelop.s3.amazonaws.com/colorcam/push/icon/Sakura.png</string>
-					<key>Message</key>
-					<array>
-						<string>Wanna have a new look? 😎✨ Come and create new keyboard &gt;&gt;</string>
-					</array>
-					<key>Name</key>
-					<string>name2</string>
-					<key>Title</key>
-					<string>Dress your keyboard!</string>
-				</dict>
-				<dict>
-					<key>ActionType</key>
-					<string>Theme</string>
-					<key>IconUrl</key>
-					<string>https://emojidevelop.s3.amazonaws.com/colorcam/push/icon/Sakura.png</string>
-					<key>Message</key>
-					<array>
-						<string>Guess you like Panda？Come and design your keyboard!</string>
-						<string>Decorate your keyboard with exclusive Panda!</string>
-					</array>
-					<key>Name</key>
-					<string>com.keyboard.theme.panda</string>
-					<key>Title</key>
-					<string>New theme Panda available!</string>
-				</dict>
-				<dict>
-					<key>ActionType</key>
-					<string>Theme</string>
-					<key>Message</key>
-					<array>
-						<string>Guess you like Panda？Come and design your keyboard!</string>
-						<string>Decorate your keyboard with exclusive Panda!</string>
-					</array>
-					<key>Title</key>
-					<string>New theme Kitty available!</string>
-				</dict>
-				<dict>
-					<key>ActionType</key>
-					<string>Theme</string>
-					<key>IconUrl</key>
-					<string>https://emojidevelop.s3.amazonaws.com/colorcam/push/icon/Sakura.png</string>
-					<key>Message</key>
-					<array>
-						<string>Guess you like Panda？Come and design your keyboard!</string>
-						<string>Decorate your keyboard with exclusive Panda!</string>
-					</array>
-					<key>Name</key>
-					<string>com.keyboard.theme.bluejeans</string>
-					<key>Title</key>
-					<string>com.keyboard.theme.firedemon</string>
-				</dict>
-				<dict>
-					<key>ActionType</key>
-					<string>Theme</string>
-					<key>IconUrl</key>
-					<string>https://emojidevelop.s3.amazonaws.com/colorcam/push/icon/Sakura.png</string>
-					<key>Message</key>
-					<array>
-						<string>Guess you like Panda？Come and design your keyboard!</string>
-						<string>Decorate your keyboard with exclusive Panda!</string>
-					</array>
-					<key>Name</key>
-					<string>com.keyboard.theme.goldtiger</string>
-					<key>Title</key>
-					<string>New theme Spinner available!</string>
-				</dict>
-				<dict>
-					<key>ActionType</key>
-					<string>Theme</string>
-					<key>IconUrl</key>
-					<string>https://emojidevelop.s3.amazonaws.com/colorcam/push/icon/Sakura.png</string>
-					<key>Message</key>
-					<array>
-						<string>Guess you like Panda？Come and design your keyboard!</string>
-						<string>Decorate your keyboard with exclusive Panda!</string>
-					</array>
-					<key>Name</key>
-					<string>com.keyboard.theme.galaxy</string>
-					<key>Title</key>
-					<string>New theme color available!</string>
-				</dict>
-			</array>
-			<key>LocalNotificationsPushTime</key>
-			<array>
-				<string>18</string>
-				<string>19</string>
-			</array>
 			<key>Locker</key>
 			<dict>
 				<key>Ads</key>
@@ -5177,7 +5057,7 @@
 							<key>Others</key>
 							<dict>
 								<key>cpm</key>
-								<real>2.0600000000000001</real>
+								<real>2.06</real>
 							</dict>
 						</dict>
 						<key>ids</key>
@@ -5203,7 +5083,7 @@
 							<key>Others</key>
 							<dict>
 								<key>cpm</key>
-								<real>8.7400000000000002</real>
+								<real>8.74</real>
 							</dict>
 						</dict>
 						<key>ids</key>
@@ -5257,7 +5137,7 @@
 							<key>Others</key>
 							<dict>
 								<key>cpm</key>
-								<real>4.3499999999999996</real>
+								<real>4.35</real>
 							</dict>
 						</dict>
 						<key>ids</key>
@@ -5283,7 +5163,7 @@
 							<key>Others</key>
 							<dict>
 								<key>cpm</key>
-								<real>1.1200000000000001</real>
+								<real>1.12</real>
 							</dict>
 						</dict>
 						<key>ids</key>
@@ -5309,7 +5189,7 @@
 							<key>Others</key>
 							<dict>
 								<key>cpm</key>
-								<real>0.10000000000000001</real>
+								<real>0.1</real>
 							</dict>
 						</dict>
 						<key>ids</key>
@@ -5775,7 +5655,7 @@
 							<key>Others</key>
 							<dict>
 								<key>cpm</key>
-								<real>0.10000000000000001</real>
+								<real>0.1</real>
 							</dict>
 						</dict>
 						<key>ids</key>

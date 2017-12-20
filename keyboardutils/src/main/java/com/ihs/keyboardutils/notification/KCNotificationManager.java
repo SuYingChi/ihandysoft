@@ -278,7 +278,7 @@ public class KCNotificationManager {
 
         contentView.setTextViewText(R.id.notification_action, notificationToSend.getButtonText());
         contentView.setTextColor(R.id.notification_action, notificationToSend.getButtonTextColor());
-        contentView.setInt(R.id.notification_action, "setBackgroundResource", R.drawable.notification_action_bg);
+        contentView.setInt(R.id.notification_action, "setBackgroundResource", R.drawable.selector_ripple_round_conor_yellow);
 
         int style = notificationToSend.getStyle();
 
@@ -349,7 +349,7 @@ public class KCNotificationManager {
                 }
 
                 //bg为空则默认bg 否则网络请求次数加一
-                if (style == 1 && !TextUtils.isEmpty(notificationToSend.getBgUrl())) {
+                if (!TextUtils.isEmpty(notificationToSend.getBgUrl())) {
                     requestCount++;
                 }
 

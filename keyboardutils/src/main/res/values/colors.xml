@@ -176,4 +176,7 @@
     <color name="search_activity_bg">#cc000000</color>
     <color name="search_divider">#33ffffff</color>
     <color name="search_bg">#33FFFFFF</color>
+
+    <color name="notification_btn_yellow">#fff333</color>
+    <color name="notification_btn_yellow_pressed">#ffd000</color>
 </resources>
