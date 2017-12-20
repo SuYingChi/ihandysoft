@@ -107,7 +107,7 @@ public class LockerEnableDialog extends Dialog {
             });
         }
 
-        if (!LockerChargingSpecialConfig.getInstance().canShowAd()) {
+        if (!LockerChargingSpecialConfig.getInstance().shouldShowAd()) {
             findViewById(R.id.tv_warning).setVisibility(View.INVISIBLE);
         }
 

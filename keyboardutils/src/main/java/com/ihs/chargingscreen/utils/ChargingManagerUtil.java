@@ -24,7 +24,6 @@ import com.launcher.FloatWindowController;
 import com.launcher.LockScreensLifeCycleRegistry;
 import com.launcher.chargingscreen.ChargingScreen;
 
-import static com.ihs.chargingscreen.utils.ChargingPrefsUtil.USER_ENABLED_CHARGING_SPECIAL;
 import static com.ihs.chargingscreen.utils.ChargingPrefsUtil.isChargingAlertEnabled;
 
 /**
@@ -150,11 +149,6 @@ public class ChargingManagerUtil {
     }
 
     public static void enableCharging(boolean startChargingActivity) {
-        if (LockerChargingSpecialConfig.getInstance().isSpecialNewUser()
-                && LockerChargingSpecialConfig.getInstance().isLockerEnable()) {
-            ChargingPrefsUtil.getInstance().getSpHelper().putBoolean(USER_ENABLED_CHARGING_SPECIAL, true);
-            return;
-        }
 
         ChargingPrefsUtil.getInstance().setChargingEnableByUser(true);
         HSChargingScreenManager.getInstance().start();

@@ -221,7 +221,7 @@ public class HSChargingScreenManager {
                     if (ChargingPrefsUtil.isChargingAlertEnabled()) {
                         AcbNativeAdManager.sharedInstance().activePlacementInProcess(HSChargingScreenManager.getInstance().getChargingAlertAdsPlacementName());
                     }else {
-                        if (LockerChargingSpecialConfig.getInstance().canShowAd()) {
+                        if (LockerChargingSpecialConfig.getInstance().shouldShowAd()) {
                             AcbExpressAdManager.getInstance().activePlacementInProcess(HSChargingScreenManager.getInstance().getChargingActivityAdsPlacementName());
                         }
                     }

@@ -109,8 +109,10 @@ public class ChargeNotifyManager {
             if (Intent.ACTION_SCREEN_OFF.equals(intent.getAction())) {
                 int delayHours = HSConfig.optInteger(0, "Application", "ChargeLocker", "HoursFromFirstUse");
                 boolean chargingReadyToWork = isReady(PREF_APP_FIRST_TRY_TO_CHARGING, delayHours);
-                LockerChargingSpecialConfig.getInstance().rebindService();
-                if (HSChargingManager.getInstance().isCharging() && chargingReadyToWork && !ChargingPrefsUtil.isChargingAlertEnabled()) {
+                if (HSChargingManager.getInstance().isCharging()
+                        && chargingReadyToWork
+                        && !ChargingPrefsUtil.isChargingAlertEnabled()
+                        && !LockerChargingSpecialConfig.getInstance().isLockerEnable()) {
                     ChargingManagerUtil.startChargingActivity();
                 }
             }

@@ -6,7 +6,7 @@ import android.content.ServiceConnection;
 import android.os.IBinder;
 import android.os.RemoteException;
 
-import com.artw.lockscreen.LockerSettings;
+import com.artw.lockscreen.common.LockerChargingScreenUtils;
 import com.artw.lockscreen.lockerappguide.LockerAppGuideManager;
 import com.fasttrack.lockscreen.ICustomizeInterface;
 import com.ihs.app.framework.HSApplication;
@@ -23,12 +23,17 @@ import static android.content.Context.BIND_AUTO_CREATE;
 public class LockerChargingSpecialConfig {
 
     public static final int NOT_SPECIAL_USER = 0;
-    public static final int SPECIAL_USER_OLD = 1;
-    public static final int SPECIAL_USER_NEW = 2;
+    public static final int CLASSIC_LOCKER_TYPE = 1;
+    public static final int PREMIUM_LOCKER_TYPE = 2;
 
     private static LockerChargingSpecialConfig instance;
 
     private LockerConnection lockerConnection;
+    private boolean showAd = true;
+
+    public boolean shouldShowAd() {
+        return showAd;
+    }
 
     private static final String ACTION_BIND_SERVICE = "action.customize.service";
 
@@ -39,7 +44,7 @@ public class LockerChargingSpecialConfig {
      * 1、老用户升级至此版本时，保留其之前的state状态。
      * 2、新用户，如果用户通过一些途径(比如set as lockscreen等)开启了锁屏，不要显示广告。
      */
-    private int noAdsVersionUserType = 0;
+    private int lockerType = 0;
 
 
     public static LockerChargingSpecialConfig getInstance() {
@@ -49,51 +54,41 @@ public class LockerChargingSpecialConfig {
         return instance;
     }
 
-    public void init(int noAdsVersionUserType) {
-        this.noAdsVersionUserType = noAdsVersionUserType;
+    public void init(int lockerType) {
+        boolean shouldShowAd = lockerType != PREMIUM_LOCKER_TYPE;
+        init(lockerType, shouldShowAd);
+        this.lockerType = lockerType;
+    }
+
+    public void init(int lockerType, boolean showAd) {
+        this.lockerType = lockerType;
+        initLockerType();
         Intent lockerIntent = new Intent(ACTION_BIND_SERVICE);
         lockerIntent.setPackage(LockerAppGuideManager.getLockerAppPkgName());
         lockerConnection = new LockerConnection();
-        boolean success = HSApplication.getContext().bindService(lockerIntent, lockerConnection, BIND_AUTO_CREATE);
-        if (!success) {
-            enableLockerForSpecialUser();
-        }
+        HSApplication.getContext().bindService(lockerIntent, lockerConnection, BIND_AUTO_CREATE);
+        this.showAd = showAd;
     }
 
-    public void rebindService() {
-        if (!isSpecialNewUser()) {
-            return;
-        }
-        if (!isLockerEnable()) {
-            enableLockerForSpecialUser();
+    private void initLockerType() {
+        if (isPremiumType()) {
+            LockerChargingScreenUtils.setLockerStyle(LockerChargingScreenUtils.LOCKER_STYLE_ACTIVITY_PREMIUM);
+        } else if (isClassicType()) {
+            LockerChargingScreenUtils.setLockerStyle(LockerChargingScreenUtils.LOCKER_STYLE_ACTIVITY_CLASSIC);
         } else {
-            disableLockerForSpecialUser();
+            LockerChargingScreenUtils.setLockerStyle(LockerChargingScreenUtils.LOCKER_STYLE_WINDOW);
         }
     }
 
     public boolean canShowAd() {
-        return noAdsVersionUserType != SPECIAL_USER_NEW || HSConfig.optBoolean(false, "Application", "Locker", "Ads", "NewUserShowAd");
+        return lockerType != PREMIUM_LOCKER_TYPE || HSConfig.optBoolean(false, "Application", "Locker", "Ads", "NewUserShowAd");
     }
 
-    public void enableLockerForSpecialUser() {
-        if (LockerSettings.isSpecialUserEnableLockerBefore()) { //仅special user 才有可能返回true
-            LockerSettings.setLockerEnabled(true);
-        }
-        if (ChargingPrefsUtil.getInstance().isChargingEnableBySpecialUSer()) { //同上
-            ChargingManagerUtil.enableCharging(false);
-        }
+    public boolean isPremiumType() {
+        return lockerType == PREMIUM_LOCKER_TYPE;
     }
 
-    private void disableLockerForSpecialUser() {
-        if (isSpecialNewUser()) {
-            LockerSettings.setLockerEnabled(false);
-            ChargingManagerUtil.disableCharging();
-        }
-    }
-
-    public boolean isSpecialNewUser() {
-        return noAdsVersionUserType == SPECIAL_USER_NEW;
-    }
+    public boolean isClassicType() { return lockerType == CLASSIC_LOCKER_TYPE; }
 
     public boolean isLockerEnable() {
         return lockerConnection != null && lockerConnection.isLockerEnable();
@@ -108,12 +103,6 @@ public class LockerChargingSpecialConfig {
             iCustomizeInterface = ICustomizeInterface.Stub.asInterface(iBinder);
             try {
                 isLockerEnable = iCustomizeInterface.isLockerEnable();
-                HSLog.e("xunling", String.valueOf(isLockerEnable));
-                if (!isLockerEnable) {
-                    enableLockerForSpecialUser();
-                } else {
-                    disableLockerForSpecialUser();
-                }
             } catch (RemoteException e) {
                 e.printStackTrace();
             }
