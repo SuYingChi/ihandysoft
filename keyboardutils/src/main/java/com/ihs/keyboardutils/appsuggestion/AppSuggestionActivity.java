@@ -177,7 +177,7 @@ public class AppSuggestionActivity extends Activity {
 
 
         KCNativeAdView nativeAdView = new KCNativeAdView(HSApplication.getContext());
-        nativeAdView.setAdLayoutView(View.inflate(this, R.layout.acb_phone_alert_ad_card_big, null));
+        nativeAdView.setAdLayoutView(View.inflate(this, R.layout.acb_suggestion_ad_layout, null));
         nativeAdView.load(getString(R.string.ad_placement_call_assist));
 
         FrameLayout adContainer = findViewById(R.id.alert_ad_container);
