@@ -187,7 +187,6 @@ public class PremiumLockerMainFrame extends PercentRelativeLayout implements INo
                 }
             } else if (v.getId() == R.id.button_camera) {
                 NavUtils.startCameraFromLockerScreen(context);
-                HSGlobalNotificationCenter.sendNotification(PremiumLockerActivity.EVENT_FINISH_SELF);
             } else if (v.getId() == R.id.button_weather) {
                 if (quickLaunch) {
                     AcbWeatherManager.showWeatherInfo(context);
