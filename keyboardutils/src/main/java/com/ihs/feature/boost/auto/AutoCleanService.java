@@ -26,6 +26,7 @@ import com.ihs.commons.utils.HSLog;
 import com.ihs.commons.utils.HSPreferenceHelper;
 import com.ihs.device.clean.memory.HSAppMemory;
 import com.ihs.device.clean.memory.HSAppMemoryManager;
+import com.ihs.device.common.HSAppFilter;
 import com.ihs.feature.boost.plus.BoostPlusSettingsActivity;
 import com.ihs.feature.boost.plus.RootHelper;
 import com.ihs.feature.common.AdminReceiver;
@@ -178,7 +179,7 @@ public class AutoCleanService extends Service {
         mThirdPartyAllowList = (List<String>) HSConfig.getList("Application", "BoostPlus", "ThirdPartyAppsAllowList");
         mSystemAppsNeedClean = (List<String>) HSConfig.getList("Application", "BoostPlus", "SystemAppsKillList");
 
-        HSAppMemoryManager.getInstance().setGlobalScanExcludeList(mThirdPartyAllowList);
+        HSAppMemoryManager.getInstance().setScanGlobalAppFilter(new HSAppFilter().excludeList(mThirdPartyAllowList));
 
         mInnerpermission = getString(R.string.receive_launch_broadcasts_permission);
         registerReceiver(mSystemScreenOffReceiver, new IntentFilter(Intent.ACTION_SCREEN_OFF));

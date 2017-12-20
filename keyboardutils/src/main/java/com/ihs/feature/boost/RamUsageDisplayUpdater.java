@@ -7,6 +7,7 @@ import android.os.SystemClock;
 import com.ihs.commons.utils.HSLog;
 import com.ihs.device.clean.memory.HSAppMemory;
 import com.ihs.device.clean.memory.HSAppMemoryManager;
+import com.ihs.device.common.HSAppFilter;
 import com.ihs.feature.common.DeviceManager;
 import com.ihs.feature.common.Thunk;
 
@@ -179,7 +180,9 @@ public class RamUsageDisplayUpdater {
         mLastBoostTime = SystemClock.uptimeMillis();
         mBoostCallbackHandler.removeCallbacksAndMessages(null);
         mBoostCallbackHandler.sendEmptyMessageDelayed(BOOST_LIB_CALLBACK_CHECK_EVENT, BOOST_LIB_CALLBACK_CHECK_TIME);
-        HSAppMemoryManager.getInstance().setGlobalScanIncludeSysAppList(BoostTipUtils.getSystemApps());
+        HSAppMemoryManager.getInstance().setScanGlobalAppFilter(new HSAppFilter()
+                .excludeNonLaunchable()
+                .includeSystem());
         HSAppMemoryManager.getInstance().startFullClean(new HSAppMemoryManager.MemoryTaskListener() {
             @Override
             public void onStarted() {}

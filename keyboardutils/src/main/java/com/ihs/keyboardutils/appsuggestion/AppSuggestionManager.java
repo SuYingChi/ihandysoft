@@ -19,7 +19,7 @@ import com.ihs.commons.config.HSConfig;
 import com.ihs.commons.notificationcenter.HSGlobalNotificationCenter;
 import com.ihs.commons.notificationcenter.INotificationObserver;
 import com.ihs.commons.utils.HSBundle;
-import com.ihs.device.common.AppFilter;
+import com.ihs.device.common.HSAppFilter;
 import com.ihs.device.common.HSAppRunningInfo;
 import com.ihs.device.common.utils.AppRunningUtils;
 
@@ -206,7 +206,7 @@ public class AppSuggestionManager {
     }
 
     private static List<HSAppRunningInfo> getAppRunningInfoList() {
-        List<HSAppRunningInfo> currentAppRunningInfoList = AppRunningUtils.getAppRunningInfoList(HSAppRunningInfo.class, new AppFilter(), true, true, true, true);
+        List<HSAppRunningInfo> currentAppRunningInfoList = AppRunningUtils.getAppRunningInfoList(HSAppRunningInfo.class, new HSAppFilter());
 
         if (appRunningInfoList == null) {
             appRunningInfoList = currentAppRunningInfoList;

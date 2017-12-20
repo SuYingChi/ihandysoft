@@ -26,6 +26,7 @@ import com.ihs.chargingscreen.utils.DisplayUtils;
 import com.ihs.commons.utils.HSLog;
 import com.ihs.device.clean.memory.HSAppMemory;
 import com.ihs.device.clean.memory.HSAppMemoryManager;
+import com.ihs.device.common.HSAppFilter;
 import com.ihs.feature.boost.animation.BoostAnimationManager;
 import com.ihs.feature.common.ActivityUtils;
 import com.ihs.feature.common.BaseCenterActivity;
@@ -156,11 +157,9 @@ public class CpuCoolDownActivity extends BaseCenterActivity {
 
     private void startScanApp() {
         CpuPreferenceHelper.setIsScanCanceled(false);
-        ArrayList<String> excludeList = new ArrayList<>();
-        excludeList.addAll(CpuCoolerUtils.getLauncherAppList());
-        excludeList.addAll(CpuCoolerUtils.getKeyBoardAppList());
 
-        HSAppMemoryManager.getInstance().setGlobalScanExcludeList(excludeList);
+        HSAppFilter filter = new HSAppFilter().excludeLauncher().excludeList(CpuCoolerUtils.getKeyBoardAppList());
+        HSAppMemoryManager.getInstance().setScanGlobalAppFilter(filter);
         mScanListener = new HSAppMemoryManager.MemoryTaskListener() {
             @Override
             public void onStarted() {
