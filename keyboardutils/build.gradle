@@ -84,10 +84,5 @@ dependencies {
     }
 
     //weather
-    implementation "net.appcloudbox.weather:acbWeatherPlugin.gm:4.0.1.gm"
-    implementation "net.appcloudbox.weather:libWeather.gm:[4.0.0.gm, 4.1.0.gm)"
-
-    implementation ("com.ihandy.appframework:libAppframework.gm:4.5.1.gm") {
-        transitive = true
-    }
+    implementation "net.appcloudbox.weather:acbWeatherPlugin.gm:4.1.0.gm"
 }

@@ -115,7 +115,7 @@ public class LockerChargingSpecialConfig {
 
         private boolean isLockerEnable() {
             try {
-                isLockerEnable = iCustomizeInterface.isLockerEnable();
+                isLockerEnable = iCustomizeInterface != null && iCustomizeInterface.isLockerEnable();
                 HSLog.e("xunling", String.valueOf(isLockerEnable));
                 return isLockerEnable;
             } catch (RemoteException e) {

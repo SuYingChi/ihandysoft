@@ -153,7 +153,8 @@ public class KCNativeAdView extends FrameLayout {
         if (view != null) {
             nativeAdContainerView.setAdChoiceView((FrameLayout) view);
         }
-        nativeAdContainerView.setClickViewList(clickableViews);
+        //TODO
+//        nativeAdContainerView.setClickViewList(clickableViews);
         addView(nativeAdContainerView);
     }
 
