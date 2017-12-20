@@ -1,7 +1,6 @@
 package com.ihs.feature.common;
 
 import com.ihs.app.analytics.HSAnalytics;
-import com.ihs.keyboardutils.BuildConfig;
 
 import net.appcloudbox.ads.nativeads.AcbNativeAdAnalytics;
 
@@ -53,14 +52,7 @@ public class AdAnalytics {
      */
     public static void logAppViewEvent(String placementName, boolean success) {
         String prefix = sEventNamePrefixMap.get(placementName);
-        if (prefix == null) {
-            if (BuildConfig.DEBUG) {
-                throw new IllegalArgumentException("Unregistered ad placement name " + placementName + ". "
-                        + "Forget to add this placement name to AdAnalytics#sEventNamePrefixMap?");
-            }
-            return;
-        }
-        if (prefix.isEmpty()) {
+        if (prefix == null || prefix.isEmpty()) {
             AcbNativeAdAnalytics.logAppViewEvent(placementName, success);
         } else {
             HSAnalytics.logEvent(prefix + "_AcbAdNative_Viewed_In_App", placementName, String.valueOf(success));
