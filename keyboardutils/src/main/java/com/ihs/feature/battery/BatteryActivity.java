@@ -47,7 +47,7 @@ import com.ihs.charging.HSChargingManager;
 import com.ihs.chargingscreen.utils.ChargingPrefsUtil;
 import com.ihs.commons.utils.HSLog;
 import com.ihs.device.clean.memory.HSAppMemoryManager;
-import com.ihs.feature.boost.BoostTipUtils;
+import com.ihs.device.common.HSAppFilter;
 import com.ihs.feature.boost.animation.DynamicRotateAnimation;
 import com.ihs.feature.common.ActivityUtils;
 import com.ihs.feature.common.AnimatorListenerAdapter;
@@ -1407,8 +1407,9 @@ public class BatteryActivity extends BaseCenterActivity implements View.OnClickL
         if (BatteryUtils.isCleanTimeFrozen()) {
             return;
         }
-        HSAppMemoryManager.getInstance().setGlobalScanIncludeSysAppList(BoostTipUtils.getSystemApps());
-        HSAppMemoryManager.getInstance().setGlobalScanExcludeList(BoostTipUtils.getExcludeSystemApps());
+        HSAppMemoryManager.getInstance().setScanGlobalAppFilter(new HSAppFilter()
+                .excludeNonLaunchable()
+                .includeSystem());
         HSAppMemoryManager.getInstance().startFullClean(null);
     }
 
