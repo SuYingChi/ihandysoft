@@ -42,9 +42,6 @@ libFramework:
     LocalFile: "Alerts.kb"
     RemoteUrl: ""
 
-libWeather:
-  APIKey: "56:<4Zhdwkhu$CXF"
-
 libIAP:
   Verify:
     ByDevice:
