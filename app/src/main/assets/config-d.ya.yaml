@@ -16,9 +16,6 @@ libCommons:
   Connection:
       SigKey: "412_1"
       HashKey: "_yLD]<chQABAgb+Hs}u_=YdCF#Y5uY3b"
-  LocationManager:
-      IPLocationServerURL: "http://geoip.asiatone.net/ip2location/mylocation/"
-      IPLocationKey: "79p2sm0slc2dy4qm"
 
   Market:
     DefaultMarket: "Google"
