@@ -22,7 +22,7 @@ import net.appcloudbox.ads.interstitialads.AcbInterstitialAdLoader;
  */
 
 public class GameStarterActivity extends Activity {
-
+    public static final String SHOW_WHEN_LOCKED = "show_when_locked";
     private static final int TIME_OUT_LIMIT = 5000;
     private Handler handler = new Handler();
     private boolean adShowed = false;
@@ -30,6 +30,11 @@ public class GameStarterActivity extends Activity {
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        Window window = getWindow();
+        boolean showWhenLocked = getIntent().getBooleanExtra(SHOW_WHEN_LOCKED, false);
+        if (showWhenLocked) {
+            window.addFlags(WindowManager.LayoutParams.FLAG_SHOW_WHEN_LOCKED);
+        }
         if (!RemoveAdsManager.getInstance().isRemoveAdsPurchased()) {
             String adPlacement = getResources().getString(R.string.placement_full_screen_game);
             KCInterstitialAd.load(adPlacement);
@@ -78,12 +83,13 @@ public class GameStarterActivity extends Activity {
     }
 
     public static void startGame(String gameUrl, String callFrom) {
-        startGame(gameUrl, callFrom, "");
+        startGame(gameUrl, callFrom, "", false);
     }
 
-    public static void startGame(String gameUrl, String callFrom, String gameName) {
+    public static void startGame(String gameUrl, String callFrom, String gameName, boolean showWhenLocked) {
         Intent intent = new Intent(HSApplication.getContext(), GameStarterActivity.class);
         intent.putExtra("url", gameUrl);
+        intent.putExtra(SHOW_WHEN_LOCKED, showWhenLocked);
         intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         HSApplication.getContext().startActivity(intent);
         if (TextUtils.isEmpty(gameName)) {

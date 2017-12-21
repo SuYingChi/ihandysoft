@@ -1,11 +1,14 @@
 package com.ihs.feature.softgame;
 
+import android.app.Activity;
+import android.content.Context;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.RecyclerView.ViewHolder;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.WindowManager;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -82,6 +85,15 @@ public class SoftGameItemAdapter extends RecyclerView.Adapter<ViewHolder> {
                 position--;
             }
 
+            Context context = holder.itemView.getContext();
+            final boolean showWhenLocked;
+            if (context instanceof Activity) {
+                int flags = ((Activity) context).getWindow().getAttributes().flags;
+                showWhenLocked = (flags & WindowManager.LayoutParams.FLAG_SHOW_WHEN_LOCKED) != 0;
+            } else {
+                showWhenLocked = false;
+            }
+
             final SoftGameItemViewHolder softGameItemViewHolder = (SoftGameItemViewHolder) holder;
             final SoftGameItemBean softGameDisplayItem = softGameDisplayItemList.get(position);
             ImageLoader.getInstance().displayImage(softGameDisplayItem.getThumb(), new ImageViewAware(softGameItemViewHolder.softGameThumbnail), displayImageOptions);
@@ -90,13 +102,13 @@ public class SoftGameItemAdapter extends RecyclerView.Adapter<ViewHolder> {
             softGameItemViewHolder.itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    GameStarterActivity.startGame(softGameDisplayItem.getLink(),"game_play_clicked",softGameDisplayItem.getName());
+                    GameStarterActivity.startGame(softGameDisplayItem.getLink(),"game_play_clicked",softGameDisplayItem.getName(), showWhenLocked);
                 }
             });
             softGameItemViewHolder.softGamePlayButton.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    GameStarterActivity.startGame(softGameDisplayItem.getLink(),"game_play_clicked",softGameDisplayItem.getName());
+                    GameStarterActivity.startGame(softGameDisplayItem.getLink(),"game_play_clicked",softGameDisplayItem.getName(), showWhenLocked);
                 }
             });
         }
