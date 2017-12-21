@@ -47,6 +47,7 @@ import static android.view.WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HI
 
 public class PremiumLockerActivity extends AppCompatActivity implements INotificationObserver {
     public static final String EVENT_FINISH_SELF = "locker_event_finish_self";
+    public static final String FINISH_WITHOUT_UNLOCK = "finish_without_unlock";
     public static final String PREF_KEY_CURRENT_WALLPAPER_HD_URL = "current_hd_wallpaper_url";
     private long startDisplayTime;
 
@@ -217,13 +218,19 @@ public class PremiumLockerActivity extends AppCompatActivity implements INotific
     }
 
     public void finishSelf() {
+        finishSelf(false);
+    }
+
+    public void finishSelf(boolean withoutUnlock) {
         findViewById(R.id.bottom_layer).setVisibility(View.GONE);
         ObjectAnimator fadeOutAnim = ObjectAnimator.ofFloat(mLockerWallpaper, View.ALPHA, 0f);
         fadeOutAnim.setDuration(300);
         fadeOutAnim.addListener(new AnimatorListenerAdapter() {
             @Override
             public void onAnimationEnd(Animator animation) {
-                DismissKeyguradActivity.startSelfIfKeyguardSecure(getApplicationContext());
+                if (!withoutUnlock) {
+                    DismissKeyguradActivity.startSelfIfKeyguardSecure(getApplicationContext());
+                }
                 finish();
                 overridePendingTransition(0, 0);
 
@@ -247,7 +254,8 @@ public class PremiumLockerActivity extends AppCompatActivity implements INotific
     public void onReceive(String s, HSBundle hsBundle) {
         switch (s) {
             case EVENT_FINISH_SELF:
-                finishSelf();
+                boolean withoutUnlock = hsBundle.getBoolean(FINISH_WITHOUT_UNLOCK);
+                finishSelf(withoutUnlock);
                 break;
             case ScreenStatusReceiver.NOTIFICATION_SCREEN_ON:
                 if (!ClickUtils.isFastDoubleClick()) {
