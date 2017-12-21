@@ -254,7 +254,10 @@ public class PremiumLockerActivity extends AppCompatActivity implements INotific
     public void onReceive(String s, HSBundle hsBundle) {
         switch (s) {
             case EVENT_FINISH_SELF:
-                boolean withoutUnlock = hsBundle.getBoolean(FINISH_WITHOUT_UNLOCK);
+                boolean withoutUnlock = false;
+                if (hsBundle != null) {
+                    withoutUnlock = hsBundle.getBoolean(FINISH_WITHOUT_UNLOCK);
+                }
                 finishSelf(withoutUnlock);
                 break;
             case ScreenStatusReceiver.NOTIFICATION_SCREEN_ON:
