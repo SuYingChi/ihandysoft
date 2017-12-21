@@ -183,11 +183,8 @@ public class PremiumLockerMainFrame extends PercentRelativeLayout implements INo
                 HSAnalytics.logEvent("new_screenLocker_feature_clicked", "entry", "game");
                 Intent intent = new Intent(context, SoftGameDisplayActivity.class);
                 intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                intent.putExtra(SoftGameDisplayActivity.SHOW_WHEN_LOCKED, quickLaunch);
                 context.startActivity(intent);
-                if (!quickLaunch) {
-                    HSGlobalNotificationCenter.sendNotification(PremiumLockerActivity.EVENT_FINISH_SELF);
-                }
+                HSGlobalNotificationCenter.sendNotification(PremiumLockerActivity.EVENT_FINISH_SELF);
             } else if (v.getId() == R.id.button_camera) {
                 HSAnalytics.logEvent("new_screenLocker_feature_clicked", "entry", "camera");
                 NavUtils.startCameraFromLockerScreen(context);
