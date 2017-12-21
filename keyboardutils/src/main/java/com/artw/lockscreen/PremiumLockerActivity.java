@@ -85,6 +85,7 @@ public class PremiumLockerActivity extends AppCompatActivity implements INotific
         }
 
         setContentView(R.layout.activity_locker);
+        HSAnalytics.logEvent("new_screenLocker_show");
 
         mLockerWallpaper = (ImageView) findViewById(R.id.locker_wallpaper_view);
 
@@ -197,7 +198,7 @@ public class PremiumLockerActivity extends AppCompatActivity implements INotific
             public void onPageSelected(int position) {
                 if (LockerAdapter.PAGE_INDEX_UNLOCK == position) {
                     finishSelf();
-                    HSAnalytics.logEvent("Locker_Unlocked");
+                    HSAnalytics.logEvent("new_screenLocker_unlock");
                 }
             }
 

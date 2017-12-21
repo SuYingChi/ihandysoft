@@ -159,6 +159,7 @@ public class PremiumLockerMainFrame extends PercentRelativeLayout implements INo
             Context context = getContext().getApplicationContext();
             boolean quickLaunch = HSConfig.optBoolean(false, "Application", "Locker", "QuickLaunch");
             if (v.getId() == R.id.search_button) {
+                HSAnalytics.logEvent("new_screenLocker_feature_clicked", "entry", "search");
                 PremiumSearchDialog dialog = new PremiumSearchDialog(getContext());
                 dialog.setOnSearchListerner((searchDialog, searchText) -> {
                     String url = WebContentSearchManager.getInstance().queryText(searchText);
@@ -173,11 +174,13 @@ public class PremiumLockerMainFrame extends PercentRelativeLayout implements INo
                 });
                 dialog.show();
             } else if (v.getId() == R.id.button_boost) {
+                HSAnalytics.logEvent("new_screenLocker_feature_clicked", "entry", "boost");
                 Intent intent = new Intent(context, BoostPlusActivity.class);
                 intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                 context.startActivity(intent);
                 HSGlobalNotificationCenter.sendNotification(PremiumLockerActivity.EVENT_FINISH_SELF);
             } else if (v.getId() == R.id.button_game) {
+                HSAnalytics.logEvent("new_screenLocker_feature_clicked", "entry", "game");
                 Intent intent = new Intent(context, SoftGameDisplayActivity.class);
                 intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                 intent.putExtra(SoftGameDisplayActivity.SHOW_WHEN_LOCKED, quickLaunch);
@@ -186,8 +189,10 @@ public class PremiumLockerMainFrame extends PercentRelativeLayout implements INo
                     HSGlobalNotificationCenter.sendNotification(PremiumLockerActivity.EVENT_FINISH_SELF);
                 }
             } else if (v.getId() == R.id.button_camera) {
+                HSAnalytics.logEvent("new_screenLocker_feature_clicked", "entry", "camera");
                 NavUtils.startCameraFromLockerScreen(context);
             } else if (v.getId() == R.id.button_weather) {
+                HSAnalytics.logEvent("new_screenLocker_feature_clicked", "entry", "weather");
                 if (quickLaunch) {
                     AcbWeatherManager.showWeatherInfo(context);
                 } else {
@@ -195,6 +200,7 @@ public class PremiumLockerMainFrame extends PercentRelativeLayout implements INo
                     HSGlobalNotificationCenter.sendNotification(PremiumLockerActivity.EVENT_FINISH_SELF);
                 }
             } else if (v.getId() == R.id.icon_locker_upgrade) {
+                HSAnalytics.logEvent("new_screenLocker_feature_clicked", "entry", "upgrade");
                 if (LockerAppGuideManager.getInstance().isLockerInstall() && !LockerChargingSpecialConfig.getInstance().isLockerEnable()) {
                     LockerAppGuideManager.openApp(LockerAppGuideManager.getLockerAppPkgName());
                     HSGlobalNotificationCenter.sendNotification(PremiumLockerActivity.EVENT_FINISH_SELF);
