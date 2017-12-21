@@ -1,10 +1,14 @@
 package com.artw.lockscreen;
 
+import android.content.BroadcastReceiver;
+import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
+import android.text.TextUtils;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
@@ -27,6 +31,7 @@ public class BrowserActivity extends AppCompatActivity {
     private WebView webView;
     private ProgressBar progressBar;
     private boolean progressDialogShowed = false;
+    private boolean isFromLockScreen;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -35,6 +40,8 @@ public class BrowserActivity extends AppCompatActivity {
         boolean showWhenLocked = getIntent().getBooleanExtra(SHOW_WHEN_LOCKED, false);
         if (showWhenLocked) {
             window.addFlags(WindowManager.LayoutParams.FLAG_SHOW_WHEN_LOCKED);
+            isFromLockScreen = true;
+            registerReceiver(screenOffReceiver, new IntentFilter(Intent.ACTION_SCREEN_OFF));
         }
         setContentView(R.layout.activity_browser);
         Intent intent = getIntent();
@@ -113,5 +120,22 @@ public class BrowserActivity extends AppCompatActivity {
 //            }
         });
         webView.loadUrl(url);
+    }
+
+    private BroadcastReceiver screenOffReceiver = new BroadcastReceiver() {
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            if (TextUtils.equals(intent.getAction(), Intent.ACTION_SCREEN_OFF)) {
+                finish();
+            }
+        }
+    };
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        if (isFromLockScreen) {
+            unregisterReceiver(screenOffReceiver);
+        }
     }
 }
