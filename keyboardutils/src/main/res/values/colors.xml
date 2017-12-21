@@ -173,6 +173,7 @@
     <color name="app_suggestion_call_btn">#129ff8</color>
     <color name="app_suggestion_search_btn">#faac1b</color>
     <color name="locker_button_bg">#80000000</color>
+    <color name="locker_button_press_bg">#B3000000</color>
     <color name="search_activity_bg">#cc000000</color>
     <color name="search_divider">#33ffffff</color>
     <color name="search_bg">#33FFFFFF</color>

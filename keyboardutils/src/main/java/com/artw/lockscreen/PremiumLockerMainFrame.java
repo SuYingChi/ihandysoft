@@ -219,25 +219,26 @@ public class PremiumLockerMainFrame extends PercentRelativeLayout implements INo
         shouldShowCommonUseButtons = HSConfig.optBoolean(true, "Application", "Locker", "ShowCommonUseButton");
 
         int backgroundColor = ContextCompat.getColor(getContext(), R.color.locker_button_bg);
+        int backgroundPressColor = ContextCompat.getColor(getContext(), R.color.locker_button_press_bg);
 
         buttonUpgrade = findViewById(R.id.icon_locker_upgrade);
         buttonUpgrade.setImageResource(R.raw.upgrade_icon);
         buttonUpgrade.setOnClickListener(clickListener);
         buttonSearch = findViewById(R.id.search_button);
         buttonSearch.setOnClickListener(clickListener);
-        buttonSearch.setBackgroundDrawable(RippleDrawableUtils.getContainDisableStatusCompatRippleDrawable(backgroundColor, backgroundColor, DisplayUtils.dip2px(2)));
+        buttonSearch.setBackgroundDrawable(RippleDrawableUtils.getCompatRippleDrawable(backgroundColor, backgroundPressColor, DisplayUtils.dip2px(2)));
         buttonBoost = findViewById(R.id.button_boost);
         buttonBoost.setOnClickListener(clickListener);
-        buttonBoost.setBackgroundDrawable(RippleDrawableUtils.getContainDisableStatusCompatRippleDrawable(backgroundColor, backgroundColor, DisplayUtils.dip2px(4)));
+        buttonBoost.setBackgroundDrawable(RippleDrawableUtils.getCompatRippleDrawable(backgroundColor, backgroundPressColor, DisplayUtils.dip2px(4)));
         buttonGame = findViewById(R.id.button_game);
         buttonGame.setOnClickListener(clickListener);
-        buttonGame.setBackgroundDrawable(RippleDrawableUtils.getContainDisableStatusCompatRippleDrawable(backgroundColor, backgroundColor, DisplayUtils.dip2px(4)));
+        buttonGame.setBackgroundDrawable(RippleDrawableUtils.getCompatRippleDrawable(backgroundColor, backgroundPressColor, DisplayUtils.dip2px(4)));
         buttonCamera = findViewById(R.id.button_camera);
         buttonCamera.setOnClickListener(clickListener);
-        buttonCamera.setBackgroundDrawable(RippleDrawableUtils.getContainDisableStatusCompatRippleDrawable(backgroundColor, backgroundColor, DisplayUtils.dip2px(4)));
+        buttonCamera.setBackgroundDrawable(RippleDrawableUtils.getCompatRippleDrawable(backgroundColor, backgroundPressColor, DisplayUtils.dip2px(4)));
         buttonWeather = findViewById(R.id.button_weather);
         buttonWeather.setOnClickListener(clickListener);
-        buttonWeather.setBackgroundDrawable(RippleDrawableUtils.getContainDisableStatusCompatRippleDrawable(backgroundColor, backgroundColor, DisplayUtils.dip2px(4)));
+        buttonWeather.setBackgroundDrawable(RippleDrawableUtils.getCompatRippleDrawable(backgroundColor, backgroundPressColor, DisplayUtils.dip2px(4)));
 
         if (!shouldShowButtonUpgrade) {
             buttonUpgrade.setVisibility(View.INVISIBLE);
