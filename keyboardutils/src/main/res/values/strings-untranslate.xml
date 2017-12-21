@@ -32,6 +32,7 @@ Try More Lock Screen Themes</string>
     <string name="locker_upgrade_alert_text_one">Thousands of fancy wallpapers for FREE</string>
     <string name="locker_upgrade_alert_text_two">Display current status</string>
     <string name="locker_upgrade_alert_text_three">Battery protection to avoid overcharge</string>
-    <string name="locker_upgrade_alert_button_text">UPGRADE</string>
+    <string name="locker_upgrade_alert_button_text">UPGRADE FOR FREE</string>
     <string name="locker_upgrade_alert_head_text">Upgrade Screen Locker</string>
+    <string name="locker_search_text">Yahoo Search</string>
 </resources>

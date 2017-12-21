@@ -89,7 +89,7 @@
         android:drawableRight="@drawable/ic_locker_search"
         android:gravity="start"
         android:padding="10dp"
-        android:text="@string/search_bar_default_text"
+        android:text="@string/locker_search_text"
         android:textColor="#4cffffff"
         android:textSize="18sp"
         app:layout_marginBottomPercent="0.78%"
