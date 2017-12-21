@@ -134,6 +134,9 @@ public class PremiumLockerActivity extends AppCompatActivity implements INotific
     @Override
     protected void onStop() {
         super.onStop();
+        if (mLockerAdapter != null && mLockerAdapter.lockerMainFrame != null) {
+            mLockerAdapter.lockerMainFrame.onActivityStop();
+        }
         if (!HSSessionMgr.isSessionStarted()) {
             HSAnalytics.stopFlurry();
         }

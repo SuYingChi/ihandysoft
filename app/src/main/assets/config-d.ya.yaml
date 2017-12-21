@@ -39,6 +39,9 @@ libFramework:
     LocalFile: "Alerts.kb"
     RemoteUrl: ""
 
+libWeather:
+  placementName: "Test"
+
 libIAP:
   Verify:
     ByDevice:

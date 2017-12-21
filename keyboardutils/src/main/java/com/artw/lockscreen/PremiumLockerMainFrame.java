@@ -110,6 +110,8 @@ public class PremiumLockerMainFrame extends PercentRelativeLayout implements INo
     private boolean shouldShowButtonSearch;
     private boolean shouldShowCommonUseButtons; //Boost, Game, Camera, Weather
 
+    private PremiumSearchDialog searchDialog;
+
     private BroadcastReceiver weatherReceiver = new BroadcastReceiver() {
         @Override
         public void onReceive(Context context, Intent intent) {
@@ -160,8 +162,8 @@ public class PremiumLockerMainFrame extends PercentRelativeLayout implements INo
             boolean quickLaunch = HSConfig.optBoolean(false, "Application", "Locker", "QuickLaunch");
             if (v.getId() == R.id.search_button) {
                 HSAnalytics.logEvent("new_screenLocker_feature_clicked", "entry", "search");
-                PremiumSearchDialog dialog = new PremiumSearchDialog(getContext());
-                dialog.setOnSearchListerner((searchDialog, searchText) -> {
+                searchDialog = new PremiumSearchDialog(getContext());
+                searchDialog.setOnSearchListerner((searchDialog, searchText) -> {
                     String url = WebContentSearchManager.getInstance().queryText(searchText);
                     Intent intent = new Intent(getContext(), BrowserActivity.class);
                     intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
@@ -171,8 +173,12 @@ public class PremiumLockerMainFrame extends PercentRelativeLayout implements INo
                     if (!quickLaunch) {
                         HSGlobalNotificationCenter.sendNotification(PremiumLockerActivity.EVENT_FINISH_SELF);
                     }
+                    searchDialog.dismiss();
                 });
-                dialog.show();
+                searchDialog.setOnDismissListener(dialog -> {
+                    searchDialog = null;
+                });
+                searchDialog.show();
             } else if (v.getId() == R.id.button_boost) {
                 HSAnalytics.logEvent("new_screenLocker_feature_clicked", "entry", "boost");
                 Intent intent = new Intent(context, BoostPlusActivity.class);
@@ -593,5 +599,12 @@ public class PremiumLockerMainFrame extends PercentRelativeLayout implements INo
         KCCommonUtils.dismissDialog(dialog);
         KCCommonUtils.showDialog(dialog);
         return true;
+    }
+
+    void onActivityStop() {
+        if (searchDialog != null) {
+            searchDialog.dismiss();
+            searchDialog = null;
+        }
     }
 }
