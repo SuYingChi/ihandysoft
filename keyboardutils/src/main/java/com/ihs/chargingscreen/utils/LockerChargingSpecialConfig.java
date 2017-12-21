@@ -12,6 +12,7 @@ import com.fasttrack.lockscreen.ICustomizeInterface;
 import com.ihs.app.framework.HSApplication;
 import com.ihs.commons.config.HSConfig;
 import com.ihs.commons.utils.HSLog;
+import com.ihs.commons.utils.HSPreferenceHelper;
 
 import static android.content.Context.BIND_AUTO_CREATE;
 
@@ -26,13 +27,15 @@ public class LockerChargingSpecialConfig {
     public static final int CLASSIC_LOCKER_TYPE = 1;
     public static final int PREMIUM_LOCKER_TYPE = 2;
 
+    private static final String LOCKER_TYPE_PREF = "locker_type_pref";
+
     private static LockerChargingSpecialConfig instance;
 
     private LockerConnection lockerConnection;
     private boolean showAd = true;
 
     public boolean shouldShowAd() {
-        return showAd;
+        return showAd || HSConfig.optBoolean(true, "Application", "Locker", "Ads", "NewUserShowAd");
     }
 
     private static final String ACTION_BIND_SERVICE = "action.customize.service";
@@ -61,7 +64,12 @@ public class LockerChargingSpecialConfig {
     }
 
     public void init(int lockerType, boolean showAd) {
-        this.lockerType = lockerType;
+        if (!HSPreferenceHelper.getDefault().contains(LOCKER_TYPE_PREF)) {
+            this.lockerType = lockerType;
+            HSPreferenceHelper.getDefault().putInt(LOCKER_TYPE_PREF, lockerType);
+        } else {
+            this.lockerType = HSPreferenceHelper.getDefault().getInt(LOCKER_TYPE_PREF, PREMIUM_LOCKER_TYPE);
+        }
         initLockerType();
         Intent lockerIntent = new Intent(ACTION_BIND_SERVICE);
         lockerIntent.setPackage(LockerAppGuideManager.getLockerAppPkgName());
