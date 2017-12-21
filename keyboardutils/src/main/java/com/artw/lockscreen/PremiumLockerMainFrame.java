@@ -193,12 +193,8 @@ public class PremiumLockerMainFrame extends PercentRelativeLayout implements INo
                 NavUtils.startCameraFromLockerScreen(context);
             } else if (v.getId() == R.id.button_weather) {
                 HSAnalytics.logEvent("new_screenLocker_feature_clicked", "entry", "weather");
-                if (quickLaunch) {
-                    AcbWeatherManager.showWeatherInfo(context);
-                } else {
-                    AcbWeatherManager.showWeatherInfo(context, false);
-                    HSGlobalNotificationCenter.sendNotification(PremiumLockerActivity.EVENT_FINISH_SELF);
-                }
+                AcbWeatherManager.showWeatherInfo(context, false);
+                HSGlobalNotificationCenter.sendNotification(PremiumLockerActivity.EVENT_FINISH_SELF);
             } else if (v.getId() == R.id.icon_locker_upgrade) {
                 HSAnalytics.logEvent("new_screenLocker_feature_clicked", "entry", "upgrade");
                 if (LockerAppGuideManager.getInstance().isLockerInstall() && !LockerChargingSpecialConfig.getInstance().isLockerEnable()) {
