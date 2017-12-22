@@ -127,7 +127,7 @@ public class HSChargingScreenManager {
                     return;
                 }
 
-                if (preChargingState == HSChargingState.STATE_DISCHARGING && curChargingState != HSChargingState.STATE_DISCHARGING) {
+                if (preChargingState == HSChargingState.STATE_DISCHARGING && curChargingState != HSChargingState.STATE_DISCHARGING && ChargingManagerUtil.isChargingEnabled()) {
                     //插电
                     ChargingManagerUtil.startChargingActivity();
                 }

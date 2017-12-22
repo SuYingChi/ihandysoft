@@ -178,7 +178,7 @@ public class ChargingScreenAlertActivity extends Activity {
         HSGlobalNotificationCenter.sendNotification(NOTIFICATION_CHARGING_ACTIVITY_STARTED);
         super.onCreate(savedInstanceState);
 
-        ChargingManagerUtil.enableCharging(false);
+        HSChargingScreenManager.getInstance().start();
 
         ChargingAnalytics.getInstance().recordChargingEnableOnce();
 
