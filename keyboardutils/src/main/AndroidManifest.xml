@@ -128,7 +128,13 @@
             android:exported="true"
             android:launchMode="singleTop"
             android:screenOrientation="portrait"
-            android:theme="@style/ChargingScreenTransparentTheme" />
+            android:taskAffinity=".key_search"
+            android:theme="@style/ChargingScreenTransparentTheme">
+            <intent-filter>
+                <category android:name="android.intent.category.DEFAULT" />
+                <action android:name="com.keyboard.search" />
+            </intent-filter>
+        </activity>
 
         <activity
             android:name="com.artw.lockscreen.DismissKeyguradActivity"
