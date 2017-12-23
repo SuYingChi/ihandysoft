@@ -34,6 +34,7 @@ import static com.ihs.keyboardutils.appsuggestion.AppSuggestionSetting.initEnabl
  */
 
 public class AppSuggestionManager {
+    private static final int MAX_APP_SIZE = 5;
     private OnAppSuggestionShowListener showListener;
 
     public interface OnAppSuggestionShowListener {
@@ -105,13 +106,11 @@ public class AppSuggestionManager {
                 currentLauncherPkg = getDefaultLauncher();
                 if (!isAppCanGetRecent) {
                     List<HSAppRunningInfo> appRunningInfoList = getAppRunningInfoList();
+                    ArrayList<String> recentAppList = new ArrayList<>();
                     for (int i = 0; i < appRunningInfoList.size(); i++) {
-                        if (recentAppPackName.size() < 5) {
-                            addNewRecentApp(appRunningInfoList.get(i).getPackageName());
-                        } else {
-                            break;
-                        }
+                        recentAppList.add(appRunningInfoList.get(i).getPackageName());
                     }
+                    recentAppPackName = recentAppList;
                     addDefaultSuggestApps();
                 }
                 saveRecentList();
@@ -243,6 +242,10 @@ public class AppSuggestionManager {
                 }
             }
 
+            if (newAppRunningInfoList.size() != 0) {
+                appRunningInfoList.addAll(0, newAppRunningInfoList);
+            }
+
             for (HSAppRunningInfo hsAppRunningInfo : appRunningInfoList) {
                 boolean contains = false;
                 for (HSAppRunningInfo appRunningInfo : currentAppRunningInfoList) {
@@ -256,9 +259,6 @@ public class AppSuggestionManager {
                 }
             }
 
-            if (newAppRunningInfoList.size() != 0) {
-                appRunningInfoList.addAll(0, newAppRunningInfoList);
-            }
             if (removeRunningInfoList.size() != 0) {
                 appRunningInfoList.removeAll(removeRunningInfoList);
             }

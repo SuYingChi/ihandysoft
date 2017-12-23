@@ -98,7 +98,7 @@ public class AppSuggestionActivity extends Activity {
 
         @Override
         public int getItemCount() {
-            return recentAppPackName.size();
+            return recentAppPackName.size() > RECENT_APP_SIZE ? RECENT_APP_SIZE : recentAppPackName.size();
         }
 
         class itemHolder extends RecyclerView.ViewHolder {
