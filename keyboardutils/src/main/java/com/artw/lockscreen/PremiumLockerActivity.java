@@ -225,25 +225,29 @@ public class PremiumLockerActivity extends AppCompatActivity implements INotific
     }
 
     public void finishSelf(boolean withoutUnlock) {
-        findViewById(R.id.bottom_layer).setVisibility(View.GONE);
-        ObjectAnimator fadeOutAnim = ObjectAnimator.ofFloat(mLockerWallpaper, View.ALPHA, 0f);
-        fadeOutAnim.setDuration(300);
-        fadeOutAnim.addListener(new AnimatorListenerAdapter() {
-            @Override
-            public void onAnimationEnd(Animator animation) {
-                if (!withoutUnlock) {
-                    DismissKeyguradActivity.startSelfIfKeyguardSecure(getApplicationContext());
-                }
-                finish();
-                overridePendingTransition(0, 0);
-
-                mLockerWallpaper.setImageResource(android.R.color.transparent);
-                if (mLockerAdapter != null && mLockerAdapter.lockerMainFrame != null) {
-                    mLockerAdapter.lockerMainFrame.clearDrawerBackground();
-                }
-            }
-        });
-        fadeOutAnim.start();
+//        findViewById(R.id.bottom_layer).setVisibility(View.GONE);
+//        ObjectAnimator fadeOutAnim = ObjectAnimator.ofFloat(mLockerWallpaper, View.ALPHA, 0f);
+//        fadeOutAnim.setDuration(300);
+//        fadeOutAnim.addListener(new AnimatorListenerAdapter() {
+//            @Override
+//            public void onAnimationEnd(Animator animation) {
+//                if (!withoutUnlock) {
+//                    DismissKeyguradActivity.startSelfIfKeyguardSecure(getApplicationContext());
+//                }
+//                finish();
+//                overridePendingTransition(0, 0);
+//
+//                mLockerWallpaper.setImageResource(android.R.color.transparent);
+//                if (mLockerAdapter != null && mLockerAdapter.lockerMainFrame != null) {
+//                    mLockerAdapter.lockerMainFrame.clearDrawerBackground();
+//                }
+//            }
+//        });
+//        fadeOutAnim.start();
+        if (!withoutUnlock) {
+            DismissKeyguradActivity.startSelfIfKeyguardSecure(getApplicationContext());
+        }
+        finish();
     }
 
     @Override
