@@ -77,7 +77,7 @@ public class AppSuggestionManager {
                 }
 
                 if (!hasDone) {
-                    if (HSChargingManager.getInstance().isCharging() && ChargingPrefsUtil.isChargingAlertEnabled()) {
+                    if (HSChargingManager.getInstance().isCharging() && ChargingManagerUtil.isChargingEnabled() && ChargingPrefsUtil.isChargingAlertEnabled()) {
                         int alertIntervalInMinute = HSConfig.optInteger(5, "Application", "ChargeAlert", "MiniInterval");
                         long lastShowDownloadLockerAlertTime = PreferenceManager.getDefaultSharedPreferences(ctx).getLong("lastShowChargingAlertTime", 0);
                         if (System.currentTimeMillis() - lastShowDownloadLockerAlertTime > alertIntervalInMinute * 60 * 1000) {
