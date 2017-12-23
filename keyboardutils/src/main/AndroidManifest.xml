@@ -298,7 +298,7 @@
             android:name=".appsuggestion.AppSuggestionActivity"
             android:taskAffinity=".appsuggestion"
             android:excludeFromRecents="true"
-            android:theme="@android:style/Theme.Translucent.NoTitleBar"/>
+            android:theme="@style/ChargingScreenAlertActivityTheme"/>
     </application>
 
 </manifest>

@@ -34,6 +34,12 @@ import static com.ihs.keyboardutils.appsuggestion.AppSuggestionSetting.initEnabl
  */
 
 public class AppSuggestionManager {
+    private OnAppSuggestionShowListener showListener;
+
+    public interface OnAppSuggestionShowListener {
+        String getCurrentPackageName();
+    }
+
     private static AppSuggestionManager ourInstance;
     private static List<HSAppRunningInfo> appRunningInfoList;
     private boolean isAppCanGetRecent;
@@ -41,7 +47,6 @@ public class AppSuggestionManager {
     private List<String> exceptAppList = new ArrayList<>();
     private PackageManager packageManager;
     protected static final String FEATURE_NAME = "AppSuggestion";
-
 
     public static AppSuggestionManager getInstance() {
         if (ourInstance == null) {
@@ -84,8 +89,16 @@ public class AppSuggestionManager {
                 }
 
                 if (!hasDone) {
-                    if (AppSuggestionSetting.getInstance().canShowAppSuggestion() && AppSuggestionSetting.getInstance().isFeatureEnabled()) {
-                        showAppSuggestion();
+                    if (AppSuggestionSetting.getInstance().canShowAppSuggestion() &&
+                            AppSuggestionSetting.getInstance().isFeatureEnabled()) {
+                        if(showListener!=null){
+                            if(!currentLauncherPkg.equals(showListener.getCurrentPackageName())
+                                    && !currentLauncherPkg.equals("com.google.android.googlequicksearchbox")){
+                                showAppSuggestion();
+                            }
+                        }else{
+                            showAppSuggestion();
+                        }
                     }
                 }
             } else if (Intent.ACTION_SCREEN_OFF.equals(intent.getAction())) {
@@ -115,6 +128,10 @@ public class AppSuggestionManager {
     public void init(boolean isAppCanGetRecent) {
         this.isAppCanGetRecent = isAppCanGetRecent;
         getSavedRecentList();
+    }
+
+    public void setShowListener(OnAppSuggestionShowListener showListener) {
+        this.showListener = showListener;
     }
 
     public AppSuggestionManager() {

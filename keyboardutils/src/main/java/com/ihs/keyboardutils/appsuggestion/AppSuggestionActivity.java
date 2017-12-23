@@ -19,8 +19,14 @@ import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.artw.lockscreen.BrowserActivity;
+import com.artw.lockscreen.PremiumLockerActivity;
+import com.artw.lockscreen.PremiumSearchDialog;
+import com.artw.lockscreen.WebContentSearchManager;
 import com.ihs.app.analytics.HSAnalytics;
 import com.ihs.app.framework.HSApplication;
+import com.ihs.commons.config.HSConfig;
+import com.ihs.commons.notificationcenter.HSGlobalNotificationCenter;
 import com.ihs.commons.utils.HSLog;
 import com.ihs.keyboardutils.R;
 import com.ihs.keyboardutils.nativeads.KCNativeAdView;
@@ -36,7 +42,8 @@ import java.util.ArrayList;
 public class AppSuggestionActivity extends Activity {
 
     private static final int RECENT_APP_SIZE = 5;
-
+    private KCNativeAdView nativeAdView;
+    private PremiumSearchDialog searchDialog;
 
     private class RecentAppAdapter extends RecyclerView.Adapter {
         private ArrayList<String> recentAppPackName;
@@ -77,7 +84,7 @@ public class AppSuggestionActivity extends Activity {
                         } catch (Exception e) {
                             ToastUtils.showToast("Launcher app failed");
                         }
-                        HSAnalytics.logEvent("appSuggestions_app_clicked","appName", finalAppName);
+                        HSAnalytics.logEvent("appSuggestions_app_clicked", "appName", finalAppName);
                         finish();
                     }
                 });
@@ -149,7 +156,7 @@ public class AppSuggestionActivity extends Activity {
                 try {
                     Intent callIntent = new Intent(Intent.ACTION_DIAL, null);
                     startActivity(callIntent);
-                    HSAnalytics.logEvent("appSuggestions_app_clicked","appName", "DefaultPhone");
+                    HSAnalytics.logEvent("appSuggestions_app_clicked", "appName", "DefaultPhone");
                 } catch (Exception e) {
                     HSLog.d("open call failed");
                 }
@@ -162,21 +169,39 @@ public class AppSuggestionActivity extends Activity {
             @Override
             public void onClick(View v) {
                 sendSMS();
-                HSAnalytics.logEvent("appSuggestions_app_clicked","appName", "DefaultMSG");
+                HSAnalytics.logEvent("appSuggestions_app_clicked", "appName", "DefaultMSG");
             }
         });
 
         View tvSearch = mainView.findViewById(R.id.tv_search);
         tvSearch.setBackgroundDrawable(RippleDrawableUtils.getButtonRippleBackground(R.color.app_suggestion_search_btn));
+        final boolean quickLaunch = HSConfig.optBoolean(false, "Application", "Locker", "QuickLaunch");
         tvSearch.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                ToastUtils.showToast("need complete");
+                searchDialog = new PremiumSearchDialog(AppSuggestionActivity.this);
+                searchDialog.setOnSearchListerner((dialog, searchText) -> {
+                    String url = WebContentSearchManager.getInstance().queryText(searchText);
+                    Intent intent = new Intent(AppSuggestionActivity.this, BrowserActivity.class);
+                    intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                    intent.putExtra(BrowserActivity.SEARCH_URL_EXTRA, url);
+                    intent.putExtra(BrowserActivity.SHOW_WHEN_LOCKED, quickLaunch);
+                    AppSuggestionActivity.this.startActivity(intent);
+                    if (!quickLaunch) {
+                        HSGlobalNotificationCenter.sendNotification(PremiumLockerActivity.EVENT_FINISH_SELF);
+                    }
+                    dialog.dismiss();
+                });
+                searchDialog.setOnDismissListener(dialog -> {
+                    searchDialog = null;
+                });
+                searchDialog.show();
+
             }
         });
 
 
-        KCNativeAdView nativeAdView = new KCNativeAdView(HSApplication.getContext());
+        nativeAdView = new KCNativeAdView(HSApplication.getContext());
         nativeAdView.setAdLayoutView(View.inflate(this, R.layout.acb_suggestion_ad_layout, null));
         nativeAdView.load(getString(R.string.ad_placement_call_assist));
 
@@ -184,6 +209,14 @@ public class AppSuggestionActivity extends Activity {
         adContainer.addView(nativeAdView);
     }
 
+    @Override
+    protected void onDestroy() {
+        if (nativeAdView != null) {
+            nativeAdView.release();
+            nativeAdView = null;
+        }
+        super.onDestroy();
+    }
 
     public static void showAppSuggestion() {
         Intent intent = new Intent(HSApplication.getContext(), AppSuggestionActivity.class);
