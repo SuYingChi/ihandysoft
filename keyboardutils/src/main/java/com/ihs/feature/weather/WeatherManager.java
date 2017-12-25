@@ -4,6 +4,7 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.text.TextUtils;
 import android.text.format.DateUtils;
 
 import com.ihs.app.framework.HSApplication;
@@ -200,7 +201,7 @@ public class WeatherManager {
             Intent intent = new Intent(ACTION_WEATHER_CHANGE);
             intent.setPackage(context.getPackageName());
 
-            if (!WeatherSettings.shouldDisplayFahrenheit()) {
+            if (isInChina()) {
 //                currentWeatherCondition.getCelsius() + "°C";
                 intent.putExtra(BUNDLE_KEY_WEATHER_TEMPERATURE_INT, currentWeatherCondition.getCelsius());
                 intent.putExtra(BUNDLE_KEY_WEATHER_TEMPERATURE_FORMAT, "%1s°C");
@@ -281,6 +282,15 @@ public class WeatherManager {
 //        HSGlobalNotificationCenter.sendNotification(NOTIFICATION_WEATHER_CONDITION_CHANGED);
 //        sendBroadcast();
     }
+
+    private boolean isInChina() {
+        if (locationManager == null) {
+            return false;
+        }
+        String country = locationManager.getCountry();
+        return !TextUtils.isEmpty(country) && country.equalsIgnoreCase("china");
+    }
+
 
     public String getWeatherText(int type) {
         if (currentWeatherCondition == null) {
