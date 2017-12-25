@@ -138,4 +138,13 @@ public class BrowserActivity extends AppCompatActivity {
             unregisterReceiver(screenOffReceiver);
         }
     }
+
+    @Override
+    public void onBackPressed() {
+        if (webView != null && webView.canGoBack()) {
+            webView.goBack();
+        } else {
+            super.onBackPressed();
+        }
+    }
 }
