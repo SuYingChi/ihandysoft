@@ -21,6 +21,8 @@ import android.view.WindowManager;
 import com.ihs.app.framework.HSApplication;
 import com.ihs.commons.utils.HSLog;
 
+import static android.net.wifi.WifiManager.WIFI_STATE_UNKNOWN;
+
 public class SystemSettingsManager {
 
     private static final String TAG = SystemSettingsManager.class.getName();
@@ -281,7 +283,13 @@ public class SystemSettingsManager {
 
     private int getWifiState() {
         WifiManager wifiMgr = (WifiManager) mContext.getApplicationContext().getSystemService(Context.WIFI_SERVICE);
-        return transferWifiState(wifiMgr.getWifiState());
+        int wifiState = WIFI_STATE_UNKNOWN;
+        try{
+            wifiState = wifiMgr.getWifiState();
+        }catch (Exception e){
+
+        }
+        return transferWifiState(wifiState);
     }
 
     private boolean isSoundOn() {
@@ -326,7 +334,7 @@ public class SystemSettingsManager {
                 state = 3;
                 break;
             case WifiManager.WIFI_STATE_DISABLED:
-            case WifiManager.WIFI_STATE_UNKNOWN:
+            case WIFI_STATE_UNKNOWN:
             default:
                 state = 0;
                 break;

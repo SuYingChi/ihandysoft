@@ -38,7 +38,7 @@ public class AppSuggestionManager {
     private OnAppSuggestionShowListener showListener;
 
     public interface OnAppSuggestionShowListener {
-        String getCurrentPackageName();
+        boolean canShowAppSuggestion();
     }
 
     private static AppSuggestionManager ourInstance;
@@ -92,12 +92,11 @@ public class AppSuggestionManager {
                 if (!hasDone) {
                     if (AppSuggestionSetting.getInstance().canShowAppSuggestion() &&
                             AppSuggestionSetting.getInstance().isFeatureEnabled()) {
-                        if(showListener!=null){
-                            if(!currentLauncherPkg.equals(showListener.getCurrentPackageName())
-                                    && !currentLauncherPkg.equals("com.google.android.googlequicksearchbox")){
+                        if (showListener != null) {
+                            if (showListener.canShowAppSuggestion()) {
                                 showAppSuggestion();
                             }
-                        }else{
+                        } else {
                             showAppSuggestion();
                         }
                     }
