@@ -32,24 +32,17 @@ public class LockerChargingSpecialConfig {
     private boolean showAd = true;
 
     public boolean shouldShowAd() {
-        if (lockerType != PREMIUM_LOCKER_TYPE) {
-            return showAd || HSConfig.optBoolean(true, "Application", "Locker", "Ads", "NewUserShowAd");
-        }
         return showAd;
     }
 
     private static final String ACTION_BIND_SERVICE = "action.customize.service";
 
     /**
-     * 用做判断当前锁屏样式 classic(旧) or premium(新)
-     *
-     * 对于style
-     * 新用户有可能使用新版锁屏，新版锁屏没有广告
-     * 老用户沿用之前配置，使用旧版锁屏
-     *
-     * 对于tiger master
-     * 新老用户均使用旧锁屏
-     * plist控制新用户的锁屏是否显示广告
+     * 用做判断当前版本是否为特殊用户版本
+     * 此功能只针对tiger和Master：
+     * 当前版本locker和chargingLocker的state如果是0，则
+     * 1、老用户升级至此版本时，保留其之前的state状态。
+     * 2、新用户，如果用户通过一些途径(比如set as lockscreen等)开启了锁屏，不要显示广告。
      */
     private int lockerType = 0;
 
@@ -95,9 +88,7 @@ public class LockerChargingSpecialConfig {
         return lockerType == PREMIUM_LOCKER_TYPE;
     }
 
-    public boolean isClassicType() {
-        return lockerType == CLASSIC_LOCKER_TYPE;
-    }
+    public boolean isClassicType() { return lockerType == CLASSIC_LOCKER_TYPE; }
 
     public boolean isLockerEnable() {
         return lockerConnection != null && lockerConnection.isLockerEnable();
