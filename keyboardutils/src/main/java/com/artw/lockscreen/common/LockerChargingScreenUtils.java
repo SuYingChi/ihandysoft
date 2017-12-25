@@ -12,6 +12,7 @@ import com.artw.lockscreen.LockerSettings;
 import com.artw.lockscreen.PremiumLockerActivity;
 import com.ihs.app.framework.HSApplication;
 import com.ihs.charging.HSChargingManager;
+import com.ihs.chargingscreen.utils.ChargingManagerUtil;
 import com.ihs.chargingscreen.utils.ChargingPrefsUtil;
 import com.ihs.chargingscreen.utils.LockerChargingSpecialConfig;
 import com.ihs.commons.config.HSConfig;
@@ -60,7 +61,7 @@ public class LockerChargingScreenUtils {
     }
 
     public static void onScreenOff() {
-        if (HSChargingManager.getInstance().isCharging() && ChargingPrefsUtil.getChargingEnableStates() == ChargingPrefsUtil.CHARGING_DEFAULT_ACTIVE) {
+        if (HSChargingManager.getInstance().isCharging() && ChargingManagerUtil.isChargingEnabled() && !ChargingPrefsUtil.isChargingAlertEnabled()) {
             finishLockerActivity();
         } else if (LockerSettings.isLockerEnabled() && !shouldBlockLockerForNewUser()) {
             if (!LockerChargingSpecialConfig.getInstance().isLockerEnable()) {

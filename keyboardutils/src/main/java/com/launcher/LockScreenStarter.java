@@ -9,6 +9,7 @@ import android.os.BatteryManager;
 import com.artw.lockscreen.common.LockerChargingScreenUtils;
 import com.ihs.app.framework.HSApplication;
 import com.ihs.chargingscreen.utils.ChargingManagerUtil;
+import com.ihs.chargingscreen.utils.ChargingPrefsUtil;
 import com.ihs.commons.utils.HSLog;
 
 /**
@@ -48,7 +49,7 @@ public class LockScreenStarter {
     }
 
     private void onScreenOff() {
-        if (isCharging() && ChargingManagerUtil.isChargingEnabled()) {
+        if (isCharging() && ChargingManagerUtil.isChargingEnabled() && !ChargingPrefsUtil.isChargingAlertEnabled()) {
             notifyToStart(EXTRA_VALUE_CHARGING);
         } else if (com.artw.lockscreen.LockerSettings.isLockerEnabled()) {
             notifyToStart(EXTRA_VALUE_LOCKER);
