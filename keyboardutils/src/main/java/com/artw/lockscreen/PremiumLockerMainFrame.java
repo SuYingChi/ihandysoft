@@ -54,6 +54,7 @@ import com.ihs.feature.softgame.SoftGameDisplayActivity;
 import com.ihs.feature.weather.WeatherManager;
 import com.ihs.keyboardutils.R;
 import com.ihs.keyboardutils.alerts.LockerUpgradeAlert;
+import com.ihs.keyboardutils.appsuggestion.AppSuggestionManager;
 import com.ihs.keyboardutils.utils.CommonUtils;
 import com.ihs.keyboardutils.utils.RippleDrawableUtils;
 import com.ihs.keyboardutils.view.HSGifImageView;
@@ -158,6 +159,7 @@ public class PremiumLockerMainFrame extends PercentRelativeLayout implements INo
          */
         @Override
         public void onClick(View v) {
+            AppSuggestionManager.getInstance().disableAppSuggestionForOneTime();
             Context context = getContext().getApplicationContext();
             boolean quickLaunch = HSConfig.optBoolean(false, "Application", "Locker", "QuickLaunch");
             if (v.getId() == R.id.search_button) {

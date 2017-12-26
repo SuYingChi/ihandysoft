@@ -35,10 +35,10 @@ import static com.ihs.keyboardutils.appsuggestion.AppSuggestionSetting.initEnabl
 
 public class AppSuggestionManager {
     private static final int MAX_APP_SIZE = 5;
-    private OnAppSuggestionShowListener showListener;
+    private boolean canShowAppSuggestion = true;
 
-    public interface OnAppSuggestionShowListener {
-        boolean canShowAppSuggestion();
+    public void disableAppSuggestionForOneTime() {
+        canShowAppSuggestion = false;
     }
 
     private static AppSuggestionManager ourInstance;
@@ -92,12 +92,10 @@ public class AppSuggestionManager {
                 if (!hasDone) {
                     if (AppSuggestionSetting.getInstance().canShowAppSuggestion() &&
                             AppSuggestionSetting.getInstance().isFeatureEnabled()) {
-                        if (showListener != null) {
-                            if (showListener.canShowAppSuggestion()) {
-                                showAppSuggestion();
-                            }
-                        } else {
+                        if (canShowAppSuggestion) {
                             showAppSuggestion();
+                        } else {
+                            canShowAppSuggestion = true;
                         }
                     }
                 }
@@ -126,10 +124,6 @@ public class AppSuggestionManager {
     public void init(boolean isAppCanGetRecent) {
         this.isAppCanGetRecent = isAppCanGetRecent;
         getSavedRecentList();
-    }
-
-    public void setShowListener(OnAppSuggestionShowListener showListener) {
-        this.showListener = showListener;
     }
 
     public AppSuggestionManager() {
