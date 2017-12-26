@@ -7,6 +7,9 @@ import android.text.TextUtils;
 import com.ihs.app.framework.HSApplication;
 import com.ihs.device.clean.junk.cache.nonapp.commonrule.HSApkInfo;
 import com.ihs.device.clean.junk.cache.nonapp.commonrule.HSCommonFileCache;
+import com.ihs.device.common.utils.Utils;
+
+import java.io.File;
 
 public class ApkJunkWrapper extends JunkWrapper {
 
@@ -58,7 +61,12 @@ public class ApkJunkWrapper extends JunkWrapper {
     }
 
     public String getApkIconPath() {
-        return mHSApkInfo.getIconPathFromCache();
+        File cachePath = HSApplication.getContext().getExternalCacheDir();
+        if(cachePath == null) {
+            cachePath = HSApplication.getContext().getCacheDir();
+        }
+
+        return cachePath.getPath() + File.separator + Utils.getMD5(HSApplication.getContext().getPackageName()) + ".png";
     }
 
     public boolean isInstall() {
