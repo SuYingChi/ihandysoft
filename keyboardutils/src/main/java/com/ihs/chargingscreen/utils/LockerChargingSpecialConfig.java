@@ -10,7 +10,6 @@ import com.artw.lockscreen.common.LockerChargingScreenUtils;
 import com.artw.lockscreen.lockerappguide.LockerAppGuideManager;
 import com.fasttrack.lockscreen.ICustomizeInterface;
 import com.ihs.app.framework.HSApplication;
-import com.ihs.commons.config.HSConfig;
 import com.ihs.commons.utils.HSLog;
 
 import static android.content.Context.BIND_AUTO_CREATE;
@@ -26,14 +25,26 @@ public class LockerChargingSpecialConfig {
     public static final int CLASSIC_LOCKER_TYPE = 1;
     public static final int PREMIUM_LOCKER_TYPE = 2;
 
+
     private static LockerChargingSpecialConfig instance;
 
     private LockerConnection lockerConnection;
     private boolean showAd = true;
 
+    private boolean hideLockerAndCharging = false;
+
     public boolean shouldShowAd() {
-        return showAd;
+        return true;
     }
+
+    public boolean isHideLockerAndCharging() {
+        return hideLockerAndCharging;
+    }
+
+    public void setHideLockerAndCharging(boolean hideLockerAndCharging) {
+        this.hideLockerAndCharging = hideLockerAndCharging;
+    }
+
 
     private static final String ACTION_BIND_SERVICE = "action.customize.service";
 
@@ -80,15 +91,13 @@ public class LockerChargingSpecialConfig {
         }
     }
 
-    public boolean canShowAd() {
-        return lockerType != PREMIUM_LOCKER_TYPE || HSConfig.optBoolean(false, "Application", "Locker", "Ads", "NewUserShowAd");
-    }
-
     public boolean isPremiumType() {
         return lockerType == PREMIUM_LOCKER_TYPE;
     }
 
-    public boolean isClassicType() { return lockerType == CLASSIC_LOCKER_TYPE; }
+    public boolean isClassicType() {
+        return lockerType == CLASSIC_LOCKER_TYPE;
+    }
 
     public boolean isLockerEnable() {
         return lockerConnection != null && lockerConnection.isLockerEnable();

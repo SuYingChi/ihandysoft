@@ -36,11 +36,12 @@ public class ChargingPrefsUtil {
 
     public static final String USER_ENABLED_CHARGING;
     private static final String RECORD_CURRENT_PLIST_SETTING;    //这个值是为了让老用户使用现在的
+
     static {
-        if (isChargingAlertEnabled()){
+        if (isChargingAlertEnabled()) {
             USER_ENABLED_CHARGING = "user_enabled_charging_alert";
             RECORD_CURRENT_PLIST_SETTING = "charging_alert_record_current_plist_setting";
-        }else {
+        } else {
             USER_ENABLED_CHARGING = "user_enabled_charging";
             RECORD_CURRENT_PLIST_SETTING = "record_current_plist_setting";
         }
@@ -67,8 +68,8 @@ public class ChargingPrefsUtil {
     }
 
     public static boolean isChargingAlertEnabled() {
-        return HSApplication.getFirstLaunchInfo().appVersionCode >= HSConfig.optInteger(Integer.MAX_VALUE,"Application","ChargeAlert","StartVersion") &&
-                HSConfig.optBoolean(false,"Application","ChargeAlert","ChargingAlertEnabled");
+        return HSApplication.getFirstLaunchInfo().appVersionCode >= HSConfig.optInteger(Integer.MAX_VALUE, "Application", "ChargeAlert", "StartVersion") &&
+                HSConfig.optBoolean(false, "Application", "ChargeAlert", "ChargingAlertEnabled");
     }
 
     /**
@@ -84,6 +85,12 @@ public class ChargingPrefsUtil {
         if (spHelper == null) {
             getInstance();
         }
+
+        //在新版本中直接隐藏LOcker和Charging 老用户沿用之前逻辑
+        if (LockerChargingSpecialConfig.getInstance().isHideLockerAndCharging()) {
+            return CHARGING_MUTED;
+        }
+
         //用户设置过的话，直接返回用户设置的状态。不管plist任何值，包括静默。
         if (spHelper.contains(USER_ENABLED_CHARGING)) {
             HSLog.e("CHARGING 获取用户设置");
@@ -128,10 +135,10 @@ public class ChargingPrefsUtil {
     //用户每次更改设置都要记录值，以便下次直接读取。
     public void setChargingEnableByUser(boolean isEnable) {
         if (isEnable) {
-            if (!RemoveAdsManager.getInstance().isRemoveAdsPurchased() ){
+            if (!RemoveAdsManager.getInstance().isRemoveAdsPurchased()) {
                 if (ChargingPrefsUtil.isChargingAlertEnabled()) {
                     AcbNativeAdManager.sharedInstance().activePlacementInProcess(HSChargingScreenManager.getInstance().getChargingAlertAdsPlacementName());
-                }else {
+                } else {
                     if (LockerChargingSpecialConfig.getInstance().shouldShowAd()) {
                         AcbExpressAdManager.getInstance().activePlacementInProcess(HSChargingScreenManager.getInstance().getChargingActivityAdsPlacementName());
                     }
@@ -163,7 +170,7 @@ public class ChargingPrefsUtil {
 
 
     private static int getChargingPlistConfig() {
-        if (isChargingAlertEnabled()){
+        if (isChargingAlertEnabled()) {
             return HSConfig.optInteger(CHARGING_MUTED, "Application", "ChargeAlert", "State");
         }
         return HSConfig.optInteger(CHARGING_MUTED, "Application", "ChargeLocker", "state");
