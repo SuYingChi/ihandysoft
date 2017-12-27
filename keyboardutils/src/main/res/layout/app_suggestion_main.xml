@@ -1,14 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content">
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
 
     <ImageView
         android:id="@+id/customize_app_name"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_above="@+id/alert_call_container"
         android:layout_marginBottom="8dp"
         android:layout_marginLeft="18dp"
         android:layout_marginRight="18dp"
@@ -16,12 +16,12 @@
         android:src="@drawable/ic_charging_screen_logo" />
 
     <RelativeLayout
-        android:layout_marginLeft="16dp"
-        android:layout_marginRight="16dp"
         android:id="@+id/alert_call_container"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_centerInParent="true"
+        android:layout_marginLeft="16dp"
+        android:layout_marginRight="16dp"
         android:background="@drawable/acb_alert_dialog_normal_bg"
         android:clipChildren="false">
 
@@ -184,8 +184,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="10dp"
                 android:layout_marginTop="10dp"
-                android:clipChildren="false"
-                />
+                android:clipChildren="false" />
 
         </LinearLayout>
 
@@ -201,4 +200,5 @@
 
     </RelativeLayout>
 
-</RelativeLayout>
+
+</LinearLayout>
