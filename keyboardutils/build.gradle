@@ -29,7 +29,7 @@ android {
         targetCompatibility JavaVersion.VERSION_1_8
     }
 }
-final LIB_DEVICE_VERSION = '.gm:4.4.1.gm'
+final LIB_DEVICE_VERSION = '.beta:4.4.2.beta01'
 
 dependencies {
     implementation 'net.appcloudbox.adadapter:libAdNexageBannerAdapter.gm:5.1.0.gm'
