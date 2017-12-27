@@ -105,7 +105,13 @@ public class AppSuggestionManager {
                     List<HSAppRunningInfo> appRunningInfoList = getAppRunningInfoList();
                     ArrayList<String> recentAppList = new ArrayList<>();
                     for (int i = 0; i < appRunningInfoList.size(); i++) {
-                        recentAppList.add(appRunningInfoList.get(i).getPackageName());
+                        if (recentAppList.size() >= 5){
+                            break;
+                        }
+                        String packageName = appRunningInfoList.get(i).getPackageName();
+                        if (!TextUtils.isEmpty(packageName) && !exceptAppList.contains(packageName) && packageManager.getLaunchIntentForPackage(packageName) != null){
+                            recentAppList.add(packageName);
+                        }
                     }
                     recentAppPackName = recentAppList;
                     addDefaultSuggestApps();
