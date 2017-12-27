@@ -115,6 +115,9 @@ public class AppSuggestionManager {
         }
     };
 
+    public String getCurrentLauncherPkg() {
+        return currentLauncherPkg;
+    }
 
     /**
      * In keyboard app, recent apps can be get by itself
