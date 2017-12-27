@@ -19,6 +19,7 @@ import com.ihs.app.framework.HSApplication;
 import com.ihs.commons.notificationcenter.HSGlobalNotificationCenter;
 import com.ihs.feature.common.Thunk;
 import com.ihs.keyboardutils.R;
+import com.ihs.keyboardutils.appsuggestion.AppSuggestionManager;
 import com.ihs.keyboardutils.utils.CommonUtils;
 import com.ihs.keyboardutils.utils.PublisherUtils;
 
@@ -144,6 +145,7 @@ public class LockerSlidingUpCallback implements SlidingUpCallback {
                     HSGlobalNotificationCenter.sendNotification(LockerActivity.EVENT_FINISH_SELF);
                 } else {
                     if (NavUtils.startCameraFromLockerScreen(HSApplication.getContext())) {
+                        AppSuggestionManager.getInstance().disableAppSuggestionForOneTime();
                         HSAnalytics.logEvent("Locker_Camera_Opened", "install_type", PublisherUtils.getInstallType());
                     }
                     HSGlobalNotificationCenter.sendNotification(LockerActivity.EVENT_FINISH_SELF);
