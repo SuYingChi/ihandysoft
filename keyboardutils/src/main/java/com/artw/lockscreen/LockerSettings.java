@@ -104,6 +104,11 @@ public class LockerSettings {
 
 
     public static int getLockerEnableStates() {
+        //在新版本中直接隐藏LOcker和Charging 老用户沿用之前逻辑
+        if (LockerChargingSpecialConfig.getInstance().isHideLockerAndCharging()) {
+            return LOCKER_MUTED;
+        }
+
         //用户设置过的话，直接返回用户设置的状态。不管plist任何值，包括静默。
         if (getPref().contains(USER_ENABLED_LOCKER)) {
             HSLog.e("locker 获取用户设置");
