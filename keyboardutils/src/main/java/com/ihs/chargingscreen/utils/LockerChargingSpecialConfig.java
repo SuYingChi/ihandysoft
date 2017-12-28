@@ -34,7 +34,7 @@ public class LockerChargingSpecialConfig {
     private boolean hideLockerAndCharging = false;
 
     public boolean shouldShowAd() {
-        return true;
+        return showAd;
     }
 
     public boolean isHideLockerAndCharging() {
