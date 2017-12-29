@@ -95,7 +95,7 @@ public class AppSuggestionSetting {
     }
 
     public boolean isEnabled() {
-        return getAppSuggestionEnableStates() == APPSUGGESTION_DEFAULT_ACTIVE;
+        return HSApplication.getFirstLaunchInfo().appVersionCode >= HSConfig.optInteger(Integer.MAX_VALUE, "Application", "AppSuggestion", "StartVersion") && getAppSuggestionEnableStates() == APPSUGGESTION_DEFAULT_ACTIVE;
     }
 
     public void setEnabled(boolean isEnabled) {

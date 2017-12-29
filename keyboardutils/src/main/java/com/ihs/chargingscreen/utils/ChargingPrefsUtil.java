@@ -86,8 +86,8 @@ public class ChargingPrefsUtil {
             getInstance();
         }
 
-        //在新版本中直接隐藏LOcker和Charging 老用户沿用之前逻辑
-        if (LockerChargingSpecialConfig.getInstance().isHideLockerAndCharging()) {
+        //charging老界面的用户如果需要隐藏功能，则会隐藏charging功能
+        if (!isChargingAlertEnabled() && LockerChargingSpecialConfig.getInstance().isHideLockerAndCharging()) {
             return CHARGING_MUTED;
         }
 
