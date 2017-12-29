@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.pm.PackageManager;
 import android.content.pm.ResolveInfo;
+import android.os.Handler;
 import android.preference.PreferenceManager;
 import android.text.TextUtils;
 
@@ -37,6 +38,7 @@ public class AppSuggestionManager {
     private static final int MAX_APP_SIZE = 5;
     private boolean canShowAppSuggestion = true;
     private List<String> defaultAppList;
+    private static final String GOOGLE_SEARCH_BAR_PACKAGE_NAME = "com.google.android.googlequicksearchbox";
 
     public void disableAppSuggestionForOneTime() {
         canShowAppSuggestion = false;
@@ -49,6 +51,9 @@ public class AppSuggestionManager {
     private List<String> exceptAppList = new ArrayList<>();
     private PackageManager packageManager;
     protected static final String FEATURE_NAME = "AppSuggestion";
+    private Handler handler = new Handler();
+
+    private String currentTopAppName = "";
 
     public static AppSuggestionManager getInstance() {
         if (ourInstance == null) {
@@ -94,10 +99,22 @@ public class AppSuggestionManager {
                     if (AppSuggestionSetting.getInstance().canShowAppSuggestion() &&
                             AppSuggestionSetting.getInstance().isFeatureEnabled()) {
                         if (canShowAppSuggestion) {
-                            showAppSuggestion();
+                            if (!TextUtils.isEmpty(currentTopAppName)) {
+                                handler.postDelayed(new Runnable() {
+                                    @Override
+                                    public void run() {
+                                        if (currentTopAppName.equals(currentLauncherPkg) || currentTopAppName.equals(GOOGLE_SEARCH_BAR_PACKAGE_NAME)) {
+                                            showAppSuggestion();
+                                        }
+                                    }
+                                }, 500);
+                            } else {
+                                showAppSuggestion();
+                            }
                         } else {
                             canShowAppSuggestion = true;
                         }
+
                     }
                 }
             } else if (Intent.ACTION_SCREEN_OFF.equals(intent.getAction())) {
@@ -274,5 +291,9 @@ public class AppSuggestionManager {
         }
 
         return appRunningInfoList;
+    }
+
+    public void setCurrentTopAppName(String currentTopAppName) {
+        this.currentTopAppName = currentTopAppName;
     }
 }

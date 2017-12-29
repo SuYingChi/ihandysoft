@@ -48,6 +48,10 @@ public class AppSuggestionSetting {
     }
 
     public int getAppSuggestionEnableStates() {
+        if (HSApplication.getFirstLaunchInfo().appVersionCode < HSConfig.optInteger(Integer.MAX_VALUE, "Application", "AppSuggestion", "StartVersion")) {
+            return APPSUGGESTION_MUTED;
+        }
+
         //用户设置过的话，直接返回用户设置的状态。不管plist任何值，包括静默。
         if (spHelper.contains(USER_ENABLED_SUGGESTION)) {
             HSLog.e("appsuggestion 获取用户设置");
@@ -95,7 +99,7 @@ public class AppSuggestionSetting {
     }
 
     public boolean isEnabled() {
-        return HSApplication.getFirstLaunchInfo().appVersionCode >= HSConfig.optInteger(Integer.MAX_VALUE, "Application", "AppSuggestion", "StartVersion") && getAppSuggestionEnableStates() == APPSUGGESTION_DEFAULT_ACTIVE;
+        return getAppSuggestionEnableStates() == APPSUGGESTION_DEFAULT_ACTIVE;
     }
 
     public void setEnabled(boolean isEnabled) {
@@ -104,7 +108,7 @@ public class AppSuggestionSetting {
         if (isEnabled) {
             AppSuggestionManager.getInstance().getSavedRecentList();
             recordEnableOnce();
-        }else{
+        } else {
             recordDisableOnce();
         }
     }
