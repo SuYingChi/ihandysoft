@@ -150,6 +150,17 @@ public class AppSuggestionManager {
      */
     public void init(boolean isAppCanGetRecent) {
         this.isAppCanGetRecent = isAppCanGetRecent;
+        try {
+            exceptAppList = (List<String>) HSConfig.getList("Application", FEATURE_NAME, "ApkException");
+        } catch (Exception e) {
+            exceptAppList = new ArrayList<>();
+        }
+
+        try {
+            defaultAppList = (List<String>) HSConfig.getList("Application", FEATURE_NAME, "ApkDefault");
+        } catch (Exception e) {
+            defaultAppList = new ArrayList<>();
+        }
         getSavedRecentList();
     }
 
