@@ -36,6 +36,7 @@ import static com.ihs.keyboardutils.appsuggestion.AppSuggestionSetting.initEnabl
 public class AppSuggestionManager {
     private static final int MAX_APP_SIZE = 5;
     private boolean canShowAppSuggestion = true;
+    private List<String> defaultAppList;
 
     public void disableAppSuggestionForOneTime() {
         canShowAppSuggestion = false;
@@ -105,11 +106,11 @@ public class AppSuggestionManager {
                     List<HSAppRunningInfo> appRunningInfoList = getAppRunningInfoList();
                     ArrayList<String> recentAppList = new ArrayList<>();
                     for (int i = 0; i < appRunningInfoList.size(); i++) {
-                        if (recentAppList.size() >= 5){
+                        if (recentAppList.size() >= 5) {
                             break;
                         }
                         String packageName = appRunningInfoList.get(i).getPackageName();
-                        if (!TextUtils.isEmpty(packageName) && !exceptAppList.contains(packageName) && packageManager.getLaunchIntentForPackage(packageName) != null){
+                        if (!TextUtils.isEmpty(packageName) && !exceptAppList.contains(packageName) && packageManager.getLaunchIntentForPackage(packageName) != null) {
                             recentAppList.add(packageName);
                         }
                     }
@@ -155,6 +156,12 @@ public class AppSuggestionManager {
                     } catch (Exception e) {
                         exceptAppList = new ArrayList<>();
                     }
+
+                    try {
+                        defaultAppList = (List<String>) HSConfig.getList("Application", FEATURE_NAME, "ApkDefault");
+                    } catch (Exception e) {
+                        defaultAppList = new ArrayList<>();
+                    }
                 }
             }
         };
@@ -186,11 +193,11 @@ public class AppSuggestionManager {
     }
 
     private void addDefaultSuggestApps() {
-        addNewRecentApp("com.whatsapp");
-        addNewRecentApp("com.facebook.orca");
-        addNewRecentApp("com.facebook.katana");
-        addNewRecentApp("com.instagram.android");
-        addNewRecentApp("com.snapchat.android");
+        if (defaultAppList != null) {
+            for (String s : defaultAppList) {
+                addNewRecentApp(s);
+            }
+        }
     }
 
     public void addNewRecentApp(String packageName) {
