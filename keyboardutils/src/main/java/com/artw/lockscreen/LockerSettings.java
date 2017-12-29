@@ -21,7 +21,7 @@ public class LockerSettings {
     public static final int LOCKER_DEFAULT_DISABLED = 1;
     public static final int LOCKER_DEFAULT_ACTIVE = 2;
 
-    private static final String
+    public static final String
             RECORD_CURRENT_PLIST_SETTING = "record_current_plist_setting";
 
     private static final String PREF_KEY_LOCKER_ENABLED = HSApplication.getContext().getResources().getString(R.string.locker_switcher);
@@ -32,7 +32,7 @@ public class LockerSettings {
     private static final String app_screen_locker_enable = "app_screen_locker_enable";
     private static final String app_screen_locker_disable = "app_screen_locker_disable";
 
-    private static final String USER_ENABLED_LOCKER = "user_enabled_locker";
+    public static final String USER_ENABLED_LOCKER = "user_enabled_locker";
 
     private static final String LOCKER_ENABLE_SHOW_COUNT = "locker_enable_show_count";
     private static final int LOCKER_ENABLE_MAX_SHOW_COUNT = 5;

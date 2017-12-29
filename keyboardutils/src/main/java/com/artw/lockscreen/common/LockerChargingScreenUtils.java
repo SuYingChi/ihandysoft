@@ -37,7 +37,12 @@ public class LockerChargingScreenUtils {
 
     }
 
-    private static int lockerStyle = LOCKER_STYLE_ACTIVITY_PREMIUM;
+    private static int lockerStyle = hasSetLockerBefore() ? LOCKER_STYLE_ACTIVITY_CLASSIC : LOCKER_STYLE_ACTIVITY_PREMIUM;
+
+    private static boolean hasSetLockerBefore() {
+        return LockerSettings.getPref().contains(LockerSettings.RECORD_CURRENT_PLIST_SETTING)
+                || LockerSettings.getPref().contains(LockerSettings.USER_ENABLED_LOCKER);
+    }
 
     public static boolean isFastDoubleClick() {
 
