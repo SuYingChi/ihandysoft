@@ -31,18 +31,14 @@ public class LockerChargingScreenUtils {
     public static final int LOCKER_STYLE_ACTIVITY_CLASSIC = 0;
     public static final int LOCKER_STYLE_ACTIVITY_PREMIUM = 1;
     public static final int LOCKER_STYLE_WINDOW = 2;
+    public static final int LOCKER_STYLE_DEFAULT = 3;
 
-    @IntDef({LOCKER_STYLE_ACTIVITY_CLASSIC, LOCKER_STYLE_ACTIVITY_PREMIUM, LOCKER_STYLE_WINDOW})
+    @IntDef({LOCKER_STYLE_ACTIVITY_CLASSIC, LOCKER_STYLE_ACTIVITY_PREMIUM, LOCKER_STYLE_WINDOW, LOCKER_STYLE_DEFAULT})
     public @interface LockerStyle {
 
     }
 
-    private static int lockerStyle = hasSetLockerBefore() ? LOCKER_STYLE_ACTIVITY_CLASSIC : LOCKER_STYLE_ACTIVITY_PREMIUM;
-
-    private static boolean hasSetLockerBefore() {
-        return LockerSettings.getPref().contains(LockerSettings.RECORD_CURRENT_PLIST_SETTING)
-                || LockerSettings.getPref().contains(LockerSettings.USER_ENABLED_LOCKER);
-    }
+    private static int lockerStyle = LOCKER_STYLE_DEFAULT;
 
     public static boolean isFastDoubleClick() {
 
@@ -139,6 +135,9 @@ public class LockerChargingScreenUtils {
                 break;
             case LOCKER_STYLE_WINDOW:
                 FloatWindowController.getInstance().showLockScreen();
+                break;
+            case LOCKER_STYLE_DEFAULT:
+                HSLog.v("startLockerActivity default style: " + lockerStyle);
                 break;
             default:
                 HSLog.e("startLockerActivity wrong style: " + lockerStyle);
