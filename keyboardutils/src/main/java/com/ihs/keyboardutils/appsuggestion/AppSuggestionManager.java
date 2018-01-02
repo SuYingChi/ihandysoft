@@ -307,7 +307,7 @@ public class AppSuggestionManager {
     }
 
     public ArrayList<String> getRecentAppPackName() {
-        return recentAppPackName;
+        return new ArrayList<>(recentAppPackName);
     }
 
     private static String getDefaultLauncher() {

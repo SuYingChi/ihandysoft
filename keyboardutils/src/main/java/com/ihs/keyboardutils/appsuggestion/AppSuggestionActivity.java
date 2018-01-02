@@ -219,6 +219,10 @@ public class AppSuggestionActivity extends Activity {
     }
 
     public static void showAppSuggestion() {
+        if (AppSuggestionManager.getInstance().getRecentAppPackName().size() == 0) {
+            return;
+        }
+
         Intent intent = new Intent(HSApplication.getContext(), AppSuggestionActivity.class);
         intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
         HSApplication.getContext().startActivity(intent);
