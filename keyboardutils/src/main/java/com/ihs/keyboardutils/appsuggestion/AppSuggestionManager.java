@@ -8,6 +8,7 @@ import android.content.pm.PackageManager;
 import android.content.pm.ResolveInfo;
 import android.os.AsyncTask;
 import android.os.Handler;
+import android.os.SystemClock;
 import android.preference.PreferenceManager;
 import android.text.TextUtils;
 
@@ -21,6 +22,7 @@ import com.ihs.commons.config.HSConfig;
 import com.ihs.commons.notificationcenter.HSGlobalNotificationCenter;
 import com.ihs.commons.notificationcenter.INotificationObserver;
 import com.ihs.commons.utils.HSBundle;
+import com.ihs.commons.utils.HSLog;
 import com.ihs.device.common.HSAppFilter;
 import com.ihs.device.common.HSAppRunningInfo;
 import com.ihs.device.common.utils.AppRunningUtils;
@@ -36,6 +38,8 @@ import static com.ihs.keyboardutils.appsuggestion.AppSuggestionSetting.initEnabl
  */
 
 public class AppSuggestionManager {
+
+    private static final java.lang.String TAG = "AppSuggestionManager";
     private static final int MAX_APP_SIZE = 5;
     private boolean canShowAppSuggestion = true;
     private List<String> defaultAppList;
@@ -122,7 +126,7 @@ public class AppSuggestionManager {
                 currentLauncherPkg = getDefaultLauncher();
                 if (!isAppCanGetRecent) {
                     new FetchRunningAppTask().executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
-                }else {
+                } else {
                     saveRecentList();
                 }
             }
@@ -133,60 +137,71 @@ public class AppSuggestionManager {
         return currentLauncherPkg;
     }
 
-    private class FetchRunningAppTask extends AsyncTask<Void,Void,List<HSAppRunningInfo>> {
+    private class FetchRunningAppTask extends AsyncTask<Void, Void, List<HSAppRunningInfo>> {
+        List<HSAppRunningInfo> preAppRunningInfoList;
 
         @Override
-        protected List<HSAppRunningInfo> doInBackground(Void... voids) {
-            return AppRunningUtils.getAppRunningInfoList(HSAppRunningInfo.class, new HSAppFilter());
+        protected void onPreExecute() {
+            super.onPreExecute();
+            preAppRunningInfoList = appRunningInfoList == null ? null : new ArrayList<>(appRunningInfoList);
         }
 
         @Override
-        protected void onPostExecute(List<HSAppRunningInfo> currentAppRunningInfoList) {
-            if (currentAppRunningInfoList != null) {
-                if (appRunningInfoList == null) {
-                    appRunningInfoList = currentAppRunningInfoList;
-                } else {
-                    List<HSAppRunningInfo> newAppRunningInfoList = new ArrayList<>();
-                    List<HSAppRunningInfo> removeRunningInfoList = new ArrayList<>();
-                    for (HSAppRunningInfo hsAppRunningInfo : currentAppRunningInfoList) {
-                        boolean contains = false;
-                        for (HSAppRunningInfo appRunningInfo : appRunningInfoList) {
-                            if (TextUtils.equals(hsAppRunningInfo.getAppName(), appRunningInfo.getAppName())) {
-                                contains = true;
-                                break;
-                            }
-                        }
-                        if (!contains) {
-                            newAppRunningInfoList.add(hsAppRunningInfo);
+        protected List<HSAppRunningInfo> doInBackground(Void... voids) {
+            long start = SystemClock.elapsedRealtime();
+            List<HSAppRunningInfo> currentAppRunningInfoList = AppRunningUtils.getAppRunningInfoList(HSAppRunningInfo.class, new HSAppFilter());
+            if (preAppRunningInfoList == null) {
+                return currentAppRunningInfoList;
+            } else {
+                List<HSAppRunningInfo> newAppRunningInfoList = new ArrayList<>();
+                List<HSAppRunningInfo> removeRunningInfoList = new ArrayList<>();
+                for (HSAppRunningInfo hsAppRunningInfo : currentAppRunningInfoList) {
+                    boolean contains = false;
+                    for (HSAppRunningInfo appRunningInfo : preAppRunningInfoList) {
+                        if (TextUtils.equals(hsAppRunningInfo.getAppName(), appRunningInfo.getAppName())) {
+                            contains = true;
+                            break;
                         }
                     }
-
-                    if (newAppRunningInfoList.size() != 0) {
-                        appRunningInfoList.addAll(0, newAppRunningInfoList);
-                    }
-
-                    for (HSAppRunningInfo hsAppRunningInfo : appRunningInfoList) {
-                        boolean contains = false;
-                        for (HSAppRunningInfo appRunningInfo : currentAppRunningInfoList) {
-                            if (TextUtils.equals(hsAppRunningInfo.getAppName(), appRunningInfo.getAppName())) {
-                                contains = true;
-                                break;
-                            }
-                        }
-                        if (!contains) {
-                            removeRunningInfoList.add(hsAppRunningInfo);
-                        }
-                    }
-
-                    if (removeRunningInfoList.size() != 0) {
-                        appRunningInfoList.removeAll(removeRunningInfoList);
+                    if (!contains) {
+                        newAppRunningInfoList.add(hsAppRunningInfo);
                     }
                 }
 
+                if (newAppRunningInfoList.size() != 0) {
+                    preAppRunningInfoList.addAll(0, newAppRunningInfoList);
+                }
 
-                ArrayList<String> recentAppList = new ArrayList<>();
+                for (HSAppRunningInfo hsAppRunningInfo : preAppRunningInfoList) {
+                    boolean contains = false;
+                    for (HSAppRunningInfo appRunningInfo : currentAppRunningInfoList) {
+                        if (TextUtils.equals(hsAppRunningInfo.getAppName(), appRunningInfo.getAppName())) {
+                            contains = true;
+                            break;
+                        }
+                    }
+                    if (!contains) {
+                        removeRunningInfoList.add(hsAppRunningInfo);
+                    }
+                }
+
+                if (removeRunningInfoList.size() != 0) {
+                    preAppRunningInfoList.removeAll(removeRunningInfoList);
+                }
+
+                HSLog.w(TAG, "doInBackground cost time :" + (SystemClock.elapsedRealtime() - start));
+                return preAppRunningInfoList;
+            }
+        }
+
+        @Override
+        protected void onPostExecute(List<HSAppRunningInfo> newAppRunningInfoList) {
+            long start = SystemClock.elapsedRealtime();
+            appRunningInfoList = newAppRunningInfoList;
+            ArrayList<String> recentAppList = new ArrayList<>();
+            if (appRunningInfoList != null) {
                 for (int i = 0; i < appRunningInfoList.size(); i++) {
-                    if (recentAppList.size() >= 5) {
+                    if (recentAppList.size() >= MAX_APP_SIZE) {
                         break;
                     }
                     String packageName = appRunningInfoList.get(i).getPackageName();
@@ -194,11 +209,11 @@ public class AppSuggestionManager {
                         recentAppList.add(packageName);
                     }
                 }
-
-                recentAppPackName = recentAppList;
-                addDefaultSuggestApps();
-                saveRecentList();
             }
+            recentAppPackName = recentAppList;
+            addDefaultSuggestApps();
+            saveRecentList();
+            HSLog.w(TAG, "onPostExecute cost time :" + (SystemClock.elapsedRealtime() - start));
         }
     }
 
