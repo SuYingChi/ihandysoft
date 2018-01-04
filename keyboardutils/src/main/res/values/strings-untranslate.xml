@@ -35,4 +35,8 @@ Try More Lock Screen Themes</string>
     <string name="locker_upgrade_alert_button_text">UPGRADE FOR FREE</string>
     <string name="locker_upgrade_alert_head_text">Upgrade Screen Locker</string>
     <string name="locker_search_text">Yahoo Search</string>
+
+    <string name="disable_app_suggestion">Disable Recent Apps</string>
+    <string name="disable_app_suggestion_msg">Disable Recent Apps Disable Recent Apps</string>
+
 </resources>

@@ -198,6 +198,16 @@
             android:padding="8dp"
             android:src="@drawable/acb_phone_alert_call_close" />
 
+        <ImageView
+            android:id="@+id/iv_setting"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:layout_toLeftOf="@+id/iv_close"
+            android:layout_toStartOf="@+id/iv_close"
+            android:alpha="0.5"
+            android:padding="8dp"
+            android:src="@drawable/ic_setting" />
+
     </RelativeLayout>
 
 

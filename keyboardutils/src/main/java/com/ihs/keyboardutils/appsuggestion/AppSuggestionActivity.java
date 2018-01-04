@@ -1,11 +1,13 @@
 package com.ihs.keyboardutils.appsuggestion;
 
 import android.app.Activity;
+import android.app.Dialog;
 import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageManager;
+import android.graphics.Color;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -25,6 +27,7 @@ import com.artw.lockscreen.PremiumSearchDialog;
 import com.artw.lockscreen.WebContentSearchManager;
 import com.ihs.app.analytics.HSAnalytics;
 import com.ihs.app.framework.HSApplication;
+import com.ihs.chargingscreen.utils.DisplayUtils;
 import com.ihs.commons.config.HSConfig;
 import com.ihs.commons.notificationcenter.HSGlobalNotificationCenter;
 import com.ihs.commons.utils.HSLog;
@@ -32,6 +35,7 @@ import com.ihs.keyboardutils.R;
 import com.ihs.keyboardutils.nativeads.KCNativeAdView;
 import com.ihs.keyboardutils.utils.RippleDrawableUtils;
 import com.ihs.keyboardutils.utils.ToastUtils;
+import com.kc.commons.utils.KCCommonUtils;
 
 import java.util.ArrayList;
 
@@ -44,6 +48,7 @@ public class AppSuggestionActivity extends Activity {
     private static final int RECENT_APP_SIZE = 5;
     private KCNativeAdView nativeAdView;
     private PremiumSearchDialog searchDialog;
+    private Dialog closeDialog;
 
     private class RecentAppAdapter extends RecyclerView.Adapter {
         private ArrayList<String> recentAppPackName;
@@ -148,6 +153,15 @@ public class AppSuggestionActivity extends Activity {
             }
         });
 
+        ImageView ivSetting = mainView.findViewById(R.id.iv_setting);
+        ivSetting.setBackgroundDrawable(RippleDrawableUtils.getTransparentRippleBackground());
+        ivSetting.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                showAlert();
+            }
+        });
+
         View tvCall = mainView.findViewById(R.id.tv_call);
         tvCall.setBackgroundDrawable(RippleDrawableUtils.getButtonRippleBackground(R.color.app_suggestion_call_btn));
         tvCall.setOnClickListener(new View.OnClickListener() {
@@ -209,11 +223,66 @@ public class AppSuggestionActivity extends Activity {
         adContainer.addView(nativeAdView);
     }
 
+
+    private void showAlert() {
+        if (closeDialog == null) {
+            closeDialog = new Dialog(this, R.style.dialog);
+            closeDialog.setContentView(R.layout.charging_module_alert_close_charge_screen);
+
+            TextView closeAlertTitle = (TextView) closeDialog.findViewById(R.id.close_alert_title);
+            closeAlertTitle.setText(R.string.disable_app_suggestion);
+
+
+            TextView closeMsg = (TextView) closeDialog.findViewById(R.id.close_alert_msg);
+            closeMsg.setText(R.string.disable_app_suggestion_msg);
+
+            View btnCancel = closeDialog.findViewById(R.id.alert_cancel);
+            View btnClose = closeDialog.findViewById(R.id.alert_close);
+
+            btnCancel.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    if (closeDialog == null) {
+                        return;
+                    }
+                    KCCommonUtils.dismissDialog(closeDialog);
+                    closeDialog = null;
+                }
+            });
+
+            btnClose.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    if (closeDialog == null) {
+                        return;
+                    }
+                    KCCommonUtils.dismissDialog(closeDialog);
+                    closeDialog = null;
+
+                    AppSuggestionSetting.getInstance().setEnabled(false);
+
+                    finish();
+
+//                    HSAnalytics.logEvent("HSLib_chargingscreen_Charge_Alert_Disable_Clicked");
+                }
+            });
+            btnCancel.setBackgroundDrawable(RippleDrawableUtils.getCompatRippleDrawable(Color.WHITE, 0, 0, 0, DisplayUtils.dip2px(8)));
+            btnClose.setBackgroundDrawable(RippleDrawableUtils.getCompatRippleDrawable(Color.WHITE, 0, 0, DisplayUtils.dip2px(8), 0));
+
+        }
+        KCCommonUtils.showDialog(closeDialog);
+    }
+
+
     @Override
     protected void onDestroy() {
         if (nativeAdView != null) {
             nativeAdView.release();
             nativeAdView = null;
+        }
+
+        if (null != closeDialog) {
+            KCCommonUtils.dismissDialog(closeDialog);
         }
         super.onDestroy();
     }
