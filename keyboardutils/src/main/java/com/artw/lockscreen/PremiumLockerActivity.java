@@ -1,8 +1,5 @@
 package com.artw.lockscreen;
 
-import android.animation.Animator;
-import android.animation.AnimatorListenerAdapter;
-import android.animation.ObjectAnimator;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.os.Build;
@@ -21,7 +18,6 @@ import com.artw.lockscreen.statusbar.StatusBar;
 import com.ihs.app.analytics.HSAnalytics;
 import com.ihs.app.framework.HSSessionMgr;
 import com.ihs.chargingscreen.activity.ChargingScreenActivity;
-import com.ihs.chargingscreen.utils.ChargingAnalytics;
 import com.ihs.chargingscreen.utils.ClickUtils;
 import com.ihs.commons.notificationcenter.HSGlobalNotificationCenter;
 import com.ihs.commons.notificationcenter.INotificationObserver;
@@ -31,6 +27,7 @@ import com.ihs.feature.common.Thunk;
 import com.ihs.feature.weather.WeatherManager;
 import com.ihs.keyboardutils.R;
 import com.ihs.keyboardutils.utils.CommonUtils;
+import com.ihs.keyboardutils.utils.PublisherUtils;
 import com.kc.commons.utils.KCCommonUtils;
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.ImageLoader;
@@ -269,8 +266,7 @@ public class PremiumLockerActivity extends AppCompatActivity implements INotific
                 break;
             case ScreenStatusReceiver.NOTIFICATION_SCREEN_ON:
                 if (!ClickUtils.isFastDoubleClick()) {
-                    ChargingAnalytics.logLockScreenShow();
-                    ChargingAnalytics.logLockeScreenOrChargingScreenShow();
+                    HSAnalytics.logEvent("premium_screen_locker_show", "install_type", PublisherUtils.getInstallType());
                 }
                 break;
             default:
