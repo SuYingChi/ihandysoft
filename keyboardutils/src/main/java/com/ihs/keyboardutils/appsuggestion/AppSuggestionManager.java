@@ -331,5 +331,8 @@ public class AppSuggestionManager {
         ResolveInfo resolveInfo = HSApplication.getContext().getPackageManager().resolveActivity(intent, PackageManager.MATCH_DEFAULT_ONLY);
         return resolveInfo.activityInfo.packageName;
     }
-
+    
+    public void setCurrentTopAppName(String currentTopAppName) {
+        this.currentTopAppName = currentTopAppName;
+    }
 }
