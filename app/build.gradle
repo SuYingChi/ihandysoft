@@ -5,7 +5,7 @@ android {
     compileSdkVersion 26
     buildToolsVersion "26.0.2"
     defaultConfig {
-        applicationId "com.wallpaper.theme.privacy.camera.lock.screen"
+        applicationId "com.kc.utils"
         minSdkVersion 14
         targetSdkVersion 22
         versionCode 1
