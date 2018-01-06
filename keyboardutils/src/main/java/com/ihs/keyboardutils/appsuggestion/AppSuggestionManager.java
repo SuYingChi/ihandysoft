@@ -324,9 +324,13 @@ public class AppSuggestionManager {
     private static String getDefaultLauncher() {
         Intent intent = new Intent(Intent.ACTION_MAIN);
         intent.addCategory(Intent.CATEGORY_HOME);
-        ResolveInfo resolveInfo = HSApplication.getContext().getPackageManager().resolveActivity(intent, PackageManager.MATCH_DEFAULT_ONLY);
-        if (resolveInfo != null && resolveInfo.activityInfo != null) {
-            return resolveInfo.activityInfo.packageName;
+        try {
+            ResolveInfo resolveInfo = HSApplication.getContext().getPackageManager().resolveActivity(intent, PackageManager.MATCH_DEFAULT_ONLY);
+            if (resolveInfo != null && resolveInfo.activityInfo != null) {
+                return resolveInfo.activityInfo.packageName;
+            }
+        } catch (Exception e) {
+
         }
         return null;
     }
