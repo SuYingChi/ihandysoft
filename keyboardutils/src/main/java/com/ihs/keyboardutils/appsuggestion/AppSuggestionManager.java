@@ -133,10 +133,6 @@ public class AppSuggestionManager {
         }
     };
 
-    public String getCurrentLauncherPkg() {
-        return currentLauncherPkg;
-    }
-
     private class FetchRunningAppTask extends AsyncTask<Void, Void, List<HSAppRunningInfo>> {
         List<HSAppRunningInfo> preAppRunningInfoList;
 
@@ -329,7 +325,10 @@ public class AppSuggestionManager {
         Intent intent = new Intent(Intent.ACTION_MAIN);
         intent.addCategory(Intent.CATEGORY_HOME);
         ResolveInfo resolveInfo = HSApplication.getContext().getPackageManager().resolveActivity(intent, PackageManager.MATCH_DEFAULT_ONLY);
-        return resolveInfo.activityInfo.packageName;
+        if (resolveInfo != null && resolveInfo.activityInfo != null) {
+            return resolveInfo.activityInfo.packageName;
+        }
+        return null;
     }
     
     public void setCurrentTopAppName(String currentTopAppName) {
