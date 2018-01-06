@@ -17,7 +17,6 @@ import com.artw.lockscreen.slidingdrawer.SlidingDrawerContent;
 import com.artw.lockscreen.statusbar.StatusBar;
 import com.ihs.app.analytics.HSAnalytics;
 import com.ihs.app.framework.HSSessionMgr;
-import com.ihs.chargingscreen.activity.ChargingScreenActivity;
 import com.ihs.chargingscreen.utils.ClickUtils;
 import com.ihs.commons.notificationcenter.HSGlobalNotificationCenter;
 import com.ihs.commons.notificationcenter.INotificationObserver;
@@ -46,7 +45,6 @@ public class PremiumLockerActivity extends AppCompatActivity implements INotific
     public static final String EVENT_FINISH_SELF = "locker_event_finish_self";
     public static final String FINISH_WITHOUT_UNLOCK = "finish_without_unlock";
     public static final String PREF_KEY_CURRENT_WALLPAPER_HD_URL = "current_hd_wallpaper_url";
-    private long startDisplayTime;
 
     @Thunk
     ViewPager mViewPager;
@@ -83,7 +81,6 @@ public class PremiumLockerActivity extends AppCompatActivity implements INotific
         }
 
         setContentView(R.layout.activity_locker);
-        HSAnalytics.logEvent("new_screenLocker_show");
 
         mLockerWallpaper = (ImageView) findViewById(R.id.locker_wallpaper_view);
 
@@ -106,20 +103,6 @@ public class PremiumLockerActivity extends AppCompatActivity implements INotific
     protected void onResume() {
         super.onResume();
         WeatherManager.getInstance().requestWeather();
-        long current = System.currentTimeMillis();
-        if (current - startDisplayTime > 1000) {
-            startDisplayTime = current;
-        } else {
-            startDisplayTime = -1;
-        }
-    }
-
-    @Override
-    protected void onPause() {
-        super.onPause();
-        if (startDisplayTime != -1) {
-            ChargingScreenActivity.logDisplayTime("app_screenLocker_displaytime", startDisplayTime);
-        }
     }
 
     @Override
@@ -266,7 +249,7 @@ public class PremiumLockerActivity extends AppCompatActivity implements INotific
                 break;
             case ScreenStatusReceiver.NOTIFICATION_SCREEN_ON:
                 if (!ClickUtils.isFastDoubleClick()) {
-                    HSAnalytics.logEvent("premium_screen_locker_show", "install_type", PublisherUtils.getInstallType());
+                    HSAnalytics.logEvent("new_screenLocker_show", "install_type", PublisherUtils.getInstallType());
                 }
                 break;
             default:
