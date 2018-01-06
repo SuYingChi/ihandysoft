@@ -30,7 +30,7 @@ public class LockScreenService extends Service {
         KeyguardManager keyguardMgr = (KeyguardManager) getSystemService(Context.KEYGUARD_SERVICE);
         keyguardLock = keyguardMgr.newKeyguardLock(KEYGUARD_LOCK_NAME);
         try {
-            keyguardLock.disableKeyguard();
+//            keyguardLock.disableKeyguard();
         } catch (Exception e) {
             keyguardLock = null;
             e.printStackTrace();
