@@ -292,10 +292,14 @@ public class AppSuggestionActivity extends Activity {
             return;
         }
 
-        Intent intent = new Intent(HSApplication.getContext(), AppSuggestionActivity.class);
-        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
-        HSApplication.getContext().startActivity(intent);
-        HSAnalytics.logEvent("appSuggestions_show");
+        try {
+            Intent intent = new Intent(HSApplication.getContext(), AppSuggestionActivity.class);
+            intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+            HSApplication.getContext().startActivity(intent);
+            HSAnalytics.logEvent("appSuggestions_show");
+        } catch (Exception e) {
+
+        }
     }
 
 
