@@ -20,6 +20,7 @@ import android.view.WindowManager;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.artw.lockscreen.BrowserActivity;
 import com.artw.lockscreen.PremiumLockerActivity;
@@ -317,7 +318,11 @@ public class AppSuggestionActivity extends Activity {
         {
             Intent smsIntent = new Intent(android.content.Intent.ACTION_VIEW);
             smsIntent.setType("vnd.android-dir/mms-sms");
-            startActivity(smsIntent);
+            if (HSApplication.getContext().getPackageManager().resolveActivity(smsIntent, 0) != null) {
+                startActivity(smsIntent);
+            } else {
+                Toast.makeText(HSApplication.getContext(),R.string.sms_not_supported_prompt,Toast.LENGTH_SHORT).show();
+            }
         }
     }
 
