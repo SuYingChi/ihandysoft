@@ -7,6 +7,7 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.content.SharedPreferences;
 import android.graphics.drawable.BitmapDrawable;
 import android.os.Build;
 import android.support.percent.PercentRelativeLayout;
@@ -112,6 +113,8 @@ public class PremiumLockerMainFrame extends PercentRelativeLayout implements INo
     private boolean shouldShowCommonUseButtons; //Boost, Game, Camera, Weather
 
     private PremiumSearchDialog searchDialog;
+
+    private int pushDialogIndex = 0;
 
     private BroadcastReceiver weatherReceiver = new BroadcastReceiver() {
         @Override
@@ -431,12 +434,52 @@ public class PremiumLockerMainFrame extends PercentRelativeLayout implements INo
                     mShimmer.cancel();
                 }
                 buttonUpgrade.clear();
+                SharedPreferences.Editor editor = getContext().getSharedPreferences("pushDialog", Context.MODE_PRIVATE).edit();
+                editor.putLong("time", System.currentTimeMillis());
+                editor.putInt("index", pushDialogIndex);
+                editor.apply();
                 break;
             case ScreenStatusReceiver.NOTIFICATION_SCREEN_ON:
                 if (!mShimmer.isAnimating()) {
                     mShimmer.start(mUnlockText);
                 }
                 buttonUpgrade.setImageResource(R.raw.upgrade_icon);
+                int timeForUpdate = (int) (System.currentTimeMillis() - getContext().getSharedPreferences("pushDialog", Context.MODE_PRIVATE).getLong("time", 0)) / (60 * 1000);
+                pushDialogIndex = getContext().getSharedPreferences("pushDialog", Context.MODE_PRIVATE).getInt("index", pushDialogIndex);
+                if (timeForUpdate > 5) {
+                    pushDialogIndex++;
+                    int pushDialogCount = 7;
+                    pushDialogIndex = pushDialogIndex% pushDialogCount;
+                }
+                switchPushDialog(pushDialogIndex);
+                break;
+            default:
+                break;
+        }
+    }
+
+    private void switchPushDialog(int pushDialogIndex) {
+        switch (pushDialogIndex) {
+            case 0:
+                //垃圾清理
+                break;
+            case 1:
+                //游戏
+                break;
+            case 2:
+                //相机内容
+                break;
+            case 3:
+                //quiz
+                break;
+            case 4:
+                //电量
+                break;
+            case 5:
+                //CPU
+                break;
+            case 6:
+                //boost
                 break;
             default:
                 break;
