@@ -98,14 +98,14 @@
 
     <LinearLayout
         android:id="@+id/button_boost"
-        android:layout_above="@+id/button_camera"
+        android:layout_above="@+id/push_dialog"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
         android:orientation="vertical"
-        app:layout_aspectRatio="234.3%"
+        app:layout_aspectRatio="100%"
         app:layout_marginBottomPercent="0.78%"
         app:layout_marginLeftPercent="5.9%"
-        app:layout_widthPercent="43.4%">
+        app:layout_widthPercent="21.7%">
 
         <ImageView
             android:layout_width="wrap_content"
@@ -119,22 +119,20 @@
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginBottom="4dp"
             android:gravity="center"
             android:text="@string/launcher_widget_boost_title"
-            android:layout_marginBottom="4dp"
             android:textColor="#7fffffff"
             android:textSize="12sp" />
     </LinearLayout>
 
     <LinearLayout
         android:id="@+id/button_game"
-        android:layout_alignParentEnd="true"
-        android:layout_alignParentRight="true"
         android:layout_alignTop="@+id/button_boost"
         android:orientation="vertical"
-        app:layout_aspectRatio="234.3%"
-        app:layout_marginRightPercent="5.9%"
-        app:layout_widthPercent="43.4%">
+        app:layout_aspectRatio="100%"
+        app:layout_marginLeftPercent="28.06%"
+        app:layout_widthPercent="21.7%">
 
         <ImageView
             android:layout_width="wrap_content"
@@ -148,23 +146,20 @@
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginBottom="4dp"
             android:gravity="center"
             android:text="@string/app_store_category_name_games"
-            android:layout_marginBottom="4dp"
             android:textColor="#7fffffff"
             android:textSize="12sp" />
     </LinearLayout>
 
     <LinearLayout
         android:id="@+id/button_camera"
-        android:layout_above="@+id/bottom_operation_area"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
+        android:layout_alignTop="@id/button_boost"
         android:orientation="vertical"
-        app:layout_aspectRatio="234.3%"
-        app:layout_marginBottomPercent="4%"
-        app:layout_marginLeftPercent="5.9%"
-        app:layout_widthPercent="43.4%">
+        app:layout_aspectRatio="100%"
+        app:layout_marginLeftPercent="50.24%"
+        app:layout_widthPercent="21.7%">
 
         <ImageView
             android:layout_width="wrap_content"
@@ -178,8 +173,8 @@
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:gravity="center"
             android:layout_marginBottom="4dp"
+            android:gravity="center"
             android:text="@string/icon_preview_camera_title"
             android:textColor="#7fffffff"
             android:textSize="12sp" />
@@ -189,11 +184,11 @@
         android:id="@+id/button_weather"
         android:layout_alignParentEnd="true"
         android:layout_alignParentRight="true"
-        android:layout_alignTop="@+id/button_camera"
+        android:layout_alignTop="@+id/button_boost"
         android:orientation="vertical"
-        app:layout_aspectRatio="234.3%"
+        app:layout_aspectRatio="100%"
         app:layout_marginRightPercent="5.9%"
-        app:layout_widthPercent="43.4%">
+        app:layout_widthPercent="21.7%">
 
         <ImageView
             android:id="@+id/weather_image"
@@ -235,6 +230,19 @@
             android:textColor="#7fffffff"
             android:textSize="12sp" />
     </android.support.percent.PercentRelativeLayout>
+
+    <FrameLayout
+        android:id="@+id/push_dialog"
+        android:layout_above="@id/bottom_operation_area"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:background="@color/colorAccent"
+        app:layout_aspectRatio="200%"
+        app:layout_marginBottomPercent="1.5%"
+        app:layout_marginLeftPercent="5.9%"
+        app:layout_widthPercent="88.2%">
+
+    </FrameLayout>
 
     <com.artw.lockscreen.slidingdrawer.SlidingDrawer
         android:id="@+id/operation_area"
