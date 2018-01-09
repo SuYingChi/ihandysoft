@@ -35,9 +35,9 @@ public class NotificationBean {
     private String bgUrl = "";
     private String name = ""; // 用于匹配是否已下载的对象
     private String actionType = ""; //跳转对象类型
-    private String messageColor = "#99000000";
-    private String titleColor = "#000000";
-    private String buttonTextColor = "#ffffff";
+    private String messageColor = "#ffffff";
+    private String titleColor = "#ffffff";
+    private String buttonTextColor = "#000000";
     private String buttonText = "CHECK";
     private String bgColor = "#ffffff";
     private Boolean repeat;

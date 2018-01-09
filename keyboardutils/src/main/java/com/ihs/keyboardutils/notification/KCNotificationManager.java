@@ -376,6 +376,12 @@ public class KCNotificationManager {
                             @Override
                             public void onLoadingFailed(String imageUri, View view, FailReason failReason) {
                                 HSLog.e("icon 加载失败 url: " + imageUri);
+                                imgRequestCompleteCount[0]--;
+                                contentView.setImageViewBitmap(R.id.notification_icon, BitmapFactory.decodeResource(context.getResources(), context.getApplicationInfo().icon));
+                                mBuilder.setContent(contentView);
+                                if (imgRequestCompleteCount[0] == 0) {
+                                    tryToNotify(mBuilder, beanCopy);
+                                }
                             }
 
                             @Override
@@ -406,6 +412,14 @@ public class KCNotificationManager {
                             @Override
                             public void onLoadingFailed(String imageUri, View view, FailReason failReason) {
                                 HSLog.e("bg 加载失败 url: " + imageUri);
+                                imgRequestCompleteCount[0]--;
+                                Bitmap background = BitmapFactory.decodeResource(context.getResources(),
+                                        R.drawable.default_push_bg);
+                                contentView.setImageViewBitmap(R.id.notification_background, background);
+                                mBuilder.setContent(contentView);
+                                if (imgRequestCompleteCount[0] == 0) {
+                                    tryToNotify(mBuilder, beanCopy);
+                                }
                             }
 
                             @Override
