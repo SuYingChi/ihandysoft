@@ -11,7 +11,6 @@ import android.text.TextUtils;
 import android.util.AttributeSet;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.ViewTreeObserver;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -47,8 +46,6 @@ public class AdLoadingView extends RelativeLayout implements KCNativeAdView.OnAd
 
     //下载延迟常量
     private boolean hasPurchaseNoAds = false;
-    private boolean isAdFlashAnimationPlayed = false;
-    private ViewTreeObserver.OnGlobalLayoutListener mGlobalLayoutListener;
     private View closeButton;
     private boolean alertDismissManually = false;
 
@@ -66,7 +63,6 @@ public class AdLoadingView extends RelativeLayout implements KCNativeAdView.OnAd
 
     private String[] onLoadingText = {"Applying...", "Applying SuccessFully"};
     private KCNativeAdView nativeAdView;
-    private FlashFrameLayout flashAdContainer;
     private OnAdBufferingListener onAdBufferingListener;
 
     public AdLoadingView(Context context) {
@@ -137,14 +133,9 @@ public class AdLoadingView extends RelativeLayout implements KCNativeAdView.OnAd
         inflate.findViewById(R.id.ad_call_to_action)
                 .setBackgroundDrawable(
                         RippleDrawableUtils.getButtonRippleBackground(R.color.ad_action_button_bg));
-        flashAdContainer = (FlashFrameLayout) inflate.findViewById(R.id.ad_loading_flash_container);
 
 
         nativeAdView.setOnAdClickedListener(this);
-        if (mGlobalLayoutListener == null) {
-            mGlobalLayoutListener = getLayoutListener();
-        }
-        nativeAdView.getViewTreeObserver().addOnGlobalLayoutListener(mGlobalLayoutListener);
 
         ViewGroup adContainer = (ViewGroup) findViewById(R.id.fl_ad_container);
         if (nativeAdView.getParent() != null) {
@@ -152,18 +143,6 @@ public class AdLoadingView extends RelativeLayout implements KCNativeAdView.OnAd
         }
         nativeAdView.setBackgroundColor(getContext().getResources().getColor(android.R.color.white));
         adContainer.addView(nativeAdView);
-    }
-
-    private ViewTreeObserver.OnGlobalLayoutListener getLayoutListener() {
-        return new ViewTreeObserver.OnGlobalLayoutListener() {
-            @Override
-            public void onGlobalLayout() {
-                if (nativeAdView.isAdLoaded() && !isAdFlashAnimationPlayed) {
-                    flashAdContainer.startShimmerAnimation();
-                    isAdFlashAnimationPlayed = true;
-                }
-            }
-        };
     }
 
     private AdLoadingView setIcon(Drawable icon) {
@@ -325,8 +304,6 @@ public class AdLoadingView extends RelativeLayout implements KCNativeAdView.OnAd
     public void dismissSelf() {
         if (nativeAdView != null) {
             nativeAdView.release();
-            isAdFlashAnimationPlayed = false;
-            nativeAdView.getViewTreeObserver().removeGlobalOnLayoutListener(mGlobalLayoutListener);
             nativeAdView = null;
         }
 
@@ -342,8 +319,6 @@ public class AdLoadingView extends RelativeLayout implements KCNativeAdView.OnAd
         super.onDetachedFromWindow();
         if (nativeAdView != null) {
             nativeAdView.release();
-            isAdFlashAnimationPlayed = false;
-            nativeAdView.getViewTreeObserver().removeGlobalOnLayoutListener(mGlobalLayoutListener);
             nativeAdView = null;
         }
     }
