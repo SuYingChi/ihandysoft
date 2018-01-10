@@ -280,7 +280,7 @@ public class KCNativeAdView extends FrameLayout {
                         // 防止因为没有权限而Crash
                     }
                     if(HSLog.isDebugging()) {
-                        Toast.makeText(getContext(), "KCNativeAd Error: " + hsError.getMessage(), Toast.LENGTH_SHORT).show();
+                        Toast.makeText(getContext(), "Ad(" + placement + ") Error: " + hsError.getMessage(), Toast.LENGTH_LONG).show();
                     }
                 }
 
