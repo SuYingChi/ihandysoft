@@ -336,7 +336,7 @@
                 android:visibility="gone" />
 
             <Button
-                android:id="@+id/push_dialog_button_cam"
+                android:id="@+id/push_dialog_button"
                 android:layout_width="match_parent"
                 android:layout_height="36.7dp"
                 android:layout_alignLeft="@id/icon"

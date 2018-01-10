@@ -8,6 +8,8 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.SharedPreferences;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.drawable.BitmapDrawable;
 import android.os.Build;
 import android.support.percent.PercentRelativeLayout;
@@ -56,16 +58,20 @@ import com.ihs.feature.weather.WeatherManager;
 import com.ihs.keyboardutils.R;
 import com.ihs.keyboardutils.alerts.LockerUpgradeAlert;
 import com.ihs.keyboardutils.appsuggestion.AppSuggestionManager;
+import com.ihs.keyboardutils.notification.NotificationBean;
 import com.ihs.keyboardutils.utils.CommonUtils;
 import com.ihs.keyboardutils.utils.RippleDrawableUtils;
 import com.ihs.keyboardutils.view.HSGifImageView;
 import com.kc.commons.utils.KCCommonUtils;
 
+import java.net.URL;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.List;
 import java.util.Locale;
+import java.util.Map;
 
 import static com.artw.lockscreen.LockerSettings.recordLockerDisableOnce;
 import static com.artw.lockscreen.common.TimeTickReceiver.NOTIFICATION_CLOCK_TIME_CHANGED;
@@ -477,12 +483,44 @@ public class PremiumLockerMainFrame extends PercentRelativeLayout implements INo
                 //游戏
                 break;
             case 2:
-                findViewById(R.id.game_and_cam_title).setVisibility(VISIBLE);
-                findViewById(R.id.push_dialog_subtitle).setVisibility(VISIBLE);
-                findViewById(R.id.title_for_boost).setVisibility(GONE);
-                findViewById(R.id.quiz_head).setVisibility(GONE);
-                findViewById(R.id.quiz_title).setVisibility(GONE);
-                //相机内容
+                List<Map<String, Object>> configs;
+                NotificationBean bean = null;
+                try {
+                    configs = (List<Map<String, Object>>) HSConfig.getList("Application", "LocalNotifications", "Content");
+                    bean = new NotificationBean(configs.get(0));
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+
+                if (bean == null) {
+                    this.pushDialogIndex++;
+                    switchPushDialog(this.pushDialogIndex);
+                } else {
+                    findViewById(R.id.game_and_cam_title).setVisibility(VISIBLE);
+                    findViewById(R.id.push_dialog_subtitle).setVisibility(VISIBLE);
+                    findViewById(R.id.title_for_boost).setVisibility(GONE);
+                    findViewById(R.id.quiz_head).setVisibility(GONE);
+                    findViewById(R.id.quiz_title).setVisibility(GONE);
+
+                    ((TextView)findViewById(R.id.game_and_cam_title)).setText(bean.getName());
+                    ((TextView)findViewById(R.id.push_dialog_subtitle)).setText(bean.getMessage());
+                    ((TextView)findViewById(R.id.push_dialog_button)).setText(bean.getButtonText());
+
+                    String imageUrl = bean.getIconUrl();
+                    if (imageUrl == null) {
+                        ((ImageView)findViewById(R.id.icon)).setImageResource(R.drawable.ic_locker_camera);
+                    } else {
+                        new Thread(() -> {
+                            try {
+                                URL url = new URL(imageUrl);
+                                Bitmap bitmap = BitmapFactory.decodeStream(url.openConnection().getInputStream());
+                                ((ImageView)findViewById(R.id.icon)).setImageBitmap(bitmap);
+                            }catch (Exception e){
+                                e.printStackTrace();
+                            }
+                        }).start();
+                    }
+                }
                 break;
             case 3:
                 findViewById(R.id.quiz_head).setVisibility(VISIBLE);
