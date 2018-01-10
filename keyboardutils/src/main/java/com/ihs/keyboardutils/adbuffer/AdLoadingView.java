@@ -11,6 +11,7 @@ import android.text.TextUtils;
 import android.util.AttributeSet;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.ViewTreeObserver;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -33,7 +34,7 @@ import static java.lang.System.currentTimeMillis;
  * Created by Arthur on 17/4/12.
  */
 
-public class AdLoadingView extends RelativeLayout implements KCNativeAdView.OnAdLoadedListener, KCNativeAdView.OnAdClickedListener {
+public class AdLoadingView extends RelativeLayout implements KCNativeAdView.OnAdClickedListener {
 
 
     private AdLoadingDialog dialog;
@@ -128,7 +129,25 @@ public class AdLoadingView extends RelativeLayout implements KCNativeAdView.OnAd
         nativeAdView = new KCNativeAdView(getContext());
         nativeAdView.setAdLayoutView(inflate);
         inflate.setLayoutParams(new FrameLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT));
-        nativeAdView.setOnAdLoadedListener(this);
+        FlashFrameLayout flashFrameLayout = inflate.findViewById(R.id.ad_loading_flash_container);
+        flashFrameLayout.setAutoStart(false);
+        nativeAdView.setOnAdLoadedListener(new KCNativeAdView.OnAdLoadedListener() {
+            @Override
+            public void onAdLoaded(KCNativeAdView adView) {
+                HSAnalytics.logEvent("NativeAds_A(NativeAds)ApplyingItem_Show");
+                adView.getViewTreeObserver().addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
+                    @Override
+                    public void onGlobalLayout() {
+                        if (adView.getWidth() > 0 && adView.getHeight() > 0) {
+                            adView.getViewTreeObserver().removeGlobalOnLayoutListener(this);
+                            if (!TextUtils.equals(adView.getAdVendorName(), "facebook")) {
+                                flashFrameLayout.startShimmerAnimation();
+                            }
+                        }
+                    }
+                });
+            }
+        });
 
         inflate.findViewById(R.id.ad_call_to_action)
                 .setBackgroundDrawable(
@@ -294,11 +313,6 @@ public class AdLoadingView extends RelativeLayout implements KCNativeAdView.OnAd
             }
         });
         KCCommonUtils.showDialog(dialog);
-    }
-
-    @Override
-    public void onAdLoaded(KCNativeAdView adView) {
-        HSAnalytics.logEvent("NativeAds_A(NativeAds)ApplyingItem_Show");
     }
 
     public void dismissSelf() {
