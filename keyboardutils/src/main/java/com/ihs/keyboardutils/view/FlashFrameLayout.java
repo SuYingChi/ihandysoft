@@ -193,38 +193,6 @@ public class FlashFrameLayout extends FrameLayout {
                     setRepeatMode(a.getInt(R.styleable.FlashFrameLayout_flash_repeat_mode, 0));
                 }
 
-                if (a.hasValue(R.styleable.FlashFrameLayout_flash_angle)) {
-                    int angle = a.getInt(R.styleable.FlashFrameLayout_flash_angle, 0);
-                    switch (angle) {
-                        default:
-                        case 0:
-                            mMask.angle = FlashFrameLayout.MaskAngle.CW_0;
-                            break;
-                        case 90:
-                            mMask.angle = FlashFrameLayout.MaskAngle.CW_90;
-                            break;
-                        case 180:
-                            mMask.angle = FlashFrameLayout.MaskAngle.CW_180;
-                            break;
-                        case 270:
-                            mMask.angle = FlashFrameLayout.MaskAngle.CW_270;
-                            break;
-                    }
-                }
-
-                if (a.hasValue(R.styleable.FlashFrameLayout_flash_shape)) {
-                    int shape = a.getInt(R.styleable.FlashFrameLayout_flash_shape, 0);
-                    switch (shape) {
-                        default:
-                        case 0:
-                            mMask.shape = FlashFrameLayout.MaskShape.LINEAR;
-                            break;
-                        case 1:
-                            mMask.shape = FlashFrameLayout.MaskShape.RADIAL;
-                            break;
-                    }
-                }
-
                 if (a.hasValue(R.styleable.FlashFrameLayout_flash_dropoff)) {
                     mMask.dropoff = a.getFloat(R.styleable.FlashFrameLayout_flash_dropoff, 0);
                 }
