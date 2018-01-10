@@ -461,24 +461,59 @@ public class PremiumLockerMainFrame extends PercentRelativeLayout implements INo
     private void switchPushDialog(int pushDialogIndex) {
         switch (pushDialogIndex) {
             case 0:
+                findViewById(R.id.title_for_boost).setVisibility(VISIBLE);
+                findViewById(R.id.push_dialog_subtitle).setVisibility(VISIBLE);
+                findViewById(R.id.game_and_cam_title).setVisibility(GONE);
+                findViewById(R.id.quiz_head).setVisibility(GONE);
+                findViewById(R.id.quiz_title).setVisibility(GONE);
                 //垃圾清理
                 break;
             case 1:
+                findViewById(R.id.game_and_cam_title).setVisibility(VISIBLE);
+                findViewById(R.id.push_dialog_subtitle).setVisibility(VISIBLE);
+                findViewById(R.id.title_for_boost).setVisibility(GONE);
+                findViewById(R.id.quiz_head).setVisibility(GONE);
+                findViewById(R.id.quiz_title).setVisibility(GONE);
                 //游戏
                 break;
             case 2:
+                findViewById(R.id.game_and_cam_title).setVisibility(VISIBLE);
+                findViewById(R.id.push_dialog_subtitle).setVisibility(VISIBLE);
+                findViewById(R.id.title_for_boost).setVisibility(GONE);
+                findViewById(R.id.quiz_head).setVisibility(GONE);
+                findViewById(R.id.quiz_title).setVisibility(GONE);
                 //相机内容
                 break;
             case 3:
+                findViewById(R.id.quiz_head).setVisibility(VISIBLE);
+                findViewById(R.id.quiz_title).setVisibility(VISIBLE);
+                findViewById(R.id.game_and_cam_title).setVisibility(GONE);
+                findViewById(R.id.push_dialog_subtitle).setVisibility(GONE);
+                findViewById(R.id.title_for_boost).setVisibility(GONE);
                 //quiz
                 break;
             case 4:
+                findViewById(R.id.title_for_boost).setVisibility(VISIBLE);
+                findViewById(R.id.push_dialog_subtitle).setVisibility(VISIBLE);
+                findViewById(R.id.game_and_cam_title).setVisibility(GONE);
+                findViewById(R.id.quiz_head).setVisibility(GONE);
+                findViewById(R.id.quiz_title).setVisibility(GONE);
                 //电量
                 break;
             case 5:
+                findViewById(R.id.title_for_boost).setVisibility(VISIBLE);
+                findViewById(R.id.push_dialog_subtitle).setVisibility(VISIBLE);
+                findViewById(R.id.game_and_cam_title).setVisibility(GONE);
+                findViewById(R.id.quiz_head).setVisibility(GONE);
+                findViewById(R.id.quiz_title).setVisibility(GONE);
                 //CPU
                 break;
             case 6:
+                findViewById(R.id.title_for_boost).setVisibility(VISIBLE);
+                findViewById(R.id.push_dialog_subtitle).setVisibility(VISIBLE);
+                findViewById(R.id.game_and_cam_title).setVisibility(GONE);
+                findViewById(R.id.quiz_head).setVisibility(GONE);
+                findViewById(R.id.quiz_title).setVisibility(GONE);
                 //boost
                 break;
             default:
