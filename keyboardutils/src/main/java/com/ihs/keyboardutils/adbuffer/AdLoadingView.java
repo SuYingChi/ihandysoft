@@ -22,6 +22,7 @@ import com.ihs.app.analytics.HSAnalytics;
 import com.ihs.chargingscreen.utils.DisplayUtils;
 import com.ihs.keyboardutils.BuildConfig;
 import com.ihs.keyboardutils.R;
+import com.ihs.keyboardutils.ads.AdUtils;
 import com.ihs.keyboardutils.nativeads.KCNativeAdView;
 import com.ihs.keyboardutils.utils.RippleDrawableUtils;
 import com.ihs.keyboardutils.view.CustomProgressDrawable;
@@ -140,7 +141,7 @@ public class AdLoadingView extends RelativeLayout implements KCNativeAdView.OnAd
                     public void onGlobalLayout() {
                         if (adView.getWidth() > 0 && adView.getHeight() > 0) {
                             adView.getViewTreeObserver().removeGlobalOnLayoutListener(this);
-                            if (!TextUtils.equals(adView.getAdVendorName(), "facebook")) {
+                            if (!TextUtils.equals(adView.getAdVendorName(), AdUtils.FACEBOOK_VENDOR_NAME)) {
                                 flashFrameLayout.startShimmerAnimation();
                             }
                         }
