@@ -86,7 +86,7 @@ public class KCInterstitialAd {
                         listener = null;
                     }
                     if(HSLog.isDebugging()){
-                        Toast.makeText(HSApplication.getContext(), "KCInterstitialAd Error: " + hsError.getMessage(), Toast.LENGTH_SHORT).show();
+                        Toast.makeText(HSApplication.getContext(), "Ad(" + placement + ") Error: " + hsError.getMessage(), Toast.LENGTH_LONG).show();
                     }
                 }
             }
