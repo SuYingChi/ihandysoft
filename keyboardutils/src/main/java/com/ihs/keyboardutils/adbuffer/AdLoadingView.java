@@ -135,12 +135,12 @@ public class AdLoadingView extends RelativeLayout implements KCNativeAdView.OnAd
         nativeAdView.setOnAdLoadedListener(new KCNativeAdView.OnAdLoadedListener() {
             @Override
             public void onAdLoaded(KCNativeAdView adView) {
-                HSAnalytics.logEvent("NativeAds_A(NativeAds)ApplyingItem_Show");
                 adView.getViewTreeObserver().addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
                     @Override
                     public void onGlobalLayout() {
                         if (adView.getWidth() > 0 && adView.getHeight() > 0) {
                             adView.getViewTreeObserver().removeGlobalOnLayoutListener(this);
+                            HSAnalytics.logEvent("NativeAds_A(NativeAds)ApplyingItem_Show");
                             if (!TextUtils.equals(adView.getAdVendorName(), AdUtils.FACEBOOK_VENDOR_NAME)) {
                                 flashFrameLayout.startShimmerAnimation();
                             }
