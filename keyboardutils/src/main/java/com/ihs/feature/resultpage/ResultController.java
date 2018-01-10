@@ -33,6 +33,7 @@ import com.ihs.feature.common.ViewUtils;
 import com.ihs.feature.resultpage.data.CardData;
 import com.ihs.feature.resultpage.data.ResultConstants;
 import com.ihs.keyboardutils.R;
+import com.ihs.keyboardutils.ads.AdUtils;
 import com.ihs.keyboardutils.utils.CommonUtils;
 import com.ihs.keyboardutils.utils.LauncherAnimationUtils;
 import com.ihs.keyboardutils.utils.ToastUtils;
@@ -375,12 +376,14 @@ abstract class ResultController implements View.OnClickListener {
                             mActionBtn.reveal();
                         }
                     }, START_DELAY_BUTTON_REVEAL);
-                    mActionBtn.postDelayed(new Runnable() {
-                        @Override
-                        public void run() {
-                            mActionBtn.flash();
-                        }
-                    }, START_DELAY_BUTTON_FLASH);
+                    if (mAd != null && !TextUtils.equals(mAd.getVendor().name(), AdUtils.FACEBOOK_VENDOR_NAME)) {
+                        mActionBtn.postDelayed(new Runnable() {
+                            @Override
+                            public void run() {
+                                mActionBtn.flash();
+                            }
+                        }, START_DELAY_BUTTON_FLASH);
+                    }
                 }
             }, startDelay);
         }

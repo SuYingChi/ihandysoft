@@ -261,7 +261,10 @@ public class KCNativeAdView extends FrameLayout {
                     return;
                 }
 
-                AcbNativeAd nativeAd = list.get(0);
+                if (nativeAd != null) {
+                    nativeAd.release();
+                }
+                nativeAd = list.get(0);
                 adLoaded(nativeAd);
             }
 
@@ -349,4 +352,13 @@ public class KCNativeAdView extends FrameLayout {
     public AcbNativeAdContainerView getNativeAdContainerView() {
         return nativeAdContainerView;
     }
+
+    public String getAdVendorName() {
+        if (nativeAd == null) {
+            return null;
+        } else {
+            return nativeAd.getVendor().name();
+        }
+    }
+
 }

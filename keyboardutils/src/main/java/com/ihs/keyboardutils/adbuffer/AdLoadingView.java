@@ -22,6 +22,7 @@ import com.ihs.app.analytics.HSAnalytics;
 import com.ihs.chargingscreen.utils.DisplayUtils;
 import com.ihs.keyboardutils.BuildConfig;
 import com.ihs.keyboardutils.R;
+import com.ihs.keyboardutils.ads.AdUtils;
 import com.ihs.keyboardutils.nativeads.KCNativeAdView;
 import com.ihs.keyboardutils.utils.RippleDrawableUtils;
 import com.ihs.keyboardutils.view.CustomProgressDrawable;
@@ -34,7 +35,7 @@ import static java.lang.System.currentTimeMillis;
  * Created by Arthur on 17/4/12.
  */
 
-public class AdLoadingView extends RelativeLayout implements KCNativeAdView.OnAdLoadedListener, KCNativeAdView.OnAdClickedListener {
+public class AdLoadingView extends RelativeLayout implements KCNativeAdView.OnAdClickedListener {
 
 
     private AdLoadingDialog dialog;
@@ -47,8 +48,6 @@ public class AdLoadingView extends RelativeLayout implements KCNativeAdView.OnAd
 
     //下载延迟常量
     private boolean hasPurchaseNoAds = false;
-    private boolean isAdFlashAnimationPlayed = false;
-    private ViewTreeObserver.OnGlobalLayoutListener mGlobalLayoutListener;
     private View closeButton;
     private boolean alertDismissManually = false;
 
@@ -66,7 +65,6 @@ public class AdLoadingView extends RelativeLayout implements KCNativeAdView.OnAd
 
     private String[] onLoadingText = {"Applying...", "Applying SuccessFully"};
     private KCNativeAdView nativeAdView;
-    private FlashFrameLayout flashAdContainer;
     private OnAdBufferingListener onAdBufferingListener;
 
     public AdLoadingView(Context context) {
@@ -132,19 +130,32 @@ public class AdLoadingView extends RelativeLayout implements KCNativeAdView.OnAd
         nativeAdView = new KCNativeAdView(getContext());
         nativeAdView.setAdLayoutView(inflate);
         inflate.setLayoutParams(new FrameLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT));
-        nativeAdView.setOnAdLoadedListener(this);
+        FlashFrameLayout flashFrameLayout = inflate.findViewById(R.id.ad_loading_flash_container);
+        flashFrameLayout.setAutoStart(false);
+        nativeAdView.setOnAdLoadedListener(new KCNativeAdView.OnAdLoadedListener() {
+            @Override
+            public void onAdLoaded(KCNativeAdView adView) {
+                adView.getViewTreeObserver().addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
+                    @Override
+                    public void onGlobalLayout() {
+                        if (adView.getWidth() > 0 && adView.getHeight() > 0) {
+                            adView.getViewTreeObserver().removeGlobalOnLayoutListener(this);
+                            HSAnalytics.logEvent("NativeAds_A(NativeAds)ApplyingItem_Show");
+                            if (!TextUtils.equals(adView.getAdVendorName(), AdUtils.FACEBOOK_VENDOR_NAME)) {
+                                flashFrameLayout.startShimmerAnimation();
+                            }
+                        }
+                    }
+                });
+            }
+        });
 
         inflate.findViewById(R.id.ad_call_to_action)
                 .setBackgroundDrawable(
                         RippleDrawableUtils.getButtonRippleBackground(R.color.ad_action_button_bg));
-        flashAdContainer = (FlashFrameLayout) inflate.findViewById(R.id.ad_loading_flash_container);
 
 
         nativeAdView.setOnAdClickedListener(this);
-        if (mGlobalLayoutListener == null) {
-            mGlobalLayoutListener = getLayoutListener();
-        }
-        nativeAdView.getViewTreeObserver().addOnGlobalLayoutListener(mGlobalLayoutListener);
 
         ViewGroup adContainer = (ViewGroup) findViewById(R.id.fl_ad_container);
         if (nativeAdView.getParent() != null) {
@@ -152,18 +163,6 @@ public class AdLoadingView extends RelativeLayout implements KCNativeAdView.OnAd
         }
         nativeAdView.setBackgroundColor(getContext().getResources().getColor(android.R.color.white));
         adContainer.addView(nativeAdView);
-    }
-
-    private ViewTreeObserver.OnGlobalLayoutListener getLayoutListener() {
-        return new ViewTreeObserver.OnGlobalLayoutListener() {
-            @Override
-            public void onGlobalLayout() {
-                if (nativeAdView.isAdLoaded() && !isAdFlashAnimationPlayed) {
-                    flashAdContainer.startShimmerAnimation();
-                    isAdFlashAnimationPlayed = true;
-                }
-            }
-        };
     }
 
     private AdLoadingView setIcon(Drawable icon) {
@@ -317,16 +316,9 @@ public class AdLoadingView extends RelativeLayout implements KCNativeAdView.OnAd
         KCCommonUtils.showDialog(dialog);
     }
 
-    @Override
-    public void onAdLoaded(KCNativeAdView adView) {
-        HSAnalytics.logEvent("NativeAds_A(NativeAds)ApplyingItem_Show");
-    }
-
     public void dismissSelf() {
         if (nativeAdView != null) {
             nativeAdView.release();
-            isAdFlashAnimationPlayed = false;
-            nativeAdView.getViewTreeObserver().removeGlobalOnLayoutListener(mGlobalLayoutListener);
             nativeAdView = null;
         }
 
@@ -342,8 +334,6 @@ public class AdLoadingView extends RelativeLayout implements KCNativeAdView.OnAd
         super.onDetachedFromWindow();
         if (nativeAdView != null) {
             nativeAdView.release();
-            isAdFlashAnimationPlayed = false;
-            nativeAdView.getViewTreeObserver().removeGlobalOnLayoutListener(mGlobalLayoutListener);
             nativeAdView = null;
         }
     }
