@@ -47,9 +47,12 @@ import com.ihs.app.framework.HSApplication;
 import com.ihs.chargingscreen.utils.DisplayUtils;
 import com.ihs.chargingscreen.utils.LockerChargingSpecialConfig;
 import com.ihs.commons.config.HSConfig;
+import com.ihs.commons.connection.HSHttpConnection;
 import com.ihs.commons.notificationcenter.HSGlobalNotificationCenter;
 import com.ihs.commons.notificationcenter.INotificationObserver;
 import com.ihs.commons.utils.HSBundle;
+import com.ihs.commons.utils.HSError;
+import com.ihs.commons.utils.HSJsonUtil;
 import com.ihs.commons.utils.HSLog;
 import com.ihs.feature.boost.plus.BoostPlusActivity;
 import com.ihs.feature.common.ScreenStatusReceiver;
@@ -63,6 +66,8 @@ import com.ihs.keyboardutils.utils.CommonUtils;
 import com.ihs.keyboardutils.utils.RippleDrawableUtils;
 import com.ihs.keyboardutils.view.HSGifImageView;
 import com.kc.commons.utils.KCCommonUtils;
+
+import org.json.JSONObject;
 
 import java.net.URL;
 import java.text.DateFormat;
@@ -85,6 +90,15 @@ public class PremiumLockerMainFrame extends PercentRelativeLayout implements INo
 
     public static final String EVENT_SLIDING_DRAWER_OPENED = "EVENT_SLIDING_DRAWER_OPENED";
     public static final String EVENT_SLIDING_DRAWER_CLOSED = "EVENT_SLIDING_DRAWER_CLOSED";
+
+    private static final int MODE_JUNK = 0;
+    private static final int MODE_GAME = 1;
+    private static final int MODE_CAMERA = 2;
+    private static final int MODE_QUIZ = 3;
+    private static final int MODE_BATTERY = 4;
+    private static final int MODE_CPU = 5;
+    private static final int MODE_STORAGE = 6;
+    private static final int GAME_INFO_COUNT = 10;
 
     private boolean mIsSlidingDrawerOpened = false;
     private boolean mIsBlackHoleShowing = false;
@@ -113,6 +127,8 @@ public class PremiumLockerMainFrame extends PercentRelativeLayout implements INo
     private View buttonGame;
     private View buttonCamera;
     private View buttonWeather;
+    private TextView pushDialogButton;
+    private ImageView pushDialogIconImageView;
 
     private boolean shouldShowButtonUpgrade;
     private boolean shouldShowButtonSearch;
@@ -120,7 +136,8 @@ public class PremiumLockerMainFrame extends PercentRelativeLayout implements INo
 
     private PremiumSearchDialog searchDialog;
 
-    private int pushDialogIndex = 0;
+    private int pushDialogIndex = 1;
+    private int gameInfoPosition = 0;
 
     private BroadcastReceiver weatherReceiver = new BroadcastReceiver() {
         @Override
@@ -258,6 +275,8 @@ public class PremiumLockerMainFrame extends PercentRelativeLayout implements INo
         buttonWeather = findViewById(R.id.button_weather);
         buttonWeather.setOnClickListener(clickListener);
         buttonWeather.setBackgroundDrawable(RippleDrawableUtils.getCompatRippleDrawable(backgroundColor, backgroundPressColor, DisplayUtils.dip2px(4)));
+        pushDialogButton = findViewById(R.id.push_dialog_button);
+        pushDialogIconImageView = findViewById(R.id.icon);
 
         if (!shouldShowButtonUpgrade) {
             buttonUpgrade.setVisibility(View.INVISIBLE);
@@ -440,12 +459,19 @@ public class PremiumLockerMainFrame extends PercentRelativeLayout implements INo
                     mShimmer.cancel();
                 }
                 buttonUpgrade.clear();
-                SharedPreferences.Editor editor = getContext().getSharedPreferences("pushDialog", Context.MODE_PRIVATE).edit();
-                editor.putLong("time", System.currentTimeMillis());
-                editor.putInt("index", pushDialogIndex);
-                editor.apply();
+                SharedPreferences.Editor editorOfDialog = getContext().getSharedPreferences("pushDialog", Context.MODE_PRIVATE).edit();
+                editorOfDialog.putLong("time", System.currentTimeMillis());
+                editorOfDialog.putInt("index", pushDialogIndex);
+                editorOfDialog.apply();
                 break;
             case ScreenStatusReceiver.NOTIFICATION_SCREEN_ON:
+                // TODO: 2018/1/10 update list of games every week
+                SharedPreferences preferencesOfGame = getContext().getSharedPreferences("gameInfo", Context.MODE_PRIVATE);
+                if (preferencesOfGame.getAll() == null) {
+                    gameInfoPosition++;
+                    askForGameInfo(gameInfoPosition%GAME_INFO_COUNT);
+                }
+
                 if (!mShimmer.isAnimating()) {
                     mShimmer.start(mUnlockText);
                 }
@@ -464,9 +490,38 @@ public class PremiumLockerMainFrame extends PercentRelativeLayout implements INo
         }
     }
 
+    private void askForGameInfo(int position){
+        SharedPreferences.Editor editorOfGame = getContext().getSharedPreferences("gameInfo", Context.MODE_PRIVATE).edit();
+        String urlOfGame = "http://api.famobi.com/feed?a=A-KCVWU&n=10&sort=top_games";
+        HSHttpConnection hsHttpConnection = new HSHttpConnection(urlOfGame);
+        hsHttpConnection.startAsync();
+        hsHttpConnection.setConnectionFinishedListener(new HSHttpConnection.OnConnectionFinishedListener() {
+            @Override
+            public void onConnectionFinished(HSHttpConnection hsHttpConnection) {
+                JSONObject bodyJSON = hsHttpConnection.getBodyJSON();
+                try {
+                    List<Object> jsonMap = HSJsonUtil.toList(bodyJSON.getJSONArray("games"));
+                    Map<String, String> object = (Map<String, String>) jsonMap.get(position);
+                    editorOfGame.putString("name", object.get("name"));
+                    editorOfGame.putString("description", object.get("description"));
+                    editorOfGame.putString("thumb", object.get("thumb"));
+                    editorOfGame.putString("link", object.get("link"));
+                    editorOfGame.apply();
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+
+            @Override
+            public void onConnectionFailed(HSHttpConnection hsHttpConnection, HSError hsError) {
+                hsError.getMessage();
+            }
+        });
+    }
+
     private void switchPushDialog(int pushDialogIndex) {
         switch (pushDialogIndex) {
-            case 0:
+            case MODE_JUNK:
                 findViewById(R.id.title_for_boost).setVisibility(VISIBLE);
                 findViewById(R.id.push_dialog_subtitle).setVisibility(VISIBLE);
                 findViewById(R.id.game_and_cam_title).setVisibility(GONE);
@@ -474,15 +529,38 @@ public class PremiumLockerMainFrame extends PercentRelativeLayout implements INo
                 findViewById(R.id.quiz_title).setVisibility(GONE);
                 //垃圾清理
                 break;
-            case 1:
-                findViewById(R.id.game_and_cam_title).setVisibility(VISIBLE);
-                findViewById(R.id.push_dialog_subtitle).setVisibility(VISIBLE);
-                findViewById(R.id.title_for_boost).setVisibility(GONE);
-                findViewById(R.id.quiz_head).setVisibility(GONE);
-                findViewById(R.id.quiz_title).setVisibility(GONE);
+            case MODE_GAME:
+                SharedPreferences preferencesOfGame = getContext().getSharedPreferences("gameInfo", Context.MODE_PRIVATE);
+                if (preferencesOfGame.getAll().size() <= 0) {
+                    gameInfoPosition++;
+                    askForGameInfo(gameInfoPosition%GAME_INFO_COUNT);
+                    this.pushDialogIndex++;
+                    switchPushDialog(this.pushDialogIndex);
+                } else {
+                    findViewById(R.id.game_and_cam_title).setVisibility(VISIBLE);
+                    findViewById(R.id.push_dialog_subtitle).setVisibility(VISIBLE);
+                    findViewById(R.id.title_for_boost).setVisibility(GONE);
+                    findViewById(R.id.quiz_head).setVisibility(GONE);
+                    findViewById(R.id.quiz_title).setVisibility(GONE);
+
+                    String iconUrl = preferencesOfGame.getString("thumb", "");
+                    new Thread(() -> {
+                        try {
+                            URL urlOfImage = new URL(iconUrl);
+                            Bitmap bitmap = BitmapFactory.decodeStream(urlOfImage.openConnection().getInputStream());
+                            pushDialogIconImageView.setImageBitmap(bitmap);
+                        }catch (Exception e){
+                            e.printStackTrace();
+                        }
+                    }).start();
+                    ((TextView)findViewById(R.id.game_and_cam_title)).setText(preferencesOfGame.getString("name", ""));
+                    ((TextView)findViewById(R.id.push_dialog_subtitle)).setText(preferencesOfGame.getString("description", ""));
+                    //todo：游戏的string
+                    pushDialogButton.setText("youxi");
+                }
                 //游戏
                 break;
-            case 2:
+            case MODE_CAMERA:
                 List<Map<String, Object>> configs;
                 NotificationBean bean = null;
                 try {
@@ -504,7 +582,7 @@ public class PremiumLockerMainFrame extends PercentRelativeLayout implements INo
 
                     ((TextView)findViewById(R.id.game_and_cam_title)).setText(bean.getName());
                     ((TextView)findViewById(R.id.push_dialog_subtitle)).setText(bean.getMessage());
-                    ((TextView)findViewById(R.id.push_dialog_button)).setText(bean.getButtonText());
+                    pushDialogButton.setText(bean.getButtonText());
 
                     String imageUrl = bean.getIconUrl();
                     if (imageUrl == null) {
@@ -512,9 +590,9 @@ public class PremiumLockerMainFrame extends PercentRelativeLayout implements INo
                     } else {
                         new Thread(() -> {
                             try {
-                                URL url = new URL(imageUrl);
-                                Bitmap bitmap = BitmapFactory.decodeStream(url.openConnection().getInputStream());
-                                ((ImageView)findViewById(R.id.icon)).setImageBitmap(bitmap);
+                                URL urlOfImage = new URL(imageUrl);
+                                Bitmap bitmap = BitmapFactory.decodeStream(urlOfImage.openConnection().getInputStream());
+                                pushDialogIconImageView.setImageBitmap(bitmap);
                             }catch (Exception e){
                                 e.printStackTrace();
                             }
@@ -522,7 +600,7 @@ public class PremiumLockerMainFrame extends PercentRelativeLayout implements INo
                     }
                 }
                 break;
-            case 3:
+            case MODE_QUIZ:
                 findViewById(R.id.quiz_head).setVisibility(VISIBLE);
                 findViewById(R.id.quiz_title).setVisibility(VISIBLE);
                 findViewById(R.id.game_and_cam_title).setVisibility(GONE);
@@ -530,7 +608,7 @@ public class PremiumLockerMainFrame extends PercentRelativeLayout implements INo
                 findViewById(R.id.title_for_boost).setVisibility(GONE);
                 //quiz
                 break;
-            case 4:
+            case MODE_BATTERY:
                 findViewById(R.id.title_for_boost).setVisibility(VISIBLE);
                 findViewById(R.id.push_dialog_subtitle).setVisibility(VISIBLE);
                 findViewById(R.id.game_and_cam_title).setVisibility(GONE);
@@ -538,7 +616,7 @@ public class PremiumLockerMainFrame extends PercentRelativeLayout implements INo
                 findViewById(R.id.quiz_title).setVisibility(GONE);
                 //电量
                 break;
-            case 5:
+            case MODE_CPU:
                 findViewById(R.id.title_for_boost).setVisibility(VISIBLE);
                 findViewById(R.id.push_dialog_subtitle).setVisibility(VISIBLE);
                 findViewById(R.id.game_and_cam_title).setVisibility(GONE);
@@ -546,7 +624,7 @@ public class PremiumLockerMainFrame extends PercentRelativeLayout implements INo
                 findViewById(R.id.quiz_title).setVisibility(GONE);
                 //CPU
                 break;
-            case 6:
+            case MODE_STORAGE:
                 findViewById(R.id.title_for_boost).setVisibility(VISIBLE);
                 findViewById(R.id.push_dialog_subtitle).setVisibility(VISIBLE);
                 findViewById(R.id.game_and_cam_title).setVisibility(GONE);
