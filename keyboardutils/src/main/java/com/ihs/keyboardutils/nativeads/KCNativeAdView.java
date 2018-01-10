@@ -261,6 +261,9 @@ public class KCNativeAdView extends FrameLayout {
                     return;
                 }
 
+                if (nativeAd != null) {
+                    nativeAd.release();
+                }
                 nativeAd = list.get(0);
                 adLoaded(nativeAd);
             }
