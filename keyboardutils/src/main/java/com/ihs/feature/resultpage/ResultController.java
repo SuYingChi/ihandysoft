@@ -375,12 +375,14 @@ abstract class ResultController implements View.OnClickListener {
                             mActionBtn.reveal();
                         }
                     }, START_DELAY_BUTTON_REVEAL);
-                    mActionBtn.postDelayed(new Runnable() {
-                        @Override
-                        public void run() {
-                            mActionBtn.flash();
-                        }
-                    }, START_DELAY_BUTTON_FLASH);
+                    if (mAd != null && !TextUtils.equals(mAd.getVendor().name(), "facebook")) {
+                        mActionBtn.postDelayed(new Runnable() {
+                            @Override
+                            public void run() {
+                                mActionBtn.flash();
+                            }
+                        }, START_DELAY_BUTTON_FLASH);
+                    }
                 }
             }, startDelay);
         }
