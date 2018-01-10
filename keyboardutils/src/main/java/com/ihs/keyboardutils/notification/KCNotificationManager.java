@@ -18,7 +18,6 @@ import com.artw.lockscreen.LockerSettings;
 import com.ihs.app.analytics.HSAnalytics;
 import com.ihs.app.framework.HSApplication;
 import com.ihs.app.framework.HSNotificationConstant;
-import com.ihs.chargingscreen.utils.ChargingManagerUtil;
 import com.ihs.chargingscreen.utils.ChargingPrefsUtil;
 import com.ihs.commons.config.HSConfig;
 import com.ihs.commons.notificationcenter.HSGlobalNotificationCenter;
@@ -222,14 +221,8 @@ public class KCNotificationManager {
             return;
         }
 
-        if (!ChargingManagerUtil.isNetworkAvailable(context)) {
-            scheduleNextEventTime();
-            return;
-        }
-
         String recordedEvent = spHelper.getString(PREFS_FINISHED_EVENT, "");
         List<String> finishedEvent = Arrays.asList(recordedEvent.split(","));
-
 
         List<Map<String, ?>> configs = null;
         try {
@@ -297,13 +290,16 @@ public class KCNotificationManager {
         if (Build.VERSION.SDK_INT == 19) {
             style = 0;
         }
+        Bitmap defaultBackground = BitmapFactory.decodeResource(context.getResources(),
+                R.drawable.default_push_bg);
+        Bitmap defaultIcon = BitmapFactory.decodeResource(context.getResources(), context.getApplicationInfo().icon);
         switch (style) {
             //系统默认样式
             case 0:
             default:
                 //icon为空 则用默认icon 否则网络请求次数加一
                 if (TextUtils.isEmpty(notificationToSend.getIconUrl())) {
-                    mBuilder.setLargeIcon(BitmapFactory.decodeResource(context.getResources(), context.getApplicationInfo().icon));
+                    mBuilder.setLargeIcon(defaultIcon);
                     tryToNotify(mBuilder, beanCopy);
                     HSLog.e("notification 默认 no icon ");
                 } else {
@@ -316,6 +312,8 @@ public class KCNotificationManager {
                         @Override
                         public void onLoadingFailed(String imageUri, View view, FailReason failReason) {
                             HSLog.e("icon 加载失败 url: " + imageUri);
+                            mBuilder.setLargeIcon(defaultIcon);
+                            tryToNotify(mBuilder, beanCopy);
                         }
 
                         @Override
@@ -343,7 +341,7 @@ public class KCNotificationManager {
 
                 //icon为空 则用默认icon 否则网络请求次数加一
                 if (TextUtils.isEmpty(notificationToSend.getIconUrl())) {
-                    mBuilder.setLargeIcon(BitmapFactory.decodeResource(context.getResources(), context.getApplicationInfo().icon));
+                    mBuilder.setLargeIcon(defaultIcon);
                 } else {
                     requestCount++;
                 }
@@ -351,6 +349,9 @@ public class KCNotificationManager {
                 //bg为空则默认bg 否则网络请求次数加一
                 if (!TextUtils.isEmpty(notificationToSend.getBgUrl())) {
                     requestCount++;
+                } else {
+                    contentView.setImageViewBitmap(R.id.notification_background, defaultBackground);
+                    mBuilder.setContent(contentView);
                 }
 
                 if (style == 1) {
@@ -370,14 +371,13 @@ public class KCNotificationManager {
                         ImageLoader.getInstance().loadImage(notificationToSend.getIconUrl(), new ImageLoadingListener() {
                             @Override
                             public void onLoadingStarted(String imageUri, View view) {
-
                             }
 
                             @Override
                             public void onLoadingFailed(String imageUri, View view, FailReason failReason) {
                                 HSLog.e("icon 加载失败 url: " + imageUri);
                                 imgRequestCompleteCount[0]--;
-                                contentView.setImageViewBitmap(R.id.notification_icon, BitmapFactory.decodeResource(context.getResources(), context.getApplicationInfo().icon));
+                                contentView.setImageViewBitmap(R.id.notification_icon, defaultIcon);
                                 mBuilder.setContent(contentView);
                                 if (imgRequestCompleteCount[0] == 0) {
                                     tryToNotify(mBuilder, beanCopy);
@@ -406,16 +406,13 @@ public class KCNotificationManager {
                         ImageLoader.getInstance().loadImage(notificationToSend.getBgUrl(), new ImageLoadingListener() {
                             @Override
                             public void onLoadingStarted(String imageUri, View view) {
-
                             }
 
                             @Override
                             public void onLoadingFailed(String imageUri, View view, FailReason failReason) {
                                 HSLog.e("bg 加载失败 url: " + imageUri);
                                 imgRequestCompleteCount[0]--;
-                                Bitmap background = BitmapFactory.decodeResource(context.getResources(),
-                                        R.drawable.default_push_bg);
-                                contentView.setImageViewBitmap(R.id.notification_background, background);
+                                contentView.setImageViewBitmap(R.id.notification_background, defaultBackground);
                                 mBuilder.setContent(contentView);
                                 if (imgRequestCompleteCount[0] == 0) {
                                     tryToNotify(mBuilder, beanCopy);
@@ -435,7 +432,6 @@ public class KCNotificationManager {
 
                             @Override
                             public void onLoadingCancelled(String imageUri, View view) {
-
                             }
                         });
                     }
