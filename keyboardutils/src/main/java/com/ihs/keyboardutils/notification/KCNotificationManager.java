@@ -59,6 +59,10 @@ public class KCNotificationManager {
         void onNotificationSent(NotificationBean notificationBean);
     }
 
+    public interface NotificationBackground {
+        Bitmap defaultBackground();
+    }
+
     private static final String PREFS_FILE_NAME = "notification_prefs";
     private static final String PREFS_FINISHED_EVENT = "prefs_finished_event";
     private static final String PREFS_NEXT_EVENT_TIME = "prefs_next_event_time";
@@ -77,6 +81,7 @@ public class KCNotificationManager {
     private Class eventReceiverClass;
     private NotificationAvailabilityCallBack notificationCallBack;
     private NotificationSentListener notificationSentListener;
+    private NotificationBackground notificationBackground;
     private boolean testSend = false;
     private boolean useAutoPilot = false;
 
@@ -98,21 +103,22 @@ public class KCNotificationManager {
     }
 
     public void init(Class eventReceiverClass, NotificationAvailabilityCallBack notificationAvailabilityCallBack, NotificationSentListener notificationSentListener, boolean testSend) {
-        notificationCallBack = notificationAvailabilityCallBack;
-        HSGlobalNotificationCenter.addObserver(HSNotificationConstant.HS_CONFIG_CHANGED, notificationObserver);
-        this.notificationSentListener = notificationSentListener;
-        this.eventReceiverClass = eventReceiverClass;
-        this.testSend = testSend;
-        scheduleNextEventTime();
+        init(eventReceiverClass, notificationAvailabilityCallBack, notificationSentListener, testSend, false);
     }
 
     public void init(Class eventReceiverClass, NotificationAvailabilityCallBack notificationAvailabilityCallBack, NotificationSentListener notificationSentListener, boolean testSend, boolean useAutoPilot) {
+        init(eventReceiverClass, notificationAvailabilityCallBack, notificationSentListener, testSend, useAutoPilot, null);
+    }
+
+    public void init(Class eventReceiverClass, NotificationAvailabilityCallBack notificationAvailabilityCallBack, NotificationSentListener notificationSentListener,
+                     boolean testSend, boolean useAutoPilot, NotificationBackground notificationBackground) {
         notificationCallBack = notificationAvailabilityCallBack;
         HSGlobalNotificationCenter.addObserver(HSNotificationConstant.HS_CONFIG_CHANGED, notificationObserver);
         this.notificationSentListener = notificationSentListener;
         this.eventReceiverClass = eventReceiverClass;
         this.testSend = testSend;
         this.useAutoPilot = useAutoPilot;
+        this.notificationBackground = notificationBackground;
         scheduleNextEventTime();
     }
 
@@ -290,8 +296,7 @@ public class KCNotificationManager {
         if (Build.VERSION.SDK_INT == 19) {
             style = 0;
         }
-        Bitmap defaultBackground = BitmapFactory.decodeResource(context.getResources(),
-                R.drawable.default_push_bg);
+        Bitmap defaultBackground = notificationBackground == null ? null : notificationBackground.defaultBackground();
         Bitmap defaultIcon = BitmapFactory.decodeResource(context.getResources(), context.getApplicationInfo().icon);
         switch (style) {
             //系统默认样式
@@ -349,7 +354,7 @@ public class KCNotificationManager {
                 //bg为空则默认bg 否则网络请求次数加一
                 if (!TextUtils.isEmpty(notificationToSend.getBgUrl())) {
                     requestCount++;
-                } else {
+                } else if (defaultBackground != null){
                     contentView.setImageViewBitmap(R.id.notification_background, defaultBackground);
                     mBuilder.setContent(contentView);
                 }
@@ -411,11 +416,13 @@ public class KCNotificationManager {
                             @Override
                             public void onLoadingFailed(String imageUri, View view, FailReason failReason) {
                                 HSLog.e("bg 加载失败 url: " + imageUri);
-                                imgRequestCompleteCount[0]--;
-                                contentView.setImageViewBitmap(R.id.notification_background, defaultBackground);
-                                mBuilder.setContent(contentView);
-                                if (imgRequestCompleteCount[0] == 0) {
-                                    tryToNotify(mBuilder, beanCopy);
+                                if (defaultBackground != null) {
+                                    imgRequestCompleteCount[0]--;
+                                    contentView.setImageViewBitmap(R.id.notification_background, defaultBackground);
+                                    mBuilder.setContent(contentView);
+                                    if (imgRequestCompleteCount[0] == 0) {
+                                        tryToNotify(mBuilder, beanCopy);
+                                    }
                                 }
                             }
 
