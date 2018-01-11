@@ -8,7 +8,6 @@ import android.os.Looper;
 import android.text.TextUtils;
 import android.widget.Toast;
 
-import com.ihs.app.analytics.HSAnalytics;
 import com.ihs.app.framework.HSApplication;
 import com.ihs.commons.utils.HSLog;
 import com.ihs.keyboardutils.iap.RemoveAdsManager;
@@ -186,7 +185,6 @@ public class KCInterstitialAd {
     }
 
     private static void logAnalyticsEvent(String placement, String actionSuffix) {
-        String eventName = "InterstitialAd_" + placement + "_" + actionSuffix;
-        HSAnalytics.logEvent(eventName);
+        // Stop logging events
     }
 }

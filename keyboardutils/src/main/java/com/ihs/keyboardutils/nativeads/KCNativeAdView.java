@@ -17,7 +17,6 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.ihs.app.analytics.HSAnalytics;
 import com.ihs.app.framework.HSApplication;
 import com.ihs.commons.utils.HSLog;
 import com.ihs.keyboardutils.iap.RemoveAdsManager;
@@ -343,10 +342,7 @@ public class KCNativeAdView extends FrameLayout {
     }
 
     private void logAnalyticsEvent(String actionSuffix) {
-        if (!TextUtils.isEmpty(placement)) {
-            String eventName = "NativeAd_" + placement + "_" + actionSuffix;
-            HSAnalytics.logEvent(eventName);
-        }
+        // Stop log events
     }
 
     public AcbNativeAdContainerView getNativeAdContainerView() {
