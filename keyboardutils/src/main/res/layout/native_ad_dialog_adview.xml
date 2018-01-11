@@ -101,7 +101,6 @@
         android:layout_marginLeft="12dp"
         android:layout_marginRight="12dp"
         android:layout_marginTop="@dimen/share_ad_cation_margin_top"
-        app:flash_angle="cw_0"
         app:flash_duration="1500"
         app:flash_repeat_count="0"
         app:flash_auto_start="false">
