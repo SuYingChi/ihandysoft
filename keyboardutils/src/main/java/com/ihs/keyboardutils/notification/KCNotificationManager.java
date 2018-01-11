@@ -59,10 +59,6 @@ public class KCNotificationManager {
         void onNotificationSent(NotificationBean notificationBean);
     }
 
-    public interface NotificationBackground {
-        Bitmap defaultBackground();
-    }
-
     private static final String PREFS_FILE_NAME = "notification_prefs";
     private static final String PREFS_FINISHED_EVENT = "prefs_finished_event";
     private static final String PREFS_NEXT_EVENT_TIME = "prefs_next_event_time";
@@ -81,7 +77,8 @@ public class KCNotificationManager {
     private Class eventReceiverClass;
     private NotificationAvailabilityCallBack notificationCallBack;
     private NotificationSentListener notificationSentListener;
-    private NotificationBackground notificationBackground;
+    private int notificationBackgroundId;
+    private boolean useDefaultBackground = false;
     private boolean testSend = false;
     private boolean useAutoPilot = false;
 
@@ -103,23 +100,24 @@ public class KCNotificationManager {
     }
 
     public void init(Class eventReceiverClass, NotificationAvailabilityCallBack notificationAvailabilityCallBack, NotificationSentListener notificationSentListener, boolean testSend) {
-        init(eventReceiverClass, notificationAvailabilityCallBack, notificationSentListener, testSend, false);
-    }
-
-    public void init(Class eventReceiverClass, NotificationAvailabilityCallBack notificationAvailabilityCallBack, NotificationSentListener notificationSentListener, boolean testSend, boolean useAutoPilot) {
-        init(eventReceiverClass, notificationAvailabilityCallBack, notificationSentListener, testSend, useAutoPilot, null);
-    }
-
-    public void init(Class eventReceiverClass, NotificationAvailabilityCallBack notificationAvailabilityCallBack, NotificationSentListener notificationSentListener,
-                     boolean testSend, boolean useAutoPilot, NotificationBackground notificationBackground) {
         notificationCallBack = notificationAvailabilityCallBack;
         HSGlobalNotificationCenter.addObserver(HSNotificationConstant.HS_CONFIG_CHANGED, notificationObserver);
         this.notificationSentListener = notificationSentListener;
         this.eventReceiverClass = eventReceiverClass;
         this.testSend = testSend;
-        this.useAutoPilot = useAutoPilot;
-        this.notificationBackground = notificationBackground;
         scheduleNextEventTime();
+    }
+
+    public void init(Class eventReceiverClass, NotificationAvailabilityCallBack notificationAvailabilityCallBack, NotificationSentListener notificationSentListener, boolean testSend, boolean useAutoPilot) {
+        this.useAutoPilot = useAutoPilot;
+        init(eventReceiverClass, notificationAvailabilityCallBack, notificationSentListener, testSend);
+    }
+
+    public void init(Class eventReceiverClass, NotificationAvailabilityCallBack notificationAvailabilityCallBack, NotificationSentListener notificationSentListener,
+                     boolean testSend, boolean useAutoPilot, int notificationBackgroundId) {
+        this.notificationBackgroundId = notificationBackgroundId;
+        this.useDefaultBackground = true;
+        init(eventReceiverClass, notificationAvailabilityCallBack, notificationSentListener, testSend, useAutoPilot);
     }
 
     private KCNotificationManager() {
@@ -296,7 +294,9 @@ public class KCNotificationManager {
         if (Build.VERSION.SDK_INT == 19) {
             style = 0;
         }
-        Bitmap defaultBackground = notificationBackground == null ? null : notificationBackground.defaultBackground();
+        Bitmap defaultBackground = !useDefaultBackground ? null : BitmapFactory.decodeResource(context.getResources(),
+                notificationBackgroundId);
+
         Bitmap defaultIcon = BitmapFactory.decodeResource(context.getResources(), context.getApplicationInfo().icon);
         switch (style) {
             //系统默认样式
