@@ -41,4 +41,19 @@ Try More Lock Screen Themes</string>
 
     <string name="sms_not_supported_prompt">Current device don\'t support SMS</string>
 
+    <string name="push_junk_title">Junk Files Found!</string>
+    <string name="push_junk_subtitle">Click boost now and make your phone clean!</string>
+    <string name="push_junk_button">CLEAN NOW</string>
+    <string name="push_game_button">PLAY NOW</string>
+    <string name="push_battery_title">Battery left!</string>
+    <string name="push_battery_subtitle">Battery is too low, tap to save battery and charge it.</string>
+    <string name="push_battery_button">SAVE BATTERY</string>
+    <string name="push_battery_title_plus">Apps Draining Battery!</string>
+    <string name="push_cpu_title">Phone Overheating!</string>
+    <string name="push_cpu_subtitle">Click to cool down your phone.</string>
+    <string name="push_cpu_button">COOL DOWN</string>
+    <string name="push_memory_title">Memory Used</string>
+    <string name="push_memory_subtitle">Click boost now and make your phone clean!</string>
+    <string name="push_memory_button">BOOST NOW</string>
+
 </resources>

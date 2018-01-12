@@ -8,6 +8,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.SharedPreferences;
+import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.drawable.BitmapDrawable;
@@ -376,6 +377,7 @@ public class PremiumLockerMainFrame extends PercentRelativeLayout implements INo
         mTvTime = findViewById(R.id.tv_time);
         mTvDate = findViewById(R.id.tv_date);
         refreshClock();
+        switchPushDialog(pushDialogIndex);
     }
 
     private void initButtons() {
@@ -593,9 +595,10 @@ public class PremiumLockerMainFrame extends PercentRelativeLayout implements INo
 
                         int junkSizeInMB = (int)junkSize / (1024 * 1024);
                         ((TextView)findViewById(R.id.scan_result_text)).setText(junkSizeInMB + "MB");
-                        ((TextView)findViewById(R.id.scan_result_title)).setText("Junk Files Found!");
-                        ((TextView)findViewById(R.id.push_dialog_subtitle)).setText("Click boost now and make your phone clean!");
-                        pushDialogButton.setText("CLEAN NOW");
+                        ((TextView)findViewById(R.id.scan_result_title)).setText(getResources().getString(R.string.push_junk_title));
+                        ((TextView)findViewById(R.id.push_dialog_subtitle)).setText(getResources().getString(R.string.push_junk_subtitle));
+                        ((ImageView)findViewById(R.id.icon)).setImageDrawable(getResources().getDrawable(R.drawable.new_locker_junk));
+                        pushDialogButton.setText(getResources().getString(R.string.push_junk_button));
                     }
                 });
                 //垃圾清理
@@ -627,7 +630,7 @@ public class PremiumLockerMainFrame extends PercentRelativeLayout implements INo
                     }).start();
                     ((TextView)findViewById(R.id.game_and_cam_title)).setText(preferencesOfGame.getString("name", ""));
                     ((TextView)findViewById(R.id.push_dialog_subtitle)).setText(preferencesOfGame.getString("description", ""));
-                    pushDialogButton.setText("PLAY NOW");
+                    pushDialogButton.setText(getResources().getString(R.string.push_game_button));
                 }
                 //游戏
                 break;
@@ -682,11 +685,11 @@ public class PremiumLockerMainFrame extends PercentRelativeLayout implements INo
                     findViewById(R.id.quiz_head).setVisibility(GONE);
                     findViewById(R.id.quiz_title).setVisibility(GONE);
 
-                    // TODO: 2018/1/12 Icon
+                    ((ImageView)findViewById(R.id.icon)).setImageDrawable(getResources().getDrawable(R.drawable.new_locker_battery));
                     ((TextView)findViewById(R.id.scan_result_text)).setText(deviceManager.getBatteryLevel() + "%");
-                    ((TextView)findViewById(R.id.scan_result_title)).setText("Battery left!");
-                    ((TextView)findViewById(R.id.push_dialog_subtitle)).setText("Battery is too low, tap to save battery and charge it.");
-                    pushDialogButton.setText("SAVE BATTERY");
+                    ((TextView)findViewById(R.id.scan_result_title)).setText(getResources().getString(R.string.push_battery_title));
+                    ((TextView)findViewById(R.id.push_dialog_subtitle)).setText(getResources().getString(R.string.push_battery_subtitle));
+                    pushDialogButton.setText(getResources().getString(R.string.push_battery_button));
                 } else if (deviceManager.getBatteryLevel() <= 80 && batteryDataManager.getCleanAnimationBatteryApps().size() >= 8) {
                     findViewById(R.id.title_for_boost).setVisibility(VISIBLE);
                     findViewById(R.id.icon_list).setVisibility(VISIBLE);
@@ -695,10 +698,10 @@ public class PremiumLockerMainFrame extends PercentRelativeLayout implements INo
                     findViewById(R.id.quiz_head).setVisibility(GONE);
                     findViewById(R.id.quiz_title).setVisibility(GONE);
 
-                    // TODO: 2018/1/12 icon
+                    ((ImageView)findViewById(R.id.icon)).setImageDrawable(getResources().getDrawable(R.drawable.new_locker_battery));
                     ((TextView)findViewById(R.id.scan_result_text)).setText(batteryDataManager.getCleanAnimationBatteryApps().size() + "");
-                    ((TextView)findViewById(R.id.scan_result_title)).setText("Apps Draining Battery!");
-                    pushDialogButton.setText("SAVE BATTERY");
+                    ((TextView)findViewById(R.id.scan_result_title)).setText(getResources().getString(R.string.push_battery_title_plus));
+                    pushDialogButton.setText(getResources().getString(R.string.push_battery_button));
                     List<BatteryAppInfo> appInfos = batteryDataManager.getCleanAnimationBatteryApps();
                     ((ImageView)findViewById(R.id.icon_first)).setImageDrawable(appInfos.get(0).getAppDrawable());
                     ((ImageView)findViewById(R.id.icon_second)).setImageDrawable(appInfos.get(1).getAppDrawable());
@@ -721,12 +724,11 @@ public class PremiumLockerMainFrame extends PercentRelativeLayout implements INo
                     findViewById(R.id.quiz_head).setVisibility(GONE);
                     findViewById(R.id.quiz_title).setVisibility(GONE);
 
-                    // TODO: 2018/1/12 Icon
-
+                    ((ImageView)findViewById(R.id.icon)).setImageDrawable(getResources().getDrawable(R.drawable.new_locker_thermometer));
                     ((TextView)findViewById(R.id.scan_result_text)).setText(cpuCoolerManager.fetchCpuTemperature() + "℃");
-                    ((TextView)findViewById(R.id.scan_result_title)).setText("Phone Overheating!");
-                    ((TextView)findViewById(R.id.push_dialog_subtitle)).setText("Click to cool down your phone.");
-                    pushDialogButton.setText("COOL DOWN");
+                    ((TextView)findViewById(R.id.scan_result_title)).setText(getResources().getString(R.string.push_cpu_title));
+                    ((TextView)findViewById(R.id.push_dialog_subtitle)).setText(getResources().getString(R.string.push_cpu_subtitle));
+                    pushDialogButton.setText(getResources().getString(R.string.push_cpu_button));
                 }
                 //CPU
                 break;
@@ -737,10 +739,11 @@ public class PremiumLockerMainFrame extends PercentRelativeLayout implements INo
                 findViewById(R.id.quiz_head).setVisibility(GONE);
                 findViewById(R.id.quiz_title).setVisibility(GONE);
 
+                ((ImageView)findViewById(R.id.icon)).setImageDrawable(getResources().getDrawable(R.drawable.new_locker_boost));
                 ((TextView)findViewById(R.id.scan_result_text)).setText(deviceManager.getRamUsage() + "%");
-                ((TextView)findViewById(R.id.scan_result_title)).setText("Memory Used");
-                ((TextView)findViewById(R.id.push_dialog_subtitle)).setText("Click boost now and make your phone clean!");
-                pushDialogButton.setText("BOOST NOW");
+                ((TextView)findViewById(R.id.scan_result_title)).setText(getResources().getString(R.string.push_memory_title));
+                ((TextView)findViewById(R.id.push_dialog_subtitle)).setText(getResources().getString(R.string.push_memory_subtitle));
+                pushDialogButton.setText(getResources().getString(R.string.push_memory_button));
                 //boost
                 break;
             default:
