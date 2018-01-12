@@ -512,7 +512,6 @@ public class PremiumLockerMainFrame extends PercentRelativeLayout implements INo
                 editorOfDialog.apply();
                 break;
             case ScreenStatusReceiver.NOTIFICATION_SCREEN_ON:
-                // TODO: 2018/1/10 update list of games every week
                 SharedPreferences preferencesOfGame = getContext().getSharedPreferences("gameInfo", Context.MODE_PRIVATE);
                 if ((preferencesOfGame.getAll().size() <= 0) || (preferencesOfGame.getInt("date", 0) != Calendar.getInstance().get(Calendar.DAY_OF_MONTH))) {
                     gameInfoPosition++;
@@ -571,8 +570,9 @@ public class PremiumLockerMainFrame extends PercentRelativeLayout implements INo
     private void switchPushDialog(int pushDialogIndex) {
         switch (pushDialogIndex) {
             case MODE_JUNK:
-                findViewById(R.id.push_dialog_layout).setVisibility(INVISIBLE);
-                // TODO: 2018/1/12 添加系统风火轮
+                findViewById(R.id.push_dialog_layout).setVisibility(GONE);
+                ((ContentLoadingProgressBar) findViewById(R.id.spin_circle)).getIndeterminateDrawable().setColorFilter(Color.BLACK, PorterDuff.Mode.MULTIPLY);
+                findViewById(R.id.scan_layout).setVisibility(VISIBLE);
                 JunkManager junkManager = JunkManager.getInstance();
                 junkManager.startJunkScan(new JunkManager.ScanJunkListener() {
                     @Override
@@ -587,6 +587,7 @@ public class PremiumLockerMainFrame extends PercentRelativeLayout implements INo
 
                     @Override
                     public void onScanFinished(long junkSize) {
+                        findViewById(R.id.scan_layout).setVisibility(GONE);
                         findViewById(R.id.push_dialog_layout).setVisibility(VISIBLE);
                         findViewById(R.id.title_for_boost).setVisibility(VISIBLE);
                         findViewById(R.id.push_dialog_subtitle).setVisibility(VISIBLE);

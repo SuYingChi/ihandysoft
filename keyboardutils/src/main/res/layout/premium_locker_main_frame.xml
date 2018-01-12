@@ -354,7 +354,7 @@
                         android:layout_height="21.3dp"
                         android:layout_marginLeft="16.7dp"
                         android:layout_marginStart="16.7dp"
-                        android:src="@drawable/new_locker_apps_more"/>
+                        android:src="@drawable/new_locker_apps_more" />
                 </LinearLayout>
             </LinearLayout>
 
@@ -411,6 +411,29 @@
                 android:textStyle="normal"
                 android:visibility="gone"
                 tools:ignore="RtlSymmetry" />
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:id="@+id/scan_layout"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:visibility="gone">
+
+            <TextView
+                android:id="@+id/scan_text"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_above="@id/spin_circle"
+                android:layout_centerHorizontal="true"
+                android:layout_marginBottom="10dp"
+                android:text="@string/push_scan_text" />
+
+            <android.support.v4.widget.ContentLoadingProgressBar
+                android:id="@+id/spin_circle"
+                style="?android:progressBarStyleSmall"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:layout_centerInParent="true" />
         </RelativeLayout>
     </FrameLayout>
 
