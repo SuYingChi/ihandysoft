@@ -54,7 +54,10 @@ import com.ihs.commons.utils.HSBundle;
 import com.ihs.commons.utils.HSError;
 import com.ihs.commons.utils.HSJsonUtil;
 import com.ihs.commons.utils.HSLog;
+import com.ihs.feature.battery.BatteryAppInfo;
+import com.ihs.feature.battery.BatteryDataManager;
 import com.ihs.feature.boost.plus.BoostPlusActivity;
+import com.ihs.feature.common.DeviceManager;
 import com.ihs.feature.common.ScreenStatusReceiver;
 import com.ihs.feature.cpucooler.CpuCoolerManager;
 import com.ihs.feature.junkclean.data.JunkManager;
@@ -629,16 +632,45 @@ public class PremiumLockerMainFrame extends PercentRelativeLayout implements INo
                 }
                 break;
             case MODE_BATTERY:
-                findViewById(R.id.title_for_boost).setVisibility(VISIBLE);
-                findViewById(R.id.push_dialog_subtitle).setVisibility(VISIBLE);
-                findViewById(R.id.game_and_cam_title).setVisibility(GONE);
-                findViewById(R.id.quiz_head).setVisibility(GONE);
-                findViewById(R.id.quiz_title).setVisibility(GONE);
+                BatteryDataManager batteryDataManager = new BatteryDataManager(getContext());
+                DeviceManager deviceManager = DeviceManager.getInstance();
+                if (deviceManager.getBatteryLevel() < 30) {
+                    findViewById(R.id.title_for_boost).setVisibility(VISIBLE);
+                    findViewById(R.id.push_dialog_subtitle).setVisibility(VISIBLE);
+                    findViewById(R.id.game_and_cam_title).setVisibility(GONE);
+                    findViewById(R.id.quiz_head).setVisibility(GONE);
+                    findViewById(R.id.quiz_title).setVisibility(GONE);
+
+                    // TODO: 2018/1/12 Icon
+                    ((TextView)findViewById(R.id.scan_result_text)).setText(deviceManager.getBatteryLevel() + "%");
+                    ((TextView)findViewById(R.id.scan_result_title)).setText("Battery left!");
+                    ((TextView)findViewById(R.id.push_dialog_subtitle)).setText("Battery is too low, tap to save battery and charge it.");
+                    pushDialogButton.setText("SAVE BATTERY");
+                } else if (deviceManager.getBatteryLevel() <= 80 && batteryDataManager.getCleanAnimationBatteryApps().size() >= 8) {
+                    findViewById(R.id.title_for_boost).setVisibility(VISIBLE);
+                    findViewById(R.id.icon_list).setVisibility(VISIBLE);
+                    findViewById(R.id.push_dialog_subtitle).setVisibility(GONE);
+                    findViewById(R.id.game_and_cam_title).setVisibility(GONE);
+                    findViewById(R.id.quiz_head).setVisibility(GONE);
+                    findViewById(R.id.quiz_title).setVisibility(GONE);
+
+                    // TODO: 2018/1/12 icon
+                    ((TextView)findViewById(R.id.scan_result_text)).setText(batteryDataManager.getCleanAnimationBatteryApps().size() + "");
+                    ((TextView)findViewById(R.id.scan_result_title)).setText("Apps Draining Battery!");
+                    pushDialogButton.setText("SAVE BATTERY");
+                    List<BatteryAppInfo> appInfos = batteryDataManager.getCleanAnimationBatteryApps();
+                    ((ImageView)findViewById(R.id.icon_first)).setImageDrawable(appInfos.get(0).getAppDrawable());
+                    ((ImageView)findViewById(R.id.icon_second)).setImageDrawable(appInfos.get(1).getAppDrawable());
+                    ((ImageView)findViewById(R.id.icon_third)).setImageDrawable(appInfos.get(2).getAppDrawable());
+                } else {
+                    this.pushDialogIndex++;
+                    switchPushDialog(this.pushDialogIndex);
+                }
                 //电量
                 break;
             case MODE_CPU:
                 CpuCoolerManager cpuCoolerManager = CpuCoolerManager.getInstance();
-                if (cpuCoolerManager.fetchCpuTemperature() > 40) {
+                if (cpuCoolerManager.fetchCpuTemperature() <= 40) {
                     this.pushDialogIndex++;
                     switchPushDialog(this.pushDialogIndex);
                 } else {
@@ -648,7 +680,7 @@ public class PremiumLockerMainFrame extends PercentRelativeLayout implements INo
                     findViewById(R.id.quiz_head).setVisibility(GONE);
                     findViewById(R.id.quiz_title).setVisibility(GONE);
 
-                    // TODO: 2018/1/12 Icon 
+                    // TODO: 2018/1/12 Icon
 
                     ((TextView)findViewById(R.id.scan_result_text)).setText(cpuCoolerManager.fetchCpuTemperature() + "℃");
                     ((TextView)findViewById(R.id.scan_result_title)).setText("Phone Overheating!");

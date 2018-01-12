@@ -324,6 +324,39 @@
                     android:textColor="#7f000000"
                     android:textSize="14sp"
                     android:textStyle="normal" />
+
+                <LinearLayout
+                    android:id="@+id/icon_list"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:visibility="gone">
+
+                    <ImageView
+                        android:id="@+id/icon_first"
+                        android:layout_width="21.3dp"
+                        android:layout_height="21.3dp" />
+
+                    <ImageView
+                        android:id="@+id/icon_second"
+                        android:layout_width="21.3dp"
+                        android:layout_height="21.3dp"
+                        android:layout_marginLeft="16.7dp"
+                        android:layout_marginStart="16.7dp" />
+
+                    <ImageView
+                        android:id="@+id/icon_third"
+                        android:layout_width="21.3dp"
+                        android:layout_height="21.3dp"
+                        android:layout_marginLeft="16.7dp"
+                        android:layout_marginStart="16.7dp" />
+
+                    <ImageView
+                        android:layout_width="21.3dp"
+                        android:layout_height="21.3dp"
+                        android:layout_marginLeft="16.7dp"
+                        android:layout_marginStart="16.7dp" />
+                </LinearLayout>
             </LinearLayout>
 
             <TextView
