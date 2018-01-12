@@ -56,6 +56,8 @@ import com.ihs.commons.utils.HSJsonUtil;
 import com.ihs.commons.utils.HSLog;
 import com.ihs.feature.boost.plus.BoostPlusActivity;
 import com.ihs.feature.common.ScreenStatusReceiver;
+import com.ihs.feature.junkclean.data.JunkManager;
+import com.ihs.feature.junkclean.model.JunkInfo;
 import com.ihs.feature.softgame.SoftGameDisplayActivity;
 import com.ihs.feature.weather.WeatherManager;
 import com.ihs.keyboardutils.R;
@@ -94,10 +96,9 @@ public class PremiumLockerMainFrame extends PercentRelativeLayout implements INo
     private static final int MODE_JUNK = 0;
     private static final int MODE_GAME = 1;
     private static final int MODE_CAMERA = 2;
-    private static final int MODE_QUIZ = 3;
-    private static final int MODE_BATTERY = 4;
-    private static final int MODE_CPU = 5;
-    private static final int MODE_STORAGE = 6;
+    private static final int MODE_BATTERY = 3;
+    private static final int MODE_CPU = 4;
+    private static final int MODE_STORAGE = 5;
     private static final int GAME_INFO_COUNT = 10;
 
     private boolean mIsSlidingDrawerOpened = false;
@@ -136,7 +137,7 @@ public class PremiumLockerMainFrame extends PercentRelativeLayout implements INo
 
     private PremiumSearchDialog searchDialog;
 
-    private int pushDialogIndex = 1;
+    private int pushDialogIndex = 0;
     private int gameInfoPosition = 0;
 
     private BroadcastReceiver weatherReceiver = new BroadcastReceiver() {
@@ -467,9 +468,10 @@ public class PremiumLockerMainFrame extends PercentRelativeLayout implements INo
             case ScreenStatusReceiver.NOTIFICATION_SCREEN_ON:
                 // TODO: 2018/1/10 update list of games every week
                 SharedPreferences preferencesOfGame = getContext().getSharedPreferences("gameInfo", Context.MODE_PRIVATE);
-                if (preferencesOfGame.getAll() == null) {
+                if (preferencesOfGame.getAll().size() <= 0) {
                     gameInfoPosition++;
-                    askForGameInfo(gameInfoPosition%GAME_INFO_COUNT);
+                    gameInfoPosition = gameInfoPosition%GAME_INFO_COUNT;
+                    askForGameInfo(gameInfoPosition);
                 }
 
                 if (!mShimmer.isAnimating()) {
@@ -480,7 +482,7 @@ public class PremiumLockerMainFrame extends PercentRelativeLayout implements INo
                 pushDialogIndex = getContext().getSharedPreferences("pushDialog", Context.MODE_PRIVATE).getInt("index", pushDialogIndex);
                 if (timeForUpdate > 5) {
                     pushDialogIndex++;
-                    int pushDialogCount = 7;
+                    int pushDialogCount = 6;
                     pushDialogIndex = pushDialogIndex% pushDialogCount;
                 }
                 switchPushDialog(pushDialogIndex);
@@ -522,18 +524,42 @@ public class PremiumLockerMainFrame extends PercentRelativeLayout implements INo
     private void switchPushDialog(int pushDialogIndex) {
         switch (pushDialogIndex) {
             case MODE_JUNK:
-                findViewById(R.id.title_for_boost).setVisibility(VISIBLE);
-                findViewById(R.id.push_dialog_subtitle).setVisibility(VISIBLE);
-                findViewById(R.id.game_and_cam_title).setVisibility(GONE);
-                findViewById(R.id.quiz_head).setVisibility(GONE);
-                findViewById(R.id.quiz_title).setVisibility(GONE);
+                findViewById(R.id.push_dialog_layout).setVisibility(INVISIBLE);
+                // TODO: 2018/1/12 添加系统风火轮
+                JunkManager junkManager = JunkManager.getInstance();
+                junkManager.startJunkScan(new JunkManager.ScanJunkListener() {
+                    @Override
+                    public void onScanNameChanged(String name) {
+
+                    }
+
+                    @Override
+                    public void onScanSizeChanged(String categoryType, JunkInfo junkInfo, boolean isEnd) {
+
+                    }
+
+                    @Override
+                    public void onScanFinished(long junkSize) {
+                        findViewById(R.id.push_dialog_layout).setVisibility(VISIBLE);
+                        findViewById(R.id.title_for_boost).setVisibility(VISIBLE);
+                        findViewById(R.id.push_dialog_subtitle).setVisibility(VISIBLE);
+                        findViewById(R.id.game_and_cam_title).setVisibility(GONE);
+                        findViewById(R.id.quiz_head).setVisibility(GONE);
+                        findViewById(R.id.quiz_title).setVisibility(GONE);
+
+                        int junkSizeInMB = (int)junkSize / (1024 * 1024);
+                        ((TextView)findViewById(R.id.scan_result_text)).setText(junkSizeInMB + "MB");
+                        pushDialogButton.setText("CLEAN NOW");
+                    }
+                });
                 //垃圾清理
                 break;
             case MODE_GAME:
                 SharedPreferences preferencesOfGame = getContext().getSharedPreferences("gameInfo", Context.MODE_PRIVATE);
                 if (preferencesOfGame.getAll().size() <= 0) {
                     gameInfoPosition++;
-                    askForGameInfo(gameInfoPosition%GAME_INFO_COUNT);
+                    gameInfoPosition = gameInfoPosition%GAME_INFO_COUNT;
+                    askForGameInfo(gameInfoPosition);
                     this.pushDialogIndex++;
                     switchPushDialog(this.pushDialogIndex);
                 } else {
@@ -555,8 +581,7 @@ public class PremiumLockerMainFrame extends PercentRelativeLayout implements INo
                     }).start();
                     ((TextView)findViewById(R.id.game_and_cam_title)).setText(preferencesOfGame.getString("name", ""));
                     ((TextView)findViewById(R.id.push_dialog_subtitle)).setText(preferencesOfGame.getString("description", ""));
-                    //todo：游戏的string
-                    pushDialogButton.setText("youxi");
+                    pushDialogButton.setText("PLAY NOW");
                 }
                 //游戏
                 break;
@@ -599,14 +624,6 @@ public class PremiumLockerMainFrame extends PercentRelativeLayout implements INo
                         }).start();
                     }
                 }
-                break;
-            case MODE_QUIZ:
-                findViewById(R.id.quiz_head).setVisibility(VISIBLE);
-                findViewById(R.id.quiz_title).setVisibility(VISIBLE);
-                findViewById(R.id.game_and_cam_title).setVisibility(GONE);
-                findViewById(R.id.push_dialog_subtitle).setVisibility(GONE);
-                findViewById(R.id.title_for_boost).setVisibility(GONE);
-                //quiz
                 break;
             case MODE_BATTERY:
                 findViewById(R.id.title_for_boost).setVisibility(VISIBLE);
