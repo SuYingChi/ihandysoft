@@ -514,7 +514,7 @@ public class PremiumLockerMainFrame extends PercentRelativeLayout implements INo
             case ScreenStatusReceiver.NOTIFICATION_SCREEN_ON:
                 // TODO: 2018/1/10 update list of games every week
                 SharedPreferences preferencesOfGame = getContext().getSharedPreferences("gameInfo", Context.MODE_PRIVATE);
-                if (preferencesOfGame.getAll().size() <= 0) {
+                if ((preferencesOfGame.getAll().size() <= 0) || (preferencesOfGame.getInt("date", 0) != Calendar.getInstance().get(Calendar.DAY_OF_MONTH))) {
                     gameInfoPosition++;
                     gameInfoPosition = gameInfoPosition%GAME_INFO_COUNT;
                     askForGameInfo(gameInfoPosition);
@@ -554,6 +554,7 @@ public class PremiumLockerMainFrame extends PercentRelativeLayout implements INo
                     editorOfGame.putString("description", object.get("description"));
                     editorOfGame.putString("thumb", object.get("thumb"));
                     editorOfGame.putString("link", object.get("link"));
+                    editorOfGame.putInt("date", Calendar.getInstance().get(Calendar.DAY_OF_MONTH));
                     editorOfGame.apply();
                 } catch (Exception e) {
                     e.printStackTrace();

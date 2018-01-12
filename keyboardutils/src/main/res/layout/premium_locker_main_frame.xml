@@ -254,8 +254,7 @@
                 android:layout_height="80dp"
                 android:layout_marginLeft="24.7dp"
                 android:layout_marginStart="24.7dp"
-                android:layout_marginTop="17dp"
-                android:src="@drawable/ic_boost_battery" />
+                android:layout_marginTop="17dp" />
 
             <LinearLayout
                 android:id="@+id/title_game_and_cam"
