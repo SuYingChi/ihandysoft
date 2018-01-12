@@ -11,6 +11,7 @@ import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.drawable.BitmapDrawable;
+import android.net.Uri;
 import android.os.Build;
 import android.support.percent.PercentRelativeLayout;
 import android.support.v4.content.ContextCompat;
@@ -54,12 +55,15 @@ import com.ihs.commons.utils.HSBundle;
 import com.ihs.commons.utils.HSError;
 import com.ihs.commons.utils.HSJsonUtil;
 import com.ihs.commons.utils.HSLog;
+import com.ihs.feature.battery.BatteryActivity;
 import com.ihs.feature.battery.BatteryAppInfo;
 import com.ihs.feature.battery.BatteryDataManager;
 import com.ihs.feature.boost.plus.BoostPlusActivity;
 import com.ihs.feature.common.DeviceManager;
 import com.ihs.feature.common.ScreenStatusReceiver;
+import com.ihs.feature.cpucooler.CpuCoolerCleanActivity;
 import com.ihs.feature.cpucooler.CpuCoolerManager;
+import com.ihs.feature.junkclean.JunkCleanActivity;
 import com.ihs.feature.junkclean.data.JunkManager;
 import com.ihs.feature.junkclean.model.JunkInfo;
 import com.ihs.feature.softgame.SoftGameDisplayActivity;
@@ -145,6 +149,7 @@ public class PremiumLockerMainFrame extends PercentRelativeLayout implements INo
 
     private int pushDialogIndex = 0;
     private int gameInfoPosition = 0;
+    private String pushCameraActionType;
 
     private BroadcastReceiver weatherReceiver = new BroadcastReceiver() {
         @Override
@@ -183,6 +188,38 @@ public class PremiumLockerMainFrame extends PercentRelativeLayout implements INo
             mSlidingDrawerContent.clearBlurredBackground();
         }
     }
+
+    private View.OnClickListener pushDialogClickListener = view -> {
+        switch (pushDialogIndex) {
+            case MODE_JUNK:
+                Intent junkCleanIntent = new Intent(getContext(), JunkCleanActivity.class);
+                getContext().startActivity(junkCleanIntent);
+                break;
+            case MODE_GAME:
+                String url = getContext().getSharedPreferences("gameInfo", Context.MODE_PRIVATE).getString("link", null);
+                Intent gameIntent = new Intent(Intent.ACTION_VIEW);
+                gameIntent.setData(Uri.parse(url));
+                getContext().startActivity(gameIntent);
+                break;
+            case MODE_CAMERA:
+                // TODO: 2018/1/12 open store in camera
+                break;
+            case MODE_BATTERY:
+                Intent batteryIntent = new Intent(getContext(), BatteryActivity.class);
+                getContext().startActivity(batteryIntent);
+                break;
+            case MODE_CPU:
+                Intent cpuCoolerCleanIntent = new Intent(getContext(), CpuCoolerCleanActivity.class);
+                getContext().startActivity(cpuCoolerCleanIntent);
+                break;
+            case MODE_STORAGE:
+                Intent boostIntent = new Intent(getContext(), BoostPlusActivity.class);
+                getContext().startActivity(boostIntent);
+                break;
+            default:
+                break;
+        }
+    };
 
     private View.OnClickListener clickListener = new View.OnClickListener() {
         /**
@@ -283,6 +320,7 @@ public class PremiumLockerMainFrame extends PercentRelativeLayout implements INo
         buttonWeather.setOnClickListener(clickListener);
         buttonWeather.setBackgroundDrawable(RippleDrawableUtils.getCompatRippleDrawable(backgroundColor, backgroundPressColor, DisplayUtils.dip2px(4)));
         pushDialogButton = findViewById(R.id.push_dialog_button);
+        pushDialogButton.setOnClickListener(pushDialogClickListener);
         pushDialogIconImageView = findViewById(R.id.icon);
 
         if (!shouldShowButtonUpgrade) {
@@ -612,6 +650,8 @@ public class PremiumLockerMainFrame extends PercentRelativeLayout implements INo
                     findViewById(R.id.title_for_boost).setVisibility(GONE);
                     findViewById(R.id.quiz_head).setVisibility(GONE);
                     findViewById(R.id.quiz_title).setVisibility(GONE);
+
+                    pushCameraActionType = bean.getActionType();
 
                     ((TextView)findViewById(R.id.game_and_cam_title)).setText(bean.getName());
                     ((TextView)findViewById(R.id.push_dialog_subtitle)).setText(bean.getMessage());
