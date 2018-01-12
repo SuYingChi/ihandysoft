@@ -108,6 +108,8 @@ public class PremiumLockerMainFrame extends PercentRelativeLayout implements INo
     private boolean mIsSlidingDrawerOpened = false;
     private boolean mIsBlackHoleShowing = false;
 
+    private DeviceManager deviceManager = DeviceManager.getInstance();
+
     private View mDimCover;
     private SlidingDrawer mSlidingDrawer;
     private SlidingDrawerContent mSlidingDrawerContent;
@@ -633,7 +635,6 @@ public class PremiumLockerMainFrame extends PercentRelativeLayout implements INo
                 break;
             case MODE_BATTERY:
                 BatteryDataManager batteryDataManager = new BatteryDataManager(getContext());
-                DeviceManager deviceManager = DeviceManager.getInstance();
                 if (deviceManager.getBatteryLevel() < 30) {
                     findViewById(R.id.title_for_boost).setVisibility(VISIBLE);
                     findViewById(R.id.push_dialog_subtitle).setVisibility(VISIBLE);
@@ -695,6 +696,11 @@ public class PremiumLockerMainFrame extends PercentRelativeLayout implements INo
                 findViewById(R.id.game_and_cam_title).setVisibility(GONE);
                 findViewById(R.id.quiz_head).setVisibility(GONE);
                 findViewById(R.id.quiz_title).setVisibility(GONE);
+
+                ((TextView)findViewById(R.id.scan_result_text)).setText(deviceManager.getRamUsage() + "%");
+                ((TextView)findViewById(R.id.scan_result_title)).setText("Memory Used");
+                ((TextView)findViewById(R.id.push_dialog_subtitle)).setText("Click boost now and make your phone clean!");
+                pushDialogButton.setText("BOOST NOW");
                 //boost
                 break;
             default:
