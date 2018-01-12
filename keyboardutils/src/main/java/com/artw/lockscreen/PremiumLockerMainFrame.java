@@ -549,6 +549,8 @@ public class PremiumLockerMainFrame extends PercentRelativeLayout implements INo
 
                         int junkSizeInMB = (int)junkSize / (1024 * 1024);
                         ((TextView)findViewById(R.id.scan_result_text)).setText(junkSizeInMB + "MB");
+                        ((TextView)findViewById(R.id.scan_result_title)).setText("Junk Files Found!");
+                        ((TextView)findViewById(R.id.push_dialog_subtitle)).setText("Click boost now and \n" + "make your phone clean!");
                         pushDialogButton.setText("CLEAN NOW");
                     }
                 });
