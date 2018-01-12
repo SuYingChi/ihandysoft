@@ -56,6 +56,7 @@ import com.ihs.commons.utils.HSJsonUtil;
 import com.ihs.commons.utils.HSLog;
 import com.ihs.feature.boost.plus.BoostPlusActivity;
 import com.ihs.feature.common.ScreenStatusReceiver;
+import com.ihs.feature.cpucooler.CpuCoolerManager;
 import com.ihs.feature.junkclean.data.JunkManager;
 import com.ihs.feature.junkclean.model.JunkInfo;
 import com.ihs.feature.softgame.SoftGameDisplayActivity;
@@ -550,7 +551,7 @@ public class PremiumLockerMainFrame extends PercentRelativeLayout implements INo
                         int junkSizeInMB = (int)junkSize / (1024 * 1024);
                         ((TextView)findViewById(R.id.scan_result_text)).setText(junkSizeInMB + "MB");
                         ((TextView)findViewById(R.id.scan_result_title)).setText("Junk Files Found!");
-                        ((TextView)findViewById(R.id.push_dialog_subtitle)).setText("Click boost now and \n" + "make your phone clean!");
+                        ((TextView)findViewById(R.id.push_dialog_subtitle)).setText("Click boost now and make your phone clean!");
                         pushDialogButton.setText("CLEAN NOW");
                     }
                 });
@@ -636,11 +637,24 @@ public class PremiumLockerMainFrame extends PercentRelativeLayout implements INo
                 //电量
                 break;
             case MODE_CPU:
-                findViewById(R.id.title_for_boost).setVisibility(VISIBLE);
-                findViewById(R.id.push_dialog_subtitle).setVisibility(VISIBLE);
-                findViewById(R.id.game_and_cam_title).setVisibility(GONE);
-                findViewById(R.id.quiz_head).setVisibility(GONE);
-                findViewById(R.id.quiz_title).setVisibility(GONE);
+                CpuCoolerManager cpuCoolerManager = CpuCoolerManager.getInstance();
+                if (cpuCoolerManager.fetchCpuTemperature() > 40) {
+                    this.pushDialogIndex++;
+                    switchPushDialog(this.pushDialogIndex);
+                } else {
+                    findViewById(R.id.title_for_boost).setVisibility(VISIBLE);
+                    findViewById(R.id.push_dialog_subtitle).setVisibility(VISIBLE);
+                    findViewById(R.id.game_and_cam_title).setVisibility(GONE);
+                    findViewById(R.id.quiz_head).setVisibility(GONE);
+                    findViewById(R.id.quiz_title).setVisibility(GONE);
+
+                    // TODO: 2018/1/12 Icon 
+
+                    ((TextView)findViewById(R.id.scan_result_text)).setText(cpuCoolerManager.fetchCpuTemperature() + "℃");
+                    ((TextView)findViewById(R.id.scan_result_title)).setText("Phone Overheating!");
+                    ((TextView)findViewById(R.id.push_dialog_subtitle)).setText("Click to cool down your phone.");
+                    pushDialogButton.setText("COOL DOWN");
+                }
                 //CPU
                 break;
             case MODE_STORAGE:
