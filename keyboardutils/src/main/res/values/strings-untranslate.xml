@@ -37,8 +37,7 @@ Try More Lock Screen Themes</string>
     <string name="locker_search_text">Yahoo Search</string>
 
     <string name="disable_app_suggestion">Disable Recent Apps</string>
-    <string name="disable_app_suggestion_msg">Disable Recent Apps Disable Recent Apps</string>
+    <string name="disable_app_suggestion_msg">You can quickly open your recent apps here. Are you sure to disable it?</string>
 
     <string name="sms_not_supported_prompt">Current device don\'t support SMS</string>
-
 </resources>
