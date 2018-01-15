@@ -3,8 +3,6 @@ package com.ihs.keyboardutils.nativeads;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.Point;
-import android.net.ConnectivityManager;
-import android.net.NetworkInfo;
 import android.os.Handler;
 import android.text.TextUtils;
 import android.util.AttributeSet;
@@ -19,6 +17,7 @@ import android.widget.Toast;
 
 import com.ihs.app.framework.HSApplication;
 import com.ihs.commons.utils.HSLog;
+import com.ihs.keyboardutils.ads.AdUtils;
 import com.ihs.keyboardutils.iap.RemoveAdsManager;
 
 import net.appcloudbox.ads.base.AcbAd;
@@ -248,7 +247,7 @@ public class KCNativeAdView extends FrameLayout {
             return;
         }
 
-        logAnalyticsEvent("Load");
+        AdUtils.logAdLoad(placement);
 
         adLoader = new AcbNativeAdLoader(getContext().getApplicationContext(), placement);
 
@@ -270,17 +269,6 @@ public class KCNativeAdView extends FrameLayout {
             @Override
             public void onAdFinished(AcbNativeAdLoader acbNativeAdLoader, AcbError hsError) {
                 if (hsError != null) {
-                    HSLog.e("Load native ad failed: " + hsError);
-                    try {
-                        ConnectivityManager cm =
-                                (ConnectivityManager) getContext().getSystemService(Context.CONNECTIVITY_SERVICE);
-                        NetworkInfo netInfo = cm.getActiveNetworkInfo();
-                        if (netInfo == null || !netInfo.isAvailable() || !netInfo.isConnected()) {
-                            logAnalyticsEvent("NoNetwork");
-                        }
-                    } catch (Exception e) {
-                        // 防止因为没有权限而Crash
-                    }
                     if(HSLog.isDebugging()) {
                         Toast.makeText(getContext(), "Ad(" + placement + ") Error: " + hsError.getMessage(), Toast.LENGTH_LONG).show();
                     }
@@ -310,7 +298,7 @@ public class KCNativeAdView extends FrameLayout {
      */
     private void bindDataToView(AcbNativeAd nativeAd) {
         if (nativeAdContainerView != null && nativeAd != null) {
-            logAnalyticsEvent("Show");
+            AdUtils.logAdShow(placement);
             nativeAdContainerView.fillNativeAd(nativeAd);
 
             // 调整布局
@@ -321,7 +309,7 @@ public class KCNativeAdView extends FrameLayout {
             nativeAd.setNativeClickListener(new AcbNativeAd.AcbNativeClickListener() {
                 @Override
                 public void onAdClick(AcbAd acbAd) {
-                    logAnalyticsEvent("Click");
+                    AdUtils.logAdClick(placement);
 
                     if (HSApplication.isDebugging) {
                         Toast.makeText(getContext(), placement + ":" + acbAd.getVendorConfig().name(), Toast.LENGTH_SHORT).show();
@@ -339,10 +327,6 @@ public class KCNativeAdView extends FrameLayout {
         ScaleAnimation scaleAnimation = new ScaleAnimation(0.0f, 1.0f, 0.0f, 1.0f, Animation.RELATIVE_TO_SELF, 0.5f, Animation.RELATIVE_TO_SELF, 0.5f);
         scaleAnimation.setDuration(300);
         nativeAdContainerView.startAnimation(scaleAnimation);
-    }
-
-    private void logAnalyticsEvent(String actionSuffix) {
-        // Stop log events
     }
 
     public AcbNativeAdContainerView getNativeAdContainerView() {
