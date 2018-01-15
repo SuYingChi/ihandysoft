@@ -1,8 +1,5 @@
 package com.ihs.keyboardutils.ads;
 
-import android.content.Context;
-import android.net.ConnectivityManager;
-import android.net.NetworkInfo;
 import android.os.Handler;
 import android.os.Looper;
 import android.text.TextUtils;
@@ -32,7 +29,7 @@ public class KCInterstitialAd {
         if (RemoveAdsManager.getInstance().isRemoveAdsPurchased()) {
             return;
         }
-        logAnalyticsEvent(placement, "Load");
+        AdUtils.logAdLoad(placement);
         AcbInterstitialAdLoader.preload(HSApplication.getContext(), 1, placement);
     }
 
@@ -52,7 +49,7 @@ public class KCInterstitialAd {
             return null;
         }
 
-        logAnalyticsEvent(placement, "Load");
+        AdUtils.logAdLoad(placement);
         AcbInterstitialAdLoader loader = new AcbInterstitialAdLoader(HSApplication.getContext(), placement);
         loader.load(1, new AcbInterstitialAdLoader.AcbInterstitialAdLoadListener() {
             OnAdShowListener listener = onAdShowListener;
@@ -69,17 +66,6 @@ public class KCInterstitialAd {
             @Override
             public void onAdFinished(AcbInterstitialAdLoader acbInterstitialAdLoader, AcbError hsError) {
                 if (hsError != null) {
-                    HSLog.e("Load interstitial ad failed: " + hsError);
-                    try {
-                        ConnectivityManager cm =
-                                (ConnectivityManager) HSApplication.getContext().getSystemService(Context.CONNECTIVITY_SERVICE);
-                        NetworkInfo netInfo = cm.getActiveNetworkInfo();
-                        if (netInfo == null || !netInfo.isAvailable() || !netInfo.isConnected()) {
-                            logAnalyticsEvent(placement, "NoNetwork");
-                        }
-                    } catch (Exception e) {
-                        // 防止因为没有权限而Crash
-                    }
                     if (listener != null) {
                         listener.onAdShow(false);
                         listener = null;
@@ -113,7 +99,6 @@ public class KCInterstitialAd {
 
         List<AcbInterstitialAd> interstitialAds = AcbInterstitialAdLoader.fetch(HSApplication.getContext(), placement, 1);
         if (interstitialAds.size() <= 0) {
-            logAnalyticsEvent(placement, "FetchNoAd");
             return false;
         }
 
@@ -132,7 +117,7 @@ public class KCInterstitialAd {
         interstitialAd.setInterstitialAdListener(new AcbInterstitialAd.IAcbInterstitialAdListener() {
             @Override
             public void onAdDisplayed() {
-                logAnalyticsEvent(placement, "Show");
+                AdUtils.logAdShow(placement);
             }
 
             @Override
@@ -141,13 +126,12 @@ public class KCInterstitialAd {
                     Toast.makeText(HSApplication.getContext(), placement + ":" + interstitialAd.getVendorConfig().name(), Toast.LENGTH_SHORT).show();
                 }
 
-                logAnalyticsEvent(placement, "Click");
+                AdUtils.logAdClick(placement);
                 releaseInterstitialAd(interstitialAd);
             }
 
             @Override
             public void onAdClosed() {
-                logAnalyticsEvent(placement, "Close");
                 releaseInterstitialAd(interstitialAd);
                 if (onAdCloseListener != null) {
                     onAdCloseListener.onAdClose();
@@ -182,9 +166,5 @@ public class KCInterstitialAd {
                 }
             }
         });
-    }
-
-    private static void logAnalyticsEvent(String placement, String actionSuffix) {
-        // Stop logging events
     }
 }
