@@ -8,14 +8,16 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.SharedPreferences;
-import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.Color;
+import android.graphics.PorterDuff;
 import android.graphics.drawable.BitmapDrawable;
 import android.net.Uri;
 import android.os.Build;
 import android.support.percent.PercentRelativeLayout;
 import android.support.v4.content.ContextCompat;
+import android.support.v4.widget.ContentLoadingProgressBar;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.Toolbar;
 import android.text.SpannableString;
@@ -203,7 +205,22 @@ public class PremiumLockerMainFrame extends PercentRelativeLayout implements INo
                 getContext().startActivity(gameIntent);
                 break;
             case MODE_CAMERA:
-                // TODO: 2018/1/12 open store in camera
+                Intent cameraIntent = new Intent("push.camera.store");
+                switch (pushCameraActionType) {
+                    case "Filter":
+                        cameraIntent.putExtra("intent_key_default_tab", "tab_filter");
+                        break;
+                    case "Sticker":
+                        cameraIntent.putExtra("intent_key_default_tab", "tab_sticker");
+                        break;
+                    case "LiveSticker":
+                        cameraIntent.putExtra("intent_key_default_tab", "tab_live_sticker");
+                        break;
+                    default:
+                        break;
+                }
+
+                getContext().startActivity(cameraIntent);
                 break;
             case MODE_BATTERY:
                 Intent batteryIntent = new Intent(getContext(), BatteryActivity.class);
@@ -605,7 +622,6 @@ public class PremiumLockerMainFrame extends PercentRelativeLayout implements INo
                         pushDialogButton.setText(getResources().getString(R.string.push_junk_button));
                     }
                 });
-                //垃圾清理
                 break;
             case MODE_GAME:
                 SharedPreferences preferencesOfGame = getContext().getSharedPreferences("gameInfo", Context.MODE_PRIVATE);
@@ -637,7 +653,6 @@ public class PremiumLockerMainFrame extends PercentRelativeLayout implements INo
                     ((TextView)findViewById(R.id.push_dialog_subtitle)).setText(preferencesOfGame.getString("description", ""));
                     pushDialogButton.setText(getResources().getString(R.string.push_game_button));
                 }
-                //游戏
                 break;
             case MODE_CAMERA:
                 List<Map<String, Object>> configs;
@@ -715,7 +730,6 @@ public class PremiumLockerMainFrame extends PercentRelativeLayout implements INo
                     this.pushDialogIndex++;
                     switchPushDialog(this.pushDialogIndex);
                 }
-                //电量
                 break;
             case MODE_CPU:
                 CpuCoolerManager cpuCoolerManager = CpuCoolerManager.getInstance();
@@ -735,7 +749,6 @@ public class PremiumLockerMainFrame extends PercentRelativeLayout implements INo
                     ((TextView)findViewById(R.id.push_dialog_subtitle)).setText(getResources().getString(R.string.push_cpu_subtitle));
                     pushDialogButton.setText(getResources().getString(R.string.push_cpu_button));
                 }
-                //CPU
                 break;
             case MODE_STORAGE:
                 findViewById(R.id.title_for_boost).setVisibility(VISIBLE);
@@ -749,7 +762,6 @@ public class PremiumLockerMainFrame extends PercentRelativeLayout implements INo
                 ((TextView)findViewById(R.id.scan_result_title)).setText(getResources().getString(R.string.push_memory_title));
                 ((TextView)findViewById(R.id.push_dialog_subtitle)).setText(getResources().getString(R.string.push_memory_subtitle));
                 pushDialogButton.setText(getResources().getString(R.string.push_memory_button));
-                //boost
                 break;
             default:
                 break;
