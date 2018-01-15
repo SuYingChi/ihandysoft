@@ -340,6 +340,7 @@ public class PremiumLockerMainFrame extends PercentRelativeLayout implements INo
         pushDialogButton = findViewById(R.id.push_dialog_button);
         pushDialogButton.setOnClickListener(pushDialogClickListener);
         pushDialogIconImageView = findViewById(R.id.icon);
+        findViewById(R.id.close_icon).setOnClickListener(view -> findViewById(R.id.push_dialog).setVisibility(INVISIBLE));
 
         if (!shouldShowButtonUpgrade) {
             buttonUpgrade.setVisibility(View.INVISIBLE);
@@ -544,6 +545,7 @@ public class PremiumLockerMainFrame extends PercentRelativeLayout implements INo
                 int timeForUpdate = (int) (System.currentTimeMillis() - getContext().getSharedPreferences("pushDialog", Context.MODE_PRIVATE).getLong("time", 0)) / (60 * 1000);
                 pushDialogIndex = getContext().getSharedPreferences("pushDialog", Context.MODE_PRIVATE).getInt("index", pushDialogIndex);
                 if (timeForUpdate > 5) {
+                    findViewById(R.id.push_dialog).setVisibility(VISIBLE);
                     pushDialogIndex++;
                     int pushDialogCount = 6;
                     pushDialogIndex = pushDialogIndex% pushDialogCount;
