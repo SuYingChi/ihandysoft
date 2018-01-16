@@ -1,5 +1,6 @@
 package com.ihs.keyboardutils.appsuggestion;
 
+import com.artw.lockscreen.LockerSettings;
 import com.ihs.app.analytics.HSAnalytics;
 import com.ihs.app.framework.HSApplication;
 import com.ihs.commons.config.HSConfig;
@@ -49,7 +50,9 @@ public class AppSuggestionSetting {
 
     public int getAppSuggestionEnableStates() {
         if (HSApplication.getFirstLaunchInfo().appVersionCode < HSConfig.optInteger(Integer.MAX_VALUE, "Application", "AppSuggestion", "StartVersion")) {
-            return APPSUGGESTION_MUTED;
+            if (LockerSettings.getLockerEnableStates() == LockerSettings.LOCKER_DEFAULT_ACTIVE) {
+                return APPSUGGESTION_MUTED;
+            }
         }
 
         //用户设置过的话，直接返回用户设置的状态。不管plist任何值，包括静默。
