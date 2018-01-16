@@ -2,18 +2,18 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/root_view"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
     android:orientation="vertical"
     android:paddingLeft="7dp"
-    android:paddingRight="7dp"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content">
+    android:paddingRight="7dp">
 
     <TextView
         android:id="@+id/app_name"
-        android:layout_marginBottom="5dp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_centerVertical="true"
+        android:layout_marginBottom="5dp"
         android:fontFamily="sans-serif-light"
         android:textColor="#767676"
         android:textSize="16sp" />
@@ -37,14 +37,35 @@
             android:layout_alignParentTop="true"
             android:orientation="vertical">
 
-            <ImageView
-                android:id="@+id/close_btn"
-                android:padding="@dimen/ad_style_charging_alert_content_margin"
-                android:layout_width="34dp"
-                android:layout_height="34dp"
-                android:layout_alignParentRight="true"
-                android:layout_gravity="right"
-                android:src="@drawable/ad_close_button" />
+            <RelativeLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content">
+
+
+                <android.support.v7.widget.AppCompatImageView
+                    android:id="@+id/iv_setting"
+                    android:layout_width="34dp"
+                    android:layout_height="34dp"
+                    android:layout_toLeftOf="@+id/close_btn"
+                    android:layout_toStartOf="@+id/close_btn"
+                    android:padding="6dp"
+                    android:alpha="0.6"
+                    android:tint="@color/white"
+                    app:srcCompat="@drawable/ic_more_vert_black_24dp"
+                    />
+
+
+                <ImageView
+                    android:id="@+id/close_btn"
+                    android:layout_width="34dp"
+                    android:layout_height="34dp"
+                    android:layout_alignParentRight="true"
+                    android:layout_gravity="right"
+                    android:padding="@dimen/ad_style_charging_alert_content_margin"
+                    android:src="@drawable/ad_close_button" />
+
+            </RelativeLayout>
+
 
             <LinearLayout
                 android:id="@+id/ll_info"
@@ -188,11 +209,11 @@
             </LinearLayout>
 
             <android.support.percent.PercentRelativeLayout
-                android:layout_marginLeft="@dimen/ad_style_charging_alert_content_margin"
-                android:layout_marginRight="@dimen/ad_style_charging_alert_content_margin"
-                android:layout_marginBottom="@dimen/ad_style_charging_alert_content_margin"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginBottom="@dimen/ad_style_charging_alert_content_margin"
+                android:layout_marginLeft="@dimen/ad_style_charging_alert_content_margin"
+                android:layout_marginRight="@dimen/ad_style_charging_alert_content_margin"
                 android:clipChildren="false">
 
                 <ImageView
@@ -205,17 +226,16 @@
 
                 <RelativeLayout
                     android:id="@+id/ad_container"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="16dp"
                     android:layout_width="match_parent"
-                    >
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="16dp">
 
                     <TextView
                         android:id="@+id/txt_charging_indicator"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:fontFamily="sans-serif-thin"
                         android:layout_centerInParent="true"
+                        android:fontFamily="sans-serif-thin"
                         android:gravity="center"
                         android:text="@string/charging_module_charging_state_speed_charging_indicator"
                         android:textColor="#88ffffff"

@@ -154,7 +154,7 @@ public class ChargingScreenAlertActivity extends Activity {
     };
 
     private BubbleView bubbleView;
-//    private AcbExpressAdView acbExpressAdView;
+    //    private AcbExpressAdView acbExpressAdView;
     private RelativeLayout adContainer;
     private ImageView removeAds;
     private long createTime;
@@ -171,6 +171,7 @@ public class ChargingScreenAlertActivity extends Activity {
         }
     };
     private KCNativeAdView nativeAdView;
+    private Dialog closeDialog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -246,8 +247,8 @@ public class ChargingScreenAlertActivity extends Activity {
         bubbleView.post(new Runnable() {
             @Override
             public void run() {
-                if (contentView.getWidth() > 0 && contentView.getHeight() > 0){
-                    bubbleView.setLayoutParams(new RelativeLayout.LayoutParams(contentView.getWidth() - contentView.getPaddingLeft() - contentView.getPaddingRight(),contentView.getHeight() - contentView.getPaddingTop() - contentView.getPaddingBottom()));
+                if (contentView.getWidth() > 0 && contentView.getHeight() > 0) {
+                    bubbleView.setLayoutParams(new RelativeLayout.LayoutParams(contentView.getWidth() - contentView.getPaddingLeft() - contentView.getPaddingRight(), contentView.getHeight() - contentView.getPaddingTop() - contentView.getPaddingBottom()));
                 }
             }
         });
@@ -300,12 +301,12 @@ public class ChargingScreenAlertActivity extends Activity {
             View view = LayoutInflater.from(HSApplication.getContext()).inflate(R.layout.ad_style_charging_alert, null);
             int width = (int) (DisplayUtils.getScreenWidthPixels() * 0.9);
             View loadingView = new View(HSApplication.getContext());
-            LinearLayout.LayoutParams loadingLP = new LinearLayout.LayoutParams(width,(int)(width / 1.9f + HSApplication.getContext().getResources().getDimensionPixelOffset(R.dimen.ad_style_charging_alert_bottom_container_height)));
+            LinearLayout.LayoutParams loadingLP = new LinearLayout.LayoutParams(width, (int) (width / 1.9f + HSApplication.getContext().getResources().getDimensionPixelOffset(R.dimen.ad_style_charging_alert_bottom_container_height)));
             loadingView.setLayoutParams(loadingLP);
             nativeAdView = new KCNativeAdView(HSApplication.getContext());
             nativeAdView.setLoadingView(loadingView);
             nativeAdView.setAdLayoutView(view);
-            nativeAdView.setPrimaryViewSize(width, (int)(width / 1.9f));
+            nativeAdView.setPrimaryViewSize(width, (int) (width / 1.9f));
             nativeAdView.load(HSChargingScreenManager.getInstance().getChargingAlertAdsPlacementName());
             adContainer.addView(nativeAdView);
 
@@ -323,6 +324,57 @@ public class ChargingScreenAlertActivity extends Activity {
         IntentFilter filter = new IntentFilter();
         filter.addAction(Intent.ACTION_SCREEN_ON);
         registerReceiver(broadcastReceiver, filter);
+
+        ImageView ivSetting = findViewById(R.id.iv_setting);
+        ivSetting.setBackgroundDrawable(RippleDrawableUtils.getTransparentRippleBackground());
+        ivSetting.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                showAlert();
+            }
+        });
+    }
+
+    private void showAlert() {
+        if (closeDialog == null) {
+            closeDialog = new Dialog(this, R.style.dialog);
+            closeDialog.setContentView(R.layout.charging_module_alert_close_charge_screen);
+
+            TextView closeAlertTitle = (TextView) closeDialog.findViewById(R.id.close_alert_title);
+            closeAlertTitle.setText(R.string.disable_battery_master);
+
+            View btnCancel = closeDialog.findViewById(R.id.alert_cancel);
+            View btnClose = closeDialog.findViewById(R.id.alert_close);
+
+            btnCancel.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    if (closeDialog == null) {
+                        return;
+                    }
+                    KCCommonUtils.dismissDialog(closeDialog);
+                    closeDialog = null;
+                }
+            });
+
+            btnClose.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    if (closeDialog == null) {
+                        return;
+                    }
+                    KCCommonUtils.dismissDialog(closeDialog);
+                    closeDialog = null;
+
+                    ChargingManagerUtil.disableCharging();
+                    finish();
+                }
+            });
+            btnCancel.setBackgroundDrawable(RippleDrawableUtils.getCompatRippleDrawable(Color.WHITE, 0, 0, 0, DisplayUtils.dip2px(8)));
+            btnClose.setBackgroundDrawable(RippleDrawableUtils.getCompatRippleDrawable(Color.WHITE, 0, 0, DisplayUtils.dip2px(8), 0));
+
+        }
+        KCCommonUtils.showDialog(closeDialog);
     }
 
     private void showChargingIndicatorText() {
@@ -555,7 +607,7 @@ public class ChargingScreenAlertActivity extends Activity {
     private void updateTxtAndImgAndStartFlashAnim(@IntRange(from = 0, to = 4) int txtChargingStateStringIndex,
                                                   @IntRange(from = 0, to = 3) int imgChargingStateGreenDrawableCount) {
 
-        if ( txtChargingStateStringIndex <= 4) {
+        if (txtChargingStateStringIndex <= 4) {
             bubbleView.start();
         } else {
             bubbleView.stop();
