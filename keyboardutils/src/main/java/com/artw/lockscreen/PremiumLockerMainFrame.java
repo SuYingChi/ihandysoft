@@ -13,7 +13,6 @@ import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.graphics.PorterDuff;
 import android.graphics.drawable.BitmapDrawable;
-import android.net.Uri;
 import android.os.Build;
 import android.support.percent.PercentRelativeLayout;
 import android.support.v4.content.ContextCompat;
@@ -69,6 +68,7 @@ import com.ihs.feature.cpucooler.CpuCoolerManager;
 import com.ihs.feature.junkclean.JunkCleanActivity;
 import com.ihs.feature.junkclean.data.JunkManager;
 import com.ihs.feature.junkclean.model.JunkInfo;
+import com.ihs.feature.softgame.GameStarterActivity;
 import com.ihs.feature.softgame.SoftGameDisplayActivity;
 import com.ihs.feature.weather.WeatherManager;
 import com.ihs.keyboardutils.R;
@@ -200,9 +200,7 @@ public class PremiumLockerMainFrame extends PercentRelativeLayout implements INo
                 break;
             case MODE_GAME:
                 String url = getContext().getSharedPreferences("gameInfo", Context.MODE_PRIVATE).getString("link", null);
-                Intent gameIntent = new Intent(Intent.ACTION_VIEW);
-                gameIntent.setData(Uri.parse(url));
-                getContext().startActivity(gameIntent);
+                GameStarterActivity.startGame(url, "push_game_clicked");
                 break;
             case MODE_CAMERA:
                 Intent cameraIntent = new Intent("push.camera.store");
