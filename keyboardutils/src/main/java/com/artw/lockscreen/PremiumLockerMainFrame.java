@@ -556,7 +556,6 @@ public class PremiumLockerMainFrame extends PercentRelativeLayout implements INo
     }
 
     private void askForGameInfo(int position){
-        SharedPreferences.Editor editorOfGame = getContext().getSharedPreferences("gameInfo", Context.MODE_PRIVATE).edit();
         String urlOfGame = "http://api.famobi.com/feed?a=A-KCVWU&n=10&sort=top_games";
         HSHttpConnection hsHttpConnection = new HSHttpConnection(urlOfGame);
         hsHttpConnection.startAsync();
@@ -567,6 +566,7 @@ public class PremiumLockerMainFrame extends PercentRelativeLayout implements INo
                 try {
                     List<Object> jsonMap = HSJsonUtil.toList(bodyJSON.getJSONArray("games"));
                     Map<String, String> object = (Map<String, String>) jsonMap.get(position);
+                    SharedPreferences.Editor editorOfGame = getContext().getSharedPreferences("gameInfo", Context.MODE_PRIVATE).edit();
                     editorOfGame.putString("name", object.get("name"));
                     editorOfGame.putString("description", object.get("description"));
                     editorOfGame.putString("thumb", object.get("thumb"));
