@@ -99,7 +99,7 @@
 
     <LinearLayout
         android:id="@+id/button_boost"
-        android:layout_above="@+id/push_dialog"
+        android:layout_above="@+id/push_frame"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
         android:orientation="vertical"
@@ -233,7 +233,7 @@
     </android.support.percent.PercentRelativeLayout>
 
     <FrameLayout
-        android:id="@+id/push_dialog"
+        android:id="@+id/push_frame"
         android:layout_above="@id/bottom_operation_area"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
