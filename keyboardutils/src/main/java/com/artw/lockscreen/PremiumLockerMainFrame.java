@@ -9,7 +9,6 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.SharedPreferences;
 import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.graphics.PorterDuff;
 import android.graphics.drawable.BitmapDrawable;
@@ -79,10 +78,12 @@ import com.ihs.keyboardutils.utils.CommonUtils;
 import com.ihs.keyboardutils.utils.RippleDrawableUtils;
 import com.ihs.keyboardutils.view.HSGifImageView;
 import com.kc.commons.utils.KCCommonUtils;
+import com.nostra13.universalimageloader.core.ImageLoader;
+import com.nostra13.universalimageloader.core.assist.FailReason;
+import com.nostra13.universalimageloader.core.listener.ImageLoadingListener;
 
 import org.json.JSONObject;
 
-import java.net.URL;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
@@ -141,8 +142,6 @@ public class PremiumLockerMainFrame extends PercentRelativeLayout implements INo
     private View buttonGame;
     private View buttonCamera;
     private View buttonWeather;
-    private TextView pushDialogButton;
-    private ImageView pushDialogIconImageView;
 
     private boolean shouldShowButtonUpgrade;
     private boolean shouldShowButtonSearch;
@@ -335,7 +334,6 @@ public class PremiumLockerMainFrame extends PercentRelativeLayout implements INo
         buttonWeather = findViewById(R.id.button_weather);
         buttonWeather.setOnClickListener(clickListener);
         buttonWeather.setBackgroundDrawable(RippleDrawableUtils.getCompatRippleDrawable(backgroundColor, backgroundPressColor, DisplayUtils.dip2px(4)));
-        pushDialogIconImageView = findViewById(R.id.icon);
         findViewById(R.id.close_icon).setOnClickListener(view -> findViewById(R.id.push_dialog).setVisibility(INVISIBLE));
 
         if (!shouldShowButtonUpgrade) {
@@ -637,15 +635,27 @@ public class PremiumLockerMainFrame extends PercentRelativeLayout implements INo
                     gameRootView.setVisibility(VISIBLE);
 
                     String iconUrl = preferencesOfGame.getString("thumb", "");
-                    new Thread(() -> {
-                        try {
-                            URL urlOfImage = new URL(iconUrl);
-                            Bitmap bitmap = BitmapFactory.decodeStream(urlOfImage.openConnection().getInputStream());
-                            ((ImageView)gameRootView.findViewById(R.id.icon)).setImageBitmap(bitmap);
-                        }catch (Exception e){
-                            e.printStackTrace();
+                    ImageLoader.getInstance().loadImage(iconUrl, new ImageLoadingListener() {
+                        @Override
+                        public void onLoadingStarted(String imageUri, View view) {
+
                         }
-                    }).start();
+
+                        @Override
+                        public void onLoadingFailed(String imageUri, View view, FailReason failReason) {
+
+                        }
+
+                        @Override
+                        public void onLoadingComplete(String imageUri, View view, Bitmap loadedImage) {
+                            ((ImageView)gameRootView.findViewById(R.id.icon)).setImageBitmap(loadedImage);
+                        }
+
+                        @Override
+                        public void onLoadingCancelled(String imageUri, View view) {
+
+                        }
+                    });
                     ((TextView)gameRootView.findViewById(R.id.push_camera_or_game_title)).setText(preferencesOfGame.getString("name", ""));
                     ((TextView)gameRootView.findViewById(R.id.push_camera_or_game_subtitle)).setText(preferencesOfGame.getString("description", ""));
                     ((Button)gameRootView.findViewById(R.id.push_camera_or_game_button)).setText(getResources().getString(R.string.push_game_button));
@@ -681,15 +691,27 @@ public class PremiumLockerMainFrame extends PercentRelativeLayout implements INo
                     if (imageUrl == null) {
                         ((ImageView)findViewById(R.id.icon)).setImageResource(R.drawable.ic_locker_camera);
                     } else {
-                        new Thread(() -> {
-                            try {
-                                URL urlOfImage = new URL(imageUrl);
-                                Bitmap bitmap = BitmapFactory.decodeStream(urlOfImage.openConnection().getInputStream());
-                                ((ImageView)cameraRootView.findViewById(R.id.icon)).setImageBitmap(bitmap);
-                            }catch (Exception e){
-                                e.printStackTrace();
+                        ImageLoader.getInstance().loadImage(imageUrl, new ImageLoadingListener() {
+                            @Override
+                            public void onLoadingStarted(String imageUri, View view) {
+
                             }
-                        }).start();
+
+                            @Override
+                            public void onLoadingFailed(String imageUri, View view, FailReason failReason) {
+
+                            }
+
+                            @Override
+                            public void onLoadingComplete(String imageUri, View view, Bitmap loadedImage) {
+                                ((ImageView)cameraRootView.findViewById(R.id.icon)).setImageBitmap(loadedImage);
+                            }
+
+                            @Override
+                            public void onLoadingCancelled(String imageUri, View view) {
+
+                            }
+                        });
                     }
                 }
                 break;
