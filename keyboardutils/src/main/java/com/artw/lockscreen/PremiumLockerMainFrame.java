@@ -335,8 +335,6 @@ public class PremiumLockerMainFrame extends PercentRelativeLayout implements INo
         buttonWeather = findViewById(R.id.button_weather);
         buttonWeather.setOnClickListener(clickListener);
         buttonWeather.setBackgroundDrawable(RippleDrawableUtils.getCompatRippleDrawable(backgroundColor, backgroundPressColor, DisplayUtils.dip2px(4)));
-        pushDialogButton = findViewById(R.id.push_dialog_button);
-        pushDialogButton.setOnClickListener(pushDialogClickListener);
         pushDialogIconImageView = findViewById(R.id.icon);
         findViewById(R.id.close_icon).setOnClickListener(view -> findViewById(R.id.push_dialog).setVisibility(INVISIBLE));
 
@@ -589,7 +587,11 @@ public class PremiumLockerMainFrame extends PercentRelativeLayout implements INo
     private void switchPushDialog(int pushDialogIndex) {
         switch (pushDialogIndex) {
             case MODE_JUNK:
-                findViewById(R.id.push_dialog_layout).setVisibility(GONE);
+                findViewById(R.id.push_camera_or_game).setVisibility(GONE);
+                findViewById(R.id.push_boost_two).setVisibility(GONE);
+
+                View junkRootView = findViewById(R.id.push_boost_one);
+                junkRootView.setVisibility(GONE);
                 ((ContentLoadingProgressBar) findViewById(R.id.spin_circle)).getIndeterminateDrawable().setColorFilter(Color.BLACK, PorterDuff.Mode.MULTIPLY);
                 findViewById(R.id.scan_layout).setVisibility(VISIBLE);
                 JunkManager junkManager = JunkManager.getInstance();
@@ -607,19 +609,14 @@ public class PremiumLockerMainFrame extends PercentRelativeLayout implements INo
                     @Override
                     public void onScanFinished(long junkSize) {
                         findViewById(R.id.scan_layout).setVisibility(GONE);
-                        findViewById(R.id.push_dialog_layout).setVisibility(VISIBLE);
-                        findViewById(R.id.title_for_boost).setVisibility(VISIBLE);
-                        findViewById(R.id.push_dialog_subtitle).setVisibility(VISIBLE);
-                        findViewById(R.id.game_and_cam_title).setVisibility(GONE);
-                        findViewById(R.id.quiz_head).setVisibility(GONE);
-                        findViewById(R.id.quiz_title).setVisibility(GONE);
+                        junkRootView.setVisibility(VISIBLE);
 
                         int junkSizeInMB = (int)junkSize / (1024 * 1024);
-                        ((TextView)findViewById(R.id.scan_result_text)).setText(junkSizeInMB + "MB");
-                        ((TextView)findViewById(R.id.scan_result_title)).setText(getResources().getString(R.string.push_junk_title));
-                        ((TextView)findViewById(R.id.push_dialog_subtitle)).setText(getResources().getString(R.string.push_junk_subtitle));
-                        ((ImageView)findViewById(R.id.icon)).setImageDrawable(getResources().getDrawable(R.drawable.new_locker_junk));
-                        pushDialogButton.setText(getResources().getString(R.string.push_junk_button));
+                        ((TextView)junkRootView.findViewById(R.id.boost_result)).setText(junkSizeInMB + "MB");
+                        ((TextView)junkRootView.findViewById(R.id.boost_title)).setText(getResources().getString(R.string.push_junk_title));
+                        ((TextView)junkRootView.findViewById(R.id.boost_subtitle)).setText(getResources().getString(R.string.push_junk_subtitle));
+                        ((ImageView)junkRootView.findViewById(R.id.icon)).setImageDrawable(getResources().getDrawable(R.drawable.new_locker_junk));
+                        ((Button)junkRootView.findViewById(R.id.push_boost_button)).setText(getResources().getString(R.string.push_junk_button));
                     }
                 });
                 break;
@@ -633,25 +630,25 @@ public class PremiumLockerMainFrame extends PercentRelativeLayout implements INo
                     this.pushDialogIndex++;
                     switchPushDialog(this.pushDialogIndex);
                 } else {
-                    findViewById(R.id.game_and_cam_title).setVisibility(VISIBLE);
-                    findViewById(R.id.push_dialog_subtitle).setVisibility(VISIBLE);
-                    findViewById(R.id.title_for_boost).setVisibility(GONE);
-                    findViewById(R.id.quiz_head).setVisibility(GONE);
-                    findViewById(R.id.quiz_title).setVisibility(GONE);
+                    findViewById(R.id.push_boost_one).setVisibility(GONE);
+                    findViewById(R.id.push_boost_two).setVisibility(GONE);
+
+                    View gameRootView = findViewById(R.id.push_camera_or_game);
+                    gameRootView.setVisibility(VISIBLE);
 
                     String iconUrl = preferencesOfGame.getString("thumb", "");
                     new Thread(() -> {
                         try {
                             URL urlOfImage = new URL(iconUrl);
                             Bitmap bitmap = BitmapFactory.decodeStream(urlOfImage.openConnection().getInputStream());
-                            pushDialogIconImageView.setImageBitmap(bitmap);
+                            ((ImageView)gameRootView.findViewById(R.id.icon)).setImageBitmap(bitmap);
                         }catch (Exception e){
                             e.printStackTrace();
                         }
                     }).start();
-                    ((TextView)findViewById(R.id.game_and_cam_title)).setText(preferencesOfGame.getString("name", ""));
-                    ((TextView)findViewById(R.id.push_dialog_subtitle)).setText(preferencesOfGame.getString("description", ""));
-                    pushDialogButton.setText(getResources().getString(R.string.push_game_button));
+                    ((TextView)gameRootView.findViewById(R.id.push_camera_or_game_title)).setText(preferencesOfGame.getString("name", ""));
+                    ((TextView)gameRootView.findViewById(R.id.push_camera_or_game_subtitle)).setText(preferencesOfGame.getString("description", ""));
+                    ((Button)gameRootView.findViewById(R.id.push_camera_or_game_button)).setText(getResources().getString(R.string.push_game_button));
                 }
                 break;
             case MODE_CAMERA:
@@ -668,17 +665,17 @@ public class PremiumLockerMainFrame extends PercentRelativeLayout implements INo
                     this.pushDialogIndex++;
                     switchPushDialog(this.pushDialogIndex);
                 } else {
-                    findViewById(R.id.game_and_cam_title).setVisibility(VISIBLE);
-                    findViewById(R.id.push_dialog_subtitle).setVisibility(VISIBLE);
-                    findViewById(R.id.title_for_boost).setVisibility(GONE);
-                    findViewById(R.id.quiz_head).setVisibility(GONE);
-                    findViewById(R.id.quiz_title).setVisibility(GONE);
+                    findViewById(R.id.push_boost_one).setVisibility(GONE);
+                    findViewById(R.id.push_boost_two).setVisibility(GONE);
+
+                    View cameraRootView = findViewById(R.id.push_camera_or_game);
+                    cameraRootView.setVisibility(VISIBLE);
 
                     pushCameraActionType = bean.getActionType();
 
-                    ((TextView)findViewById(R.id.game_and_cam_title)).setText(bean.getName());
-                    ((TextView)findViewById(R.id.push_dialog_subtitle)).setText(bean.getMessage());
-                    pushDialogButton.setText(bean.getButtonText());
+                    ((TextView)cameraRootView.findViewById(R.id.push_camera_or_game_title)).setText(bean.getName());
+                    ((TextView)cameraRootView.findViewById(R.id.push_camera_or_game_subtitle)).setText(bean.getMessage());
+                    ((Button)findViewById(R.id.push_camera_or_game_button)).setText(bean.getButtonText());
 
                     String imageUrl = bean.getIconUrl();
                     if (imageUrl == null) {
@@ -688,7 +685,7 @@ public class PremiumLockerMainFrame extends PercentRelativeLayout implements INo
                             try {
                                 URL urlOfImage = new URL(imageUrl);
                                 Bitmap bitmap = BitmapFactory.decodeStream(urlOfImage.openConnection().getInputStream());
-                                pushDialogIconImageView.setImageBitmap(bitmap);
+                                ((ImageView)cameraRootView.findViewById(R.id.icon)).setImageBitmap(bitmap);
                             }catch (Exception e){
                                 e.printStackTrace();
                             }
@@ -699,33 +696,32 @@ public class PremiumLockerMainFrame extends PercentRelativeLayout implements INo
             case MODE_BATTERY:
                 BatteryDataManager batteryDataManager = new BatteryDataManager(getContext());
                 if (deviceManager.getBatteryLevel() < 30) {
-                    findViewById(R.id.title_for_boost).setVisibility(VISIBLE);
-                    findViewById(R.id.push_dialog_subtitle).setVisibility(VISIBLE);
-                    findViewById(R.id.game_and_cam_title).setVisibility(GONE);
-                    findViewById(R.id.quiz_head).setVisibility(GONE);
-                    findViewById(R.id.quiz_title).setVisibility(GONE);
+                    findViewById(R.id.push_camera_or_game).setVisibility(GONE);
+                    findViewById(R.id.push_boost_two).setVisibility(GONE);
 
-                    ((ImageView)findViewById(R.id.icon)).setImageDrawable(getResources().getDrawable(R.drawable.new_locker_battery));
-                    ((TextView)findViewById(R.id.scan_result_text)).setText(deviceManager.getBatteryLevel() + "%");
-                    ((TextView)findViewById(R.id.scan_result_title)).setText(getResources().getString(R.string.push_battery_title));
-                    ((TextView)findViewById(R.id.push_dialog_subtitle)).setText(getResources().getString(R.string.push_battery_subtitle));
-                    pushDialogButton.setText(getResources().getString(R.string.push_battery_button));
+                    View batteryOneRootView = findViewById(R.id.push_boost_one);
+                    batteryOneRootView.setVisibility(VISIBLE);
+
+                    ((ImageView)batteryOneRootView.findViewById(R.id.icon)).setImageDrawable(getResources().getDrawable(R.drawable.new_locker_battery));
+                    ((TextView)batteryOneRootView.findViewById(R.id.boost_result)).setText(deviceManager.getBatteryLevel() + "%");
+                    ((TextView)batteryOneRootView.findViewById(R.id.boost_title)).setText(getResources().getString(R.string.push_battery_title));
+                    ((TextView)batteryOneRootView.findViewById(R.id.boost_subtitle)).setText(getResources().getString(R.string.push_battery_subtitle));
+                    ((Button)batteryOneRootView.findViewById(R.id.push_boost_button)).setText(getResources().getString(R.string.push_battery_button));
                 } else if (deviceManager.getBatteryLevel() <= 80 && batteryDataManager.getCleanAnimationBatteryApps().size() >= 8) {
-                    findViewById(R.id.title_for_boost).setVisibility(VISIBLE);
-                    findViewById(R.id.icon_list).setVisibility(VISIBLE);
-                    findViewById(R.id.push_dialog_subtitle).setVisibility(GONE);
-                    findViewById(R.id.game_and_cam_title).setVisibility(GONE);
-                    findViewById(R.id.quiz_head).setVisibility(GONE);
-                    findViewById(R.id.quiz_title).setVisibility(GONE);
+                    findViewById(R.id.push_camera_or_game).setVisibility(GONE);
+                    findViewById(R.id.push_boost_one).setVisibility(GONE);
 
-                    ((ImageView)findViewById(R.id.icon)).setImageDrawable(getResources().getDrawable(R.drawable.new_locker_battery));
-                    ((TextView)findViewById(R.id.scan_result_text)).setText(batteryDataManager.getCleanAnimationBatteryApps().size() + "");
-                    ((TextView)findViewById(R.id.scan_result_title)).setText(getResources().getString(R.string.push_battery_title_plus));
-                    pushDialogButton.setText(getResources().getString(R.string.push_battery_button));
+                    View batteryTwoRootView = findViewById(R.id.push_boost_two);
+                    batteryTwoRootView.setVisibility(VISIBLE);
+
+                    ((ImageView)batteryTwoRootView.findViewById(R.id.icon)).setImageDrawable(getResources().getDrawable(R.drawable.new_locker_battery));
+                    ((TextView)batteryTwoRootView.findViewById(R.id.boost_result)).setText(batteryDataManager.getCleanAnimationBatteryApps().size() + "");
+                    ((TextView)batteryTwoRootView.findViewById(R.id.boost_title)).setText(getResources().getString(R.string.push_battery_title_plus));
+                    ((Button)batteryTwoRootView.findViewById(R.id.push_boost_button)).setText(getResources().getString(R.string.push_battery_button));
                     List<BatteryAppInfo> appInfos = batteryDataManager.getCleanAnimationBatteryApps();
-                    ((ImageView)findViewById(R.id.icon_first)).setImageDrawable(appInfos.get(0).getAppDrawable());
-                    ((ImageView)findViewById(R.id.icon_second)).setImageDrawable(appInfos.get(1).getAppDrawable());
-                    ((ImageView)findViewById(R.id.icon_third)).setImageDrawable(appInfos.get(2).getAppDrawable());
+                    ((ImageView)batteryTwoRootView.findViewById(R.id.icon_first)).setImageDrawable(appInfos.get(0).getAppDrawable());
+                    ((ImageView)batteryTwoRootView.findViewById(R.id.icon_second)).setImageDrawable(appInfos.get(1).getAppDrawable());
+                    ((ImageView)batteryTwoRootView.findViewById(R.id.icon_third)).setImageDrawable(appInfos.get(2).getAppDrawable());
                 } else {
                     this.pushDialogIndex++;
                     switchPushDialog(this.pushDialogIndex);
@@ -737,31 +733,31 @@ public class PremiumLockerMainFrame extends PercentRelativeLayout implements INo
                     this.pushDialogIndex++;
                     switchPushDialog(this.pushDialogIndex);
                 } else {
-                    findViewById(R.id.title_for_boost).setVisibility(VISIBLE);
-                    findViewById(R.id.push_dialog_subtitle).setVisibility(VISIBLE);
-                    findViewById(R.id.game_and_cam_title).setVisibility(GONE);
-                    findViewById(R.id.quiz_head).setVisibility(GONE);
-                    findViewById(R.id.quiz_title).setVisibility(GONE);
+                    findViewById(R.id.push_camera_or_game).setVisibility(GONE);
+                    findViewById(R.id.push_boost_two).setVisibility(GONE);
 
-                    ((ImageView)findViewById(R.id.icon)).setImageDrawable(getResources().getDrawable(R.drawable.new_locker_thermometer));
-                    ((TextView)findViewById(R.id.scan_result_text)).setText(cpuCoolerManager.fetchCpuTemperature() + "℃");
-                    ((TextView)findViewById(R.id.scan_result_title)).setText(getResources().getString(R.string.push_cpu_title));
-                    ((TextView)findViewById(R.id.push_dialog_subtitle)).setText(getResources().getString(R.string.push_cpu_subtitle));
-                    pushDialogButton.setText(getResources().getString(R.string.push_cpu_button));
+                    View cpuRootView = findViewById(R.id.push_boost_one);
+                    cpuRootView.setVisibility(VISIBLE);
+
+                    ((ImageView)cpuRootView.findViewById(R.id.icon)).setImageDrawable(getResources().getDrawable(R.drawable.new_locker_thermometer));
+                    ((TextView)cpuRootView.findViewById(R.id.boost_result)).setText(cpuCoolerManager.fetchCpuTemperature() + "℃");
+                    ((TextView)cpuRootView.findViewById(R.id.boost_title)).setText(getResources().getString(R.string.push_cpu_title));
+                    ((TextView)cpuRootView.findViewById(R.id.boost_subtitle)).setText(getResources().getString(R.string.push_cpu_subtitle));
+                    ((Button)cpuRootView.findViewById(R.id.push_boost_button)).setText(getResources().getString(R.string.push_cpu_button));
                 }
                 break;
             case MODE_STORAGE:
-                findViewById(R.id.title_for_boost).setVisibility(VISIBLE);
-                findViewById(R.id.push_dialog_subtitle).setVisibility(VISIBLE);
-                findViewById(R.id.game_and_cam_title).setVisibility(GONE);
-                findViewById(R.id.quiz_head).setVisibility(GONE);
-                findViewById(R.id.quiz_title).setVisibility(GONE);
+                findViewById(R.id.push_camera_or_game).setVisibility(GONE);
+                findViewById(R.id.push_boost_two).setVisibility(GONE);
 
-                ((ImageView)findViewById(R.id.icon)).setImageDrawable(getResources().getDrawable(R.drawable.new_locker_boost));
-                ((TextView)findViewById(R.id.scan_result_text)).setText(deviceManager.getRamUsage() + "%");
-                ((TextView)findViewById(R.id.scan_result_title)).setText(getResources().getString(R.string.push_memory_title));
-                ((TextView)findViewById(R.id.push_dialog_subtitle)).setText(getResources().getString(R.string.push_memory_subtitle));
-                pushDialogButton.setText(getResources().getString(R.string.push_memory_button));
+                View storageRootView = findViewById(R.id.push_boost_one);
+                storageRootView.setVisibility(VISIBLE);
+
+                ((ImageView)storageRootView.findViewById(R.id.icon)).setImageDrawable(getResources().getDrawable(R.drawable.new_locker_boost));
+                ((TextView)storageRootView.findViewById(R.id.boost_result)).setText(deviceManager.getRamUsage() + "%");
+                ((TextView)storageRootView.findViewById(R.id.boost_title)).setText(getResources().getString(R.string.push_memory_title));
+                ((TextView)storageRootView.findViewById(R.id.boost_subtitle)).setText(getResources().getString(R.string.push_memory_subtitle));
+                ((Button)findViewById(R.id.push_boost_button)).setText(getResources().getString(R.string.push_memory_button));
                 break;
             default:
                 break;
