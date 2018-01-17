@@ -150,7 +150,6 @@ public class PremiumLockerMainFrame extends PercentRelativeLayout implements INo
     private PremiumSearchDialog searchDialog;
 
     private int pushDialogIndex = 0;
-    private int gameInfoPosition = 0;
     private String pushCameraActionType;
 
     private BroadcastReceiver weatherReceiver = new BroadcastReceiver() {
@@ -717,7 +716,8 @@ public class PremiumLockerMainFrame extends PercentRelativeLayout implements INo
                 break;
             case MODE_BATTERY:
                 BatteryDataManager batteryDataManager = new BatteryDataManager(getContext());
-                if (deviceManager.getBatteryLevel() < 30) {
+                int batteryLevel = deviceManager.getBatteryLevel();
+                if (batteryLevel < 30) {
                     findViewById(R.id.push_camera_or_game).setVisibility(GONE);
                     findViewById(R.id.push_boost_two).setVisibility(GONE);
 
@@ -725,11 +725,11 @@ public class PremiumLockerMainFrame extends PercentRelativeLayout implements INo
                     batteryOneRootView.setVisibility(VISIBLE);
 
                     ((ImageView)batteryOneRootView.findViewById(R.id.icon)).setImageDrawable(getResources().getDrawable(R.drawable.new_locker_battery));
-                    ((TextView)batteryOneRootView.findViewById(R.id.boost_result)).setText(deviceManager.getBatteryLevel() + "%");
+                    ((TextView)batteryOneRootView.findViewById(R.id.boost_result)).setText(batteryLevel + "%");
                     ((TextView)batteryOneRootView.findViewById(R.id.boost_title)).setText(getResources().getString(R.string.push_battery_title));
                     ((TextView)batteryOneRootView.findViewById(R.id.boost_subtitle)).setText(getResources().getString(R.string.push_battery_subtitle));
                     ((Button)batteryOneRootView.findViewById(R.id.push_boost_button)).setText(getResources().getString(R.string.push_battery_button));
-                } else if (deviceManager.getBatteryLevel() <= 80 && batteryDataManager.getCleanAnimationBatteryApps().size() >= 8) {
+                } else if (batteryLevel <= 80 && batteryDataManager.getCleanAnimationBatteryApps().size() >= 8) {
                     findViewById(R.id.push_camera_or_game).setVisibility(GONE);
                     findViewById(R.id.push_boost_one).setVisibility(GONE);
 
@@ -751,7 +751,8 @@ public class PremiumLockerMainFrame extends PercentRelativeLayout implements INo
                 break;
             case MODE_CPU:
                 CpuCoolerManager cpuCoolerManager = CpuCoolerManager.getInstance();
-                if (cpuCoolerManager.fetchCpuTemperature() <= 40) {
+                int cpuTemperature = cpuCoolerManager.fetchCpuTemperature();
+                if (cpuTemperature <= 40) {
                     this.pushDialogIndex++;
                     switchPushDialog(this.pushDialogIndex);
                 } else {
@@ -762,7 +763,7 @@ public class PremiumLockerMainFrame extends PercentRelativeLayout implements INo
                     cpuRootView.setVisibility(VISIBLE);
 
                     ((ImageView)cpuRootView.findViewById(R.id.icon)).setImageDrawable(getResources().getDrawable(R.drawable.new_locker_thermometer));
-                    ((TextView)cpuRootView.findViewById(R.id.boost_result)).setText(cpuCoolerManager.fetchCpuTemperature() + "℃");
+                    ((TextView)cpuRootView.findViewById(R.id.boost_result)).setText(cpuTemperature + "℃");
                     ((TextView)cpuRootView.findViewById(R.id.boost_title)).setText(getResources().getString(R.string.push_cpu_title));
                     ((TextView)cpuRootView.findViewById(R.id.boost_subtitle)).setText(getResources().getString(R.string.push_cpu_subtitle));
                     ((Button)cpuRootView.findViewById(R.id.push_boost_button)).setText(getResources().getString(R.string.push_cpu_button));
