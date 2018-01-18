@@ -60,6 +60,7 @@ public class AppSuggestionManager {
     private Handler handler = new Handler();
 
     private String currentTopAppName = "";
+    private String adPlacementName = "";
 
     public static AppSuggestionManager getInstance() {
         if (ourInstance == null) {
@@ -219,7 +220,7 @@ public class AppSuggestionManager {
      *
      * @param isAppCanGetRecent
      */
-    public void init(boolean isAppCanGetRecent) {
+    public void init(boolean isAppCanGetRecent, String adPlacementName) {
         this.isAppCanGetRecent = isAppCanGetRecent;
         try {
             exceptAppList = (List<String>) HSConfig.getList("Application", FEATURE_NAME, "ApkException");
@@ -233,6 +234,7 @@ public class AppSuggestionManager {
             defaultAppList = new ArrayList<>();
         }
         getSavedRecentList();
+        this.adPlacementName = adPlacementName;
     }
 
     public AppSuggestionManager() {
@@ -351,5 +353,9 @@ public class AppSuggestionManager {
             return false;
         }
         return true;
+    }
+
+    public String getAdPlacementName() {
+        return adPlacementName;
     }
 }

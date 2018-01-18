@@ -221,7 +221,7 @@ public class AppSuggestionActivity extends Activity {
 
         nativeAdView = new KCNativeAdView(HSApplication.getContext());
         nativeAdView.setAdLayoutView(View.inflate(this, R.layout.acb_suggestion_ad_layout, null));
-        nativeAdView.load(getString(R.string.ad_placement_call_assist));
+        nativeAdView.load(AppSuggestionManager.getInstance().getAdPlacementName());
 
         FrameLayout adContainer = findViewById(R.id.alert_ad_container);
         adContainer.addView(nativeAdView);
