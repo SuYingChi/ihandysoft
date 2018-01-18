@@ -112,6 +112,7 @@ public class PremiumLockerMainFrame extends PercentRelativeLayout implements INo
     private static final int MODE_CPU = 4;
     private static final int MODE_STORAGE = 5;
     private static final int GAME_INFO_COUNT = 10;
+    private static final int MODE_COUNT = 6;
 
     private boolean mIsSlidingDrawerOpened = false;
     private boolean mIsBlackHoleShowing = false;
@@ -148,9 +149,6 @@ public class PremiumLockerMainFrame extends PercentRelativeLayout implements INo
     private boolean shouldShowCommonUseButtons; //Boost, Game, Camera, Weather
 
     private PremiumSearchDialog searchDialog;
-
-    private int pushFrameItemIndex = 0;
-    private String pushCameraActionType;
 
     private BroadcastReceiver weatherReceiver = new BroadcastReceiver() {
         @Override
@@ -343,7 +341,7 @@ public class PremiumLockerMainFrame extends PercentRelativeLayout implements INo
         mTvTime = findViewById(R.id.tv_time);
         mTvDate = findViewById(R.id.tv_date);
         refreshClock();
-        showPushFrameItem(pushFrameItemIndex);
+        showPushFrameItem(getPushFrameItemIndex());
     }
 
     private void initButtons() {
@@ -472,10 +470,6 @@ public class PremiumLockerMainFrame extends PercentRelativeLayout implements INo
                     mShimmer.cancel();
                 }
                 buttonUpgrade.clear();
-                SharedPreferences.Editor editorOfDialog = getContext().getSharedPreferences("pushDialog", Context.MODE_PRIVATE).edit();
-                editorOfDialog.putLong("time", System.currentTimeMillis());
-                editorOfDialog.putInt("index", pushFrameItemIndex);
-                editorOfDialog.apply();
                 break;
             case ScreenStatusReceiver.NOTIFICATION_SCREEN_ON:
                 SharedPreferences preferencesOfGame = getContext().getSharedPreferences("gameInfo", Context.MODE_PRIVATE);
@@ -490,22 +484,30 @@ public class PremiumLockerMainFrame extends PercentRelativeLayout implements INo
                     mShimmer.start(mUnlockText);
                 }
                 buttonUpgrade.setImageResource(R.raw.upgrade_icon);
-                int timeForUpdate = (int) (System.currentTimeMillis() - getContext().getSharedPreferences("pushDialog", Context.MODE_PRIVATE).getLong("time", 0)) / (60 * 1000);
+                int timeForUpdate = (int) (System.currentTimeMillis() - getContext().getSharedPreferences("push_frame", Context.MODE_PRIVATE).getLong("time", 0)) / (60 * 1000);
                 if (timeForUpdate > 5) {
-                pushFrameItemIndex = getContext().getSharedPreferences("pushDialog", Context.MODE_PRIVATE).getInt("index", pushFrameItemIndex);
                     findViewById(R.id.push_frame).setVisibility(VISIBLE);
-                    pushFrameItemIndex++;
-                    int pushFrameItemCount = 6;
-                    pushFrameItemIndex = pushFrameItemIndex % pushFrameItemCount;
+                    increasePushFrameItemIndex();
                 }
-                boolean pushItemShowed = false;
-                while (!pushItemShowed) {
-                    pushItemShowed = showPushFrameItem(pushFrameItemIndex);
+                while (!showPushFrameItem(getPushFrameItemIndex())) {
+                    increasePushFrameItemIndex();
                 }
+                getContext().getSharedPreferences("push_frame", Context.MODE_PRIVATE).edit().putLong("time", System.currentTimeMillis()).apply();
                 break;
             default:
                 break;
         }
+    }
+
+    private int getPushFrameItemIndex() {
+        return getContext().getSharedPreferences("push_frame", Context.MODE_PRIVATE).getInt("index", 0);
+    }
+
+    private void increasePushFrameItemIndex() {
+        int pushFrameItemIndex = getContext().getSharedPreferences("push_frame", Context.MODE_PRIVATE).getInt("index", 0);
+        pushFrameItemIndex++;
+        pushFrameItemIndex = pushFrameItemIndex % MODE_COUNT;
+        getContext().getSharedPreferences("push_frame", Context.MODE_PRIVATE).edit().putInt("index", pushFrameItemIndex).apply();
     }
 
     private void askForGameInfo(int position) {
@@ -586,7 +588,6 @@ public class PremiumLockerMainFrame extends PercentRelativeLayout implements INo
                     gameInfoPosition++;
                     gameInfoPosition = gameInfoPosition % GAME_INFO_COUNT;
                     askForGameInfo(gameInfoPosition);
-                    this.pushFrameItemIndex++;
                     return false;
                 }
                 findViewById(R.id.push_boost_one).setVisibility(GONE);
@@ -626,26 +627,21 @@ public class PremiumLockerMainFrame extends PercentRelativeLayout implements INo
                 });
                 break;
             case MODE_CAMERA:
-                List<Map<String, Object>> configs;
-                NotificationBean bean = null;
-                try {
-                    configs = (List<Map<String, Object>>) HSConfig.getList("Application", "LocalNotifications", "Content");
-                    bean = new NotificationBean(configs.get(0));
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
+                List<Map<String, Object>> configs = (List<Map<String, Object>>) HSConfig.getList("Application", "LocalNotifications", "Content");
 
-                if (bean == null) {
-                    this.pushFrameItemIndex++;
+                if (configs.get(0) == null) {
                     return false;
                 }
+
+                NotificationBean bean = new NotificationBean(configs.get(0));
+
                 findViewById(R.id.push_boost_one).setVisibility(GONE);
                 findViewById(R.id.push_boost_two).setVisibility(GONE);
 
                 View cameraRootView = findViewById(R.id.push_camera_or_game);
                 cameraRootView.setVisibility(VISIBLE);
 
-                pushCameraActionType = bean.getActionType();
+                String pushCameraActionType = bean.getActionType();
 
                 ((TextView) cameraRootView.findViewById(R.id.push_camera_or_game_title)).setText(bean.getName());
                 ((TextView) cameraRootView.findViewById(R.id.push_camera_or_game_subtitle)).setText(bean.getMessage());
@@ -735,14 +731,12 @@ public class PremiumLockerMainFrame extends PercentRelativeLayout implements INo
                     ((ImageView) batteryTwoRootView.findViewById(R.id.icon_second)).setImageDrawable(appInfos.get(1).getAppDrawable());
                     ((ImageView) batteryTwoRootView.findViewById(R.id.icon_third)).setImageDrawable(appInfos.get(2).getAppDrawable());
                 } else {
-                    this.pushFrameItemIndex++;
                     return false;
                 }
                 break;
             case MODE_CPU:
                 int cpuTemperature = CpuCoolerManager.getInstance().fetchCpuTemperature();
                 if (cpuTemperature <= 40) {
-                    this.pushFrameItemIndex++;
                     return false;
                 }
                 findViewById(R.id.push_camera_or_game).setVisibility(GONE);
@@ -764,7 +758,6 @@ public class PremiumLockerMainFrame extends PercentRelativeLayout implements INo
             case MODE_STORAGE:
                 int usage = deviceManager.getRamUsage();
                 if (usage < 75) {
-                    this.pushFrameItemIndex++;
                     return false;
                 }
                 findViewById(R.id.push_camera_or_game).setVisibility(GONE);
