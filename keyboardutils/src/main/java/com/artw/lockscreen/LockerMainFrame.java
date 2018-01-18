@@ -316,7 +316,6 @@ public class LockerMainFrame extends RelativeLayout implements INotificationObse
             mBottomOperationArea.setVisibility(View.INVISIBLE);
             mAdContainer.setVisibility(View.INVISIBLE);
             HSGlobalNotificationCenter.sendNotification(EVENT_SLIDING_DRAWER_OPENED);
-            HSAnalytics.logEvent("Locker_Toggle_Slided");
         } else {
             mDimCover.setVisibility(View.INVISIBLE);
             HSGlobalNotificationCenter.sendNotification(EVENT_SLIDING_DRAWER_CLOSED);

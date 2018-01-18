@@ -478,7 +478,6 @@ public class PremiumLockerMainFrame extends PercentRelativeLayout implements INo
             buttonCamera.setVisibility(View.INVISIBLE);
             buttonWeather.setVisibility(View.INVISIBLE);
             HSGlobalNotificationCenter.sendNotification(EVENT_SLIDING_DRAWER_OPENED);
-            HSAnalytics.logEvent("Locker_Toggle_Slided");
         } else {
             mDimCover.setVisibility(View.INVISIBLE);
             HSGlobalNotificationCenter.sendNotification(EVENT_SLIDING_DRAWER_CLOSED);
