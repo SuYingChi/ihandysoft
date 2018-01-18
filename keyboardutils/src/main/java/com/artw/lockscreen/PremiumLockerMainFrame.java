@@ -118,6 +118,9 @@ public class PremiumLockerMainFrame extends PercentRelativeLayout implements INo
     private boolean mIsBlackHoleShowing = false;
 
     private DeviceManager deviceManager = DeviceManager.getInstance();
+    private BatteryDataManager batteryDataManager = new BatteryDataManager(getContext());
+    private SharedPreferences pushFramePreferences = getContext().getSharedPreferences("push_frame", Context.MODE_PRIVATE);
+    private SharedPreferences pushGamePreferences = getContext().getSharedPreferences("gameInfo", Context.MODE_PRIVATE);
 
     private View mDimCover;
     private SlidingDrawer mSlidingDrawer;
@@ -341,7 +344,9 @@ public class PremiumLockerMainFrame extends PercentRelativeLayout implements INo
         mTvTime = findViewById(R.id.tv_time);
         mTvDate = findViewById(R.id.tv_date);
         refreshClock();
-        showPushFrameItem(getPushFrameItemIndex());
+        while (!showPushFrameItem(getPushFrameItemIndex())) {
+            increasePushFrameItemIndex();
+        }
     }
 
     private void initButtons() {
@@ -472,9 +477,8 @@ public class PremiumLockerMainFrame extends PercentRelativeLayout implements INo
                 buttonUpgrade.clear();
                 break;
             case ScreenStatusReceiver.NOTIFICATION_SCREEN_ON:
-                SharedPreferences preferencesOfGame = getContext().getSharedPreferences("gameInfo", Context.MODE_PRIVATE);
-                if ((preferencesOfGame.getAll().size() <= 0) || (preferencesOfGame.getInt("date", 0) != Calendar.getInstance().get(Calendar.DAY_OF_MONTH))) {
-                    int gameInfoPosition = preferencesOfGame.getInt("position", 0);
+                if ((pushGamePreferences.getAll().size() <= 0) || (pushGamePreferences.getInt("date", 0) != Calendar.getInstance().get(Calendar.DAY_OF_MONTH))) {
+                    int gameInfoPosition = pushGamePreferences.getInt("position", 0);
                     gameInfoPosition++;
                     gameInfoPosition = gameInfoPosition % GAME_INFO_COUNT;
                     askForGameInfo(gameInfoPosition);
@@ -484,15 +488,15 @@ public class PremiumLockerMainFrame extends PercentRelativeLayout implements INo
                     mShimmer.start(mUnlockText);
                 }
                 buttonUpgrade.setImageResource(R.raw.upgrade_icon);
-                int timeForUpdate = (int) (System.currentTimeMillis() - getContext().getSharedPreferences("push_frame", Context.MODE_PRIVATE).getLong("time", 0)) / (60 * 1000);
                 if (timeForUpdate > HSConfig.optInteger(5, "Application", "LockerPush", "IntervalTime")) {
+                int timeForUpdate = (int) (System.currentTimeMillis() - pushFramePreferences.getLong("time", 0)) / (60 * 1000);
                     findViewById(R.id.push_frame).setVisibility(VISIBLE);
                     increasePushFrameItemIndex();
                 }
                 while (!showPushFrameItem(getPushFrameItemIndex())) {
                     increasePushFrameItemIndex();
                 }
-                getContext().getSharedPreferences("push_frame", Context.MODE_PRIVATE).edit().putLong("time", System.currentTimeMillis()).apply();
+                pushFramePreferences.edit().putLong("time", System.currentTimeMillis()).apply();
                 break;
             default:
                 break;
@@ -500,14 +504,14 @@ public class PremiumLockerMainFrame extends PercentRelativeLayout implements INo
     }
 
     private int getPushFrameItemIndex() {
-        return getContext().getSharedPreferences("push_frame", Context.MODE_PRIVATE).getInt("index", 0);
+        return pushFramePreferences.getInt("index", 2);
     }
 
     private void increasePushFrameItemIndex() {
-        int pushFrameItemIndex = getContext().getSharedPreferences("push_frame", Context.MODE_PRIVATE).getInt("index", 0);
+        int pushFrameItemIndex = pushFramePreferences.getInt("index", 0);
         pushFrameItemIndex++;
         pushFrameItemIndex = pushFrameItemIndex % MODE_COUNT;
-        getContext().getSharedPreferences("push_frame", Context.MODE_PRIVATE).edit().putInt("index", pushFrameItemIndex).apply();
+        pushFramePreferences.edit().putInt("index", pushFrameItemIndex).apply();
     }
 
     private void askForGameInfo(int position) {
@@ -521,7 +525,7 @@ public class PremiumLockerMainFrame extends PercentRelativeLayout implements INo
                 try {
                     List<Object> jsonMap = HSJsonUtil.toList(bodyJSON.getJSONArray("games"));
                     Map<String, String> object = (Map<String, String>) jsonMap.get(position);
-                    SharedPreferences.Editor editorOfGame = getContext().getSharedPreferences("gameInfo", Context.MODE_PRIVATE).edit();
+                    SharedPreferences.Editor editorOfGame = pushGamePreferences.edit();
                     editorOfGame.putString("name", object.get("name"));
                     editorOfGame.putString("description", object.get("description"));
                     editorOfGame.putString("thumb", object.get("thumb"));
@@ -582,9 +586,8 @@ public class PremiumLockerMainFrame extends PercentRelativeLayout implements INo
                 });
                 break;
             case MODE_GAME:
-                SharedPreferences preferencesOfGame = getContext().getSharedPreferences("gameInfo", Context.MODE_PRIVATE);
-                if (preferencesOfGame.getAll().size() <= 0) {
-                    int gameInfoPosition = preferencesOfGame.getInt("position", 0);
+                if (pushGamePreferences.getAll().size() <= 0) {
+                    int gameInfoPosition = pushGamePreferences.getInt("position", 0);
                     gameInfoPosition++;
                     gameInfoPosition = gameInfoPosition % GAME_INFO_COUNT;
                     askForGameInfo(gameInfoPosition);
@@ -596,7 +599,7 @@ public class PremiumLockerMainFrame extends PercentRelativeLayout implements INo
                 View gameRootView = findViewById(R.id.push_camera_or_game);
                 gameRootView.setVisibility(VISIBLE);
 
-                String iconUrl = preferencesOfGame.getString("thumb", "");
+                String iconUrl = pushGamePreferences.getString("thumb", "");
                 ImageLoader.getInstance().loadImage(iconUrl, new ImageLoadingListener() {
                     @Override
                     public void onLoadingStarted(String imageUri, View view) {
@@ -618,18 +621,18 @@ public class PremiumLockerMainFrame extends PercentRelativeLayout implements INo
 
                     }
                 });
-                ((TextView) gameRootView.findViewById(R.id.push_camera_or_game_title)).setText(preferencesOfGame.getString("name", ""));
-                ((TextView) gameRootView.findViewById(R.id.push_camera_or_game_subtitle)).setText(preferencesOfGame.getString("description", ""));
+                ((TextView) gameRootView.findViewById(R.id.push_camera_or_game_title)).setText(pushGamePreferences.getString("name", ""));
+                ((TextView) gameRootView.findViewById(R.id.push_camera_or_game_subtitle)).setText(pushGamePreferences.getString("description", ""));
                 ((Button) gameRootView.findViewById(R.id.push_camera_or_game_button)).setText(getResources().getString(R.string.push_game_button));
                 gameRootView.findViewById(R.id.push_camera_or_game_button).setOnClickListener(view -> {
-                    String url = getContext().getSharedPreferences("gameInfo", Context.MODE_PRIVATE).getString("link", null);
+                    String url = pushGamePreferences.getString("link", null);
                     GameStarterActivity.startGame(url, "push_game_clicked");
                 });
                 break;
             case MODE_CAMERA:
                 List<Map<String, Object>> configs = (List<Map<String, Object>>) HSConfig.getList("Application", "LocalNotifications", "Content");
 
-                if (configs.get(0) == null) {
+                if (configs == null || configs.size() == 0) {
                     return false;
                 }
 
@@ -693,8 +696,11 @@ public class PremiumLockerMainFrame extends PercentRelativeLayout implements INo
                 }
                 break;
             case MODE_BATTERY:
-                BatteryDataManager batteryDataManager = new BatteryDataManager(getContext());
                 int batteryLevel = deviceManager.getBatteryLevel();
+                int appsCount = 0;
+                if (batteryDataManager.getCleanAnimationBatteryApps() != null) {
+                    appsCount = batteryDataManager.getCleanAnimationBatteryApps().size();
+                }
                 if (batteryLevel < 30) {
                     findViewById(R.id.push_camera_or_game).setVisibility(GONE);
                     findViewById(R.id.push_boost_two).setVisibility(GONE);
@@ -711,7 +717,7 @@ public class PremiumLockerMainFrame extends PercentRelativeLayout implements INo
                         Intent batteryIntent = new Intent(getContext(), BatteryActivity.class);
                         getContext().startActivity(batteryIntent);
                     });
-                } else if (batteryLevel <= 80 && batteryDataManager.getCleanAnimationBatteryApps().size() >= 8) {
+                } else if (batteryLevel <= 80 && appsCount >= 8) {
                     findViewById(R.id.push_camera_or_game).setVisibility(GONE);
                     findViewById(R.id.push_boost_one).setVisibility(GONE);
 
@@ -719,7 +725,7 @@ public class PremiumLockerMainFrame extends PercentRelativeLayout implements INo
                     batteryTwoRootView.setVisibility(VISIBLE);
 
                     ((ImageView) batteryTwoRootView.findViewById(R.id.icon)).setImageDrawable(getResources().getDrawable(R.drawable.new_locker_battery));
-                    ((TextView) batteryTwoRootView.findViewById(R.id.boost_result)).setText(batteryDataManager.getCleanAnimationBatteryApps().size() + "");
+                    ((TextView) batteryTwoRootView.findViewById(R.id.boost_result)).setText(appsCount + "");
                     ((TextView) batteryTwoRootView.findViewById(R.id.boost_title)).setText(getResources().getString(R.string.push_battery_title_plus));
                     ((Button) batteryTwoRootView.findViewById(R.id.push_boost_button)).setText(getResources().getString(R.string.push_battery_button));
                     batteryTwoRootView.findViewById(R.id.push_boost_button).setOnClickListener(view -> {
