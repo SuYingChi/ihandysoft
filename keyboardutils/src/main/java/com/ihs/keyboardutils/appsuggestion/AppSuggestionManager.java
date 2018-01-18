@@ -4,6 +4,7 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageManager;
 import android.content.pm.ResolveInfo;
 import android.os.AsyncTask;
@@ -303,7 +304,8 @@ public class AppSuggestionManager {
                 TextUtils.isEmpty(packageName) ||
                 TextUtils.equals(packageName, currentLauncherPkg) ||
                 exceptAppList.contains(packageName) ||
-                packageManager.getLaunchIntentForPackage(packageName) == null) {
+                packageManager.getLaunchIntentForPackage(packageName) == null ||
+                !isPackageValid(packageName)) {
             return;
         }
 
@@ -334,8 +336,20 @@ public class AppSuggestionManager {
         }
         return null;
     }
-    
+
     public void setCurrentTopAppName(String currentTopAppName) {
         this.currentTopAppName = currentTopAppName;
+    }
+
+    private boolean isPackageValid(String packageName) {
+        try {
+            PackageManager packageManager = HSApplication.getContext().getPackageManager();
+            ApplicationInfo applicationInfo = packageManager.getApplicationInfo(packageName, 0);
+            packageManager.getApplicationLabel(applicationInfo).toString().trim().replace(" ", "");
+            packageManager.getApplicationIcon(packageName);
+        } catch (Exception e) {
+            return false;
+        }
+        return true;
     }
 }
