@@ -1,6 +1,5 @@
 package com.kc.utils;
 
-import com.crashlytics.android.answers.Answers;
 import com.crashlytics.android.answers.CustomEvent;
 import com.ihs.app.analytics.HSAnalytics;
 
@@ -39,6 +38,6 @@ public class KCAnalytics {
             }
         }
 
-        Answers.getInstance().logCustom(event);
+//        Answers.getInstance().logCustom(event);
     }
 }

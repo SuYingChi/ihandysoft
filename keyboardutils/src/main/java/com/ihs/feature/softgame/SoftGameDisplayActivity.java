@@ -33,7 +33,7 @@ public class SoftGameDisplayActivity extends FragmentActivity implements ViewPag
 
         if (getIntent() != null) {
             placementName = getIntent().getStringExtra(SOFT_GAME_PLACEMENT_MESSAGE);
-            if(getIntent().getBooleanExtra("fromShortcut",false)){
+            if (getIntent().getBooleanExtra("fromShortcut", false)) {
                 HSAnalytics.logEvent("h5games_shortcut_clicked");
             }
         }
@@ -69,7 +69,7 @@ public class SoftGameDisplayActivity extends FragmentActivity implements ViewPag
     }
 
     private class MyPagerAdapter extends FragmentPagerAdapter {
-        private String[] mTitles = new String[]{"HOT", "NEW"};
+        private String[] mTitles = new String[]{"HOT GAMES"};
 
         public MyPagerAdapter(FragmentManager fm) {
             super(fm);
@@ -89,7 +89,7 @@ public class SoftGameDisplayActivity extends FragmentActivity implements ViewPag
 
         @Override
         public int getCount() {
-            return 2;
+            return mTitles.length;
         }
 
         @Override
