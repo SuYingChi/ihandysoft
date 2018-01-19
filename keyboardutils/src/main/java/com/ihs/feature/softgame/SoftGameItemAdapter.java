@@ -55,7 +55,7 @@ public class SoftGameItemAdapter extends RecyclerView.Adapter<ViewHolder> {
         if (viewType == TYPE_AD) {
             View view = LayoutInflater.from(HSApplication.getContext()).inflate(R.layout.ad_style_theme_card, null);
             LinearLayout loadingView = (LinearLayout) LayoutInflater.from(HSApplication.getContext()).inflate(R.layout.ad_loading_3, null);
-            int width = DisplayUtils.getScreenWidthForContent() - DisplayUtils.dip2px(16);
+            int width = DisplayUtils.getScreenWidthForContent();
             LinearLayout.LayoutParams loadingLP = new LinearLayout.LayoutParams(width, (int) (width / 1.9f));
             loadingView.setLayoutParams(loadingLP);
             loadingView.setGravity(Gravity.CENTER);
