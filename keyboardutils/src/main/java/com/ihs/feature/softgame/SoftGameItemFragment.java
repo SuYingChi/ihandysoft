@@ -30,7 +30,7 @@ public class SoftGameItemFragment extends Fragment {
 
     public static final int SOFT_GAME_LOAD_COUNT = 50;
     public static final String JSON_GAMES = "games";
-    public static final String TOP_GAMES = "http://api.famobi.com/feed?a=A-KCVWU&n=50&sort=top_games";
+    public static final String TOP_GAMES = "http://api.famobi.com/feed?a=A-KCVWU&sort=top_games";
 
 
     private ArrayList<SoftGameItemBean> softGameItemArrayList = new ArrayList<>();
