@@ -17,7 +17,6 @@ import com.artw.lockscreen.slidingdrawer.SlidingDrawerContent;
 import com.artw.lockscreen.statusbar.StatusBar;
 import com.ihs.app.analytics.HSAnalytics;
 import com.ihs.app.framework.HSSessionMgr;
-import com.ihs.chargingscreen.utils.ClickUtils;
 import com.ihs.commons.notificationcenter.HSGlobalNotificationCenter;
 import com.ihs.commons.notificationcenter.INotificationObserver;
 import com.ihs.commons.utils.HSBundle;
@@ -26,7 +25,6 @@ import com.ihs.feature.common.Thunk;
 import com.ihs.feature.weather.WeatherManager;
 import com.ihs.keyboardutils.R;
 import com.ihs.keyboardutils.utils.CommonUtils;
-import com.ihs.keyboardutils.utils.PublisherUtils;
 import com.kc.commons.utils.KCCommonUtils;
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.ImageLoader;
@@ -182,7 +180,6 @@ public class PremiumLockerActivity extends AppCompatActivity implements INotific
             public void onPageSelected(int position) {
                 if (LockerAdapter.PAGE_INDEX_UNLOCK == position) {
                     finishSelf();
-                    HSAnalytics.logEvent("new_screenLocker_unlock");
                 }
             }
 
@@ -248,9 +245,6 @@ public class PremiumLockerActivity extends AppCompatActivity implements INotific
                 finishSelf(withoutUnlock);
                 break;
             case ScreenStatusReceiver.NOTIFICATION_SCREEN_ON:
-                if (!ClickUtils.isFastDoubleClick()) {
-                    HSAnalytics.logEvent("new_screenLocker_show", "install_type", PublisherUtils.getInstallType());
-                }
                 break;
             default:
                 break;

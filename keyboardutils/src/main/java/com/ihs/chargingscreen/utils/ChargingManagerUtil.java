@@ -11,7 +11,6 @@ import android.os.Bundle;
 import android.support.v4.content.ContextCompat;
 
 import com.artw.lockscreen.common.LockerChargingScreenUtils;
-import com.ihs.app.analytics.HSAnalytics;
 import com.ihs.app.framework.HSApplication;
 import com.ihs.charging.HSChargingManager;
 import com.ihs.chargingscreen.HSChargingScreenManager;
@@ -165,7 +164,6 @@ public class ChargingManagerUtil {
                 intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NO_ANIMATION);
                 ContextCompat.startActivity(HSApplication.getContext(), intent, null);
 
-                HSAnalytics.logEvent("chargeAlert_show");
             } catch (Exception e) {
                 HSLog.e(e.getMessage());
             }

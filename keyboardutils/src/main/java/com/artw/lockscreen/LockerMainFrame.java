@@ -36,7 +36,6 @@ import com.artw.lockscreen.slidingdrawer.SlidingDrawerContent;
 import com.artw.lockscreen.slidingup.SlidingUpCallback;
 import com.artw.lockscreen.slidingup.SlidingUpTouchListener;
 import com.crashlytics.android.Crashlytics;
-import com.ihs.app.analytics.HSAnalytics;
 import com.ihs.app.framework.HSApplication;
 import com.ihs.chargingscreen.utils.DisplayUtils;
 import com.ihs.commons.notificationcenter.HSGlobalNotificationCenter;
@@ -153,7 +152,6 @@ public class LockerMainFrame extends RelativeLayout implements INotificationObse
             @Override
             public void onClick(View v) {
                 showMenuPopupWindow(getContext(), mMenuMore);
-                HSAnalytics.logEvent("Locker_Menu_Clicked");
             }
         });
 
@@ -199,7 +197,6 @@ public class LockerMainFrame extends RelativeLayout implements INotificationObse
             acbExpressAdView.setExpressAdViewListener(new AcbExpressAdView.AcbExpressAdViewListener() {
                 @Override
                 public void onAdClicked(AcbExpressAdView acbExpressAdView) {
-                    HSAnalytics.logEvent("NativeAd_ColorCam_A(NativeAds)ScreenLocker_Click");
                     HSGlobalNotificationCenter.sendNotification(LockerActivity.EVENT_FINISH_SELF);
                 }
 
@@ -390,7 +387,6 @@ public class LockerMainFrame extends RelativeLayout implements INotificationObse
                         if (menuPopupWindow != null) {
                             menuPopupWindow.dismiss();
                         }
-                        HSAnalytics.logEvent("Locker_DisableLocker_Clicked");
                         showLockerCloseDialog();
                     }
                 });
@@ -447,7 +443,6 @@ public class LockerMainFrame extends RelativeLayout implements INotificationObse
                 LockerSettings.setLockerEnabled(false);
                 ((LockerActivity) getContext()).finishSelf();
                 Toast.makeText(getContext(), R.string.locker_diabled_success, Toast.LENGTH_SHORT).show();
-                HSAnalytics.logEvent("Locker_DisableLocker_Alert_TurnOff_Clicked");
                 recordLockerDisableOnce();
             }
         });

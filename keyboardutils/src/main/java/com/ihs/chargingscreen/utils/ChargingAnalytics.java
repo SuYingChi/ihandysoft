@@ -13,14 +13,8 @@ public class ChargingAnalytics {
     private static ChargingAnalytics instance = null;
     private static Context context = HSApplication.getContext();
 
-    private String NativeAd_Charging_Load;
-    private String NativeAd_Charging_Show;
-    private String NativeAd_Charging_Click;
 
     private ChargingAnalytics() {
-        NativeAd_Charging_Load = "NativeAd_" + context.getPackageName() + "_Charging_Load";
-        NativeAd_Charging_Show = "NativeAd_" + context.getPackageName() + "_Charging_Show";
-        NativeAd_Charging_Click = "NativeAd_" + context.getPackageName() + "_Charging_Click";
     }
 
     public static synchronized ChargingAnalytics getInstance() {

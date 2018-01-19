@@ -7,7 +7,6 @@ import android.view.View;
 import android.widget.TextView;
 
 import com.ihs.app.analytics.HSAnalytics;
-import com.ihs.feature.common.AdPlacements;
 import com.ihs.feature.common.ViewUtils;
 import com.ihs.feature.resultpage.data.CardData;
 import com.ihs.feature.resultpage.data.ResultConstants;
@@ -27,11 +26,9 @@ class JunkCleanResultController extends ResultController {
     JunkCleanResultController(ResultPageActivity activity, Type type, @Nullable AcbNativeAd ad, List<CardData> cardDataList) {
         super.init(activity, ResultConstants.RESULT_TYPE_JUNK_CLEAN, type, ad, cardDataList);
         if (ad != null) {
-            HSAnalytics.logEvent(AdPlacements.SHARED_POOL_NATIVE_AD_FLURRY_EVENT_SHOWN_NAME_RESULT_PAGE, "Type", "CleanDone");
             ad.setNativeClickListener(new AcbNativeAd.AcbNativeClickListener() {
                 @Override
                 public void onAdClick(AcbAd acbAd) {
-                    HSAnalytics.logEvent(AdPlacements.SHARED_POOL_NATIVE_AD_FLURRY_EVENT_CLICKED_NAME_RESULT_PAGE, "Type", "CleanDone");
                     HSAnalytics.logEvent("ResultPage_Cards_Click", "Type", ResultConstants.AD);
                 }
             });

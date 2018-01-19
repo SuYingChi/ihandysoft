@@ -25,7 +25,6 @@ import com.artw.lockscreen.LockerMainFrame;
 import com.artw.lockscreen.PremiumLockerActivity;
 import com.artw.lockscreen.common.NetworkChangeReceiver;
 import com.artw.lockscreen.slidingdrawer.SlidingDrawerContent;
-import com.ihs.app.analytics.HSAnalytics;
 import com.ihs.app.framework.HSApplication;
 import com.ihs.commons.config.HSConfig;
 import com.ihs.commons.notificationcenter.HSGlobalNotificationCenter;
@@ -198,7 +197,6 @@ public class WallpaperContainer extends LinearLayout implements View.OnClickList
                                     for (int index = 0; index < mLoadingSucceed.size(); index++) {
                                         succeed += mLoadingSucceed.get(mLoadingSucceed.keyAt(index)) ? 1 : 0;
                                     }
-                                    HSAnalytics.logEvent("Locker_Wallpaper_Refresh_Clicked", "success", "" + succeed);
                                     mIsRefreshSwitchClicked = false;
                                 }
                             }
@@ -229,7 +227,6 @@ public class WallpaperContainer extends LinearLayout implements View.OnClickList
                                     for (int index = 0; index < mLoadingSucceed.size(); index++) {
                                         succeed += mLoadingSucceed.get(mLoadingSucceed.keyAt(index)) ? 1 : 0;
                                     }
-                                    HSAnalytics.logEvent("Locker_Wallpaper_Refresh_Clicked", "success", "" + succeed);
                                     mIsRefreshSwitchClicked = false;
                                 }
                             }
@@ -263,7 +260,6 @@ public class WallpaperContainer extends LinearLayout implements View.OnClickList
             }
             mIsDownloadingWallpaper = false;
             ToastUtils.showToast(R.string.locker_wallpaper_network_error);
-            HSAnalytics.logEvent("Locker_Wallpaper_Preview_Clicked", "name", s, "result", "fail");
         }
 
         @Override
@@ -313,7 +309,6 @@ public class WallpaperContainer extends LinearLayout implements View.OnClickList
             change.playSequentially(wallpaperOut, wallpaperIn);
             change.start();
             mPrefer.putString(LockerActivity.PREF_KEY_CURRENT_WALLPAPER_HD_URL, mHDUrls.get(mCurrentIndex));
-            HSAnalytics.logEvent("Locker_Wallpaper_Preview_Clicked", "name", s, "result", "success");
         }
 
         @Override

@@ -16,7 +16,6 @@ import android.widget.TextView;
 import com.ihs.app.analytics.HSAnalytics;
 import com.ihs.commons.utils.HSLog;
 import com.ihs.feature.boost.plus.BoostBgImageView;
-import com.ihs.feature.common.AdPlacements;
 import com.ihs.feature.common.AnimatorListenerAdapter;
 import com.ihs.feature.common.DeviceManager;
 import com.ihs.feature.common.LauncherAnimUtils;
@@ -105,11 +104,9 @@ class BoostPlusResultController extends ResultController {
         mCleanedSizeMbs = cleanedSizeMbs;
         mBatteryLevel = DeviceManager.getInstance().getBatteryLevel();
         if (ad != null) {
-            HSAnalytics.logEvent(AdPlacements.SHARED_POOL_NATIVE_AD_FLURRY_EVENT_SHOWN_NAME_RESULT_PAGE, "Type", "BoostPlusDone");
             ad.setNativeClickListener(new AcbNativeAd.AcbNativeClickListener() {
                 @Override
                 public void onAdClick(AcbAd acbAd) {
-                    HSAnalytics.logEvent(AdPlacements.SHARED_POOL_NATIVE_AD_FLURRY_EVENT_CLICKED_NAME_RESULT_PAGE, "Type", "BoostPlusDone");
                     HSAnalytics.logEvent("ResultPage_Cards_Click", "Type", ResultConstants.AD);
                 }
             });
