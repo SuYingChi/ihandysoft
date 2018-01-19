@@ -289,7 +289,7 @@ public class PremiumLockerMainFrame extends PercentRelativeLayout implements INo
         buttonWeather = findViewById(R.id.button_weather);
         buttonWeather.setOnClickListener(clickListener);
         buttonWeather.setBackgroundDrawable(RippleDrawableUtils.getCompatRippleDrawable(backgroundColor, backgroundPressColor, DisplayUtils.dip2px(4)));
-        findViewById(R.id.close_icon).setOnClickListener(view -> findViewById(R.id.push_frame).setVisibility(INVISIBLE));
+        findViewById(R.id.push_close_icon).setOnClickListener(view -> findViewById(R.id.push_frame).setVisibility(INVISIBLE));
 
         if (!shouldShowButtonUpgrade) {
             buttonUpgrade.setVisibility(View.INVISIBLE);
@@ -488,8 +488,8 @@ public class PremiumLockerMainFrame extends PercentRelativeLayout implements INo
                     mShimmer.start(mUnlockText);
                 }
                 buttonUpgrade.setImageResource(R.raw.upgrade_icon);
-                if (timeForUpdate > HSConfig.optInteger(5, "Application", "LockerPush", "IntervalTime")) {
                 int timeForUpdate = (int) (System.currentTimeMillis() - pushFramePreferences.getLong("time", 0)) / (60 * 1000);
+                if (timeForUpdate > 0) {
                     findViewById(R.id.push_frame).setVisibility(VISIBLE);
                     increasePushFrameItemIndex();
                 }

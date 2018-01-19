@@ -84,11 +84,11 @@
         android:textSize="14sp" />
 
     <ImageView
-        android:id="@+id/close_icon"
+        android:id="@+id/push_close_icon"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:src="@drawable/ic_close_button_circle"
-        android:layout_alignParentTop="true"
+        android:layout_alignParentEnd="true"
         android:layout_alignParentRight="true"
-        android:layout_alignParentEnd="true" />
+        android:layout_alignParentTop="true"
+        android:src="@drawable/rate_alert_ui_close" />
 </RelativeLayout>
