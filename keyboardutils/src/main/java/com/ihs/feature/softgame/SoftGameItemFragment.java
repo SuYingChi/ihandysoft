@@ -10,10 +10,10 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.ihs.app.framework.HSApplication;
+import com.ihs.commons.connection.HSHttpConnection;
+import com.ihs.commons.utils.HSError;
 import com.ihs.commons.utils.HSJsonUtil;
 import com.ihs.keyboardutils.R;
-import com.ihs.keyboardutils.utils.ToastUtils;
-import com.millennialmedia.internal.utils.ThreadUtils;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -24,15 +24,29 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
+import static java.util.Arrays.asList;
+
 public class SoftGameItemFragment extends Fragment {
 
     public static final int SOFT_GAME_LOAD_COUNT = 50;
     public static final String JSON_GAMES = "games";
+    public static final String TOP_GAMES = "http://api.famobi.com/feed?a=A-KCVWU&n=50&sort=top_games";
+
 
     private ArrayList<SoftGameItemBean> softGameItemArrayList = new ArrayList<>();
 
     private SoftGameItemAdapter softGameItemAdapter;
 
+    //50 games ID
+    private List<String> gameIdList = asList("smarty-bubbles", "solitaire-classic", "lovetester", "treasure-hunt",
+            "hextris", "stones-of-pharaoh", "burnin-rubber", "fruita-crush", "jewelish", "fidget-spinner-high-score",
+            "streetrace-fury", "running-jack", "smarty-bubbles-xmas", "soccertastic", "candy-bubble", "parking-passion",
+            "endless-truck", "sprint-club-nitro", "glow-lines", "ultimate-boxing", "klondike-solitaire", "turbotastic",
+            "penalty-shooters-2", "western-solitaire", "kk-jungle-chaos", "wedding-lily", "euro-penalty-2016", "world-cup-penalty",
+            "foot-chinko", "slacking-school", "tiny-rifles", "hop-dont-stop", "euro-soccer-sprint", "circle-rush", "1010-animals",
+            "snail-bob-3", "puppy-maker", "pizza-margherita", "butterfly-chocolate-cake", "kuli", "speed-pool-king", "street-pursuit",
+            "wild-west-solitaire", "piano-steps", "chocolate-biscuits", "fruita-swipe-2", "speed-maniac", "creamy-ice"
+            , "spider-solitaire", "italian-tiramisu");
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -49,29 +63,38 @@ public class SoftGameItemFragment extends Fragment {
         recyclerView.setAdapter(softGameItemAdapter);
         recyclerView.addItemDecoration(new DividerItemDecoration(getContext(), LinearLayoutManager.VERTICAL));
 
-        ThreadUtils.runOnWorkerThread(new Runnable() {
+        HSHttpConnection hsHttpConnection = new HSHttpConnection(TOP_GAMES);
+        hsHttpConnection.startAsync();
+        hsHttpConnection.setConnectionFinishedListener(new HSHttpConnection.OnConnectionFinishedListener() {
             @Override
-            public void run() {
+            public void onConnectionFinished(HSHttpConnection hsHttpConnection) {
+                JSONObject bodyJSON = hsHttpConnection.getBodyJSON();
                 try {
-                    JSONObject jsonObject = loadJSONFromAsset();
-                    if (jsonObject != null) {
-                        List<Object> jsonMap = HSJsonUtil.toList(jsonObject.getJSONArray(JSON_GAMES));
-                        for (Object stringObjectMap : jsonMap) {
-                            Map<String, String> object = (Map<String, String>) stringObjectMap;
-                            String name = object.get("name");
-                            String description = object.get("description");
-                            String thumb = object.get("thumb");
-                            String link = object.get("link");
-                            SoftGameItemBean bean = new SoftGameItemBean(name, description, thumb, link);
-                            softGameItemArrayList.add(bean);
+                    List<Object> jsonMap = HSJsonUtil.toList(bodyJSON.getJSONArray(JSON_GAMES));
+                    for (Object stringObjectMap : jsonMap) {
+                        Map<String, String> object = (Map<String, String>) stringObjectMap;
+                        if (!gameIdList.contains(object.get("package_id"))) {
+                            continue;
                         }
-                        softGameItemAdapter.refreshDataList(softGameItemArrayList);
-                    } else {
-                        ToastUtils.showToast("Game data error!");
+                        String name = object.get("name");
+                        String description = object.get("description");
+                        String thumb = object.get("thumb");
+                        String link = object.get("link");
+                        SoftGameItemBean bean = new SoftGameItemBean(name, description, thumb, link);
+                        softGameItemArrayList.add(bean);
+                        if (softGameItemArrayList.size() >= 50) {
+                            break;
+                        }
                     }
+                    softGameItemAdapter.refreshDataList(softGameItemArrayList);
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
+            }
+
+            @Override
+            public void onConnectionFailed(HSHttpConnection hsHttpConnection, HSError hsError) {
+                hsError.getMessage();
             }
         });
         return v;
