@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:id="@+id/push_camera_or_game"
+    android:id="@+id/push_boost_scan"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
@@ -10,10 +10,11 @@
         android:layout_height="80dp"
         android:layout_marginLeft="24.7dp"
         android:layout_marginStart="24.7dp"
-        android:layout_marginTop="17dp" />
+        android:layout_marginTop="17dp"
+        android:src="@drawable/new_locker_junk" />
 
     <LinearLayout
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignTop="@id/icon"
         android:layout_marginLeft="15dp"
@@ -24,33 +25,23 @@
         android:paddingTop="5dp">
 
         <TextView
-            android:id="@+id/push_camera_or_game_title"
+            android:id="@+id/scan_text"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:ellipsize="end"
-            android:fontFamily="sans-serif-medium"
-            android:maxLines="1"
-            android:text="Black cat"
-            android:textColor="#000000"
-            android:textSize="26.7sp"
-            android:textStyle="normal" />
+            android:layout_gravity="center_horizontal"
+            android:layout_marginBottom="10dp"
+            android:text="@string/push_scan_text" />
 
-        <TextView
-            android:id="@+id/push_camera_or_game_subtitle"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:ellipsize="end"
-            android:fontFamily="sans-serif"
-            android:lineSpacingExtra="4.3sp"
-            android:maxLines="2"
-            android:text="New Livesticker!"
-            android:textColor="#7f000000"
-            android:textSize="14sp"
-            android:textStyle="normal" />
+        <android.support.v4.widget.ContentLoadingProgressBar
+            android:id="@+id/spin_circle"
+            style="?android:progressBarStyleSmall"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:layout_gravity="center_horizontal" />
     </LinearLayout>
 
     <Button
-        android:id="@+id/push_camera_or_game_button"
+        android:id="@+id/push_boost_scan_button"
         android:layout_width="match_parent"
         android:layout_height="36.7dp"
         android:layout_alignLeft="@id/icon"

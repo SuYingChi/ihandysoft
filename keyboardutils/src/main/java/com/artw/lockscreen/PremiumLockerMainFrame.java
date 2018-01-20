@@ -347,6 +347,7 @@ public class PremiumLockerMainFrame extends PercentRelativeLayout implements INo
         while (!showPushFrameItem(getPushFrameItemIndex())) {
             increasePushFrameItemIndex();
         }
+        pushFramePreferences.edit().putLong("time", System.currentTimeMillis()).apply();
     }
 
     private void initButtons() {
@@ -504,7 +505,7 @@ public class PremiumLockerMainFrame extends PercentRelativeLayout implements INo
     }
 
     private int getPushFrameItemIndex() {
-        return pushFramePreferences.getInt("index", 2);
+        return pushFramePreferences.getInt("index", 0);
     }
 
     private void increasePushFrameItemIndex() {
@@ -554,7 +555,11 @@ public class PremiumLockerMainFrame extends PercentRelativeLayout implements INo
                 View junkRootView = findViewById(R.id.push_boost_one);
                 junkRootView.setVisibility(GONE);
                 ((ContentLoadingProgressBar) findViewById(R.id.spin_circle)).getIndeterminateDrawable().setColorFilter(Color.BLACK, PorterDuff.Mode.MULTIPLY);
-                findViewById(R.id.scan_layout).setVisibility(VISIBLE);
+                findViewById(R.id.push_boost_scan).setVisibility(VISIBLE);
+                findViewById(R.id.push_boost_scan_button).setOnClickListener(view -> {
+                    Intent junkCleanIntent = new Intent(getContext(), JunkCleanActivity.class);
+                    getContext().startActivity(junkCleanIntent);
+                });
                 JunkManager junkManager = JunkManager.getInstance();
                 junkManager.startJunkScan(new JunkManager.ScanJunkListener() {
                     @Override
@@ -569,7 +574,7 @@ public class PremiumLockerMainFrame extends PercentRelativeLayout implements INo
 
                     @Override
                     public void onScanFinished(long junkSize) {
-                        findViewById(R.id.scan_layout).setVisibility(GONE);
+                        findViewById(R.id.push_boost_scan).setVisibility(GONE);
                         junkRootView.setVisibility(VISIBLE);
 
                         int junkSizeInMB = (int) junkSize / (1024 * 1024);
@@ -670,7 +675,7 @@ public class PremiumLockerMainFrame extends PercentRelativeLayout implements INo
 
                 String imageUrl = bean.getIconUrl();
                 if (imageUrl == null) {
-                    ((ImageView) findViewById(R.id.icon)).setImageResource(R.drawable.ic_locker_camera);
+                    ((ImageView) findViewById(R.id.icon)).setImageResource(R.drawable.push_camera_icon);
                 } else {
                     ImageLoader.getInstance().loadImage(imageUrl, new ImageLoadingListener() {
                         @Override
