@@ -15,11 +15,8 @@ import com.ihs.commons.utils.HSError;
 import com.ihs.commons.utils.HSJsonUtil;
 import com.ihs.keyboardutils.R;
 
-import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.io.IOException;
-import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -82,7 +79,7 @@ public class SoftGameItemFragment extends Fragment {
                         String link = object.get("link");
                         SoftGameItemBean bean = new SoftGameItemBean(name, description, thumb, link);
                         softGameItemArrayList.add(bean);
-                        if (softGameItemArrayList.size() >= 50) {
+                        if (softGameItemArrayList.size() >= gameIdList.size()) {
                             break;
                         }
                     }
@@ -111,24 +108,4 @@ public class SoftGameItemFragment extends Fragment {
         return f;
     }
 
-    private JSONObject loadJSONFromAsset() {
-        String json;
-        try {
-            InputStream is = getActivity().getAssets().open("h5games.json");
-            int size = is.available();
-            byte[] buffer = new byte[size];
-            is.read(buffer);
-            is.close();
-            json = new String(buffer, "UTF-8");
-        } catch (IOException ex) {
-            ex.printStackTrace();
-            return null;
-        }
-        try {
-            return new JSONObject(json);
-        } catch (JSONException e) {
-            e.printStackTrace();
-            return null;
-        }
-    }
 }
