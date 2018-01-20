@@ -5,7 +5,6 @@ import android.support.multidex.MultiDex;
 import android.text.TextUtils;
 
 import com.acb.weather.plugin.AcbWeatherManager;
-import com.artw.lockscreen.lockerappguide.LockerAppGuideManager;
 import com.artw.lockscreen.ScreenLockerManager;
 import com.artw.lockscreen.lockerappguide.LockerAppGuideManager;
 import com.ihs.app.alerts.HSAlertMgr;
@@ -66,11 +65,11 @@ public class MyApplication extends HSApplication {
         LeakCanary.install(this);
         AcbWeatherManager.getInstance().init(this, R.mipmap.ic_launcher);
         AcbExpressAdManager.getInstance().init(this);
-        HSChargingScreenManager.init(true, "Master_A(NativeAds)Charging",getString(R.string.ad_placement_filter_download));
+        HSChargingScreenManager.init(true, "Master_A(NativeAds)Charging", getString(R.string.ad_placement_filter_download));
 
         HSGlobalNotificationCenter.addObserver(HSNotificationConstant.HS_SESSION_START, sessionEventObserver);
         HSGlobalNotificationCenter.addObserver(HSNotificationConstant.HS_SESSION_END, sessionEventObserver);
-        
+
         ScreenLockerManager.init();
         NotificationManager.getInstance().updateBattery();
         initImageLoader();
@@ -83,13 +82,13 @@ public class MyApplication extends HSApplication {
         }, null, false);
 
 
+        AppSuggestionManager.getInstance().init(false, getString(R.string.ad_placement_call_assist));
+        LockerAppGuideManager.getInstance().init(true);
 
         AcbNativeAdManager.sharedInstance().activePlacementInProcess(getString(R.string.ad_placement_result_page));
-        AcbNativeAdManager.sharedInstance().activePlacementInProcess(getString(R.string.ad_placement_call_assist));
+        AcbNativeAdManager.sharedInstance().activePlacementInProcess(AppSuggestionManager.getInstance().getAdPlacementName());
         AcbNativeAdManager.sharedInstance().activePlacementInProcess(getString(R.string.ad_placement_filter_download));
         FloatWindowCompat.initLockScreen(this);
-        LockerAppGuideManager.getInstance().init(true);
-        AppSuggestionManager.getInstance().init(false);
     }
 
 

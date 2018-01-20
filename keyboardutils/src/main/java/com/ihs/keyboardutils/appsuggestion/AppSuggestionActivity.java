@@ -32,6 +32,7 @@ import com.ihs.chargingscreen.utils.DisplayUtils;
 import com.ihs.commons.config.HSConfig;
 import com.ihs.commons.notificationcenter.HSGlobalNotificationCenter;
 import com.ihs.commons.utils.HSLog;
+import com.ihs.keyboardutils.BuildConfig;
 import com.ihs.keyboardutils.R;
 import com.ihs.keyboardutils.nativeads.KCNativeAdView;
 import com.ihs.keyboardutils.utils.RippleDrawableUtils;
@@ -77,7 +78,9 @@ public class AppSuggestionActivity extends Activity {
                     ((itemHolder) holder).getTitle().setText(appName);
                     ((itemHolder) holder).getIcon().setImageDrawable(packageManager.getApplicationIcon(packageName));
                 } catch (Exception e) {
-                    e.printStackTrace();
+                    if (BuildConfig.DEBUG) {
+                        ToastUtils.showToast("App info fetch error");
+                    }
                 }
                 holder.itemView.setBackgroundDrawable(RippleDrawableUtils.getButtonRippleBackground(R.color.white));
                 String finalAppName = appName;
@@ -88,7 +91,7 @@ public class AppSuggestionActivity extends Activity {
                         try {
                             startActivity(LaunchIntent);
                         } catch (Exception e) {
-                            ToastUtils.showToast("Launcher app failed");
+                            ToastUtils.showToast("Launch app failed");
                         }
                         HSAnalytics.logEvent("appSuggestions_app_clicked", "appName", finalAppName);
                         finish();
@@ -218,7 +221,7 @@ public class AppSuggestionActivity extends Activity {
 
         nativeAdView = new KCNativeAdView(HSApplication.getContext());
         nativeAdView.setAdLayoutView(View.inflate(this, R.layout.acb_suggestion_ad_layout, null));
-        nativeAdView.load(getString(R.string.ad_placement_call_assist));
+        nativeAdView.load(AppSuggestionManager.getInstance().getAdPlacementName());
 
         FrameLayout adContainer = findViewById(R.id.alert_ad_container);
         adContainer.addView(nativeAdView);
@@ -321,7 +324,7 @@ public class AppSuggestionActivity extends Activity {
             if (HSApplication.getContext().getPackageManager().resolveActivity(smsIntent, 0) != null) {
                 startActivity(smsIntent);
             } else {
-                Toast.makeText(HSApplication.getContext(),R.string.sms_not_supported_prompt,Toast.LENGTH_SHORT).show();
+                Toast.makeText(HSApplication.getContext(), R.string.sms_not_supported_prompt, Toast.LENGTH_SHORT).show();
             }
         }
     }
