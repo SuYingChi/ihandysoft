@@ -84,5 +84,15 @@
         <item name="android:windowFullscreen">true</item>
         <item name="android:backgroundDimEnabled">true</item>
     </style>
+    <style name="HeadsetActivityStyle" parent="android:Theme.Translucent.NoTitleBar.Fullscreen">
+        <item name="android:windowBackground">@color/trunsfluent</item>
+        <item name="android:windowAnimationStyle">@style/AnimBottom</item>
+    </style>
+    <style name="AppTheme" parent="android:Theme.Light" />
+    <!-- 定义弹框Activity的进入、关闭动画 -->
+    <style name="AnimBottom" parent="@android:style/Animation">
+        <item name="android:windowEnterAnimation">@anim/push_bottom_in</item>
+        <item name="android:windowExitAnimation">@anim/push_bottom_out</item>
+    </style>
 
 </resources>
