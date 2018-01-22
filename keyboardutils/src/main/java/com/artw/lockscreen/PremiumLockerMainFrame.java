@@ -557,6 +557,7 @@ public class PremiumLockerMainFrame extends PercentRelativeLayout implements INo
                 ((ContentLoadingProgressBar) findViewById(R.id.spin_circle)).getIndeterminateDrawable().setColorFilter(Color.BLACK, PorterDuff.Mode.MULTIPLY);
                 findViewById(R.id.push_boost_scan).setVisibility(VISIBLE);
                 findViewById(R.id.push_boost_scan_button).setOnClickListener(view -> {
+                    increasePushFrameItemIndex();
                     Intent junkCleanIntent = new Intent(getContext(), JunkCleanActivity.class);
                     getContext().startActivity(junkCleanIntent);
                 });
@@ -584,6 +585,7 @@ public class PremiumLockerMainFrame extends PercentRelativeLayout implements INo
                         ((ImageView) junkRootView.findViewById(R.id.icon)).setImageDrawable(getResources().getDrawable(R.drawable.new_locker_junk));
                         ((Button) junkRootView.findViewById(R.id.push_boost_button)).setText(getResources().getString(R.string.push_junk_button));
                         junkRootView.findViewById(R.id.push_boost_button).setOnClickListener(view -> {
+                            increasePushFrameItemIndex();
                             Intent junkCleanIntent = new Intent(getContext(), JunkCleanActivity.class);
                             getContext().startActivity(junkCleanIntent);
                         });
@@ -630,6 +632,7 @@ public class PremiumLockerMainFrame extends PercentRelativeLayout implements INo
                 ((TextView) gameRootView.findViewById(R.id.push_camera_or_game_subtitle)).setText(pushGamePreferences.getString("description", ""));
                 ((Button) gameRootView.findViewById(R.id.push_camera_or_game_button)).setText(getResources().getString(R.string.push_game_button));
                 gameRootView.findViewById(R.id.push_camera_or_game_button).setOnClickListener(view -> {
+                    increasePushFrameItemIndex();
                     String url = pushGamePreferences.getString("link", null);
                     GameStarterActivity.startGame(url, "push_game_clicked");
                 });
@@ -655,6 +658,7 @@ public class PremiumLockerMainFrame extends PercentRelativeLayout implements INo
                 ((TextView) cameraRootView.findViewById(R.id.push_camera_or_game_subtitle)).setText(bean.getMessage());
                 ((Button) findViewById(R.id.push_camera_or_game_button)).setText(bean.getButtonText());
                 findViewById(R.id.push_camera_or_game_button).setOnClickListener(view -> {
+                    increasePushFrameItemIndex();
                     Intent cameraIntent = new Intent("push.camera.store");
                     switch (pushCameraActionType) {
                         case "Filter":
@@ -719,6 +723,7 @@ public class PremiumLockerMainFrame extends PercentRelativeLayout implements INo
                     ((TextView) batteryOneRootView.findViewById(R.id.boost_subtitle)).setText(getResources().getString(R.string.push_battery_subtitle));
                     ((Button) batteryOneRootView.findViewById(R.id.push_boost_button)).setText(getResources().getString(R.string.push_battery_button));
                     batteryOneRootView.findViewById(R.id.push_boost_button).setOnClickListener(view -> {
+                        increasePushFrameItemIndex();
                         Intent batteryIntent = new Intent(getContext(), BatteryActivity.class);
                         getContext().startActivity(batteryIntent);
                     });
@@ -734,6 +739,7 @@ public class PremiumLockerMainFrame extends PercentRelativeLayout implements INo
                     ((TextView) batteryTwoRootView.findViewById(R.id.boost_title)).setText(getResources().getString(R.string.push_battery_title_plus));
                     ((Button) batteryTwoRootView.findViewById(R.id.push_boost_button)).setText(getResources().getString(R.string.push_battery_button));
                     batteryTwoRootView.findViewById(R.id.push_boost_button).setOnClickListener(view -> {
+                        increasePushFrameItemIndex();
                         Intent batteryIntent = new Intent(getContext(), BatteryActivity.class);
                         getContext().startActivity(batteryIntent);
                     });
@@ -762,6 +768,7 @@ public class PremiumLockerMainFrame extends PercentRelativeLayout implements INo
                 ((TextView) cpuRootView.findViewById(R.id.boost_subtitle)).setText(getResources().getString(R.string.push_cpu_subtitle));
                 ((Button) cpuRootView.findViewById(R.id.push_boost_button)).setText(getResources().getString(R.string.push_cpu_button));
                 cpuRootView.findViewById(R.id.push_boost_button).setOnClickListener(view -> {
+                    increasePushFrameItemIndex();
                     Intent cpuCoolerCleanIntent = new Intent(getContext(), CpuCoolerCleanActivity.class);
                     getContext().startActivity(cpuCoolerCleanIntent);
                 });
@@ -783,6 +790,7 @@ public class PremiumLockerMainFrame extends PercentRelativeLayout implements INo
                 ((TextView) storageRootView.findViewById(R.id.boost_subtitle)).setText(getResources().getString(R.string.push_memory_subtitle));
                 ((Button) findViewById(R.id.push_boost_button)).setText(getResources().getString(R.string.push_memory_button));
                 findViewById(R.id.push_boost_button).setOnClickListener(view -> {
+                    increasePushFrameItemIndex();
                     Intent boostIntent = new Intent(getContext(), BoostPlusActivity.class);
                     getContext().startActivity(boostIntent);
                 });

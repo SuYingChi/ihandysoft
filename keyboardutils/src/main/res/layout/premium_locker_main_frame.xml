@@ -267,7 +267,7 @@
             android:layout_alignParentRight="true"
             android:layout_alignParentTop="true"
             android:scaleType="centerCrop"
-            android:src="@drawable/rate_alert_ui_close" />
+            android:src="@drawable/push_frame_close_icon" />
     </RelativeLayout>
 
     <com.artw.lockscreen.slidingdrawer.SlidingDrawer
