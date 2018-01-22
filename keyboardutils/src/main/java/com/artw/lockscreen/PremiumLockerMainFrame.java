@@ -476,6 +476,12 @@ public class PremiumLockerMainFrame extends PercentRelativeLayout implements INo
                     mShimmer.cancel();
                 }
                 buttonUpgrade.clear();
+                if (getPushFrameItemIndex() == MODE_GAME && pushGamePreferences.getBoolean("showed", false)) {
+                    int gameInfoPosition = pushGamePreferences.getInt("position", 0);
+                    gameInfoPosition++;
+                    gameInfoPosition = gameInfoPosition % GAME_INFO_COUNT;
+                    askForGameInfo(gameInfoPosition);
+                }
                 break;
             case ScreenStatusReceiver.NOTIFICATION_SCREEN_ON:
                 if ((pushGamePreferences.getAll().size() <= 0) || (pushGamePreferences.getInt("date", 0) != Calendar.getInstance().get(Calendar.DAY_OF_MONTH))) {
@@ -533,6 +539,7 @@ public class PremiumLockerMainFrame extends PercentRelativeLayout implements INo
                     editorOfGame.putString("link", object.get("link"));
                     editorOfGame.putInt("date", Calendar.getInstance().get(Calendar.DAY_OF_MONTH));
                     editorOfGame.putInt("position", position);
+                    editorOfGame.putBoolean("showed", false);
                     editorOfGame.apply();
                 } catch (Exception e) {
                     e.printStackTrace();
@@ -560,6 +567,7 @@ public class PremiumLockerMainFrame extends PercentRelativeLayout implements INo
                     increasePushFrameItemIndex();
                     Intent junkCleanIntent = new Intent(getContext(), JunkCleanActivity.class);
                     getContext().startActivity(junkCleanIntent);
+                    HSGlobalNotificationCenter.sendNotification(PremiumLockerActivity.EVENT_FINISH_SELF);
                 });
                 JunkManager junkManager = JunkManager.getInstance();
                 junkManager.startJunkScan(new JunkManager.ScanJunkListener() {
@@ -588,6 +596,7 @@ public class PremiumLockerMainFrame extends PercentRelativeLayout implements INo
                             increasePushFrameItemIndex();
                             Intent junkCleanIntent = new Intent(getContext(), JunkCleanActivity.class);
                             getContext().startActivity(junkCleanIntent);
+                            HSGlobalNotificationCenter.sendNotification(PremiumLockerActivity.EVENT_FINISH_SELF);
                         });
                     }
                 });
@@ -635,7 +644,9 @@ public class PremiumLockerMainFrame extends PercentRelativeLayout implements INo
                     increasePushFrameItemIndex();
                     String url = pushGamePreferences.getString("link", null);
                     GameStarterActivity.startGame(url, "push_game_clicked");
+                    HSGlobalNotificationCenter.sendNotification(PremiumLockerActivity.EVENT_FINISH_SELF);
                 });
+                pushGamePreferences.edit().putBoolean("showed", true).apply();
                 break;
             case MODE_CAMERA:
                 List<Map<String, Object>> configs = (List<Map<String, Object>>) HSConfig.getList("Application", "LocalNotifications", "Content");
@@ -675,6 +686,7 @@ public class PremiumLockerMainFrame extends PercentRelativeLayout implements INo
                     }
 
                     getContext().startActivity(cameraIntent);
+                    HSGlobalNotificationCenter.sendNotification(PremiumLockerActivity.EVENT_FINISH_SELF);
                 });
 
                 String imageUrl = bean.getIconUrl();
@@ -726,6 +738,7 @@ public class PremiumLockerMainFrame extends PercentRelativeLayout implements INo
                         increasePushFrameItemIndex();
                         Intent batteryIntent = new Intent(getContext(), BatteryActivity.class);
                         getContext().startActivity(batteryIntent);
+                        HSGlobalNotificationCenter.sendNotification(PremiumLockerActivity.EVENT_FINISH_SELF);
                     });
                 } else if (batteryLevel <= 80 && appsCount >= 8) {
                     findViewById(R.id.push_camera_or_game).setVisibility(GONE);
@@ -742,6 +755,7 @@ public class PremiumLockerMainFrame extends PercentRelativeLayout implements INo
                         increasePushFrameItemIndex();
                         Intent batteryIntent = new Intent(getContext(), BatteryActivity.class);
                         getContext().startActivity(batteryIntent);
+                        HSGlobalNotificationCenter.sendNotification(PremiumLockerActivity.EVENT_FINISH_SELF);
                     });
                     List<BatteryAppInfo> appInfos = batteryDataManager.getCleanAnimationBatteryApps();
                     ((ImageView) batteryTwoRootView.findViewById(R.id.icon_first)).setImageDrawable(appInfos.get(0).getAppDrawable());
@@ -771,6 +785,7 @@ public class PremiumLockerMainFrame extends PercentRelativeLayout implements INo
                     increasePushFrameItemIndex();
                     Intent cpuCoolerCleanIntent = new Intent(getContext(), CpuCoolerCleanActivity.class);
                     getContext().startActivity(cpuCoolerCleanIntent);
+                    HSGlobalNotificationCenter.sendNotification(PremiumLockerActivity.EVENT_FINISH_SELF);
                 });
                 break;
             case MODE_STORAGE:
@@ -793,6 +808,7 @@ public class PremiumLockerMainFrame extends PercentRelativeLayout implements INo
                     increasePushFrameItemIndex();
                     Intent boostIntent = new Intent(getContext(), BoostPlusActivity.class);
                     getContext().startActivity(boostIntent);
+                    HSGlobalNotificationCenter.sendNotification(PremiumLockerActivity.EVENT_FINISH_SELF);
                 });
                 break;
             default:
