@@ -13,44 +13,53 @@
         android:layout_marginTop="17dp"
         android:src="@drawable/new_locker_junk" />
 
-    <LinearLayout
-        android:layout_width="match_parent"
+    <RelativeLayout
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_alignBottom="@id/icon"
+        android:layout_alignEnd="@id/push_boost_scan_button"
+        android:layout_alignRight="@id/push_boost_scan_button"
         android:layout_alignTop="@id/icon"
-        android:layout_marginLeft="15dp"
-        android:layout_marginStart="15dp"
         android:layout_toEndOf="@id/icon"
-        android:layout_toRightOf="@id/icon"
-        android:orientation="vertical"
-        android:paddingTop="5dp">
+        android:layout_toRightOf="@id/icon">
 
-        <TextView
-            android:id="@+id/scan_text"
-            android:layout_width="wrap_content"
+        <LinearLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_gravity="center_horizontal"
-            android:layout_marginBottom="10dp"
-            android:text="@string/push_scan_text" />
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="15dp"
+            android:layout_marginStart="15dp"
+            android:orientation="vertical"
+            android:paddingTop="5dp">
 
-        <android.support.v4.widget.ContentLoadingProgressBar
-            android:id="@+id/spin_circle"
-            style="?android:progressBarStyleSmall"
-            android:layout_width="30dp"
-            android:layout_height="30dp"
-            android:layout_gravity="center_horizontal" />
-    </LinearLayout>
+            <TextView
+                android:id="@+id/scan_text"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginBottom="10dp"
+                android:text="@string/push_scan_text" />
+
+            <android.support.v4.widget.ContentLoadingProgressBar
+                android:id="@+id/spin_circle"
+                style="?android:progressBarStyleSmall"
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                android:layout_gravity="center_horizontal" />
+        </LinearLayout>
+    </RelativeLayout>
 
     <Button
         android:id="@+id/push_boost_scan_button"
         android:layout_width="match_parent"
-        android:layout_height="36.7dp"
+        android:layout_height="42dp"
         android:layout_alignLeft="@id/icon"
+        android:layout_alignParentBottom="true"
         android:layout_alignStart="@id/icon"
-        android:layout_below="@id/icon"
         android:layout_centerHorizontal="true"
+        android:layout_marginBottom="15dp"
         android:layout_marginEnd="24.7dp"
         android:layout_marginRight="24.7dp"
-        android:layout_marginTop="17dp"
         android:background="@drawable/locker_push_dialog_button_background"
         android:text="TRY NOW"
         android:textAllCaps="true"

@@ -12,54 +12,63 @@
         android:layout_marginStart="24.7dp"
         android:layout_marginTop="17dp" />
 
-    <LinearLayout
+    <RelativeLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_alignBottom="@id/icon"
+        android:layout_alignEnd="@id/push_camera_or_game_button"
+        android:layout_alignRight="@id/push_camera_or_game_button"
         android:layout_alignTop="@id/icon"
-        android:layout_marginLeft="15dp"
-        android:layout_marginStart="15dp"
         android:layout_toEndOf="@id/icon"
-        android:layout_toRightOf="@id/icon"
-        android:orientation="vertical"
-        android:paddingTop="5dp">
+        android:layout_toRightOf="@id/icon">
 
-        <TextView
-            android:id="@+id/push_camera_or_game_title"
+        <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:ellipsize="end"
-            android:fontFamily="sans-serif-medium"
-            android:maxLines="1"
-            android:text="Black cat"
-            android:textColor="#000000"
-            android:textSize="26.7sp"
-            android:textStyle="normal" />
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="15dp"
+            android:layout_marginStart="15dp"
+            android:orientation="vertical"
+            android:paddingTop="5dp">
 
-        <TextView
-            android:id="@+id/push_camera_or_game_subtitle"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:ellipsize="end"
-            android:fontFamily="sans-serif"
-            android:lineSpacingExtra="4.3sp"
-            android:maxLines="2"
-            android:text="New Livesticker!"
-            android:textColor="#7f000000"
-            android:textSize="14sp"
-            android:textStyle="normal" />
-    </LinearLayout>
+            <TextView
+                android:id="@+id/push_camera_or_game_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:ellipsize="end"
+                android:fontFamily="sans-serif-medium"
+                android:maxLines="1"
+                android:text="Black cat"
+                android:textColor="#000000"
+                android:textSize="26.7sp"
+                android:textStyle="normal" />
+
+            <TextView
+                android:id="@+id/push_camera_or_game_subtitle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:ellipsize="end"
+                android:fontFamily="sans-serif"
+                android:lineSpacingExtra="4.3sp"
+                android:maxLines="2"
+                android:text="New Livesticker!"
+                android:textColor="#7f000000"
+                android:textSize="14sp"
+                android:textStyle="normal" />
+        </LinearLayout>
+    </RelativeLayout>
 
     <Button
         android:id="@+id/push_camera_or_game_button"
         android:layout_width="match_parent"
-        android:layout_height="36.7dp"
+        android:layout_height="42dp"
         android:layout_alignLeft="@id/icon"
+        android:layout_alignParentBottom="true"
         android:layout_alignStart="@id/icon"
-        android:layout_below="@id/icon"
         android:layout_centerHorizontal="true"
+        android:layout_marginBottom="15dp"
         android:layout_marginEnd="24.7dp"
         android:layout_marginRight="24.7dp"
-        android:layout_marginTop="17dp"
         android:background="@drawable/locker_push_dialog_button_background"
         android:text="TRY NOW"
         android:textAllCaps="true"

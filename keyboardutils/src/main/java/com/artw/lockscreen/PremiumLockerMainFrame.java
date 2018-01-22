@@ -587,7 +587,13 @@ public class PremiumLockerMainFrame extends PercentRelativeLayout implements INo
                         junkRootView.setVisibility(VISIBLE);
 
                         int junkSizeInMB = (int) junkSize / (1024 * 1024);
-                        ((TextView) junkRootView.findViewById(R.id.boost_result)).setText(junkSizeInMB + "MB");
+                        if (junkSizeInMB < 1024) {
+                            ((TextView) junkRootView.findViewById(R.id.boost_result)).setText(junkSizeInMB + "MB");
+                        } else {
+                            float junkSizeInGB = (float) junkSizeInMB / 1024f;
+                            String junkSizeInGBFloat = String.format("%.2f", junkSizeInGB);
+                            ((TextView) junkRootView.findViewById(R.id.boost_result)).setText(junkSizeInGBFloat + "GB");
+                        }
                         ((TextView) junkRootView.findViewById(R.id.boost_title)).setText(getResources().getString(R.string.push_junk_title));
                         ((TextView) junkRootView.findViewById(R.id.boost_subtitle)).setText(getResources().getString(R.string.push_junk_subtitle));
                         ((ImageView) junkRootView.findViewById(R.id.icon)).setImageDrawable(getResources().getDrawable(R.drawable.new_locker_junk));

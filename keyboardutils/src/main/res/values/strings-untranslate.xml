@@ -55,6 +55,6 @@ Try More Lock Screen Themes</string>
     <string name="push_memory_title">Memory Used</string>
     <string name="push_memory_subtitle">Click boost now and make your phone clean!</string>
     <string name="push_memory_button">BOOST NOW</string>
-    <string name="push_scan_text">Scanning…</string>
+    <string name="push_scan_text">CLEAN NOW</string>
 
 </resources>
