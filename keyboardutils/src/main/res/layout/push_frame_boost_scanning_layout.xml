@@ -56,14 +56,4 @@
         android:textAllCaps="true"
         android:textColor="#ffffff"
         android:textSize="14sp" />
-
-    <ImageView
-        android:id="@+id/push_close_icon"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentEnd="true"
-        android:layout_alignParentRight="true"
-        android:layout_alignParentTop="true"
-        android:scaleType="centerCrop"
-        android:src="@drawable/rate_alert_ui_close" />
 </RelativeLayout>

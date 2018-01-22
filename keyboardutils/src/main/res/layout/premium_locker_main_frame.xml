@@ -232,7 +232,7 @@
             android:textSize="12sp" />
     </android.support.percent.PercentRelativeLayout>
 
-    <FrameLayout
+    <RelativeLayout
         android:id="@+id/push_frame"
         android:layout_above="@id/bottom_operation_area"
         android:layout_alignParentLeft="true"
@@ -245,20 +245,30 @@
 
         <include
             layout="@layout/push_frame_camera_or_game_layout"
-            android:visibility="gone"/>
+            android:visibility="gone" />
 
         <include
             layout="@layout/push_frame_boost_layout_type_one"
-            android:visibility="gone"/>
+            android:visibility="gone" />
 
         <include
             layout="@layout/push_frame_boost_layout_type_two"
-            android:visibility="gone"/>
+            android:visibility="gone" />
 
         <include
             layout="@layout/push_frame_boost_scanning_layout"
-            android:visibility="gone"/>
-    </FrameLayout>
+            android:visibility="gone" />
+
+        <ImageView
+            android:id="@+id/push_close_icon"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentTop="true"
+            android:scaleType="centerCrop"
+            android:src="@drawable/rate_alert_ui_close" />
+    </RelativeLayout>
 
     <com.artw.lockscreen.slidingdrawer.SlidingDrawer
         android:id="@+id/operation_area"
