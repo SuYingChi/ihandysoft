@@ -10,7 +10,8 @@
         android:layout_height="80dp"
         android:layout_marginLeft="24.7dp"
         android:layout_marginStart="24.7dp"
-        android:layout_marginTop="17dp" />
+        android:layout_marginTop="17dp"
+        android:scaleType="centerInside" />
 
     <RelativeLayout
         android:layout_width="wrap_content"
@@ -28,8 +29,7 @@
             android:layout_centerVertical="true"
             android:layout_marginLeft="15dp"
             android:layout_marginStart="15dp"
-            android:orientation="vertical"
-            android:paddingTop="5dp">
+            android:orientation="vertical">
 
             <TextView
                 android:id="@+id/push_camera_or_game_title"
@@ -40,7 +40,7 @@
                 android:maxLines="1"
                 android:text="Black cat"
                 android:textColor="#000000"
-                android:textSize="26.7sp"
+                android:textSize="25sp"
                 android:textStyle="normal" />
 
             <TextView

@@ -563,6 +563,7 @@ public class PremiumLockerMainFrame extends PercentRelativeLayout implements INo
                 junkRootView.setVisibility(GONE);
                 ((ContentLoadingProgressBar) findViewById(R.id.spin_circle)).getIndeterminateDrawable().setColorFilter(Color.BLACK, PorterDuff.Mode.MULTIPLY);
                 findViewById(R.id.push_boost_scan).setVisibility(VISIBLE);
+                ((TextView) findViewById(R.id.push_boost_scan_button)).setText(getResources().getString(R.string.push_junk_button));
                 findViewById(R.id.push_boost_scan_button).setOnClickListener(view -> {
                     increasePushFrameItemIndex();
                     Intent junkCleanIntent = new Intent(getContext(), JunkCleanActivity.class);
@@ -696,31 +697,28 @@ public class PremiumLockerMainFrame extends PercentRelativeLayout implements INo
                 });
 
                 String imageUrl = bean.getIconUrl();
-                if (imageUrl == null) {
-                    ((ImageView) findViewById(R.id.icon)).setImageResource(R.drawable.push_camera_icon);
-                } else {
-                    ImageLoader.getInstance().loadImage(imageUrl, new ImageLoadingListener() {
-                        @Override
-                        public void onLoadingStarted(String imageUri, View view) {
+                ((ImageView) findViewById(R.id.icon)).setImageResource(R.drawable.push_camera_icon);
+                ImageLoader.getInstance().loadImage(imageUrl, new ImageLoadingListener() {
+                    @Override
+                    public void onLoadingStarted(String imageUri, View view) {
 
-                        }
+                    }
 
-                        @Override
-                        public void onLoadingFailed(String imageUri, View view, FailReason failReason) {
+                    @Override
+                    public void onLoadingFailed(String imageUri, View view, FailReason failReason) {
 
-                        }
+                    }
 
-                        @Override
-                        public void onLoadingComplete(String imageUri, View view, Bitmap loadedImage) {
-                            ((ImageView) cameraRootView.findViewById(R.id.icon)).setImageBitmap(loadedImage);
-                        }
+                    @Override
+                    public void onLoadingComplete(String imageUri, View view, Bitmap loadedImage) {
+                        ((ImageView) cameraRootView.findViewById(R.id.icon)).setImageBitmap(loadedImage);
+                    }
 
-                        @Override
-                        public void onLoadingCancelled(String imageUri, View view) {
+                    @Override
+                    public void onLoadingCancelled(String imageUri, View view) {
 
-                        }
-                    });
-                }
+                    }
+                });
                 break;
             case MODE_BATTERY:
                 int batteryLevel = deviceManager.getBatteryLevel();
