@@ -21,7 +21,6 @@ import android.widget.Toast;
 
 import com.artw.lockscreen.shimmer.Shimmer;
 import com.artw.lockscreen.shimmer.ShimmerTextView;
-import com.ihs.app.analytics.HSAnalytics;
 import com.ihs.app.framework.HSApplication;
 import com.ihs.chargingscreen.utils.ClickUtils;
 import com.ihs.commons.config.HSConfig;
@@ -154,7 +153,6 @@ public class LockerMainFrame extends RelativeLayout implements INotificationObse
         mMenuMore = findViewById(R.id.ic_menu);
         mMenuMore.setOnClickListener(v -> {
             showMenuPopupWindow(getContext(), mMenuMore);
-            HSAnalytics.logEvent("Locker_Menu_Clicked");
         });
 
         mSlidingDrawer.setListener(this);

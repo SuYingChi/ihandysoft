@@ -632,7 +632,6 @@ public class ChargingScreenActivity extends Activity {
 
                         showAlert();
                         ChargingAnalytics.getInstance().chargingDisableTouchedOnce("activity");
-                        HSAnalytics.logEvent("HSLib_chargingscreen_Charge_TurnOff_Clicked");
                     }
                 });
 
@@ -693,7 +692,6 @@ public class ChargingScreenActivity extends Activity {
 
                     finish();
 
-                    HSAnalytics.logEvent("HSLib_chargingscreen_Charge_Alert_Disable_Clicked");
                 }
             });
             btnCancel.setBackgroundDrawable(RippleDrawableUtils.getCompatRippleDrawable(Color.WHITE, 0, 0, 0, DisplayUtils.dip2px(8)));

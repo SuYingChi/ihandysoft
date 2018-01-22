@@ -275,7 +275,6 @@ public class PremiumLockerMainFrame extends PercentRelativeLayout implements INo
             @Override
             public void onClick(View v) {
                 showMenuPopupWindow(getContext(), mMenuMore);
-                HSAnalytics.logEvent("Locker_Menu_Clicked");
             }
         });
 
@@ -525,7 +524,6 @@ public class PremiumLockerMainFrame extends PercentRelativeLayout implements INo
                     if (menuPopupWindow != null) {
                         menuPopupWindow.dismiss();
                     }
-                    HSAnalytics.logEvent("Locker_DisableLocker_Clicked");
                     showLockerCloseDialog();
                 }
             });
@@ -576,7 +574,6 @@ public class PremiumLockerMainFrame extends PercentRelativeLayout implements INo
                 LockerSettings.setLockerEnabled(false);
                 ((PremiumLockerActivity) getContext()).finishSelf();
                 Toast.makeText(getContext(), R.string.locker_diabled_success, Toast.LENGTH_SHORT).show();
-                HSAnalytics.logEvent("Locker_DisableLocker_Alert_TurnOff_Clicked");
                 recordLockerDisableOnce();
             }
         });
