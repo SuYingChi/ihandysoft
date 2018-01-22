@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <color name="transparent">#00000000</color>
+    <color name="trunsfluent">#88000000</color>
     <color name="ad_progress_color">#1E88E5</color>
     <color name="function_card_body_text_color">#66000000</color>
     <color name="notify_color_background">#ff212121</color>
@@ -86,6 +87,8 @@
     <color name="dark_translucent_bg">#66000000</color>
     <color name="app_bar_activities_content_bg">#eaeaea</color>
     <color name="blue">#448aff</color>
+    <color name="headSetblueStart">#1454a2</color>
+    <color name="headSetblueend">#40659b</color>
 
     <!-- Material Design -->
     <color name="material_text_black_hint">#61000000</color>
@@ -180,4 +183,5 @@
 
     <color name="notification_btn_yellow">#fff333</color>
     <color name="notification_btn_yellow_pressed">#ffd000</color>
+    <color name="headset_pop_button_interval">#30000000</color>
 </resources>
