@@ -14,6 +14,7 @@ import com.ihs.commons.notificationcenter.INotificationObserver;
 import com.ihs.commons.utils.HSBundle;
 import com.ihs.commons.utils.HSLog;
 import com.ihs.keyboardutils.iap.RemoveAdsManager;
+import com.kc.utils.KCAnalytics;
 
 import net.appcloudbox.ads.expressads.AcbExpressAdManager;
 import net.appcloudbox.ads.nativeads.AcbNativeAdManager;
@@ -105,6 +106,12 @@ public class HSChargingScreenManager {
             @Override
             public void onChargingStateChanged(HSChargingState preChargingState, HSChargingState curChargingState) {
                 HSLog.e(preChargingState.toString() + " -- " + curChargingState.toString() + " -- " + HSChargingScreenManager.getInstance().isChargingModuleOpened());
+
+                if (preChargingState == HSChargingState.STATE_DISCHARGING && curChargingState != HSChargingState.STATE_DISCHARGING) {
+                    KCAnalytics.logEvent("KC_Charging_Event", "Action", "PlugIn");
+                } else if (preChargingState != HSChargingState.STATE_DISCHARGING && curChargingState == HSChargingState.STATE_DISCHARGING) {
+                    KCAnalytics.logEvent("KC_Charging_Event", "Action", "PlugOut");
+                }
 
                 if (!HSChargingScreenManager.getInstance().isChargingModuleOpened() && !ChargingPrefsUtil.getInstance().getSpHelper().contains(USER_ENABLED_CHARGING)) {
                     //功能未开启时插电 并且5.0以下
