@@ -7,10 +7,10 @@ import android.view.View;
 import android.widget.Toast;
 
 import com.artw.lockscreen.LockerSettings;
-import com.ihs.app.analytics.HSAnalytics;
 import com.ihs.chargingscreen.utils.ChargingPrefsUtil;
 import com.ihs.feature.ui.DefaultButtonDialog2;
 import com.ihs.keyboardutils.R;
+import com.kc.utils.KCAnalytics;
 
 
 /**
@@ -41,7 +41,7 @@ public class ChargingScreenTip extends DefaultButtonDialog2 {
         }
         Toast.makeText(getContext(), R.string.charging_screen_guide_turn_on, Toast.LENGTH_SHORT).show();
         super.onClickPositiveButton(v);
-        HSAnalytics.logEvent("Alert_LockerScreen_TurnOn_Clicked", "type", "Turn on");
+        KCAnalytics.logEvent("Alert_LockerScreen_TurnOn_Clicked", "type", "Turn on");
     }
 
     @Override

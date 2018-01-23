@@ -14,7 +14,6 @@ import android.widget.ImageView;
 
 import com.artw.lockscreen.LockerActivity;
 import com.artw.lockscreen.common.NavUtils;
-import com.ihs.app.analytics.HSAnalytics;
 import com.ihs.app.framework.HSApplication;
 import com.ihs.commons.notificationcenter.HSGlobalNotificationCenter;
 import com.ihs.feature.common.Thunk;
@@ -22,6 +21,7 @@ import com.ihs.keyboardutils.R;
 import com.ihs.keyboardutils.appsuggestion.AppSuggestionManager;
 import com.ihs.keyboardutils.utils.CommonUtils;
 import com.ihs.keyboardutils.utils.PublisherUtils;
+import com.kc.utils.KCAnalytics;
 
 import static com.ihs.app.framework.HSApplication.getContext;
 
@@ -146,7 +146,7 @@ public class LockerSlidingUpCallback implements SlidingUpCallback {
                 } else {
                     if (NavUtils.startCameraFromLockerScreen(HSApplication.getContext())) {
                         AppSuggestionManager.getInstance().disableAppSuggestionForOneTime();
-                        HSAnalytics.logEvent("Locker_Camera_Opened", "install_type", PublisherUtils.getInstallType());
+                        KCAnalytics.logEvent("Locker_Camera_Opened", "install_type", PublisherUtils.getInstallType());
                     }
                     HSGlobalNotificationCenter.sendNotification(LockerActivity.EVENT_FINISH_SELF);
                 }

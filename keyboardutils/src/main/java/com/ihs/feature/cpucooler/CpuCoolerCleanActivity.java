@@ -22,7 +22,6 @@ import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
-import com.ihs.app.analytics.HSAnalytics;
 import com.ihs.app.framework.activity.HSAppCompatActivity;
 import com.ihs.chargingscreen.utils.DisplayUtils;
 import com.ihs.commons.utils.HSLog;
@@ -34,6 +33,7 @@ import com.ihs.feature.cpucooler.recycleitem.CpuListSubItem;
 import com.ihs.feature.cpucooler.util.CpuCoolerConstant;
 import com.ihs.feature.cpucooler.util.CpuCoolerUtils;
 import com.ihs.keyboardutils.R;
+import com.kc.utils.KCAnalytics;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -137,7 +137,7 @@ public class CpuCoolerCleanActivity extends HSAppCompatActivity {
                     mOptimizeButtonTv.setVisibility(View.VISIBLE);
                     mAppBarLayout.setBackgroundColor(mCurrentColor);
                     mRootLayout.setBackgroundColor(Color.WHITE);
-                    HSAnalytics.logEvent("CPUCooler_ScanResult_Show", "Type", CpuCoolerUtils.getTemperatureColorText(temperature));
+                    KCAnalytics.logEvent("CPUCooler_ScanResult_Show", "Type", CpuCoolerUtils.getTemperatureColorText(temperature));
                 }
             });
 
@@ -153,7 +153,7 @@ public class CpuCoolerCleanActivity extends HSAppCompatActivity {
     }
 
     private void startFadeOutAnimation() {
-        HSAnalytics.logEvent("CPUCooler_ScanResult_BtnClicked");
+        KCAnalytics.logEvent("CPUCooler_ScanResult_BtnClicked");
         final int height = getResources().getDimensionPixelSize(R.dimen.cpu_appbar_height);
         ValueAnimator fadeOutAnimator = ValueAnimator.ofFloat(0, 1);
         fadeOutAnimator.addUpdateListener(animation -> {

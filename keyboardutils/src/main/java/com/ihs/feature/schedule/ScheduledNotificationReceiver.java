@@ -8,7 +8,6 @@ import android.os.Build;
 import android.support.v7.app.NotificationCompat;
 import android.widget.RemoteViews;
 
-import com.ihs.app.analytics.HSAnalytics;
 import com.ihs.commons.config.HSConfig;
 import com.ihs.commons.utils.HSLog;
 import com.ihs.commons.utils.HSPreferenceHelper;
@@ -20,6 +19,7 @@ import com.ihs.feature.notification.NotificationManager;
 import com.ihs.feature.notification.NotificationReceiver;
 import com.ihs.keyboardutils.BuildConfig;
 import com.ihs.keyboardutils.R;
+import com.kc.utils.KCAnalytics;
 
 
 /**
@@ -121,8 +121,8 @@ public class ScheduledNotificationReceiver extends BroadcastReceiver {
         }
 
         String flurryNotificationType = getFlurryNotificationType();
-        HSAnalytics.logEvent("Notification_Pushed", "Type", NotificationManager.SET_AS_HOME, "notifyType", flurryNotificationType);
-        HSAnalytics.logEvent("Notification_SetAsHome_Pushed", "notifyType", flurryNotificationType); // TODO: temporary event log for v1.4.2, remove later
+        KCAnalytics.logEvent("Notification_Pushed", "Type", NotificationManager.SET_AS_HOME, "notifyType", flurryNotificationType);
+        KCAnalytics.logEvent("Notification_SetAsHome_Pushed", "notifyType", flurryNotificationType); // TODO: temporary event log for v1.4.2, remove later
 
         // Use icon resource ID as notification ID
         NotificationManager.getInstance().notify(notificationId, builder.build());

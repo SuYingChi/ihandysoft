@@ -20,7 +20,6 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.artw.lockscreen.common.NavUtils;
-import com.ihs.app.analytics.HSAnalytics;
 import com.ihs.feature.battery.BatteryActivity;
 import com.ihs.feature.boost.plus.BoostPlusActivity;
 import com.ihs.feature.common.DeviceManager;
@@ -37,6 +36,7 @@ import com.ihs.feature.resultpage.data.ResultConstants;
 import com.ihs.keyboardutils.R;
 import com.ihs.keyboardutils.utils.CommonUtils;
 import com.ihs.keyboardutils.utils.ToastUtils;
+import com.kc.utils.KCAnalytics;
 
 import java.util.HashSet;
 import java.util.List;
@@ -134,7 +134,7 @@ public class ResultListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
                 bindFeatureCardViewHolder((FeatureCardViewHolder) holder, iconResId, R.color.result_card_battery_bg,
                         R.string.result_page_card_battery_saver_title, content,
                         R.string.battery_optimize, v -> onClickBatteryView());
-                doOnce(position, () -> HSAnalytics.logEvent("ResultPage_Cards_Show", "type", ResultConstants.BATTERY));
+                doOnce(position, () -> KCAnalytics.logEvent("ResultPage_Cards_Show", "type", ResultConstants.BATTERY));
                 break;
             case ResultConstants.CARD_VIEW_TYPE_BOOST_PLUS:
                 bindFeatureCardViewHolder((FeatureCardViewHolder) holder, R.drawable.result_page_boost_plus,
@@ -142,7 +142,7 @@ public class ResultListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
                         R.string.result_page_card_boost_plus_title,
                         context.getString(R.string.result_page_card_boost_plus_description),
                         R.string.result_page_card_boost_plus_btn, v -> onClickBoostPlusView());
-                doOnce(position, () -> HSAnalytics.logEvent("ResultPage_Cards_Show", "type", ResultConstants.BOOST_PLUS));
+                doOnce(position, () -> KCAnalytics.logEvent("ResultPage_Cards_Show", "type", ResultConstants.BOOST_PLUS));
                 break;
             case ResultConstants.CARD_VIEW_TYPE_JUNK_CLEANER:
                 bindFeatureCardViewHolder((FeatureCardViewHolder) holder, R.drawable.result_page_junk_cleaner,
@@ -150,7 +150,7 @@ public class ResultListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
                         R.string.clean_title, context.getString(R.string.clean_card_content),
                         R.string.clean_capital, v -> onClickJunkCleanerView());
                 doOnce(position, () -> {
-                    HSAnalytics.logEvent("ResultPage_Cards_Show", "type", ResultConstants.JUNK_CLEANER);
+                    KCAnalytics.logEvent("ResultPage_Cards_Show", "type", ResultConstants.JUNK_CLEANER);
                 });
                 break;
             case ResultConstants.CARD_VIEW_TYPE_CPU_COOLER:
@@ -164,7 +164,7 @@ public class ResultListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
                         R.color.result_card_cpu_cooler_bg,
                         R.string.promotion_max_card_title_cpu_cooler, contentSpannableString,
                         R.string.cool_capital, v -> onClickCpuCoolerView());
-                doOnce(position, () -> HSAnalytics.logEvent("ResultPage_Cards_Show", "type", ResultConstants.CPU_COOLER));
+                doOnce(position, () -> KCAnalytics.logEvent("ResultPage_Cards_Show", "type", ResultConstants.CPU_COOLER));
                 break;
             case ResultConstants.CARD_VIEW_TYPE_ACCESSIBILITY:
                 bindFeatureCardViewHolder((FeatureCardViewHolder) holder, R.drawable.result_page_accessibility,
@@ -175,7 +175,7 @@ public class ResultListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
                 break;
             case ResultConstants.CARD_VIEW_TYPE_DEFAULT:
                 final DescriptionCardViewHolder descriptionCardViewHolder = (DescriptionCardViewHolder) holder;
-                HSAnalytics.logEvent("ResultPage_Cards_Show", "type", ResultConstants.DEFAULT);
+                KCAnalytics.logEvent("ResultPage_Cards_Show", "type", ResultConstants.DEFAULT);
                 switch (mResultType) {
                     case ResultConstants.RESULT_TYPE_BOOST_PLUS:
                         descriptionCardViewHolder.titleTv.setText(mResultPageActivity.getString(R.string.result_page_card_default_boost_plus_title));
@@ -241,24 +241,21 @@ public class ResultListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
     }
 
     private void onClickBatteryView() {
-        HSAnalytics.logEvent("Battery_OpenFrom", "type", "From Card");
+        KCAnalytics.logEvent("Battery_OpenFrom", "type", "From Card");
         NavUtils.startActivity(mResultPageActivity, BatteryActivity.class);
         mResultPageActivity.finishSelfAndParentActivity();
-        HSAnalytics.logEvent("ResultPage_Cards_Click", "Type", ResultConstants.BATTERY);
     }
 
     private void onClickBoostPlusView() {
         NavUtils.startActivity(mResultPageActivity, BoostPlusActivity.class);
-        HSAnalytics.logEvent("BoostPlus_Open", "Type", "Result Page");
+        KCAnalytics.logEvent("BoostPlus_Open", "Type", "Result Page");
         mResultPageActivity.finishSelfAndParentActivity();
-        HSAnalytics.logEvent("ResultPage_Cards_Click", "Type", ResultConstants.BOOST_PLUS);
     }
 
     private void onClickJunkCleanerView() {
         JunkCleanUtils.FlurryLogger.logOpen(JunkCleanConstant.RESULTPAGE);
         NavUtils.startActivity(mResultPageActivity, JunkCleanActivity.class);
         mResultPageActivity.finishSelfAndParentActivity();
-        HSAnalytics.logEvent("ResultPage_Cards_Click", "Type", ResultConstants.JUNK_CLEANER);
     }
 
     private void onClickCpuCoolerView() {
@@ -266,26 +263,24 @@ public class ResultListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
         cpuCoolerIntent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
         NavUtils.startActivitySafely(mResultPageActivity, cpuCoolerIntent);
         mResultPageActivity.finishSelfAndParentActivity();
-        HSAnalytics.logEvent("CPUCooler_Open", "Type", "ResultPage");
-        HSAnalytics.logEvent("ResultPage_Cards_Click", "Type", ResultConstants.CPU_COOLER);
+        KCAnalytics.logEvent("CPUCooler_Open", "Type", "ResultPage");
     }
 
 //    private void onClickSecurityView() {
-//        HSAnalytics.logEvent("Promotion_Clicked", "Type", "SecurityCard");
+//        KCAnalytics.logEvent("Promotion_Clicked", "Type", "SecurityCard");
 //        PromotionTracker.startTracking(HSConfig.getString("Application", "Promotions", "SecurityPackage"),
 //                PromotionTracker.EVENT_LOG_APP_NAME_SECURITY, true);
 //    }
 //
 //    private void onClickMaxView(String eventLogParam) {
-//        HSAnalytics.logEvent("Promotion_Clicked", "Type", eventLogParam);
+//        KCAnalytics.logEvent("Promotion_Clicked", "Type", eventLogParam);
 //        PromotionTracker.startTracking(HSConfig.getString("Application", "Promotions", "MaxPackage"),
 //                PromotionTracker.EVENT_LOG_APP_NAME_MAX, true);
 //    }
 
     private void onClickAccessibilityView() {
-        HSAnalytics.logEvent("ResultPage_Cards_Click", "Type", ResultConstants.ACCESSIBILITY);
+
         ToastUtils.showToast("这里请求Accessbility");
-       // PermissionUtils.requestAccessibilityPermission(mResultPageActivity, () -> HSAnalytics.logEvent("BoostPlus_Accessibility_OpenSuccess", "Type", "ResultPageCard"));
     }
 
     private class BaseCardViewHolder extends RecyclerView.ViewHolder {

@@ -60,7 +60,7 @@ public class JunkCleanerSettingsActivity extends BaseSettingsActivity implements
         int i = v.getId();
         if (i == R.id.notification_cleaner_rl) {
             ToastUtils.showToast("这里打开Notification收纳界面");
-//            HSAnalytics.logEvent("NotificationCleaner_Enterance_Click", "type", NotificationCleanerConstants.JUNK_CLEANER_SETTINGS);
+//            KCAnalytics.logEvent("NotificationCleaner_Enterance_Click", "type", NotificationCleanerConstants.JUNK_CLEANER_SETTINGS);
 //            NotificationCleanerUtil.checkToStartNotificationOrganizerActivity(JunkCleanerSettingsActivity.this, NotificationCleanerConstants.JUNK_CLEANER_SETTINGS);
 
         } else {

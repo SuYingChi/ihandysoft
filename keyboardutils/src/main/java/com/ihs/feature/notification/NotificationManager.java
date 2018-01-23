@@ -32,7 +32,6 @@ import android.widget.RemoteViews;
 import com.artw.lockscreen.DismissKeyguradActivity;
 import com.artw.lockscreen.LockerUtils;
 import com.artw.lockscreen.common.NavUtils;
-import com.ihs.app.analytics.HSAnalytics;
 import com.ihs.app.framework.HSApplication;
 import com.ihs.commons.utils.HSLog;
 import com.ihs.feature.battery.BatteryActivity;
@@ -55,6 +54,7 @@ import com.ihs.feature.junkclean.util.JunkCleanUtils;
 import com.ihs.feature.resultpage.data.ResultConstants;
 import com.ihs.keyboardutils.R;
 import com.ihs.keyboardutils.utils.CommonUtils;
+import com.kc.utils.KCAnalytics;
 
 import java.util.Calendar;
 import java.util.HashMap;
@@ -410,8 +410,8 @@ public class NotificationManager {
                         int source = intent.getIntExtra(NotificationManager.EXTRA_BOOST_SOURCE,
                                 NotificationManager.EXTRA_VALUE_BOOST_SOURCE_TOOLBAR);
                         if (source == NotificationManager.EXTRA_VALUE_BOOST_SOURCE_TOOLBAR) {
-                            HSAnalytics.logEvent("Notification_Toolbar_Icon_Clicked", "type", "Boost");
-                            HSAnalytics.logEvent("Notification_Toolbar_Boost_Clicked");
+                            KCAnalytics.logEvent("Notification_Toolbar_Icon_Clicked", "type", "Boost");
+                            KCAnalytics.logEvent("Notification_Toolbar_Boost_Clicked");
                         }
                         Intent boostIntent = new Intent(context, BoostActivity.class);
                         intent.putExtra(BoostActivity.INTENT_KEY_BOOST_TYPE, typeOrdinal);
@@ -424,7 +424,7 @@ public class NotificationManager {
                 int typeOrdinal = intent.getIntExtra(NotificationManager.EXTRA_BOOST_TYPE, 0);
                 break;
             case ACTION_WEATHER:
-                HSAnalytics.logEvent("Notification_Clicked", "Type", WEATHER, "time",
+                KCAnalytics.logEvent("Notification_Clicked", "Type", WEATHER, "time",
                         String.valueOf(Calendar.getInstance().get(Calendar.HOUR_OF_DAY)));
                 break;
             case ACTION_WEATHER_DELETE:
@@ -439,7 +439,7 @@ public class NotificationManager {
                 break;
             case ACTION_CPU_COOLER:
                 logNotificationClicked(CPU_COOLER);
-                HSAnalytics.logEvent("CPUCooler_Open", "Type", "Notification");
+                KCAnalytics.logEvent("CPUCooler_Open", "Type", "Notification");
                 mHandler.postDelayed(() -> {
                     Intent cpuCoolerIntent = new Intent(context, CpuCoolDownActivity.class);
                     cpuCoolerIntent.putExtra(CpuCoolDownActivity.EXTRA_KEY_NEED_SCAN, true);
@@ -451,8 +451,8 @@ public class NotificationManager {
                 final Runnable cpu = new Runnable() {
                     @Override
                     public void run() {
-                        HSAnalytics.logEvent("Notification_Toolbar_CPU_Clicked", "Type", CpuCoolerUtils.getTemperatureColorText(mCpuTemperature));
-                        HSAnalytics.logEvent("CPUCooler_Open", "Type", "Toolbar");
+                        KCAnalytics.logEvent("Notification_Toolbar_CPU_Clicked", "Type", CpuCoolerUtils.getTemperatureColorText(mCpuTemperature));
+                        KCAnalytics.logEvent("CPUCooler_Open", "Type", "Toolbar");
                         Intent cpuCoolerIntent = new Intent(context, CpuCoolDownActivity.class);
                         cpuCoolerIntent.putExtra(CpuCoolDownActivity.EXTRA_KEY_NEED_SCAN, true);
                         cpuCoolerIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_SINGLE_TOP | Intent.FLAG_ACTIVITY_CLEAR_TOP);
@@ -466,8 +466,8 @@ public class NotificationManager {
                 final Runnable battery = new Runnable() {
                     @Override
                     public void run() {
-                        HSAnalytics.logEvent("Notification_Toolbar_Battery_Clicked");
-                        HSAnalytics.logEvent("Battery_OpenFrom", "type", "From Toolbar");
+                        KCAnalytics.logEvent("Notification_Toolbar_Battery_Clicked");
+                        KCAnalytics.logEvent("Battery_OpenFrom", "type", "From Toolbar");
                         Intent intentBattery = new Intent(context, BatteryActivity.class);
                         NavUtils.startActivitySafely(context, intentBattery);
                     }
@@ -480,14 +480,14 @@ public class NotificationManager {
                 NavUtils.startActivitySafely(context, boostPlusIntent);
                 String boostType = intent.getStringExtra(EXTRA_NOTIFICATION_TYPE);
                 logNotificationClicked(boostType);
-                HSAnalytics.logEvent("BoostPlus_Open", "Type", "Notification");
+                KCAnalytics.logEvent("BoostPlus_Open", "Type", "Notification");
                 break;
             case ACTION_BATTERY_OPTIMIZE:
                 Intent batteryIntent = new Intent(context, BatteryActivity.class);
                 NavUtils.startActivitySafely(context, batteryIntent);
                 String batteryType = intent.getStringExtra(EXTRA_NOTIFICATION_TYPE);
                 logNotificationClicked(batteryType);
-                HSAnalytics.logEvent("Battery_OpenFrom", "type", "From Notifications");
+                KCAnalytics.logEvent("Battery_OpenFrom", "type", "From Notifications");
                 break;
             case ACTION_CONTENT:
                 // Used for content intent. Do nothing
@@ -793,11 +793,11 @@ public class NotificationManager {
 
 
     public static void logNotificationPushed(String type) {
-        HSAnalytics.logEvent("Notification_Pushed", "Type", type);
+        KCAnalytics.logEvent("Notification_Pushed", "Type", type);
     }
 
     public static void logNotificationClicked(String type) {
-        HSAnalytics.logEvent("Notification_Clicked", "Type", type);
+        KCAnalytics.logEvent("Notification_Clicked", "Type", type);
     }
 
     public void checkNextNotification() {

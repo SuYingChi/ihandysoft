@@ -20,7 +20,6 @@ import com.artw.lockscreen.slidingup.LockerSlidingUpCallback;
 import com.artw.lockscreen.statusbar.StatusBar;
 import com.ihs.app.analytics.HSAnalytics;
 import com.ihs.app.framework.HSSessionMgr;
-import com.ihs.chargingscreen.activity.ChargingScreenActivity;
 import com.ihs.chargingscreen.utils.ChargingAnalytics;
 import com.ihs.chargingscreen.utils.ClickUtils;
 import com.ihs.commons.notificationcenter.HSGlobalNotificationCenter;
@@ -31,6 +30,7 @@ import com.ihs.feature.common.Thunk;
 import com.ihs.keyboardutils.R;
 import com.ihs.keyboardutils.utils.CommonUtils;
 import com.kc.commons.utils.KCCommonUtils;
+import com.kc.utils.KCAnalytics;
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.nostra13.universalimageloader.core.assist.FailReason;
@@ -46,12 +46,9 @@ import static android.view.WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HI
 
 public class LockerActivity extends AppCompatActivity implements INotificationObserver {
 
-    private static final String TAG = "LOCKER_ACTIVITY";
-
     public static final String EVENT_FINISH_SELF = "locker_event_finish_self";
     public static final String EXTRA_SHOULD_DISMISS_KEYGUARD = "extra_should_dismiss_keyguard";
     public static final String PREF_KEY_CURRENT_WALLPAPER_HD_URL = "current_hd_wallpaper_url";
-    private long startDisplayTime;
 
 
     @Thunk
@@ -120,30 +117,6 @@ public class LockerActivity extends AppCompatActivity implements INotificationOb
         LockerSettings.increaseLockerShowCount();
 
         HSGlobalNotificationCenter.addObserver(ScreenStatusReceiver.NOTIFICATION_SCREEN_ON, this);
-    }
-
-    @Override
-    protected void onResume() {
-        super.onResume();
-        //// TODO: 17/3/31 增加home键事件处理
-//        if (mIsHomeKeyClicked && mLockerAdapter != null && mLockerAdapter.lockerMainFrame != null) {
-//            mIsHomeKeyClicked = false;
-//            mLockerAdapter.lockerMainFrame.closeDrawer();
-//        }
-        long current = System.currentTimeMillis();
-        if (current - startDisplayTime > 1000) {
-            startDisplayTime = current;
-        } else {
-            startDisplayTime = -1;
-        }
-    }
-
-    @Override
-    protected void onPause() {
-        super.onPause();
-        if (startDisplayTime != -1) {
-            ChargingScreenActivity.logDisplayTime("app_screenLocker_displaytime", startDisplayTime);
-        }
     }
 
     @Override
@@ -224,7 +197,7 @@ public class LockerActivity extends AppCompatActivity implements INotificationOb
             public void onPageSelected(int position) {
                 if (LockerAdapter.PAGE_INDEX_UNLOCK == position) {
                     finishSelf();
-                    HSAnalytics.logEvent("Locker_Unlocked");
+                    KCAnalytics.logEvent("Locker_Unlocked");
                 }
             }
 

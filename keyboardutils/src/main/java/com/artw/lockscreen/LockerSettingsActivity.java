@@ -6,17 +6,15 @@ import android.view.View;
 import android.widget.CompoundButton;
 
 import com.artw.lockscreen.common.BaseSettingsActivity;
-import com.ihs.app.analytics.HSAnalytics;
-import com.ihs.chargingscreen.activity.ChargingScreenActivity;
 import com.ihs.feature.common.ViewUtils;
 import com.ihs.keyboardutils.R;
+import com.kc.utils.KCAnalytics;
 
 public class LockerSettingsActivity extends BaseSettingsActivity
         implements View.OnClickListener, SwitchCompat.OnCheckedChangeListener {
 
     private View mLockerEnabledLayout;
     private SwitchCompat mLockerEnabledToggle;
-    private long startDisplayTime;
 
 
     @Override protected int getLayoutId() {
@@ -50,20 +48,18 @@ public class LockerSettingsActivity extends BaseSettingsActivity
     @Override public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
         if (buttonView == mLockerEnabledToggle) {
             LockerSettings.setLockerEnabled(isChecked);
-            HSAnalytics.logEvent("LauncherSettings_LockerSettings_Locker_Clicked", "type", isChecked ? "On" : "Off");
+            KCAnalytics.logEvent("LauncherSettings_LockerSettings_Locker_Clicked", "type", isChecked ? "On" : "Off");
         }
     }
 
     @Override
     protected void onResume() {
         super.onResume();
-        startDisplayTime = System.currentTimeMillis();
     }
 
     @Override
     protected void onPause() {
         super.onPause();
-        ChargingScreenActivity.logDisplayTime("app_screenLocker_displaytime", startDisplayTime);
     }
 
 }

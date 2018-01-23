@@ -1,6 +1,5 @@
 package com.artw.lockscreen;
 
-import com.ihs.app.analytics.HSAnalytics;
 import com.ihs.app.framework.HSApplication;
 import com.ihs.chargingscreen.utils.LockerChargingSpecialConfig;
 import com.ihs.commons.config.HSConfig;
@@ -9,6 +8,7 @@ import com.ihs.commons.utils.HSPreferenceHelper;
 import com.ihs.keyboardutils.R;
 import com.ihs.keyboardutils.iap.RemoveAdsManager;
 import com.ihs.keyboardutils.utils.PublisherUtils;
+import com.kc.utils.KCAnalytics;
 
 import net.appcloudbox.ads.expressads.AcbExpressAdManager;
 
@@ -158,14 +158,14 @@ public class LockerSettings {
     public static void recordLockerEnableOnce() {
         if (!getPref().contains(app_screen_locker_enable)) {
             getPref().putBoolean(app_screen_locker_enable, true);
-            HSAnalytics.logEvent(app_screen_locker_enable, app_screen_locker_enable, "lockerEnabled", "install_type", PublisherUtils.getInstallType());
+            KCAnalytics.logEvent(app_screen_locker_enable, app_screen_locker_enable, "lockerEnabled", "install_type", PublisherUtils.getInstallType());
         }
     }
 
     public static void recordLockerDisableOnce() {
         if (!getPref().contains(app_screen_locker_disable)) {
             getPref().putBoolean(app_screen_locker_disable, true);
-            HSAnalytics.logEvent(app_screen_locker_disable, app_screen_locker_disable, "lockerDisabled", "install_type", PublisherUtils.getInstallType());
+            KCAnalytics.logEvent(app_screen_locker_disable, app_screen_locker_disable, "lockerDisabled", "install_type", PublisherUtils.getInstallType());
         }
     }
 

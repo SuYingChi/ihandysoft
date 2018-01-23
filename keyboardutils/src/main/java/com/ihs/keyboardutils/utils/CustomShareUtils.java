@@ -28,13 +28,13 @@ import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.ihs.app.analytics.HSAnalytics;
 import com.ihs.app.framework.HSApplication;
 import com.ihs.keyboardutils.R;
 import com.ihs.keyboardutils.alerts.HSAlertDialog;
 import com.ihs.keyboardutils.iap.RemoveAdsManager;
 import com.ihs.keyboardutils.nativeads.KCNativeAdView;
 import com.kc.commons.utils.KCCommonUtils;
+import com.kc.utils.KCAnalytics;
 import com.nostra13.universalimageloader.core.ImageLoader;
 
 import java.util.ArrayList;
@@ -266,7 +266,7 @@ public class CustomShareUtils {
                     if (null != shareItemClickedListener) {
                         shareItemClickedListener.OnShareItemClicked(activity);
                     }
-                    HSAnalytics.logEvent("share_app_clicked", "appName", resolveInfo.activityInfo.applicationInfo.loadLabel(HSApplication.getContext().getPackageManager()).toString());
+                    KCAnalytics.logEvent("share_app_clicked", "appName", resolveInfo.activityInfo.applicationInfo.loadLabel(HSApplication.getContext().getPackageManager()).toString());
                 }
             });
         }

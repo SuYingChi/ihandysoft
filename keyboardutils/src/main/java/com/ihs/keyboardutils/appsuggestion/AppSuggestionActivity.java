@@ -26,7 +26,6 @@ import com.artw.lockscreen.BrowserActivity;
 import com.artw.lockscreen.PremiumLockerActivity;
 import com.artw.lockscreen.PremiumSearchDialog;
 import com.artw.lockscreen.WebContentSearchManager;
-import com.ihs.app.analytics.HSAnalytics;
 import com.ihs.app.framework.HSApplication;
 import com.ihs.chargingscreen.utils.DisplayUtils;
 import com.ihs.commons.config.HSConfig;
@@ -38,6 +37,7 @@ import com.ihs.keyboardutils.nativeads.KCNativeAdView;
 import com.ihs.keyboardutils.utils.RippleDrawableUtils;
 import com.ihs.keyboardutils.utils.ToastUtils;
 import com.kc.commons.utils.KCCommonUtils;
+import com.kc.utils.KCAnalytics;
 
 import java.util.ArrayList;
 
@@ -93,7 +93,7 @@ public class AppSuggestionActivity extends Activity {
                         } catch (Exception e) {
                             ToastUtils.showToast("Launch app failed");
                         }
-                        HSAnalytics.logEvent("appSuggestions_app_clicked", "appName", finalAppName);
+                        KCAnalytics.logEvent("appSuggestions_app_clicked", "appName", finalAppName);
                         finish();
                     }
                 });
@@ -174,7 +174,7 @@ public class AppSuggestionActivity extends Activity {
                 try {
                     Intent callIntent = new Intent(Intent.ACTION_DIAL, null);
                     startActivity(callIntent);
-                    HSAnalytics.logEvent("appSuggestions_app_clicked", "appName", "DefaultPhone");
+                    KCAnalytics.logEvent("appSuggestions_app_clicked", "appName", "DefaultPhone");
                 } catch (Exception e) {
                     HSLog.d("open call failed");
                 }
@@ -187,7 +187,7 @@ public class AppSuggestionActivity extends Activity {
             @Override
             public void onClick(View v) {
                 sendSMS();
-                HSAnalytics.logEvent("appSuggestions_app_clicked", "appName", "DefaultMSG");
+                KCAnalytics.logEvent("appSuggestions_app_clicked", "appName", "DefaultMSG");
             }
         });
 
@@ -267,7 +267,7 @@ public class AppSuggestionActivity extends Activity {
 
                     finish();
 
-//                    HSAnalytics.logEvent("HSLib_chargingscreen_Charge_Alert_Disable_Clicked");
+//                    KCAnalytics.logEvent("HSLib_chargingscreen_Charge_Alert_Disable_Clicked");
                 }
             });
             btnCancel.setBackgroundDrawable(RippleDrawableUtils.getCompatRippleDrawable(Color.WHITE, 0, 0, 0, DisplayUtils.dip2px(8)));
@@ -300,7 +300,7 @@ public class AppSuggestionActivity extends Activity {
             Intent intent = new Intent(HSApplication.getContext(), AppSuggestionActivity.class);
             intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
             HSApplication.getContext().startActivity(intent);
-            HSAnalytics.logEvent("appSuggestions_show");
+            KCAnalytics.logEvent("appSuggestions_show");
         } catch (Exception e) {
 
         }

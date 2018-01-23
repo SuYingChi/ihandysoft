@@ -41,7 +41,6 @@ import android.widget.TextView;
 
 import com.artw.lockscreen.common.NavUtils;
 import com.ihs.aidl.ISubAdService;
-import com.ihs.app.analytics.HSAnalytics;
 import com.ihs.app.framework.HSApplication;
 import com.ihs.charging.HSChargingManager;
 import com.ihs.chargingscreen.utils.ChargingPrefsUtil;
@@ -1288,11 +1287,9 @@ public class BatteryActivity extends BaseCenterActivity implements View.OnClickL
     public void onClick(View v) {
         int i = v.getId();
         if (i == R.id.mode_menu_iv) {
-            HSAnalytics.logEvent("Battery_HomePage_Mode_Clicked");
             NavUtils.startActivitySafely(this, new Intent(BatteryActivity.this, BatteryModeActivity.class));
 
         } else if (i == R.id.rank_menu_iv) {
-            HSAnalytics.logEvent("Battery_HomePage_Rank_Clicked");
             NavUtils.startActivitySafely(this, new Intent(BatteryActivity.this, BatteryRankingActivity.class));
 
         } else if (i == R.id.optimize_btn) {
@@ -1343,25 +1340,6 @@ public class BatteryActivity extends BaseCenterActivity implements View.OnClickL
         }
         startCleaningAnimation();
         startBoost();
-        if (BatteryUtils.isCleanTimeFrozen()) {
-            HSAnalytics.logEvent("Battery_HomePage_Optimize_Clicked", "Type", "Optimized");
-        } else {
-            switch (mCurrentViewType) {
-                case LOW_BATTERY:
-                    HSAnalytics.logEvent("Battery_HomePage_Optimize_Clicked", "Type", "Low battery");
-                    break;
-                case CAREFUL:
-                    HSAnalytics.logEvent("Battery_HomePage_Optimize_Clicked", "Type", "Careful");
-                    break;
-                case EXCELLENT:
-                    HSAnalytics.logEvent("Battery_HomePage_Optimize_Clicked", "Type", "Excellent");
-                    break;
-                case CHARGING:
-                case CHARGING_COMPLETED:
-                    HSAnalytics.logEvent("Battery_HomePage_Optimize_Clicked", "Type", "Charging");
-                    break;
-            }
-        }
     }
 
     @Override

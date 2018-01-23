@@ -29,7 +29,6 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.ihs.app.analytics.HSAnalytics;
 import com.ihs.app.framework.HSApplication;
 import com.ihs.commons.config.HSConfig;
 import com.ihs.commons.notificationcenter.HSGlobalNotificationCenter;
@@ -63,6 +62,7 @@ import com.ihs.keyboardutils.R;
 import com.ihs.keyboardutils.permission.PermissionUtils;
 import com.ihs.keyboardutils.utils.CommonUtils;
 import com.ihs.keyboardutils.utils.ToastUtils;
+import com.kc.utils.KCAnalytics;
 
 import java.util.ArrayDeque;
 import java.util.ArrayList;
@@ -72,7 +72,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Queue;
-
 
 import static android.content.IntentFilter.SYSTEM_HIGH_PRIORITY;
 
@@ -718,7 +717,7 @@ public class BoostPlusActivity extends BasePermissionActivity
         }
         data.put("Number", countString);
 
-        HSAnalytics.logEvent("BoostPlus_Homepage_ScanResult", data);
+        KCAnalytics.logEvent("BoostPlus_Homepage_ScanResult", data);
     }
 
     @SuppressLint("HandlerLeak")
@@ -1136,7 +1135,7 @@ public class BoostPlusActivity extends BasePermissionActivity
         HSLog.d(TAG, "showAccessibilityDialog *** runningAppSize = " + runningAppSize);
         if (BoostPlusUtils.shouldShowAccessibilityNoticeDialog(runningAppSize)) {
             BoostPlusUtils.setAccessibilityNoticeDialogShowed();
-            HSAnalytics.logEvent("BoostPlus_DetectedAlert_Show");
+            KCAnalytics.logEvent("BoostPlus_DetectedAlert_Show");
         }
     }
 

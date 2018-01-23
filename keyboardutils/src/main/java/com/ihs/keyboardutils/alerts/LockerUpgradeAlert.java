@@ -10,9 +10,9 @@ import android.widget.ImageView;
 
 import com.artw.lockscreen.PremiumLockerActivity;
 import com.artw.lockscreen.lockerappguide.LockerAppGuideManager;
-import com.ihs.app.analytics.HSAnalytics;
 import com.ihs.commons.notificationcenter.HSGlobalNotificationCenter;
 import com.ihs.keyboardutils.R;
+import com.kc.utils.KCAnalytics;
 
 public class LockerUpgradeAlert extends AlertDialog {
 
@@ -29,7 +29,7 @@ public class LockerUpgradeAlert extends AlertDialog {
         assert rootView != null;
         Button upgradeButton = rootView.findViewById(R.id.upgrade_button);
         upgradeButton.setOnClickListener(view -> {
-            HSAnalytics.logEvent("new_screenLocker_upgrade_alert_OK_clicked");
+            KCAnalytics.logEvent("new_screenLocker_upgrade_alert_OK_clicked");
             LockerAppGuideManager.directToMarket(null, null, LockerAppGuideManager.getInstance().getLockerAppPkgName());
             HSGlobalNotificationCenter.sendNotification(PremiumLockerActivity.EVENT_FINISH_SELF);
         });

@@ -5,7 +5,7 @@ import android.text.format.DateUtils;
 
 import com.annimon.stream.Stream;
 import com.artw.lockscreen.common.NavUtils;
-import com.ihs.app.analytics.HSAnalytics;
+import com.kc.utils.KCAnalytics;
 
 /**
  * Tracking installation of promoted ihs apps.
@@ -46,7 +46,7 @@ public final class PromotionTracker {
         getTrackedAppsLocked()
                 .filter(trackedApp -> !trackedApp.isExpired() && TextUtils.equals(trackedApp.packageName, packageName))
                 .forEach(trackedApp -> {
-                    HSAnalytics.logEvent("Promotion_Installed", "Type", trackedApp.eventLogAppName);
+                    KCAnalytics.logEvent("Promotion_Installed", "Type", trackedApp.eventLogAppName);
                     removeTrackedAppLocked(trackedApp.packageName);
                 });
     }

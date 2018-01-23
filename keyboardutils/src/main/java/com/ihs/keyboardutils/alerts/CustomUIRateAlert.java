@@ -16,11 +16,11 @@ import android.view.animation.TranslateAnimation;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.ihs.app.analytics.HSAnalytics;
 import com.ihs.app.framework.HSApplication;
 import com.ihs.chargingscreen.utils.DisplayUtils;
 import com.ihs.keyboardutils.R;
 import com.ihs.keyboardutils.utils.RippleDrawableUtils;
+import com.kc.utils.KCAnalytics;
 
 import java.util.Locale;
 
@@ -108,7 +108,7 @@ public class CustomUIRateAlert extends CustomUIRateBaseAlert {
     public void onClick(View v) {
         super.onClick(v);
         if (v == positiveButton) {
-            HSAnalytics.logEvent("rate_alert_to_GP");
+            KCAnalytics.logEvent("rate_alert_to_GP");
             dismiss();
 
             if (rateStarNumber != 5) {
@@ -137,7 +137,7 @@ public class CustomUIRateAlert extends CustomUIRateBaseAlert {
             rate(4);
         } else if (v.getId() == R.id.start_5) {
             rate(5);
-            HSAnalytics.logEvent("rate_alert_like_clicked");
+            KCAnalytics.logEvent("rate_alert_like_clicked");
         }
     }
 

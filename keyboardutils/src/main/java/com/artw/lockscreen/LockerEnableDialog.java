@@ -16,12 +16,12 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.artw.lockscreen.lockerappguide.LockerAppGuideManager;
-import com.ihs.app.analytics.HSAnalytics;
 import com.ihs.app.framework.HSApplication;
 import com.ihs.chargingscreen.utils.LockerChargingSpecialConfig;
 import com.ihs.keyboardutils.R;
 import com.ihs.keyboardutils.alerts.HSAlertDialog;
 import com.kc.commons.utils.KCCommonUtils;
+import com.kc.utils.KCAnalytics;
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.nostra13.universalimageloader.core.assist.FailReason;
 import com.nostra13.universalimageloader.core.listener.ImageLoadingListener;
@@ -87,10 +87,10 @@ public class LockerEnableDialog extends Dialog {
                 @Override
                 public void onClick(View v) {
                     if (LockerAppGuideManager.getInstance().isLockerInstall()) {
-                        HSAnalytics.logEvent("app_theme_setAsLockScreen_apply_okButton","app_theme_setAsLockScreen_apply_okButton", themeName);
+                        KCAnalytics.logEvent("app_theme_setAsLockScreen_apply_okButton","app_theme_setAsLockScreen_apply_okButton", themeName);
                         LockerAppGuideManager.setLockerAppWallpaper(context,bgUrl,"");
                     } else {
-                        HSAnalytics.logEvent("app_theme_setAsLockScreen_download_okButton","app_theme_setAsLockScreen_apply_okButton", themeName);
+                        KCAnalytics.logEvent("app_theme_setAsLockScreen_download_okButton","app_theme_setAsLockScreen_apply_okButton", themeName);
                         LockerAppGuideManager.getInstance().downloadOrRedirectToLockerApp(LockerAppGuideManager.FLURRY_SET_AS_LOCK_SCREEN);
                     }
                 }
@@ -99,7 +99,7 @@ public class LockerEnableDialog extends Dialog {
             enableButton.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    HSAnalytics.logEvent("keyboard_lockeralert_ok_clicked");
+                    KCAnalytics.logEvent("keyboard_lockeralert_ok_clicked");
                     LockerSettings.setLockerEnabled(true);
                     LockerSettings.setLockerBgUrl(bgUrl);
                     dismiss();
@@ -153,7 +153,7 @@ public class LockerEnableDialog extends Dialog {
 
         }
 
-        HSAnalytics.logEvent("keyboard_lockeralert_show");
+        KCAnalytics.logEvent("keyboard_lockeralert_show");
         LockerSettings.addLockerEnableShowCount();
     }
 

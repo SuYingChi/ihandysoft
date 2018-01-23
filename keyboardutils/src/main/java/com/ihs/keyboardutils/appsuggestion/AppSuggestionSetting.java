@@ -1,12 +1,12 @@
 package com.ihs.keyboardutils.appsuggestion;
 
 import com.artw.lockscreen.LockerSettings;
-import com.ihs.app.analytics.HSAnalytics;
 import com.ihs.app.framework.HSApplication;
 import com.ihs.commons.config.HSConfig;
 import com.ihs.commons.utils.HSLog;
 import com.ihs.commons.utils.HSPreferenceHelper;
 import com.ihs.keyboardutils.utils.PublisherUtils;
+import com.kc.utils.KCAnalytics;
 import com.kc.utils.KCFeatureControlUtils;
 
 import static com.ihs.keyboardutils.appsuggestion.AppSuggestionManager.FEATURE_NAME;
@@ -152,14 +152,14 @@ public class AppSuggestionSetting {
     public void recordEnableOnce() {
         if (!spHelper.contains(app_suggestion_enable)) {
             spHelper.putBoolean(app_suggestion_enable, true);
-            HSAnalytics.logEvent(app_suggestion_enable, "install_type", PublisherUtils.getInstallType());
+            KCAnalytics.logEvent(app_suggestion_enable, "install_type", PublisherUtils.getInstallType());
         }
     }
 
     public void recordDisableOnce() {
         if (!spHelper.contains(appSuggestions_disabled)) {
             spHelper.putBoolean(appSuggestions_disabled, true);
-            HSAnalytics.logEvent(appSuggestions_disabled, "install_type", PublisherUtils.getInstallType());
+            KCAnalytics.logEvent(appSuggestions_disabled, "install_type", PublisherUtils.getInstallType());
         }
     }
 

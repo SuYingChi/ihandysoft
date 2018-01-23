@@ -30,7 +30,6 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
-import com.ihs.app.analytics.HSAnalytics;
 import com.ihs.commons.config.HSConfig;
 import com.ihs.commons.utils.HSLog;
 import com.ihs.feature.common.ActivityUtils;
@@ -58,6 +57,7 @@ import com.ihs.keyboardutils.R;
 import com.ihs.keyboardutils.permission.PermissionUtils;
 import com.ihs.keyboardutils.utils.CommonUtils;
 import com.kc.commons.utils.KCCommonUtils;
+import com.kc.utils.KCAnalytics;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -350,7 +350,7 @@ public class JunkCleanAnimationActivity extends BasePermissionActivity {
     }
 
     private void showSecurityBottomDialog() {
-        HSAnalytics.logEvent("Promotion_Viewed", "Type", "SecurityAlert");
+        KCAnalytics.logEvent("Promotion_Viewed", "Type", "SecurityAlert");
         mBottomSheetDialog = new BottomSheetDialog(JunkCleanAnimationActivity.this);
         mBottomSheetDialog.setCanceledOnTouchOutside(false);
         mIsPowerfulCleanBottomDialogShowed = false;
@@ -370,7 +370,7 @@ public class JunkCleanAnimationActivity extends BasePermissionActivity {
         actionBtn.setText(getString(R.string.locker_install_btn));
 
         actionBtn.setOnClickListener(v -> {
-            HSAnalytics.logEvent("Promotion_Clicked", "Type", "SecurityAlert");
+            KCAnalytics.logEvent("Promotion_Clicked", "Type", "SecurityAlert");
             mIsBottomActionButtonClicked = true;
             PromotionTracker.startTracking(mSecurityPackage, PromotionTracker.EVENT_LOG_APP_NAME_SECURITY, true);
         });

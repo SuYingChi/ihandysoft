@@ -6,7 +6,6 @@ import android.support.v4.view.animation.PathInterpolatorCompat;
 import android.view.View;
 import android.widget.TextView;
 
-import com.ihs.app.analytics.HSAnalytics;
 import com.ihs.feature.common.ViewUtils;
 import com.ihs.feature.resultpage.data.CardData;
 import com.ihs.feature.resultpage.data.ResultConstants;
@@ -29,7 +28,7 @@ class JunkCleanResultController extends ResultController {
             ad.setNativeClickListener(new AcbNativeAd.AcbNativeClickListener() {
                 @Override
                 public void onAdClick(AcbAd acbAd) {
-                    HSAnalytics.logEvent("ResultPage_Cards_Click", "Type", ResultConstants.AD);
+
                 }
             });
         }
@@ -92,7 +91,6 @@ class JunkCleanResultController extends ResultController {
     @Override
     public void onClick(View v) {
         super.onClick(v);
-        logClickEvent(mType);
     }
 
 }

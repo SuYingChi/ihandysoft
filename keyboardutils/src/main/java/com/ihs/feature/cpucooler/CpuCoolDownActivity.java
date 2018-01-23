@@ -20,7 +20,6 @@ import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
-import com.ihs.app.analytics.HSAnalytics;
 import com.ihs.app.framework.HSApplication;
 import com.ihs.chargingscreen.utils.DisplayUtils;
 import com.ihs.commons.utils.HSLog;
@@ -41,6 +40,7 @@ import com.ihs.feature.resultpage.ResultPageActivity;
 import com.ihs.feature.resultpage.ResultPageAdsManager;
 import com.ihs.keyboardutils.R;
 import com.ihs.keyboardutils.utils.CommonUtils;
+import com.kc.utils.KCAnalytics;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -310,7 +310,7 @@ public class CpuCoolDownActivity extends BaseCenterActivity {
     }
 
     private void startSnowFallAnimation() {
-        HSAnalytics.logEvent("CPUCooler_CoolAnimation_Start");
+        KCAnalytics.logEvent("CPUCooler_CoolAnimation_Start");
         final View[] fallingSnow = { findViewById(R.id.left_falling_snow_view),
                 findViewById(R.id.middle_falling_snow_view),
                 findViewById(R.id.right_falling_snow_view) };

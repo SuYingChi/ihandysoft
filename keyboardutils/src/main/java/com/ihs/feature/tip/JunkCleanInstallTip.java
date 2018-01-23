@@ -27,7 +27,6 @@ public class JunkCleanInstallTip extends JunkCleanFloatTip {
         super.onClick(v);
         int i = v.getId();
         if (i == R.id.action_btn) {// click implements in super
-            JunkCleanUtils.FlurryLogger.logSpecialAlertClicked(JunkCleanConstant.OBSOLETE_APK);
             JunkCleanUtils.FlurryLogger.logOpen(JunkCleanConstant.OBSOLETE_APK);
 
         } else {

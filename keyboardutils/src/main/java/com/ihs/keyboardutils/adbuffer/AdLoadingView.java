@@ -18,7 +18,6 @@ import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
-import com.ihs.app.analytics.HSAnalytics;
 import com.ihs.chargingscreen.utils.DisplayUtils;
 import com.ihs.keyboardutils.BuildConfig;
 import com.ihs.keyboardutils.R;
@@ -28,6 +27,7 @@ import com.ihs.keyboardutils.utils.RippleDrawableUtils;
 import com.ihs.keyboardutils.view.CustomProgressDrawable;
 import com.ihs.keyboardutils.view.FlashFrameLayout;
 import com.kc.commons.utils.KCCommonUtils;
+import com.kc.utils.KCAnalytics;
 
 import static java.lang.System.currentTimeMillis;
 
@@ -53,7 +53,6 @@ public class AdLoadingView extends RelativeLayout implements KCNativeAdView.OnAd
 
     @Override
     public void onAdClicked(KCNativeAdView adView) {
-        HSAnalytics.logEvent("NativeAds_A(NativeAds)ApplyingItem_Click");
         alertDismissManually = false;
         dismissSelf();
     }
@@ -140,7 +139,6 @@ public class AdLoadingView extends RelativeLayout implements KCNativeAdView.OnAd
                     public void onGlobalLayout() {
                         if (adView.getWidth() > 0 && adView.getHeight() > 0) {
                             adView.getViewTreeObserver().removeGlobalOnLayoutListener(this);
-                            HSAnalytics.logEvent("NativeAds_A(NativeAds)ApplyingItem_Show");
                             if (!TextUtils.equals(adView.getAdVendorName(), AdUtils.FACEBOOK_VENDOR_NAME)) {
                                 flashFrameLayout.startShimmerAnimation();
                             }
@@ -186,8 +184,6 @@ public class AdLoadingView extends RelativeLayout implements KCNativeAdView.OnAd
         if (!TextUtils.isEmpty(adPlacementName) && !hasPurchaseNoAds) {
             nativeAdView.setPrimaryViewSize((int) (DisplayUtils.getScreenWidthPixels() * 0.9), (int) (DisplayUtils.getScreenWidthPixels() * 0.9 / 1.9));
             nativeAdView.load(adPlacementName);
-
-            HSAnalytics.logEvent("NativeAds_A(NativeAds)ApplyingItem_Load");
             return this;
         }
         if(BuildConfig.DEBUG){
@@ -301,7 +297,7 @@ public class AdLoadingView extends RelativeLayout implements KCNativeAdView.OnAd
     }
 
     public void showInDialog() {
-        HSAnalytics.logEvent("app_alert_applyingItem_show");
+        KCAnalytics.logEvent("app_alert_applyingItem_show");
         dialog = new AdLoadingDialog(getContext());
         dialog.setContentView(this);
         dialog.setCancelable(false);

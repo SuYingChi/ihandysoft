@@ -32,7 +32,6 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.ihs.app.analytics.HSAnalytics;
 import com.ihs.commons.config.HSConfig;
 import com.ihs.commons.notificationcenter.HSGlobalNotificationCenter;
 import com.ihs.commons.notificationcenter.INotificationObserver;
@@ -60,6 +59,7 @@ import com.ihs.keyboardutils.BuildConfig;
 import com.ihs.keyboardutils.R;
 import com.ihs.keyboardutils.utils.CommonUtils;
 import com.ihs.keyboardutils.utils.LauncherAnimationUtils;
+import com.kc.utils.KCAnalytics;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -320,12 +320,12 @@ public class BoostPlusCleanDialog extends FullScreenDialog {
     private int initCleanType(int type) {
         if (type == CLEAN_TYPE_NON_ROOT_DIRECTLY) {
             type = CLEAN_TYPE_NON_ROOT;
-            HSAnalytics.logEvent("BoostPlus_Animation_Start", "Type", "Directly");
+            KCAnalytics.logEvent("BoostPlus_Animation_Start", "Type", "Directly");
         } else if (type == CLEAN_TYPE_NON_ROOT_ACCESSIBILITY_OPEN) {
             type = CLEAN_TYPE_NON_ROOT;
-            HSAnalytics.logEvent("BoostPlus_Animation_Start", "Type", "Accessibility Open");
+            KCAnalytics.logEvent("BoostPlus_Animation_Start", "Type", "Accessibility Open");
         } else {
-            HSAnalytics.logEvent("BoostPlus_Animation_Start", "Type", "Root Open");
+            KCAnalytics.logEvent("BoostPlus_Animation_Start", "Type", "Root Open");
         }
         return type;
     }

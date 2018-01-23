@@ -558,8 +558,6 @@ public class JunkManager {
                     }
                     data.iconBitmap = packageItemInfo.iconBitmap;
                     LauncherTipManager.getInstance().showTip(activity, tiptype, data);
-
-                    JunkCleanUtils.FlurryLogger.logSpecialAlertViewed(JunkCleanConstant.RESIDUAL_FILES);
                 }
             }
 
@@ -608,8 +606,6 @@ public class JunkManager {
                             data.content = appSizeText;
                             data.iconDrawable = LauncherPackageManager.getInstance().getApplicationIcon(packageName);
                             LauncherTipManager.getInstance().showTip(activity, tiptype, data);
-
-                            JunkCleanUtils.FlurryLogger.logSpecialAlertViewed(JunkCleanConstant.OBSOLETE_APK);
                         };
 
                     }

@@ -1,6 +1,6 @@
 package com.ihs.feature.common;
 
-import com.ihs.app.analytics.HSAnalytics;
+import com.kc.utils.KCAnalytics;
 
 import net.appcloudbox.ads.nativeads.AcbNativeAdAnalytics;
 
@@ -55,7 +55,7 @@ public class AdAnalytics {
         if (prefix == null || prefix.isEmpty()) {
             AcbNativeAdAnalytics.logAppViewEvent(placementName, success);
         } else {
-            HSAnalytics.logEvent(prefix + "_AcbAdNative_Viewed_In_App", placementName, String.valueOf(success));
+            KCAnalytics.logEvent(prefix + "_AcbAdNative_Viewed_In_App", placementName, String.valueOf(success));
         }
     }
 }

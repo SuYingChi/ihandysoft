@@ -28,6 +28,7 @@ import com.ihs.keyboardutils.R;
 import com.ihs.keyboardutils.utils.CommonUtils;
 import com.ihs.keyboardutils.utils.PublisherUtils;
 import com.kc.commons.utils.KCCommonUtils;
+import com.kc.utils.KCAnalytics;
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.nostra13.universalimageloader.core.assist.FailReason;
@@ -182,7 +183,7 @@ public class PremiumLockerActivity extends AppCompatActivity implements INotific
             public void onPageSelected(int position) {
                 if (LockerAdapter.PAGE_INDEX_UNLOCK == position) {
                     finishSelf();
-                    HSAnalytics.logEvent("new_screenLocker_unlock");
+                    KCAnalytics.logEvent("new_screenLocker_unlock");
                 }
             }
 
@@ -249,7 +250,7 @@ public class PremiumLockerActivity extends AppCompatActivity implements INotific
                 break;
             case ScreenStatusReceiver.NOTIFICATION_SCREEN_ON:
                 if (!ClickUtils.isFastDoubleClick()) {
-                    HSAnalytics.logEvent("new_screenLocker_show", "install_type", PublisherUtils.getInstallType());
+                    KCAnalytics.logEvent("new_screenLocker_show", "install_type", PublisherUtils.getInstallType());
                 }
                 break;
             default:

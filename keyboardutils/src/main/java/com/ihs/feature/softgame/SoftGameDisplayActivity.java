@@ -10,8 +10,8 @@ import android.support.v4.view.ViewPager;
 import android.view.Window;
 import android.view.WindowManager;
 
-import com.ihs.app.analytics.HSAnalytics;
 import com.ihs.keyboardutils.R;
+import com.kc.utils.KCAnalytics;
 
 public class SoftGameDisplayActivity extends FragmentActivity implements ViewPager.OnPageChangeListener {
     public static final String SHOW_WHEN_LOCKED = "show_when_locked";
@@ -34,7 +34,7 @@ public class SoftGameDisplayActivity extends FragmentActivity implements ViewPag
         if (getIntent() != null) {
             placementName = getIntent().getStringExtra(SOFT_GAME_PLACEMENT_MESSAGE);
             if (getIntent().getBooleanExtra("fromShortcut", false)) {
-                HSAnalytics.logEvent("h5games_shortcut_clicked");
+                KCAnalytics.logEvent("h5games_shortcut_clicked");
             }
         }
 

@@ -9,11 +9,11 @@ import android.text.TextUtils;
 import android.view.Window;
 import android.view.WindowManager;
 
-import com.ihs.app.analytics.HSAnalytics;
 import com.ihs.app.framework.HSApplication;
 import com.ihs.keyboardutils.R;
 import com.ihs.keyboardutils.ads.KCInterstitialAd;
 import com.ihs.keyboardutils.iap.RemoveAdsManager;
+import com.kc.utils.KCAnalytics;
 
 import net.appcloudbox.ads.interstitialads.AcbInterstitialAdLoader;
 
@@ -93,9 +93,9 @@ public class GameStarterActivity extends Activity {
         intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         HSApplication.getContext().startActivity(intent);
         if (TextUtils.isEmpty(gameName)) {
-            HSAnalytics.logEvent(callFrom);
+            KCAnalytics.logEvent(callFrom);
         } else {
-            HSAnalytics.logEvent(callFrom, callFrom, gameName);
+            KCAnalytics.logEvent(callFrom, callFrom, gameName);
         }
     }
 }

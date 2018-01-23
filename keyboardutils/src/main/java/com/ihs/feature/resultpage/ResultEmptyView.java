@@ -13,7 +13,6 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.artw.lockscreen.common.NavUtils;
-import com.ihs.app.analytics.HSAnalytics;
 import com.ihs.feature.battery.BatteryActivity;
 import com.ihs.feature.battery.BatteryUtils;
 import com.ihs.feature.boost.plus.BoostPlusActivity;
@@ -29,6 +28,7 @@ import com.ihs.feature.junkclean.JunkCleanActivity;
 import com.ihs.feature.resultpage.data.ResultConstants;
 import com.ihs.keyboardutils.R;
 import com.ihs.keyboardutils.utils.CommonUtils;
+import com.kc.utils.KCAnalytics;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -183,7 +183,7 @@ public class ResultEmptyView extends RelativeLayout {
             Map<String, String> params = new HashMap<>();
             params.put("Type", FLURRY_VALUE_TYPE[model.type]);
             params.put("Number", "One");
-            HSAnalytics.logEvent("OptimalPage_Module_Show", params);
+            KCAnalytics.logEvent("OptimalPage_Module_Show", params);
         } else if (models.size() == 2) {
             mContainerDouble.setTranslationY(CommonUtils.pxFromDp(150));
             mContainerDouble.setVisibility(View.VISIBLE);
@@ -213,11 +213,11 @@ public class ResultEmptyView extends RelativeLayout {
             Map<String, String> params = new HashMap<>();
             params.put("Type", FLURRY_VALUE_TYPE[leftModel.type]);
             params.put("Number", "Two");
-            HSAnalytics.logEvent("OptimalPage_Module_Show", params);
+            KCAnalytics.logEvent("OptimalPage_Module_Show", params);
             params = new HashMap<>();
             params.put("Type", FLURRY_VALUE_TYPE[rightModel.type]);
             params.put("Number", "Two");
-            HSAnalytics.logEvent("OptimalPage_Module_Show", params);
+            KCAnalytics.logEvent("OptimalPage_Module_Show", params);
         }
     }
 
@@ -231,8 +231,8 @@ public class ResultEmptyView extends RelativeLayout {
                     Map<String, String> params = new HashMap<>();
                     params.put("Type", FLURRY_VALUE_TYPE[type]);
                     params.put("Number", isDouble ? "Two" : "One");
-                    HSAnalytics.logEvent("OptimalPage_Module_Click", params);
-                    HSAnalytics.logEvent("JunkCleaner_Open", "Type", "OptimalPage");
+                    KCAnalytics.logEvent("OptimalPage_Module_Click", params);
+                    KCAnalytics.logEvent("JunkCleaner_Open", "Type", "OptimalPage");
                 });
                 break;
             case EVALUATION_TYPE_BOOST_PLUS:
@@ -243,8 +243,8 @@ public class ResultEmptyView extends RelativeLayout {
                     Map<String, String> params = new HashMap<>();
                     params.put("Type", FLURRY_VALUE_TYPE[type]);
                     params.put("Number", isDouble ? "Two" : "One");
-                    HSAnalytics.logEvent("OptimalPage_Module_Click", params);
-                    HSAnalytics.logEvent("BoostPlus_Open", "Type", "OptimalPage");
+                    KCAnalytics.logEvent("OptimalPage_Module_Click", params);
+                    KCAnalytics.logEvent("BoostPlus_Open", "Type", "OptimalPage");
                 });
                 break;
             case EVALUATION_TYPE_BATTERY:
@@ -255,8 +255,8 @@ public class ResultEmptyView extends RelativeLayout {
                     Map<String, String> params = new HashMap<>();
                     params.put("Type", FLURRY_VALUE_TYPE[type]);
                     params.put("Number", isDouble ? "Two" : "One");
-                    HSAnalytics.logEvent("OptimalPage_Module_Click", params);
-                    HSAnalytics.logEvent("Battery_OpenFrom", "type", "OptimalPage");
+                    KCAnalytics.logEvent("OptimalPage_Module_Click", params);
+                    KCAnalytics.logEvent("Battery_OpenFrom", "type", "OptimalPage");
                 });
                 break;
             case EVALUATION_TYPE_CPU_COOLER:
@@ -267,8 +267,8 @@ public class ResultEmptyView extends RelativeLayout {
                     Map<String, String> params = new HashMap<>();
                     params.put("Type", FLURRY_VALUE_TYPE[type]);
                     params.put("Number", isDouble ? "Two" : "One");
-                    HSAnalytics.logEvent("OptimalPage_Module_Click", params);
-                    HSAnalytics.logEvent("CPUCooler_Open", "Type", "OptimalPage");
+                    KCAnalytics.logEvent("OptimalPage_Module_Click", params);
+                    KCAnalytics.logEvent("CPUCooler_Open", "Type", "OptimalPage");
                 });
                 break;
             case EVALUATION_TYPE_NOTIFICATION:
@@ -278,7 +278,7 @@ public class ResultEmptyView extends RelativeLayout {
                     Map<String, String> params = new HashMap<>();
                     params.put("Type", FLURRY_VALUE_TYPE[type]);
                     params.put("Number", isDouble ? "Two" : "One");
-                    HSAnalytics.logEvent("OptimalPage_Module_Click", params);
+                    KCAnalytics.logEvent("OptimalPage_Module_Click", params);
                 });
                 break;
             default:

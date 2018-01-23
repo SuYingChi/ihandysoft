@@ -8,7 +8,6 @@ import android.widget.Toast;
 
 import com.artw.lockscreen.common.LockerChargingScreenUtils;
 import com.artw.lockscreen.common.TimeTickReceiver;
-import com.ihs.app.analytics.HSAnalytics;
 import com.ihs.app.framework.HSApplication;
 import com.ihs.app.framework.HSNotificationConstant;
 import com.ihs.chargingscreen.activity.ChargingFullScreenAlertDialogActivity;
@@ -20,6 +19,7 @@ import com.ihs.commons.utils.HSBundle;
 import com.ihs.feature.common.ScreenStatusReceiver;
 import com.ihs.keyboardutils.R;
 import com.ihs.keyboardutils.iap.RemoveAdsManager;
+import com.kc.utils.KCAnalytics;
 
 import net.appcloudbox.ads.expressads.AcbExpressAdManager;
 
@@ -76,6 +76,6 @@ public class ScreenLockerManager {
     public static void enableLockerFromAlert() {
         LockerSettings.setLockerEnabled(true);
         Toast.makeText(HSApplication.getContext(), HSApplication.getContext().getString(R.string.screen_locker_enable_alert_toast), Toast.LENGTH_SHORT).show();
-        HSAnalytics.logEvent("alert_screen_locker_click");
+        KCAnalytics.logEvent("alert_screen_locker_click");
     }
 }

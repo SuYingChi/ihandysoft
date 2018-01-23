@@ -5,7 +5,6 @@ import android.content.Intent;
 import android.view.Menu;
 
 import com.artw.lockscreen.common.NavUtils;
-import com.ihs.app.analytics.HSAnalytics;
 import com.ihs.commons.config.HSConfig;
 import com.ihs.commons.utils.HSLog;
 import com.ihs.device.clean.memory.HSAppMemory;
@@ -18,6 +17,7 @@ import com.ihs.feature.common.PreferenceHelper;
 import com.ihs.feature.common.Utils;
 import com.ihs.keyboardutils.R;
 import com.ihs.keyboardutils.permission.PermissionUtils;
+import com.kc.utils.KCAnalytics;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -110,11 +110,11 @@ class BoostPlusPresenter implements BoostPlusContracts.Presenter {
         boolean rootPermissionGranted = RootHelper.isPermissionGranted(rootStatus);
         boolean userActionInvolved = RootHelper.isUserActionInvolved(rootStatus);
         if (userActionInvolved) {
-            HSAnalytics.logEvent("BoostPlus_Homepage_BtnClick", "Type", "Root Alert Show");
+            KCAnalytics.logEvent("BoostPlus_Homepage_BtnClick", "Type", "Root Alert Show");
         }
         if (rootPermissionGranted) {
             if (!userActionInvolved) {
-                HSAnalytics.logEvent("BoostPlus_Homepage_BtnClick", "Type", "Boost Directly");
+                KCAnalytics.logEvent("BoostPlus_Homepage_BtnClick", "Type", "Boost Directly");
             }
             mView.showCleanAnimationDialog(BoostPlusCleanDialog.CLEAN_TYPE_ROOT);
             onBoostStart(size);
@@ -124,10 +124,10 @@ class BoostPlusPresenter implements BoostPlusContracts.Presenter {
         // Non-root
         if (!userActionInvolved) {
             if (PermissionUtils.isAccessibilityGranted()) {
-                HSAnalytics.logEvent("BoostPlus_Homepage_BtnClick", "Type", "Boost Directly");
+                KCAnalytics.logEvent("BoostPlus_Homepage_BtnClick", "Type", "Boost Directly");
                 mView.showCleanAnimationDialog(BoostPlusCleanDialog.CLEAN_TYPE_NON_ROOT_DIRECTLY);
             } else {
-                HSAnalytics.logEvent("BoostPlus_Homepage_BtnClick", "Type", "Accessibility Alert Show");
+                KCAnalytics.logEvent("BoostPlus_Homepage_BtnClick", "Type", "Accessibility Alert Show");
                 mView.showAuthorizeDialog(size);
             }
             onBoostStart(size);

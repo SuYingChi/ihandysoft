@@ -15,7 +15,6 @@ import android.view.View;
 import android.widget.RemoteViews;
 
 import com.artw.lockscreen.LockerSettings;
-import com.ihs.app.analytics.HSAnalytics;
 import com.ihs.app.framework.HSApplication;
 import com.ihs.app.framework.HSNotificationConstant;
 import com.ihs.chargingscreen.utils.ChargingPrefsUtil;
@@ -26,6 +25,7 @@ import com.ihs.commons.utils.HSBundle;
 import com.ihs.commons.utils.HSLog;
 import com.ihs.commons.utils.HSPreferenceHelper;
 import com.ihs.keyboardutils.R;
+import com.kc.utils.KCAnalytics;
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.nostra13.universalimageloader.core.assist.FailReason;
 import com.nostra13.universalimageloader.core.listener.ImageLoadingListener;
@@ -544,8 +544,8 @@ public class KCNotificationManager {
             notificationSentListener.onNotificationSent(notificationBean);
         }
 
-        HSAnalytics.logEvent("local_push_showed", "local_push_showed", notificationBean.getActionType());
-        HSAnalytics.logEvent("local_push_showed_content_name", "local_push_showed_content_name", notificationBean.getName());
+        KCAnalytics.logEvent("local_push_showed", "local_push_showed", notificationBean.getActionType());
+        KCAnalytics.logEvent("local_push_showed_content_name", "local_push_showed_content_name", notificationBean.getName());
     }
 
     private void uploadAutopilotShow() {
@@ -591,8 +591,8 @@ public class KCNotificationManager {
     }
 
     public static void logNotificationClick(String actionType, String name) {
-        HSAnalytics.logEvent("local_push_clicked", "local_push_clicked", actionType);
-        HSAnalytics.logEvent("local_push_clicked_content_name", "local_push_clicked_content_name", name);
+        KCAnalytics.logEvent("local_push_clicked", "local_push_clicked", actionType);
+        KCAnalytics.logEvent("local_push_clicked_content_name", "local_push_clicked_content_name", name);
     }
 
     public static void uploadPushAutopilotEvent(String actionType, String name) {

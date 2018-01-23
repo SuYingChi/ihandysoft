@@ -15,12 +15,12 @@ import android.provider.MediaStore;
 import android.provider.Settings;
 import android.text.TextUtils;
 
-import com.ihs.app.analytics.HSAnalytics;
 import com.ihs.app.framework.HSApplication;
 import com.ihs.app.utils.HSMarketUtils;
 import com.ihs.commons.utils.HSLog;
 import com.ihs.keyboardutils.R;
 import com.ihs.keyboardutils.utils.CommonUtils;
+import com.kc.utils.KCAnalytics;
 
 import java.util.List;
 import java.util.NoSuchElementException;
@@ -134,7 +134,7 @@ public class NavUtils {
     }
 
     public static void startSystemDataUsageSetting(Context context, boolean attachNewTaskFlag) {
-        HSAnalytics.logEvent("Toolkit_DataUsage_IconClicked");
+        KCAnalytics.logEvent("Toolkit_DataUsage_IconClicked");
         Intent dataUsageIntent = new Intent();
         dataUsageIntent.setComponent(new ComponentName(
                 "com.android.settings",
@@ -190,7 +190,7 @@ public class NavUtils {
         launchIntent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
         try {
             context.startActivity(launchIntent);//null pointer check in case package name was not found
-            HSAnalytics.logEvent("app_screen_locker_cam_shortcut_entry_successful");
+            KCAnalytics.logEvent("app_screen_locker_cam_shortcut_entry_successful");
             return true;
         } catch (Exception e) {
             Intent infoIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);

@@ -4,9 +4,9 @@ import android.app.KeyguardManager;
 import android.content.Context;
 import android.os.Build;
 
-import com.ihs.app.analytics.HSAnalytics;
 import com.ihs.app.framework.HSApplication;
 import com.ihs.keyboardutils.utils.PublisherUtils;
+import com.kc.utils.KCAnalytics;
 
 public class ChargingAnalytics {
 
@@ -37,23 +37,23 @@ public class ChargingAnalytics {
         if (!ChargingPrefsUtil.getInstance().getSpHelper().contains(app_chargingLocker_enable)) {
             ChargingPrefsUtil.getInstance().getSpHelper().putBoolean(app_chargingLocker_enable, true);
 
-            HSAnalytics.logEvent(app_chargingLocker_enable, app_chargingLocker_enable, "enabledForm", "intall_type", PublisherUtils.getInstallType());
+            KCAnalytics.logEvent(app_chargingLocker_enable, app_chargingLocker_enable, "enabledForm", "intall_type", PublisherUtils.getInstallType());
         }
     }
 
     public void recordChargingDisableOnce() {
         if (!ChargingPrefsUtil.getInstance().getSpHelper().contains(app_chargingLocker_disable)) {
             ChargingPrefsUtil.getInstance().getSpHelper().putBoolean(app_chargingLocker_disable, true);
-            HSAnalytics.logEvent(app_chargingLocker_disable, app_chargingLocker_disable, "enabledForm", "install_type", PublisherUtils.getInstallType());
+            KCAnalytics.logEvent(app_chargingLocker_disable, app_chargingLocker_disable, "enabledForm", "install_type", PublisherUtils.getInstallType());
         }
     }
 
     public static void logChargingScreenShow() {
-        HSAnalytics.logEvent(app_chargingLocker_show, "install_type", PublisherUtils.getInstallType());
+        KCAnalytics.logEvent(app_chargingLocker_show, "install_type", PublisherUtils.getInstallType());
     }
 
     public static void logLockScreenShow() {
-        HSAnalytics.logEvent("app_screen_locker_show", "install_type", PublisherUtils.getInstallType());
+        KCAnalytics.logEvent("app_screen_locker_show", "install_type", PublisherUtils.getInstallType());
     }
 
     public static void logLockeScreenOrChargingScreenShow() {
@@ -65,28 +65,28 @@ public class ChargingAnalytics {
             }
         }
 
-        HSAnalytics.logEvent("app_locker_and_charging_show", "type", "charging_show", "isKeyguardSecure", isKeyguardSecure);
+        KCAnalytics.logEvent("app_locker_and_charging_show", "type", "charging_show", "isKeyguardSecure", isKeyguardSecure);
     }
 
     public void chargingEnableNotificationShowed() {
-        HSAnalytics.logEvent(notification_chargingLocker_show);
+        KCAnalytics.logEvent(notification_chargingLocker_show);
     }
 
     public void chargingEnableNotificationClicked() {
-        HSAnalytics.logEvent(notification_chargingLocker_click);
+        KCAnalytics.logEvent(notification_chargingLocker_click);
     }
 
     public void chargingDisableTouchedOnce(String from) {
         if (!ChargingPrefsUtil.getInstance().getSpHelper().contains(app_chargingLocker_disable_clicked)) {
             ChargingPrefsUtil.getInstance().getSpHelper().putBoolean(app_chargingLocker_disable_clicked, true);
-            HSAnalytics.logEvent(app_chargingLocker_disable_clicked, app_chargingLocker_disable_clicked, from);
+            KCAnalytics.logEvent(app_chargingLocker_disable_clicked, app_chargingLocker_disable_clicked, from);
         }
     }
 
     public void chargingDisableConfirmedOnce(String from) {
         if (!ChargingPrefsUtil.getInstance().getSpHelper().contains(app_chargingLocker_disable)) {
             ChargingPrefsUtil.getInstance().getSpHelper().putBoolean(app_chargingLocker_disable, true);
-            HSAnalytics.logEvent(app_chargingLocker_disable, app_chargingLocker_disable, "enabledForm", "install_type", PublisherUtils.getInstallType());
+            KCAnalytics.logEvent(app_chargingLocker_disable, app_chargingLocker_disable, "enabledForm", "install_type", PublisherUtils.getInstallType());
         }
     }
 

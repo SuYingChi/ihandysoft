@@ -7,6 +7,7 @@ import android.text.TextUtils;
 import com.acb.weather.plugin.AcbWeatherManager;
 import com.artw.lockscreen.ScreenLockerManager;
 import com.artw.lockscreen.lockerappguide.LockerAppGuideManager;
+import com.crashlytics.android.answers.Answers;
 import com.ihs.app.alerts.HSAlertMgr;
 import com.ihs.app.framework.HSApplication;
 import com.ihs.app.framework.HSNotificationConstant;
@@ -29,6 +30,8 @@ import com.squareup.leakcanary.LeakCanary;
 import net.appcloudbox.ads.expressads.AcbExpressAdManager;
 import net.appcloudbox.ads.nativeads.AcbNativeAdManager;
 
+import io.fabric.sdk.android.Fabric;
+
 
 /**
  * Created by ihandysoft on 16/10/24.
@@ -40,7 +43,8 @@ public class MyApplication extends HSApplication {
     @Override
     public void onCreate() {
         super.onCreate();
-        HSLog.e("apppli");
+
+        Fabric.with(this, new Answers());
 
         String packageName = getPackageName();
         String processName = getProcessName();

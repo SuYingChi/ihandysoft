@@ -70,4 +70,8 @@ dependencies {
     //weather
     implementation "net.appcloudbox.weather:acbWeatherPlugin.gm:4.1.0.gm"
     api project(':keyboardutils')
+
+    implementation ('com.crashlytics.sdk.android:crashlytics:2.6.4@aar') {
+        transitive = true
+    }
 }

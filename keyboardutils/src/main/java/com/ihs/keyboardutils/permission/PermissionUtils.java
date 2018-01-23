@@ -20,10 +20,10 @@ import android.provider.Settings;
 import android.text.TextUtils;
 import android.view.accessibility.AccessibilityManager;
 
-import com.ihs.app.analytics.HSAnalytics;
 import com.ihs.app.framework.HSApplication;
 import com.ihs.commons.utils.HSLog;
 import com.ihs.keyboardutils.utils.CommonUtils;
+import com.kc.utils.KCAnalytics;
 
 import java.util.List;
 import java.util.Timer;
@@ -56,7 +56,7 @@ public class PermissionUtils {
                     if (permissionEnabledRunnable != null) {
                         permissionEnabledRunnable.run();
                     }
-                    HSAnalytics.logEvent("Authority_Accessibility_Granted");
+                    KCAnalytics.logEvent("Authority_Accessibility_Granted");
                 }
                 watchDog.removeCallbacksAndMessages(null);
                 stopObservingPermission(this, PERMISSION_ACCESSIBILITY);

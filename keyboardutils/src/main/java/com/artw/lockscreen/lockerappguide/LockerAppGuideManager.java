@@ -11,7 +11,6 @@ import android.content.pm.ResolveInfo;
 import android.net.Uri;
 import android.text.TextUtils;
 
-import com.ihs.app.analytics.HSAnalytics;
 import com.ihs.app.framework.HSApplication;
 import com.ihs.app.utils.HSMarketUtils;
 import com.ihs.commons.config.HSConfig;
@@ -20,6 +19,7 @@ import com.ihs.keyboardutils.BuildConfig;
 import com.ihs.keyboardutils.R;
 import com.ihs.keyboardutils.utils.CommonUtils;
 import com.kc.commons.utils.KCCommonUtils;
+import com.kc.utils.KCAnalytics;
 
 import net.appcloudbox.autopilot.AutopilotEvent;
 
@@ -89,7 +89,7 @@ public class LockerAppGuideManager {
                 lockerInstallStatusChangeListener.onLockerInstallStatusChange();
             }
         }
-        HSAnalytics.logEvent("googlePlay_smartLocker_installed", "googlePlay_smartLocker_installed", lockerAppInstalledFrom);
+        KCAnalytics.logEvent("googlePlay_smartLocker_installed", "googlePlay_smartLocker_installed", lockerAppInstalledFrom);
         if (FLURRY_ALERT_OPEN_APP.equals(lockerAppInstalledFrom)) {
             AutopilotEvent.logTopicEvent("topic-1512033355055", "locker_installed");
         }
@@ -180,10 +180,10 @@ public class LockerAppGuideManager {
         lockerDialog.setPositiveButton(bean.getButton(), view -> {
             HSMarketUtils.browseAPP(getLockerAppPkgName());
             lockerAppInstalledFrom = from;
-            HSAnalytics.logEvent("app_lockerAlert_button_clicked", "app_lockerAlert_button_clicked", from);
+            KCAnalytics.logEvent("app_lockerAlert_button_clicked", "app_lockerAlert_button_clicked", from);
         });
         KCCommonUtils.showDialog(lockerDialog);
-        HSAnalytics.logEvent("app_lockerAlert_show", "app_lockerAlert_show", from);
+        KCAnalytics.logEvent("app_lockerAlert_show", "app_lockerAlert_show", from);
     }
 
     private static class PackageInstallReceiver extends BroadcastReceiver {

@@ -23,7 +23,6 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.artw.lockscreen.LockerSettings;
-import com.ihs.app.analytics.HSAnalytics;
 import com.ihs.chargingscreen.utils.ChargingManagerUtil;
 import com.ihs.chargingscreen.utils.ChargingPrefsUtil;
 import com.ihs.commons.utils.HSLog;
@@ -37,6 +36,7 @@ import com.ihs.keyboardutils.ads.AdUtils;
 import com.ihs.keyboardutils.utils.CommonUtils;
 import com.ihs.keyboardutils.utils.LauncherAnimationUtils;
 import com.ihs.keyboardutils.utils.ToastUtils;
+import com.kc.utils.KCAnalytics;
 
 import net.appcloudbox.ads.base.AcbNativeAd;
 import net.appcloudbox.ads.base.ContainerView.AcbNativeAdContainerView;
@@ -478,21 +478,11 @@ abstract class ResultController implements View.OnClickListener {
 
     private void logViewEvent(Type type) {
         if (type == AD) {
-            HSAnalytics.logEvent("ResultPage_Cards_Show", "type", ResultConstants.AD);
+            KCAnalytics.logEvent("ResultPage_Cards_Show", "type", ResultConstants.AD);
         } else if (type == Type.CHARGE_SCREEN) {
-            HSAnalytics.logEvent("ResultPage_Cards_Show", "type", ResultConstants.CHARGING_SCREEN_FULL);
+            KCAnalytics.logEvent("ResultPage_Cards_Show", "type", ResultConstants.CHARGING_SCREEN_FULL);
         } else if (type == Type.NOTIFICATION_CLEANER) {
-            HSAnalytics.logEvent("ResultPage_Cards_Show", "type", ResultConstants.NOTIFICATION_CLEANER_FULL);
-        }
-    }
-
-    protected void logClickEvent(Type type) {
-        if (type == AD) {
-            // No log here, logged in onAdClick()
-        } else if (type == Type.CHARGE_SCREEN) {
-            HSAnalytics.logEvent("ResultPage_Cards_Click", "Type", ResultConstants.CHARGING_SCREEN_FULL);
-        } else if (type == Type.NOTIFICATION_CLEANER) {
-            HSAnalytics.logEvent("ResultPage_Cards_Click", "Type", ResultConstants.NOTIFICATION_CLEANER_FULL);
+            KCAnalytics.logEvent("ResultPage_Cards_Show", "type", ResultConstants.NOTIFICATION_CLEANER_FULL);
         }
     }
 }

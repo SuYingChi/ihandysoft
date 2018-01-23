@@ -28,7 +28,6 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.artw.lockscreen.LockerSettings;
-import com.ihs.app.analytics.HSAnalytics;
 import com.ihs.chargingscreen.utils.ChargingManagerUtil;
 import com.ihs.commons.notificationcenter.HSGlobalNotificationCenter;
 import com.ihs.commons.utils.HSBundle;
@@ -48,6 +47,7 @@ import com.ihs.feature.ui.SafeWindowManager;
 import com.ihs.keyboardutils.R;
 import com.ihs.keyboardutils.utils.CommonUtils;
 import com.ihs.keyboardutils.utils.LauncherAnimationUtils;
+import com.kc.utils.KCAnalytics;
 
 import net.appcloudbox.ads.base.AcbAd;
 import net.appcloudbox.ads.base.AcbNativeAd;
@@ -251,13 +251,13 @@ public class BoostTip extends FrameLayout implements View.OnClickListener, Float
 
             switch (mBoostPlusViewType) {
                 case OPTIMAL:
-                    HSAnalytics.logEvent("BoostPlus_Open", "Type", "Toast Optimal");
+                    KCAnalytics.logEvent("BoostPlus_Open", "Type", "Toast Optimal");
                     break;
                 case MEMORY:
-                    HSAnalytics.logEvent("BoostPlus_Open", "Type", "Toast Memory");
+                    KCAnalytics.logEvent("BoostPlus_Open", "Type", "Toast Memory");
                     break;
                 case BATTERY:
-                    HSAnalytics.logEvent("BoostPlus_Open", "Type", "Toast Battery");
+                    KCAnalytics.logEvent("BoostPlus_Open", "Type", "Toast Battery");
                     break;
             }
             dismiss(false);
@@ -283,7 +283,7 @@ public class BoostTip extends FrameLayout implements View.OnClickListener, Float
                 .setDuration(FADE_IN_NORMAL_ANIM_DURATION)
                 .setInterpolator(new AccelerateDecelerateInterpolator())
                 .start();
-        HSAnalytics.logEvent("Boost_Toast_Shown");
+        KCAnalytics.logEvent("Boost_Toast_Shown");
 
         if (mBoostSource == BoostSource.LOCKER_TOGGLE) {
             return;
@@ -450,7 +450,7 @@ public class BoostTip extends FrameLayout implements View.OnClickListener, Float
             button.setBackgroundResource(R.drawable.boost_tip_boost_plus_green_bg);
 
             mPrefs.putLong(PREF_KEY_BOOST_PLUS_SHOW_TIME_BATTERY, System.currentTimeMillis());
-            HSAnalytics.logEvent("BoostPlus_Show", "Type", "Toast Battery");
+            KCAnalytics.logEvent("BoostPlus_Show", "Type", "Toast Battery");
         } else if (optimal) {
             // Optimal
             mBoostPlusViewType = BoostPlusViewType.OPTIMAL;
@@ -465,7 +465,7 @@ public class BoostTip extends FrameLayout implements View.OnClickListener, Float
             button.setBackgroundResource(R.drawable.material_compat_button_bg_blue);
 
             mPrefs.putLong(PREF_KEY_BOOST_PLUS_SHOW_TIME_OPTIMAL, System.currentTimeMillis());
-            HSAnalytics.logEvent("BoostPlus_Show", "Type", "Toast Optimal");
+            KCAnalytics.logEvent("BoostPlus_Show", "Type", "Toast Optimal");
         } else {
             // Memory
             mBoostPlusViewType = BoostPlusViewType.MEMORY;
@@ -480,7 +480,7 @@ public class BoostTip extends FrameLayout implements View.OnClickListener, Float
             button.setBackgroundResource(R.drawable.material_compat_button_bg_blue);
 
             mPrefs.putLong(PREF_KEY_BOOST_PLUS_SHOW_TIME_MEMORY, System.currentTimeMillis());
-            HSAnalytics.logEvent("BoostPlus_Show", "Type", "Toast Memory");
+            KCAnalytics.logEvent("BoostPlus_Show", "Type", "Toast Memory");
         }
         boostPlusView.setOnClickListener(this);
         mAdContainerLayout.addView(boostPlusView);
@@ -494,10 +494,10 @@ public class BoostTip extends FrameLayout implements View.OnClickListener, Float
 
         if (mType == BoostType.BATTERY) {
             title.setText(getContext().getText(R.string.charging_screen_guide_battery_title));
-            HSAnalytics.logEvent("ChargingScreen_Toast_Shown", "type", "Battery life");
+            KCAnalytics.logEvent("ChargingScreen_Toast_Shown", "type", "Battery life");
         } else if (mType == BoostType.CPU_TEMPERATURE) {
             title.setText(getContext().getText(R.string.charging_screen_guide_temperature_title));
-            HSAnalytics.logEvent("ChargingScreen_Toast_Shown", "type", "CPU");
+            KCAnalytics.logEvent("ChargingScreen_Toast_Shown", "type", "CPU");
         }
         button.setOnClickListener(v -> {
             dismiss(false);
@@ -505,7 +505,7 @@ public class BoostTip extends FrameLayout implements View.OnClickListener, Float
             if (!LockerSettings.isLockerEnabledBefore()) {
                 LockerSettings.setLockerEnabled(true);
             }
-            HSAnalytics.logEvent("ChargingScreen_Toast_TurnOn_Clicked", "type",
+            KCAnalytics.logEvent("ChargingScreen_Toast_TurnOn_Clicked", "type",
                     mType == BoostType.BATTERY ? "Battery life" : "CPU");
             Toast.makeText(getContext(), R.string.charging_screen_guide_turn_on, Toast.LENGTH_SHORT).show();
         });

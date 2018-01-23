@@ -11,7 +11,6 @@ import android.view.View;
 import android.widget.Toast;
 
 import com.artw.lockscreen.common.NavUtils;
-import com.ihs.app.analytics.HSAnalytics;
 import com.ihs.commons.utils.HSLog;
 import com.ihs.feature.boost.auto.LockHelper;
 import com.ihs.feature.boost.plus.BoostPlusSettingsActivity;
@@ -19,6 +18,7 @@ import com.ihs.feature.common.CompatUtils;
 import com.ihs.feature.ui.DefaultButtonDialog2;
 import com.ihs.keyboardutils.R;
 import com.ihs.keyboardutils.utils.ToastUtils;
+import com.kc.utils.KCAnalytics;
 
 public class BoostPlusAutoCleanTip extends DefaultButtonDialog2 {
     public static final int SETTING_LOCK_INSTANTLY = 1;
@@ -69,7 +69,7 @@ public class BoostPlusAutoCleanTip extends DefaultButtonDialog2 {
                 }
             });
         }
-        HSAnalytics.logEvent("Boost+_Setting_PowerNap_AlertOpen", "type", getEventLogType());
+        KCAnalytics.logEvent("Boost+_Setting_PowerNap_AlertOpen", "type", getEventLogType());
         super.onClickPositiveButton(v);
     }
 

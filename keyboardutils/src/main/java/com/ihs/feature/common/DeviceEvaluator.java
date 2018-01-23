@@ -7,11 +7,11 @@ import android.os.Build;
 import android.os.SystemClock;
 import android.util.Printer;
 
-import com.ihs.app.analytics.HSAnalytics;
 import com.ihs.app.framework.HSApplication;
 import com.ihs.commons.utils.HSLog;
 import com.ihs.commons.utils.HSPreferenceHelper;
 import com.ihs.keyboardutils.BuildConfig;
+import com.kc.utils.KCAnalytics;
 
 /**
  * Evaluates device rendering performance and provides suggestions on how we do animations and draw expensive effects.
@@ -197,7 +197,7 @@ public class DeviceEvaluator {
 
             if (mFrameCount > RESULT_CONVERGE_FRAME_COUNT_THRESHOLD && !mPrefs.getBoolean(PREF_KEY_RESULT_LOGGED, false)) {
                 mPrefs.putBoolean(PREF_KEY_RESULT_LOGGED, true);
-                HSAnalytics.logEvent("DeviceEvaluation_Result", "result", Integer.toString(saturation) + "%");
+                KCAnalytics.logEvent("DeviceEvaluation_Result", "result", Integer.toString(saturation) + "%");
             }
             return evaluation;
         }

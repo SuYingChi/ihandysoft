@@ -29,11 +29,11 @@ public class BoostUtils {
         //AB TEST CODE for auto clean.
 //        boolean isFirstLaunch = HSVersionControlUtils.isFirstLaunchSinceInstallation();
 //        if (isFirstLaunch) {
-//            HSAnalytics.logEvent("App_FirstStart_AutoClean_" + (shouldEnableBoostPlusConfig() ? "Open" : "Closed"));
+//            KCAnalytics.logEvent("App_FirstStart_AutoClean_" + (shouldEnableBoostPlusConfig() ? "Open" : "Closed"));
 //        }
 //        if (isFirstLaunch && shouldEnableBoostPlusConfig()) {
 //            HSLog.d("BoostUtil", "Enable boost plus forever(Except clear data, upgrade)");
-//            HSAnalytics.logEvent("Boost_Plus_Auto_Boost_Switch_On");
+//            KCAnalytics.logEvent("Boost_Plus_Auto_Boost_Switch_On");
 //            PreferenceHelper.get(LauncherFiles.BOOST_PREFS).putBoolean(PREF_KEY_BOOST_PLUS_ONCE_FOREVER, true);
 //        }
     }

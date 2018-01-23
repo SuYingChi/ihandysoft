@@ -1,8 +1,8 @@
 package com.ihs.feature.tip;
 
-import com.ihs.app.analytics.HSAnalytics;
 import com.ihs.chargingscreen.activity.ChargingFullScreenAlertDialogActivity;
 import com.ihs.feature.common.ITipInfo;
+import com.kc.utils.KCAnalytics;
 
 /**
  * Created by lz on 3/10/17.
@@ -24,7 +24,7 @@ public class ChargingScreenTipInfo implements ITipInfo {
 
     @Override public void show(LauncherTipManager.TipEnvironment env) {
         new ChargingScreenTip(env.context).show();
-        HSAnalytics.logEvent("Alert_LockerScreen_Shown");
+        KCAnalytics.logEvent("Alert_LockerScreen_Shown");
         ChargingFullScreenAlertDialogActivity.startChargingAlert();
     }
 

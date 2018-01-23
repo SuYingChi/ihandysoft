@@ -32,7 +32,6 @@ public class JunkCleanUninstallTip extends JunkCleanFloatTip implements View.OnC
         super.onClick(v);
         int i = v.getId();
         if (i == R.id.action_btn) {// click implements in super
-            JunkCleanUtils.FlurryLogger.logSpecialAlertClicked(JunkCleanConstant.RESIDUAL_FILES);
             JunkCleanUtils.FlurryLogger.logOpen(JunkCleanConstant.RESIDUAL_FILES);
 
         } else {

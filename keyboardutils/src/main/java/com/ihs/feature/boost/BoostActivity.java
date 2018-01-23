@@ -5,13 +5,13 @@ import android.os.Bundle;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.ihs.app.analytics.HSAnalytics;
 import com.ihs.app.framework.activity.HSActivity;
 import com.ihs.commons.utils.HSLog;
 import com.ihs.feature.boost.animation.BlackHoleLayout;
 import com.ihs.feature.common.LauncherFiles;
 import com.ihs.feature.common.PreferenceHelper;
 import com.ihs.keyboardutils.R;
+import com.kc.utils.KCAnalytics;
 
 
 /**
@@ -70,7 +70,7 @@ public class BoostActivity extends HSActivity {
     }
 
     private void startForeignIconAnimation() {
-        HSAnalytics.logEvent("Boost_Animation_Viewed", "type", "FloatingWindow");
+        KCAnalytics.logEvent("Boost_Animation_Viewed", "type", "FloatingWindow");
         final BlackHoleLayout blackHoleLayout = new BlackHoleLayout(BoostActivity.this);
         blackHoleLayout.setBoostType(mBoostType);
         blackHoleLayout.setBoostSource(BoostSource.STANDALONE_ACTIVITY);
@@ -104,7 +104,7 @@ public class BoostActivity extends HSActivity {
     private void logBoostClickedEvent() {
         switch (mStartSource) {
             case START_SOURCE_FOREIGN_LAUNCHER:
-                HSAnalytics.logEvent("Boost_Shortcut_Clicked");
+                KCAnalytics.logEvent("Boost_Shortcut_Clicked");
                 break;
         }
     }

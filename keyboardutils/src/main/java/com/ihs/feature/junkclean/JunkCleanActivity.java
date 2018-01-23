@@ -32,7 +32,6 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.artw.lockscreen.common.NavUtils;
-import com.ihs.app.analytics.HSAnalytics;
 import com.ihs.commons.config.HSConfig;
 import com.ihs.commons.utils.HSLog;
 import com.ihs.feature.boost.plus.BannerBackground;
@@ -73,6 +72,7 @@ import com.ihs.keyboardutils.R;
 import com.ihs.keyboardutils.permission.PermissionUtils;
 import com.ihs.keyboardutils.utils.CommonUtils;
 import com.ihs.keyboardutils.utils.ToastUtils;
+import com.kc.utils.KCAnalytics;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -713,10 +713,10 @@ public class JunkCleanActivity extends BasePermissionActivity {
         HSLog.d(TAG, "getListItems **** isNetworkAvailable = " + isNetworkAvailable + " isApkInstalled = " + isApkInstalled + " isSecurityBannerShowCountLimit = " + isSecurityBannerShowCountLimit + " shouldSecurityItemVisible = " + shouldSecurityItemVisible);
         if (shouldSecurityItemVisible) {
             final String eventLogParam = "SecurityBanner";
-            HSAnalytics.logEvent("Promotion_Viewed", "Type", eventLogParam);
+            KCAnalytics.logEvent("Promotion_Viewed", "Type", eventLogParam);
             SecurityItem securityItem = new SecurityItem(JunkCleanActivity.this);
             securityItem.setOnClickListener(() -> {
-                HSAnalytics.logEvent("Promotion_Clicked", "Type", eventLogParam);
+                KCAnalytics.logEvent("Promotion_Clicked", "Type", eventLogParam);
                 PromotionTracker.startTracking(mSecurityPackage, PromotionTracker.EVENT_LOG_APP_NAME_SECURITY, true);
             });
             flexibleItems.add(securityItem);

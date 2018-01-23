@@ -11,7 +11,6 @@ import android.support.v4.content.ContextCompat;
 import android.view.MenuItem;
 import android.view.View;
 
-import com.ihs.app.analytics.HSAnalytics;
 import com.ihs.app.framework.activity.HSAppCompatActivity;
 import com.ihs.chargingscreen.utils.ChargingPrefsUtil;
 import com.ihs.commons.notificationcenter.HSGlobalNotificationCenter;
@@ -33,6 +32,7 @@ import com.ihs.feature.resultpage.data.CardData;
 import com.ihs.feature.resultpage.data.ResultConstants;
 import com.ihs.keyboardutils.R;
 import com.ihs.keyboardutils.utils.CommonUtils;
+import com.kc.utils.KCAnalytics;
 
 import net.appcloudbox.ads.base.AcbNativeAd;
 
@@ -94,7 +94,7 @@ public class ResultPageActivity extends HSAppCompatActivity
         intent.setFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION | Intent.FLAG_ACTIVITY_CLEAR_TOP);
         activity.startActivity(intent);
         activity.overridePendingTransition(R.anim.no_anim, R.anim.no_anim);
-        HSAnalytics.logEvent("ResultPage_Show", "Type", ResultConstants.BOOST_PLUS);
+        KCAnalytics.logEvent("ResultPage_Show", "Type", ResultConstants.BOOST_PLUS);
     }
 
     public static void startForBattery(Activity activity,
@@ -112,7 +112,7 @@ public class ResultPageActivity extends HSAppCompatActivity
         intent.setFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION | Intent.FLAG_ACTIVITY_CLEAR_TOP);
         activity.startActivity(intent);
         activity.overridePendingTransition(R.anim.no_anim, R.anim.no_anim);
-        HSAnalytics.logEvent("ResultPage_Show", "Type", ResultConstants.BATTERY);
+        KCAnalytics.logEvent("ResultPage_Show", "Type", ResultConstants.BATTERY);
     }
 
     public static void startForJunkClean(Activity activity) {
@@ -128,7 +128,7 @@ public class ResultPageActivity extends HSAppCompatActivity
         intent.setFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION | Intent.FLAG_ACTIVITY_CLEAR_TOP);
         activity.startActivity(intent);
         activity.overridePendingTransition(R.anim.anim_popup, R.anim.anim_popup);
-        HSAnalytics.logEvent("ResultPage_Show", "Type", ResultConstants.JUNK_CLEANER);
+        KCAnalytics.logEvent("ResultPage_Show", "Type", ResultConstants.JUNK_CLEANER);
     }
 
     public static void startForCpuCooler(Activity activity) {
@@ -141,7 +141,7 @@ public class ResultPageActivity extends HSAppCompatActivity
         intent.setFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION | Intent.FLAG_ACTIVITY_CLEAR_TOP);
         activity.startActivity(intent);
         activity.overridePendingTransition(R.anim.none, R.anim.none);
-        HSAnalytics.logEvent("ResultPage_Show", "Type", ResultConstants.CPU_COOLER);
+        KCAnalytics.logEvent("ResultPage_Show", "Type", ResultConstants.CPU_COOLER);
     }
 
     public static void startForNotificationCleaner(Activity activity, int clearNotificationsCount) {
@@ -155,7 +155,7 @@ public class ResultPageActivity extends HSAppCompatActivity
         intent.setFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION | Intent.FLAG_ACTIVITY_CLEAR_TOP);
         activity.startActivity(intent);
         activity.overridePendingTransition(R.anim.none, R.anim.none);
-        HSAnalytics.logEvent("ResultPage_Show", "Type", ResultConstants.NOTIFICATION_CLEANER);
+        KCAnalytics.logEvent("ResultPage_Show", "Type", ResultConstants.NOTIFICATION_CLEANER);
     }
 
     private void recordIntoBpAndNcCardTimes() {

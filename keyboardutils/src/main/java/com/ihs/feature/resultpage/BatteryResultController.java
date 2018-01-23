@@ -14,7 +14,6 @@ import android.view.animation.AnimationSet;
 import android.view.animation.TranslateAnimation;
 import android.widget.TextView;
 
-import com.ihs.app.analytics.HSAnalytics;
 import com.ihs.feature.common.AnimatorListenerAdapter;
 import com.ihs.feature.common.ViewUtils;
 import com.ihs.feature.resultpage.data.CardData;
@@ -60,7 +59,7 @@ class BatteryResultController extends ResultController {
             ad.setNativeClickListener(new AcbNativeAd.AcbNativeClickListener() {
                 @Override
                 public void onAdClick(AcbAd acbAd) {
-                    HSAnalytics.logEvent("ResultPage_Cards_Click", "Type", ResultConstants.AD);
+
                 }
             });
         }
@@ -335,6 +334,5 @@ class BatteryResultController extends ResultController {
     @Override
     public void onClick(View v) {
         super.onClick(v);
-        logClickEvent(mType);
     }
 }

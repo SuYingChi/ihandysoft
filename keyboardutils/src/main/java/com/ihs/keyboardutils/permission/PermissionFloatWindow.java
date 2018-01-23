@@ -9,8 +9,8 @@ import android.view.Gravity;
 import android.view.WindowManager;
 import android.view.WindowManager.LayoutParams;
 
-import com.ihs.app.analytics.HSAnalytics;
 import com.ihs.app.framework.HSApplication;
+import com.kc.utils.KCAnalytics;
 
 
 public class PermissionFloatWindow {
@@ -68,7 +68,7 @@ public class PermissionFloatWindow {
                 permissionTip.startHandAnimationAgain();
             }
 
-            HSAnalytics.logEvent("Authorization_Mov_Viewed");
+            KCAnalytics.logEvent("Authorization_Mov_Viewed");
         } catch (Exception e) {
             e.printStackTrace();
         }

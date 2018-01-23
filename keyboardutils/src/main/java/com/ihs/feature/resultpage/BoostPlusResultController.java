@@ -13,7 +13,6 @@ import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
-import com.ihs.app.analytics.HSAnalytics;
 import com.ihs.commons.utils.HSLog;
 import com.ihs.feature.boost.plus.BoostBgImageView;
 import com.ihs.feature.common.AnimatorListenerAdapter;
@@ -107,7 +106,6 @@ class BoostPlusResultController extends ResultController {
             ad.setNativeClickListener(new AcbNativeAd.AcbNativeClickListener() {
                 @Override
                 public void onAdClick(AcbAd acbAd) {
-                    HSAnalytics.logEvent("ResultPage_Cards_Click", "Type", ResultConstants.AD);
                 }
             });
         }
@@ -283,6 +281,5 @@ class BoostPlusResultController extends ResultController {
     @Override
     public void onClick(View v) {
         super.onClick(v);
-        logClickEvent(mType);
     }
 }

@@ -3,15 +3,15 @@ package com.ihs.feature.battery;
 import android.content.Context;
 
 import com.artw.lockscreen.common.NavUtils;
-import com.ihs.app.analytics.HSAnalytics;
 import com.ihs.commons.utils.HSLog;
 import com.ihs.feature.common.DeviceManager;
 import com.ihs.feature.common.LauncherFiles;
-import com.ihs.feature.tip.LauncherTipManager;
 import com.ihs.feature.common.PreferenceHelper;
 import com.ihs.feature.resultpage.data.ResultConstants;
+import com.ihs.feature.tip.LauncherTipManager;
 import com.ihs.keyboardutils.BuildConfig;
 import com.ihs.keyboardutils.R;
+import com.kc.utils.KCAnalytics;
 
 import java.util.Calendar;
 
@@ -239,22 +239,6 @@ public class BatteryUtils {
         return (0 != lastCleanSecondTime && cleanFreezeSecondTime < BATTERY_CLEAN_FREEZE_SECOND_TIME);
     }
 
-    public static void flurryBatteryIconClicked(int batteryLevel, boolean isCharging) {
-        if (batteryLevel <= 0) {
-            batteryLevel = DeviceManager.getInstance().getBatteryLevel();
-        }
-        if (batteryLevel <= BATTERY_STATUS_A_LEVEL) {
-            HSAnalytics.logEvent("Battery_IconClicked", "type", isCharging ? "Charging-a" : "Not Charging-a");
-        } else if (batteryLevel <= BATTERY_STATUS_B_LEVEL) {
-            HSAnalytics.logEvent("Battery_IconClicked", "type", isCharging ? "Charging-b" : "Not Charging-b");
-        } else if (batteryLevel <= BATTERY_STATUS_C_LEVEL) {
-            HSAnalytics.logEvent("Battery_IconClicked", "type", isCharging ? "Charging-c" : "Not Charging-c");
-        } else {
-            HSAnalytics.logEvent("Battery_IconClicked", "type", isCharging ? "Charging-d" : "Not Charging-d");
-        }
-        PreferenceHelper.get(LauncherFiles.BATTERY_PREFS).putLong(PREF_KEY_BATTERY_USER_VISIT_TIME, System.currentTimeMillis());
-    }
-
     public static boolean isUserEnterBatteryManagerRecent(long interval) {
         long lastTime = PreferenceHelper.get(LauncherFiles.BATTERY_PREFS).getLong(PREF_KEY_BATTERY_USER_VISIT_TIME, 0);
         return (System.currentTimeMillis() - lastTime) < interval;
@@ -325,15 +309,15 @@ public class BatteryUtils {
             public void run() {
                 // Confirm
                 NavUtils.startActivity(launcher, BatteryActivity.class);
-                HSAnalytics.logEvent("Battery_OpenFrom", "type", "From Dialog");
-                HSAnalytics.logEvent("Battery_Dialog_LowPower_Show", "type", "Try");
+                KCAnalytics.logEvent("Battery_OpenFrom", "type", "From Dialog");
+                KCAnalytics.logEvent("Battery_Dialog_LowPower_Show", "type", "Try");
             }
         }, new Runnable() {
             @Override
             public void run() {
                 // Cancel
                 PreferenceHelper.get(LauncherFiles.BATTERY_PREFS).incrementAndGetInt(PREF_KEY_BATTERY_TIP_CANCEL_COUNT);
-                HSAnalytics.logEvent("Battery_Dialog_LowPower_Show", "type", "Cancel");
+                KCAnalytics.logEvent("Battery_Dialog_LowPower_Show", "type", "Cancel");
             }
         });
     }

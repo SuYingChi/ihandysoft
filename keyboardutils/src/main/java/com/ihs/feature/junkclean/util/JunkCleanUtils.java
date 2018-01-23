@@ -7,7 +7,6 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
-import com.ihs.app.analytics.HSAnalytics;
 import com.ihs.commons.utils.HSLog;
 import com.ihs.feature.common.LauncherFiles;
 import com.ihs.feature.common.PreferenceHelper;
@@ -16,6 +15,7 @@ import com.ihs.feature.junkclean.JunkCleanActivity;
 import com.ihs.feature.junkclean.JunkCleanWindowController;
 import com.ihs.feature.resultpage.data.ResultConstants;
 import com.ihs.keyboardutils.R;
+import com.kc.utils.KCAnalytics;
 
 public class JunkCleanUtils {
 
@@ -217,27 +217,19 @@ public class JunkCleanUtils {
     public static class FlurryLogger {
 
         public static void logOpen(String type) {
-            HSAnalytics.logEvent("JunkCleaner_Open", "Type", type);
+            KCAnalytics.logEvent("JunkCleaner_Open", "Type", type);
         }
 
         public static void logHomepageButtonClicked() {
-            HSAnalytics.logEvent("JunkCleaner_Homepage_Button_Clicked");
+            KCAnalytics.logEvent("JunkCleaner_Homepage_Button_Clicked");
         }
 
         public static void logNotificationPushed() {
-            HSAnalytics.logEvent("Notification_Pushed", "Type", ResultConstants.JUNK_CLEANER);
+            KCAnalytics.logEvent("Notification_Pushed", "Type", ResultConstants.JUNK_CLEANER);
         }
 
         public static void logNotificationClicked() {
-            HSAnalytics.logEvent("Notification_Clicked", "Type", ResultConstants.JUNK_CLEANER);
-        }
-
-        public static void logSpecialAlertViewed(String type) {
-            HSAnalytics.logEvent("JunkCleaner_SpecialAlert_Viewed", "Type", type);
-        }
-
-        public static void logSpecialAlertClicked(String type) {
-            HSAnalytics.logEvent("JunkCleaner_SpecialAlert_Clicked", "Type", type);
+            KCAnalytics.logEvent("Notification_Clicked", "Type", ResultConstants.JUNK_CLEANER);
         }
     }
 }

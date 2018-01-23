@@ -90,8 +90,6 @@ public class ChargingScreenAlertActivity extends Activity {
     private List<Drawable> imgChargingStateGreenDrawables = new ArrayList<>();
     private List<Drawable> imgChargingStateDarkDrawables = new ArrayList<>();
 
-    private long startDisplayTime;
-
     private TelephonyManager telephonyManager;
 
     private Handler handler = new Handler() {
@@ -402,12 +400,6 @@ public class ChargingScreenAlertActivity extends Activity {
         if (getChargingState() > 0) {
             bubbleView.start();
         }
-        if (System.currentTimeMillis() - startDisplayTime > 1000) {
-            startDisplayTime = System.currentTimeMillis();
-        } else {
-            startDisplayTime = -1;
-        }
-        HSLog.d("chargingtest onResume");
 
         long duration = System.currentTimeMillis() - createTime;
 
@@ -432,10 +424,6 @@ public class ChargingScreenAlertActivity extends Activity {
         HSLog.d("chargingtest onPause");
 
         ChargeNotifyManager.getInstance().setIsChargingActivityAlive(false);
-
-        if (startDisplayTime != -1) {
-            logDisplayTime("app_chargingLocker_displaytime", startDisplayTime);
-        }
     }
 
     @Override
@@ -641,31 +629,6 @@ public class ChargingScreenAlertActivity extends Activity {
         }
 
         startFlashAnimation(imgChargingStateGreenDrawableCount);
-    }
-
-
-    public static void logDisplayTime(String key, long startDisplayTime) {
-        long totalTime = (System.currentTimeMillis() - startDisplayTime) / 1000;
-
-        if (totalTime < 1) {
-            HSAnalytics.logEvent(key, key, "0~1s");
-        } else if (totalTime < 2) {
-            HSAnalytics.logEvent(key, key, "1~2s");
-        } else if (totalTime < 3) {
-            HSAnalytics.logEvent(key, key, "2~3s");
-        } else if (totalTime < 4) {
-            HSAnalytics.logEvent(key, key, "3~4s");
-        } else if (totalTime < 5) {
-            HSAnalytics.logEvent(key, key, "4~5s");
-        } else if (totalTime < 6) {
-            HSAnalytics.logEvent(key, key, "5~6s");
-        } else if (totalTime < 7) {
-            HSAnalytics.logEvent(key, key, "6~7s");
-        } else if (totalTime < 8) {
-            HSAnalytics.logEvent(key, key, "7~8s");
-        } else {
-            HSAnalytics.logEvent(key, key, "8s+");
-        }
     }
 
     private void showRemoveAdsDialog() {
