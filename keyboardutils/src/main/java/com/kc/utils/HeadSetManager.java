@@ -73,7 +73,7 @@ public class HeadSetManager {
         HSApplication.getContext().unregisterReceiver(headSetReceiver);
     }
 
-    public static void init(String string){
+    public  void init(String string){
         mHeadSetAdvManager.setHeadSetAdPlaceMent(string);
         mHeadSetAdvManager.registerHeadSetReceiver();
 
