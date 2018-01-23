@@ -22,7 +22,22 @@ public class FloatWindowCompat {
             FloatWindowController.init(context);
             FloatWindowController.getInstance().start();
         } else {
-            context.startService(LockScreenService.getIntent());
+
+            /*
+            https://www.fabric.io/keyboardandroid/android/apps/com.smartkeyboard.emoji/issues/59dd38ecbe077a4dcc137231?time=last-seven-days
+
+            应该是部分手机特有crash
+            https://stackoverflow.com/questions/38764497/security-exception-unable-to-start-service-user-0-is-restricted
+
+            Below is some translation from the post: After auto screen off for a while,
+            the system will start battery management module, it will forbid any app start up.
+            but there is a bug, it should force stop the app instead throw exception.
+            From developer side, they give a solution: use "try catch" when starting the service.
+             */
+            try {
+                context.startService(LockScreenService.getIntent());
+            } catch (Exception e) {
+            }
         }
     }
 
