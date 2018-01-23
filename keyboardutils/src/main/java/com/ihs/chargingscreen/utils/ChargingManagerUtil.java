@@ -164,6 +164,7 @@ public class ChargingManagerUtil {
                 intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NO_ANIMATION);
                 ContextCompat.startActivity(HSApplication.getContext(), intent, null);
 
+                HSAnalytics.logEvent("chargeAlert_show");
             } catch (Exception e) {
                 HSLog.e(e.getMessage());
             }
