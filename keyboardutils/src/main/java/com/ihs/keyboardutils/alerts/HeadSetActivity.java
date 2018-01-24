@@ -55,8 +55,6 @@ import java.util.Map;
  */
 
 public class HeadSetActivity extends HSActivity implements SeekBar.OnSeekBarChangeListener, View.OnClickListener {
-    private static final int ADD_APP = 2;
-    private static final int DELETE_APP = 3;
     public String TAG = "HeadSetActivity";
     private SeekBar voiceseekBar;
     private AudioManager am;
@@ -72,7 +70,6 @@ public class HeadSetActivity extends HSActivity implements SeekBar.OnSeekBarChan
     private View rootview;
     private LinearLayout noadv;
     private RoundedCornerLayout adContainer;
-    private HashMap<String, Drawable> lastMatchAppMap = new HashMap<String, Drawable>();
     private HashMap<String, Drawable> currentMatchAppMap = new HashMap<String, Drawable>();
     private Button cancle;
     private Button noNotification;
@@ -193,8 +190,6 @@ public class HeadSetActivity extends HSActivity implements SeekBar.OnSeekBarChan
                 roundCornerImageView.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-
-                       // openPackage(HeadSetActivity.this, name);
                        Intent launnchIntent = getPackageManager().getLaunchIntentForPackage(name);
                        startActivity(launnchIntent);
 
@@ -211,15 +206,6 @@ public class HeadSetActivity extends HSActivity implements SeekBar.OnSeekBarChan
 
     }
 
-    private void isReloadInstallApp() {
-        if (!currentMatchAppMap.isEmpty() && !currentMatchAppMap.equals(lastMatchAppMap)) {
-            showInstallAPP(currentMatchAppMap);
-        } else if (currentMatchAppMap.isEmpty()) {
-            installAppViewGroup.setVisibility(View.GONE);
-        }
-        lastMatchAppMap.putAll(currentMatchAppMap);
-    }
-
     private void initAppsinfoAndCompared() {
         mHandlerThead = new HandlerThread("getInstalledAppInfoAndCompared");
         mHandlerThead.start();
@@ -233,7 +219,7 @@ public class HeadSetActivity extends HSActivity implements SeekBar.OnSeekBarChan
                         mUIHandler.post(new Runnable() {
                             @Override
                             public void run() {
-                                isReloadInstallApp();
+                                showInstallAPP(currentMatchAppMap);
                                     }
                                 });
                         break;
@@ -275,44 +261,6 @@ public class HeadSetActivity extends HSActivity implements SeekBar.OnSeekBarChan
             }
         }
         return compareResult;
-    }
-    private boolean compareRemoteAdd(String packageName) {
-
-        if (getRemoteAPPlist().contains(packageName)) {
-            PackageManager pManager = getPackageManager();
-            PackageInfo pak = null;
-            try {
-                pak = pManager.getPackageInfo(packageName, 0);
-            } catch (PackageManager.NameNotFoundException e) {
-                e.printStackTrace();
-            }
-            if (pak != null) {
-                Drawable drawable = pak.applicationInfo.loadIcon(pManager);
-                if(currentMatchAppMap.size()<5) {
-                    currentMatchAppMap.put(packageName, drawable);
-                    return true;
-                }
-            }
-        }
-        return false;
-    }
-    private boolean compareRemoteRemoved(String packageName) {
-
-        if (currentMatchAppMap.keySet().contains(packageName)) {
-            PackageManager pManager = getPackageManager();
-            PackageInfo pak = null;
-            try {
-                pak = pManager.getPackageInfo(packageName, 0);
-            } catch (PackageManager.NameNotFoundException e) {
-                e.printStackTrace();
-            }
-            if (pak != null) {
-                Drawable drawable = pak.applicationInfo.loadIcon(pManager);
-                currentMatchAppMap.remove(packageName);
-                return true;
-            }
-        }
-        return false;
     }
     @Override
     protected void onDestroy() {
@@ -444,54 +392,5 @@ public class HeadSetActivity extends HSActivity implements SeekBar.OnSeekBarChan
         }
         return list;
     }
-
-/*    // 根据包名寻找MainActivity
-    private static Intent getAppOpenIntentByPackageName(Context context, String packageName) {
-        String mainAct = null;
-        PackageManager pkgMag = context.getPackageManager();
-        Intent intent = new Intent(Intent.ACTION_MAIN);
-        intent.addCategory(Intent.CATEGORY_LAUNCHER);
-        intent.setFlags(Intent.FLAG_ACTIVITY_RESET_TASK_IF_NEEDED | Intent.FLAG_ACTIVITY_NEW_TASK);
-
-        @SuppressLint("WrongConstant")
-        List<ResolveInfo> list = pkgMag.queryIntentActivities(intent, PackageManager.GET_ACTIVITIES);
-        for (int i = 0; i < list.size(); i++) {
-            ResolveInfo info = list.get(i);
-            if (info.activityInfo.packageName.equals(packageName)) {
-                mainAct = info.activityInfo.name;
-                break;
-            }
-        }
-        if (TextUtils.isEmpty(mainAct)) {
-            return null;
-        }
-        intent.setComponent(new ComponentName(packageName, mainAct));
-        return intent;
-    }
-
-    // 创建第三方应用的上下文环境
-    private static Context getPackageContext(Context context, String packageName) {
-        Context pkgContext = null;
-        if (context.getPackageName().equals(packageName)) {
-            pkgContext = context;
-        } else {
-            try {
-                pkgContext = context.createPackageContext(packageName, Context.CONTEXT_IGNORE_SECURITY | Context.CONTEXT_INCLUDE_CODE);
-            } catch (PackageManager.NameNotFoundException e) {
-                e.printStackTrace();
-            }
-        }
-        return pkgContext;
-    }
-
-    private boolean openPackage(Context context, String packageName) {
-        Context pkgContext = getPackageContext(context, packageName);
-        Intent intent = getAppOpenIntentByPackageName(context, packageName);
-        if (pkgContext != null && intent != null) {
-            pkgContext.startActivity(intent);
-            return true;
-        }
-        return false;
-    }*/
 
 }
