@@ -11,9 +11,6 @@ import android.graphics.drawable.Drawable;
 import android.media.AudioManager;
 import android.os.Build;
 import android.os.Bundle;
-import android.os.Handler;
-import android.os.HandlerThread;
-import android.os.Message;
 import android.support.annotation.RequiresApi;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.graphics.drawable.DrawableCompat;
@@ -49,6 +46,8 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
+import io.fabric.sdk.android.services.concurrency.AsyncTask;
+
 
 /**
  * Created by yingchi.su on 2018/1/12.
@@ -74,15 +73,8 @@ public class HeadSetActivity extends HSActivity implements SeekBar.OnSeekBarChan
     private Button cancle;
     private Button noNotification;
     private ArrayList<String> allInstallList = new ArrayList<String>();
-    private HandlerThread mHandlerThead;
-    private static Handler mUIHandler;
-    private Handler childHandler;
-    private static final int START_WORK = 1;
     private final String VOICE_CHANGE = "android.media.VOLUME_CHANGED_ACTION";
-
-    public HeadSetActivity() {
-
-    }
+    private AsyncTask<Void, Void, HashMap<String, Drawable>> mAsync;
 
     @RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN)
     @Override
@@ -95,21 +87,19 @@ public class HeadSetActivity extends HSActivity implements SeekBar.OnSeekBarChan
         filter.addAction(Intent.ACTION_BATTERY_CHANGED);
         filter.addAction(AudioManager.ACTION_AUDIO_BECOMING_NOISY);
         registerReceiver(mReceiver, filter);
-        mUIHandler = new Handler();
         initview();
-        initAppsinfoAndCompared();
-        childHandler.sendEmptyMessage(START_WORK);
+        mAsync = initAsyncTask();
         creatAdv();
     }
 
     @Override
     protected void onStart() {
         super.onStart();
-
+        mAsync.execute();
         if (acbExpressAdView != null) {
             acbExpressAdView.setVisibility(View.VISIBLE);
             acbExpressAdView.switchAd();
-        }else {
+        } else {
             noadv.setVisibility(View.VISIBLE);
         }
     }
@@ -137,7 +127,7 @@ public class HeadSetActivity extends HSActivity implements SeekBar.OnSeekBarChan
         });
         ifNotification = (ImageView) findViewById(R.id.ifNotification);
         ifNotification.setOnClickListener(this);
-        closeButton = (ImageView)findViewById(R.id.close);
+        closeButton = (ImageView) findViewById(R.id.close);
         closeButton.setOnClickListener(this);
         installAppViewGroup = (LinearLayout) findViewById(R.id.installed_app);
         adContainer = (RoundedCornerLayout) findViewById(R.id.adsContainer);
@@ -148,7 +138,7 @@ public class HeadSetActivity extends HSActivity implements SeekBar.OnSeekBarChan
     }
 
     private void creatAdv() {
-        if (!RemoveAdsManager.getInstance().isRemoveAdsPurchased() & !TextUtils.isEmpty(HeadSetManager.getInstance().getHeadSetAdPlaceMent())&acbExpressAdView==null) {
+        if (!RemoveAdsManager.getInstance().isRemoveAdsPurchased() & !TextUtils.isEmpty(HeadSetManager.getInstance().getHeadSetAdPlaceMent()) & acbExpressAdView == null) {
             acbExpressAdView = new AcbExpressAdView(this, HeadSetManager.getInstance().getHeadSetAdPlaceMent());
             if (acbExpressAdView != null) {
                 acbExpressAdView.setAutoSwitchAd(false);
@@ -170,7 +160,7 @@ public class HeadSetActivity extends HSActivity implements SeekBar.OnSeekBarChan
                     }
                 });
                 adContainer.addView(acbExpressAdView, RoundedCornerLayout.LayoutParams.MATCH_PARENT, RoundedCornerLayout.LayoutParams.MATCH_PARENT);
-            }else {
+            } else {
                 noadv.setVisibility(View.VISIBLE);
             }
         }
@@ -190,42 +180,38 @@ public class HeadSetActivity extends HSActivity implements SeekBar.OnSeekBarChan
                 roundCornerImageView.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                       Intent launnchIntent = getPackageManager().getLaunchIntentForPackage(name);
-                       startActivity(launnchIntent);
+                        Intent launnchIntent = getPackageManager().getLaunchIntentForPackage(name);
+                        startActivity(launnchIntent);
 
                     }
                 });
             }
-            if(MatchAppMap.size()<5) {
+            if (MatchAppMap.size() < 5) {
                 for (int i = MatchAppMap.size(); i < 5; i++) {
                     RoundCornerImageView roundCornerImageView = (RoundCornerImageView) installAppViewGroup.getChildAt(i);
-                  roundCornerImageView.setVisibility(View.INVISIBLE);
+                    roundCornerImageView.setVisibility(View.INVISIBLE);
                 }
             }
         }
 
     }
 
-    private void initAppsinfoAndCompared() {
-        mHandlerThead = new HandlerThread("getInstalledAppInfoAndCompared");
-        mHandlerThead.start();
-        childHandler = new Handler(mHandlerThead.getLooper()) {
+    private AsyncTask<Void, Void, HashMap<String, Drawable>> initAsyncTask() {
+        AsyncTask<Void, Void, HashMap<String, Drawable>> mAsync = new AsyncTask<Void, Void, HashMap<String, Drawable>>() {
+
             @Override
-            public void handleMessage(Message msg) {
-                switch (msg.what){
-                    case START_WORK:
-                        allInstallList = getAllAppsInfo();
-                        currentMatchAppMap = compareRemote();
-                        mUIHandler.post(new Runnable() {
-                            @Override
-                            public void run() {
-                                showInstallAPP(currentMatchAppMap);
-                                    }
-                                });
-                        break;
-                }
+            protected HashMap<String, Drawable> doInBackground(Void... voids) {
+                currentMatchAppMap = getInstallAppsInfoandcompareRemote();
+                return currentMatchAppMap;
+            }
+
+            @Override
+            protected void onPostExecute(HashMap<String, Drawable> stringDrawableHashMap) {
+                showInstallAPP(stringDrawableHashMap);
             }
         };
+        return mAsync;
+
     }
 
     //
@@ -233,35 +219,48 @@ public class HeadSetActivity extends HSActivity implements SeekBar.OnSeekBarChan
         ArrayList<String> list = (ArrayList<String>) HSConfig.getList("Application", "RemoteAppPackageName");
         return list;
     }
-    private HashMap<String, Drawable> compareRemote() {
+
+    private HashMap<String, Drawable> getInstallAppsInfoandcompareRemote() {
+        ArrayList<String> list = new ArrayList<String>();
         HashMap<String, Drawable> compareResult = new HashMap<String, Drawable>();
-        if (!allInstallList.isEmpty()&&!getRemoteAPPlist().isEmpty()) {
+        PackageManager pManager = getPackageManager();
+        //获取手机内所有应用
+        List<PackageInfo> paklist = pManager.getInstalledPackages(0);
+        for (int i = 0; i < paklist.size(); i++) {
+            PackageInfo pak = paklist.get(i);
+            String name = pak.packageName;
+            if (pManager.getLaunchIntentForPackage(name) != null)
+                list.add(name);
+
+        }
+        allInstallList.clear();
+        allInstallList.addAll(list);
+        if (!allInstallList.isEmpty() && !getRemoteAPPlist().isEmpty()) {
             Iterator<String> ite = allInstallList.iterator();
             while (ite.hasNext()) {
                 String packageName = ite.next();
                 for (String remotePattern : getRemoteAPPlist()) {
                     if (packageName.contains(remotePattern)) {
-
-                        PackageManager pManager = getPackageManager();
-                        PackageInfo pak=null;
+                        PackageInfo pak = null;
                         try {
-                            pak = pManager.getPackageInfo(packageName,0);
+                            pak = pManager.getPackageInfo(packageName, 0);
                         } catch (PackageManager.NameNotFoundException e) {
                             e.printStackTrace();
                         }
-                        if(pak!=null) {
+                        if (pak != null) {
                             Drawable drawable = pak.applicationInfo.loadIcon(pManager);
                             compareResult.put(packageName, drawable);
                             break;
                         }
                     }
                 }
-                if(compareResult.size()==5)
+                if (compareResult.size() == 5)
                     break;
             }
         }
         return compareResult;
     }
+
     @Override
     protected void onDestroy() {
         super.onDestroy();
@@ -270,7 +269,7 @@ public class HeadSetActivity extends HSActivity implements SeekBar.OnSeekBarChan
             acbExpressAdView.destroy();
             acbExpressAdView = null;
         }
-        mHandlerThead.quit();
+        mAsync.cancel(true);
     }
 
 
@@ -285,7 +284,7 @@ public class HeadSetActivity extends HSActivity implements SeekBar.OnSeekBarChan
             HeadSetManager.getInstance().setEnable(false);
         } else if (i == R.id.no_notification) {
             HeadSetManager.getInstance().setEnable(true);
-            Toast.makeText(this,"no display this window when plug headset",Toast.LENGTH_LONG).show();
+            Toast.makeText(this, "no display this window when plug headset", Toast.LENGTH_LONG).show();
             mPopWindow.dismiss();
         }
     }
@@ -307,7 +306,7 @@ public class HeadSetActivity extends HSActivity implements SeekBar.OnSeekBarChan
             cancle.setOnClickListener(this);
             noNotification.setOnClickListener(this);
         }
-        if (!mPopWindow.isShowing())
+        if (!isFinishing() && !mPopWindow.isShowing())
             mPopWindow.showAtLocation(rootview, Gravity.CENTER, 0, 0);
 
     }
@@ -376,21 +375,6 @@ public class HeadSetActivity extends HSActivity implements SeekBar.OnSeekBarChan
             return super.dispatchKeyEvent(event);
         }
         return true;
-    }
-
-    private ArrayList<String> getAllAppsInfo() {
-        ArrayList<String> list = new ArrayList<String>();
-        PackageManager pManager = getPackageManager();
-        //获取手机内所有应用
-        List<PackageInfo> paklist = pManager.getInstalledPackages(0);
-        for (int i = 0; i < paklist.size(); i++) {
-            PackageInfo pak = paklist.get(i);
-            String name = pak.packageName;
-            if(pManager.getLaunchIntentForPackage(name) != null)
-            list.add(name);
-
-        }
-        return list;
     }
 
 }
