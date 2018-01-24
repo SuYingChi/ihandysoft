@@ -308,17 +308,11 @@ public class AppSuggestionActivity extends Activity {
 
 
     private void sendSMS() {
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) // At least KitKat
-        {
-            Intent intent = new Intent(Intent.ACTION_MAIN);
-            intent.addCategory(Intent.CATEGORY_APP_MESSAGING);
-            try {
-                startActivity(intent);
-            } catch (Exception e) {
-
-            }
-        } else // For early versions, do what worked for you before.
-        {
+        Intent intent = new Intent(Intent.ACTION_MAIN);
+        intent.addCategory(Intent.CATEGORY_APP_MESSAGING);
+        try {
+            startActivity(intent);
+        } catch (Exception e) {
             Intent smsIntent = new Intent(android.content.Intent.ACTION_VIEW);
             smsIntent.setType("vnd.android-dir/mms-sms");
             if (HSApplication.getContext().getPackageManager().resolveActivity(smsIntent, 0) != null) {
