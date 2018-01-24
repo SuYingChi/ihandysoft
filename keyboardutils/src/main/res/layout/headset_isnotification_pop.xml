@@ -33,7 +33,7 @@
         android:layout_marginTop="8dp"
         >
         <Button
-            android:id="@+id/cancle"
+            android:id="@+id/disable"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:text="Disable "
@@ -43,7 +43,7 @@
             android:textSize="16sp"
             />
         <Button
-            android:id="@+id/no_notification"
+            android:id="@+id/not_now"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:text="Not now"

@@ -57,10 +57,10 @@ public class HeadSetActivity extends HSActivity implements SeekBar.OnSeekBarChan
     public String TAG = "HeadSetActivity";
     private SeekBar voiceseekBar;
     private AudioManager am;
-    private BroadcastReceiver mReceiver;
-    private ImageView ifNotification;
+    private BroadcastReceiver receiver;
+    private ImageView isEnable;
     private ImageView closeButton;
-    private PopupWindow mPopWindow;
+    private PopupWindow isEnablePopupWindow;
     private AcbExpressAdView acbExpressAdView;
     private LinearLayout installAppViewGroup;
     private int percent = 0;
@@ -69,33 +69,44 @@ public class HeadSetActivity extends HSActivity implements SeekBar.OnSeekBarChan
     private View rootview;
     private LinearLayout noadv;
     private RoundedCornerLayout adContainer;
-    private HashMap<String, Drawable> currentMatchAppMap = new HashMap<String, Drawable>();
     private Button cancle;
     private Button noNotification;
-    private ArrayList<String> allInstallList = new ArrayList<String>();
     private final String VOICE_CHANGE = "android.media.VOLUME_CHANGED_ACTION";
-    private AsyncTask<Void, Void, HashMap<String, Drawable>> mAsync;
 
     @RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN)
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.headsetlayout);
-        mReceiver = new MyReceiver();
+        receiver = new MyReceiver();
         IntentFilter filter = new IntentFilter();
         filter.addAction(VOICE_CHANGE);
         filter.addAction(Intent.ACTION_BATTERY_CHANGED);
         filter.addAction(AudioManager.ACTION_AUDIO_BECOMING_NOISY);
-        registerReceiver(mReceiver, filter);
+        registerReceiver(receiver, filter);
         initview();
-        mAsync = initAsyncTask();
         creatAdv();
+
     }
+
+    AsyncTask<Void, Void, HashMap<String, Drawable>> getMatchedAppsAsyncTask = new AsyncTask<Void, Void, HashMap<String, Drawable>>() {
+
+        @Override
+        protected HashMap<String, Drawable> doInBackground(Void... voids) {
+            HashMap<String, Drawable>  currentMatchAppMap = getInstallAppsInfoAndcompareRemote();
+            return currentMatchAppMap;
+        }
+
+        @Override
+        protected void onPostExecute(HashMap<String, Drawable> stringDrawableHashMap) {
+            showInstallAPP(stringDrawableHashMap);
+        }
+    };
 
     @Override
     protected void onStart() {
         super.onStart();
-        mAsync.execute();
+        getMatchedAppsAsyncTask.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
         if (acbExpressAdView != null) {
             acbExpressAdView.setVisibility(View.VISIBLE);
             acbExpressAdView.switchAd();
@@ -125,8 +136,8 @@ public class HeadSetActivity extends HSActivity implements SeekBar.OnSeekBarChan
                 Log.d(TAG, "click  headSetLayout,avoid finish headsetactivity");
             }
         });
-        ifNotification = (ImageView) findViewById(R.id.isNotification);
-        ifNotification.setOnClickListener(this);
+        isEnable = (ImageView) findViewById(R.id.isNotification);
+        isEnable.setOnClickListener(this);
         closeButton = (ImageView) findViewById(R.id.close);
         closeButton.setOnClickListener(this);
         installAppViewGroup = (LinearLayout) findViewById(R.id.installed_app);
@@ -166,11 +177,11 @@ public class HeadSetActivity extends HSActivity implements SeekBar.OnSeekBarChan
         }
     }
 
-    private void showInstallAPP(HashMap<String, Drawable> MatchAppMap) {
-        if (!MatchAppMap.isEmpty()) {
+    private void showInstallAPP(HashMap<String, Drawable> matchAppMap) {
+        if (!matchAppMap.isEmpty()) {
             installAppViewGroup.setVisibility(View.VISIBLE);
-            Iterator<Map.Entry<String, Drawable>> ite = MatchAppMap.entrySet().iterator();
-            for (int i = 0; i < MatchAppMap.size() && ite.hasNext(); i++) {
+            Iterator<Map.Entry<String, Drawable>> ite = matchAppMap.entrySet().iterator();
+            for (int i = 0; i < matchAppMap.size() && ite.hasNext(); i++) {
                 Map.Entry<String, Drawable> iteEntry = ite.next();
                 Drawable icon = iteEntry.getValue();
                 String name = iteEntry.getKey();
@@ -186,8 +197,8 @@ public class HeadSetActivity extends HSActivity implements SeekBar.OnSeekBarChan
                     }
                 });
             }
-            if (MatchAppMap.size() < 5) {
-                for (int i = MatchAppMap.size(); i < 5; i++) {
+            if (matchAppMap.size() < 5) {
+                for (int i = matchAppMap.size(); i < 5; i++) {
                     RoundCornerImageView roundCornerImageView = (RoundCornerImageView) installAppViewGroup.getChildAt(i);
                     roundCornerImageView.setVisibility(View.INVISIBLE);
                 }
@@ -198,32 +209,12 @@ public class HeadSetActivity extends HSActivity implements SeekBar.OnSeekBarChan
 
 
     }
-
-    private AsyncTask<Void, Void, HashMap<String, Drawable>> initAsyncTask() {
-        AsyncTask<Void, Void, HashMap<String, Drawable>> mAsync = new AsyncTask<Void, Void, HashMap<String, Drawable>>() {
-
-            @Override
-            protected HashMap<String, Drawable> doInBackground(Void... voids) {
-                currentMatchAppMap = getInstallAppsInfoandcompareRemote();
-                return currentMatchAppMap;
-            }
-
-            @Override
-            protected void onPostExecute(HashMap<String, Drawable> stringDrawableHashMap) {
-                showInstallAPP(stringDrawableHashMap);
-            }
-        };
-        return mAsync;
-
-    }
-
-    //
     private ArrayList<String> getRemoteAPPlist() {
         ArrayList<String> list = (ArrayList<String>) HSConfig.getList("Application", "RemoteAppPackageName");
         return list;
     }
 
-    private HashMap<String, Drawable> getInstallAppsInfoandcompareRemote() {
+    private HashMap<String, Drawable> getInstallAppsInfoAndcompareRemote() {
         ArrayList<String> list = new ArrayList<String>();
         HashMap<String, Drawable> compareResult = new HashMap<String, Drawable>();
         PackageManager pManager = getPackageManager();
@@ -232,28 +223,29 @@ public class HeadSetActivity extends HSActivity implements SeekBar.OnSeekBarChan
         for (int i = 0; i < paklist.size(); i++) {
             PackageInfo pak = paklist.get(i);
             String name = pak.packageName;
-            if (pManager.getLaunchIntentForPackage(name) != null)
                 list.add(name);
 
         }
-        allInstallList.clear();
-        allInstallList.addAll(list);
-        if (!allInstallList.isEmpty() && !getRemoteAPPlist().isEmpty()) {
-            Iterator<String> ite = allInstallList.iterator();
+        if (!list.isEmpty() && !getRemoteAPPlist().isEmpty()) {
+            Iterator<String> ite = list.iterator();
+            ArrayList<String> remouteList = getRemoteAPPlist();
             while (ite.hasNext()) {
                 String packageName = ite.next();
-                for (String remotePattern : getRemoteAPPlist()) {
+                for (String remotePattern : remouteList) {
                     if (packageName.contains(remotePattern)) {
                         PackageInfo pak = null;
                         try {
-                            pak = pManager.getPackageInfo(packageName, 0);
+                            if(pManager.getLaunchIntentForPackage(packageName)!=null) {
+                                pak = pManager.getPackageInfo(packageName, 0);
+                                if (pak != null) {
+                                    Drawable drawable = pak.applicationInfo.loadIcon(pManager);
+                                    compareResult.put(packageName, drawable);
+
+                                    break;
+                                }
+                            }
                         } catch (PackageManager.NameNotFoundException e) {
                             e.printStackTrace();
-                        }
-                        if (pak != null) {
-                            Drawable drawable = pak.applicationInfo.loadIcon(pManager);
-                            compareResult.put(packageName, drawable);
-                            break;
                         }
                     }
                 }
@@ -267,12 +259,12 @@ public class HeadSetActivity extends HSActivity implements SeekBar.OnSeekBarChan
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        unregisterReceiver(mReceiver);
+        unregisterReceiver(receiver);
         if (acbExpressAdView != null) {
             acbExpressAdView.destroy();
             acbExpressAdView = null;
         }
-        mAsync.cancel(true);
+        getMatchedAppsAsyncTask.cancel(true);
     }
 
 
@@ -283,34 +275,38 @@ public class HeadSetActivity extends HSActivity implements SeekBar.OnSeekBarChan
             showPopwindow();
         } else if (i == R.id.close) {
             finish();
-        } else if (i == R.id.cancle) {
+        } else if (i == R.id.disable) {
             HeadSetManager.getInstance().setEnable(false);
-        } else if (i == R.id.no_notification) {
-            HeadSetManager.getInstance().setEnable(true);
             Toast.makeText(this, "no display this window when plug headset", Toast.LENGTH_LONG).show();
-            mPopWindow.dismiss();
+            if(isEnablePopupWindow.isShowing()&!isFinishing())
+            isEnablePopupWindow.dismiss();
+        } else if (i == R.id.not_now) {
+            HeadSetManager.getInstance().setEnable(true);
+            Toast.makeText(this, "display this window when plug headset", Toast.LENGTH_LONG).show();
+            if(isEnablePopupWindow.isShowing()&!isFinishing())
+            isEnablePopupWindow.dismiss();
         }
     }
 
     private void showPopwindow() {
-        if (mPopWindow == null) {
+        if (isEnablePopupWindow == null) {
             View contentView = LayoutInflater.from(this).inflate(R.layout.headset_isnotification_pop, null);
             DisplayMetrics metrics = new DisplayMetrics();
             getWindowManager().getDefaultDisplay().getMetrics(metrics);
             int width = metrics.widthPixels;
-            mPopWindow = new PopupWindow(contentView, (int) (width * 0.8), LinearLayout.LayoutParams.WRAP_CONTENT);
-            mPopWindow.setFocusable(true);
-            mPopWindow.setContentView(contentView);
-            mPopWindow.setBackgroundDrawable(new BitmapDrawable());
-            mPopWindow.setOutsideTouchable(true);
-            mPopWindow.setTouchable(true);
-            cancle = (Button) contentView.findViewById(R.id.cancle);
-            noNotification = (Button) contentView.findViewById(R.id.no_notification);
+            isEnablePopupWindow = new PopupWindow(contentView, (int) (width * 0.8), LinearLayout.LayoutParams.WRAP_CONTENT);
+            isEnablePopupWindow.setFocusable(true);
+            isEnablePopupWindow.setContentView(contentView);
+            isEnablePopupWindow.setBackgroundDrawable(new BitmapDrawable());
+            isEnablePopupWindow.setOutsideTouchable(true);
+            isEnablePopupWindow.setTouchable(true);
+            cancle = (Button) contentView.findViewById(R.id.disable);
+            noNotification = (Button) contentView.findViewById(R.id.not_now);
             cancle.setOnClickListener(this);
             noNotification.setOnClickListener(this);
         }
-        if (!isFinishing() && !mPopWindow.isShowing())
-            mPopWindow.showAtLocation(rootview, Gravity.CENTER, 0, 0);
+        if (!isFinishing() && !isEnablePopupWindow.isShowing())
+            isEnablePopupWindow.showAtLocation(rootview, Gravity.CENTER, 0, 0);
 
     }
 
@@ -370,8 +366,8 @@ public class HeadSetActivity extends HSActivity implements SeekBar.OnSeekBarChan
         } else if (event.getKeyCode() == KeyEvent.KEYCODE_VOLUME_UP) {
             am.adjustStreamVolume(AudioManager.STREAM_MUSIC, AudioManager.ADJUST_RAISE, 0);
         } else if (event.getKeyCode() == KeyEvent.KEYCODE_BACK) {
-            if (mPopWindow != null && mPopWindow.isShowing()) {
-                mPopWindow.dismiss();
+            if (isEnablePopupWindow != null && isEnablePopupWindow.isShowing()) {
+                isEnablePopupWindow.dismiss();
             }
             return super.dispatchKeyEvent(event);
         } else {
