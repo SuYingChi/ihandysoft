@@ -192,7 +192,10 @@ public class HeadSetActivity extends HSActivity implements SeekBar.OnSeekBarChan
                     roundCornerImageView.setVisibility(View.INVISIBLE);
                 }
             }
+        }else {
+            installAppViewGroup.setVisibility(View.GONE);
         }
+
 
     }
 
