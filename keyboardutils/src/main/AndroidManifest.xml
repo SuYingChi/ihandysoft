@@ -266,7 +266,7 @@
             android:screenOrientation="portrait"
             android:theme="@style/HeadsetActivityStyle"
             android:taskAffinity=".cpu.cooler"
-            android:launchMode="singleTask"
+            android:launchMode="singleTop"
             android:excludeFromRecents="true"
             />
         <activity

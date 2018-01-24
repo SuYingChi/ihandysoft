@@ -1,14 +1,11 @@
 package com.ihs.keyboardutils.alerts;
 
-import android.annotation.SuppressLint;
 import android.content.BroadcastReceiver;
-import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
-import android.content.pm.ResolveInfo;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.media.AudioManager;
@@ -36,12 +33,8 @@ import android.widget.SeekBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.ihs.app.framework.HSNotificationConstant;
 import com.ihs.app.framework.activity.HSActivity;
 import com.ihs.commons.config.HSConfig;
-import com.ihs.commons.notificationcenter.HSGlobalNotificationCenter;
-import com.ihs.commons.notificationcenter.INotificationObserver;
-import com.ihs.commons.utils.HSBundle;
 import com.ihs.feature.common.RoundCornerImageView;
 import com.ihs.keyboardutils.R;
 import com.ihs.keyboardutils.iap.RemoveAdsManager;
@@ -61,7 +54,7 @@ import java.util.Map;
  * Created by yingchi.su on 2018/1/12.
  */
 
-public class HeadSetActivity extends HSActivity implements SeekBar.OnSeekBarChangeListener, View.OnClickListener, INotificationObserver {
+public class HeadSetActivity extends HSActivity implements SeekBar.OnSeekBarChangeListener, View.OnClickListener {
     private static final int ADD_APP = 2;
     private static final int DELETE_APP = 3;
     public String TAG = "HeadSetActivity";
@@ -105,27 +98,11 @@ public class HeadSetActivity extends HSActivity implements SeekBar.OnSeekBarChan
         filter.addAction(Intent.ACTION_BATTERY_CHANGED);
         filter.addAction(AudioManager.ACTION_AUDIO_BECOMING_NOISY);
         registerReceiver(mReceiver, filter);
-        HSGlobalNotificationCenter.addObserver(HSNotificationConstant.HS_CONFIG_CHANGED, this);
         mUIHandler = new Handler();
         initview();
-        //初始化获取app信息并且与remote比对的子线程task
         initAppsinfoAndCompared();
-        //开启工作任务
         childHandler.sendEmptyMessage(START_WORK);
         creatAdv();
-    }
-
-    @Override
-    protected void onNewIntent(Intent intent) {
-        super.onNewIntent(intent);
-        if(currentMatchAppMap.isEmpty()){
-            childHandler.sendEmptyMessage(START_WORK);
-        }
-    }
-
-    @Override
-    protected void onStop() {
-        super.onStop();
     }
 
     @Override
@@ -175,7 +152,6 @@ public class HeadSetActivity extends HSActivity implements SeekBar.OnSeekBarChan
 
     private void creatAdv() {
         if (!RemoveAdsManager.getInstance().isRemoveAdsPurchased() & !TextUtils.isEmpty(HeadSetManager.getInstance().getHeadSetAdPlaceMent())&acbExpressAdView==null) {
-            //使用lumen测试
             acbExpressAdView = new AcbExpressAdView(this, HeadSetManager.getInstance().getHeadSetAdPlaceMent());
             if (acbExpressAdView != null) {
                 acbExpressAdView.setAutoSwitchAd(false);
@@ -218,7 +194,10 @@ public class HeadSetActivity extends HSActivity implements SeekBar.OnSeekBarChan
                     @Override
                     public void onClick(View v) {
 
-                        openPackage(HeadSetActivity.this, name);
+                       // openPackage(HeadSetActivity.this, name);
+                       Intent launnchIntent = getPackageManager().getLaunchIntentForPackage(name);
+                       startActivity(launnchIntent);
+
                     }
                 });
             }
@@ -257,30 +236,6 @@ public class HeadSetActivity extends HSActivity implements SeekBar.OnSeekBarChan
                                 isReloadInstallApp();
                                     }
                                 });
-                        break;
-                    case ADD_APP:
-                        String packageName =(String) msg.obj;
-                        allInstallList.add(packageName);
-                        if(compareRemoteAdd(packageName)){
-                            mUIHandler.post(new Runnable() {
-                                @Override
-                                public void run() {
-                                    isReloadInstallApp();
-                                }
-                            });
-                        }
-                        break;
-                    case DELETE_APP:
-                        String package_Name =(String) msg.obj;
-                        allInstallList.remove(package_Name);
-                        if(compareRemoteRemoved(package_Name)){
-                            mUIHandler.post(new Runnable() {
-                                @Override
-                                public void run() {
-                                    isReloadInstallApp();
-                                }
-                            });
-                        }
                         break;
                 }
             }
@@ -362,9 +317,7 @@ public class HeadSetActivity extends HSActivity implements SeekBar.OnSeekBarChan
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        Log.d(TAG, "unregisterReceiver  HeadSetReceiver");
         unregisterReceiver(mReceiver);
-        HSGlobalNotificationCenter.removeObserver(this);
         if (acbExpressAdView != null) {
             acbExpressAdView.destroy();
             acbExpressAdView = null;
@@ -376,7 +329,7 @@ public class HeadSetActivity extends HSActivity implements SeekBar.OnSeekBarChan
     @Override
     public void onClick(View v) {
         int i = v.getId();
-        if (i == R.id.ifNotification) {
+        if (i == R.id.isNotification) {
             showPopwindow();
         } else if (i == R.id.close) {
             finish();
@@ -438,12 +391,6 @@ public class HeadSetActivity extends HSActivity implements SeekBar.OnSeekBarChan
 
     }
 
-    @Override
-    public void onReceive(String s, HSBundle hsBundle) {
-        if (TextUtils.equals(s, HSNotificationConstant.HS_CONFIG_CHANGED)) {
-            childHandler.sendEmptyMessage(START_WORK);
-        }
-    }
 
     private class MyReceiver extends BroadcastReceiver {
 
@@ -462,19 +409,6 @@ public class HeadSetActivity extends HSActivity implements SeekBar.OnSeekBarChan
                 movie.setText(String.valueOf(percent * 3));
             } else if (action.equals(AudioManager.ACTION_AUDIO_BECOMING_NOISY)) {
                 HeadSetActivity.this.finish();
-            } else if (action.equals(Intent.ACTION_PACKAGE_ADDED)) {
-                Message message =new Message();
-                message.obj = intent.getData().getEncodedSchemeSpecificPart();
-                message.what = ADD_APP;
-                childHandler.sendMessage(message);
-            } else if (action.equals(Intent.ACTION_PACKAGE_REMOVED)) {
-                final String packageName = intent.getData().getEncodedSchemeSpecificPart();
-                if (lastMatchAppMap.keySet().contains(packageName)) {
-                    Message message =new Message();
-                    message.obj = intent.getData().getEncodedSchemeSpecificPart();
-                    message.what = DELETE_APP;
-                    childHandler.sendMessage(message);
-                }
             }
         }
     }
@@ -511,7 +445,7 @@ public class HeadSetActivity extends HSActivity implements SeekBar.OnSeekBarChan
         return list;
     }
 
-    // 根据包名寻找MainActivity
+/*    // 根据包名寻找MainActivity
     private static Intent getAppOpenIntentByPackageName(Context context, String packageName) {
         String mainAct = null;
         PackageManager pkgMag = context.getPackageManager();
@@ -558,6 +492,6 @@ public class HeadSetActivity extends HSActivity implements SeekBar.OnSeekBarChan
             return true;
         }
         return false;
-    }
+    }*/
 
 }

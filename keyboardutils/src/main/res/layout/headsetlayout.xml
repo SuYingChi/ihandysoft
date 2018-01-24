@@ -22,7 +22,7 @@
         android:layout_weight="1"
         />
     <ImageView
-        android:id="@+id/ifNotification"
+        android:id="@+id/isNotification"
         android:layout_width="25dp"
         android:layout_height="25dp"
         android:layout_marginLeft="8dp"
