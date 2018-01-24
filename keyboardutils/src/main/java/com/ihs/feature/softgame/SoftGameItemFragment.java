@@ -25,7 +25,6 @@ import static java.util.Arrays.asList;
 
 public class SoftGameItemFragment extends Fragment {
 
-    public static final int SOFT_GAME_LOAD_COUNT = 50;
     public static final String JSON_GAMES = "games";
     public static final String TOP_GAMES = "http://api.famobi.com/feed?a=A-KCVWU&sort=top_games";
 
@@ -97,12 +96,11 @@ public class SoftGameItemFragment extends Fragment {
         return v;
     }
 
-    public static SoftGameItemFragment newInstance(String text, String placementName) {
+    public static SoftGameItemFragment newInstance(String text) {
 
         SoftGameItemFragment f = new SoftGameItemFragment();
         Bundle b = new Bundle();
         b.putString("url", text);
-        b.putString("placementName", placementName);
         f.setArguments(b);
 
         return f;

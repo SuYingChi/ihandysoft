@@ -18,8 +18,6 @@ public class SoftGameDisplayActivity extends FragmentActivity implements ViewPag
     public static final String TOP_50_GAME = "http://api.famobi.com/feed?a=A-KCVWU&n=50&sort=top_games";
     public static final String TOP_NEW_GAME = "http://api.famobi.com/feed?a=A-KCVWU&n=50";
     private ViewPager mViewPager;
-    public static final String SOFT_GAME_PLACEMENT_MESSAGE = "soft_game_placement_msg";
-    private String placementName;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -32,7 +30,6 @@ public class SoftGameDisplayActivity extends FragmentActivity implements ViewPag
         setContentView(R.layout.activity_soft_game_display);
 
         if (getIntent() != null) {
-            placementName = getIntent().getStringExtra(SOFT_GAME_PLACEMENT_MESSAGE);
             if (getIntent().getBooleanExtra("fromShortcut", false)) {
                 KCAnalytics.logEvent("h5games_shortcut_clicked");
             }
@@ -79,11 +76,11 @@ public class SoftGameDisplayActivity extends FragmentActivity implements ViewPag
         public Fragment getItem(int pos) {
             switch (pos) {
                 case 0:
-                    return SoftGameItemFragment.newInstance(TOP_50_GAME, placementName);
+                    return SoftGameItemFragment.newInstance(TOP_50_GAME);
                 case 1:
-                    return SoftGameItemFragment.newInstance(TOP_NEW_GAME, placementName);
+                    return SoftGameItemFragment.newInstance(TOP_NEW_GAME);
                 default:
-                    return SoftGameItemFragment.newInstance(TOP_50_GAME, placementName);
+                    return SoftGameItemFragment.newInstance(TOP_50_GAME);
             }
         }
 
