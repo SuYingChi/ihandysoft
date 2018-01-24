@@ -28,7 +28,6 @@ import android.widget.LinearLayout;
 import android.widget.PopupWindow;
 import android.widget.SeekBar;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.ihs.app.framework.activity.HSActivity;
 import com.ihs.commons.config.HSConfig;
@@ -72,7 +71,19 @@ public class HeadSetActivity extends HSActivity implements SeekBar.OnSeekBarChan
     private Button cancle;
     private Button noNotification;
     private final String VOICE_CHANGE = "android.media.VOLUME_CHANGED_ACTION";
+    private AsyncTask<Void, Void, HashMap<String, Drawable>> getMatchedAppsAsyncTask = new AsyncTask<Void, Void, HashMap<String, Drawable>>() {
 
+        @Override
+        protected HashMap<String, Drawable> doInBackground(Void... voids) {
+            HashMap<String, Drawable>  currentMatchAppMap = getInstallAppsInfoAndcompareRemote();
+            return currentMatchAppMap;
+        }
+
+        @Override
+        protected void onPostExecute(HashMap<String, Drawable> stringDrawableHashMap) {
+            showInstallAPP(stringDrawableHashMap);
+        }
+    };
     @RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN)
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -86,27 +97,12 @@ public class HeadSetActivity extends HSActivity implements SeekBar.OnSeekBarChan
         registerReceiver(receiver, filter);
         initview();
         creatAdv();
-
+        getMatchedAppsAsyncTask.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
     }
-
-    AsyncTask<Void, Void, HashMap<String, Drawable>> getMatchedAppsAsyncTask = new AsyncTask<Void, Void, HashMap<String, Drawable>>() {
-
-        @Override
-        protected HashMap<String, Drawable> doInBackground(Void... voids) {
-            HashMap<String, Drawable>  currentMatchAppMap = getInstallAppsInfoAndcompareRemote();
-            return currentMatchAppMap;
-        }
-
-        @Override
-        protected void onPostExecute(HashMap<String, Drawable> stringDrawableHashMap) {
-            showInstallAPP(stringDrawableHashMap);
-        }
-    };
 
     @Override
     protected void onStart() {
         super.onStart();
-        getMatchedAppsAsyncTask.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
         if (acbExpressAdView != null) {
             acbExpressAdView.setVisibility(View.VISIBLE);
             acbExpressAdView.switchAd();
@@ -151,7 +147,6 @@ public class HeadSetActivity extends HSActivity implements SeekBar.OnSeekBarChan
     private void creatAdv() {
         if (!RemoveAdsManager.getInstance().isRemoveAdsPurchased() & !TextUtils.isEmpty(HeadSetManager.getInstance().getHeadSetAdPlaceMent()) & acbExpressAdView == null) {
             acbExpressAdView = new AcbExpressAdView(this, HeadSetManager.getInstance().getHeadSetAdPlaceMent());
-            if (acbExpressAdView != null) {
                 acbExpressAdView.setAutoSwitchAd(false);
                 acbExpressAdView.setGravity(Gravity.CENTER);
                 acbExpressAdView.setExpressAdViewListener(new AcbExpressAdView.AcbExpressAdViewListener() {
@@ -171,9 +166,6 @@ public class HeadSetActivity extends HSActivity implements SeekBar.OnSeekBarChan
                     }
                 });
                 adContainer.addView(acbExpressAdView, RoundedCornerLayout.LayoutParams.MATCH_PARENT, RoundedCornerLayout.LayoutParams.MATCH_PARENT);
-            } else {
-                noadv.setVisibility(View.VISIBLE);
-            }
         }
     }
 
@@ -240,7 +232,6 @@ public class HeadSetActivity extends HSActivity implements SeekBar.OnSeekBarChan
                                 if (pak != null) {
                                     Drawable drawable = pak.applicationInfo.loadIcon(pManager);
                                     compareResult.put(packageName, drawable);
-
                                     break;
                                 }
                             }
@@ -277,12 +268,9 @@ public class HeadSetActivity extends HSActivity implements SeekBar.OnSeekBarChan
             finish();
         } else if (i == R.id.disable) {
             HeadSetManager.getInstance().setEnable(false);
-            Toast.makeText(this, "no display this window when plug headset", Toast.LENGTH_LONG).show();
             if(isEnablePopupWindow.isShowing()&!isFinishing())
             isEnablePopupWindow.dismiss();
         } else if (i == R.id.not_now) {
-            HeadSetManager.getInstance().setEnable(true);
-            Toast.makeText(this, "display this window when plug headset", Toast.LENGTH_LONG).show();
             if(isEnablePopupWindow.isShowing()&!isFinishing())
             isEnablePopupWindow.dismiss();
         }

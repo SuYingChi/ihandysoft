@@ -19,7 +19,7 @@ public class HeadSetManager {
     private static HeadSetManager mHeadSetAdvManager;
     private  HeadReceiver headSetReceiver;
     private  String placeMent;
-    private  boolean isOpen = false;
+    private  boolean isEnable = false;
     private HeadSetManager(){
         headSetReceiver = new HeadReceiver();
     }
@@ -37,18 +37,18 @@ public class HeadSetManager {
     public  String  getHeadSetAdPlaceMent(){
         return placeMent;
     }
-
+//get value from setting,remaining
     public boolean getEnable() {
-        return isOpen;
+        return isEnable;
     }
-
-    public void setEnable(boolean open) {
-        isOpen = open;
-        if(isOpen){
+//set value of setting,ramaining
+    public void setEnable(boolean enable) {
+        if(!isEnable&&enable){
             registerHeadSetReceiver();
-        }else{
+        }else if(isEnable&&!enable){
             unRegisterHeadSetReceiver();
         }
+        isEnable = enable;
     }
 
     private class HeadReceiver extends BroadcastReceiver {
@@ -79,7 +79,9 @@ public class HeadSetManager {
 
     public  void init(String string){
         mHeadSetAdvManager.setHeadSetAdPlaceMent(string);
-        mHeadSetAdvManager.registerHeadSetReceiver();
+        if(isEnable) {
+            mHeadSetAdvManager.registerHeadSetReceiver();
+        }
 
     }
 }
