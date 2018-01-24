@@ -38,12 +38,17 @@ public class HeadSetManager {
         return mPlaceMent;
     }
 
-    public boolean getOpen() {
+    public boolean getEnable() {
         return isOpen;
     }
 
-    public void setOpen(boolean open) {
+    public void setEnable(boolean open) {
         isOpen = open;
+        if(isOpen==true){
+            registerHeadSetReceiver();
+        }else{
+            unRegisterHeadSetReceiver();
+        }
     }
 
     private class HeadReceiver extends BroadcastReceiver {
@@ -55,10 +60,9 @@ public class HeadSetManager {
             if (intent.getAction().equals(Intent.ACTION_HEADSET_PLUG)) {
                 if (intent.getIntExtra("state", 0) == 1) {
                     Log.d(TAG, " onReceive  headset==========" + Intent.ACTION_HEADSET_PLUG + "      state================" + intent.getIntExtra("state", 0));
-                    if (getOpen()) {
+                    if (getEnable()) {
                         Intent mIntent = new Intent(context, HeadSetActivity.class);
                         mIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                        //if(isActivityRunning(context,"com.keyboard.colorkeyboard.app.SplashActivity"))
                         context.startActivity(mIntent);
                     }
                 }

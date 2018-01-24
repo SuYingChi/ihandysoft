@@ -131,7 +131,6 @@ public class HeadSetActivity extends HSActivity implements SeekBar.OnSeekBarChan
     @Override
     protected void onStart() {
         super.onStart();
-//        showAdv();
 
         if (acbExpressAdView != null) {
             acbExpressAdView.setVisibility(View.VISIBLE);
@@ -382,14 +381,10 @@ public class HeadSetActivity extends HSActivity implements SeekBar.OnSeekBarChan
         } else if (i == R.id.close) {
             finish();
         } else if (i == R.id.cancle) {
-            HeadSetManager.getInstance().setOpen(false);
+            HeadSetManager.getInstance().setEnable(false);
         } else if (i == R.id.no_notification) {
-            HeadSetManager.getInstance().setOpen(true);
+            HeadSetManager.getInstance().setEnable(true);
             Toast.makeText(this,"no display this window when plug headset",Toast.LENGTH_LONG).show();
-            mPopWindow.dismiss();
-        } else if (i == R.id.no_notification) {
-            HeadSetManager.getInstance().setOpen(true);
-            Toast.makeText(this," display this window when plug headset",Toast.LENGTH_LONG).show();
             mPopWindow.dismiss();
         }
     }
