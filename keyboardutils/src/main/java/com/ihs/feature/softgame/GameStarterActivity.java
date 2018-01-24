@@ -10,7 +10,6 @@ import android.view.Window;
 import android.view.WindowManager;
 
 import com.ihs.app.framework.HSApplication;
-import com.ihs.keyboardutils.R;
 import com.ihs.keyboardutils.ads.KCInterstitialAd;
 import com.ihs.keyboardutils.iap.RemoveAdsManager;
 import com.kc.utils.KCAnalytics;
@@ -79,7 +78,10 @@ public class GameStarterActivity extends Activity {
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         handler.removeCallbacksAndMessages(null);
-        KCInterstitialAd.show(getResources().getString(R.string.placement_full_screen_game), "", "");
+        final String fullscreenPlacement = SoftGameManager.getInstance().getFullscreenAdPlacement();
+        if (!TextUtils.isEmpty(fullscreenPlacement)) {
+            KCInterstitialAd.show(fullscreenPlacement, "", "");
+        }
         finish();
     }
 

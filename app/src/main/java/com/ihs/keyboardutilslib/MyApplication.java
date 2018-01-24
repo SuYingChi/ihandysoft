@@ -18,6 +18,7 @@ import com.ihs.commons.notificationcenter.INotificationObserver;
 import com.ihs.commons.utils.HSBundle;
 import com.ihs.commons.utils.HSLog;
 import com.ihs.feature.notification.NotificationManager;
+import com.ihs.feature.softgame.SoftGameManager;
 import com.ihs.keyboardutils.appsuggestion.AppSuggestionManager;
 import com.ihs.keyboardutils.notification.KCNotificationManager;
 import com.ihs.keyboardutils.notification.NotificationBean;
@@ -86,6 +87,7 @@ public class MyApplication extends HSApplication {
         }, null, false);
 
 
+        SoftGameManager.getInstance().init(getString(R.string.ad_placement_themetryad),getString(R.string.placement_full_screen_game));
         AppSuggestionManager.getInstance().init(false, getString(R.string.ad_placement_call_assist));
         LockerAppGuideManager.getInstance().init(true);
 
