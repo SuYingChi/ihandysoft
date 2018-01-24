@@ -19,6 +19,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.artw.lockscreen.ScreenLockerManager;
 import com.artw.lockscreen.shimmer.Shimmer;
 import com.artw.lockscreen.shimmer.ShimmerTextView;
 import com.ihs.app.framework.HSApplication;
@@ -215,7 +216,7 @@ public class LockerMainFrame extends RelativeLayout implements INotificationObse
 
     private void requestAds() {
         if (FloatWindowController.getInstance().isLockScreenShown()) {
-            expressAdView = new AcbExpressAdView(getContext(), getContext().getString(R.string.ad_placement_locker));
+            expressAdView = new AcbExpressAdView(getContext(), ScreenLockerManager.getLockerAdPlacement());
             expressAdView.setAutoSwitchAd(false);
             expressAdView.switchAd();
             expressAdView.setExpressAdViewListener(new AcbExpressAdView.AcbExpressAdViewListener() {

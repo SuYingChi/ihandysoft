@@ -23,6 +23,7 @@ import net.appcloudbox.ads.interstitialads.AcbInterstitialAdLoader;
 
 public class GameStarterActivity extends Activity {
     public static final String SHOW_WHEN_LOCKED = "show_when_locked";
+    public static final String FULL_SCREEN_AD_PLACEMENT = "full_screen_ad_placement";
     private static final int TIME_OUT_LIMIT = 5000;
     private Handler handler = new Handler();
     private boolean adShowed = false;
@@ -35,10 +36,11 @@ public class GameStarterActivity extends Activity {
         if (showWhenLocked) {
             window.addFlags(WindowManager.LayoutParams.FLAG_SHOW_WHEN_LOCKED);
         }
-        if (!RemoveAdsManager.getInstance().isRemoveAdsPurchased()) {
-            String adPlacement = getResources().getString(R.string.placement_full_screen_game);
-            KCInterstitialAd.load(adPlacement);
-            AcbInterstitialAdLoader loader = KCInterstitialAd.loadAndShow(adPlacement, "", "", new KCInterstitialAd.OnAdShowListener() {
+
+        final String fullscreenPlacement = getIntent().getStringExtra(FULL_SCREEN_AD_PLACEMENT);
+        if (!RemoveAdsManager.getInstance().isRemoveAdsPurchased() && !TextUtils.isEmpty(fullscreenPlacement)) {
+            KCInterstitialAd.load(fullscreenPlacement);
+            AcbInterstitialAdLoader loader = KCInterstitialAd.loadAndShow(fullscreenPlacement, "", "", new KCInterstitialAd.OnAdShowListener() {
                 @Override
                 public void onAdShow(boolean b) {
                     adShowed = b;
@@ -51,7 +53,7 @@ public class GameStarterActivity extends Activity {
                     if (!adShowed) {
                         loader.cancel();
                     }
-                    KCInterstitialAd.load(adPlacement);
+                    KCInterstitialAd.load(fullscreenPlacement);
                 }
             }, TIME_OUT_LIMIT);
 
@@ -70,8 +72,8 @@ public class GameStarterActivity extends Activity {
         }
 
         Intent gameIntent = new Intent(this, GameActivity.class);
-        gameIntent.putExtra("url",url);
-        startActivityForResult(gameIntent,0);
+        gameIntent.putExtra("url", url);
+        startActivityForResult(gameIntent, 0);
     }
 
     @Override
@@ -82,14 +84,15 @@ public class GameStarterActivity extends Activity {
         finish();
     }
 
-    public static void startGame(String gameUrl, String callFrom) {
-        startGame(gameUrl, callFrom, "", false);
+    public static void startGame(String gameUrl, String callFrom, String placement) {
+        startGame(gameUrl, callFrom, placement, "", false);
     }
 
-    public static void startGame(String gameUrl, String callFrom, String gameName, boolean showWhenLocked) {
+    public static void startGame(String gameUrl, String callFrom, String placement, String gameName, boolean showWhenLocked) {
         Intent intent = new Intent(HSApplication.getContext(), GameStarterActivity.class);
         intent.putExtra("url", gameUrl);
         intent.putExtra(SHOW_WHEN_LOCKED, showWhenLocked);
+        intent.putExtra(FULL_SCREEN_AD_PLACEMENT, placement);
         intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         HSApplication.getContext().startActivity(intent);
         if (TextUtils.isEmpty(gameName)) {

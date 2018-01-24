@@ -74,7 +74,7 @@ public class MyApplication extends HSApplication {
         HSGlobalNotificationCenter.addObserver(HSNotificationConstant.HS_SESSION_START, sessionEventObserver);
         HSGlobalNotificationCenter.addObserver(HSNotificationConstant.HS_SESSION_END, sessionEventObserver);
 
-        ScreenLockerManager.init();
+        ScreenLockerManager.init(getString(R.string.ad_placement_result_page),getString(R.string.ad_placement_locker));
         NotificationManager.getInstance().updateBattery();
         initImageLoader();
 

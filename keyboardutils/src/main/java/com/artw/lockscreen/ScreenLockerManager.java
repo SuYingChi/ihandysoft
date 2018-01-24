@@ -29,8 +29,20 @@ import net.appcloudbox.ads.expressads.AcbExpressAdManager;
 
 public class ScreenLockerManager {
 
+    private static String lockerAdPlacement;
+    private static String resultPageAdPlacement;
 
-    public static void init() {
+    public static String getLockerAdPlacement() {
+        return lockerAdPlacement;
+    }
+
+    public static String getResultPageAdPlacement() {
+        return resultPageAdPlacement;
+    }
+
+    public static void init(String resultPageAdPlacement, String lockerAdPlacement) {
+        ScreenLockerManager.resultPageAdPlacement = resultPageAdPlacement;
+        ScreenLockerManager.lockerAdPlacement = lockerAdPlacement;
 
         final IntentFilter screenFilter = new IntentFilter();
         screenFilter.addAction(Intent.ACTION_SCREEN_OFF);
@@ -69,7 +81,7 @@ public class ScreenLockerManager {
         HSGlobalNotificationCenter.addObserver(HSNotificationConstant.HS_SESSION_END, observer);
         if (LockerSettings.isLockerEnabled() && !RemoveAdsManager.getInstance().isRemoveAdsPurchased()
                 && LockerChargingSpecialConfig.getInstance().shouldShowAd()) {
-            AcbExpressAdManager.getInstance().activePlacementInProcess(HSApplication.getContext().getString(R.string.ad_placement_locker));
+            AcbExpressAdManager.getInstance().activePlacementInProcess(lockerAdPlacement);
         }
     }
 
