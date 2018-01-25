@@ -144,9 +144,7 @@ public class ChargingPrefsUtil {
                     }
                 }
             }
-        } else {
-            AcbExpressAdManager.getInstance().deactivePlacementInProcess(HSChargingScreenManager.getInstance().getChargingAdsPlacementName());
-        }
+        } 
         spHelper.putBoolean(USER_ENABLED_CHARGING, isEnable);
     }
 

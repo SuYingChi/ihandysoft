@@ -34,7 +34,6 @@ import java.util.List;
 public class SoftGameItemAdapter extends RecyclerView.Adapter<ViewHolder> {
 
 
-    private String placementName = "";
     private DisplayImageOptions displayImageOptions = new DisplayImageOptions.Builder()
             .cacheInMemory(true)
             .showImageOnFail(null)
@@ -46,7 +45,6 @@ public class SoftGameItemAdapter extends RecyclerView.Adapter<ViewHolder> {
     private KCNativeAdView nativeAdView;
 
     public SoftGameItemAdapter() {
-        this.placementName = HSApplication.getContext().getString(R.string.ad_placement_themetryad);
     }
 
     @Override
@@ -63,7 +61,7 @@ public class SoftGameItemAdapter extends RecyclerView.Adapter<ViewHolder> {
             nativeAdView.setAdLayoutView(view);
             nativeAdView.setLoadingView(loadingView);
             nativeAdView.setPrimaryViewSize(width, (int)(width / 1.9f));
-            nativeAdView.load(placementName);
+            nativeAdView.load(SoftGameManager.getInstance().getNativeAdPlacement());
             viewHolder = new ViewHolder(nativeAdView) {
             };
         } else if (viewType == TYPE_GAME) {

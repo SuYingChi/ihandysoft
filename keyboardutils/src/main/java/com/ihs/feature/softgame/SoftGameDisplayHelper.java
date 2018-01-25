@@ -11,21 +11,19 @@ import com.ihs.app.framework.HSApplication;
 
 public class SoftGameDisplayHelper {
 
-    public static void DisplaySoftGames(String placement) {
-        DisplaySoftGames(null, placement);
+    public static void DisplaySoftGames() {
+        DisplaySoftGames(null);
     }
 
-    public static void DisplaySoftGames(Activity activity, String placement) {
+    public static void DisplaySoftGames(Activity activity) {
         Intent intent;
         if (null == activity) {
             intent = new Intent(HSApplication.getContext(), SoftGameDisplayActivity.class);
-            intent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION | Intent.FLAG_ACTIVITY_NEW_TASK|Intent.FLAG_ACTIVITY_CLEAR_TASK);
-            intent.putExtra(SoftGameDisplayActivity.SOFT_GAME_PLACEMENT_MESSAGE, placement);
+            intent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION | Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
             HSApplication.getContext().startActivity(intent);
         } else {
             intent = new Intent(activity, SoftGameDisplayActivity.class);
-            intent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION|Intent.FLAG_ACTIVITY_CLEAR_TASK);
-            intent.putExtra(SoftGameDisplayActivity.SOFT_GAME_PLACEMENT_MESSAGE, placement);
+            intent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION | Intent.FLAG_ACTIVITY_CLEAR_TASK);
             activity.startActivity(intent);
         }
     }

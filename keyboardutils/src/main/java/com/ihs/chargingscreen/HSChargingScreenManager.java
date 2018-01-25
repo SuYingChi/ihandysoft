@@ -7,7 +7,6 @@ import com.ihs.chargingscreen.activity.ChargingFullScreenAlertDialogActivity;
 import com.ihs.chargingscreen.notification.ChargeNotifyManager;
 import com.ihs.chargingscreen.utils.ChargingManagerUtil;
 import com.ihs.chargingscreen.utils.ChargingPrefsUtil;
-import com.ihs.chargingscreen.utils.LockerChargingSpecialConfig;
 import com.ihs.commons.config.HSConfig;
 import com.ihs.commons.notificationcenter.HSGlobalNotificationCenter;
 import com.ihs.commons.notificationcenter.INotificationObserver;
@@ -220,17 +219,12 @@ public class HSChargingScreenManager {
             case CHARGING_MUTED:
             case CHARGING_DEFAULT_DISABLED:
             default:
-                AcbExpressAdManager.getInstance().deactivePlacementInProcess(HSChargingScreenManager.getInstance().getChargingAdsPlacementName());
                 HSChargingScreenManager.getInstance().stop();
                 break;
             case CHARGING_DEFAULT_ACTIVE:
                 if (!RemoveAdsManager.getInstance().isRemoveAdsPurchased()){
                     if (ChargingPrefsUtil.isChargingAlertEnabled()) {
                         AcbNativeAdManager.sharedInstance().activePlacementInProcess(HSChargingScreenManager.getInstance().getChargingAlertAdsPlacementName());
-                    }else {
-                        if (LockerChargingSpecialConfig.getInstance().shouldShowAd()) {
-                            AcbExpressAdManager.getInstance().activePlacementInProcess(HSChargingScreenManager.getInstance().getChargingActivityAdsPlacementName());
-                        }
                     }
                 }
                 HSChargingScreenManager.getInstance().start();

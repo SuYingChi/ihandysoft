@@ -10,7 +10,6 @@ import android.view.Window;
 import android.view.WindowManager;
 
 import com.ihs.app.framework.HSApplication;
-import com.ihs.keyboardutils.R;
 import com.ihs.keyboardutils.ads.KCInterstitialAd;
 import com.ihs.keyboardutils.iap.RemoveAdsManager;
 import com.kc.utils.KCAnalytics;
@@ -35,10 +34,11 @@ public class GameStarterActivity extends Activity {
         if (showWhenLocked) {
             window.addFlags(WindowManager.LayoutParams.FLAG_SHOW_WHEN_LOCKED);
         }
-        if (!RemoveAdsManager.getInstance().isRemoveAdsPurchased()) {
-            String adPlacement = getResources().getString(R.string.placement_full_screen_game);
-            KCInterstitialAd.load(adPlacement);
-            AcbInterstitialAdLoader loader = KCInterstitialAd.loadAndShow(adPlacement, "", "", new KCInterstitialAd.OnAdShowListener() {
+
+        final String fullscreenPlacement = SoftGameManager.getInstance().getFullscreenAdPlacement();
+        if (!RemoveAdsManager.getInstance().isRemoveAdsPurchased() && !TextUtils.isEmpty(fullscreenPlacement)) {
+            KCInterstitialAd.load(fullscreenPlacement);
+            AcbInterstitialAdLoader loader = KCInterstitialAd.loadAndShow(fullscreenPlacement, "", "", new KCInterstitialAd.OnAdShowListener() {
                 @Override
                 public void onAdShow(boolean b) {
                     adShowed = b;
@@ -51,7 +51,7 @@ public class GameStarterActivity extends Activity {
                     if (!adShowed) {
                         loader.cancel();
                     }
-                    KCInterstitialAd.load(adPlacement);
+                    KCInterstitialAd.load(fullscreenPlacement);
                 }
             }, TIME_OUT_LIMIT);
 
@@ -70,15 +70,18 @@ public class GameStarterActivity extends Activity {
         }
 
         Intent gameIntent = new Intent(this, GameActivity.class);
-        gameIntent.putExtra("url",url);
-        startActivityForResult(gameIntent,0);
+        gameIntent.putExtra("url", url);
+        startActivityForResult(gameIntent, 0);
     }
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         handler.removeCallbacksAndMessages(null);
-        KCInterstitialAd.show(getResources().getString(R.string.placement_full_screen_game), "", "");
+        final String fullscreenPlacement = SoftGameManager.getInstance().getFullscreenAdPlacement();
+        if (!TextUtils.isEmpty(fullscreenPlacement)) {
+            KCInterstitialAd.show(fullscreenPlacement, "", "");
+        }
         finish();
     }
 

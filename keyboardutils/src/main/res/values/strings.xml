@@ -71,8 +71,6 @@
     <string name="tip_accessibility">Find %s. Switch it on to enable Usage Access.</string>
     <string name="tip_usage_access">Find %s. Switch it on to enable Smart Memory Protection</string>
 
-    <string name="ad_placement_boost_tip" translatable="false">500_A(NativeAds)SevenInOne</string>
-
     <!-- Boost tip -->
     <string name="boost_tip_title_memory">Memory Freed Up</string>
     <string name="boost_tip_title_cpu_temperature">Phone Cooled Down</string>
@@ -873,7 +871,6 @@
 
     <string name="locker_switcher">locker_screen_enabled</string>
     <string name="enable_locker_detail">Open camera directly from lock screen and never miss a shot again. Contains sponsored contents.</string>
-    <string name="ad_placement_locker">Colorkey_A(NativeAds)Fuse</string>
     <string name="screen_locker_enable_alert_toast">Screen Locker Enabled</string>
 
     <!--guide-->
@@ -1152,8 +1149,6 @@
     <string name="text_privacy_policy">Privacy Policy</string>
     <string name="locker_alert_title">Screen Locker</string>
 
-    <string name="placement_full_screen_game" translatable="false">Smiley_A(InterstitialAds)H5GameAd</string>
-    <string name="ad_placement_themetryad" translatable="false">Master_A(NativeAds)ThemeTryAd</string>
     <string name="title_activity_game">GameActivity</string>
 
     <string name="title_search">Search</string>

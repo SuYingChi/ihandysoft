@@ -1,11 +1,13 @@
 package com.ihs.feature.resultpage;
 
 
+import android.text.TextUtils;
+
+import com.artw.lockscreen.ScreenLockerManager;
 import com.ihs.app.framework.HSApplication;
 import com.ihs.commons.utils.HSLog;
 import com.ihs.feature.common.AdAnalytics;
 import com.ihs.feature.common.AdPlacements;
-import com.ihs.keyboardutils.R;
 
 import net.appcloudbox.ads.base.AcbNativeAd;
 import net.appcloudbox.ads.nativeads.AcbNativeAdLoader;
@@ -19,7 +21,6 @@ public class ResultPageAdsManager {
     private static final String TAG = ResultPageAdsManager.class.getSimpleName();
 
     private AcbNativeAd mAd = null;
-
     private static ResultPageAdsManager sInstance;
 
     private ResultPageAdsManager() {
@@ -37,7 +38,12 @@ public class ResultPageAdsManager {
     }
 
     public void preloadAd() {
-        AcbNativeAdLoader loader = new AcbNativeAdLoader(HSApplication.getContext(), HSApplication.getContext().getString(R.string.ad_placement_result_page));
+        final String adPlacement = ScreenLockerManager.getResultPageAdPlacement();
+        if (TextUtils.isEmpty(adPlacement)) {
+            return;
+        }
+
+        AcbNativeAdLoader loader = new AcbNativeAdLoader(HSApplication.getContext(), adPlacement);
         loader.load(1, new AcbNativeAdLoader.AcbNativeAdLoadListener() {
             @Override
             public void onAdReceived(AcbNativeAdLoader acbNativeAdLoader, List<AcbNativeAd> list) {
