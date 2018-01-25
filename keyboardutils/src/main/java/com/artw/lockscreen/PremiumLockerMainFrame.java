@@ -556,8 +556,9 @@ public class PremiumLockerMainFrame extends PercentRelativeLayout implements INo
     private boolean showPushFrameItem(int pushFrameItemIndex) {
         switch (pushFrameItemIndex) {
             case MODE_JUNK:
-                findViewById(R.id.push_camera_or_game).setVisibility(GONE);
+                findViewById(R.id.push_camera).setVisibility(GONE);
                 findViewById(R.id.push_boost_two).setVisibility(GONE);
+                findViewById(R.id.push_game).setVisibility(GONE);
 
                 View junkRootView = findViewById(R.id.push_boost_one);
                 junkRootView.setVisibility(GONE);
@@ -618,8 +619,10 @@ public class PremiumLockerMainFrame extends PercentRelativeLayout implements INo
                 }
                 findViewById(R.id.push_boost_one).setVisibility(GONE);
                 findViewById(R.id.push_boost_two).setVisibility(GONE);
+                findViewById(R.id.push_camera).setVisibility(GONE);
+                findViewById(R.id.push_boost_scan).setVisibility(GONE);
 
-                View gameRootView = findViewById(R.id.push_camera_or_game);
+                View gameRootView = findViewById(R.id.push_game);
                 gameRootView.setVisibility(VISIBLE);
 
                 String iconUrl = pushGamePreferences.getString("thumb", "");
@@ -644,10 +647,10 @@ public class PremiumLockerMainFrame extends PercentRelativeLayout implements INo
 
                     }
                 });
-                ((TextView) gameRootView.findViewById(R.id.push_camera_or_game_title)).setText(pushGamePreferences.getString("name", ""));
-                ((TextView) gameRootView.findViewById(R.id.push_camera_or_game_subtitle)).setText(pushGamePreferences.getString("description", ""));
-                ((Button) gameRootView.findViewById(R.id.push_camera_or_game_button)).setText(getResources().getString(R.string.push_game_button));
-                gameRootView.findViewById(R.id.push_camera_or_game_button).setOnClickListener(view -> {
+                ((TextView) gameRootView.findViewById(R.id.push_game_title)).setText(pushGamePreferences.getString("name", ""));
+                ((TextView) gameRootView.findViewById(R.id.push_game_subtitle)).setText(pushGamePreferences.getString("description", ""));
+                ((Button) gameRootView.findViewById(R.id.push_game_button)).setText(getResources().getString(R.string.push_game_button));
+                gameRootView.findViewById(R.id.push_game_button).setOnClickListener(view -> {
                     increasePushFrameItemIndex();
                     String url = pushGamePreferences.getString("link", null);
                     GameStarterActivity.startGame(url, "push_game_clicked");
@@ -666,16 +669,18 @@ public class PremiumLockerMainFrame extends PercentRelativeLayout implements INo
 
                 findViewById(R.id.push_boost_one).setVisibility(GONE);
                 findViewById(R.id.push_boost_two).setVisibility(GONE);
+                findViewById(R.id.push_boost_scan).setVisibility(GONE);
+                findViewById(R.id.push_game).setVisibility(GONE);
 
-                View cameraRootView = findViewById(R.id.push_camera_or_game);
+                View cameraRootView = findViewById(R.id.push_camera);
                 cameraRootView.setVisibility(VISIBLE);
 
                 String pushCameraActionType = bean.getActionType();
 
-                ((TextView) cameraRootView.findViewById(R.id.push_camera_or_game_title)).setText(bean.getName());
-                ((TextView) cameraRootView.findViewById(R.id.push_camera_or_game_subtitle)).setText(bean.getMessage());
-                ((Button) findViewById(R.id.push_camera_or_game_button)).setText(bean.getButtonText());
-                findViewById(R.id.push_camera_or_game_button).setOnClickListener(view -> {
+                ((TextView) cameraRootView.findViewById(R.id.push_camera_title)).setText(bean.getName());
+                ((TextView) cameraRootView.findViewById(R.id.push_camera_subtitle)).setText(bean.getMessage());
+                ((Button) findViewById(R.id.push_camera_button)).setText(bean.getButtonText());
+                findViewById(R.id.push_camera_button).setOnClickListener(view -> {
                     increasePushFrameItemIndex();
                     Intent cameraIntent = new Intent("push.camera.store");
                     switch (pushCameraActionType) {
@@ -727,8 +732,10 @@ public class PremiumLockerMainFrame extends PercentRelativeLayout implements INo
                     appsCount = batteryDataManager.getCleanAnimationBatteryApps().size();
                 }
                 if (batteryLevel < 30) {
-                    findViewById(R.id.push_camera_or_game).setVisibility(GONE);
+                    findViewById(R.id.push_camera).setVisibility(GONE);
+                    findViewById(R.id.push_game).setVisibility(GONE);
                     findViewById(R.id.push_boost_two).setVisibility(GONE);
+                    findViewById(R.id.push_boost_scan).setVisibility(GONE);
 
                     View batteryOneRootView = findViewById(R.id.push_boost_one);
                     batteryOneRootView.setVisibility(VISIBLE);
@@ -745,8 +752,10 @@ public class PremiumLockerMainFrame extends PercentRelativeLayout implements INo
                         HSGlobalNotificationCenter.sendNotification(PremiumLockerActivity.EVENT_FINISH_SELF);
                     });
                 } else if (batteryLevel <= 80 && appsCount >= 8) {
-                    findViewById(R.id.push_camera_or_game).setVisibility(GONE);
+                    findViewById(R.id.push_camera).setVisibility(GONE);
+                    findViewById(R.id.push_game).setVisibility(GONE);
                     findViewById(R.id.push_boost_one).setVisibility(GONE);
+                    findViewById(R.id.push_boost_scan).setVisibility(GONE);
 
                     View batteryTwoRootView = findViewById(R.id.push_boost_two);
                     batteryTwoRootView.setVisibility(VISIBLE);
@@ -774,8 +783,10 @@ public class PremiumLockerMainFrame extends PercentRelativeLayout implements INo
                 if (cpuTemperature <= 40) {
                     return false;
                 }
-                findViewById(R.id.push_camera_or_game).setVisibility(GONE);
+                findViewById(R.id.push_camera).setVisibility(GONE);
+                findViewById(R.id.push_game).setVisibility(GONE);
                 findViewById(R.id.push_boost_two).setVisibility(GONE);
+                findViewById(R.id.push_boost_scan).setVisibility(GONE);
 
                 View cpuRootView = findViewById(R.id.push_boost_one);
                 cpuRootView.setVisibility(VISIBLE);
@@ -797,8 +808,10 @@ public class PremiumLockerMainFrame extends PercentRelativeLayout implements INo
                 if (usage < 75) {
                     return false;
                 }
-                findViewById(R.id.push_camera_or_game).setVisibility(GONE);
+                findViewById(R.id.push_camera).setVisibility(GONE);
+                findViewById(R.id.push_game).setVisibility(GONE);
                 findViewById(R.id.push_boost_two).setVisibility(GONE);
+                findViewById(R.id.push_boost_scan).setVisibility(GONE);
 
                 View storageRootView = findViewById(R.id.push_boost_one);
                 storageRootView.setVisibility(VISIBLE);

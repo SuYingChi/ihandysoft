@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:id="@+id/push_boost_one"
+    android:id="@+id/push_game"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
     <Button
-        android:id="@+id/push_boost_button"
+        android:id="@+id/push_game_button"
         android:layout_width="match_parent"
         android:layout_height="42dp"
         android:layout_alignParentBottom="true"
@@ -24,11 +24,11 @@
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_above="@id/push_boost_button"
-        android:layout_alignEnd="@+id/push_boost_button"
-        android:layout_alignLeft="@id/push_boost_button"
-        android:layout_alignRight="@id/push_boost_button"
-        android:layout_alignStart="@+id/push_boost_button">
+        android:layout_above="@id/push_game_button"
+        android:layout_alignEnd="@id/push_game_button"
+        android:layout_alignLeft="@id/push_game_button"
+        android:layout_alignRight="@id/push_game_button"
+        android:layout_alignStart="@id/push_game_button">
 
         <ImageView
             android:id="@+id/icon"
@@ -57,39 +57,20 @@
                 android:layout_marginStart="15dp"
                 android:orientation="vertical">
 
-                <LinearLayout
-                    android:id="@+id/title_for_boost"
+                <TextView
+                    android:id="@+id/push_game_title"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:orientation="horizontal">
-
-                    <TextView
-                        android:id="@+id/boost_result"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:fontFamily="@string/roboto_regular"
-                        android:text="41 ℃"
-                        android:textColor="#ff3743"
-                        android:textSize="24sp"
-                        android:textStyle="normal" />
-
-                    <TextView
-                        android:id="@+id/boost_title"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginLeft="5dp"
-                        android:layout_marginStart="5dp"
-                        android:ellipsize="end"
-                        android:fontFamily="@string/roboto_medium"
-                        android:maxLines="1"
-                        android:text="Phone Overheating!"
-                        android:textColor="#000000"
-                        android:textSize="15sp"
-                        android:textStyle="normal" />
-                </LinearLayout>
+                    android:ellipsize="end"
+                    android:fontFamily="sans-serif-medium"
+                    android:maxLines="1"
+                    android:text="Black cat"
+                    android:textColor="#000000"
+                    android:textSize="25sp"
+                    android:textStyle="normal" />
 
                 <TextView
-                    android:id="@+id/boost_subtitle"
+                    android:id="@+id/push_game_subtitle"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:ellipsize="end"
@@ -103,4 +84,16 @@
             </LinearLayout>
         </RelativeLayout>
     </RelativeLayout>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@drawable/push_game_head_backgrond"
+        android:fontFamily="Roboto-Regular"
+        android:lineSpacingExtra="12sp"
+        android:padding="5dp"
+        android:text="@string/push_game_head_title"
+        android:textColor="#000000"
+        android:textSize="13sp"
+        android:textStyle="normal" />
 </RelativeLayout>
