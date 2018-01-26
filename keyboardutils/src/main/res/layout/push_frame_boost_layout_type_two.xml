@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/push_boost_two"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
@@ -16,7 +17,7 @@
         android:layout_marginRight="24.7dp"
         android:layout_marginStart="24.7dp"
         android:background="@drawable/locker_push_dialog_button_background"
-        android:text="TRY NOW"
+        android:text="@string/push_button_text"
         android:textAllCaps="true"
         android:textColor="#ffffff"
         android:textSize="14sp" />
@@ -36,7 +37,8 @@
             android:layout_height="80dp"
             android:layout_centerVertical="true"
             android:layout_marginTop="17dp"
-            android:scaleType="centerInside" />
+            android:scaleType="centerInside"
+            tools:ignore="ContentDescription" />
 
         <RelativeLayout
             android:layout_width="wrap_content"
@@ -55,7 +57,8 @@
                 android:layout_centerVertical="true"
                 android:layout_marginLeft="15dp"
                 android:layout_marginStart="15dp"
-                android:orientation="vertical">
+                android:orientation="vertical"
+                tools:ignore="UselessParent">
 
                 <LinearLayout
                     android:id="@+id/title_for_boost"
@@ -68,10 +71,11 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:fontFamily="@string/roboto_regular"
-                        android:text="41 ℃"
+                        android:text="@string/push_title"
                         android:textColor="#ff3743"
                         android:textSize="24sp"
-                        android:textStyle="normal" />
+                        android:textStyle="normal"
+                        tools:targetApi="jelly_bean" />
 
                     <TextView
                         android:id="@+id/boost_title"
@@ -82,10 +86,11 @@
                         android:ellipsize="end"
                         android:fontFamily="@string/roboto_medium"
                         android:maxLines="1"
-                        android:text="Phone Overheating!"
+                        android:text="@string/push_title"
                         android:textColor="#000000"
                         android:textSize="15sp"
-                        android:textStyle="normal" />
+                        android:textStyle="normal"
+                        tools:targetApi="jelly_bean" />
                 </LinearLayout>
 
                 <LinearLayout
@@ -98,21 +103,24 @@
                     <ImageView
                         android:id="@+id/icon_first"
                         android:layout_width="21.3dp"
-                        android:layout_height="21.3dp" />
+                        android:layout_height="21.3dp"
+                        tools:ignore="ContentDescription" />
 
                     <ImageView
                         android:id="@+id/icon_second"
                         android:layout_width="21.3dp"
                         android:layout_height="21.3dp"
                         android:layout_marginLeft="16.7dp"
-                        android:layout_marginStart="16.7dp" />
+                        android:layout_marginStart="16.7dp"
+                        tools:ignore="ContentDescription" />
 
                     <ImageView
                         android:id="@+id/icon_third"
                         android:layout_width="21.3dp"
                         android:layout_height="21.3dp"
                         android:layout_marginLeft="16.7dp"
-                        android:layout_marginStart="16.7dp" />
+                        android:layout_marginStart="16.7dp"
+                        tools:ignore="ContentDescription" />
 
                     <ImageView
                         android:layout_width="21.3dp"
@@ -120,7 +128,8 @@
                         android:layout_marginLeft="16.7dp"
                         android:layout_marginStart="16.7dp"
                         android:scaleType="centerInside"
-                        android:src="@drawable/new_locker_apps_more" />
+                        android:src="@drawable/new_locker_apps_more"
+                        tools:ignore="ContentDescription" />
                 </LinearLayout>
             </LinearLayout>
         </RelativeLayout>

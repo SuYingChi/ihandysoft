@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/push_boost_scan"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
@@ -16,7 +17,7 @@
         android:layout_marginRight="24.7dp"
         android:layout_marginStart="24.7dp"
         android:background="@drawable/locker_push_dialog_button_background"
-        android:text="CLEAN NOW"
+        android:text="@string/push_button_text"
         android:textAllCaps="true"
         android:textColor="#ffffff"
         android:textSize="14sp" />
@@ -41,7 +42,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_centerInParent="true"
-                android:orientation="vertical">
+                android:orientation="vertical"
+                tools:ignore="UselessParent">
 
                 <TextView
                     android:id="@+id/scan_text"
@@ -67,6 +69,7 @@
             android:layout_centerVertical="true"
             android:layout_marginTop="17dp"
             android:scaleType="centerInside"
-            android:src="@drawable/new_locker_junk" />
+            android:src="@drawable/new_locker_junk"
+            tools:ignore="ContentDescription" />
     </RelativeLayout>
 </RelativeLayout>
