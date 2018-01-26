@@ -1,56 +1,54 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    style="@style/dialog"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:orientation="vertical"
-    android:background="@drawable/popwindow"
     android:layout_gravity="center_horizontal"
-    style="@style/dialog"
-    >
+    android:background="@drawable/headset_popwindow_background"
+    android:orientation="vertical">
 
-<TextView
-    android:layout_width="match_parent"
-    android:layout_height="45dp"
-    android:text="Disable Headphone Suggestion"
-    android:gravity="bottom"
-    android:paddingLeft="20dp"
-    android:textSize="18sp"
-    android:textColor="#dd000000"
-    />
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="45dp"
+        android:gravity="bottom"
+        android:paddingLeft="20dp"
+        android:text="@string/disable_headphone_suggestion"
+        android:textColor="#dd000000"
+        android:textSize="18sp" />
+
     <TextView
         android:layout_width="match_parent"
         android:layout_height="50dp"
-        android:text="You can quickly open your audio apps here.Are you sure to disable it?"
         android:gravity="center_vertical"
         android:paddingLeft="20dp"
+        android:text="@string/disable_suggestion_detail"
         android:textColor="#aa000000"
-        android:textSize="13sp"
-        />
+        android:textSize="13sp" />
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="40dp"
-        android:orientation="horizontal"
         android:layout_marginTop="8dp"
-        >
+        android:orientation="horizontal">
+
         <Button
             android:id="@+id/disable"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:text="Disable "
             android:layout_weight="1"
             android:background="@drawable/headset_isnotification_pop_button"
+            android:text="Disable "
             android:textColor="#aa000000"
-            android:textSize="16sp"
-            />
+            android:textSize="16sp" />
+
         <Button
             android:id="@+id/not_now"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:text="Not now"
             android:layout_weight="1"
             android:background="@drawable/headset_isnotification_pop_button_right"
+            android:text="Not now"
             android:textColor="#aa000000"
-            android:textSize="16sp"
-            />
+            android:textSize="16sp" />
     </LinearLayout>
 </LinearLayout>

@@ -23,6 +23,7 @@ import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.Button;
+import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.PopupWindow;
@@ -31,11 +32,10 @@ import android.widget.TextView;
 
 import com.ihs.app.framework.activity.HSActivity;
 import com.ihs.commons.config.HSConfig;
-import com.ihs.feature.common.RoundCornerImageView;
+import com.ihs.commons.utils.HSLog;
 import com.ihs.keyboardutils.R;
 import com.ihs.keyboardutils.iap.RemoveAdsManager;
-import com.ihs.keyboardutils.view.RoundedCornerLayout;
-import com.kc.utils.HeadSetManager;
+import com.kc.utils.KCHeadSetManager;
 
 import net.appcloudbox.ads.expressads.AcbExpressAdView;
 
@@ -52,8 +52,8 @@ import io.fabric.sdk.android.services.concurrency.AsyncTask;
  * Created by yingchi.su on 2018/1/12.
  */
 
-public class HeadSetActivity extends HSActivity implements SeekBar.OnSeekBarChangeListener, View.OnClickListener {
-    public String TAG = "HeadSetActivity";
+public class HeadsetActivity extends HSActivity implements SeekBar.OnSeekBarChangeListener, View.OnClickListener {
+    public static  final String TAG = "HeadsetActivity";
     private SeekBar voiceseekBar;
     private AudioManager am;
     private BroadcastReceiver receiver;
@@ -67,10 +67,10 @@ public class HeadSetActivity extends HSActivity implements SeekBar.OnSeekBarChan
     private TextView movie;
     private View rootview;
     private LinearLayout noadv;
-    private RoundedCornerLayout adContainer;
+    private FrameLayout adContainer;
     private Button cancle;
     private Button noNotification;
-    private final String VOICE_CHANGE = "android.media.VOLUME_CHANGED_ACTION";
+    public static final String VOICE_CHANGE = "android.media.VOLUME_CHANGED_ACTION";
     private AsyncTask<Void, Void, HashMap<String, Drawable>> getMatchedAppsAsyncTask = new AsyncTask<Void, Void, HashMap<String, Drawable>>() {
 
         @Override
@@ -89,7 +89,7 @@ public class HeadSetActivity extends HSActivity implements SeekBar.OnSeekBarChan
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.headsetlayout);
-        receiver = new MyReceiver();
+        receiver = new HeadsetFeatureReceiver();
         IntentFilter filter = new IntentFilter();
         filter.addAction(VOICE_CHANGE);
         filter.addAction(Intent.ACTION_BATTERY_CHANGED);
@@ -137,7 +137,7 @@ public class HeadSetActivity extends HSActivity implements SeekBar.OnSeekBarChan
         closeButton = (ImageView) findViewById(R.id.close);
         closeButton.setOnClickListener(this);
         installAppViewGroup = (LinearLayout) findViewById(R.id.installed_app);
-        adContainer = (RoundedCornerLayout) findViewById(R.id.adsContainer);
+        adContainer = (FrameLayout) findViewById(R.id.adsContainer);
         noadv = (LinearLayout) findViewById(R.id.noadv);
         music = (TextView) findViewById(R.id.musicRemain);
         movie = (TextView) findViewById(R.id.movieRemain);
@@ -145,8 +145,8 @@ public class HeadSetActivity extends HSActivity implements SeekBar.OnSeekBarChan
     }
 
     private void creatAdv() {
-        if (!RemoveAdsManager.getInstance().isRemoveAdsPurchased() & !TextUtils.isEmpty(HeadSetManager.getInstance().getHeadSetAdPlaceMent()) & acbExpressAdView == null) {
-            acbExpressAdView = new AcbExpressAdView(this, HeadSetManager.getInstance().getHeadSetAdPlaceMent());
+        if (!RemoveAdsManager.getInstance().isRemoveAdsPurchased() & !TextUtils.isEmpty(KCHeadSetManager.getInstance().getHeadSetAdPlaceMent()) & acbExpressAdView == null) {
+            acbExpressAdView = new AcbExpressAdView(this, KCHeadSetManager.getInstance().getHeadSetAdPlaceMent());
                 acbExpressAdView.setAutoSwitchAd(false);
                 acbExpressAdView.setGravity(Gravity.CENTER);
                 acbExpressAdView.setExpressAdViewListener(new AcbExpressAdView.AcbExpressAdViewListener() {
@@ -165,7 +165,7 @@ public class HeadSetActivity extends HSActivity implements SeekBar.OnSeekBarChan
 
                     }
                 });
-                adContainer.addView(acbExpressAdView, RoundedCornerLayout.LayoutParams.MATCH_PARENT, RoundedCornerLayout.LayoutParams.MATCH_PARENT);
+                adContainer.addView(acbExpressAdView, FrameLayout.LayoutParams.MATCH_PARENT, FrameLayout.LayoutParams.MATCH_PARENT);
         }
     }
 
@@ -177,10 +177,10 @@ public class HeadSetActivity extends HSActivity implements SeekBar.OnSeekBarChan
                 Map.Entry<String, Drawable> iteEntry = ite.next();
                 Drawable icon = iteEntry.getValue();
                 String name = iteEntry.getKey();
-                RoundCornerImageView roundCornerImageView = (RoundCornerImageView) installAppViewGroup.getChildAt(i);
-                roundCornerImageView.setVisibility(View.VISIBLE);
-                roundCornerImageView.setImageDrawable(icon);
-                roundCornerImageView.setOnClickListener(new View.OnClickListener() {
+                ImageView imageView = (ImageView) installAppViewGroup.getChildAt(i);
+                imageView.setVisibility(View.VISIBLE);
+                imageView.setImageDrawable(icon);
+                imageView.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
                         Intent launnchIntent = getPackageManager().getLaunchIntentForPackage(name);
@@ -191,8 +191,8 @@ public class HeadSetActivity extends HSActivity implements SeekBar.OnSeekBarChan
             }
             if (matchAppMap.size() < 5) {
                 for (int i = matchAppMap.size(); i < 5; i++) {
-                    RoundCornerImageView roundCornerImageView = (RoundCornerImageView) installAppViewGroup.getChildAt(i);
-                    roundCornerImageView.setVisibility(View.INVISIBLE);
+                    ImageView imageView = (ImageView) installAppViewGroup.getChildAt(i);
+                    imageView.setVisibility(View.INVISIBLE);
                 }
             }
         }else {
@@ -267,7 +267,7 @@ public class HeadSetActivity extends HSActivity implements SeekBar.OnSeekBarChan
         } else if (i == R.id.close) {
             finish();
         } else if (i == R.id.disable) {
-            HeadSetManager.getInstance().setEnable(false);
+            KCHeadSetManager.getInstance().setEnabled(false);
             if(isEnablePopupWindow.isShowing()&!isFinishing())
             isEnablePopupWindow.dismiss();
         } else if (i == R.id.not_now) {
@@ -278,7 +278,7 @@ public class HeadSetActivity extends HSActivity implements SeekBar.OnSeekBarChan
 
     private void showPopwindow() {
         if (isEnablePopupWindow == null) {
-            View contentView = LayoutInflater.from(this).inflate(R.layout.headset_isnotification_pop, null);
+            View contentView = LayoutInflater.from(this).inflate(R.layout.headset_disable_suggestion_pop, null);
             DisplayMetrics metrics = new DisplayMetrics();
             getWindowManager().getDefaultDisplay().getMetrics(metrics);
             int width = metrics.widthPixels;
@@ -326,11 +326,11 @@ public class HeadSetActivity extends HSActivity implements SeekBar.OnSeekBarChan
     }
 
 
-    private class MyReceiver extends BroadcastReceiver {
+    private class HeadsetFeatureReceiver extends BroadcastReceiver {
 
         @Override
         public void onReceive(Context context, Intent intent) {
-            Log.d(TAG, "HeadSetReceiver  onReceive  headset==========" + intent.getAction());
+            HSLog.d(TAG, "HeadsetReceiver  onReceive  headset==========" + intent.getAction());
             String action = intent.getAction();
             if (action.equals(VOICE_CHANGE)) {
                 int currentVolume = am.getStreamVolume(AudioManager.STREAM_MUSIC);
@@ -342,7 +342,7 @@ public class HeadSetActivity extends HSActivity implements SeekBar.OnSeekBarChan
                 music.setText(String.valueOf(percent * 5));
                 movie.setText(String.valueOf(percent * 3));
             } else if (action.equals(AudioManager.ACTION_AUDIO_BECOMING_NOISY)) {
-                HeadSetActivity.this.finish();
+                HeadsetActivity.this.finish();
             }
         }
     }

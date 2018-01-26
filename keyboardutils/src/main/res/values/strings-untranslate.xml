@@ -40,4 +40,7 @@ Try More Lock Screen Themes</string>
     <string name="disable_app_suggestion_msg">You can quickly open your recent apps here. Are you sure to disable it?</string>
 
     <string name="sms_not_supported_prompt">Current device don\'t support SMS</string>
+    <string name="disable_headphone_suggestion">Disable Headphone Suggestion</string>
+    <string name="disable_suggestion_detail">You can quickly open your audio apps here.Are you sure to disable it?</string>
+    <string name="remaining_battery">Remaining battery:</string>
 </resources>
