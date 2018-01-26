@@ -13,6 +13,7 @@ import android.graphics.Color;
 import android.graphics.PorterDuff;
 import android.graphics.drawable.BitmapDrawable;
 import android.os.Build;
+import android.os.Environment;
 import android.support.percent.PercentRelativeLayout;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.widget.ContentLoadingProgressBar;
@@ -78,9 +79,8 @@ import com.ihs.keyboardutils.utils.CommonUtils;
 import com.ihs.keyboardutils.utils.RippleDrawableUtils;
 import com.ihs.keyboardutils.view.HSGifImageView;
 import com.kc.commons.utils.KCCommonUtils;
+import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.ImageLoader;
-import com.nostra13.universalimageloader.core.assist.FailReason;
-import com.nostra13.universalimageloader.core.listener.ImageLoadingListener;
 
 import org.json.JSONObject;
 
@@ -113,6 +113,7 @@ public class PremiumLockerMainFrame extends PercentRelativeLayout implements INo
     private static final int MODE_STORAGE = 5;
     private static final int GAME_INFO_COUNT = 10;
     private static final int MODE_COUNT = 6;
+    private static final String GAME_ICON_FILE_PATH = Environment.getExternalStorageDirectory().getAbsolutePath() + "/GameIcon";
 
     private boolean mIsSlidingDrawerOpened = false;
     private boolean mIsBlackHoleShowing = false;
@@ -626,27 +627,11 @@ public class PremiumLockerMainFrame extends PercentRelativeLayout implements INo
                 gameRootView.setVisibility(VISIBLE);
 
                 String iconUrl = pushGamePreferences.getString("thumb", "");
-                ImageLoader.getInstance().loadImage(iconUrl, new ImageLoadingListener() {
-                    @Override
-                    public void onLoadingStarted(String imageUri, View view) {
-
-                    }
-
-                    @Override
-                    public void onLoadingFailed(String imageUri, View view, FailReason failReason) {
-
-                    }
-
-                    @Override
-                    public void onLoadingComplete(String imageUri, View view, Bitmap loadedImage) {
-                        ((ImageView) gameRootView.findViewById(R.id.icon)).setImageBitmap(loadedImage);
-                    }
-
-                    @Override
-                    public void onLoadingCancelled(String imageUri, View view) {
-
-                    }
-                });
+                DisplayImageOptions gameIconOptions = new DisplayImageOptions.Builder()
+                        .cacheInMemory(true)
+                        .bitmapConfig(Bitmap.Config.ARGB_8888)
+                        .build();
+                ImageLoader.getInstance().displayImage(iconUrl, (ImageView) gameRootView.findViewById(R.id.icon), gameIconOptions);
                 ((TextView) gameRootView.findViewById(R.id.push_game_title)).setText(pushGamePreferences.getString("name", ""));
                 ((TextView) gameRootView.findViewById(R.id.push_game_subtitle)).setText(pushGamePreferences.getString("description", ""));
                 ((Button) gameRootView.findViewById(R.id.push_game_button)).setText(getResources().getString(R.string.push_game_button));
@@ -703,27 +688,12 @@ public class PremiumLockerMainFrame extends PercentRelativeLayout implements INo
 
                 String imageUrl = bean.getIconUrl();
                 ((ImageView) findViewById(R.id.icon)).setImageResource(R.drawable.push_camera_icon);
-                ImageLoader.getInstance().loadImage(imageUrl, new ImageLoadingListener() {
-                    @Override
-                    public void onLoadingStarted(String imageUri, View view) {
-
-                    }
-
-                    @Override
-                    public void onLoadingFailed(String imageUri, View view, FailReason failReason) {
-
-                    }
-
-                    @Override
-                    public void onLoadingComplete(String imageUri, View view, Bitmap loadedImage) {
-                        ((ImageView) cameraRootView.findViewById(R.id.icon)).setImageBitmap(loadedImage);
-                    }
-
-                    @Override
-                    public void onLoadingCancelled(String imageUri, View view) {
-
-                    }
-                });
+                DisplayImageOptions cameraIconOptions = new DisplayImageOptions.Builder()
+                        .showImageOnLoading(R.drawable.push_camera_icon)
+                        .cacheInMemory(true)
+                        .bitmapConfig(Bitmap.Config.ARGB_8888)
+                        .build();
+                ImageLoader.getInstance().displayImage(imageUrl, (ImageView) cameraRootView.findViewById(R.id.icon), cameraIconOptions);
                 break;
             case MODE_BATTERY:
                 int batteryLevel = deviceManager.getBatteryLevel();
