@@ -22,8 +22,8 @@
     <uses-permission android:name="android.permission.READ_SYNC_SETTINGS" />
     <uses-permission android:name="android.permission.WRITE_SYNC_SETTINGS" />
     <uses-permission android:name="android.permission.READ_PHONE_STATE" />
-    <uses-permission android:name="android.permission.PACKAGE_USAGE_STATS" />
-    <uses-permission android:name="android.permission.GET_PACKAGE_SIZE" />
+    <uses-permission android:name="android.permission.PACKAGE_USAGE_STATS"/>
+    <uses-permission android:name="android.permission.GET_PACKAGE_SIZE"/>
     <uses-permission android:name="android.permission.GET_TASKS" />
 
     <application>
@@ -118,8 +118,24 @@
             android:exported="true"
             android:launchMode="singleTop"
             android:screenOrientation="portrait"
-            android:theme="@style/ChargingScreenTransparentTheme"
-            android:windowSoftInputMode="stateVisible|adjustResize|adjustPan" />
+            android:windowSoftInputMode="stateVisible|adjustResize|adjustPan"
+            android:theme="@style/ChargingScreenTransparentTheme" />
+
+        <activity
+            android:name="com.artw.lockscreen.BrowserActivity"
+            android:configChanges="keyboardHidden|orientation|screenSize"
+            android:excludeFromRecents="true"
+            android:exported="true"
+            android:launchMode="singleTop"
+            android:noHistory="true"
+            android:screenOrientation="portrait"
+            android:taskAffinity=".key_search"
+            android:theme="@style/ChargingScreenTransparentTheme">
+            <intent-filter>
+                <category android:name="android.intent.category.DEFAULT" />
+                <action android:name="com.keyboard.search" />
+            </intent-filter>
+        </activity>
 
         <activity
             android:name="com.artw.lockscreen.DismissKeyguradActivity"
@@ -184,8 +200,8 @@
         <activity
             android:name="com.ihs.feature.softgame.GameActivity"
             android:label="@string/title_activity_game"
-            android:launchMode="singleTask"
             android:process=":h5game"
+            android:launchMode="singleTask"
             android:theme="@style/Theme.AppCompat.Light.NoActionBar" />
 
         <activity
@@ -257,13 +273,12 @@
             android:enabled="true"
             android:exported="false">
             <intent-filter android:priority="1000">
-                <action android:name="com.ihs.keyboard.LockScreenService" />
+                <action android:name="com.ihs.keyboard.LockScreenService"/>
             </intent-filter>
         </service>
 
         <!-- This service is used to bring main-process's life back. -->
-        <service
-            android:name="com.launcher.LockScreenStarterService"
+        <service android:name="com.launcher.LockScreenStarterService"
             android:exported="false">
             <intent-filter>
                 <action android:name="com.ihs.keyboard.intent.action.INNER_ALIVE" />
@@ -272,19 +287,19 @@
 
         <service android:name="com.launcher.KeepAliveService" />
 
-        <receiver android:name="com.ihs.feature.notification.NotificationReceiver" />
+        <receiver android:name="com.ihs.feature.notification.NotificationReceiver"/>
 
         <provider
             android:name="com.artw.lockscreen.LockerContentProvider"
             android:authorities="${applicationId}.locker.provider"
             android:enabled="true"
-            android:exported="true" />
+            android:exported="true"/>
 
         <activity
             android:name=".appsuggestion.AppSuggestionActivity"
-            android:excludeFromRecents="true"
             android:taskAffinity=".appsuggestion"
-            android:theme="@style/ChargingScreenAlertActivityTheme" />
+            android:excludeFromRecents="true"
+            android:theme="@style/ChargingScreenAlertActivityTheme"/>
 
         <receiver android:name="com.artw.lockscreen.SearchIntentReceiver">
             <intent-filter>
