@@ -167,11 +167,7 @@ public class PremiumLockerMainFrame extends PercentRelativeLayout implements INo
                 searchDialog = new PremiumSearchDialog(getContext());
                 searchDialog.setOnSearchListerner((searchDialog, searchText) -> {
                     String url = WebContentSearchManager.getInstance().queryText(searchText);
-                    Intent intent = new Intent(getContext(), BrowserActivity.class);
-                    intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                    intent.putExtra(BrowserActivity.SEARCH_URL_EXTRA, url);
-                    intent.putExtra(BrowserActivity.SHOW_WHEN_LOCKED, quickLaunch);
-                    context.startActivity(intent);
+                    SearchIntentReceiver.sendSearchIntent(url);
                     if (!quickLaunch) {
                         HSGlobalNotificationCenter.sendNotification(PremiumLockerActivity.EVENT_FINISH_SELF);
                     }

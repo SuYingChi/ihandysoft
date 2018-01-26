@@ -10,7 +10,7 @@
         android:layout_height="wrap_content"
         android:background="@color/colorAccent"
         app:tabIndicatorHeight="0dp"
-        app:tabIndicatorColor="@color/white"
+        app:tabIndicatorColor="@color/colorAccent"
         app:tabSelectedTextColor="@color/white"
         app:tabTextColor="@color/white">
     </android.support.design.widget.TabLayout>
