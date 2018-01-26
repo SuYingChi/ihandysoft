@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.graphics.Bitmap;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
@@ -45,10 +46,7 @@ public class BrowserActivity extends AppCompatActivity {
         }
         setContentView(R.layout.activity_browser);
         Intent intent = getIntent();
-        String url = DEFAULT_SEARCH_URL;
-        if (intent.hasExtra(SEARCH_URL_EXTRA)) {
-            url = intent.getStringExtra(SEARCH_URL_EXTRA);
-        }
+        String url = getSearchUrl(intent);
         webView = findViewById(R.id.browser_web_view);
         WebSettings webSettings = webView.getSettings();
         webSettings.setUseWideViewPort(true);
@@ -120,6 +118,20 @@ public class BrowserActivity extends AppCompatActivity {
 //            }
         });
         webView.loadUrl(url);
+    }
+
+    @Override
+    protected void onNewIntent(Intent intent) {
+        super.onNewIntent(intent);
+        webView.loadUrl(getSearchUrl(intent));
+    }
+
+    private String getSearchUrl(@NonNull Intent intent) {
+        String url = DEFAULT_SEARCH_URL;
+        if (intent.hasExtra(SEARCH_URL_EXTRA)) {
+            url = intent.getStringExtra(SEARCH_URL_EXTRA);
+        }
+        return url;
     }
 
     private BroadcastReceiver screenOffReceiver = new BroadcastReceiver() {
