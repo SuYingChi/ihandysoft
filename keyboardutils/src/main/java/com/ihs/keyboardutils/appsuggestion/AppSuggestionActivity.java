@@ -22,9 +22,9 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.artw.lockscreen.BrowserActivity;
 import com.artw.lockscreen.PremiumLockerActivity;
 import com.artw.lockscreen.PremiumSearchDialog;
+import com.artw.lockscreen.SearchIntentReceiver;
 import com.artw.lockscreen.WebContentSearchManager;
 import com.ihs.app.framework.HSApplication;
 import com.ihs.chargingscreen.utils.DisplayUtils;
@@ -200,11 +200,7 @@ public class AppSuggestionActivity extends Activity {
                 searchDialog = new PremiumSearchDialog(AppSuggestionActivity.this);
                 searchDialog.setOnSearchListerner((dialog, searchText) -> {
                     String url = WebContentSearchManager.getInstance().queryText(searchText);
-                    Intent intent = new Intent(AppSuggestionActivity.this, BrowserActivity.class);
-                    intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                    intent.putExtra(BrowserActivity.SEARCH_URL_EXTRA, url);
-                    intent.putExtra(BrowserActivity.SHOW_WHEN_LOCKED, quickLaunch);
-                    AppSuggestionActivity.this.startActivity(intent);
+                    SearchIntentReceiver.sendSearchIntent(url);
                     if (!quickLaunch) {
                         HSGlobalNotificationCenter.sendNotification(PremiumLockerActivity.EVENT_FINISH_SELF);
                     }

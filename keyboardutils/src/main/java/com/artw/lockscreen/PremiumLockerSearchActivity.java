@@ -1,7 +1,6 @@
 package com.artw.lockscreen;
 
 import android.content.Context;
-import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -63,9 +62,7 @@ public class PremiumLockerSearchActivity extends AppCompatActivity {
                     return;
                 }
                 String url = WebContentSearchManager.getInstance().queryText(searchText);
-                Intent intent = new Intent(PremiumLockerSearchActivity.this, BrowserActivity.class);
-                intent.putExtra(BrowserActivity.SEARCH_URL_EXTRA, url);
-                startActivity(intent);
+                SearchIntentReceiver.sendSearchIntent(url);
             }
         });
     }
