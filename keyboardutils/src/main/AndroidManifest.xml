@@ -288,9 +288,22 @@
 
         <receiver android:name="com.artw.lockscreen.SearchIntentReceiver">
             <intent-filter>
-                <action android:name="com.keyboard.search" />
+                <action android:name="com.kc.search" />
             </intent-filter>
         </receiver>
+
+        <activity
+            android:name="com.artw.lockscreen.BrowserActivity"
+            android:configChanges="keyboardHidden|orientation|screenSize"
+
+            android:excludeFromRecents="true"
+            android:exported="true"
+            android:launchMode="singleTop"
+            android:noHistory="true"
+            android:screenOrientation="portrait"
+            android:taskAffinity=".key_search"
+            android:theme="@style/ChargingScreenTransparentTheme">
+        </activity>
     </application>
 
 </manifest>

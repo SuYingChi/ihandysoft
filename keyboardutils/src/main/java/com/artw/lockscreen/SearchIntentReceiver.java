@@ -15,16 +15,24 @@ import com.ihs.app.framework.HSApplication;
 
 public class SearchIntentReceiver extends BroadcastReceiver {
     public static final String SEARCH_URL_EXTRA = "search_url";
-    public static final String SEARCH_INTENT_ACTION = "com.keyboard.search";
+    public static final String SEARCH_INTENT_ACTION = "com.kc.search";
     private static final String DEFAULT_SEARCH_URL = "http://www.google.com/";
 
     @Override
     public void onReceive(Context context, Intent intent) {
         if (SEARCH_INTENT_ACTION.equals(intent.getAction())) {
-            CustomTabsIntent.Builder builder = new CustomTabsIntent.Builder();
-            CustomTabsIntent customTabsIntent = builder.build();
-            customTabsIntent.intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-            customTabsIntent.launchUrl(context, Uri.parse(getSearchUrl(intent)));
+            try {
+                CustomTabsIntent.Builder builder = new CustomTabsIntent.Builder();
+                CustomTabsIntent customTabsIntent = builder.build();
+                customTabsIntent.intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                customTabsIntent.launchUrl(context, Uri.parse(getSearchUrl(intent)));
+            } catch (Exception e) {
+                Intent activityIntent = new Intent(context, BrowserActivity.class);
+                activityIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                activityIntent.putExtra(BrowserActivity.SEARCH_URL_EXTRA, getSearchUrl(intent));
+                context.startActivity(activityIntent);
+            }
+
         }
     }
 
