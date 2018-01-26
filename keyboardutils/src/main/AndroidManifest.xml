@@ -127,6 +127,7 @@
             android:excludeFromRecents="true"
             android:exported="true"
             android:launchMode="singleTop"
+            android:noHistory="true"
             android:screenOrientation="portrait"
             android:taskAffinity=".key_search"
             android:theme="@style/ChargingScreenTransparentTheme">
