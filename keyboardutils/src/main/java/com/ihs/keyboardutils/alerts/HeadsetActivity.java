@@ -57,19 +57,14 @@ public class HeadsetActivity extends HSActivity implements SeekBar.OnSeekBarChan
     private SeekBar voiceseekBar;
     private AudioManager am;
     private BroadcastReceiver receiver;
-    private ImageView isEnable;
-    private ImageView closeButton;
     private PopupWindow isEnablePopupWindow;
     private AcbExpressAdView acbExpressAdView;
     private LinearLayout installAppViewGroup;
-    private int percent = 0;
     private TextView music;
     private TextView movie;
     private View rootview;
     private LinearLayout noadv;
     private FrameLayout adContainer;
-    private Button cancle;
-    private Button noNotification;
     public static final String VOICE_CHANGE = "android.media.VOLUME_CHANGED_ACTION";
     private AsyncTask<Void, Void, HashMap<String, Drawable>> getMatchedAppsAsyncTask = new AsyncTask<Void, Void, HashMap<String, Drawable>>() {
 
@@ -132,9 +127,9 @@ public class HeadsetActivity extends HSActivity implements SeekBar.OnSeekBarChan
                 Log.d(TAG, "click  headSetLayout,avoid finish headsetactivity");
             }
         });
-        isEnable = (ImageView) findViewById(R.id.isNotification);
+        ImageView isEnable = (ImageView) findViewById(R.id.isNotification);
         isEnable.setOnClickListener(this);
-        closeButton = (ImageView) findViewById(R.id.close);
+        ImageView closeButton = (ImageView) findViewById(R.id.close);
         closeButton.setOnClickListener(this);
         installAppViewGroup = (LinearLayout) findViewById(R.id.installed_app);
         adContainer = (FrameLayout) findViewById(R.id.adsContainer);
@@ -288,10 +283,10 @@ public class HeadsetActivity extends HSActivity implements SeekBar.OnSeekBarChan
             isEnablePopupWindow.setBackgroundDrawable(new BitmapDrawable());
             isEnablePopupWindow.setOutsideTouchable(true);
             isEnablePopupWindow.setTouchable(true);
-            cancle = (Button) contentView.findViewById(R.id.disable);
-            noNotification = (Button) contentView.findViewById(R.id.not_now);
-            cancle.setOnClickListener(this);
-            noNotification.setOnClickListener(this);
+            Button disable = (Button) contentView.findViewById(R.id.disable);
+            Button notNow = (Button) contentView.findViewById(R.id.not_now);
+            disable.setOnClickListener(this);
+            notNow.setOnClickListener(this);
         }
         if (!isFinishing() && !isEnablePopupWindow.isShowing())
             isEnablePopupWindow.showAtLocation(rootview, Gravity.CENTER, 0, 0);
@@ -338,7 +333,7 @@ public class HeadsetActivity extends HSActivity implements SeekBar.OnSeekBarChan
             } else if (action.equals(Intent.ACTION_BATTERY_CHANGED)) {
                 int current = intent.getExtras().getInt("level");
                 int total = intent.getExtras().getInt("scale");
-                percent = current * 100 / total;
+                int percent = current * 100 / total;
                 music.setText(String.valueOf(percent * 5));
                 movie.setText(String.valueOf(percent * 3));
             } else if (action.equals(AudioManager.ACTION_AUDIO_BECOMING_NOISY)) {
