@@ -68,7 +68,7 @@ public class HeadsetActivity extends HSAppCompatActivity implements SeekBar.OnSe
 
         @Override
         protected Map<String, Drawable> doInBackground(Void... voids) {
-            Map<String, Drawable> currentMatchAppMap = getInstallAppsInfoAndCompareRemote();
+            Map<String, Drawable> currentMatchAppMap = getInstalledAppsInfoAndCompareRemote();
             return currentMatchAppMap;
         }
 
@@ -178,12 +178,12 @@ public class HeadsetActivity extends HSAppCompatActivity implements SeekBar.OnSe
         }
     }
 
-    private List<String> getRemoteAPPlist() {
+    private List<String> getRemoteAppList() {
         ArrayList<String> list = (ArrayList<String>) HSConfig.getList("Application", "RemoteAppPackageName");
         return list;
     }
 
-    private Map<String, Drawable> getInstallAppsInfoAndCompareRemote() {
+    private Map<String, Drawable> getInstalledAppsInfoAndCompareRemote() {
         ArrayList<String> list = new ArrayList<String>();
         HashMap<String, Drawable> compareResult = new HashMap<String, Drawable>();
         PackageManager packageManager = getPackageManager();
@@ -195,9 +195,9 @@ public class HeadsetActivity extends HSAppCompatActivity implements SeekBar.OnSe
             list.add(name);
 
         }
-        if (!list.isEmpty() && !getRemoteAPPlist().isEmpty()) {
+        if (!list.isEmpty() && !getRemoteAppList().isEmpty()) {
             Iterator<String> iterator = list.iterator();
-            List<String> remoteAPPlist = getRemoteAPPlist();
+            List<String> remoteAPPlist = getRemoteAppList();
             while (iterator.hasNext()) {
                 String packageName = iterator.next();
                 for (String remotePattern : remoteAPPlist) {
@@ -245,13 +245,13 @@ public class HeadsetActivity extends HSAppCompatActivity implements SeekBar.OnSe
             finish();
         } else if (i == R.id.headset_disable) {
             KCHeadsetManager.getInstance().setEnabled(false);
-            dissMissPopWindow();
+            dismissPopWindow();
         } else if (i == R.id.close_pop_window) {
-            dissMissPopWindow();
+            dismissPopWindow();
         }
     }
 
-    private void dissMissPopWindow() {
+    private void dismissPopWindow() {
         if (moreSettingPopWindow.isShowing() & !isFinishing())
             moreSettingPopWindow.dismiss();
     }
