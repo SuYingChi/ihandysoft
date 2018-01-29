@@ -78,7 +78,7 @@
                 android:src="@drawable/locker_brightness_low"/>
 
             <SeekBar
-                android:id="@+id/volume_seek_bar"
+                android:id="@+id/brightness_seekbar"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:progressDrawable="@drawable/settings_seekbar_track_white"
