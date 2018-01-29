@@ -25,9 +25,11 @@ public class KCHeadsetManager {
         headsetReceiver = new HeadsetReceiver();
     }
 
-    public static synchronized KCHeadsetManager getInstance() {
-        if (HeadsetManager == null) {
-            HeadsetManager = new KCHeadsetManager();
+    public static  KCHeadsetManager getInstance() {
+        synchronized(KCHeadsetManager.class) {
+            if (HeadsetManager == null) {
+                HeadsetManager = new KCHeadsetManager();
+            }
         }
         return HeadsetManager;
     }
