@@ -1,4 +1,4 @@
-package com.ihs.keyboardutils.alerts;
+package com.ihs.feature.headset;
 
 import android.content.BroadcastReceiver;
 import android.content.Context;
@@ -29,12 +29,11 @@ import android.widget.PopupWindow;
 import android.widget.SeekBar;
 import android.widget.TextView;
 
-import com.ihs.app.framework.activity.HSActivity;
+import com.ihs.app.framework.activity.HSAppCompatActivity;
 import com.ihs.commons.config.HSConfig;
 import com.ihs.commons.utils.HSLog;
 import com.ihs.keyboardutils.R;
 import com.ihs.keyboardutils.iap.RemoveAdsManager;
-import com.kc.utils.KCHeadsetManager;
 
 import net.appcloudbox.ads.expressads.AcbExpressAdView;
 
@@ -51,12 +50,12 @@ import io.fabric.sdk.android.services.concurrency.AsyncTask;
  * Created by yingchi.su on 2018/1/12.
  */
 
-public class HeadsetActivity extends HSActivity implements SeekBar.OnSeekBarChangeListener, View.OnClickListener {
-    public static  final String TAG = "HeadsetActivity";
+public class HeadsetActivity extends HSAppCompatActivity implements SeekBar.OnSeekBarChangeListener, View.OnClickListener {
+    public static final String TAG = "HeadsetActivity";
     private SeekBar volumeSeekBar;
     private AudioManager audioManager;
     private BroadcastReceiver headsetReceiver;
-    private PopupWindow chooseCloseHeadsetPopupWindow;
+    private PopupWindow moreSettingPopWindow;
     private AcbExpressAdView acbExpressAdView;
     private LinearLayout installedAppViewGroup;
     private TextView musicRemain;
@@ -69,7 +68,7 @@ public class HeadsetActivity extends HSActivity implements SeekBar.OnSeekBarChan
 
         @Override
         protected Map<String, Drawable> doInBackground(Void... voids) {
-            Map<String, Drawable>  currentMatchAppMap = getInstallAppsInfoAndcompareRemote();
+            Map<String, Drawable> currentMatchAppMap = getInstallAppsInfoAndCompareRemote();
             return currentMatchAppMap;
         }
 
@@ -97,9 +96,9 @@ public class HeadsetActivity extends HSActivity implements SeekBar.OnSeekBarChan
 
 
     private void initView() {
-        LinearLayout headsetLayout = (LinearLayout) findViewById(R.id.headsetactivity);
-        volumeSeekBar = (SeekBar) findViewById(R.id.brightness_seekbar);
-        if ( Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
+        LinearLayout headsetLayout = (LinearLayout) findViewById(R.id.headset_activity);
+        volumeSeekBar = (SeekBar) findViewById(R.id.volume_seek_bar);
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
             Drawable wrapDrawable = DrawableCompat.wrap(volumeSeekBar.getThumb());
             DrawableCompat.setTint(wrapDrawable, ContextCompat.getColor(this, android.R.color.white));
             volumeSeekBar.setThumb(DrawableCompat.unwrap(wrapDrawable));
@@ -111,25 +110,23 @@ public class HeadsetActivity extends HSActivity implements SeekBar.OnSeekBarChan
         volumeSeekBar.setProgress(currentVolume);
         volumeSeekBar.setOnSeekBarChangeListener(this);
         headsetLayout.setOnClickListener(new View.OnClickListener() {
-            //此处空实现是为了避免点击弹窗的不可点击区域时收起弹窗
+            //此处空实现是为了避免点击弹窗的不可点击区域时收起弹窗,不可移除该事件监听
             @Override
             public void onClick(View v) {
             }
         });
-        ImageView isEnable = (ImageView) findViewById(R.id.headset_menu);
-        isEnable.setOnClickListener(this);
-        ImageView closeButton = (ImageView) findViewById(R.id.close);
-        closeButton.setOnClickListener(this);
+        findViewById(R.id.headset_menu).setOnClickListener(this);;
+        findViewById(R.id.close).setOnClickListener(this);
         installedAppViewGroup = (LinearLayout) findViewById(R.id.installed_app);
-        adContainer = (FrameLayout) findViewById(R.id.adsContainer);
-        noAdView = (LinearLayout) findViewById(R.id.noadv);
+        adContainer = (FrameLayout) findViewById(R.id.ad_container);
+        noAdView = (LinearLayout) findViewById(R.id.no_adView);
         musicRemain = (TextView) findViewById(R.id.musicRemain);
         movieRemain = (TextView) findViewById(R.id.movieRemain);
         rootView = LayoutInflater.from(this).inflate(R.layout.headset_layout, null);
-        BatteryManager batteryManager=(BatteryManager)getSystemService(BATTERY_SERVICE);
+        BatteryManager batteryManager = (BatteryManager) getSystemService(BATTERY_SERVICE);
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-            musicRemain.setText(String.valueOf(batteryManager.getIntProperty(BatteryManager.BATTERY_PROPERTY_CAPACITY)*5));
-            movieRemain.setText(String.valueOf(batteryManager.getIntProperty(BatteryManager.BATTERY_PROPERTY_CAPACITY)*3));
+            musicRemain.setText(String.valueOf(batteryManager.getIntProperty(BatteryManager.BATTERY_PROPERTY_CAPACITY) * 5));
+            movieRemain.setText(String.valueOf(batteryManager.getIntProperty(BatteryManager.BATTERY_PROPERTY_CAPACITY) * 3));
         }
 
     }
@@ -137,20 +134,20 @@ public class HeadsetActivity extends HSActivity implements SeekBar.OnSeekBarChan
     private void createAdView() {
         if (!RemoveAdsManager.getInstance().isRemoveAdsPurchased() & !TextUtils.isEmpty(KCHeadsetManager.getInstance().getHeadsetAdPlacement())) {
             acbExpressAdView = new AcbExpressAdView(this, KCHeadsetManager.getInstance().getHeadsetAdPlacement());
-                acbExpressAdView.setAutoSwitchAd(true);
-                acbExpressAdView.setGravity(Gravity.CENTER);
-                acbExpressAdView.setExpressAdViewListener(new AcbExpressAdView.AcbExpressAdViewListener() {
-                    @Override
-                    public void onAdShown(AcbExpressAdView acbExpressAdView) {
-                        noAdView.setVisibility(View.GONE);
-                    }
+            acbExpressAdView.setAutoSwitchAd(true);
+            acbExpressAdView.setGravity(Gravity.CENTER);
+            acbExpressAdView.setExpressAdViewListener(new AcbExpressAdView.AcbExpressAdViewListener() {
+                @Override
+                public void onAdShown(AcbExpressAdView acbExpressAdView) {
+                    noAdView.setVisibility(View.GONE);
+                }
 
-                    @Override
-                    public void onAdClicked(AcbExpressAdView acbExpressAdView) {
+                @Override
+                public void onAdClicked(AcbExpressAdView acbExpressAdView) {
 
-                    }
-                });
-                adContainer.addView(acbExpressAdView, FrameLayout.LayoutParams.MATCH_PARENT, FrameLayout.LayoutParams.MATCH_PARENT);
+                }
+            });
+            adContainer.addView(acbExpressAdView, FrameLayout.LayoutParams.MATCH_PARENT, FrameLayout.LayoutParams.MATCH_PARENT);
         }
     }
 
@@ -169,30 +166,24 @@ public class HeadsetActivity extends HSActivity implements SeekBar.OnSeekBarChan
                 imageView.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        Intent launchIntent = getPackageManager().getLaunchIntentForPackage(name);
+                        Intent launchIntent = null;
+                            launchIntent = getPackageManager().getLaunchIntentForPackage(name);
                         startActivity(launchIntent);
 
                     }
                 });
             }
-            if (matchAppMap.size() < installedAppViewMaximum) {
-                for (int i = matchAppMap.size(); i < installedAppViewMaximum; i++) {
-                    ImageView imageView = (ImageView) installedAppViewGroup.getChildAt(i);
-                    imageView.setVisibility(View.INVISIBLE);
-                }
-            }
-        }else {
+        } else {
             installedAppViewGroup.setVisibility(View.GONE);
         }
-
-
     }
+
     private List<String> getRemoteAPPlist() {
         ArrayList<String> list = (ArrayList<String>) HSConfig.getList("Application", "RemoteAppPackageName");
         return list;
     }
 
-    private Map<String, Drawable> getInstallAppsInfoAndcompareRemote() {
+    private Map<String, Drawable> getInstallAppsInfoAndCompareRemote() {
         ArrayList<String> list = new ArrayList<String>();
         HashMap<String, Drawable> compareResult = new HashMap<String, Drawable>();
         PackageManager packageManager = getPackageManager();
@@ -201,7 +192,7 @@ public class HeadsetActivity extends HSActivity implements SeekBar.OnSeekBarChan
         for (int i = 0; i < installedPackages.size(); i++) {
             PackageInfo packageInfo = installedPackages.get(i);
             String name = packageInfo.packageName;
-                list.add(name);
+            list.add(name);
 
         }
         if (!list.isEmpty() && !getRemoteAPPlist().isEmpty()) {
@@ -213,7 +204,7 @@ public class HeadsetActivity extends HSActivity implements SeekBar.OnSeekBarChan
                     if (packageName.contains(remotePattern)) {
                         PackageInfo packageInfo = null;
                         try {
-                            if(packageManager.getLaunchIntentForPackage(packageName)!=null) {
+                            if (packageManager.getLaunchIntentForPackage(packageName) != null) {
                                 packageInfo = packageManager.getPackageInfo(packageName, 0);
                                 if (packageInfo != null) {
                                     Drawable drawable = packageInfo.applicationInfo.loadIcon(packageManager);
@@ -253,34 +244,37 @@ public class HeadsetActivity extends HSActivity implements SeekBar.OnSeekBarChan
         } else if (i == R.id.close) {
             finish();
         } else if (i == R.id.headset_disable) {
-            KCHeadsetManager.getInstance().setNewEnabledValueToSetting(false);
-            if(chooseCloseHeadsetPopupWindow.isShowing()&!isFinishing())
-            chooseCloseHeadsetPopupWindow.dismiss();
-        } else if (i == R.id.close_popWindow) {
-            if(chooseCloseHeadsetPopupWindow.isShowing()&!isFinishing())
-            chooseCloseHeadsetPopupWindow.dismiss();
+            KCHeadsetManager.getInstance().setEnabled(false);
+            dissMissPopWindow();
+        } else if (i == R.id.close_pop_window) {
+            dissMissPopWindow();
         }
     }
 
+    private void dissMissPopWindow() {
+        if (moreSettingPopWindow.isShowing() & !isFinishing())
+            moreSettingPopWindow.dismiss();
+    }
+
     private void showPopWindow() {
-        if (chooseCloseHeadsetPopupWindow == null) {
+        if (moreSettingPopWindow == null) {
             View contentView = LayoutInflater.from(this).inflate(R.layout.headset_disable_suggestion_pop, null);
             DisplayMetrics metrics = new DisplayMetrics();
             getWindowManager().getDefaultDisplay().getMetrics(metrics);
             int width = metrics.widthPixels;
-            chooseCloseHeadsetPopupWindow = new PopupWindow(contentView, (int) (width * 0.8), LinearLayout.LayoutParams.WRAP_CONTENT);
-            chooseCloseHeadsetPopupWindow.setFocusable(true);
-            chooseCloseHeadsetPopupWindow.setContentView(contentView);
-            chooseCloseHeadsetPopupWindow.setBackgroundDrawable(new BitmapDrawable());
-            chooseCloseHeadsetPopupWindow.setOutsideTouchable(true);
-            chooseCloseHeadsetPopupWindow.setTouchable(true);
+            moreSettingPopWindow = new PopupWindow(contentView, (int) (width * 0.8), LinearLayout.LayoutParams.WRAP_CONTENT);
+            moreSettingPopWindow.setFocusable(true);
+            moreSettingPopWindow.setContentView(contentView);
+            moreSettingPopWindow.setBackgroundDrawable(new BitmapDrawable());
+            moreSettingPopWindow.setOutsideTouchable(true);
+            moreSettingPopWindow.setTouchable(true);
             Button headsetDisable = (Button) contentView.findViewById(R.id.headset_disable);
-            Button closePopWindow= (Button) contentView.findViewById(R.id.close_popWindow);
+            Button closePopWindow = (Button) contentView.findViewById(R.id.close_pop_window);
             headsetDisable.setOnClickListener(this);
             closePopWindow.setOnClickListener(this);
         }
-        if (!isFinishing() && !chooseCloseHeadsetPopupWindow.isShowing())
-            chooseCloseHeadsetPopupWindow.showAtLocation(rootView, Gravity.CENTER, 0, 0);
+        if (!isFinishing() && !moreSettingPopWindow.isShowing())
+            moreSettingPopWindow.showAtLocation(rootView, Gravity.CENTER, 0, 0);
 
     }
 
@@ -297,17 +291,15 @@ public class HeadsetActivity extends HSActivity implements SeekBar.OnSeekBarChan
             int currentVolume = audioManager.getStreamVolume(AudioManager.STREAM_MUSIC);
             seekBar.setProgress(currentVolume);
         }
-
     }
 
     @Override
     public void onStartTrackingTouch(SeekBar seekBar) {
-        HSLog.d(TAG, "onStartTrackingTouch       " + "   seekBar.getProgress() " + seekBar.getProgress() + "    volumeSeekBar.getProgress() " + volumeSeekBar.getProgress());
+
     }
 
     @Override
     public void onStopTrackingTouch(SeekBar seekBar) {
-        HSLog.d(TAG, "onStopTrackingTouch       " + "   seekBar.getProgress() " + seekBar.getProgress() + "    volumeSeekBar.getProgress() " + volumeSeekBar.getProgress());
 
     }
 
@@ -340,8 +332,8 @@ public class HeadsetActivity extends HSActivity implements SeekBar.OnSeekBarChan
         } else if (event.getKeyCode() == KeyEvent.KEYCODE_VOLUME_UP) {
             audioManager.adjustStreamVolume(AudioManager.STREAM_MUSIC, AudioManager.ADJUST_RAISE, 0);
         } else if (event.getKeyCode() == KeyEvent.KEYCODE_BACK) {
-            if (chooseCloseHeadsetPopupWindow != null && chooseCloseHeadsetPopupWindow.isShowing()) {
-                chooseCloseHeadsetPopupWindow.dismiss();
+            if (moreSettingPopWindow != null && moreSettingPopWindow.isShowing()) {
+                moreSettingPopWindow.dismiss();
             }
             return super.dispatchKeyEvent(event);
         } else {

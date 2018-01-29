@@ -4,7 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_gravity="center_horizontal"
-    android:background="@drawable/headset_popwindow_background"
+    android:background="@drawable/headset_pop_window_background"
     android:orientation="vertical">
 
     <TextView
@@ -36,18 +36,18 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_weight="1"
-            android:background="@drawable/headset_popwindow_disable_button"
-            android:text="Disable "
+            android:background="@drawable/headset_disable_button"
+            android:text="@string/charging_module_alert_close"
             android:textColor="#aa000000"
             android:textSize="16sp" />
 
         <Button
-            android:id="@+id/close_popWindow"
+            android:id="@+id/close_pop_window"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_weight="1"
-            android:background="@drawable/headset_popwindow_close_popwindow_button"
-            android:text="Not now"
+            android:background="@drawable/headset_pop_window_close_button"
+            android:text="@string/charging_module_alert_cancel"
             android:textColor="#aa000000"
             android:textSize="16sp" />
     </LinearLayout>

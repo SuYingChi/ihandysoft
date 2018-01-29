@@ -84,7 +84,9 @@
         <item name="android:windowFullscreen">true</item>
         <item name="android:backgroundDimEnabled">true</item>
     </style>
-    <style name="HeadsetActivityStyle" parent="android:Theme.Translucent.NoTitleBar.Fullscreen">
+    <style name="HeadsetActivityStyle" parent="Theme.AppCompat.Light">
+        <item name="android:windowFullscreen">true</item>
+        <item name="windowNoTitle">true</item>
         <item name="android:windowBackground">@color/transparent_black</item>
         <item name="android:windowAnimationStyle">@style/Headset_Animation</item>
     </style>

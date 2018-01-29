@@ -1,4 +1,4 @@
-package com.kc.utils;
+package com.ihs.feature.headset;
 
 import android.content.BroadcastReceiver;
 import android.content.Context;
@@ -8,20 +8,18 @@ import android.text.TextUtils;
 
 import com.ihs.app.framework.HSApplication;
 import com.ihs.commons.utils.HSLog;
-import com.ihs.keyboardutils.alerts.HeadsetActivity;
 
 /**
  * Created by yingchi.su on 2018/1/17.
  */
 
 public class KCHeadsetManager {
-
-
     private static KCHeadsetManager HeadsetManager;
     private HeadsetReceiver headsetReceiver;
 
     private String placement;
-    private boolean lastEnabledValue;
+    private boolean isEnabled = false;
+    private boolean isRegisterReceiver = false;
 
     private KCHeadsetManager() {
         headsetReceiver = new HeadsetReceiver();
@@ -35,7 +33,6 @@ public class KCHeadsetManager {
     }
 
     public void setHeadsetAdPlacement(String placement) {
-
         this.placement = placement;
     }
 
@@ -44,52 +41,46 @@ public class KCHeadsetManager {
     }
 
     //从设置获取该功能新的的开关值，（暂返回默认值false，留待后续补充获取开关值的逻辑）
-    private boolean getHeadsetEnabledValuefromSetting() {
-        lastEnabledValue = false;
+    private boolean getHeadsetEnabledValueFromSetting() {
         return false;
     }
 
     //将该功能的新的开关值设给设置的开关并更新headsetReceiver的注册状态，留待后续补充
-    public void setNewEnabledValueToSetting(boolean newEnableValue) {
-        updateHeadsetReceiver(newEnableValue);
+    public void setEnabled(boolean newEnableValue) {
+        isEnabled = newEnableValue;
+        updateHeadsetReceiver();
     }
 
     private class HeadsetReceiver extends BroadcastReceiver {
-
         public static final String TAG = "HeadsetReceiver";
 
         @Override
         public void onReceive(Context context, Intent intent) {
-            if (TextUtils.equals(intent.getAction(),Intent.ACTION_HEADSET_PLUG)) {
+            if (TextUtils.equals(intent.getAction(), Intent.ACTION_HEADSET_PLUG)) {
                 if (intent.getIntExtra("state", 0) == 1) {
                     HSLog.d(TAG, " onReceive  headset==========" + Intent.ACTION_HEADSET_PLUG + "      state================" + intent.getIntExtra("state", 0));
-                    if (getHeadsetEnabledValuefromSetting()) {
-                        Intent mIntent = new Intent(context, HeadsetActivity.class);
-                        mIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                        context.startActivity(mIntent);
-                    }
+                    Intent mIntent = new Intent(context, HeadsetActivity.class);
+                    mIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                    context.startActivity(mIntent);
                 }
             }
         }
-
     }
 
     public void init(String string) {
         setHeadsetAdPlacement(string);
-        if(lastEnabledValue){
-            HSApplication.getContext().unregisterReceiver(headsetReceiver);
-        }else{
-            HSApplication.getContext().registerReceiver(headsetReceiver, new IntentFilter(Intent.ACTION_HEADSET_PLUG));
-        }
-        lastEnabledValue = !lastEnabledValue;
+        //updateHeadsetReceiver(getHeadsetEnabledValueFromSetting());
+        isEnabled = true;
+        updateHeadsetReceiver();
     }
 
-    private void updateHeadsetReceiver(boolean newEnableValue){
-        if (!lastEnabledValue && newEnableValue) {
+    private void updateHeadsetReceiver() {
+        if (!isRegisterReceiver && isEnabled) {
             HSApplication.getContext().registerReceiver(headsetReceiver, new IntentFilter(Intent.ACTION_HEADSET_PLUG));
-        } else if (lastEnabledValue && !newEnableValue) {
+            isRegisterReceiver = true;
+        } else if (isRegisterReceiver && !isEnabled) {
             HSApplication.getContext().unregisterReceiver(headsetReceiver);
+            isRegisterReceiver = false;
         }
-        lastEnabledValue = newEnableValue;
     }
 }

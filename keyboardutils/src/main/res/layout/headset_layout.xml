@@ -1,13 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/headsetactivity"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/headset_activity"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_gravity="bottom"
     android:background="@drawable/headset_background"
     android:orientation="vertical"
-    tools:context=".alerts.HeadsetActivity">
+    tools:context="com.ihs.feature.headset.HeadsetActivity">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -31,7 +32,7 @@
             android:background="@drawable/headset_btn_pressed_selector"
             android:clickable="true"
             android:padding="6dp"
-            android:srcCompact="@drawable/headset_menu" />
+            app:srcCompat="@drawable/ic_headset_menu" />
 
         <ImageView
             android:id="@+id/close"
@@ -41,7 +42,7 @@
             android:background="@drawable/headset_btn_pressed_selector"
             android:clickable="true"
             android:padding="6dp"
-            android:srcCompact="@drawable/headset_close" />
+            app:srcCompat="@drawable/ic_headset_close" />
     </LinearLayout>
 
     <TextView
@@ -63,16 +64,15 @@
         android:orientation="horizontal">
 
         <ImageView
-            android:layout_width="7dp"
+            android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:layout_marginLeft="5dp"
             android:layout_marginRight="5dp"
-            android:srcCompact="@drawable/headset_volume_down"
-
+            app:srcCompat="@drawable/ic_headset_volume_down"
             />
 
         <SeekBar
-            android:id="@+id/brightness_seekbar"
+            android:id="@+id/volume_seek_bar"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginLeft="5dp"
@@ -84,12 +84,11 @@
             android:thumbTint="@android:color/white" />
 
         <ImageView
-            android:id="@+id/bb"
             android:layout_width="13dp"
             android:layout_height="match_parent"
             android:layout_marginLeft="5dp"
             android:layout_marginRight="5dp"
-            android:srcCompact="@drawable/headset_volume_up" />
+            app:srcCompat="@drawable/ic_headset_volume_up" />
     </LinearLayout>
 
     <TextView
@@ -109,7 +108,7 @@
         android:layout_marginLeft="30dp"
         android:layout_marginRight="30dp"
         android:layout_marginTop="10dp"
-        android:background="@drawable/headset_cornerbackground"
+        android:background="@drawable/headset_corner_background"
         android:orientation="horizontal"
 
         >
@@ -119,7 +118,7 @@
             android:layout_height="15dp"
             android:layout_gravity="center"
             android:layout_marginLeft="29dp"
-            android:srcCompact="@drawable/headset_music"
+            app:srcCompat="@drawable/ic_headset_music"
 
             />
 
@@ -149,7 +148,7 @@
             android:layout_height="15dp"
             android:layout_gravity="center"
             android:layout_marginLeft="55dp"
-            android:srcCompact="@drawable/headset_video" />
+            app:srcCompat="@drawable/ic_headset_movie" />
 
         <TextView
             android:id="@+id/movieRemain"
@@ -183,7 +182,7 @@
         android:layout_marginLeft="30dp"
         android:layout_marginRight="30dp"
         android:layout_marginTop="10dp"
-        android:background="@drawable/headset_cornerbackground"
+        android:background="@drawable/headset_corner_background"
         android:orientation="horizontal"
         android:padding="8dp">
 
@@ -238,7 +237,7 @@
     </LinearLayout>
 
     <FrameLayout
-        android:id="@+id/adsContainer"
+        android:id="@+id/ad_container"
         android:layout_width="match_parent"
         android:layout_height="230dp"
         android:layout_marginBottom="15dp"
@@ -247,22 +246,19 @@
         android:layout_marginTop="15dp">
 
         <LinearLayout
-            android:id="@+id/noadv"
+            android:id="@+id/no_adView"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:background="@drawable/headset_cornerbackground"
+            android:background="@drawable/headset_corner_background"
             android:orientation="vertical"
             android:visibility="visible">
 
             <ImageView
-                android:id="@+id/noadver"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_width="90dp"
+                android:layout_height="77dp"
                 android:layout_gravity="center"
-                android:layout_marginLeft="100dp"
-                android:layout_marginRight="100dp"
                 android:layout_marginTop="60dp"
-                android:src="@drawable/headphone" />
+                app:srcCompat = "@drawable/ic_headset"/>
 
             <TextView
                 android:layout_width="wrap_content"
