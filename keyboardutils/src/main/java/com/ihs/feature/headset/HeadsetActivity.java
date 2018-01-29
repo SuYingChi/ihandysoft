@@ -311,7 +311,7 @@ public class HeadsetActivity extends HSAppCompatActivity implements SeekBar.OnSe
             } else if (action.equals(Intent.ACTION_BATTERY_CHANGED)) {
                 int current = intent.getExtras().getInt("level");
                 int total = intent.getExtras().getInt("scale");
-                float percent = current * 100 / total;
+                int percent = current * 100 / total;
                 musicRemain.setText(String.valueOf(percent * 5));
                 movieRemain.setText(String.valueOf(percent * 3));
             } else if (action.equals(AudioManager.ACTION_AUDIO_BECOMING_NOISY)) {
