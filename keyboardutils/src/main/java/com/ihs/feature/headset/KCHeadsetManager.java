@@ -69,8 +69,7 @@ public class KCHeadsetManager {
 
     public void init(String string) {
         setHeadsetAdPlacement(string);
-        //updateHeadsetReceiver(getHeadsetEnabledValueFromSetting());
-        isEnabled = true;
+        isEnabled = getHeadsetEnabledValueFromSetting();
         updateHeadsetReceiver();
     }
 
