@@ -67,7 +67,6 @@
         android:layout_marginLeft="8dp"
         android:layout_marginStart="8dp"
         android:lineSpacingExtra="5dp"
-        android:lines="2"
         android:text="May,02"
         android:textColor="@android:color/white"
         android:textSize="15sp"
