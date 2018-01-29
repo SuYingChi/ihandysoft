@@ -20,7 +20,7 @@ import com.ihs.feature.notification.NotificationManager;
 import com.ihs.keyboardutils.appsuggestion.AppSuggestionManager;
 import com.ihs.keyboardutils.notification.KCNotificationManager;
 import com.ihs.keyboardutils.notification.NotificationBean;
-import com.kc.utils.KCHeadsetManager;
+import com.ihs.feature.headset.KCHeadsetManager;
 import com.launcher.FloatWindowCompat;
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
