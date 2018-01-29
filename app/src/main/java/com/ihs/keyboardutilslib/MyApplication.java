@@ -20,7 +20,7 @@ import com.ihs.feature.notification.NotificationManager;
 import com.ihs.keyboardutils.appsuggestion.AppSuggestionManager;
 import com.ihs.keyboardutils.notification.KCNotificationManager;
 import com.ihs.keyboardutils.notification.NotificationBean;
-import com.kc.utils.KCHeadSetManager;
+import com.kc.utils.KCHeadsetManager;
 import com.launcher.FloatWindowCompat;
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
@@ -52,7 +52,7 @@ public class MyApplication extends HSApplication {
             onRemoteProcessApplicationCreate(processSuffix);
         }
 
-        KCHeadSetManager.getInstance().init("");
+        KCHeadsetManager.getInstance().init("");
     }
 
     private void onRemoteProcessApplicationCreate(String processSuffix) {

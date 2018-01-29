@@ -12,7 +12,7 @@
         android:layout_height="45dp"
         android:gravity="bottom"
         android:paddingLeft="20dp"
-        android:text="@string/disable_headphone_suggestion"
+        android:text="@string/headset_disable_title"
         android:textColor="#dd000000"
         android:textSize="18sp" />
 
@@ -21,7 +21,7 @@
         android:layout_height="50dp"
         android:gravity="center_vertical"
         android:paddingLeft="20dp"
-        android:text="@string/disable_suggestion_detail"
+        android:text="@string/headset_disable_suggestion_detail"
         android:textColor="#aa000000"
         android:textSize="13sp" />
 
@@ -32,21 +32,21 @@
         android:orientation="horizontal">
 
         <Button
-            android:id="@+id/disable"
+            android:id="@+id/headset_disable"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_weight="1"
-            android:background="@drawable/headset_isnotification_pop_button"
+            android:background="@drawable/headset_popwindow_disable_button"
             android:text="Disable "
             android:textColor="#aa000000"
             android:textSize="16sp" />
 
         <Button
-            android:id="@+id/not_now"
+            android:id="@+id/close_popWindow"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_weight="1"
-            android:background="@drawable/headset_isnotification_pop_button_right"
+            android:background="@drawable/headset_popwindow_close_popwindow_button"
             android:text="Not now"
             android:textColor="#aa000000"
             android:textSize="16sp" />

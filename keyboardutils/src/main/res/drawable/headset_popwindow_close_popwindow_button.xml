@@ -3,7 +3,7 @@
     <item>
         <shape >
             <corners android:bottomRightRadius="10dp"></corners>
-            <solid android:color="@color/headset_pop_button_interval"></solid>
+            <solid android:color="@color/headset_popwindow_button_interval_color"></solid>
         </shape>
     </item>
     <item android:top="1dp">

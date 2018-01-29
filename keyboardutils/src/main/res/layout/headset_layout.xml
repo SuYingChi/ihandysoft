@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/headsetactivity"
     android:layout_width="match_parent"
@@ -23,26 +22,26 @@
             android:layout_weight="1" />
 
         <ImageView
-            android:id="@+id/isNotification"
+            android:id="@+id/headset_menu"
             android:layout_width="25dp"
             android:layout_height="25dp"
             android:layout_gravity="center"
             android:layout_marginLeft="8dp"
             android:layout_marginRight="14dp"
-            android:background="@drawable/headset_close_more_selector"
+            android:background="@drawable/headset_btn_pressed_selector"
             android:clickable="true"
             android:padding="6dp"
-            android:src="@drawable/more" />
+            android:srcCompact="@drawable/headset_menu" />
 
         <ImageView
             android:id="@+id/close"
             android:layout_width="25dp"
             android:layout_height="25dp"
             android:layout_gravity="center"
-            android:background="@drawable/headset_close_more_selector"
+            android:background="@drawable/headset_btn_pressed_selector"
             android:clickable="true"
             android:padding="6dp"
-            android:src="@drawable/close" />
+            android:srcCompact="@drawable/headset_close" />
     </LinearLayout>
 
     <TextView
@@ -68,7 +67,7 @@
             android:layout_height="match_parent"
             android:layout_marginLeft="5dp"
             android:layout_marginRight="5dp"
-            android:src="@drawable/volume_down"
+            android:srcCompact="@drawable/headset_volume_down"
 
             />
 
@@ -90,7 +89,7 @@
             android:layout_height="match_parent"
             android:layout_marginLeft="5dp"
             android:layout_marginRight="5dp"
-            android:src="@drawable/volume_up" />
+            android:srcCompact="@drawable/headset_volume_up" />
     </LinearLayout>
 
     <TextView
@@ -120,7 +119,7 @@
             android:layout_height="15dp"
             android:layout_gravity="center"
             android:layout_marginLeft="29dp"
-            android:src="@drawable/music"
+            android:srcCompact="@drawable/headset_music"
 
             />
 
@@ -150,7 +149,7 @@
             android:layout_height="15dp"
             android:layout_gravity="center"
             android:layout_marginLeft="55dp"
-            android:src="@drawable/video" />
+            android:srcCompact="@drawable/headset_video" />
 
         <TextView
             android:id="@+id/movieRemain"
@@ -195,7 +194,6 @@
             android:layout_marginRight="5dp"
             android:layout_weight="1"
             android:clickable="true"
-            android:src="@drawable/music"
             android:visibility="invisible" />
 
         <ImageView
@@ -206,7 +204,6 @@
             android:layout_weight="1"
             android:clickable="true"
             android:scaleType="fitCenter"
-            android:src="@drawable/video"
             android:visibility="invisible" />
 
         <ImageView
@@ -217,7 +214,6 @@
             android:layout_weight="1"
             android:clickable="true"
             android:scaleType="fitCenter"
-            android:src="@color/white"
             android:visibility="invisible" />
 
         <ImageView
@@ -228,7 +224,6 @@
             android:layout_weight="1"
             android:clickable="true"
             android:scaleType="centerInside"
-            android:src="@color/white"
             android:visibility="invisible" />
 
         <ImageView
@@ -238,7 +233,6 @@
             android:layout_marginRight="5dp"
             android:layout_weight="1"
             android:clickable="true"
-            android:src="@color/white"
             android:visibility="invisible" />
 
     </LinearLayout>
