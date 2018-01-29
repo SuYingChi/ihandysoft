@@ -13,7 +13,6 @@ import android.graphics.Color;
 import android.graphics.PorterDuff;
 import android.graphics.drawable.BitmapDrawable;
 import android.os.Build;
-import android.os.Environment;
 import android.support.percent.PercentRelativeLayout;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.widget.ContentLoadingProgressBar;
@@ -57,6 +56,7 @@ import com.ihs.commons.utils.HSBundle;
 import com.ihs.commons.utils.HSError;
 import com.ihs.commons.utils.HSJsonUtil;
 import com.ihs.commons.utils.HSLog;
+import com.ihs.commons.utils.HSPreferenceHelper;
 import com.ihs.feature.battery.BatteryActivity;
 import com.ihs.feature.battery.BatteryAppInfo;
 import com.ihs.feature.battery.BatteryDataManager;
@@ -74,6 +74,7 @@ import com.ihs.feature.weather.WeatherManager;
 import com.ihs.keyboardutils.R;
 import com.ihs.keyboardutils.alerts.LockerUpgradeAlert;
 import com.ihs.keyboardutils.appsuggestion.AppSuggestionManager;
+import com.ihs.keyboardutils.notification.KCNotificationManager;
 import com.ihs.keyboardutils.notification.NotificationBean;
 import com.ihs.keyboardutils.utils.CommonUtils;
 import com.ihs.keyboardutils.utils.RippleDrawableUtils;
@@ -81,11 +82,14 @@ import com.ihs.keyboardutils.view.HSGifImageView;
 import com.kc.commons.utils.KCCommonUtils;
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.ImageLoader;
+import com.nostra13.universalimageloader.core.assist.FailReason;
+import com.nostra13.universalimageloader.core.listener.ImageLoadingListener;
 
 import org.json.JSONObject;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
+import java.util.Arrays;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
@@ -98,6 +102,9 @@ import static com.ihs.feature.weather.WeatherManager.BUNDLE_KEY_WEATHER_DESCRIPT
 import static com.ihs.feature.weather.WeatherManager.BUNDLE_KEY_WEATHER_ICON_ID;
 import static com.ihs.feature.weather.WeatherManager.BUNDLE_KEY_WEATHER_TEMPERATURE_FORMAT;
 import static com.ihs.feature.weather.WeatherManager.BUNDLE_KEY_WEATHER_TEMPERATURE_INT;
+import static com.ihs.keyboardutils.notification.KCNotificationManager.PREFS_FILE_NAME;
+import static com.ihs.keyboardutils.notification.KCNotificationManager.PREFS_FINISHED_EVENT;
+import static com.ihs.keyboardutils.notification.KCNotificationManager.PREFS_NEXT_NOTIFICATION_INDEX_IN_PLIST;
 
 public class PremiumLockerMainFrame extends PercentRelativeLayout implements INotificationObserver, SlidingDrawer.SlidingDrawerListener {
 
@@ -113,15 +120,23 @@ public class PremiumLockerMainFrame extends PercentRelativeLayout implements INo
     private static final int MODE_STORAGE = 5;
     private static final int GAME_INFO_COUNT = 10;
     private static final int MODE_COUNT = 6;
-    private static final String GAME_ICON_FILE_PATH = Environment.getExternalStorageDirectory().getAbsolutePath() + "/GameIcon";
+    private static final String PUSH_FRAME_PREFERENCE = "push_frame";
+    private static final String GAME_INFO_PREFERENCE = "gameInfo";
+    private static final String PUSH_FRAME_INDEX = "index";
+    private static final String PUSH_FRAME_TIME = "time";
+    private static final String PUSH_GAME_POSITION = "position";
+    private static final String PUSH_GAME_THUMB = "thumb";
+    private static final String PUSH_GAME_NAME = "name";
+    private static final String PUSH_GAME_DESCRIPTION = "description";
+    private static final String PUSH_GAME_URL = "link";
 
     private boolean mIsSlidingDrawerOpened = false;
     private boolean mIsBlackHoleShowing = false;
 
     private DeviceManager deviceManager = DeviceManager.getInstance();
     private BatteryDataManager batteryDataManager = new BatteryDataManager(getContext());
-    private SharedPreferences pushFramePreferences = getContext().getSharedPreferences("push_frame", Context.MODE_PRIVATE);
-    private SharedPreferences pushGamePreferences = getContext().getSharedPreferences("gameInfo", Context.MODE_PRIVATE);
+    private SharedPreferences pushFramePreferences = getContext().getSharedPreferences(PUSH_FRAME_PREFERENCE, Context.MODE_PRIVATE);
+    private SharedPreferences pushGamePreferences = getContext().getSharedPreferences(GAME_INFO_PREFERENCE, Context.MODE_PRIVATE);
 
     private View mDimCover;
     private SlidingDrawer mSlidingDrawer;
@@ -348,7 +363,6 @@ public class PremiumLockerMainFrame extends PercentRelativeLayout implements INo
         while (!showPushFrameItem(getPushFrameItemIndex())) {
             increasePushFrameItemIndex();
         }
-        pushFramePreferences.edit().putLong("time", System.currentTimeMillis()).apply();
     }
 
     private void initButtons() {
@@ -477,16 +491,10 @@ public class PremiumLockerMainFrame extends PercentRelativeLayout implements INo
                     mShimmer.cancel();
                 }
                 buttonUpgrade.clear();
-                if (getPushFrameItemIndex() == MODE_GAME && pushGamePreferences.getBoolean("showed", false)) {
-                    int gameInfoPosition = pushGamePreferences.getInt("position", 0);
-                    gameInfoPosition++;
-                    gameInfoPosition = gameInfoPosition % GAME_INFO_COUNT;
-                    askForGameInfo(gameInfoPosition);
-                }
                 break;
             case ScreenStatusReceiver.NOTIFICATION_SCREEN_ON:
-                if ((pushGamePreferences.getAll().size() <= 0) || (pushGamePreferences.getInt("date", 0) != Calendar.getInstance().get(Calendar.DAY_OF_MONTH))) {
-                    int gameInfoPosition = pushGamePreferences.getInt("position", 0);
+                if (pushGamePreferences.getAll().size() <= 0) {
+                    int gameInfoPosition = pushGamePreferences.getInt(PUSH_GAME_POSITION, 0);
                     gameInfoPosition++;
                     gameInfoPosition = gameInfoPosition % GAME_INFO_COUNT;
                     askForGameInfo(gameInfoPosition);
@@ -496,7 +504,7 @@ public class PremiumLockerMainFrame extends PercentRelativeLayout implements INo
                     mShimmer.start(mUnlockText);
                 }
                 buttonUpgrade.setImageResource(R.raw.upgrade_icon);
-                int timeForUpdate = (int) (System.currentTimeMillis() - pushFramePreferences.getLong("time", 0)) / (60 * 1000);
+                int timeForUpdate = (int) (System.currentTimeMillis() - pushFramePreferences.getLong(PUSH_FRAME_TIME, 0)) / (60 * 1000);
                 if (timeForUpdate > HSConfig.optInteger(5, "Application", "LockerPush", "IntervalTimeInMin")) {
                     findViewById(R.id.push_frame).setVisibility(VISIBLE);
                     increasePushFrameItemIndex();
@@ -504,7 +512,6 @@ public class PremiumLockerMainFrame extends PercentRelativeLayout implements INo
                 while (!showPushFrameItem(getPushFrameItemIndex())) {
                     increasePushFrameItemIndex();
                 }
-                pushFramePreferences.edit().putLong("time", System.currentTimeMillis()).apply();
                 break;
             default:
                 break;
@@ -512,14 +519,17 @@ public class PremiumLockerMainFrame extends PercentRelativeLayout implements INo
     }
 
     private int getPushFrameItemIndex() {
-        return pushFramePreferences.getInt("index", 0);
+        return pushFramePreferences.getInt(PUSH_FRAME_INDEX, 0);
     }
 
     private void increasePushFrameItemIndex() {
-        int pushFrameItemIndex = pushFramePreferences.getInt("index", 0);
+        int pushFrameItemIndex = pushFramePreferences.getInt(PUSH_FRAME_INDEX, 0);
+        if (pushFrameItemIndex == MODE_GAME) {
+            pushGamePreferences.edit().clear().apply();
+        }
         pushFrameItemIndex++;
         pushFrameItemIndex = pushFrameItemIndex % MODE_COUNT;
-        pushFramePreferences.edit().putInt("index", pushFrameItemIndex).apply();
+        pushFramePreferences.edit().putInt(PUSH_FRAME_INDEX, pushFrameItemIndex).putLong(PUSH_FRAME_TIME, System.currentTimeMillis()).apply();
     }
 
     private void askForGameInfo(int position) {
@@ -534,14 +544,37 @@ public class PremiumLockerMainFrame extends PercentRelativeLayout implements INo
                     List<Object> jsonMap = HSJsonUtil.toList(bodyJSON.getJSONArray("games"));
                     Map<String, String> object = (Map<String, String>) jsonMap.get(position);
                     SharedPreferences.Editor editorOfGame = pushGamePreferences.edit();
-                    editorOfGame.putString("name", object.get("name"));
-                    editorOfGame.putString("description", object.get("description"));
-                    editorOfGame.putString("thumb", object.get("thumb"));
-                    editorOfGame.putString("link", object.get("link"));
-                    editorOfGame.putInt("date", Calendar.getInstance().get(Calendar.DAY_OF_MONTH));
-                    editorOfGame.putInt("position", position);
-                    editorOfGame.putBoolean("showed", false);
+                    editorOfGame.putString(PUSH_GAME_NAME, object.get(PUSH_GAME_NAME));
+                    editorOfGame.putString(PUSH_GAME_DESCRIPTION, object.get(PUSH_GAME_DESCRIPTION));
+                    editorOfGame.putString(PUSH_GAME_THUMB, object.get(PUSH_GAME_THUMB));
+                    editorOfGame.putString(PUSH_GAME_URL, object.get(PUSH_GAME_URL));
+                    editorOfGame.putInt(PUSH_GAME_POSITION, position);
                     editorOfGame.apply();
+
+                    DisplayImageOptions options = new DisplayImageOptions.Builder()
+                            .cacheInMemory(true)
+                            .build();
+                    ImageLoader.getInstance().loadImage(object.get(PUSH_GAME_URL), options, new ImageLoadingListener() {
+                        @Override
+                        public void onLoadingStarted(String imageUri, View view) {
+
+                        }
+
+                        @Override
+                        public void onLoadingFailed(String imageUri, View view, FailReason failReason) {
+
+                        }
+
+                        @Override
+                        public void onLoadingComplete(String imageUri, View view, Bitmap loadedImage) {
+
+                        }
+
+                        @Override
+                        public void onLoadingCancelled(String imageUri, View view) {
+
+                        }
+                    });
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
@@ -612,10 +645,6 @@ public class PremiumLockerMainFrame extends PercentRelativeLayout implements INo
                 break;
             case MODE_GAME:
                 if (pushGamePreferences.getAll().size() <= 0) {
-                    int gameInfoPosition = pushGamePreferences.getInt("position", 0);
-                    gameInfoPosition++;
-                    gameInfoPosition = gameInfoPosition % GAME_INFO_COUNT;
-                    askForGameInfo(gameInfoPosition);
                     return false;
                 }
                 findViewById(R.id.push_boost_one).setVisibility(GONE);
@@ -626,31 +655,48 @@ public class PremiumLockerMainFrame extends PercentRelativeLayout implements INo
                 View gameRootView = findViewById(R.id.push_game);
                 gameRootView.setVisibility(VISIBLE);
 
-                String iconUrl = pushGamePreferences.getString("thumb", "");
+                String iconUrl = pushGamePreferences.getString(PUSH_GAME_THUMB, "");
                 DisplayImageOptions gameIconOptions = new DisplayImageOptions.Builder()
                         .cacheInMemory(true)
                         .bitmapConfig(Bitmap.Config.ARGB_8888)
                         .build();
                 ImageLoader.getInstance().displayImage(iconUrl, (ImageView) gameRootView.findViewById(R.id.icon), gameIconOptions);
-                ((TextView) gameRootView.findViewById(R.id.push_game_title)).setText(pushGamePreferences.getString("name", ""));
-                ((TextView) gameRootView.findViewById(R.id.push_game_subtitle)).setText(pushGamePreferences.getString("description", ""));
+                ((TextView) gameRootView.findViewById(R.id.push_game_title)).setText(pushGamePreferences.getString(PUSH_GAME_NAME, ""));
+                ((TextView) gameRootView.findViewById(R.id.push_game_subtitle)).setText(pushGamePreferences.getString(PUSH_GAME_DESCRIPTION, ""));
                 ((Button) gameRootView.findViewById(R.id.push_game_button)).setText(getResources().getString(R.string.push_game_button));
                 gameRootView.findViewById(R.id.push_game_button).setOnClickListener(view -> {
                     increasePushFrameItemIndex();
-                    String url = pushGamePreferences.getString("link", null);
+                    String url = pushGamePreferences.getString(PUSH_GAME_URL, null);
                     GameStarterActivity.startGame(url, "push_game_clicked");
                     HSGlobalNotificationCenter.sendNotification(PremiumLockerActivity.EVENT_FINISH_SELF);
                 });
-                pushGamePreferences.edit().putBoolean("showed", true).apply();
                 break;
             case MODE_CAMERA:
-                List<Map<String, Object>> configs = (List<Map<String, Object>>) HSConfig.getList("Application", "LocalNotifications", "Content");
+                HSPreferenceHelper spHelper = HSPreferenceHelper.create(getContext(), PREFS_FILE_NAME);
 
-                if (configs == null || configs.size() == 0) {
+                String recordedEvent = spHelper.getString(PREFS_FINISHED_EVENT, "");
+                List<String> finishedEvent = Arrays.asList(recordedEvent.split(","));
+
+
+                List<Map<String, ?>> configs = null;
+                try {
+                    configs = (List<Map<String, ?>>) HSConfig.getList("Application", "LocalNotifications", "Content");
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+                if (configs == null) {
+                    HSLog.e("没有配置本地提醒");
                     return false;
                 }
 
-                NotificationBean bean = new NotificationBean(configs.get(0));
+                int nextNotificationIndex = spHelper.getInt(PREFS_NEXT_NOTIFICATION_INDEX_IN_PLIST, 0);
+
+                if (nextNotificationIndex >= configs.size()) {
+                    HSLog.e("通知循环完毕");
+                    return false;
+                }
+
+                NotificationBean bean = KCNotificationManager.getInstance().getNextAvailableBean(configs, finishedEvent, recordedEvent, nextNotificationIndex);
 
                 findViewById(R.id.push_boost_one).setVisibility(GONE);
                 findViewById(R.id.push_boost_two).setVisibility(GONE);
@@ -690,6 +736,7 @@ public class PremiumLockerMainFrame extends PercentRelativeLayout implements INo
                 ((ImageView) findViewById(R.id.icon)).setImageResource(R.drawable.push_camera_icon);
                 DisplayImageOptions cameraIconOptions = new DisplayImageOptions.Builder()
                         .showImageOnLoading(R.drawable.push_camera_icon)
+                        .showImageOnFail(R.drawable.push_camera_icon)
                         .cacheInMemory(true)
                         .bitmapConfig(Bitmap.Config.ARGB_8888)
                         .build();
