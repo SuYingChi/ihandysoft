@@ -21,7 +21,6 @@ import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
-import android.widget.Button;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -115,7 +114,8 @@ public class HeadsetActivity extends HSAppCompatActivity implements SeekBar.OnSe
             public void onClick(View v) {
             }
         });
-        findViewById(R.id.headset_menu).setOnClickListener(this);;
+        findViewById(R.id.headset_menu).setOnClickListener(this);
+        ;
         findViewById(R.id.close).setOnClickListener(this);
         installedAppViewGroup = (LinearLayout) findViewById(R.id.installed_app);
         adContainer = (FrameLayout) findViewById(R.id.ad_container);
@@ -144,7 +144,6 @@ public class HeadsetActivity extends HSAppCompatActivity implements SeekBar.OnSe
 
                 @Override
                 public void onAdClicked(AcbExpressAdView acbExpressAdView) {
-
                 }
             });
             adContainer.addView(acbExpressAdView, FrameLayout.LayoutParams.MATCH_PARENT, FrameLayout.LayoutParams.MATCH_PARENT);
@@ -167,9 +166,8 @@ public class HeadsetActivity extends HSAppCompatActivity implements SeekBar.OnSe
                     @Override
                     public void onClick(View v) {
                         Intent launchIntent = null;
-                            launchIntent = getPackageManager().getLaunchIntentForPackage(name);
+                        launchIntent = getPackageManager().getLaunchIntentForPackage(name);
                         startActivity(launchIntent);
-
                     }
                 });
             }
@@ -193,7 +191,6 @@ public class HeadsetActivity extends HSAppCompatActivity implements SeekBar.OnSe
             PackageInfo packageInfo = installedPackages.get(i);
             String name = packageInfo.packageName;
             list.add(name);
-
         }
         if (!list.isEmpty() && !getRemoteAppList().isEmpty()) {
             Iterator<String> iterator = list.iterator();
@@ -268,10 +265,8 @@ public class HeadsetActivity extends HSAppCompatActivity implements SeekBar.OnSe
             moreSettingPopWindow.setBackgroundDrawable(new BitmapDrawable());
             moreSettingPopWindow.setOutsideTouchable(true);
             moreSettingPopWindow.setTouchable(true);
-            Button headsetDisable = (Button) contentView.findViewById(R.id.headset_disable);
-            Button closePopWindow = (Button) contentView.findViewById(R.id.close_pop_window);
-            headsetDisable.setOnClickListener(this);
-            closePopWindow.setOnClickListener(this);
+            contentView.findViewById(R.id.headset_disable).setOnClickListener(this);
+            contentView.findViewById(R.id.close_pop_window).setOnClickListener(this);
         }
         if (!isFinishing() && !moreSettingPopWindow.isShowing())
             moreSettingPopWindow.showAtLocation(rootView, Gravity.CENTER, 0, 0);
