@@ -82,8 +82,6 @@ import com.ihs.keyboardutils.view.HSGifImageView;
 import com.kc.commons.utils.KCCommonUtils;
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.ImageLoader;
-import com.nostra13.universalimageloader.core.assist.FailReason;
-import com.nostra13.universalimageloader.core.listener.ImageLoadingListener;
 
 import org.json.JSONObject;
 
@@ -555,29 +553,9 @@ public class PremiumLockerMainFrame extends PercentRelativeLayout implements INo
                     editorOfGame.apply();
 
                     DisplayImageOptions options = new DisplayImageOptions.Builder()
-                            .cacheInMemory(true)
+                            .cacheOnDisk(true)
                             .build();
-                    ImageLoader.getInstance().loadImage(object.get(PUSH_GAME_URL), options, new ImageLoadingListener() {
-                        @Override
-                        public void onLoadingStarted(String imageUri, View view) {
-
-                        }
-
-                        @Override
-                        public void onLoadingFailed(String imageUri, View view, FailReason failReason) {
-
-                        }
-
-                        @Override
-                        public void onLoadingComplete(String imageUri, View view, Bitmap loadedImage) {
-
-                        }
-
-                        @Override
-                        public void onLoadingCancelled(String imageUri, View view) {
-
-                        }
-                    });
+                    ImageLoader.getInstance().loadImage(object.get(PUSH_GAME_URL), options, null);
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
@@ -660,7 +638,7 @@ public class PremiumLockerMainFrame extends PercentRelativeLayout implements INo
 
                 String iconUrl = pushGamePreferences.getString(PUSH_GAME_THUMB, "");
                 DisplayImageOptions gameIconOptions = new DisplayImageOptions.Builder()
-                        .cacheInMemory(true)
+                        .cacheOnDisk(true)
                         .bitmapConfig(Bitmap.Config.ARGB_8888)
                         .build();
                 ImageLoader.getInstance().displayImage(iconUrl, (ImageView) gameRootView.findViewById(R.id.icon), gameIconOptions);
