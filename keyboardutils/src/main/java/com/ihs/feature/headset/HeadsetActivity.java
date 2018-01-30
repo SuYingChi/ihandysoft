@@ -182,7 +182,7 @@ public class HeadsetActivity extends HSAppCompatActivity implements SeekBar.OnSe
     }
 
     private Map<String, Drawable> getInstalledAppsInfoAndCompareRemote() {
-        ArrayList<String> list = new ArrayList<String>();
+        List<String> list = new ArrayList<String>();
         HashMap<String, Drawable> compareResult = new HashMap<String, Drawable>();
         PackageManager packageManager = getPackageManager();
         //获取手机内所有应用

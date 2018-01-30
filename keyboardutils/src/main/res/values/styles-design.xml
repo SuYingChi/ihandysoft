@@ -87,11 +87,11 @@
     <style name="HeadsetActivityStyle" parent="Theme.AppCompat.Light">
         <item name="android:windowFullscreen">true</item>
         <item name="windowNoTitle">true</item>
-        <item name="android:windowBackground">@color/transparent_black</item>
-        <item name="android:windowAnimationStyle">@style/Headset_Animation</item>
+        <item name="android:windowBackground">@color/headset_window_background</item>
+        <item name="android:windowAnimationStyle">@style/HeadsetActivityAnimation</item>
     </style>
     <!-- 定义弹框Activity的进入、关闭动画 -->
-    <style name="Headset_Animation" parent="@android:style/Animation">
+    <style name="HeadsetActivityAnimation" parent="@android:style/Animation">
         <item name="android:windowEnterAnimation">@anim/headset_push_bottom_in</item>
         <item name="android:windowExitAnimation">@anim/headset_push_bottom_out</item>
     </style>
