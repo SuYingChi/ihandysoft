@@ -22,6 +22,7 @@ import com.ihs.feature.softgame.SoftGameManager;
 import com.ihs.keyboardutils.appsuggestion.AppSuggestionManager;
 import com.ihs.keyboardutils.notification.KCNotificationManager;
 import com.ihs.keyboardutils.notification.NotificationBean;
+import com.ihs.feature.headset.KCHeadsetManager;
 import com.launcher.FloatWindowCompat;
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
@@ -56,6 +57,7 @@ public class MyApplication extends HSApplication {
             onRemoteProcessApplicationCreate(processSuffix);
         }
 
+        KCHeadsetManager.getInstance().init("");
     }
 
     private void onRemoteProcessApplicationCreate(String processSuffix) {

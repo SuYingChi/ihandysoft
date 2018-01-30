@@ -247,6 +247,15 @@
             android:taskAffinity=".cpu.cooler"
             android:theme="@style/Theme" />
         <activity
+            android:name="com.ihs.feature.headset.HeadsetActivity"
+            android:exported="false"
+            android:screenOrientation="portrait"
+            android:theme="@style/HeadsetActivityStyle"
+            android:taskAffinity=".alert.headset"
+            android:launchMode="singleTop"
+            android:excludeFromRecents="true"
+            />
+        <activity
             android:name="com.ihs.feature.cpucooler.CpuCoolDownActivity"
             android:exported="false"
             android:screenOrientation="portrait"
