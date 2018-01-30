@@ -5,10 +5,7 @@ import android.animation.AnimatorListenerAdapter;
 import android.animation.ObjectAnimator;
 import android.animation.ValueAnimator;
 import android.annotation.SuppressLint;
-import android.content.BroadcastReceiver;
-import android.content.Context;
 import android.content.Intent;
-import android.content.IntentFilter;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.v4.content.ContextCompat;
@@ -27,7 +24,6 @@ import com.ihs.device.common.HSAppFilter;
 import com.ihs.feature.common.ActivityUtils;
 import com.ihs.feature.common.BaseCenterActivity;
 import com.ihs.feature.common.LauncherPackageManager;
-import com.ihs.feature.common.ScreenStatusReceiver;
 import com.ihs.feature.common.ViewUtils;
 import com.ihs.feature.cpucooler.util.CpuCoolerUtils;
 import com.ihs.feature.cpucooler.util.CpuPreferenceHelper;
@@ -38,8 +34,6 @@ import com.ihs.keyboardutils.utils.CommonUtils;
 
 import java.util.ArrayList;
 import java.util.List;
-
-import static android.content.IntentFilter.SYSTEM_HIGH_PRIORITY;
 
 public class CpuCoolerScanActivity extends BaseCenterActivity {
 
@@ -361,36 +355,4 @@ public class CpuCoolerScanActivity extends BaseCenterActivity {
         ResultPageActivity.startForCpuCooler(CpuCoolerScanActivity.this);
         finish();
     }
-
-    public static void initBoost() {
-        final IntentFilter screenFilter = new IntentFilter();
-        screenFilter.addAction(Intent.ACTION_SCREEN_OFF);
-        screenFilter.addAction(Intent.ACTION_SCREEN_ON);
-        screenFilter.setPriority(SYSTEM_HIGH_PRIORITY);
-        HSApplication.getContext().registerReceiver(new BroadcastReceiver() {
-            @Override
-            public void onReceive(Context context, Intent intent) {
-                if (intent.getAction().equals(Intent.ACTION_SCREEN_OFF)) {
-                    ScreenStatusReceiver.onScreenOff();
-                } else if (intent.getAction().equals(Intent.ACTION_SCREEN_ON)) {
-                    ScreenStatusReceiver.onScreenOn();
-                } else if (Intent.ACTION_USER_PRESENT.equals(intent.getAction())) {
-                    HSLog.d("Screen Receiver onReceiver screen present");
-//                    HSGlobalNotificationCenter.sendNotification(NotificationCondition.EVENT_UNLOCK);
-                }
-            }
-        }, screenFilter);
-
-        Intent addShortcutIntent = new Intent("com.android.launcher.action.INSTALL_SHORTCUT");
-        addShortcutIntent.putExtra("duplicate", false);
-        addShortcutIntent.putExtra(Intent.EXTRA_SHORTCUT_NAME, "cpu cool");
-        Context context = HSApplication.getContext();
-        addShortcutIntent.putExtra(Intent.EXTRA_SHORTCUT_ICON_RESOURCE,
-                Intent.ShortcutIconResource.fromContext(context, R.drawable.boost_icon));
-        Intent launcherIntent = new Intent(Intent.ACTION_MAIN);
-        launcherIntent.setClass(context, CpuCoolerScanActivity.class);
-        addShortcutIntent.putExtra(Intent.EXTRA_SHORTCUT_INTENT, launcherIntent);
-        context.sendBroadcast(addShortcutIntent);
-    }
-
 }
