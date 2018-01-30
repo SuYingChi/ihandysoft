@@ -97,16 +97,16 @@ public class ChargeNotifyManager {
         }
     };
 
-    private BroadcastReceiver receiver = new BroadcastReceiver() {
+    private BroadcastReceiver screenOffReceiver = new BroadcastReceiver() {
         @Override
         public void onReceive(Context context, Intent intent) {
-            if (!HSChargingScreenManager.getInstance().isChargingModuleOpened() ||
-                    ChargingPrefsUtil.getChargingEnableStates() != ChargingPrefsUtil.CHARGING_DEFAULT_ACTIVE
-                    ) {
-                return;
-            }
+            Runnable runnable = () -> {
+                if (!HSChargingScreenManager.getInstance().isChargingModuleOpened() ||
+                        ChargingPrefsUtil.getChargingEnableStates() != ChargingPrefsUtil.CHARGING_DEFAULT_ACTIVE
+                        ) {
+                    return;
+                }
 
-            if (Intent.ACTION_SCREEN_OFF.equals(intent.getAction())) {
                 int delayHours = HSConfig.optInteger(0, "Application", "ChargeLocker", "HoursFromFirstUse");
                 boolean chargingReadyToWork = isReady(PREF_APP_FIRST_TRY_TO_CHARGING, delayHours);
                 if (HSChargingManager.getInstance().isCharging()
@@ -115,6 +115,12 @@ public class ChargeNotifyManager {
                         && !LockerChargingSpecialConfig.getInstance().isLockerEnable()) {
                     ChargingManagerUtil.startChargingActivity();
                 }
+            };
+
+            if (HSConfig.optBoolean(false, "Application", "DisableScreenBroadcastDelay")) {
+                runnable.run();
+            } else {
+                new Handler().post(runnable);
             }
         }
     };
@@ -151,13 +157,13 @@ public class ChargeNotifyManager {
         IntentFilter intentFilter = new IntentFilter();
         intentFilter.addAction(Intent.ACTION_SCREEN_OFF);
 
-        HSApplication.getContext().registerReceiver(receiver, intentFilter);
+        HSApplication.getContext().registerReceiver(screenOffReceiver, intentFilter);
     }
 
     public void unregisterScreenOffReceiver() {
         //预防特殊情况没有注册却unregister
         try {
-            HSApplication.getContext().unregisterReceiver(receiver);
+            HSApplication.getContext().unregisterReceiver(screenOffReceiver);
         } catch (Exception e) {
             e.printStackTrace();
         }
