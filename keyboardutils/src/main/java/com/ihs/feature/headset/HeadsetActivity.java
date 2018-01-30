@@ -177,7 +177,7 @@ public class HeadsetActivity extends HSAppCompatActivity implements SeekBar.OnSe
     }
 
     private List<String> getRemoteAppList() {
-        ArrayList<String> list = (ArrayList<String>) HSConfig.getList("Application", "RemoteAppPackageName");
+        List<String> list = (ArrayList<String>) HSConfig.getList("Application", "RemoteAppPackageName");
         return list;
     }
 
