@@ -4,6 +4,7 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.os.Handler;
 import android.widget.Toast;
 
 import com.artw.lockscreen.common.LockerChargingScreenUtils;
@@ -13,6 +14,7 @@ import com.ihs.app.framework.HSNotificationConstant;
 import com.ihs.chargingscreen.activity.ChargingFullScreenAlertDialogActivity;
 import com.ihs.chargingscreen.activity.ChargingScreenActivity;
 import com.ihs.chargingscreen.utils.LockerChargingSpecialConfig;
+import com.ihs.commons.config.HSConfig;
 import com.ihs.commons.notificationcenter.HSGlobalNotificationCenter;
 import com.ihs.commons.notificationcenter.INotificationObserver;
 import com.ihs.commons.utils.HSBundle;
@@ -22,6 +24,7 @@ import com.ihs.keyboardutils.iap.RemoveAdsManager;
 import com.kc.utils.KCAnalytics;
 
 import net.appcloudbox.ads.expressads.AcbExpressAdManager;
+
 
 /**
  * Created by Arthur on 17/3/31.
@@ -52,11 +55,20 @@ public class ScreenLockerManager {
         HSApplication.getContext().registerReceiver(new BroadcastReceiver() {
             @Override
             public void onReceive(Context context, Intent intent) {
-                if (intent.getAction().equals(Intent.ACTION_SCREEN_OFF)) {
-                    ScreenStatusReceiver.onScreenOff();
-                } else if (intent.getAction().equals(Intent.ACTION_SCREEN_ON)) {
-                    ScreenStatusReceiver.onScreenOn();
+                Runnable runnable = ()->{
+                    if (intent.getAction().equals(Intent.ACTION_SCREEN_OFF)) {
+                        ScreenStatusReceiver.onScreenOff();
+                    } else if (intent.getAction().equals(Intent.ACTION_SCREEN_ON)) {
+                        ScreenStatusReceiver.onScreenOn();
+                    }
+                };
+
+                if (HSConfig.optBoolean(false, "Application", "DisableScreenBroadcastDelay")) {
+                    runnable.run();
+                } else {
+                    new Handler().post(runnable);
                 }
+
             }
         }, screenFilter);
 

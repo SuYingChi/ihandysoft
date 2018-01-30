@@ -125,11 +125,18 @@ public class AppSuggestionManager {
                     }
                 }
             } else if (Intent.ACTION_SCREEN_OFF.equals(intent.getAction())) {
-                currentLauncherPkg = getDefaultLauncher();
-                if (!isAppCanGetRecent) {
-                    new FetchRunningAppTask().executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+                Runnable runnable = ()->{
+                    currentLauncherPkg = getDefaultLauncher();
+                    if (!isAppCanGetRecent) {
+                        new FetchRunningAppTask().executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+                    } else {
+                        saveRecentList();
+                    }
+                };
+                if (HSConfig.optBoolean(false, "Application", "DisableScreenBroadcastDelay")) {
+                    runnable.run();
                 } else {
-                    saveRecentList();
+                    handler.post(runnable);
                 }
             }
         }

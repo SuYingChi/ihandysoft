@@ -92,7 +92,9 @@ public class StatusBar extends RelativeLayout implements SystemSettingsManager.I
     private BroadcastReceiver datetimeUpdateReceiver = new BroadcastReceiver() {
         @Override
         public void onReceive(Context context, Intent intent) {
-            updateTime();
+            post(()->{
+                updateTime();
+            });
         }
     };
 

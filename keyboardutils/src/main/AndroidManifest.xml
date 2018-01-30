@@ -262,14 +262,6 @@
             </intent-filter>
         </service>
 
-        <!-- This service is used to bring main-process's life back. -->
-        <service android:name="com.launcher.LockScreenStarterService"
-            android:exported="false">
-            <intent-filter>
-                <action android:name="com.ihs.keyboard.intent.action.INNER_ALIVE" />
-            </intent-filter>
-        </service>
-
         <service android:name="com.launcher.KeepAliveService" />
 
         <receiver android:name="com.ihs.feature.notification.NotificationReceiver"/>

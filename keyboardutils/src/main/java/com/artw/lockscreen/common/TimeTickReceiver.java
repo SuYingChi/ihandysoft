@@ -4,6 +4,8 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.os.Looper;
+import android.os.Handler;
 
 import com.ihs.app.framework.HSApplication;
 import com.ihs.commons.notificationcenter.HSGlobalNotificationCenter;
@@ -19,6 +21,7 @@ public class TimeTickReceiver extends BroadcastReceiver {
     private static final String TAG = TimeTickReceiver.class.getSimpleName();
     private static TimeTickReceiver sReceiver;
     private static boolean sRegistered;
+    private static final Handler handler = new Handler(Looper.getMainLooper());
 
     public static void register(final Context context) {
         if (sRegistered) {
@@ -41,7 +44,9 @@ public class TimeTickReceiver extends BroadcastReceiver {
 
     @Override
     public void onReceive(final Context context, Intent intent) {
-        HSGlobalNotificationCenter.sendNotification(NOTIFICATION_CLOCK_TIME_CHANGED);
+        handler.post(()->{
+            HSGlobalNotificationCenter.sendNotification(NOTIFICATION_CLOCK_TIME_CHANGED);
+        });
     }
 
 
