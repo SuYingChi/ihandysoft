@@ -34,7 +34,7 @@ public class BatteryDataManager {
     private List<String> runningPackageList;
 
 
-    BatteryDataManager(Context context) {
+    public BatteryDataManager(Context context) {
         initLauncherApps();
         intAllInstallApps();
     }
@@ -62,7 +62,7 @@ public class BatteryDataManager {
     }
 
 
-    List<BatteryAppInfo> getCleanAnimationBatteryApps() {
+    public List<BatteryAppInfo> getCleanAnimationBatteryApps() {
         if (null != mAllInstallBatteryAppInfoListCache) {
             return mAllInstallBatteryAppInfoListCache;
         }

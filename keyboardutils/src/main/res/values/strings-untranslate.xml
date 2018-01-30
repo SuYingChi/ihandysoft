@@ -43,4 +43,25 @@ Try More Lock Screen Themes</string>
     <string name="headset_disable_title">Disable Headphone Suggestion</string>
     <string name="headset_disable_suggestion_detail">You can quickly open your audio apps here.Are you sure to disable it?</string>
     <string name="headset_remaining_battery">Remaining battery:</string>
+    <string name="push_junk_title">Junk Files Found!</string>
+    <string name="push_junk_subtitle">Click boost now and make your phone clean!</string>
+    <string name="push_junk_button">CLEAN NOW</string>
+    <string name="push_game_button">PLAY NOW</string>
+    <string name="push_battery_title">Battery left!</string>
+    <string name="push_battery_subtitle">Battery is too low, tap to save battery and charge it.</string>
+    <string name="push_battery_button">SAVE BATTERY</string>
+    <string name="push_battery_title_plus">Apps Draining Battery!</string>
+    <string name="push_cpu_title">Overheating!</string>
+    <string name="push_cpu_subtitle">Click to cool down your phone.</string>
+    <string name="push_cpu_button">COOL DOWN</string>
+    <string name="push_memory_title">Memory Used</string>
+    <string name="push_memory_subtitle">Click boost now and make your phone clean!</string>
+    <string name="push_memory_button">BOOST NOW</string>
+    <string name="push_scan_text">Scanning…</string>
+    <string name="push_game_head_title">Game of The Day</string>
+
+    <string name="push_title">title</string>
+    <string name="push_subtitle">subtitle</string>
+    <string name="push_button_text">Check</string>
+
 </resources>

@@ -7,10 +7,15 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.content.SharedPreferences;
+import android.graphics.Bitmap;
+import android.graphics.Color;
+import android.graphics.PorterDuff;
 import android.graphics.drawable.BitmapDrawable;
 import android.os.Build;
 import android.support.percent.PercentRelativeLayout;
 import android.support.v4.content.ContextCompat;
+import android.support.v4.widget.ContentLoadingProgressBar;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.Toolbar;
 import android.text.SpannableString;
@@ -43,28 +48,51 @@ import com.ihs.app.framework.HSApplication;
 import com.ihs.chargingscreen.utils.DisplayUtils;
 import com.ihs.chargingscreen.utils.LockerChargingSpecialConfig;
 import com.ihs.commons.config.HSConfig;
+import com.ihs.commons.connection.HSHttpConnection;
 import com.ihs.commons.notificationcenter.HSGlobalNotificationCenter;
 import com.ihs.commons.notificationcenter.INotificationObserver;
 import com.ihs.commons.utils.HSBundle;
+import com.ihs.commons.utils.HSError;
+import com.ihs.commons.utils.HSJsonUtil;
 import com.ihs.commons.utils.HSLog;
+import com.ihs.commons.utils.HSPreferenceHelper;
+import com.ihs.feature.battery.BatteryActivity;
+import com.ihs.feature.battery.BatteryAppInfo;
+import com.ihs.feature.battery.BatteryDataManager;
 import com.ihs.feature.boost.plus.BoostPlusActivity;
+import com.ihs.feature.common.DeviceManager;
 import com.ihs.feature.common.ScreenStatusReceiver;
+import com.ihs.feature.cpucooler.CpuCoolerCleanActivity;
+import com.ihs.feature.cpucooler.CpuCoolerManager;
+import com.ihs.feature.junkclean.JunkCleanActivity;
+import com.ihs.feature.junkclean.data.JunkManager;
+import com.ihs.feature.junkclean.model.JunkInfo;
+import com.ihs.feature.softgame.GameStarterActivity;
 import com.ihs.feature.softgame.SoftGameDisplayActivity;
 import com.ihs.feature.weather.WeatherManager;
 import com.ihs.keyboardutils.R;
 import com.ihs.keyboardutils.alerts.LockerUpgradeAlert;
 import com.ihs.keyboardutils.appsuggestion.AppSuggestionManager;
+import com.ihs.keyboardutils.notification.KCNotificationManager;
+import com.ihs.keyboardutils.notification.NotificationBean;
 import com.ihs.keyboardutils.utils.CommonUtils;
 import com.ihs.keyboardutils.utils.RippleDrawableUtils;
 import com.ihs.keyboardutils.view.HSGifImageView;
 import com.kc.commons.utils.KCCommonUtils;
 import com.kc.utils.KCAnalytics;
+import com.nostra13.universalimageloader.core.DisplayImageOptions;
+import com.nostra13.universalimageloader.core.ImageLoader;
+
+import org.json.JSONObject;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
+import java.util.Arrays;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.List;
 import java.util.Locale;
+import java.util.Map;
 
 import static com.artw.lockscreen.LockerSettings.recordLockerDisableOnce;
 import static com.artw.lockscreen.common.TimeTickReceiver.NOTIFICATION_CLOCK_TIME_CHANGED;
@@ -72,6 +100,9 @@ import static com.ihs.feature.weather.WeatherManager.BUNDLE_KEY_WEATHER_DESCRIPT
 import static com.ihs.feature.weather.WeatherManager.BUNDLE_KEY_WEATHER_ICON_ID;
 import static com.ihs.feature.weather.WeatherManager.BUNDLE_KEY_WEATHER_TEMPERATURE_FORMAT;
 import static com.ihs.feature.weather.WeatherManager.BUNDLE_KEY_WEATHER_TEMPERATURE_INT;
+import static com.ihs.keyboardutils.notification.KCNotificationManager.PREFS_FILE_NAME;
+import static com.ihs.keyboardutils.notification.KCNotificationManager.PREFS_FINISHED_EVENT;
+import static com.ihs.keyboardutils.notification.KCNotificationManager.PREFS_NEXT_NOTIFICATION_INDEX_IN_PLIST;
 
 public class PremiumLockerMainFrame extends PercentRelativeLayout implements INotificationObserver, SlidingDrawer.SlidingDrawerListener {
 
@@ -79,8 +110,31 @@ public class PremiumLockerMainFrame extends PercentRelativeLayout implements INo
     public static final String EVENT_SLIDING_DRAWER_OPENED = "EVENT_SLIDING_DRAWER_OPENED";
     public static final String EVENT_SLIDING_DRAWER_CLOSED = "EVENT_SLIDING_DRAWER_CLOSED";
 
+    private static final int MODE_JUNK = 0;
+    private static final int MODE_GAME = 1;
+    private static final int MODE_CAMERA = 2;
+    private static final int MODE_BATTERY = 3;
+    private static final int MODE_CPU = 4;
+    private static final int MODE_STORAGE = 5;
+    private static final int GAME_INFO_COUNT = 10;
+    private static final int MODE_COUNT = 6;
+    private static final String PUSH_FRAME_PREFERENCE = "push_frame";
+    private static final String GAME_INFO_PREFERENCE = "gameInfo";
+    private static final String PUSH_FRAME_INDEX = "index";
+    private static final String PUSH_FRAME_TIME = "time";
+    private static final String PUSH_GAME_POSITION = "position";
+    private static final String PUSH_GAME_THUMB = "thumb";
+    private static final String PUSH_GAME_NAME = "name";
+    private static final String PUSH_GAME_DESCRIPTION = "description";
+    private static final String PUSH_GAME_URL = "link";
+
     private boolean mIsSlidingDrawerOpened = false;
     private boolean mIsBlackHoleShowing = false;
+
+    private DeviceManager deviceManager = DeviceManager.getInstance();
+    private BatteryDataManager batteryDataManager = new BatteryDataManager(getContext());
+    private SharedPreferences pushFramePreferences = getContext().getSharedPreferences(PUSH_FRAME_PREFERENCE, Context.MODE_PRIVATE);
+    private SharedPreferences pushGamePreferences = getContext().getSharedPreferences(GAME_INFO_PREFERENCE, Context.MODE_PRIVATE);
 
     private View mDimCover;
     private SlidingDrawer mSlidingDrawer;
@@ -245,6 +299,7 @@ public class PremiumLockerMainFrame extends PercentRelativeLayout implements INo
         buttonWeather = findViewById(R.id.button_weather);
         buttonWeather.setOnClickListener(clickListener);
         buttonWeather.setBackgroundDrawable(RippleDrawableUtils.getCompatRippleDrawable(backgroundColor, backgroundPressColor, DisplayUtils.dip2px(4)));
+        findViewById(R.id.push_close_icon).setOnClickListener(view -> findViewById(R.id.push_frame).setVisibility(INVISIBLE));
 
         if (!shouldShowButtonUpgrade) {
             buttonUpgrade.setVisibility(View.INVISIBLE);
@@ -298,6 +353,9 @@ public class PremiumLockerMainFrame extends PercentRelativeLayout implements INo
         mTvTime = findViewById(R.id.tv_time);
         mTvDate = findViewById(R.id.tv_date);
         refreshClock();
+        while (!showPushFrameItem(getPushFrameItemIndex())) {
+            increasePushFrameItemIndex();
+        }
     }
 
     private void initButtons() {
@@ -428,14 +486,345 @@ public class PremiumLockerMainFrame extends PercentRelativeLayout implements INo
                 buttonUpgrade.clear();
                 break;
             case ScreenStatusReceiver.NOTIFICATION_SCREEN_ON:
+                if (pushGamePreferences.getAll().size() <= 0) {
+                    int gameInfoPosition = pushGamePreferences.getInt(PUSH_GAME_POSITION, 0);
+                    gameInfoPosition++;
+                    gameInfoPosition = gameInfoPosition % GAME_INFO_COUNT;
+                    askForGameInfo(gameInfoPosition);
+                }
+
                 if (!mShimmer.isAnimating()) {
                     mShimmer.start(mUnlockText);
                 }
                 buttonUpgrade.setImageResource(R.raw.upgrade_icon);
+                int timeForUpdate = (int) (System.currentTimeMillis() - pushFramePreferences.getLong(PUSH_FRAME_TIME, 0)) / (60 * 1000);
+                if (timeForUpdate > HSConfig.optInteger(5, "Application", "LockerPush", "IntervalTimeInMin")) {
+                    findViewById(R.id.push_frame).setVisibility(VISIBLE);
+                    increasePushFrameItemIndex();
+                }
+                while (!showPushFrameItem(getPushFrameItemIndex())) {
+                    increasePushFrameItemIndex();
+                }
                 break;
             default:
                 break;
         }
+    }
+
+    private int getPushFrameItemIndex() {
+        return pushFramePreferences.getInt(PUSH_FRAME_INDEX, 0);
+    }
+
+    private void increasePushFrameItemIndex() {
+        int pushFrameItemIndex = pushFramePreferences.getInt(PUSH_FRAME_INDEX, 0);
+        if (pushFrameItemIndex == MODE_GAME) {
+            int gameInfoPosition = pushGamePreferences.getInt(PUSH_GAME_POSITION, 0);
+            gameInfoPosition++;
+            gameInfoPosition = gameInfoPosition % GAME_INFO_COUNT;
+            askForGameInfo(gameInfoPosition);
+        }
+        pushFrameItemIndex++;
+        pushFrameItemIndex = pushFrameItemIndex % MODE_COUNT;
+        pushFramePreferences.edit().putInt(PUSH_FRAME_INDEX, pushFrameItemIndex).putLong(PUSH_FRAME_TIME, System.currentTimeMillis()).apply();
+    }
+
+    private void askForGameInfo(int position) {
+        String urlOfGame = "http://api.famobi.com/feed?a=A-KCVWU&n=10&sort=top_games";
+        HSHttpConnection hsHttpConnection = new HSHttpConnection(urlOfGame);
+        hsHttpConnection.startAsync();
+        hsHttpConnection.setConnectionFinishedListener(new HSHttpConnection.OnConnectionFinishedListener() {
+            @Override
+            public void onConnectionFinished(HSHttpConnection hsHttpConnection) {
+                JSONObject bodyJSON = hsHttpConnection.getBodyJSON();
+                try {
+                    List<Object> jsonMap = HSJsonUtil.toList(bodyJSON.getJSONArray("games"));
+                    Map<String, String> object = (Map<String, String>) jsonMap.get(position);
+                    SharedPreferences.Editor editorOfGame = pushGamePreferences.edit();
+                    editorOfGame.putString(PUSH_GAME_NAME, object.get(PUSH_GAME_NAME));
+                    editorOfGame.putString(PUSH_GAME_DESCRIPTION, object.get(PUSH_GAME_DESCRIPTION));
+                    editorOfGame.putString(PUSH_GAME_THUMB, object.get(PUSH_GAME_THUMB));
+                    editorOfGame.putString(PUSH_GAME_URL, object.get(PUSH_GAME_URL));
+                    editorOfGame.putInt(PUSH_GAME_POSITION, position);
+                    editorOfGame.apply();
+
+                    DisplayImageOptions options = new DisplayImageOptions.Builder()
+                            .cacheOnDisk(true)
+                            .build();
+                    ImageLoader.getInstance().loadImage(object.get(PUSH_GAME_URL), options, null);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+
+            @Override
+            public void onConnectionFailed(HSHttpConnection hsHttpConnection, HSError hsError) {
+                hsError.getMessage();
+            }
+        });
+    }
+
+    private boolean showPushFrameItem(int pushFrameItemIndex) {
+        switch (pushFrameItemIndex) {
+            case MODE_JUNK:
+                findViewById(R.id.push_camera).setVisibility(GONE);
+                findViewById(R.id.push_boost_two).setVisibility(GONE);
+                findViewById(R.id.push_game).setVisibility(GONE);
+
+                View junkRootView = findViewById(R.id.push_boost_one);
+                junkRootView.setVisibility(GONE);
+                ((ContentLoadingProgressBar) findViewById(R.id.spin_circle)).getIndeterminateDrawable().setColorFilter(Color.BLACK, PorterDuff.Mode.MULTIPLY);
+                findViewById(R.id.push_boost_scan).setVisibility(VISIBLE);
+                ((TextView) findViewById(R.id.push_boost_scan_button)).setText(getResources().getString(R.string.push_junk_button));
+                findViewById(R.id.push_boost_scan_button).setOnClickListener(view -> {
+                    increasePushFrameItemIndex();
+                    Intent junkCleanIntent = new Intent(getContext(), JunkCleanActivity.class);
+                    getContext().startActivity(junkCleanIntent);
+                    HSGlobalNotificationCenter.sendNotification(PremiumLockerActivity.EVENT_FINISH_SELF);
+                });
+                JunkManager junkManager = JunkManager.getInstance();
+                junkManager.startJunkScan(new JunkManager.ScanJunkListener() {
+                    @Override
+                    public void onScanNameChanged(String name) {
+
+                    }
+
+                    @Override
+                    public void onScanSizeChanged(String categoryType, JunkInfo junkInfo, boolean isEnd) {
+
+                    }
+
+                    @Override
+                    public void onScanFinished(long junkSize) {
+                        findViewById(R.id.push_boost_scan).setVisibility(GONE);
+                        junkRootView.setVisibility(VISIBLE);
+
+                        int junkSizeInMB = (int) junkSize / (1024 * 1024);
+                        if (junkSizeInMB < 1024) {
+                            ((TextView) junkRootView.findViewById(R.id.boost_result)).setText(junkSizeInMB + "MB");
+                        } else {
+                            float junkSizeInGB = (float) junkSizeInMB / 1024f;
+                            String junkSizeInGBFloat = String.format("%.2f", junkSizeInGB);
+                            ((TextView) junkRootView.findViewById(R.id.boost_result)).setText(junkSizeInGBFloat + "GB");
+                        }
+                        ((TextView) junkRootView.findViewById(R.id.boost_title)).setText(getResources().getString(R.string.push_junk_title));
+                        ((TextView) junkRootView.findViewById(R.id.boost_subtitle)).setText(getResources().getString(R.string.push_junk_subtitle));
+                        ((ImageView) junkRootView.findViewById(R.id.icon)).setImageDrawable(getResources().getDrawable(R.drawable.new_locker_junk));
+                        ((Button) junkRootView.findViewById(R.id.push_boost_button)).setText(getResources().getString(R.string.push_junk_button));
+                        junkRootView.findViewById(R.id.push_boost_button).setOnClickListener(view -> {
+                            increasePushFrameItemIndex();
+                            Intent junkCleanIntent = new Intent(getContext(), JunkCleanActivity.class);
+                            getContext().startActivity(junkCleanIntent);
+                            HSGlobalNotificationCenter.sendNotification(PremiumLockerActivity.EVENT_FINISH_SELF);
+                        });
+                    }
+                });
+                break;
+            case MODE_GAME:
+                if (pushGamePreferences.getAll().size() <= 0) {
+                    return false;
+                }
+                findViewById(R.id.push_boost_one).setVisibility(GONE);
+                findViewById(R.id.push_boost_two).setVisibility(GONE);
+                findViewById(R.id.push_camera).setVisibility(GONE);
+                findViewById(R.id.push_boost_scan).setVisibility(GONE);
+
+                View gameRootView = findViewById(R.id.push_game);
+                gameRootView.setVisibility(VISIBLE);
+
+                String iconUrl = pushGamePreferences.getString(PUSH_GAME_THUMB, "");
+                DisplayImageOptions gameIconOptions = new DisplayImageOptions.Builder()
+                        .cacheOnDisk(true)
+                        .bitmapConfig(Bitmap.Config.ARGB_8888)
+                        .build();
+                ImageLoader.getInstance().displayImage(iconUrl, (ImageView) gameRootView.findViewById(R.id.icon), gameIconOptions);
+                ((TextView) gameRootView.findViewById(R.id.push_game_title)).setText(pushGamePreferences.getString(PUSH_GAME_NAME, ""));
+                ((TextView) gameRootView.findViewById(R.id.push_game_subtitle)).setText(pushGamePreferences.getString(PUSH_GAME_DESCRIPTION, ""));
+                ((Button) gameRootView.findViewById(R.id.push_game_button)).setText(getResources().getString(R.string.push_game_button));
+                gameRootView.findViewById(R.id.push_game_button).setOnClickListener(view -> {
+                    increasePushFrameItemIndex();
+                    String url = pushGamePreferences.getString(PUSH_GAME_URL, null);
+                    GameStarterActivity.startGame(url, "push_game_clicked");
+                    HSGlobalNotificationCenter.sendNotification(PremiumLockerActivity.EVENT_FINISH_SELF);
+                });
+                break;
+            case MODE_CAMERA:
+                HSPreferenceHelper spHelper = HSPreferenceHelper.create(getContext(), PREFS_FILE_NAME);
+
+                String recordedEvent = spHelper.getString(PREFS_FINISHED_EVENT, "");
+                List<String> finishedEvent = Arrays.asList(recordedEvent.split(","));
+
+
+                List<Map<String, ?>> configs = null;
+                try {
+                    configs = (List<Map<String, ?>>) HSConfig.getList("Application", "LocalNotifications", "Content");
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+                if (configs == null) {
+                    HSLog.e("没有配置本地提醒");
+                    return false;
+                }
+
+                int nextNotificationIndex = spHelper.getInt(PREFS_NEXT_NOTIFICATION_INDEX_IN_PLIST, 0);
+
+                if (nextNotificationIndex >= configs.size()) {
+                    HSLog.e("通知循环完毕");
+                    return false;
+                }
+
+                NotificationBean bean = KCNotificationManager.getInstance().getNextAvailableBean(configs, finishedEvent, recordedEvent, nextNotificationIndex);
+
+                findViewById(R.id.push_boost_one).setVisibility(GONE);
+                findViewById(R.id.push_boost_two).setVisibility(GONE);
+                findViewById(R.id.push_boost_scan).setVisibility(GONE);
+                findViewById(R.id.push_game).setVisibility(GONE);
+
+                View cameraRootView = findViewById(R.id.push_camera);
+                cameraRootView.setVisibility(VISIBLE);
+
+                String pushCameraActionType = bean.getActionType();
+
+                ((TextView) cameraRootView.findViewById(R.id.push_camera_title)).setText(bean.getName());
+                ((TextView) cameraRootView.findViewById(R.id.push_camera_subtitle)).setText(bean.getMessage());
+                ((Button) findViewById(R.id.push_camera_button)).setText(bean.getButtonText());
+                findViewById(R.id.push_camera_button).setOnClickListener(view -> {
+                    increasePushFrameItemIndex();
+                    Intent cameraIntent = new Intent("push.camera.store");
+                    switch (pushCameraActionType) {
+                        case "Filter":
+                            cameraIntent.putExtra("intent_key_default_tab", "tab_filter");
+                            break;
+                        case "Sticker":
+                            cameraIntent.putExtra("intent_key_default_tab", "tab_sticker");
+                            break;
+                        case "LiveSticker":
+                            cameraIntent.putExtra("intent_key_default_tab", "tab_live_sticker");
+                            break;
+                        default:
+                            break;
+                    }
+
+                    getContext().startActivity(cameraIntent);
+                    HSGlobalNotificationCenter.sendNotification(PremiumLockerActivity.EVENT_FINISH_SELF);
+                });
+
+                String imageUrl = bean.getIconUrl();
+                ((ImageView) findViewById(R.id.icon)).setImageResource(R.drawable.push_camera_icon);
+                DisplayImageOptions cameraIconOptions = new DisplayImageOptions.Builder()
+                        .showImageOnLoading(R.drawable.push_camera_icon)
+                        .showImageOnFail(R.drawable.push_camera_icon)
+                        .cacheInMemory(true)
+                        .bitmapConfig(Bitmap.Config.ARGB_8888)
+                        .build();
+                ImageLoader.getInstance().displayImage(imageUrl, (ImageView) cameraRootView.findViewById(R.id.icon), cameraIconOptions);
+                break;
+            case MODE_BATTERY:
+                int batteryLevel = deviceManager.getBatteryLevel();
+                int appsCount = 0;
+                if (batteryDataManager.getCleanAnimationBatteryApps() != null) {
+                    appsCount = batteryDataManager.getCleanAnimationBatteryApps().size();
+                }
+                if (batteryLevel < 30) {
+                    findViewById(R.id.push_camera).setVisibility(GONE);
+                    findViewById(R.id.push_game).setVisibility(GONE);
+                    findViewById(R.id.push_boost_two).setVisibility(GONE);
+                    findViewById(R.id.push_boost_scan).setVisibility(GONE);
+
+                    View batteryOneRootView = findViewById(R.id.push_boost_one);
+                    batteryOneRootView.setVisibility(VISIBLE);
+
+                    ((ImageView) batteryOneRootView.findViewById(R.id.icon)).setImageDrawable(getResources().getDrawable(R.drawable.new_locker_battery));
+                    ((TextView) batteryOneRootView.findViewById(R.id.boost_result)).setText(batteryLevel + "%");
+                    ((TextView) batteryOneRootView.findViewById(R.id.boost_title)).setText(getResources().getString(R.string.push_battery_title));
+                    ((TextView) batteryOneRootView.findViewById(R.id.boost_subtitle)).setText(getResources().getString(R.string.push_battery_subtitle));
+                    ((Button) batteryOneRootView.findViewById(R.id.push_boost_button)).setText(getResources().getString(R.string.push_battery_button));
+                    batteryOneRootView.findViewById(R.id.push_boost_button).setOnClickListener(view -> {
+                        increasePushFrameItemIndex();
+                        Intent batteryIntent = new Intent(getContext(), BatteryActivity.class);
+                        getContext().startActivity(batteryIntent);
+                        HSGlobalNotificationCenter.sendNotification(PremiumLockerActivity.EVENT_FINISH_SELF);
+                    });
+                } else if (batteryLevel <= 80 && appsCount >= 8) {
+                    findViewById(R.id.push_camera).setVisibility(GONE);
+                    findViewById(R.id.push_game).setVisibility(GONE);
+                    findViewById(R.id.push_boost_one).setVisibility(GONE);
+                    findViewById(R.id.push_boost_scan).setVisibility(GONE);
+
+                    View batteryTwoRootView = findViewById(R.id.push_boost_two);
+                    batteryTwoRootView.setVisibility(VISIBLE);
+
+                    ((ImageView) batteryTwoRootView.findViewById(R.id.icon)).setImageDrawable(getResources().getDrawable(R.drawable.new_locker_battery));
+                    ((TextView) batteryTwoRootView.findViewById(R.id.boost_result)).setText(appsCount + "");
+                    ((TextView) batteryTwoRootView.findViewById(R.id.boost_title)).setText(getResources().getString(R.string.push_battery_title_plus));
+                    ((Button) batteryTwoRootView.findViewById(R.id.push_boost_button)).setText(getResources().getString(R.string.push_battery_button));
+                    batteryTwoRootView.findViewById(R.id.push_boost_button).setOnClickListener(view -> {
+                        increasePushFrameItemIndex();
+                        Intent batteryIntent = new Intent(getContext(), BatteryActivity.class);
+                        getContext().startActivity(batteryIntent);
+                        HSGlobalNotificationCenter.sendNotification(PremiumLockerActivity.EVENT_FINISH_SELF);
+                    });
+                    List<BatteryAppInfo> appInfos = batteryDataManager.getCleanAnimationBatteryApps();
+                    ((ImageView) batteryTwoRootView.findViewById(R.id.icon_first)).setImageDrawable(appInfos.get(0).getAppDrawable());
+                    ((ImageView) batteryTwoRootView.findViewById(R.id.icon_second)).setImageDrawable(appInfos.get(1).getAppDrawable());
+                    ((ImageView) batteryTwoRootView.findViewById(R.id.icon_third)).setImageDrawable(appInfos.get(2).getAppDrawable());
+                } else {
+                    return false;
+                }
+                break;
+            case MODE_CPU:
+                int cpuTemperature = CpuCoolerManager.getInstance().fetchCpuTemperature();
+                if (cpuTemperature <= 40) {
+                    return false;
+                }
+                findViewById(R.id.push_camera).setVisibility(GONE);
+                findViewById(R.id.push_game).setVisibility(GONE);
+                findViewById(R.id.push_boost_two).setVisibility(GONE);
+                findViewById(R.id.push_boost_scan).setVisibility(GONE);
+
+                View cpuRootView = findViewById(R.id.push_boost_one);
+                cpuRootView.setVisibility(VISIBLE);
+
+                ((ImageView) cpuRootView.findViewById(R.id.icon)).setImageDrawable(getResources().getDrawable(R.drawable.new_locker_thermometer));
+                ((TextView) cpuRootView.findViewById(R.id.boost_result)).setText(cpuTemperature + "℃");
+                ((TextView) cpuRootView.findViewById(R.id.boost_title)).setText(getResources().getString(R.string.push_cpu_title));
+                ((TextView) cpuRootView.findViewById(R.id.boost_subtitle)).setText(getResources().getString(R.string.push_cpu_subtitle));
+                ((Button) cpuRootView.findViewById(R.id.push_boost_button)).setText(getResources().getString(R.string.push_cpu_button));
+                cpuRootView.findViewById(R.id.push_boost_button).setOnClickListener(view -> {
+                    increasePushFrameItemIndex();
+                    Intent cpuCoolerCleanIntent = new Intent(getContext(), CpuCoolerCleanActivity.class);
+                    getContext().startActivity(cpuCoolerCleanIntent);
+                    HSGlobalNotificationCenter.sendNotification(PremiumLockerActivity.EVENT_FINISH_SELF);
+                });
+                break;
+            case MODE_STORAGE:
+                int usage = deviceManager.getRamUsage();
+                if (usage < 75) {
+                    return false;
+                }
+                findViewById(R.id.push_camera).setVisibility(GONE);
+                findViewById(R.id.push_game).setVisibility(GONE);
+                findViewById(R.id.push_boost_two).setVisibility(GONE);
+                findViewById(R.id.push_boost_scan).setVisibility(GONE);
+
+                View storageRootView = findViewById(R.id.push_boost_one);
+                storageRootView.setVisibility(VISIBLE);
+
+                ((ImageView) storageRootView.findViewById(R.id.icon)).setImageDrawable(getResources().getDrawable(R.drawable.new_locker_boost));
+                ((TextView) storageRootView.findViewById(R.id.boost_result)).setText(deviceManager.getRamUsage() + "%");
+                ((TextView) storageRootView.findViewById(R.id.boost_title)).setText(getResources().getString(R.string.push_memory_title));
+                ((TextView) storageRootView.findViewById(R.id.boost_subtitle)).setText(getResources().getString(R.string.push_memory_subtitle));
+                ((Button) findViewById(R.id.push_boost_button)).setText(getResources().getString(R.string.push_memory_button));
+                findViewById(R.id.push_boost_button).setOnClickListener(view -> {
+                    increasePushFrameItemIndex();
+                    Intent boostIntent = new Intent(getContext(), BoostPlusActivity.class);
+                    getContext().startActivity(boostIntent);
+                    HSGlobalNotificationCenter.sendNotification(PremiumLockerActivity.EVENT_FINISH_SELF);
+                });
+                break;
+            default:
+                break;
+        }
+        return true;
     }
 
     private void refreshClock() {
@@ -446,7 +835,7 @@ public class PremiumLockerMainFrame extends PercentRelativeLayout implements INo
             hour = hour % 12;
         }
         mTvTime.setText(String.format(Locale.getDefault(), "%02d:%02d", hour, minute));
-        DateFormat format = new SimpleDateFormat("MMMM, dd\nEEE", Locale.getDefault());
+        DateFormat format = new SimpleDateFormat("MMMM, dd EEE", Locale.getDefault());
         mTvDate.setText(format.format(new Date()));
     }
 
