@@ -525,7 +525,10 @@ public class PremiumLockerMainFrame extends PercentRelativeLayout implements INo
     private void increasePushFrameItemIndex() {
         int pushFrameItemIndex = pushFramePreferences.getInt(PUSH_FRAME_INDEX, 0);
         if (pushFrameItemIndex == MODE_GAME) {
-            pushGamePreferences.edit().clear().apply();
+            int gameInfoPosition = pushGamePreferences.getInt(PUSH_GAME_POSITION, 0);
+            gameInfoPosition++;
+            gameInfoPosition = gameInfoPosition % GAME_INFO_COUNT;
+            askForGameInfo(gameInfoPosition);
         }
         pushFrameItemIndex++;
         pushFrameItemIndex = pushFrameItemIndex % MODE_COUNT;
