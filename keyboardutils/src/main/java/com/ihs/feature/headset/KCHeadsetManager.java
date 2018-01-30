@@ -14,7 +14,7 @@ import com.ihs.commons.utils.HSLog;
  */
 
 public class KCHeadsetManager {
-    private static KCHeadsetManager HeadsetManager;
+    private volatile static KCHeadsetManager headsetManager;
     private HeadsetReceiver headsetReceiver;
 
     private String placement;
@@ -25,13 +25,15 @@ public class KCHeadsetManager {
         headsetReceiver = new HeadsetReceiver();
     }
 
-    public static  KCHeadsetManager getInstance() {
-        synchronized(KCHeadsetManager.class) {
-            if (HeadsetManager == null) {
-                HeadsetManager = new KCHeadsetManager();
+    public static KCHeadsetManager getInstance() {
+        if (headsetManager == null) {
+            synchronized (KCHeadsetManager.class) {
+                if (headsetManager == null) {
+                    headsetManager = new KCHeadsetManager();
+                }
             }
         }
-        return HeadsetManager;
+        return headsetManager;
     }
 
     public void setHeadsetAdPlacement(String placement) {
