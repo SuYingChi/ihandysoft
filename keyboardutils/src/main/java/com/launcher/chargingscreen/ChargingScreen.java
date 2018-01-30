@@ -171,13 +171,9 @@ public class ChargingScreen extends LockScreen implements INotificationObserver 
     private BroadcastReceiver timeTickReceiver = new BroadcastReceiver() {
         @Override
         public void onReceive(Context context, Intent intent) {
-            if (intent == null || TextUtils.isEmpty(intent.getAction())) {
-                return;
-            }
-
-            if (intent.getAction().equals(Intent.ACTION_TIME_TICK)) {
+            handler.post(()->{
                 updateTimeAndDateView();
-            }
+            });
         }
     };
 
