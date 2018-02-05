@@ -204,15 +204,15 @@
 
         <TextView
             android:id="@+id/weather_desc"
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignTop="@+id/weather_image"
-            android:layout_marginLeft="2dp"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentTop="true"
+            android:layout_marginEnd="2dp"
+            android:layout_marginRight="2dp"
             android:layout_marginTop="2dp"
-            android:layout_toEndOf="@+id/weather_image"
-            android:layout_toRightOf="@+id/weather_image"
             android:ellipsize="end"
-            android:gravity="left|start"
             android:maxLines="1"
             android:text="@string/weather_unknown"
             android:textColor="@android:color/white"
@@ -248,7 +248,7 @@
 
         <include
             layout="@layout/push_frame_game_layout"
-            android:visibility="gone"/>
+            android:visibility="gone" />
 
         <include
             layout="@layout/push_frame_boost_layout_type_one"
@@ -269,11 +269,11 @@
             android:layout_alignParentEnd="true"
             android:layout_alignParentRight="true"
             android:layout_alignParentTop="true"
+            android:layout_marginEnd="10dp"
             android:layout_marginRight="10dp"
             android:layout_marginTop="10dp"
             android:scaleType="centerCrop"
-            android:src="@drawable/push_frame_close_icon"
-            android:layout_marginEnd="10dp" />
+            android:src="@drawable/push_frame_close_icon" />
     </RelativeLayout>
 
     <com.artw.lockscreen.slidingdrawer.SlidingDrawer
