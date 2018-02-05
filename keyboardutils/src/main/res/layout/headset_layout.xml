@@ -28,7 +28,7 @@
             android:layout_height="25dp"
             android:layout_gravity="center"
             android:layout_marginLeft="8dp"
-            android:layout_marginRight="14dp"
+            android:layout_marginRight="7dp"
             android:background="@drawable/headset_btn_pressed_selector"
             android:clickable="true"
             android:padding="6dp"
