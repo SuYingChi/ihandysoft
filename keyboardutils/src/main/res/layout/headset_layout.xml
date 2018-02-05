@@ -107,6 +107,13 @@
         android:orientation="horizontal"
 
         >
+        <LinearLayout
+            android:layout_width="0dip"
+            android:layout_height="match_parent"
+            android:gravity="center_vertical"
+            android:orientation="horizontal"
+            android:layout_weight="1"
+            >
 
         <ImageView
             android:layout_width="15dp"
@@ -133,12 +140,19 @@
             android:text="minutes"
             android:textColor="@color/white"
             android:textSize="13sp" />
-
+        </LinearLayout>
+<LinearLayout
+    android:layout_width="0dip"
+    android:layout_height="match_parent"
+    android:gravity="center_vertical"
+    android:orientation="horizontal"
+    android:layout_weight="1"
+    >
 
         <ImageView
             android:layout_width="15dp"
             android:layout_height="15dp"
-            android:layout_marginLeft="55dp"
+            android:layout_marginLeft="29dp"
             app:srcCompat="@drawable/ic_headset_movie" />
 
         <TextView
@@ -161,7 +175,7 @@
             android:text="minutes"
             android:textColor="@color/white"
             android:textSize="13sp" />
-
+</LinearLayout>
     </LinearLayout>
 
     <LinearLayout
