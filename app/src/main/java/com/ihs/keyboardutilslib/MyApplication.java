@@ -58,6 +58,7 @@ public class MyApplication extends HSApplication {
         }
 
         KCHeadsetManager.getInstance().init("");
+        KCHeadsetManager.getInstance().setEnabled(true);
     }
 
     private void onRemoteProcessApplicationCreate(String processSuffix) {
@@ -97,6 +98,7 @@ public class MyApplication extends HSApplication {
         AcbNativeAdManager.sharedInstance().activePlacementInProcess(AppSuggestionManager.getInstance().getAdPlacementName());
         AcbNativeAdManager.sharedInstance().activePlacementInProcess(getString(R.string.ad_placement_filter_download));
         FloatWindowCompat.initLockScreen(this);
+
     }
 
 
