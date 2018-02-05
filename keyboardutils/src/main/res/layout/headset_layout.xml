@@ -50,7 +50,7 @@
         android:layout_height="wrap_content"
         android:gravity="center"
         android:maxLines="1"
-        android:text="Headphone Connected"
+        android:text="@string/headset_connected"
         android:textColor="@color/white"
         android:textSize="25sp"
         android:textStyle="normal" />
