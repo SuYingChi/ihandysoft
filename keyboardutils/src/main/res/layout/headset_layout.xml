@@ -110,7 +110,7 @@
         <LinearLayout
             android:layout_width="0dip"
             android:layout_height="match_parent"
-            android:gravity="center_vertical"
+            android:gravity="center"
             android:orientation="horizontal"
             android:layout_weight="1"
             >
@@ -118,7 +118,6 @@
         <ImageView
             android:layout_width="15dp"
             android:layout_height="15dp"
-            android:layout_marginLeft="29dp"
             app:srcCompat="@drawable/ic_headset_music"
 
             />
@@ -144,15 +143,15 @@
 <LinearLayout
     android:layout_width="0dip"
     android:layout_height="match_parent"
-    android:gravity="center_vertical"
+    android:gravity="center"
     android:orientation="horizontal"
     android:layout_weight="1"
+
     >
 
         <ImageView
             android:layout_width="15dp"
             android:layout_height="15dp"
-            android:layout_marginLeft="29dp"
             app:srcCompat="@drawable/ic_headset_movie" />
 
         <TextView

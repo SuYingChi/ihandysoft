@@ -58,6 +58,7 @@ public class MyApplication extends HSApplication {
         }
 
         KCHeadsetManager.getInstance().init("");
+        KCHeadsetManager.getInstance().setEnabled(true);
     }
 
     private void onRemoteProcessApplicationCreate(String processSuffix) {
