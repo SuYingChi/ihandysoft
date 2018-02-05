@@ -63,5 +63,6 @@ Try More Lock Screen Themes</string>
     <string name="push_title">title</string>
     <string name="push_subtitle">subtitle</string>
     <string name="push_button_text">Check</string>
+    <string name="headset_connected">Headphone Connected</string>
 
 </resources>

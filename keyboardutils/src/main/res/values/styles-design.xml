@@ -29,7 +29,9 @@
         <item name="android:fontFamily">sans-serif</item>
         <item name="android:textColor">@color/design_dialog_content_body_color</item>
         <item name="android:textSize">@dimen/design_dialog_content_body_size</item>
-        <item name="android:layout_marginTop">@dimen/design_dialog_content_padding_between_title_and_body</item>
+        <item name="android:layout_marginTop">
+            @dimen/design_dialog_content_padding_between_title_and_body
+        </item>
     </style>
 
     <style name="DesignDialogActionArea">
@@ -58,14 +60,16 @@
         <item name="android:layout_height">@dimen/design_dialog_action_button_height</item>
         <item name="android:gravity">center</item>
         <item name="android:fontFamily">sans-serif-medium</item>
-        <item name="android:textColor">@color/design_dialog_action_button_highlight_text_color</item>
+        <item name="android:textColor">@color/design_dialog_action_button_highlight_text_color
+        </item>
         <item name="android:textSize">@dimen/design_dialog_action_button_text_size</item>
         <item name="android:paddingLeft">@dimen/design_base_padding</item>
         <item name="android:paddingRight">@dimen/design_base_padding</item>
     </style>
 
     <style name="DesignDialogActionButtonHighlight" parent="DesignDialogActionButton">
-        <item name="android:textColor">@color/design_dialog_action_button_highlight_text_color</item>
+        <item name="android:textColor">@color/design_dialog_action_button_highlight_text_color
+        </item>
     </style>
 
     <style name="DesignTransparentDialog" parent="Theme.AppCompat.Light.Dialog.Alert">
@@ -84,9 +88,10 @@
         <item name="android:windowFullscreen">true</item>
         <item name="android:backgroundDimEnabled">true</item>
     </style>
-    <style name="HeadsetActivityStyle" parent="Theme.AppCompat.Light">
+
+    <style name="HeadsetActivityStyle" parent="Theme.AppCompat.Light.NoActionBar">
         <item name="android:windowFullscreen">true</item>
-        <item name="windowNoTitle">true</item>
+        <item name="android:windowIsTranslucent">true</item>
         <item name="android:windowBackground">@color/headset_window_background</item>
         <item name="android:windowAnimationStyle">@style/HeadsetActivityAnimation</item>
     </style>
