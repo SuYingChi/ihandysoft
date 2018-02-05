@@ -73,10 +73,8 @@
 
         <SeekBar
             android:id="@+id/volume_seek_bar"
-            android:layout_width="0dp"
+            android:layout_width="0dip"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="5dp"
-            android:layout_marginRight="5dp"
             android:layout_weight="1"
             android:progressDrawable="@drawable/settings_seekbar_track_white"
             android:thumb="@drawable/settings_seekbar_handle"
@@ -125,7 +123,7 @@
         <TextView
             android:id="@+id/musicRemain"
             android:layout_width="wrap_content"
-            android:layout_height="15dp"
+            android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:layout_marginLeft="7dp"
             android:text="300"
@@ -134,7 +132,7 @@
 
         <TextView
             android:layout_width="wrap_content"
-            android:layout_height="15dp"
+            android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:layout_marginLeft="7dp"
             android:gravity="center"
@@ -153,7 +151,7 @@
         <TextView
             android:id="@+id/movieRemain"
             android:layout_width="wrap_content"
-            android:layout_height="15dp"
+            android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:layout_marginLeft="7dp"
             android:gravity="center"
@@ -165,7 +163,7 @@
 
         <TextView
             android:layout_width="wrap_content"
-            android:layout_height="15dp"
+            android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:layout_marginLeft="7dp"
             android:gravity="center"
