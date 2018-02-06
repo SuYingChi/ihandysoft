@@ -135,6 +135,7 @@ public class PremiumLockerMainFrame extends PercentRelativeLayout implements INo
     private BatteryDataManager batteryDataManager = new BatteryDataManager(getContext());
     private SharedPreferences pushFramePreferences = getContext().getSharedPreferences(PUSH_FRAME_PREFERENCE, Context.MODE_PRIVATE);
     private SharedPreferences pushGamePreferences = getContext().getSharedPreferences(GAME_INFO_PREFERENCE, Context.MODE_PRIVATE);
+    private NotificationBean notificationBean;
 
     private View mDimCover;
     private SlidingDrawer mSlidingDrawer;
@@ -480,17 +481,22 @@ public class PremiumLockerMainFrame extends PercentRelativeLayout implements INo
                 refreshClock();
                 break;
             case ScreenStatusReceiver.NOTIFICATION_SCREEN_OFF:
+                findViewById(R.id.push_frame).setVisibility(INVISIBLE);
                 if (mShimmer.isAnimating()) {
                     mShimmer.cancel();
                 }
                 buttonUpgrade.clear();
                 break;
             case ScreenStatusReceiver.NOTIFICATION_SCREEN_ON:
+                findViewById(R.id.push_frame).setVisibility(VISIBLE);
                 if (pushGamePreferences.getAll().size() <= 0) {
                     int gameInfoPosition = pushGamePreferences.getInt(PUSH_GAME_POSITION, 0);
                     gameInfoPosition++;
                     gameInfoPosition = gameInfoPosition % GAME_INFO_COUNT;
                     askForGameInfo(gameInfoPosition);
+                }
+                if (notificationBean == null) {
+                    getPushCameraBean();
                 }
 
                 if (!mShimmer.isAnimating()) {
@@ -498,7 +504,7 @@ public class PremiumLockerMainFrame extends PercentRelativeLayout implements INo
                 }
                 buttonUpgrade.setImageResource(R.raw.upgrade_icon);
                 int timeForUpdate = (int) (System.currentTimeMillis() - pushFramePreferences.getLong(PUSH_FRAME_TIME, 0)) / (60 * 1000);
-                if (timeForUpdate > HSConfig.optInteger(5, "Application", "LockerPush", "IntervalTimeInMin")) {
+                if (timeForUpdate >= HSConfig.optInteger(5, "Application", "LockerPush", "IntervalTimeInMin")) {
                     findViewById(R.id.push_frame).setVisibility(VISIBLE);
                     increasePushFrameItemIndex();
                 }
@@ -523,9 +529,37 @@ public class PremiumLockerMainFrame extends PercentRelativeLayout implements INo
             gameInfoPosition = gameInfoPosition % GAME_INFO_COUNT;
             askForGameInfo(gameInfoPosition);
         }
+        if (pushFrameItemIndex == MODE_CAMERA) {
+            getPushCameraBean();
+        }
         pushFrameItemIndex++;
         pushFrameItemIndex = pushFrameItemIndex % MODE_COUNT;
         pushFramePreferences.edit().putInt(PUSH_FRAME_INDEX, pushFrameItemIndex).putLong(PUSH_FRAME_TIME, System.currentTimeMillis()).apply();
+    }
+
+    private void getPushCameraBean() {
+        HSPreferenceHelper spHelper = HSPreferenceHelper.create(getContext(), PREFS_FILE_NAME);
+
+        String recordedEvent = spHelper.getString(PREFS_FINISHED_EVENT, "");
+        List<String> finishedEvent = Arrays.asList(recordedEvent.split(","));
+
+        List<Map<String, ?>> configs = null;
+        try {
+            configs = (List<Map<String, ?>>) HSConfig.getList("Application", "LocalNotifications", "Content");
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        if (configs == null) {
+            HSLog.e("没有配置本地提醒");
+        }
+
+        int nextNotificationIndex = spHelper.getInt(PREFS_NEXT_NOTIFICATION_INDEX_IN_PLIST, 0);
+
+        if (nextNotificationIndex >= configs.size()) {
+            HSLog.e("通知循环完毕");
+        }
+
+        notificationBean = KCNotificationManager.getInstance().getNextAvailableBean(configs, finishedEvent, recordedEvent, nextNotificationIndex);
     }
 
     private void askForGameInfo(int position) {
@@ -595,37 +629,39 @@ public class PremiumLockerMainFrame extends PercentRelativeLayout implements INo
 
                     @Override
                     public void onScanFinished(long junkSize) {
-                        findViewById(R.id.push_boost_scan).setVisibility(GONE);
-                        junkRootView.setVisibility(VISIBLE);
+                        if (getPushFrameItemIndex() == MODE_JUNK) {
+                            findViewById(R.id.push_boost_scan).setVisibility(GONE);
+                            junkRootView.setVisibility(VISIBLE);
 
-                        int junkSizeInMB = (int) junkSize / (1024 * 1024);
-                        if (junkSizeInMB < 0) {
-                            ((TextView) junkRootView.findViewById(R.id.boost_result)).setText("");
-                            ((TextView) junkRootView.findViewById(R.id.boost_title)).setText("");
-                            findViewById(R.id.scan_failed_text).setVisibility(VISIBLE);
-                            ((TextView) junkRootView.findViewById(R.id.boost_subtitle)).setText("");
-                            ((Button) junkRootView.findViewById(R.id.push_boost_button)).setText(getResources().getString(R.string.push_junk_failed_button));
-                        } else if (junkSizeInMB < 1024) {
-                            ((TextView) junkRootView.findViewById(R.id.boost_result)).setText(junkSizeInMB + "MB");
-                            ((TextView) junkRootView.findViewById(R.id.boost_title)).setText(getResources().getString(R.string.push_junk_title));
-                            ((TextView) junkRootView.findViewById(R.id.boost_subtitle)).setText(getResources().getString(R.string.push_junk_subtitle));
-                            ((Button) junkRootView.findViewById(R.id.push_boost_button)).setText(getResources().getString(R.string.push_junk_button));
-                        } else {
-                            float junkSizeInGB = (float) junkSizeInMB / 1024f;
-                            String junkSizeInGBFloat = String.format("%.2f", junkSizeInGB);
-                            ((TextView) junkRootView.findViewById(R.id.boost_result)).setText(junkSizeInGBFloat + "GB");
-                            ((TextView) junkRootView.findViewById(R.id.boost_title)).setText(getResources().getString(R.string.push_junk_title));
-                            ((TextView) junkRootView.findViewById(R.id.boost_subtitle)).setText(getResources().getString(R.string.push_junk_subtitle));
-                            ((Button) junkRootView.findViewById(R.id.push_boost_button)).setText(getResources().getString(R.string.push_junk_button));
+                            int junkSizeInMB = (int) junkSize / (1024 * 1024);
+                            if (junkSizeInMB < 0) {
+                                ((TextView) junkRootView.findViewById(R.id.boost_result)).setText("");
+                                ((TextView) junkRootView.findViewById(R.id.boost_title)).setText("");
+                                findViewById(R.id.scan_failed_text).setVisibility(VISIBLE);
+                                ((TextView) junkRootView.findViewById(R.id.boost_subtitle)).setText("");
+                                ((Button) junkRootView.findViewById(R.id.push_boost_button)).setText(getResources().getString(R.string.push_junk_failed_button));
+                            } else if (junkSizeInMB < 1024) {
+                                ((TextView) junkRootView.findViewById(R.id.boost_result)).setText(junkSizeInMB + "MB");
+                                ((TextView) junkRootView.findViewById(R.id.boost_title)).setText(getResources().getString(R.string.push_junk_title));
+                                ((TextView) junkRootView.findViewById(R.id.boost_subtitle)).setText(getResources().getString(R.string.push_junk_subtitle));
+                                ((Button) junkRootView.findViewById(R.id.push_boost_button)).setText(getResources().getString(R.string.push_junk_button));
+                            } else {
+                                float junkSizeInGB = (float) junkSizeInMB / 1024f;
+                                String junkSizeInGBFloat = String.format("%.2f", junkSizeInGB);
+                                ((TextView) junkRootView.findViewById(R.id.boost_result)).setText(junkSizeInGBFloat + "GB");
+                                ((TextView) junkRootView.findViewById(R.id.boost_title)).setText(getResources().getString(R.string.push_junk_title));
+                                ((TextView) junkRootView.findViewById(R.id.boost_subtitle)).setText(getResources().getString(R.string.push_junk_subtitle));
+                                ((Button) junkRootView.findViewById(R.id.push_boost_button)).setText(getResources().getString(R.string.push_junk_button));
+                            }
+                            ((ImageView) junkRootView.findViewById(R.id.icon)).setImageDrawable(getResources().getDrawable(R.drawable.new_locker_junk));
+                            junkRootView.findViewById(R.id.push_boost_button).setOnClickListener(view -> {
+                                KCAnalytics.logEvent("Screenlocker_push_clicked", "junk");
+                                increasePushFrameItemIndex();
+                                Intent junkCleanIntent = new Intent(getContext(), JunkCleanActivity.class);
+                                getContext().startActivity(junkCleanIntent);
+                                HSGlobalNotificationCenter.sendNotification(PremiumLockerActivity.EVENT_FINISH_SELF);
+                            });
                         }
-                        ((ImageView) junkRootView.findViewById(R.id.icon)).setImageDrawable(getResources().getDrawable(R.drawable.new_locker_junk));
-                        junkRootView.findViewById(R.id.push_boost_button).setOnClickListener(view -> {
-                            KCAnalytics.logEvent("Screenlocker_push_clicked", "junk");
-                            increasePushFrameItemIndex();
-                            Intent junkCleanIntent = new Intent(getContext(), JunkCleanActivity.class);
-                            getContext().startActivity(junkCleanIntent);
-                            HSGlobalNotificationCenter.sendNotification(PremiumLockerActivity.EVENT_FINISH_SELF);
-                        });
                     }
                 });
                 break;
@@ -659,32 +695,9 @@ public class PremiumLockerMainFrame extends PercentRelativeLayout implements INo
                 });
                 break;
             case MODE_CAMERA:
-                HSPreferenceHelper spHelper = HSPreferenceHelper.create(getContext(), PREFS_FILE_NAME);
-
-                String recordedEvent = spHelper.getString(PREFS_FINISHED_EVENT, "");
-                List<String> finishedEvent = Arrays.asList(recordedEvent.split(","));
-
-
-                List<Map<String, ?>> configs = null;
-                try {
-                    configs = (List<Map<String, ?>>) HSConfig.getList("Application", "LocalNotifications", "Content");
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
-                if (configs == null) {
-                    HSLog.e("没有配置本地提醒");
+                if (notificationBean == null) {
                     return false;
                 }
-
-                int nextNotificationIndex = spHelper.getInt(PREFS_NEXT_NOTIFICATION_INDEX_IN_PLIST, 0);
-
-                if (nextNotificationIndex >= configs.size()) {
-                    HSLog.e("通知循环完毕");
-                    return false;
-                }
-
-                NotificationBean bean = KCNotificationManager.getInstance().getNextAvailableBean(configs, finishedEvent, recordedEvent, nextNotificationIndex);
-
                 findViewById(R.id.push_boost_one).setVisibility(GONE);
                 findViewById(R.id.push_boost_two).setVisibility(GONE);
                 findViewById(R.id.push_boost_scan).setVisibility(GONE);
@@ -693,11 +706,11 @@ public class PremiumLockerMainFrame extends PercentRelativeLayout implements INo
                 View cameraRootView = findViewById(R.id.push_camera);
                 cameraRootView.setVisibility(VISIBLE);
 
-                String pushCameraActionType = bean.getActionType();
+                String pushCameraActionType = notificationBean.getActionType();
 
-                ((TextView) cameraRootView.findViewById(R.id.push_camera_title)).setText(bean.getName());
-                ((TextView) cameraRootView.findViewById(R.id.push_camera_subtitle)).setText(bean.getMessage());
-                ((Button) findViewById(R.id.push_camera_button)).setText(bean.getButtonText());
+                ((TextView) cameraRootView.findViewById(R.id.push_camera_title)).setText(notificationBean.getTitle());
+                ((TextView) cameraRootView.findViewById(R.id.push_camera_subtitle)).setText(notificationBean.getMessage());
+                ((Button) findViewById(R.id.push_camera_button)).setText(notificationBean.getButtonText());
                 findViewById(R.id.push_camera_button).setOnClickListener(view -> {
                     KCAnalytics.logEvent("Screenlocker_push_clicked", "camera");
                     increasePushFrameItemIndex();
@@ -720,7 +733,7 @@ public class PremiumLockerMainFrame extends PercentRelativeLayout implements INo
                     HSGlobalNotificationCenter.sendNotification(PremiumLockerActivity.EVENT_FINISH_SELF);
                 });
 
-                String imageUrl = bean.getIconUrl();
+                String imageUrl = notificationBean.getIconUrl();
                 ((ImageView) findViewById(R.id.icon)).setImageResource(R.drawable.push_camera_icon);
                 DisplayImageOptions cameraIconOptions = new DisplayImageOptions.Builder()
                         .showImageOnLoading(R.drawable.push_camera_icon)
