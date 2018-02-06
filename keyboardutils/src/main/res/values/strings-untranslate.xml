@@ -46,8 +46,6 @@ Try More Lock Screen Themes</string>
     <string name="push_junk_title">Junk Files Found!</string>
     <string name="push_junk_subtitle">Click boost now and make your phone clean!</string>
     <string name="push_junk_button">CLEAN NOW</string>
-    <string name="push_junk_failed_title">Scan Failed</string>
-    <string name="push_junk_failed_button">Try Again</string>
     <string name="push_game_button">PLAY NOW</string>
     <string name="push_battery_title">Battery left!</string>
     <string name="push_battery_subtitle">Battery is too low, tap to save battery and charge it.</string>

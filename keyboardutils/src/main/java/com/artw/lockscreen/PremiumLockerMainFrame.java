@@ -633,13 +633,12 @@ public class PremiumLockerMainFrame extends PercentRelativeLayout implements INo
                             findViewById(R.id.push_boost_scan).setVisibility(GONE);
                             junkRootView.setVisibility(VISIBLE);
 
-                            int junkSizeInMB = (int) junkSize / (1024 * 1024);
+                            int junkSizeInMB = (int) (junkSize / (1024L * 1024L));
                             if (junkSize < 0) {
-                                ((TextView) junkRootView.findViewById(R.id.boost_result)).setText("");
-                                ((TextView) junkRootView.findViewById(R.id.boost_title)).setText("");
-                                findViewById(R.id.scan_failed_text).setVisibility(VISIBLE);
-                                ((TextView) junkRootView.findViewById(R.id.boost_subtitle)).setText("");
-                                ((Button) junkRootView.findViewById(R.id.push_boost_button)).setText(getResources().getString(R.string.push_junk_failed_button));
+                                ((TextView) junkRootView.findViewById(R.id.boost_result)).setText("50+MB");
+                                ((TextView) junkRootView.findViewById(R.id.boost_title)).setText(getResources().getString(R.string.push_junk_title));
+                                ((TextView) junkRootView.findViewById(R.id.boost_subtitle)).setText(getResources().getString(R.string.push_junk_subtitle));
+                                ((Button) junkRootView.findViewById(R.id.push_boost_button)).setText(getResources().getString(R.string.push_junk_button));
                             } else if (junkSizeInMB < 1024) {
                                 ((TextView) junkRootView.findViewById(R.id.boost_result)).setText(junkSizeInMB + "MB");
                                 ((TextView) junkRootView.findViewById(R.id.boost_title)).setText(getResources().getString(R.string.push_junk_title));
