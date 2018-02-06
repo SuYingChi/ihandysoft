@@ -496,7 +496,7 @@ public class PremiumLockerMainFrame extends PercentRelativeLayout implements INo
                     askForGameInfo(gameInfoPosition);
                 }
                 if (notificationBean == null) {
-                    getPushCameraBean();
+                    updatePushCameraBean();
                 }
 
                 if (!mShimmer.isAnimating()) {
@@ -530,14 +530,14 @@ public class PremiumLockerMainFrame extends PercentRelativeLayout implements INo
             askForGameInfo(gameInfoPosition);
         }
         if (pushFrameItemIndex == MODE_CAMERA) {
-            getPushCameraBean();
+            updatePushCameraBean();
         }
         pushFrameItemIndex++;
         pushFrameItemIndex = pushFrameItemIndex % MODE_COUNT;
         pushFramePreferences.edit().putInt(PUSH_FRAME_INDEX, pushFrameItemIndex).putLong(PUSH_FRAME_TIME, System.currentTimeMillis()).apply();
     }
 
-    private void getPushCameraBean() {
+    private void updatePushCameraBean() {
         HSPreferenceHelper spHelper = HSPreferenceHelper.create(getContext(), PREFS_FILE_NAME);
 
         String recordedEvent = spHelper.getString(PREFS_FINISHED_EVENT, "");
@@ -634,7 +634,7 @@ public class PremiumLockerMainFrame extends PercentRelativeLayout implements INo
                             junkRootView.setVisibility(VISIBLE);
 
                             int junkSizeInMB = (int) junkSize / (1024 * 1024);
-                            if (junkSizeInMB < 0) {
+                            if (junkSize < 0) {
                                 ((TextView) junkRootView.findViewById(R.id.boost_result)).setText("");
                                 ((TextView) junkRootView.findViewById(R.id.boost_title)).setText("");
                                 findViewById(R.id.scan_failed_text).setVisibility(VISIBLE);
