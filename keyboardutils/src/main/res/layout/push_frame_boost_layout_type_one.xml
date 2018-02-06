@@ -94,6 +94,22 @@
                 </LinearLayout>
 
                 <TextView
+                    android:id="@+id/scan_failed_text"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="5dp"
+                    android:layout_marginStart="5dp"
+                    android:ellipsize="end"
+                    android:fontFamily="@string/roboto_medium"
+                    android:maxLines="1"
+                    android:text="@string/push_junk_failed_title"
+                    android:textColor="#000000"
+                    android:textSize="18sp"
+                    android:textStyle="normal"
+                    android:visibility="gone"
+                    tools:targetApi="jelly_bean" />
+
+                <TextView
                     android:id="@+id/boost_subtitle"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
