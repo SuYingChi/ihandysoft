@@ -42,7 +42,7 @@ dependencies {
     // App Framework
     implementation "com.ihandy.appframework:libAppframework.gm:4.5.2.gm"
     // Ads
-    implementation 'net.appcloudbox.ads:libAcbAds.gm:1.2.1.gm'
+    implementation 'net.appcloudbox.ads:libAcbAds.gm:1.2.3.gm'
     implementation 'net.appcloudbox.common:libAcbCommonUtils.gm:1.1.5.gm'
 
     // Native Ad Adapters
