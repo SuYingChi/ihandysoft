@@ -251,7 +251,7 @@ public class KCNotificationManager {
         for (;notificationIndex < configs.size(); notificationIndex++) {
             notificationToSend = getAvailableBean(configs, finishedEvent, notificationIndex);
             if (notificationToSend != null) {
-                spHelper.putInt(PREFS_NOTIFICATION_INDEX_IN_PLIST, notificationIndex);
+                spHelper.putInt(PREFS_NOTIFICATION_INDEX_IN_PLIST, ++notificationIndex);
                 break;
             }
         }

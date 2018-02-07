@@ -674,14 +674,13 @@ public class PremiumLockerMainFrame extends PercentRelativeLayout implements INo
                     return false;
                 }
 
-                int notificationBeanIndex = pushFramePreferences.getInt(PUSH_CAM_NOTIFICATION_INDEX, 0);
+                int startNotificationBeanIndex = pushFramePreferences.getInt(PUSH_CAM_NOTIFICATION_INDEX, 0);
 
                 NotificationBean bean = null;
-                notificationBeanIndex = notificationBeanIndex % configs.size();
-                for (;notificationBeanIndex < notificationBeanIndex + configs.size(); notificationBeanIndex++) {
-                    bean = KCNotificationManager.getInstance().getAvailableBean(configs, null, notificationBeanIndex);
+                for (int notificationBeanIndex = startNotificationBeanIndex; notificationBeanIndex < startNotificationBeanIndex + configs.size(); notificationBeanIndex++) {
+                    bean = KCNotificationManager.getInstance().getAvailableBean(configs, null, notificationBeanIndex % configs.size());
                     if (bean != null) {
-                        pushFramePreferences.edit().putInt(PUSH_CAM_NOTIFICATION_INDEX, notificationBeanIndex).apply();
+                        pushFramePreferences.edit().putInt(PUSH_CAM_NOTIFICATION_INDEX, notificationBeanIndex % configs.size()).apply();
                         break;
                     }
                 }
