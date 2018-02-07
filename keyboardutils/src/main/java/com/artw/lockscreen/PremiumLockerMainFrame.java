@@ -62,7 +62,7 @@ import com.ihs.feature.battery.BatteryDataManager;
 import com.ihs.feature.boost.plus.BoostPlusActivity;
 import com.ihs.feature.common.DeviceManager;
 import com.ihs.feature.common.ScreenStatusReceiver;
-import com.ihs.feature.cpucooler.CpuCoolerCleanActivity;
+import com.ihs.feature.cpucooler.CpuCoolDownActivity;
 import com.ihs.feature.cpucooler.CpuCoolerManager;
 import com.ihs.feature.junkclean.JunkCleanActivity;
 import com.ihs.feature.junkclean.data.JunkManager;
@@ -827,7 +827,7 @@ public class PremiumLockerMainFrame extends PercentRelativeLayout implements INo
                 cpuRootView.findViewById(R.id.push_boost_button).setOnClickListener(view -> {
                     KCAnalytics.logEvent("Screenlocker_push_clicked", "CPU");
                     increasePushFrameItemIndex();
-                    Intent cpuCoolerCleanIntent = new Intent(getContext(), CpuCoolerCleanActivity.class);
+                    Intent cpuCoolerCleanIntent = new Intent(getContext(), CpuCoolDownActivity.class);
                     getContext().startActivity(cpuCoolerCleanIntent);
                     HSGlobalNotificationCenter.sendNotification(PremiumLockerActivity.EVENT_FINISH_SELF);
                 });
@@ -1032,7 +1032,7 @@ public class PremiumLockerMainFrame extends PercentRelativeLayout implements INo
 
     private NotificationBean getNextAvailableBean(List<Map<String, ?>> configs, List<String> finishedEvent, String recordedEvent, int nextNotificationIndex) {
         if (nextNotificationIndex >= configs.size()) {
-            return null;
+            nextNotificationIndex = nextNotificationIndex % configs.size();
         }
 
         NotificationBean bean = null;
