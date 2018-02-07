@@ -1,7 +1,6 @@
 package com.ihs.inputmethod.uimodules.settings;
 
 import android.content.Intent;
-import android.graphics.Color;
 import android.graphics.PorterDuff;
 import android.graphics.drawable.Drawable;
 import android.graphics.drawable.StateListDrawable;
@@ -10,7 +9,6 @@ import android.support.graphics.drawable.VectorDrawableCompat;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.graphics.drawable.DrawableCompat;
 
-import com.kc.utils.KCAnalytics;
 import com.ihs.app.framework.HSApplication;
 import com.ihs.commons.utils.HSLog;
 import com.ihs.inputmethod.api.framework.HSInputMethodSettings;
@@ -18,6 +16,7 @@ import com.ihs.inputmethod.api.theme.HSKeyboardThemeManager;
 import com.ihs.inputmethod.api.utils.HSDrawableUtils;
 import com.ihs.inputmethod.feature.lucky.LuckyActivity;
 import com.ihs.inputmethod.uimodules.R;
+import com.kc.utils.KCAnalytics;
 
 
 /**
@@ -33,6 +32,7 @@ final class ViewItemBuilder {
     private final static String SETTINGS_KEY_SELECTOR = "ic_selector";
 
     private final static String SETTINGS_KEY_FONTS = "ic_settings_key_fonts";
+    private final static String SETTINGS_KEY_KEYBOARD_HEIGHT = "ic_settings_key_fonts";
 
     private final static String SETTINGS_KEY_SOUND_OFF = "ic_settings_key_sound_off";
     private final static String SETTINGS_KEY_SOUND_ON = "ic_settings_key_sound_on";
@@ -119,6 +119,12 @@ final class ViewItemBuilder {
                 item.updateSelectedStatus(!HSInputMethodSettings.getKeySoundEnabled());
             }
         }, !HSInputMethodSettings.getKeySoundEnabled());
+    }
+
+    static ViewItem getKeyboardHeightItem(ViewItem.ViewItemListener viewItemListener) {
+        return new ViewItem(HSApplication.getContext().getString(R.string.setting_item_keyboard_height),
+                getStateListDrawable(SETTINGS_KEY_KEYBOARD_HEIGHT, SETTINGS_KEY_KEYBOARD_HEIGHT)
+                , viewItemListener, false);
     }
 
     private static void updateSoundsSettings(ViewItem item) {

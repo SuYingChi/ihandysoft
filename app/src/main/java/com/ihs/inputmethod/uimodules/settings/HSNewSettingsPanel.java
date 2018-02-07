@@ -109,7 +109,12 @@ public class HSNewSettingsPanel extends BasePanel {
             items.add(ViewItemBuilder.getLuckyItem());
         }
         items.add(ViewItemBuilder.getSoundsPositionItem());
-        items.add(ViewItemBuilder.getAutoCorrectionItem());
+        items.add(ViewItemBuilder.getKeyboardHeightItem(new ViewItem.ViewItemListener() {
+            @Override
+            public void onItemClick(ViewItem item) {
+
+            }
+        }));
         if (selectorItem == null) {
             selectorItem = ViewItemBuilder.getSelectorItem(new ViewItem.ViewItemListener() {
                 @Override
@@ -137,6 +142,7 @@ public class HSNewSettingsPanel extends BasePanel {
                 KCAnalytics.logEvent("keyboard_setting_addlanguage_clicked");
             }
         }));
+        items.add(ViewItemBuilder.getAutoCorrectionItem());
         items.add(ViewItemBuilder.getMoreSettingsItem(new ViewItem.ViewItemListener() {
             @Override
             public void onItemClick(ViewItem item) {
