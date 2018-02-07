@@ -872,7 +872,7 @@ public class PremiumLockerMainFrame extends PercentRelativeLayout implements INo
             hour = hour % 12;
         }
         mTvTime.setText(String.format(Locale.getDefault(), "%02d:%02d", hour, minute));
-        DateFormat format = new SimpleDateFormat("MMMM, dd EEE", Locale.getDefault());
+        DateFormat format = new SimpleDateFormat("EEE\nMMMM, dd", Locale.getDefault());
         mTvDate.setText(format.format(new Date()));
     }
 
