@@ -159,13 +159,7 @@ public class ChargingManagerUtil {
 
     public static void startChargingActivity() {
         if (isChargingAlertEnabled()){
-            try {
-                Intent intent = new Intent(HSApplication.getContext(), ChargingScreenAlertActivity.class);
-                intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NO_ANIMATION);
-                ContextCompat.startActivity(HSApplication.getContext(), intent, null);
-            } catch (Exception e) {
-                HSLog.e(e.getMessage());
-            }
+            startChargingAlertActivity();
         } else if (!HSConfig.optBoolean(false, "Application", "Locker", "UseNewLockScreen")) {
             HSLog.d("config use past charging screen");
             try {
@@ -197,6 +191,16 @@ public class ChargingManagerUtil {
             bundle.putBoolean(ChargingScreen.EXTRA_BOOLEAN_IS_CHARGING_STATE_CHANGED, false);
 
             FloatWindowController.getInstance().showChargingScreen(bundle);
+        }
+    }
+
+    public static void startChargingAlertActivity() {
+        try {
+            Intent intent = new Intent(HSApplication.getContext(), ChargingScreenAlertActivity.class);
+            intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NO_ANIMATION);
+            ContextCompat.startActivity(HSApplication.getContext(), intent, null);
+        } catch (Exception e) {
+            HSLog.e(e.getMessage());
         }
     }
 

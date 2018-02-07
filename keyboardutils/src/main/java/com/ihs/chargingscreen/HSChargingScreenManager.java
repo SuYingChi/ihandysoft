@@ -15,7 +15,6 @@ import com.ihs.commons.utils.HSLog;
 import com.ihs.keyboardutils.iap.RemoveAdsManager;
 import com.kc.utils.KCAnalytics;
 
-import net.appcloudbox.ads.expressads.AcbExpressAdManager;
 import net.appcloudbox.ads.nativeads.AcbNativeAdManager;
 
 import static com.ihs.charging.HSChargingManager.HSChargingState.STATE_CHARGING_FULL;
@@ -110,6 +109,9 @@ public class HSChargingScreenManager {
                     KCAnalytics.logEvent("KC_Charging_Event", "Action", "PlugIn");
                 } else if (preChargingState != HSChargingState.STATE_DISCHARGING && curChargingState == HSChargingState.STATE_DISCHARGING) {
                     KCAnalytics.logEvent("KC_Charging_Event", "Action", "PlugOut");
+                    if (ChargingPrefsUtil.isChargingAlertEnabled()) {
+                        ChargingManagerUtil.startChargingAlertActivity();
+                    }
                 }
 
                 if (!HSChargingScreenManager.getInstance().isChargingModuleOpened() && !ChargingPrefsUtil.getInstance().getSpHelper().contains(USER_ENABLED_CHARGING)) {

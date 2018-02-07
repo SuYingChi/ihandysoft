@@ -241,7 +241,9 @@ public class ChargingScreenAlertActivity extends Activity {
             }
         });
 
-        findViewById(R.id.close_btn).setOnClickListener(new OnClickListener() {
+        ImageView closeBtn = findViewById(R.id.close_btn);
+        closeBtn.setBackgroundDrawable(RippleDrawableUtils.getTransparentRippleBackground());
+        closeBtn.setOnClickListener(new OnClickListener() {
             public void onClick(View v) {
                 finish();
             }
