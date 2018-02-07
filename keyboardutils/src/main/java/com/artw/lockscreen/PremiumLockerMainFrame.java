@@ -670,22 +670,25 @@ public class PremiumLockerMainFrame extends PercentRelativeLayout implements INo
                     e.printStackTrace();
                 }
 
-                if (configs == null) {
+                if (configs == null || configs.size() <= 0) {
                     return false;
                 }
 
                 int notificationBeanIndex = pushFramePreferences.getInt(PUSH_CAM_NOTIFICATION_INDEX, 0);
 
-                NotificationBean bean;
-                do {
-                    notificationBeanIndex = notificationBeanIndex % configs.size();
+                NotificationBean bean = null;
+                notificationBeanIndex = notificationBeanIndex % configs.size();
+                for (;notificationBeanIndex < notificationBeanIndex + configs.size(); notificationBeanIndex++) {
                     bean = KCNotificationManager.getInstance().getAvailableBean(configs, null, notificationBeanIndex);
                     if (bean != null) {
                         pushFramePreferences.edit().putInt(PUSH_CAM_NOTIFICATION_INDEX, notificationBeanIndex).apply();
-                    } else {
-                        notificationBeanIndex++;
+                        break;
                     }
-                } while (bean == null);
+                }
+
+                if (bean == null) {
+                    return false;
+                }
 
                 findViewById(R.id.push_boost_one).setVisibility(GONE);
                 findViewById(R.id.push_boost_two).setVisibility(GONE);

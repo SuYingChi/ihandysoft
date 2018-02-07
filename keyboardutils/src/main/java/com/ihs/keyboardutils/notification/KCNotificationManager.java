@@ -246,16 +246,15 @@ public class KCNotificationManager {
             return;
         }
 
-        NotificationBean notificationToSend;
+        NotificationBean notificationToSend = null;
 
-        do {
+        for (;notificationIndex < configs.size(); notificationIndex++) {
             notificationToSend = getAvailableBean(configs, finishedEvent, notificationIndex);
-            if (notificationToSend == null) {
-                notificationIndex++;
-            } else {
+            if (notificationToSend != null) {
                 spHelper.putInt(PREFS_NOTIFICATION_INDEX_IN_PLIST, notificationIndex);
+                break;
             }
-        } while (notificationToSend == null && notificationIndex < configs.size());
+        }
 
 
         if (notificationToSend == null) {
