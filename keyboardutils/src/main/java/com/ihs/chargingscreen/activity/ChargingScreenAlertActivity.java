@@ -44,20 +44,18 @@ import com.ihs.charging.HSChargingManager.HSChargingState;
 import com.ihs.chargingscreen.HSChargingScreenManager;
 import com.ihs.chargingscreen.notification.ChargeNotifyManager;
 import com.ihs.chargingscreen.ui.BubbleView;
-import com.ihs.chargingscreen.utils.ChargingAnalytics;
 import com.ihs.chargingscreen.utils.ChargingManagerUtil;
-import com.ihs.chargingscreen.utils.ClickUtils;
 import com.ihs.chargingscreen.utils.DisplayUtils;
 import com.ihs.commons.config.HSConfig;
 import com.ihs.commons.notificationcenter.HSGlobalNotificationCenter;
 import com.ihs.commons.notificationcenter.INotificationObserver;
 import com.ihs.commons.utils.HSBundle;
-import com.ihs.commons.utils.HSLog;
 import com.ihs.keyboardutils.R;
 import com.ihs.keyboardutils.iap.RemoveAdsManager;
 import com.ihs.keyboardutils.nativeads.KCNativeAdView;
 import com.ihs.keyboardutils.utils.RippleDrawableUtils;
 import com.kc.commons.utils.KCCommonUtils;
+import com.kc.utils.KCAnalytics;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -71,8 +69,6 @@ import static com.ihs.keyboardutils.iap.RemoveAdsManager.NOTIFICATION_REMOVEADS_
  * Created by zhixiangxiao on 5/4/16.
  */
 public class ChargingScreenAlertActivity extends Activity {
-
-    public static final String NOTIFICATION_CHARGING_ACTIVITY_STARTED = "notification_charging_activity_started";
 
     private static final int EVENT_START_SCROLL_UP_ANIMATOR = 101;
 
@@ -152,19 +148,14 @@ public class ChargingScreenAlertActivity extends Activity {
     };
 
     private BubbleView bubbleView;
-    //    private AcbExpressAdView acbExpressAdView;
     private RelativeLayout adContainer;
     private ImageView removeAds;
-    private long createTime;
 
     private BroadcastReceiver broadcastReceiver = new BroadcastReceiver() {
         @Override
         public void onReceive(Context context, Intent intent) {
-            if (intent.getAction().equals(Intent.ACTION_SCREEN_ON)) {
-                if (!ClickUtils.isFastDoubleClick()) {
-                    ChargingAnalytics.logChargingScreenShow();
-                    ChargingAnalytics.logLockeScreenOrChargingScreenShow();
-                }
+            if (TextUtils.equals(intent.getAction(), Intent.ACTION_SCREEN_OFF)) {
+                finish();
             }
         }
     };
@@ -173,13 +164,12 @@ public class ChargingScreenAlertActivity extends Activity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        createTime = System.currentTimeMillis();
-        HSGlobalNotificationCenter.sendNotification(NOTIFICATION_CHARGING_ACTIVITY_STARTED);
         super.onCreate(savedInstanceState);
 
-        HSChargingScreenManager.getInstance().start();
+        KCAnalytics.logEvent("chargeAlert_show");
+        KCAnalytics.logEvent("Cable_Report_Show");
 
-        ChargingAnalytics.getInstance().recordChargingEnableOnce();
+        HSChargingScreenManager.getInstance().start();
 
         Window window = getWindow();
 
@@ -320,7 +310,7 @@ public class ChargingScreenAlertActivity extends Activity {
         }
 
         IntentFilter filter = new IntentFilter();
-        filter.addAction(Intent.ACTION_SCREEN_ON);
+        filter.addAction(Intent.ACTION_SCREEN_OFF);
         registerReceiver(broadcastReceiver, filter);
 
         ImageView ivSetting = findViewById(R.id.iv_setting);
@@ -400,11 +390,6 @@ public class ChargingScreenAlertActivity extends Activity {
         if (getChargingState() > 0) {
             bubbleView.start();
         }
-
-        long duration = System.currentTimeMillis() - createTime;
-
-        HSLog.d("Charging activity display duration: " + duration + "ms");
-
     }
 
     @Override
@@ -413,7 +398,6 @@ public class ChargingScreenAlertActivity extends Activity {
         if (!HSSessionMgr.isSessionStarted()) {
             HSAnalytics.stopFlurry();
         }
-        HSLog.d("chargingtest onStop");
         bubbleView.stop();
         showChargingIndicatorText();
     }
@@ -421,7 +405,6 @@ public class ChargingScreenAlertActivity extends Activity {
     @Override
     public void onPause() {
         super.onPause();
-        HSLog.d("chargingtest onPause");
 
         ChargeNotifyManager.getInstance().setIsChargingActivityAlive(false);
     }

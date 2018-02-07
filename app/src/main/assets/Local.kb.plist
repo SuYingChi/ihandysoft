@@ -333,6 +333,8 @@
 			</dict>
 			<key>ChargeAlert</key>
 			<dict>
+				<key>MiniInterval</key>
+				<integer>0</integer>
 				<key>ChargingAlertEnabled</key>
 				<true/>
 				<key>StartVersion</key>
