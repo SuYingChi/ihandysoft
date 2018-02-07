@@ -14,9 +14,16 @@ public class AppJunkWrapper extends JunkWrapper {
     public static final String APP_JUNK = "APP_JUNK";
 
     private List<HSAppJunkCache> mHSAppJunkCacheList = new ArrayList<>();
+    private boolean install = false;
 
     public AppJunkWrapper(@NonNull HSAppJunkCache junk) {
         mHSAppJunkCacheList.add(junk);
+
+        try {
+            install = HSApplication.getContext().getPackageManager().getPackageInfo(getPackageName(), 0) != null;
+        } catch (PackageManager.NameNotFoundException e) {
+            e.printStackTrace();
+        }
     }
 
     public void addJunk(HSAppJunkCache junk){
@@ -64,11 +71,6 @@ public class AppJunkWrapper extends JunkWrapper {
     }
 
     public boolean isInstall() {
-        try {
-            return HSApplication.getContext().getPackageManager().getPackageInfo(getPackageName(), 0) != null;
-        } catch (PackageManager.NameNotFoundException e) {
-            return false;
-        }
+        return install;
     }
-
 }
