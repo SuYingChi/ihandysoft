@@ -87,12 +87,13 @@ import org.json.JSONObject;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
-import java.util.Arrays;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
+import java.util.Set;
 
 import static com.artw.lockscreen.LockerSettings.recordLockerDisableOnce;
 import static com.artw.lockscreen.common.TimeTickReceiver.NOTIFICATION_CLOCK_TIME_CHANGED;
@@ -672,7 +673,7 @@ public class PremiumLockerMainFrame extends PercentRelativeLayout implements INo
                     e.printStackTrace();
                 }
 
-                List<String> finishedEvent = Arrays.asList(pushFramePreferences.getString(PUSH_CAM_FINISHED_EVENT, "").split(","));
+                Set<String> finishedEvent = pushFramePreferences.getStringSet(PUSH_CAM_FINISHED_EVENT, new HashSet<>());
 
                 int nextNotificationBean = pushFramePreferences.getInt(PUSH_CAM_NOTIFICATION_INDEX, 0);
 
@@ -1010,7 +1011,7 @@ public class PremiumLockerMainFrame extends PercentRelativeLayout implements INo
 
     private KCNotificationManager.NotificationAvailabilityCallBack notificationCallBack = notificationBean -> false;
 
-    private NotificationBean getNextAvailableBean(List<Map<String, ?>> configs, List<String> finishedEvent, int notificationIndex) {
+    private NotificationBean getNextAvailableBean(List<Map<String, ?>> configs, Set<String> finishedEvent, int notificationIndex) {
         if (notificationIndex >= configs.size()) {
             notificationIndex = notificationIndex % configs.size();
         }
@@ -1047,7 +1048,8 @@ public class PremiumLockerMainFrame extends PercentRelativeLayout implements INo
             default:
                 //如果下载过了，就记录到不再发送列表里面
                 if (notificationCallBack.isItemDownloaded(bean)) {
-                    pushFramePreferences.edit().putString(PUSH_CAM_FINISHED_EVENT, bean.getSPKey() + ",").apply();
+                    finishedEvent.add(bean.getSPKey());
+                    pushFramePreferences.edit().putStringSet(PUSH_CAM_FINISHED_EVENT, finishedEvent).apply();
                     return null;
                 } else {
                     return bean;
