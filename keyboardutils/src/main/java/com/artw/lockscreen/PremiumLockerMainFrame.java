@@ -612,7 +612,7 @@ public class PremiumLockerMainFrame extends PercentRelativeLayout implements INo
 
                 View junkRootView = findViewById(R.id.push_boost_one);
                 junkRootView.setVisibility(GONE);
-                ((ContentLoadingProgressBar) findViewById(R.id.spin_circle)).getIndeterminateDrawable().setColorFilter(Color.BLACK, PorterDuff.Mode.MULTIPLY);
+                ((ContentLoadingProgressBar) findViewById(R.id.spin_circle)).getIndeterminateDrawable().setColorFilter(Color.parseColor("#7f000000"), PorterDuff.Mode.MULTIPLY);
                 findViewById(R.id.push_boost_scan).setVisibility(VISIBLE);
                 ((TextView) findViewById(R.id.push_boost_scan_button)).setText(getResources().getString(R.string.push_junk_button));
                 findViewById(R.id.push_boost_scan_button).setOnClickListener(view -> {
