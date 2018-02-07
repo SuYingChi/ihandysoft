@@ -9,6 +9,7 @@ import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Build;
+import android.support.annotation.Nullable;
 import android.support.v4.app.NotificationCompat;
 import android.text.TextUtils;
 import android.view.View;
@@ -63,7 +64,7 @@ public class KCNotificationManager {
     private static final String PREFS_FINISHED_EVENT = "prefs_finished_event";
     private static final String PREFS_NEXT_EVENT_TIME = "prefs_next_event_time";
     private static final String PREFS_NOTIFICATION_ENABLE = HSApplication.getContext().getString(R.string.prefs_notification_enable);
-    private static final String PREFS_NEXT_NOTIFICATION_INDEX_IN_PLIST = "next_notification_index";
+    private static final String PREFS_NOTIFICATION_INDEX_IN_PLIST = "next_notification_index";
     private static final String AUTOPILOT_TEST_FILTER_NAME = "redcolor";
 
     private static final int NOTIFICATION_ID = Math.abs(HSApplication.getContext().getPackageName().hashCode() / 100000);
@@ -86,7 +87,7 @@ public class KCNotificationManager {
         @Override
         public void onReceive(String s, HSBundle hsBundle) {
             if (s.equals(HSNotificationConstant.HS_CONFIG_CHANGED)) {
-                spHelper.putInt(PREFS_NEXT_NOTIFICATION_INDEX_IN_PLIST, 0);
+                spHelper.putInt(PREFS_NOTIFICATION_INDEX_IN_PLIST, 0);
                 scheduleNextEventTime();
             }
         }
@@ -225,8 +226,7 @@ public class KCNotificationManager {
             return;
         }
 
-        String recordedEvent = spHelper.getString(PREFS_FINISHED_EVENT, "");
-        List<String> finishedEvent = Arrays.asList(recordedEvent.split(","));
+        List<String> finishedEvent = Arrays.asList(spHelper.getString(PREFS_FINISHED_EVENT, "").split(","));
 
         List<Map<String, ?>> configs = null;
         try {
@@ -239,14 +239,24 @@ public class KCNotificationManager {
             return;
         }
 
-        int nextNotificationIndex = spHelper.getInt(PREFS_NEXT_NOTIFICATION_INDEX_IN_PLIST, 0);
+        int notificationIndex = spHelper.getInt(PREFS_NOTIFICATION_INDEX_IN_PLIST, 0);
 
-        if (nextNotificationIndex >= configs.size()) {
+        if (notificationIndex >= configs.size()) {
             HSLog.e("通知循环完毕");
             return;
         }
 
-        NotificationBean notificationToSend = getNextAvailableBean(configs, finishedEvent, recordedEvent, nextNotificationIndex);
+        NotificationBean notificationToSend;
+
+        do {
+            notificationToSend = getAvailableBean(configs, finishedEvent, notificationIndex);
+            if (notificationToSend == null) {
+                notificationIndex++;
+            } else {
+                spHelper.putInt(PREFS_NOTIFICATION_INDEX_IN_PLIST, notificationIndex);
+            }
+        } while (notificationToSend == null && notificationIndex < configs.size());
+
 
         if (notificationToSend == null) {
             return;
@@ -450,54 +460,47 @@ public class KCNotificationManager {
         scheduleNextEventTime();
     }
 
-    private NotificationBean getNextAvailableBean(List<Map<String, ?>> configs, List<String> finishedEvent, String recordedEvent, int nextNotificationIndex) {
-        if (nextNotificationIndex >= configs.size()) {
+    public NotificationBean getAvailableBean(List<Map<String, ?>> configs, @Nullable List<String> finishedEvent, int notificationIndex) {
+        if (notificationIndex >= configs.size()) {
             return null;
         }
 
         NotificationBean bean = null;
         try {
-            Map<String, Object> value = (Map<String, Object>) configs.get(nextNotificationIndex);
+            Map<String, Object> value = (Map<String, Object>) configs.get(notificationIndex);
             bean = new NotificationBean(value);
         } catch (Exception e) {
-            HSLog.e("wrong config for ==> " + configs.get(nextNotificationIndex));
+            e.printStackTrace();
         }
 
         if (bean == null) {
-            if (nextNotificationIndex >= configs.size()) {
-                return null;
-            } else {
-                return getNextAvailableBean(configs, finishedEvent, recordedEvent, ++nextNotificationIndex);
-            }
+            return null;
         }
 
-        if (!bean.isRepeat() && finishedEvent.contains(bean.getSPKey())) {
-            return getNextAvailableBean(configs, finishedEvent, recordedEvent, ++nextNotificationIndex);
+        if (!bean.isRepeat() && (finishedEvent != null && finishedEvent.contains(bean.getSPKey()))) {
+            return null;
         }
 
-        if (bean.getActionType().equals(ACTION_LOCKER)) {
-            if (isLockerEnabled() || LockerSettings.isUserTouchedLockerSettings()) {
-                return getNextAvailableBean(configs, finishedEvent, recordedEvent, ++nextNotificationIndex);
-            } else {
-                spHelper.putInt(PREFS_NEXT_NOTIFICATION_INDEX_IN_PLIST, ++nextNotificationIndex);
-                return bean;
-            }
-        } else if (bean.getActionType().equals(ACTION_CHARGING)) {
-            if (isChargingEnabled() || ChargingPrefsUtil.isUserTouchedChargingSetting()) {
-                return getNextAvailableBean(configs, finishedEvent, recordedEvent, ++nextNotificationIndex);
-            } else {
-                spHelper.putInt(PREFS_NEXT_NOTIFICATION_INDEX_IN_PLIST, ++nextNotificationIndex);
-                return bean;
-            }
-        } else {
-            //如果下载过了，就记录到不再发送列表里面
-            if (notificationCallBack.isItemDownloaded(bean)) {
-                spHelper.putString(PREFS_FINISHED_EVENT, recordedEvent + bean.getSPKey() + ",");
-                return getNextAvailableBean(configs, finishedEvent, recordedEvent, ++nextNotificationIndex);
-            } else {
-                spHelper.putInt(PREFS_NEXT_NOTIFICATION_INDEX_IN_PLIST, ++nextNotificationIndex);
-                return bean;
-            }
+        switch (bean.getActionType()) {
+            case "Locker":
+                if (LockerSettings.getLockerEnableStates() == LockerSettings.LOCKER_DEFAULT_ACTIVE || LockerSettings.isUserTouchedLockerSettings()) {
+                    return null;
+                } else {
+                    return bean;
+                }
+            case "Charging":
+                if (ChargingPrefsUtil.getChargingEnableStates() == ChargingPrefsUtil.CHARGING_DEFAULT_ACTIVE || ChargingPrefsUtil.isUserTouchedChargingSetting()) {
+                    return null;
+                } else {
+                    return bean;
+                }
+            default:
+                //如果下载过了，就记录到不再发送列表里面
+                if (notificationCallBack.isItemDownloaded(bean)) {
+                    return null;
+                } else {
+                    return bean;
+                }
         }
     }
 

@@ -45,7 +45,6 @@ import com.artw.lockscreen.shimmer.ShimmerTextView;
 import com.artw.lockscreen.slidingdrawer.SlidingDrawer;
 import com.artw.lockscreen.slidingdrawer.SlidingDrawerContent;
 import com.ihs.app.framework.HSApplication;
-import com.ihs.chargingscreen.utils.ChargingPrefsUtil;
 import com.ihs.chargingscreen.utils.DisplayUtils;
 import com.ihs.chargingscreen.utils.LockerChargingSpecialConfig;
 import com.ihs.commons.config.HSConfig;
@@ -89,11 +88,9 @@ import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
-import java.util.HashSet;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
-import java.util.Set;
 
 import static com.artw.lockscreen.LockerSettings.recordLockerDisableOnce;
 import static com.artw.lockscreen.common.TimeTickReceiver.NOTIFICATION_CLOCK_TIME_CHANGED;
@@ -673,17 +670,20 @@ public class PremiumLockerMainFrame extends PercentRelativeLayout implements INo
                     e.printStackTrace();
                 }
 
-                Set<String> finishedEvent = pushFramePreferences.getStringSet(PUSH_CAM_FINISHED_EVENT, new HashSet<>());
+                if (configs == null) {
+                    return false;
+                }
 
-                int nextNotificationBean = pushFramePreferences.getInt(PUSH_CAM_NOTIFICATION_INDEX, 0);
+                int notificationBeanIndex = pushFramePreferences.getInt(PUSH_CAM_NOTIFICATION_INDEX, 0);
 
                 NotificationBean bean;
                 do {
-                    bean = getNextAvailableBean(configs, finishedEvent, nextNotificationBean);
+                    notificationBeanIndex = notificationBeanIndex % configs.size();
+                    bean = KCNotificationManager.getInstance().getAvailableBean(configs, null, notificationBeanIndex);
                     if (bean != null) {
-                        pushFramePreferences.edit().putInt(PUSH_CAM_NOTIFICATION_INDEX, nextNotificationBean).apply();
+                        pushFramePreferences.edit().putInt(PUSH_CAM_NOTIFICATION_INDEX, notificationBeanIndex).apply();
                     } else {
-                        nextNotificationBean++;
+                        notificationBeanIndex++;
                     }
                 } while (bean == null);
 
@@ -1006,54 +1006,6 @@ public class PremiumLockerMainFrame extends PercentRelativeLayout implements INo
         if (searchDialog != null) {
             searchDialog.dismiss();
             searchDialog = null;
-        }
-    }
-
-    private KCNotificationManager.NotificationAvailabilityCallBack notificationCallBack = notificationBean -> false;
-
-    private NotificationBean getNextAvailableBean(List<Map<String, ?>> configs, Set<String> finishedEvent, int notificationIndex) {
-        if (notificationIndex >= configs.size()) {
-            notificationIndex = notificationIndex % configs.size();
-        }
-
-        NotificationBean bean = null;
-        try {
-            Map<String, Object> value = (Map<String, Object>) configs.get(notificationIndex);
-            bean = new NotificationBean(value);
-        } catch (Exception e) {
-
-        }
-
-        if (bean == null) {
-            return null;
-        }
-
-        if (!bean.isRepeat() && finishedEvent.contains(bean.getSPKey())) {
-            return null;
-        }
-
-        switch (bean.getActionType()) {
-            case "Locker":
-                if (LockerSettings.getLockerEnableStates() == LockerSettings.LOCKER_DEFAULT_ACTIVE || LockerSettings.isUserTouchedLockerSettings()) {
-                    return null;
-                } else {
-                    return bean;
-                }
-            case "Charging":
-                if (ChargingPrefsUtil.getChargingEnableStates() == ChargingPrefsUtil.CHARGING_DEFAULT_ACTIVE || ChargingPrefsUtil.isUserTouchedChargingSetting()) {
-                    return null;
-                } else {
-                    return bean;
-                }
-            default:
-                //如果下载过了，就记录到不再发送列表里面
-                if (notificationCallBack.isItemDownloaded(bean)) {
-                    finishedEvent.add(bean.getSPKey());
-                    pushFramePreferences.edit().putStringSet(PUSH_CAM_FINISHED_EVENT, finishedEvent).apply();
-                    return null;
-                } else {
-                    return bean;
-                }
         }
     }
 }
