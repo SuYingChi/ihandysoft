@@ -51,7 +51,8 @@
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_horizontal"
                     android:layout_marginBottom="10dp"
-                    android:text="@string/push_scan_text" />
+                    android:text="@string/push_scan_text"
+                    android:textColor="#7f000000" />
 
                 <android.support.v4.widget.ContentLoadingProgressBar
                     android:id="@+id/spin_circle"

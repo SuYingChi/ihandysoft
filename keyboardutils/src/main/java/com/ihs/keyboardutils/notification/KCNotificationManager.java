@@ -59,11 +59,11 @@ public class KCNotificationManager {
         void onNotificationSent(NotificationBean notificationBean);
     }
 
-    public static final String PREFS_FILE_NAME = "notification_prefs";
-    public static final String PREFS_FINISHED_EVENT = "prefs_finished_event";
+    private static final String PREFS_FILE_NAME = "notification_prefs";
+    private static final String PREFS_FINISHED_EVENT = "prefs_finished_event";
     private static final String PREFS_NEXT_EVENT_TIME = "prefs_next_event_time";
-    public static final String PREFS_NOTIFICATION_ENABLE = HSApplication.getContext().getString(R.string.prefs_notification_enable);
-    public static final String PREFS_NEXT_NOTIFICATION_INDEX_IN_PLIST = "next_notification_index";
+    private static final String PREFS_NOTIFICATION_ENABLE = HSApplication.getContext().getString(R.string.prefs_notification_enable);
+    private static final String PREFS_NEXT_NOTIFICATION_INDEX_IN_PLIST = "next_notification_index";
     private static final String AUTOPILOT_TEST_FILTER_NAME = "redcolor";
 
     private static final int NOTIFICATION_ID = Math.abs(HSApplication.getContext().getPackageName().hashCode() / 100000);
@@ -450,7 +450,7 @@ public class KCNotificationManager {
         scheduleNextEventTime();
     }
 
-    public NotificationBean getNextAvailableBean(List<Map<String, ?>> configs, List<String> finishedEvent, String recordedEvent, int nextNotificationIndex) {
+    private NotificationBean getNextAvailableBean(List<Map<String, ?>> configs, List<String> finishedEvent, String recordedEvent, int nextNotificationIndex) {
         if (nextNotificationIndex >= configs.size()) {
             return null;
         }

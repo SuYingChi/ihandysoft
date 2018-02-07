@@ -45,6 +45,7 @@ import com.artw.lockscreen.shimmer.ShimmerTextView;
 import com.artw.lockscreen.slidingdrawer.SlidingDrawer;
 import com.artw.lockscreen.slidingdrawer.SlidingDrawerContent;
 import com.ihs.app.framework.HSApplication;
+import com.ihs.chargingscreen.utils.ChargingPrefsUtil;
 import com.ihs.chargingscreen.utils.DisplayUtils;
 import com.ihs.chargingscreen.utils.LockerChargingSpecialConfig;
 import com.ihs.commons.config.HSConfig;
@@ -55,7 +56,6 @@ import com.ihs.commons.utils.HSBundle;
 import com.ihs.commons.utils.HSError;
 import com.ihs.commons.utils.HSJsonUtil;
 import com.ihs.commons.utils.HSLog;
-import com.ihs.commons.utils.HSPreferenceHelper;
 import com.ihs.feature.battery.BatteryActivity;
 import com.ihs.feature.battery.BatteryAppInfo;
 import com.ihs.feature.battery.BatteryDataManager;
@@ -100,9 +100,6 @@ import static com.ihs.feature.weather.WeatherManager.BUNDLE_KEY_WEATHER_DESCRIPT
 import static com.ihs.feature.weather.WeatherManager.BUNDLE_KEY_WEATHER_ICON_ID;
 import static com.ihs.feature.weather.WeatherManager.BUNDLE_KEY_WEATHER_TEMPERATURE_FORMAT;
 import static com.ihs.feature.weather.WeatherManager.BUNDLE_KEY_WEATHER_TEMPERATURE_INT;
-import static com.ihs.keyboardutils.notification.KCNotificationManager.PREFS_FILE_NAME;
-import static com.ihs.keyboardutils.notification.KCNotificationManager.PREFS_FINISHED_EVENT;
-import static com.ihs.keyboardutils.notification.KCNotificationManager.PREFS_NEXT_NOTIFICATION_INDEX_IN_PLIST;
 
 public class PremiumLockerMainFrame extends PercentRelativeLayout implements INotificationObserver, SlidingDrawer.SlidingDrawerListener {
 
@@ -120,6 +117,7 @@ public class PremiumLockerMainFrame extends PercentRelativeLayout implements INo
     private static final int MODE_COUNT = 6;
     private static final String PUSH_FRAME_PREFERENCE = "push_frame";
     private static final String GAME_INFO_PREFERENCE = "gameInfo";
+    private static final String CAMERA_INFO_PREFERENCE = "camera_info";
     private static final String PUSH_FRAME_INDEX = "index";
     private static final String PUSH_FRAME_TIME = "time";
     private static final String PUSH_GAME_POSITION = "position";
@@ -127,6 +125,13 @@ public class PremiumLockerMainFrame extends PercentRelativeLayout implements INo
     private static final String PUSH_GAME_NAME = "name";
     private static final String PUSH_GAME_DESCRIPTION = "description";
     private static final String PUSH_GAME_URL = "link";
+    private static final String PUSH_CAM_FINISHED_EVENT = "prefs_finished_event";
+    private static final String PUSH_CAM_NEXT_NOTIFICATION_INDEX = "next_notification_index";
+    private static final String PUSH_CAM_ACTION_TYPE = "action_type";
+    private static final String PUSH_CAM_TITLE = "title";
+    private static final String PUSH_CAM_MESSAGE = "message";
+    private static final String PUSH_CAM_BUTTON_TEXT = "button_text";
+    private static final String PUSH_CAM_ICON_URL = "icon_url";
 
     private boolean mIsSlidingDrawerOpened = false;
     private boolean mIsBlackHoleShowing = false;
@@ -135,7 +140,7 @@ public class PremiumLockerMainFrame extends PercentRelativeLayout implements INo
     private BatteryDataManager batteryDataManager = new BatteryDataManager(getContext());
     private SharedPreferences pushFramePreferences = getContext().getSharedPreferences(PUSH_FRAME_PREFERENCE, Context.MODE_PRIVATE);
     private SharedPreferences pushGamePreferences = getContext().getSharedPreferences(GAME_INFO_PREFERENCE, Context.MODE_PRIVATE);
-    private NotificationBean notificationBean;
+    private SharedPreferences pushCameraPreferences = getContext().getSharedPreferences(CAMERA_INFO_PREFERENCE, Context.MODE_PRIVATE);
 
     private View mDimCover;
     private SlidingDrawer mSlidingDrawer;
@@ -354,9 +359,6 @@ public class PremiumLockerMainFrame extends PercentRelativeLayout implements INo
         mTvTime = findViewById(R.id.tv_time);
         mTvDate = findViewById(R.id.tv_date);
         refreshClock();
-        while (!showPushFrameItem(getPushFrameItemIndex())) {
-            increasePushFrameItemIndex();
-        }
     }
 
     private void initButtons() {
@@ -495,9 +497,6 @@ public class PremiumLockerMainFrame extends PercentRelativeLayout implements INo
                     gameInfoPosition = gameInfoPosition % GAME_INFO_COUNT;
                     askForGameInfo(gameInfoPosition);
                 }
-                if (notificationBean == null) {
-                    updatePushCameraBean();
-                }
 
                 if (!mShimmer.isAnimating()) {
                     mShimmer.start(mUnlockText);
@@ -537,10 +536,9 @@ public class PremiumLockerMainFrame extends PercentRelativeLayout implements INo
         pushFramePreferences.edit().putInt(PUSH_FRAME_INDEX, pushFrameItemIndex).putLong(PUSH_FRAME_TIME, System.currentTimeMillis()).apply();
     }
 
-    private void updatePushCameraBean() {
-        HSPreferenceHelper spHelper = HSPreferenceHelper.create(getContext(), PREFS_FILE_NAME);
 
-        String recordedEvent = spHelper.getString(PREFS_FINISHED_EVENT, "");
+    private void updatePushCameraBean() {
+        String recordedEvent = pushCameraPreferences.getString(PUSH_CAM_FINISHED_EVENT, "");
         List<String> finishedEvent = Arrays.asList(recordedEvent.split(","));
 
         List<Map<String, ?>> configs = null;
@@ -553,13 +551,21 @@ public class PremiumLockerMainFrame extends PercentRelativeLayout implements INo
             HSLog.e("没有配置本地提醒");
         }
 
-        int nextNotificationIndex = spHelper.getInt(PREFS_NEXT_NOTIFICATION_INDEX_IN_PLIST, 0);
+        int nextNotificationIndex = pushCameraPreferences.getInt(PUSH_CAM_NEXT_NOTIFICATION_INDEX, 0);
 
         if (nextNotificationIndex >= configs.size()) {
             HSLog.e("通知循环完毕");
         }
 
-        notificationBean = KCNotificationManager.getInstance().getNextAvailableBean(configs, finishedEvent, recordedEvent, nextNotificationIndex);
+        NotificationBean notificationBean = getNextAvailableBean(configs, finishedEvent, recordedEvent, nextNotificationIndex);
+        if (notificationBean != null) {
+            pushCameraPreferences.edit().putString(PUSH_CAM_ACTION_TYPE, notificationBean.getActionType())
+                    .putString(PUSH_CAM_TITLE, notificationBean.getTitle())
+                    .putString(PUSH_CAM_MESSAGE, notificationBean.getMessage())
+                    .putString(PUSH_CAM_BUTTON_TEXT, notificationBean.getButtonText())
+                    .putString(PUSH_CAM_ICON_URL, notificationBean.getIconUrl())
+                    .apply();
+        }
     }
 
     private void askForGameInfo(int position) {
@@ -687,6 +693,9 @@ public class PremiumLockerMainFrame extends PercentRelativeLayout implements INo
                 ((Button) gameRootView.findViewById(R.id.push_game_button)).setText(getResources().getString(R.string.push_game_button));
                 gameRootView.findViewById(R.id.push_game_button).setOnClickListener(view -> {
                     KCAnalytics.logEvent("Screenlocker_push_clicked", "game");
+                    Intent intent = new Intent(getContext(), SoftGameDisplayActivity.class);
+                    intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                    getContext().startActivity(intent);
                     increasePushFrameItemIndex();
                     String url = pushGamePreferences.getString(PUSH_GAME_URL, null);
                     GameStarterActivity.startGame(url, "push_game_clicked");
@@ -694,7 +703,7 @@ public class PremiumLockerMainFrame extends PercentRelativeLayout implements INo
                 });
                 break;
             case MODE_CAMERA:
-                if (notificationBean == null) {
+                if (pushCameraPreferences.getAll().size() <= 0) {
                     return false;
                 }
                 findViewById(R.id.push_boost_one).setVisibility(GONE);
@@ -705,11 +714,11 @@ public class PremiumLockerMainFrame extends PercentRelativeLayout implements INo
                 View cameraRootView = findViewById(R.id.push_camera);
                 cameraRootView.setVisibility(VISIBLE);
 
-                String pushCameraActionType = notificationBean.getActionType();
+                String pushCameraActionType = pushCameraPreferences.getString(PUSH_CAM_ACTION_TYPE, "");
 
-                ((TextView) cameraRootView.findViewById(R.id.push_camera_title)).setText(notificationBean.getTitle());
-                ((TextView) cameraRootView.findViewById(R.id.push_camera_subtitle)).setText(notificationBean.getMessage());
-                ((Button) findViewById(R.id.push_camera_button)).setText(notificationBean.getButtonText());
+                ((TextView) cameraRootView.findViewById(R.id.push_camera_title)).setText(pushCameraPreferences.getString(PUSH_CAM_TITLE, ""));
+                ((TextView) cameraRootView.findViewById(R.id.push_camera_subtitle)).setText(pushCameraPreferences.getString(PUSH_CAM_MESSAGE, ""));
+                ((Button) findViewById(R.id.push_camera_button)).setText(pushCameraPreferences.getString(PUSH_CAM_BUTTON_TEXT, ""));
                 findViewById(R.id.push_camera_button).setOnClickListener(view -> {
                     KCAnalytics.logEvent("Screenlocker_push_clicked", "camera");
                     increasePushFrameItemIndex();
@@ -732,7 +741,7 @@ public class PremiumLockerMainFrame extends PercentRelativeLayout implements INo
                     HSGlobalNotificationCenter.sendNotification(PremiumLockerActivity.EVENT_FINISH_SELF);
                 });
 
-                String imageUrl = notificationBean.getIconUrl();
+                String imageUrl = pushCameraPreferences.getString(PUSH_CAM_ICON_URL, "");
                 ((ImageView) findViewById(R.id.icon)).setImageResource(R.drawable.push_camera_icon);
                 DisplayImageOptions cameraIconOptions = new DisplayImageOptions.Builder()
                         .showImageOnLoading(R.drawable.push_camera_icon)
@@ -1016,6 +1025,59 @@ public class PremiumLockerMainFrame extends PercentRelativeLayout implements INo
         if (searchDialog != null) {
             searchDialog.dismiss();
             searchDialog = null;
+        }
+    }
+
+    private KCNotificationManager.NotificationAvailabilityCallBack notificationCallBack = notificationBean -> false;
+
+    private NotificationBean getNextAvailableBean(List<Map<String, ?>> configs, List<String> finishedEvent, String recordedEvent, int nextNotificationIndex) {
+        if (nextNotificationIndex >= configs.size()) {
+            return null;
+        }
+
+        NotificationBean bean = null;
+        try {
+            Map<String, Object> value = (Map<String, Object>) configs.get(nextNotificationIndex);
+            bean = new NotificationBean(value);
+        } catch (Exception e) {
+            HSLog.e("wrong config for ==> " + configs.get(nextNotificationIndex));
+        }
+
+        if (bean == null) {
+            if (nextNotificationIndex >= configs.size()) {
+                return null;
+            } else {
+                return getNextAvailableBean(configs, finishedEvent, recordedEvent, ++nextNotificationIndex);
+            }
+        }
+
+        if (!bean.isRepeat() && finishedEvent.contains(bean.getSPKey())) {
+            return getNextAvailableBean(configs, finishedEvent, recordedEvent, ++nextNotificationIndex);
+        }
+
+        if (bean.getActionType().equals("Locker")) {
+            if (LockerSettings.getLockerEnableStates() == LockerSettings.LOCKER_DEFAULT_ACTIVE || LockerSettings.isUserTouchedLockerSettings()) {
+                return getNextAvailableBean(configs, finishedEvent, recordedEvent, ++nextNotificationIndex);
+            } else {
+                pushCameraPreferences.edit().putInt(PUSH_CAM_NEXT_NOTIFICATION_INDEX, ++nextNotificationIndex).apply();
+                return bean;
+            }
+        } else if (bean.getActionType().equals("Charging")) {
+            if (ChargingPrefsUtil.getChargingEnableStates() == ChargingPrefsUtil.CHARGING_DEFAULT_ACTIVE || ChargingPrefsUtil.isUserTouchedChargingSetting()) {
+                return getNextAvailableBean(configs, finishedEvent, recordedEvent, ++nextNotificationIndex);
+            } else {
+                pushCameraPreferences.edit().putInt(PUSH_CAM_NEXT_NOTIFICATION_INDEX, ++nextNotificationIndex).apply();
+                return bean;
+            }
+        } else {
+            //如果下载过了，就记录到不再发送列表里面
+            if (notificationCallBack.isItemDownloaded(bean)) {
+                pushCameraPreferences.edit().putString(PUSH_CAM_FINISHED_EVENT, recordedEvent + bean.getSPKey() + ",").apply();
+                return getNextAvailableBean(configs, finishedEvent, recordedEvent, ++nextNotificationIndex);
+            } else {
+                pushCameraPreferences.edit().putInt(PUSH_CAM_NEXT_NOTIFICATION_INDEX, ++nextNotificationIndex).apply();
+                return bean;
+            }
         }
     }
 }

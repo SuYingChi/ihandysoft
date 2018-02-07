@@ -240,7 +240,8 @@
         app:layout_aspectRatio="190.34%"
         app:layout_marginBottomPercent="1%"
         app:layout_marginLeftPercent="5.9%"
-        app:layout_widthPercent="88.2%">
+        app:layout_widthPercent="88.2%"
+        android:visibility="invisible" >
 
         <include
             layout="@layout/push_frame_camera_layout"
@@ -262,7 +263,7 @@
             layout="@layout/push_frame_boost_scanning_layout"
             android:visibility="gone" />
 
-        <ImageView
+        <android.support.v7.widget.AppCompatImageView
             android:id="@+id/push_close_icon"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -273,7 +274,8 @@
             android:layout_marginRight="10dp"
             android:layout_marginTop="10dp"
             android:scaleType="centerCrop"
-            android:src="@drawable/push_frame_close_icon" />
+            android:src="@drawable/push_frame_close_icon"
+            android:background="?android:attr/actionBarItemBackground" />
     </RelativeLayout>
 
     <com.artw.lockscreen.slidingdrawer.SlidingDrawer
