@@ -55,14 +55,13 @@ import com.ihs.commons.utils.HSBundle;
 import com.ihs.commons.utils.HSError;
 import com.ihs.commons.utils.HSJsonUtil;
 import com.ihs.commons.utils.HSLog;
-import com.ihs.commons.utils.HSPreferenceHelper;
 import com.ihs.feature.battery.BatteryActivity;
 import com.ihs.feature.battery.BatteryAppInfo;
 import com.ihs.feature.battery.BatteryDataManager;
 import com.ihs.feature.boost.plus.BoostPlusActivity;
 import com.ihs.feature.common.DeviceManager;
 import com.ihs.feature.common.ScreenStatusReceiver;
-import com.ihs.feature.cpucooler.CpuCoolerCleanActivity;
+import com.ihs.feature.cpucooler.CpuCoolDownActivity;
 import com.ihs.feature.cpucooler.CpuCoolerManager;
 import com.ihs.feature.junkclean.JunkCleanActivity;
 import com.ihs.feature.junkclean.data.JunkManager;
@@ -87,7 +86,6 @@ import org.json.JSONObject;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
-import java.util.Arrays;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
@@ -100,9 +98,6 @@ import static com.ihs.feature.weather.WeatherManager.BUNDLE_KEY_WEATHER_DESCRIPT
 import static com.ihs.feature.weather.WeatherManager.BUNDLE_KEY_WEATHER_ICON_ID;
 import static com.ihs.feature.weather.WeatherManager.BUNDLE_KEY_WEATHER_TEMPERATURE_FORMAT;
 import static com.ihs.feature.weather.WeatherManager.BUNDLE_KEY_WEATHER_TEMPERATURE_INT;
-import static com.ihs.keyboardutils.notification.KCNotificationManager.PREFS_FILE_NAME;
-import static com.ihs.keyboardutils.notification.KCNotificationManager.PREFS_FINISHED_EVENT;
-import static com.ihs.keyboardutils.notification.KCNotificationManager.PREFS_NEXT_NOTIFICATION_INDEX_IN_PLIST;
 
 public class PremiumLockerMainFrame extends PercentRelativeLayout implements INotificationObserver, SlidingDrawer.SlidingDrawerListener {
 
@@ -127,6 +122,8 @@ public class PremiumLockerMainFrame extends PercentRelativeLayout implements INo
     private static final String PUSH_GAME_NAME = "name";
     private static final String PUSH_GAME_DESCRIPTION = "description";
     private static final String PUSH_GAME_URL = "link";
+    private static final String PUSH_CAM_FINISHED_EVENT = "prefs_finished_event";
+    private static final String PUSH_CAM_NOTIFICATION_INDEX = "next_notification_index";
 
     private boolean mIsSlidingDrawerOpened = false;
     private boolean mIsBlackHoleShowing = false;
@@ -135,7 +132,6 @@ public class PremiumLockerMainFrame extends PercentRelativeLayout implements INo
     private BatteryDataManager batteryDataManager = new BatteryDataManager(getContext());
     private SharedPreferences pushFramePreferences = getContext().getSharedPreferences(PUSH_FRAME_PREFERENCE, Context.MODE_PRIVATE);
     private SharedPreferences pushGamePreferences = getContext().getSharedPreferences(GAME_INFO_PREFERENCE, Context.MODE_PRIVATE);
-    private NotificationBean notificationBean;
 
     private View mDimCover;
     private SlidingDrawer mSlidingDrawer;
@@ -354,9 +350,6 @@ public class PremiumLockerMainFrame extends PercentRelativeLayout implements INo
         mTvTime = findViewById(R.id.tv_time);
         mTvDate = findViewById(R.id.tv_date);
         refreshClock();
-        while (!showPushFrameItem(getPushFrameItemIndex())) {
-            increasePushFrameItemIndex();
-        }
     }
 
     private void initButtons() {
@@ -495,9 +488,6 @@ public class PremiumLockerMainFrame extends PercentRelativeLayout implements INo
                     gameInfoPosition = gameInfoPosition % GAME_INFO_COUNT;
                     askForGameInfo(gameInfoPosition);
                 }
-                if (notificationBean == null) {
-                    updatePushCameraBean();
-                }
 
                 if (!mShimmer.isAnimating()) {
                     mShimmer.start(mUnlockText);
@@ -530,36 +520,12 @@ public class PremiumLockerMainFrame extends PercentRelativeLayout implements INo
             askForGameInfo(gameInfoPosition);
         }
         if (pushFrameItemIndex == MODE_CAMERA) {
-            updatePushCameraBean();
+            int notificationBeanIndex = pushFramePreferences.getInt(PUSH_CAM_NOTIFICATION_INDEX, 0);
+            pushFramePreferences.edit().putInt(PUSH_CAM_NOTIFICATION_INDEX, ++notificationBeanIndex).apply();
         }
         pushFrameItemIndex++;
         pushFrameItemIndex = pushFrameItemIndex % MODE_COUNT;
         pushFramePreferences.edit().putInt(PUSH_FRAME_INDEX, pushFrameItemIndex).putLong(PUSH_FRAME_TIME, System.currentTimeMillis()).apply();
-    }
-
-    private void updatePushCameraBean() {
-        HSPreferenceHelper spHelper = HSPreferenceHelper.create(getContext(), PREFS_FILE_NAME);
-
-        String recordedEvent = spHelper.getString(PREFS_FINISHED_EVENT, "");
-        List<String> finishedEvent = Arrays.asList(recordedEvent.split(","));
-
-        List<Map<String, ?>> configs = null;
-        try {
-            configs = (List<Map<String, ?>>) HSConfig.getList("Application", "LocalNotifications", "Content");
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        if (configs == null) {
-            HSLog.e("没有配置本地提醒");
-        }
-
-        int nextNotificationIndex = spHelper.getInt(PREFS_NEXT_NOTIFICATION_INDEX_IN_PLIST, 0);
-
-        if (nextNotificationIndex >= configs.size()) {
-            HSLog.e("通知循环完毕");
-        }
-
-        notificationBean = KCNotificationManager.getInstance().getNextAvailableBean(configs, finishedEvent, recordedEvent, nextNotificationIndex);
     }
 
     private void askForGameInfo(int position) {
@@ -606,7 +572,7 @@ public class PremiumLockerMainFrame extends PercentRelativeLayout implements INo
 
                 View junkRootView = findViewById(R.id.push_boost_one);
                 junkRootView.setVisibility(GONE);
-                ((ContentLoadingProgressBar) findViewById(R.id.spin_circle)).getIndeterminateDrawable().setColorFilter(Color.BLACK, PorterDuff.Mode.MULTIPLY);
+                ((ContentLoadingProgressBar) findViewById(R.id.spin_circle)).getIndeterminateDrawable().setColorFilter(Color.parseColor("#7f000000"), PorterDuff.Mode.MULTIPLY);
                 findViewById(R.id.push_boost_scan).setVisibility(VISIBLE);
                 ((TextView) findViewById(R.id.push_boost_scan_button)).setText(getResources().getString(R.string.push_junk_button));
                 findViewById(R.id.push_boost_scan_button).setOnClickListener(view -> {
@@ -633,13 +599,12 @@ public class PremiumLockerMainFrame extends PercentRelativeLayout implements INo
                             findViewById(R.id.push_boost_scan).setVisibility(GONE);
                             junkRootView.setVisibility(VISIBLE);
 
-                            int junkSizeInMB = (int) junkSize / (1024 * 1024);
+                            int junkSizeInMB = (int) (junkSize / (1024L * 1024L));
                             if (junkSize < 0) {
-                                ((TextView) junkRootView.findViewById(R.id.boost_result)).setText("");
-                                ((TextView) junkRootView.findViewById(R.id.boost_title)).setText("");
-                                findViewById(R.id.scan_failed_text).setVisibility(VISIBLE);
-                                ((TextView) junkRootView.findViewById(R.id.boost_subtitle)).setText("");
-                                ((Button) junkRootView.findViewById(R.id.push_boost_button)).setText(getResources().getString(R.string.push_junk_failed_button));
+                                ((TextView) junkRootView.findViewById(R.id.boost_result)).setText("50+MB");
+                                ((TextView) junkRootView.findViewById(R.id.boost_title)).setText(getResources().getString(R.string.push_junk_title));
+                                ((TextView) junkRootView.findViewById(R.id.boost_subtitle)).setText(getResources().getString(R.string.push_junk_subtitle));
+                                ((Button) junkRootView.findViewById(R.id.push_boost_button)).setText(getResources().getString(R.string.push_junk_button));
                             } else if (junkSizeInMB < 1024) {
                                 ((TextView) junkRootView.findViewById(R.id.boost_result)).setText(junkSizeInMB + "MB");
                                 ((TextView) junkRootView.findViewById(R.id.boost_title)).setText(getResources().getString(R.string.push_junk_title));
@@ -688,6 +653,9 @@ public class PremiumLockerMainFrame extends PercentRelativeLayout implements INo
                 ((Button) gameRootView.findViewById(R.id.push_game_button)).setText(getResources().getString(R.string.push_game_button));
                 gameRootView.findViewById(R.id.push_game_button).setOnClickListener(view -> {
                     KCAnalytics.logEvent("Screenlocker_push_clicked", "game");
+                    Intent intent = new Intent(getContext(), SoftGameDisplayActivity.class);
+                    intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                    getContext().startActivity(intent);
                     increasePushFrameItemIndex();
                     String url = pushGamePreferences.getString(PUSH_GAME_URL, null);
                     GameStarterActivity.startGame(url, "push_game_clicked");
@@ -695,9 +663,32 @@ public class PremiumLockerMainFrame extends PercentRelativeLayout implements INo
                 });
                 break;
             case MODE_CAMERA:
-                if (notificationBean == null) {
+                List<Map<String, ?>> configs = null;
+                try {
+                    configs = (List<Map<String, ?>>) HSConfig.getList("Application", "LocalNotifications", "Content");
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+
+                if (configs == null || configs.size() <= 0) {
                     return false;
                 }
+
+                int startNotificationBeanIndex = pushFramePreferences.getInt(PUSH_CAM_NOTIFICATION_INDEX, 0);
+
+                NotificationBean bean = null;
+                for (int notificationBeanIndex = startNotificationBeanIndex; notificationBeanIndex < startNotificationBeanIndex + configs.size(); notificationBeanIndex++) {
+                    bean = KCNotificationManager.getInstance().getAvailableBean(configs, null, notificationBeanIndex % configs.size());
+                    if (bean != null) {
+                        pushFramePreferences.edit().putInt(PUSH_CAM_NOTIFICATION_INDEX, notificationBeanIndex % configs.size()).apply();
+                        break;
+                    }
+                }
+
+                if (bean == null) {
+                    return false;
+                }
+
                 findViewById(R.id.push_boost_one).setVisibility(GONE);
                 findViewById(R.id.push_boost_two).setVisibility(GONE);
                 findViewById(R.id.push_boost_scan).setVisibility(GONE);
@@ -706,11 +697,11 @@ public class PremiumLockerMainFrame extends PercentRelativeLayout implements INo
                 View cameraRootView = findViewById(R.id.push_camera);
                 cameraRootView.setVisibility(VISIBLE);
 
-                String pushCameraActionType = notificationBean.getActionType();
+                String pushCameraActionType = bean.getActionType();
 
-                ((TextView) cameraRootView.findViewById(R.id.push_camera_title)).setText(notificationBean.getTitle());
-                ((TextView) cameraRootView.findViewById(R.id.push_camera_subtitle)).setText(notificationBean.getMessage());
-                ((Button) findViewById(R.id.push_camera_button)).setText(notificationBean.getButtonText());
+                ((TextView) cameraRootView.findViewById(R.id.push_camera_title)).setText(bean.getTitle());
+                ((TextView) cameraRootView.findViewById(R.id.push_camera_subtitle)).setText(bean.getMessage());
+                ((Button) findViewById(R.id.push_camera_button)).setText(bean.getButtonText());
                 findViewById(R.id.push_camera_button).setOnClickListener(view -> {
                     KCAnalytics.logEvent("Screenlocker_push_clicked", "camera");
                     increasePushFrameItemIndex();
@@ -733,7 +724,7 @@ public class PremiumLockerMainFrame extends PercentRelativeLayout implements INo
                     HSGlobalNotificationCenter.sendNotification(PremiumLockerActivity.EVENT_FINISH_SELF);
                 });
 
-                String imageUrl = notificationBean.getIconUrl();
+                String imageUrl = bean.getIconUrl();
                 ((ImageView) findViewById(R.id.icon)).setImageResource(R.drawable.push_camera_icon);
                 DisplayImageOptions cameraIconOptions = new DisplayImageOptions.Builder()
                         .showImageOnLoading(R.drawable.push_camera_icon)
@@ -819,7 +810,7 @@ public class PremiumLockerMainFrame extends PercentRelativeLayout implements INo
                 cpuRootView.findViewById(R.id.push_boost_button).setOnClickListener(view -> {
                     KCAnalytics.logEvent("Screenlocker_push_clicked", "CPU");
                     increasePushFrameItemIndex();
-                    Intent cpuCoolerCleanIntent = new Intent(getContext(), CpuCoolerCleanActivity.class);
+                    Intent cpuCoolerCleanIntent = new Intent(getContext(), CpuCoolDownActivity.class);
                     getContext().startActivity(cpuCoolerCleanIntent);
                     HSGlobalNotificationCenter.sendNotification(PremiumLockerActivity.EVENT_FINISH_SELF);
                 });
@@ -864,7 +855,7 @@ public class PremiumLockerMainFrame extends PercentRelativeLayout implements INo
             hour = hour % 12;
         }
         mTvTime.setText(String.format(Locale.getDefault(), "%02d:%02d", hour, minute));
-        DateFormat format = new SimpleDateFormat("MMMM, dd EEE", Locale.getDefault());
+        DateFormat format = new SimpleDateFormat("EEE\nMMMM, dd", Locale.getDefault());
         mTvDate.setText(format.format(new Date()));
     }
 
