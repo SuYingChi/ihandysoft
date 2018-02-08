@@ -16,6 +16,7 @@ import com.ihs.commons.notificationcenter.HSGlobalNotificationCenter;
 import com.ihs.commons.notificationcenter.INotificationObserver;
 import com.ihs.commons.utils.HSBundle;
 import com.ihs.inputmethod.api.HSUIInputMethod;
+import com.ihs.inputmethod.api.HSUIInputMethodService;
 import com.ihs.inputmethod.api.framework.HSInputMethod;
 import com.ihs.inputmethod.api.theme.HSKeyboardThemeManager;
 import com.ihs.inputmethod.api.utils.HSResourceUtils;
@@ -112,7 +113,9 @@ public class HSNewSettingsPanel extends BasePanel {
         items.add(ViewItemBuilder.getKeyboardHeightItem(new ViewItem.ViewItemListener() {
             @Override
             public void onItemClick(ViewItem item) {
-
+//                getPanelActionListener().showChildPanel(HSAdjustHeightPanel.class, null);
+//                getKeyboardPanelMananger()
+                HSUIInputMethodService.getKeyboardPanelMananger().showAdjustKeyboardHeight();
             }
         }));
         if (selectorItem == null) {

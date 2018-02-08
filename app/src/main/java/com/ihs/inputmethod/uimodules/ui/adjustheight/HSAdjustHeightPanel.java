@@ -2,6 +2,8 @@ package com.ihs.inputmethod.uimodules.ui.adjustheight;
 
 import android.view.View;
 
+import com.ihs.app.framework.HSApplication;
+import com.ihs.inputmethod.uimodules.R;
 import com.ihs.panelcontainer.BasePanel;
 
 /**
@@ -12,6 +14,6 @@ public class HSAdjustHeightPanel extends BasePanel {
 
     @Override
     protected View onCreatePanelView() {
-        return null;
+        return View.inflate(HSApplication.getContext(), R.layout.item_panel_keyboard_height, null);
     }
 }

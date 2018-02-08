@@ -448,4 +448,8 @@ public class KeyboardPanelManager extends KeyboardPanelSwitcher implements BaseF
             HSFloatWindowManager.getInstance().removeFloatingWindow();
         }
     }
+
+    public void showAdjustKeyboardHeight() {
+
+    }
 }
