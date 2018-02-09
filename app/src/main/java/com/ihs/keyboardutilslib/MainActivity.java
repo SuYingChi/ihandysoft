@@ -34,7 +34,8 @@ public class MainActivity extends HSActivity {
             "Lock Screen & Charging Screen",
             "Camera Intents",
             "Country Code Parser",
-            "Send Boost Notifications"
+            "Send Boost Notifications",
+            "Boost Activities"
     };
 
     Class[] activityClassArray = {
@@ -47,7 +48,8 @@ public class MainActivity extends HSActivity {
             ChargingLockerSettingsActivity.class,
             CameraUtilActivity.class,
             CountryCodeUtil.class,
-            null
+            null,
+            DemoShowBoostActivity.class
     };
 
     @Override

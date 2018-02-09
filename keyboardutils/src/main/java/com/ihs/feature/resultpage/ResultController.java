@@ -3,6 +3,7 @@ package com.ihs.feature.resultpage;
 import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Context;
+import android.os.Build;
 import android.support.annotation.Nullable;
 import android.support.graphics.drawable.VectorDrawableCompat;
 import android.support.v4.content.ContextCompat;
@@ -113,6 +114,7 @@ abstract class ResultController implements View.OnClickListener {
         NOTIFICATION_CLEANER,
         CARD_VIEW,
     }
+
 
     ResultController() {
     }
@@ -242,6 +244,7 @@ abstract class ResultController implements View.OnClickListener {
         switch (mType) {
             case AD:
             case CARD_VIEW:
+
                 adMarkView.setVisibility(View.VISIBLE);
                 mAdImageContainer.setBackground(imageFrame);
                 AcbNativeAdContainerView adContainer = new AcbNativeAdContainerView(getContext());
@@ -391,8 +394,7 @@ abstract class ResultController implements View.OnClickListener {
 
     public void startCardResultAnimation(long startDelay) {
         if (true) {
-            mType = AD;
-            startAdOrChargingScreenResultAnimation(startDelay);
+            return;
         }
 
         if (mType == Type.CARD_VIEW) {
@@ -432,7 +434,9 @@ abstract class ResultController implements View.OnClickListener {
             mHeaderTagView.getViewTreeObserver().addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
                 @Override
                 public void onGlobalLayout() {
-                    mHeaderTagView.getViewTreeObserver().removeOnGlobalLayoutListener(this);
+                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
+                        mHeaderTagView.getViewTreeObserver().removeOnGlobalLayoutListener(this);
+                    }
                     startRealBgTranslateAnimation();
                 }
             });

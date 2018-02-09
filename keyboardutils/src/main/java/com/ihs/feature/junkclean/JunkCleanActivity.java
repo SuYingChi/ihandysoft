@@ -835,7 +835,6 @@ public class JunkCleanActivity extends BasePermissionActivity {
             return;
         }
 
-        ResultPageAdsManager.getInstance().preloadAd();
         mIsOnScanFinished = false;
         mIsSystemScanAnimationFinished = false;
         mIsAppScanAnimationFinished = false;

@@ -8,6 +8,8 @@ import com.ihs.app.framework.HSApplication;
 import com.ihs.commons.utils.HSLog;
 import com.ihs.feature.common.AdAnalytics;
 import com.ihs.feature.common.AdPlacements;
+import com.ihs.keyboardutils.BuildConfig;
+import com.ihs.keyboardutils.utils.ToastUtils;
 
 import net.appcloudbox.ads.base.AcbNativeAd;
 import net.appcloudbox.ads.nativeads.AcbNativeAdLoader;
@@ -18,6 +20,10 @@ import java.util.List;
 
 public class ResultPageAdsManager {
 
+    public interface OnAdListener {
+        void onAdReceive(AcbNativeAd mAd);
+    }
+
     private static final String TAG = ResultPageAdsManager.class.getSimpleName();
 
     private AcbNativeAd mAd = null;
@@ -25,6 +31,9 @@ public class ResultPageAdsManager {
 
     private ResultPageAdsManager() {
     }
+
+    private OnAdListener listener;
+
 
     public static ResultPageAdsManager getInstance() {
         if (sInstance == null) {
@@ -35,6 +44,10 @@ public class ResultPageAdsManager {
             }
         }
         return sInstance;
+    }
+
+    public void setOnAdListner(OnAdListener adListner) {
+        this.listener = adListner;
     }
 
     public void preloadAd() {
@@ -50,6 +63,12 @@ public class ResultPageAdsManager {
                 mAd = list.isEmpty() ? null : list.get(0);
                 if (mAd != null) {
                     AdAnalytics.logAppViewEvent(AdPlacements.SHARED_POOL_NATIVE_AD_FLURRY_KEY_VIEW_IN_APP_RESULT_PAGE, true);
+                    if (BuildConfig.DEBUG) {
+                        ToastUtils.showToast("ad received");
+                    }
+                    if (listener != null) {
+                        listener.onAdReceive(mAd);
+                    }
                 }
             }
 
@@ -61,6 +80,9 @@ public class ResultPageAdsManager {
                 }
             }
         });
+        if (BuildConfig.DEBUG) {
+            ToastUtils.showToast("LOAD AD");
+        }
     }
 
     public AcbNativeAd getAd() {

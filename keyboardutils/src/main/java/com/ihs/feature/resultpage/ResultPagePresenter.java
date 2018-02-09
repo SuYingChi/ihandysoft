@@ -50,15 +50,7 @@ public class ResultPagePresenter implements ResultPageContracts.Presenter {
 
         mType = ResultController.Type.AD;
         if (!determineWhetherToShowChargeScreen() || DEBUG_ALL_CARDS) {
-            HSLog.d(TAG, "ResultPage Debug all cards current type is " + mType);
-            if ( DEBUG_ALL_CARDS) {
-                if (ad == null) {
-                    HSLog.d(TAG, "Ads not loaded in time, stop ads preload and show other cards");
-                    cards = setupCards();
-                } else {
-                    mType = ResultController.Type.AD;
-                }
-            }
+            mType = ResultController.Type.AD;
         }
 
         HSLog.d(TAG, "ResultPage mType = " + mType + " ad = " + ad + " cards = " + cards);

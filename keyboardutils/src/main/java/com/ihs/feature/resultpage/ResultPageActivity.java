@@ -202,6 +202,15 @@ public class ResultPageActivity extends HSAppCompatActivity
 
         // Set bg color early
         ViewUtils.findViewById(this, R.id.bg_view).setBackgroundColor(getBackgroundColor());
+
+        ResultPageAdsManager.getInstance().setOnAdListner(new ResultPageAdsManager.OnAdListener() {
+            @Override
+            public void onAdReceive(AcbNativeAd mAd) {
+                if(mResultController!=null){
+                    mResultController.fillNativeAd(mAd);
+                }
+            }
+        });
     }
 
     @SuppressLint("NewApi")
@@ -261,7 +270,8 @@ public class ResultPageActivity extends HSAppCompatActivity
     }
 
     @Override
-    public void show(ResultController.Type type, @Nullable AcbNativeAd ad, @Nullable List<CardData> cards) {
+    public void show(ResultController.Type type, @Nullable AcbNativeAd ads, @Nullable List<CardData> cards) {
+        AcbNativeAd ad = ResultPageAdsManager.getInstance().getAd();
         String titleText;
         Intent intent = getIntent();
         switch (mResultType) {
