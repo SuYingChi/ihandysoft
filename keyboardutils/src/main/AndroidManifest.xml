@@ -283,12 +283,6 @@
             android:excludeFromRecents="true"
             android:taskAffinity=".appsuggestion"
             android:theme="@style/ChargingScreenAlertActivityTheme" />
-        <activity android:name="com.kc.utils.phantom.PhantomNotificationActivity"
-            android:excludeFromRecents="true"
-            android:noHistory="true"
-            android:launchMode="singleInstance"
-            android:theme="@style/PhantomNotificationActivityTheme"
-            />
     </application>
 
 </manifest>
