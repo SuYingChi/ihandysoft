@@ -48,6 +48,8 @@ public class KCPhantomNotificationManager {
 
     private static final String FEATURE_NAME = "Phantom";
 
+    private KCNativeAdView adView;
+
     @SuppressLint("StaticFieldLeak")
     private volatile static KCPhantomNotificationManager instance;
 
@@ -123,7 +125,9 @@ public class KCPhantomNotificationManager {
 
     private void showNotification() {
         View adLayoutView = View.inflate(applicationContext, R.layout.layout_ad_phantom, null);
-        KCNativeAdView adView = new KCNativeAdView(applicationContext);
+        if (adView == null) {
+            adView = new KCNativeAdView(applicationContext);
+        }
         adView.setAdLayoutView(adLayoutView);
         adView.load(adPlacement);
         adView.setOnAdLoadedListener((view) -> {
@@ -144,6 +148,13 @@ public class KCPhantomNotificationManager {
             WindowManager windowManager = (WindowManager) applicationContext.getSystemService(Context.WINDOW_SERVICE);
             dismissBanner(windowManager, view);
         });
+    }
+
+    private void destroyAdView() {
+        if (adView != null) {
+            adView.release();
+            adView = null;
+        }
     }
 
     private void displayBanner(WindowManager windowManager, View view) {
@@ -262,6 +273,8 @@ public class KCPhantomNotificationManager {
                         int intervalSeconds = HSConfig.optInteger(DEFAULT_INTERVAL_SECONDS, "Application", "Phantom", "IntervalSeconds");
                         windowManager.removeView((View) view.getParent());
                         scheduleNotifications(intervalSeconds * 1000);
+
+                        destroyAdView();
                     }
                 })
                 .start();
