@@ -17,6 +17,7 @@ import android.os.Build;
 import android.os.Handler;
 import android.os.Looper;
 import android.os.Vibrator;
+import android.provider.Settings;
 import android.text.TextUtils;
 import android.view.Gravity;
 import android.view.View;
@@ -70,6 +71,14 @@ public class KCPhantomNotificationManager {
         return true;
     }
 
+    private boolean canDrawOverlay() {
+        boolean result = true;
+        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.M) {
+            result = Settings.canDrawOverlays(applicationContext);
+        }
+        return result;
+    }
+
     private void registerBroadcastReceiver() {
         this.applicationContext.registerReceiver(new BroadcastReceiver() {
             @Override
@@ -90,7 +99,7 @@ public class KCPhantomNotificationManager {
     private void scheduleNotifications(long delayMillis) {
         handler.removeCallbacks(showNotificationRunnable);
 
-        if (isFeatureEnabled()) {
+        if (isFeatureEnabled() && canDrawOverlay()) {
             handler.postDelayed(showNotificationRunnable, delayMillis);
         }
     }
@@ -119,8 +128,12 @@ public class KCPhantomNotificationManager {
         adView.load(adPlacement);
         adView.setOnAdLoadedListener((view) -> {
             if (!isKeyguardLocked(applicationContext)) {
-                WindowManager windowManager = (WindowManager) applicationContext.getSystemService(Context.WINDOW_SERVICE);
-                displayBanner(windowManager, view);
+                try {
+                    WindowManager windowManager = (WindowManager) applicationContext.getSystemService(Context.WINDOW_SERVICE);
+                    displayBanner(windowManager, view);
+                } catch (Exception e) {
+                    // Ignore exception
+                }
             }
         });
         adView.setOnAdFailListener((view) -> {
@@ -134,7 +147,7 @@ public class KCPhantomNotificationManager {
     }
 
     private void displayBanner(WindowManager windowManager, View view) {
-        if (windowManager == null || view == null || view.getParent() != null) {
+        if (windowManager == null || view == null || view.getParent() != null || !canDrawOverlay()) {
             return;
         }
         int notificationHeight = applicationContext.getResources().getDimensionPixelSize(R.dimen.phantom_notification_height);
