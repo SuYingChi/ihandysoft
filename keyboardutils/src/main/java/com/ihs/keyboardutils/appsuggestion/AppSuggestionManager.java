@@ -96,7 +96,7 @@ public class AppSuggestionManager {
                         long lastShowDownloadLockerAlertTime = PreferenceManager.getDefaultSharedPreferences(ctx).getLong("lastShowChargingAlertTime", 0);
                         if (System.currentTimeMillis() - lastShowDownloadLockerAlertTime > alertIntervalInMinute * 60 * 1000) {
                             PreferenceManager.getDefaultSharedPreferences(ctx).edit().putLong("lastShowChargingAlertTime", System.currentTimeMillis()).apply();
-                            ChargingManagerUtil.startChargingActivity();
+                            ChargingManagerUtil.startChargingAlertActivity("chargingUnlock");
                             hasDone = true;
                         }
                     }
