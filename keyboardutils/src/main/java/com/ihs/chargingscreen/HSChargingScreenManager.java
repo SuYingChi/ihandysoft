@@ -110,7 +110,7 @@ public class HSChargingScreenManager {
                 } else if (preChargingState != HSChargingState.STATE_DISCHARGING && curChargingState == HSChargingState.STATE_DISCHARGING) {
                     KCAnalytics.logEvent("KC_Charging_Event", "Action", "PlugOut");
                     if (ChargingPrefsUtil.isChargingAlertEnabled()) {
-                        ChargingManagerUtil.startChargingAlertActivity("plugeOut");
+                        ChargingManagerUtil.startChargingAlertActivity("PlugOut");
                     }
                 }
 

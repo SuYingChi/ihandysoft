@@ -69,7 +69,7 @@ import static com.ihs.keyboardutils.iap.RemoveAdsManager.NOTIFICATION_REMOVEADS_
  * Created by zhixiangxiao on 5/4/16.
  */
 public class ChargingScreenAlertActivity extends Activity {
-
+    public static final String INTENT_EXTRA_ACTION = "action";
     private static final int EVENT_START_SCROLL_UP_ANIMATOR = 101;
 
     private TextView txtBatteryLevelPercent;
@@ -166,8 +166,10 @@ public class ChargingScreenAlertActivity extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        KCAnalytics.logEvent("chargeAlert_show");
-        KCAnalytics.logEvent("Cable_Report_Show");
+        String action = getIntent().getStringExtra(INTENT_EXTRA_ACTION);
+
+        KCAnalytics.logEvent("chargeAlert_show", "action", action);
+        KCAnalytics.logEvent("Cable_Report_Show", "action", action);
 
         HSChargingScreenManager.getInstance().start();
 
