@@ -46,8 +46,8 @@ public class ResultPageAdsManager {
         return sInstance;
     }
 
-    public void setOnAdListner(OnAdListener adListner) {
-        this.listener = adListner;
+    public void setOnAdListener(OnAdListener adListener) {
+        this.listener = adListener;
     }
 
     public void preloadAd() {

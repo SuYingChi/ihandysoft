@@ -203,7 +203,7 @@ public class ResultPageActivity extends HSAppCompatActivity
         // Set bg color early
         ViewUtils.findViewById(this, R.id.bg_view).setBackgroundColor(getBackgroundColor());
 
-        ResultPageAdsManager.getInstance().setOnAdListner(new ResultPageAdsManager.OnAdListener() {
+        ResultPageAdsManager.getInstance().setOnAdListener(new ResultPageAdsManager.OnAdListener() {
             @Override
             public void onAdReceive(AcbNativeAd mAd) {
                 if(mResultController!=null){
