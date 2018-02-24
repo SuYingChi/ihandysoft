@@ -7,8 +7,17 @@ import com.ihs.commons.utils.HSPreferenceHelper;
 
 public final class KCFeatureControlUtils {
     private static final String PREF_FILE = "kc_utils_fd";
+
+    private static HSPreferenceHelper preferenceHelper;
+    private static HSPreferenceHelper getPreferenceHelper(Context context) {
+        if (preferenceHelper == null) {
+            preferenceHelper = HSPreferenceHelper.create(context, PREF_FILE);
+        }
+        return preferenceHelper;
+    }
+
     public static boolean isFeatureReleased(Context context, String featureName, float delayHours) {
-        HSPreferenceHelper preferences = HSPreferenceHelper.create(context, PREF_FILE);
+        HSPreferenceHelper preferences = getPreferenceHelper(context);
         long currentTime = System.currentTimeMillis();
         long firstCheckTime;
         if (!preferences.contains(featureName)) {
@@ -30,7 +39,7 @@ public final class KCFeatureControlUtils {
     }
 
     public static int getCountToday(Context context, String featureName) {
-        HSPreferenceHelper preferences = HSPreferenceHelper.create(context, PREF_FILE);
+        HSPreferenceHelper preferences = getPreferenceHelper(context);
 
         String lastActionTimeKey = getLastActionTimeKey(featureName);
         long lastActionTime = preferences.getLong(lastActionTimeKey, 0);
@@ -45,6 +54,15 @@ public final class KCFeatureControlUtils {
 
     public static boolean isCountLimitReachedToday(Context context, String featureName, int countLimitPerDay) {
         return getCountToday(context, featureName) >= countLimitPerDay;
+    }
+
+    public static boolean isIntervalReached(Context context, String featureName, long intervalMillis) {
+        HSPreferenceHelper preferences = getPreferenceHelper(context);
+
+        String lastActionTimeKey = getLastActionTimeKey(featureName);
+        long lastActionTime = preferences.getLong(lastActionTimeKey, 0);
+
+        return System.currentTimeMillis() >= lastActionTime + intervalMillis;
     }
 
     public static void increaseCountToday(Context context, String featureName) {
