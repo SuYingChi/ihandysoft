@@ -9,7 +9,6 @@ import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Build;
-import android.support.annotation.Nullable;
 import android.support.v4.app.NotificationCompat;
 import android.text.TextUtils;
 import android.view.View;
@@ -35,7 +34,6 @@ import net.appcloudbox.autopilot.AutopilotConfig;
 import net.appcloudbox.autopilot.AutopilotEvent;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Calendar;
 import java.util.List;
 import java.util.Map;
@@ -66,6 +64,8 @@ public class KCNotificationManager {
     private static final String PREFS_NOTIFICATION_ENABLE = HSApplication.getContext().getString(R.string.prefs_notification_enable);
     private static final String PREFS_NOTIFICATION_INDEX_IN_PLIST = "next_notification_index";
     private static final String AUTOPILOT_TEST_FILTER_NAME = "redcolor";
+    private static final String SHOWED_COUNT = "showed_count";
+    private static final String MIN_SHOWED_COUNT = "min_showed_count";
 
     private static final int NOTIFICATION_ID = Math.abs(HSApplication.getContext().getPackageName().hashCode() / 100000);
 
@@ -226,8 +226,6 @@ public class KCNotificationManager {
             return;
         }
 
-        List<String> finishedEvent = Arrays.asList(spHelper.getString(PREFS_FINISHED_EVENT, "").split(","));
-
         List<Map<String, ?>> configs = null;
         try {
             configs = (List<Map<String, ?>>) HSConfig.getList("Application", "LocalNotifications", "Content");
@@ -248,8 +246,10 @@ public class KCNotificationManager {
 
         NotificationBean notificationToSend = null;
 
+        int minShowedCount = spHelper.getInt(MIN_SHOWED_COUNT, 0);
+
         for (;notificationIndex < configs.size(); notificationIndex++) {
-            notificationToSend = getAvailableBean(configs, finishedEvent, notificationIndex);
+            notificationToSend = getAvailableBean(configs, minShowedCount, notificationIndex);
             if (notificationToSend != null) {
                 spHelper.putInt(PREFS_NOTIFICATION_INDEX_IN_PLIST, ++notificationIndex);
                 break;
@@ -258,6 +258,7 @@ public class KCNotificationManager {
 
 
         if (notificationToSend == null) {
+            spHelper.putInt(MIN_SHOWED_COUNT, ++minShowedCount);
             return;
         }
 
@@ -459,7 +460,7 @@ public class KCNotificationManager {
         scheduleNextEventTime();
     }
 
-    public NotificationBean getAvailableBean(List<Map<String, ?>> configs, @Nullable List<String> finishedEvent, int notificationIndex) {
+    public NotificationBean getAvailableBean(List<Map<String, ?>> configs, int minShowedCount, int notificationIndex) {
         if (notificationIndex >= configs.size()) {
             return null;
         }
@@ -476,7 +477,9 @@ public class KCNotificationManager {
             return null;
         }
 
-        if (!bean.isRepeat() && (finishedEvent != null && finishedEvent.contains(bean.getSPKey()))) {
+        int repeatCount = spHelper.getInt(bean.getSPKey() + SHOWED_COUNT, 0);
+
+        if (minShowedCount < 0 || repeatCount > minShowedCount || repeatCount >= bean.getMaxRepeatCount()) {
             return null;
         }
 
@@ -530,10 +533,8 @@ public class KCNotificationManager {
             manager.notify(notificationBean.getActionType(), NOTIFICATION_ID, mBuilder.build());
             switch (notificationBean.getActionType()) {
                 default:
-                    if (!notificationBean.isRepeat()) {
-                        String finishedEvents = spHelper.getString(PREFS_FINISHED_EVENT, "");
-                        spHelper.putString(PREFS_FINISHED_EVENT, finishedEvents + notificationBean.getSPKey() + ",");
-                    }
+                    int showedCount = spHelper.getInt(notificationBean.getSPKey() + SHOWED_COUNT, 0);
+                    spHelper.putInt(notificationBean.getSPKey() + SHOWED_COUNT, ++showedCount);
                     break;
             }
         } catch (Exception e) {
