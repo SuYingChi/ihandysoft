@@ -247,8 +247,8 @@ public class KCNotificationManager {
 
         int minShowedCount = spHelper.getInt(configs.get(0).get("ActionType") + "|" + configs.get(0).get("Name") + SHOWED_COUNT, 0);
 
-        for (int i = 0; i < configs.size(); i++) {
-            int showedCount = spHelper.getInt(configs.get(0).get("ActionType") + "|" + configs.get(i).get("Name") + SHOWED_COUNT, 0);
+        for (int i = 1; i < configs.size(); i++) {
+            int showedCount = spHelper.getInt(configs.get(i).get("ActionType") + "|" + configs.get(i).get("Name") + SHOWED_COUNT, 0);
             minShowedCount = minShowedCount < showedCount ? minShowedCount : showedCount;
         }
 
