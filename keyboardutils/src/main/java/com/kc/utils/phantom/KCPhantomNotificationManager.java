@@ -240,7 +240,7 @@ public class KCPhantomNotificationManager {
     }
 
     private void dismissBanner(WindowManager windowManager, View view) {
-        if (windowManager == null || view == null || view.getParent() == null) {
+        if (windowManager == null || view == null || view.getParent() == null || view.getParent().getParent() == null) {
             return;
         }
 
