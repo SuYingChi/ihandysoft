@@ -65,7 +65,6 @@ public class KCNotificationManager {
     private static final String PREFS_NOTIFICATION_INDEX_IN_PLIST = "next_notification_index";
     private static final String AUTOPILOT_TEST_FILTER_NAME = "redcolor";
     private static final String SHOWED_COUNT = "showed_count";
-    private static final String MIN_SHOWED_COUNT = "min_showed_count";
 
     private static final int NOTIFICATION_ID = Math.abs(HSApplication.getContext().getPackageName().hashCode() / 100000);
 
@@ -246,7 +245,12 @@ public class KCNotificationManager {
 
         NotificationBean notificationToSend = null;
 
-        int minShowedCount = spHelper.getInt(MIN_SHOWED_COUNT, 0);
+        int minShowedCount = spHelper.getInt(configs.get(0).get("ActionType") + "|" + configs.get(0).get("Name") + SHOWED_COUNT, 0);
+
+        for (int i = 0; i < configs.size(); i++) {
+            int showedCount = spHelper.getInt(configs.get(0).get("ActionType") + "|" + configs.get(i).get("Name") + SHOWED_COUNT, 0);
+            minShowedCount = minShowedCount < showedCount ? minShowedCount : showedCount;
+        }
 
         for (;notificationIndex < configs.size(); notificationIndex++) {
             notificationToSend = getAvailableBean(configs, minShowedCount, notificationIndex);
@@ -256,9 +260,7 @@ public class KCNotificationManager {
             }
         }
 
-
         if (notificationToSend == null) {
-            spHelper.putInt(MIN_SHOWED_COUNT, ++minShowedCount);
             return;
         }
 
