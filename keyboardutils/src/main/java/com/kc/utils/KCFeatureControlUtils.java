@@ -29,7 +29,6 @@ public final class KCFeatureControlUtils {
         return currentTime >= firstCheckTime + (long)(delayHours * 3600 * 1000);
     }
 
-
     private static String getLastActionTimeKey(String featureName) {
         return featureName + "_action_time";
     }
@@ -66,12 +65,11 @@ public final class KCFeatureControlUtils {
     }
 
     public static void increaseCountToday(Context context, String featureName) {
-        HSPreferenceHelper preferences = HSPreferenceHelper.create(context, PREF_FILE);
+        HSPreferenceHelper preferences = getPreferenceHelper(context);
 
         int count = getCountToday(context, featureName) + 1;
 
         preferences.putInt(getActionCountDuringTodayKey(featureName), count);
         preferences.putLong(getLastActionTimeKey(featureName), System.currentTimeMillis());
     }
-
 }

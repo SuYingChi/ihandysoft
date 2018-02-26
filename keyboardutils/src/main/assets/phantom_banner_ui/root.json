@@ -1,0 +1,166 @@
+{
+  "widget": "ConstraintLayout",
+  "properties": [
+    {"name":"layout_height", "type":"dimen", "value":"match_parent"},
+    {"name":"layout_width", "type":"dimen", "value":"match_parent"}
+  ],
+  "views": [
+    {
+      "widget": "ImageView",
+      "properties": [
+        {"name":"src", "type":"file", "value":"background.png"},
+        {"name":"scaleType", "type":"string", "value":"fit_xy"},
+        {"name":"layout_width", "type":"dimen", "value":"match_parent"},
+        {"name":"layout_height", "type":"dimen", "value":"match_parent"}
+      ]
+    },
+    {
+      "widget": "Guideline",
+      "properties": [
+        {"name":"id", "type":"ref", "value":"icon_top_guideline"},
+        {"name":"orientation", "type":"string", "value":"horizontal"},
+        {"name":"layout_width", "type":"dimen", "value":"wrap_content"},
+        {"name":"layout_height", "type":"dimen", "value":"wrap_content"},
+        {"name":"layout_constraintGuide_percent", "type":"float", "value":"0.11"}
+      ]
+    },
+    {
+      "widget": "Guideline",
+      "properties": [
+        {"name":"id", "type":"ref", "value":"icon_bottom_guideline"},
+        {"name":"orientation", "type":"string", "value":"horizontal"},
+        {"name":"layout_width", "type":"dimen", "value":"wrap_content"},
+        {"name":"layout_height", "type":"dimen", "value":"wrap_content"},
+        {"name":"layout_constraintGuide_percent", "type":"float", "value":"0.89"}
+      ]
+    },
+    {
+      "widget": "Guideline",
+      "properties": [
+        {"name":"id", "type":"ref", "value":"title_bottom_guideline"},
+        {"name":"orientation", "type":"string", "value":"horizontal"},
+        {"name":"layout_width", "type":"dimen", "value":"wrap_content"},
+        {"name":"layout_height", "type":"dimen", "value":"wrap_content"},
+        {"name":"layout_constraintGuide_percent", "type":"float", "value":"0.45"}
+      ]
+    },
+    {
+      "widget": "Guideline",
+      "properties": [
+        {"name":"id", "type":"ref", "value":"subtitle_top_guideline"},
+        {"name":"orientation", "type":"string", "value":"horizontal"},
+        {"name":"layout_width", "type":"dimen", "value":"wrap_content"},
+        {"name":"layout_height", "type":"dimen", "value":"wrap_content"},
+        {"name":"layout_constraintGuide_percent", "type":"float", "value":"0.43"}
+      ]
+    },
+    {
+      "widget": "AcbNativeAdIconView",
+      "properties": [
+        {"name":"id", "type":"ref", "value":"icon"},
+        {"name":"function", "type":"json", "value": {
+          "function":"setDefaultIcon", "args" : [ { "class":"java.io.InputStream", "value":"icon_default.png" }]
+        }},
+        {"name":"layout_width", "type":"dimen", "value":"0dp"},
+        {"name":"layout_height", "type":"dimen", "value":"0dp"},
+        {"name":"layout_marginLeft", "type":"dimen", "value":"5dp"},
+        {"name":"layout_constraintDimensionRatio", "type":"string", "value":"1"},
+        {"name":"layout_constraintLeft_toLeftOf", "type":"string", "value":"parent"},
+        {"name":"layout_constraintTop_toBottomOf", "type":"ref", "value":"icon_top_guideline"},
+        {"name":"layout_constraintBottom_toTopOf", "type":"ref", "value":"icon_bottom_guideline"}
+      ]
+    },
+    {
+      "widget": "AcbAutoTextView",
+      "properties": [
+        {"name":"text", "type" : "string", "value" : "title"},
+        {"name":"id", "type":"ref", "value":"title"},
+        {"name":"function", "type":"json", "value": {
+          "function":"setTextSizeFunction", "args" : [
+            { "primitive":"Float", "value":"0.392" },
+            { "primitive":"Float", "value":"7.333" }
+          ]
+        }},
+        {"name":"textColor", "type":"color", "value":"#FFFFFFFF"},
+        {"name":"ellipsize", "type":"string", "value":"END"},
+        {"name":"layout_constraintTop_toBottomOf", "type":"ref", "value":"icon_top_guideline"},
+        {"name":"layout_constraintBottom_toTopOf", "type":"ref", "value":"title_bottom_guideline"},
+        {"name":"layout_constraintLeft_toRightOf", "type":"ref", "value":"icon"},
+        {"name":"layout_constraintRight_toLeftOf", "type":"ref", "value":"action_framelayout"},
+        {"name":"layout_marginLeft", "type":"dimen", "value":"5dp"},
+        {"name":"padding_right", "type":"dimen", "value":"10dp"},
+        {"name":"layout_marginRight", "type":"dimen", "value":"0dp"},
+        {"name":"layout_width", "type":"dimen", "value":"0dp"},
+        {"name":"layout_height", "type":"dimen", "value":"0dp"},
+        {"name":"fontFamily", "type":"file", "value":"ProximaNovaSoft-Bold.otf"}
+      ]
+    },
+    {
+      "widget": "AcbAutoTextView",
+      "properties": [
+        {"name":"id", "type":"ref", "value":"subtitle"},
+        {"name":"text", "type" : "string", "value" : "subtitle"},
+        {"name":"function", "type":"json", "value": {
+          "function":"setTextSizeFunction", "args" : [
+            { "primitive":"Float", "value":"0.195" },
+            { "primitive":"Float", "value":"5.111" }
+          ]
+        }},
+        {"name":"textColor", "type":"color", "value":"#FFFFFFFF"},
+        {"name":"fontFamily", "type":"file", "value":"ProximaNovaSoft-Medium.otf"},
+        {"name":"ellipsize", "type":"string", "value":"END"},
+        {"name":"layout_width", "type":"dimen", "value":"0dp"},
+        {"name":"layout_height", "type":"dimen", "value":"0dp"},
+        {"name":"layout_constraintTop_toBottomOf", "type":"ref", "value":"subtitle_top_guideline"},
+        {"name":"layout_constraintBottom_toBottomOf", "type":"string", "value":"parent"},
+        {"name":"layout_constraintLeft_toLeftOf", "type":"ref", "value":"title"},
+        {"name":"layout_constraintRight_toLeftOf", "type":"ref", "value":"action_framelayout"},
+        {"name":"padding_right", "type":"dimen", "value":"10dp"},
+        {"name":"layout_marginRight", "type":"dimen", "value":"0dp"}
+      ]
+    },
+    {
+      "widget": "FrameLayout",
+      "properties": [
+        {"name":"id", "type":"ref", "value":"action_framelayout"},
+        {"name":"layout_height", "type":"dimen", "value":"wrap_content"},
+        {"name":"layout_width", "type":"dimen", "value":"wrap_content"},
+        {"name":"layout_constraintRight_toRightOf", "type":"string", "value":"parent"},
+        {"name":"layout_constraintTop_toTopOf", "type":"string", "value":"parent"},
+        {"name":"layout_constraintBottom_toBottomOf", "type":"string", "value":"parent"},
+        {"name":"layout_marginRight", "type":"dimen", "value":"5dp"}
+      ],
+      "views": [
+        {
+          "widget": "Button",
+          "properties": [
+            {"name":"id", "type":"ref", "value":"action"},
+            {"name":"background", "type":"file", "value":"button.png"},
+            {"name":"text", "type" : "string", "value" : "button"},
+            {"name":"textColor", "type":"color", "value":"#FFFFFFFF"},
+            {"name":"textStyle", "type":"string", "value":"bold"},
+            {"name":"textSize", "type":"dimen", "value":"12sp"},
+            {"name":"layout_width", "type":"dimen", "value":"71dp"},
+            {"name":"layout_height", "type":"dimen", "value":"38dp"},
+            {"name":"padding_left", "type":"dimen", "value":"8dp"},
+            {"name":"padding_right", "type":"dimen", "value":"8dp"},
+            {"name":"padding_top", "type":"dimen", "value":"0dp"},
+            {"name":"padding_bottom", "type":"dimen", "value":"0dp"},
+            {"name":"maxLines", "type":"integer", "value":"1"},
+            {"name":"ellipsize", "type":"string", "value":"END"}
+          ]
+        }
+      ]
+    },
+    {
+      "widget": "FrameLayout",
+      "properties": [
+        {"name":"id", "type":"ref", "value":"choice"},
+        {"name":"layout_constraintTop_toTopOf", "type":"string", "value":"parent"},
+        {"name":"layout_constraintRight_toRightOf", "type":"string", "value":"parent"},
+        {"name":"layout_width", "type":"dimen", "value":"wrap_content"},
+        {"name":"layout_height", "type":"dimen", "value":"wrap_content"}
+      ]
+    }
+  ]
+}

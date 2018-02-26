@@ -245,4 +245,6 @@
     <dimen name="ad_style_charging_alert_bottom_container_height">65dp</dimen>
     <dimen name="ad_style_theme_card_bottom_container_height">65dp</dimen>
     <dimen name="ad_style_charging_alert_content_margin">9dp</dimen>
+
+    <dimen name="phantom_notification_height">70dp</dimen>
 </resources>

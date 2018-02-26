@@ -6,6 +6,23 @@
 	<dict>
 		<key>Application</key>
 		<dict>
+			<key>Phantom</key>
+			<dict>
+				<key>Enabled</key>
+				<false/>
+				<key>SoundEnabled</key>
+				<true/>
+				<key>VibrationEnabled</key>
+				<true/>
+				<key>DisplaySeconds</key>
+				<integer>5</integer>
+				<key>IntervalSeconds</key>
+				<integer>10</integer>
+				<key>UserPresentDelaySeconds</key>
+				<integer>0</integer>
+				<key>MaxCountPerDay</key>
+				<integer>3</integer>
+			</dict>
 			<key>AccessUsageAlert</key>
 			<dict>
 				<key>AskInterval</key>

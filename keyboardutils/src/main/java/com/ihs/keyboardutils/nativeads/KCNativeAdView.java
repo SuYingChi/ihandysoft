@@ -41,6 +41,10 @@ public class KCNativeAdView extends FrameLayout {
         void onAdClicked(KCNativeAdView adView);
     }
 
+    public interface OnAdFailListener {
+        void onAdFail(KCNativeAdView adView);
+    }
+
     public enum NativeAdType {
         ICON, NORMAL
     }
@@ -59,6 +63,7 @@ public class KCNativeAdView extends FrameLayout {
 
     private OnAdLoadedListener adLoadedListener;
     private OnAdClickedListener adClickedListener;
+    private OnAdFailListener adFailListener;
 
     private boolean isPaused = true;
 
@@ -94,6 +99,10 @@ public class KCNativeAdView extends FrameLayout {
 
     public void setOnAdClickedListener(OnAdClickedListener listener) {
         this.adClickedListener = listener;
+    }
+
+    public void setOnAdFailListener(OnAdFailListener listener) {
+        this.adFailListener = listener;
     }
 
     public OnAdLoadedListener getOnAdLoadedListener() {
@@ -272,6 +281,11 @@ public class KCNativeAdView extends FrameLayout {
                     if(HSLog.isDebugging()) {
                         Toast.makeText(getContext(), "Ad(" + placement + ") Error: " + hsError.getMessage(), Toast.LENGTH_LONG).show();
                     }
+
+                    if (adFailListener != null) {
+                        adFailListener.onAdFail(KCNativeAdView.this);
+                    }
+
                 }
 
                 adLoader = null;

@@ -23,6 +23,7 @@ import com.ihs.keyboardutils.appsuggestion.AppSuggestionManager;
 import com.ihs.keyboardutils.notification.KCNotificationManager;
 import com.ihs.keyboardutils.notification.NotificationBean;
 import com.ihs.feature.headset.KCHeadsetManager;
+import com.kc.utils.phantom.KCPhantomNotificationManager;
 import com.launcher.FloatWindowCompat;
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
@@ -69,6 +70,9 @@ public class MyApplication extends HSApplication {
             // You should not init your app in this process.
             return;
         }
+
+        KCPhantomNotificationManager.with(this, getString(R.string.ad_placement_result_page));
+
         LeakCanary.install(this);
         AcbWeatherManager.getInstance().init(this, R.mipmap.ic_launcher);
         AcbExpressAdManager.getInstance().init(this);
