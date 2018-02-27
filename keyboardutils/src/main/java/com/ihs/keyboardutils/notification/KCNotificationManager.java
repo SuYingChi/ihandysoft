@@ -232,6 +232,7 @@ public class KCNotificationManager {
             int showedCount = spHelper.getInt(key, 0);
             spHelper.putInt(key, ++showedCount);
         }
+        spHelper.remove(PREFS_FINISHED_EVENT);
 
         List<Map<String, ?>> configs = null;
         try {
