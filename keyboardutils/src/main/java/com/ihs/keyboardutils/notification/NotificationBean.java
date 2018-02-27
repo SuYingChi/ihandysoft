@@ -40,7 +40,6 @@ public class NotificationBean {
     private String buttonTextColor = "#000000";
     private String buttonText = "CHECK";
     private String bgColor = "#ffffff";
-    private Boolean repeat;
     private int maxRepeatCount = 0;
     private int style = 0;
 
@@ -86,7 +85,6 @@ public class NotificationBean {
         messageColor = readStringConfig(value, "MessageColor", messageColor);
         bgColor = readStringConfig(value, "BgColor", bgColor);
         style = readIntConfig(value, "Style", 0);
-        repeat = readBooleanConfig(value, "Repeat", false);
         maxRepeatCount = readIntConfig(value, "MaxRepeatCount", 1);
     }
 
@@ -189,10 +187,6 @@ public class NotificationBean {
 
     public int getStyle() {
         return style;
-    }
-
-    public Boolean isRepeat() {
-        return repeat;
     }
 
     public int getMaxRepeatCount() {

@@ -34,6 +34,7 @@ import net.appcloudbox.autopilot.AutopilotConfig;
 import net.appcloudbox.autopilot.AutopilotEvent;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Calendar;
 import java.util.List;
 import java.util.Map;
@@ -225,6 +226,13 @@ public class KCNotificationManager {
             return;
         }
 
+        List<String> finishedEvent = Arrays.asList(spHelper.getString(PREFS_FINISHED_EVENT, "").split(","));
+        for (String event : finishedEvent) {
+            String key = event + SHOWED_COUNT;
+            int showedCount = spHelper.getInt(key, 0);
+            spHelper.putInt(key, ++showedCount);
+        }
+
         List<Map<String, ?>> configs = null;
         try {
             configs = (List<Map<String, ?>>) HSConfig.getList("Application", "LocalNotifications", "Content");
@@ -247,15 +255,19 @@ public class KCNotificationManager {
 
         int minShowedCount = Integer.MAX_VALUE;
 
-        for (int i = configs.size() - 1; i >= 0; i--) {
+        for (int i = 0; i < configs.size(); i++) {
             NotificationBean bean;
             bean = getAvailableBean(configs, i);
             if (bean != null) {
                 int showedCount = spHelper.getInt(bean.getSPKey() + SHOWED_COUNT, 0);
-                if (minShowedCount >= showedCount && showedCount < bean.getMaxRepeatCount()) {
+                if (showedCount == 0) {
                     notificationToSend = bean;
+                    break;
                 }
-                minShowedCount = minShowedCount < showedCount ? minShowedCount : showedCount;
+                if (minShowedCount > showedCount && showedCount < bean.getMaxRepeatCount()) {
+                    notificationToSend = bean;
+                    minShowedCount = showedCount;
+                }
             }
         }
 
