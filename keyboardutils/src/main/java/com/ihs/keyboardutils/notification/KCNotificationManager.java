@@ -250,7 +250,7 @@ public class KCNotificationManager {
         for (int i = configs.size() - 1; i >= 0; i--) {
             NotificationBean bean;
             bean = getAvailableBean(configs, i);
-            if (bean != null && spHelper.getInt(bean.getSPKey() + SHOWED_COUNT, 0) < bean.getMaxRepeatCount()) {
+            if (bean != null) {
                 int showedCount = spHelper.getInt(bean.getSPKey() + SHOWED_COUNT, 0);
                 if (minShowedCount >= showedCount && showedCount < bean.getMaxRepeatCount()) {
                     notificationToSend = bean;
