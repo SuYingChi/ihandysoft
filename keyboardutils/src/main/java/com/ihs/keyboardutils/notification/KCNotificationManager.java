@@ -9,7 +9,6 @@ import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Build;
-import android.support.annotation.Nullable;
 import android.support.v4.app.NotificationCompat;
 import android.text.TextUtils;
 import android.view.View;
@@ -66,6 +65,7 @@ public class KCNotificationManager {
     private static final String PREFS_NOTIFICATION_ENABLE = HSApplication.getContext().getString(R.string.prefs_notification_enable);
     private static final String PREFS_NOTIFICATION_INDEX_IN_PLIST = "next_notification_index";
     private static final String AUTOPILOT_TEST_FILTER_NAME = "redcolor";
+    private static final String SHOWED_COUNT = "showed_count";
 
     private static final int NOTIFICATION_ID = Math.abs(HSApplication.getContext().getPackageName().hashCode() / 100000);
 
@@ -226,7 +226,14 @@ public class KCNotificationManager {
             return;
         }
 
+        // 历史记录复用后移除
         List<String> finishedEvent = Arrays.asList(spHelper.getString(PREFS_FINISHED_EVENT, "").split(","));
+        for (String event : finishedEvent) {
+            String key = event + SHOWED_COUNT;
+            int showedCount = spHelper.getInt(key, 0);
+            spHelper.putInt(key, ++showedCount);
+        }
+        spHelper.remove(PREFS_FINISHED_EVENT);
 
         List<Map<String, ?>> configs = null;
         try {
@@ -248,14 +255,23 @@ public class KCNotificationManager {
 
         NotificationBean notificationToSend = null;
 
-        for (;notificationIndex < configs.size(); notificationIndex++) {
-            notificationToSend = getAvailableBean(configs, finishedEvent, notificationIndex);
-            if (notificationToSend != null) {
-                spHelper.putInt(PREFS_NOTIFICATION_INDEX_IN_PLIST, ++notificationIndex);
-                break;
+        int minShowedCount = Integer.MAX_VALUE;
+
+        for (int i = 0; i < configs.size(); i++) {
+            NotificationBean bean;
+            bean = getAvailableBean(configs, i);
+            if (bean != null) {
+                int showedCount = spHelper.getInt(bean.getSPKey() + SHOWED_COUNT, 0);
+                if (showedCount == 0) {
+                    notificationToSend = bean;
+                    break;
+                }
+                if (minShowedCount > showedCount && showedCount < bean.getMaxRepeatCount()) {
+                    notificationToSend = bean;
+                    minShowedCount = showedCount;
+                }
             }
         }
-
 
         if (notificationToSend == null) {
             return;
@@ -459,7 +475,7 @@ public class KCNotificationManager {
         scheduleNextEventTime();
     }
 
-    public NotificationBean getAvailableBean(List<Map<String, ?>> configs, @Nullable List<String> finishedEvent, int notificationIndex) {
+    public NotificationBean getAvailableBean(List<Map<String, ?>> configs, int notificationIndex) {
         if (notificationIndex >= configs.size()) {
             return null;
         }
@@ -473,10 +489,6 @@ public class KCNotificationManager {
         }
 
         if (bean == null) {
-            return null;
-        }
-
-        if (!bean.isRepeat() && (finishedEvent != null && finishedEvent.contains(bean.getSPKey()))) {
             return null;
         }
 
@@ -530,10 +542,9 @@ public class KCNotificationManager {
             manager.notify(notificationBean.getActionType(), NOTIFICATION_ID, mBuilder.build());
             switch (notificationBean.getActionType()) {
                 default:
-                    if (!notificationBean.isRepeat()) {
-                        String finishedEvents = spHelper.getString(PREFS_FINISHED_EVENT, "");
-                        spHelper.putString(PREFS_FINISHED_EVENT, finishedEvents + notificationBean.getSPKey() + ",");
-                    }
+                    String key = notificationBean.getSPKey() + SHOWED_COUNT;
+                    int showedCount = spHelper.getInt(key, 0);
+                    spHelper.putInt(key, ++showedCount);
                     break;
             }
         } catch (Exception e) {

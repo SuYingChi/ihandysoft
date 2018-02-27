@@ -678,7 +678,7 @@ public class PremiumLockerMainFrame extends PercentRelativeLayout implements INo
 
                 NotificationBean bean = null;
                 for (int notificationBeanIndex = startNotificationBeanIndex; notificationBeanIndex < startNotificationBeanIndex + configs.size(); notificationBeanIndex++) {
-                    bean = KCNotificationManager.getInstance().getAvailableBean(configs, null, notificationBeanIndex % configs.size());
+                    bean = KCNotificationManager.getInstance().getAvailableBean(configs, notificationBeanIndex % configs.size());
                     if (bean != null) {
                         pushFramePreferences.edit().putInt(PUSH_CAM_NOTIFICATION_INDEX, notificationBeanIndex % configs.size()).apply();
                         break;
