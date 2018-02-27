@@ -541,8 +541,9 @@ public class KCNotificationManager {
             manager.notify(notificationBean.getActionType(), NOTIFICATION_ID, mBuilder.build());
             switch (notificationBean.getActionType()) {
                 default:
-                    int showedCount = spHelper.getInt(notificationBean.getSPKey() + SHOWED_COUNT, 0);
-                    spHelper.putInt(notificationBean.getSPKey() + SHOWED_COUNT, ++showedCount);
+                    String key = notificationBean.getSPKey() + SHOWED_COUNT;
+                    int showedCount = spHelper.getInt(key, 0);
+                    spHelper.putInt(key, ++showedCount);
                     break;
             }
         } catch (Exception e) {
