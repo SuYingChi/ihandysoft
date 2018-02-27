@@ -12,7 +12,8 @@ import com.ihs.keyboardutils.BuildConfig;
 import com.ihs.keyboardutils.utils.ToastUtils;
 
 import net.appcloudbox.ads.base.AcbNativeAd;
-import net.appcloudbox.ads.nativeads.AcbNativeAdLoader;
+import net.appcloudbox.ads.nativead.AcbNativeAdLoader;
+import net.appcloudbox.ads.nativead.AcbNativeAdManager;
 import net.appcloudbox.common.utils.AcbError;
 
 import java.util.List;
@@ -56,7 +57,7 @@ public class ResultPageAdsManager {
             return;
         }
 
-        AcbNativeAdLoader loader = new AcbNativeAdLoader(HSApplication.getContext(), adPlacement);
+        AcbNativeAdLoader loader = AcbNativeAdManager.createLoaderWithPlacement(HSApplication.getContext(), adPlacement);
         loader.load(1, new AcbNativeAdLoader.AcbNativeAdLoadListener() {
             @Override
             public void onAdReceived(AcbNativeAdLoader acbNativeAdLoader, List<AcbNativeAd> list) {

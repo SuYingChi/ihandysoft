@@ -15,7 +15,7 @@ import com.ihs.commons.utils.HSLog;
 import com.ihs.keyboardutils.iap.RemoveAdsManager;
 import com.kc.utils.KCAnalytics;
 
-import net.appcloudbox.ads.nativeads.AcbNativeAdManager;
+import net.appcloudbox.ads.nativead.AcbNativeAdManager;
 
 import static com.ihs.charging.HSChargingManager.HSChargingState.STATE_CHARGING_FULL;
 import static com.ihs.charging.HSChargingManager.HSChargingState.STATE_DISCHARGING;
@@ -81,7 +81,7 @@ public class HSChargingScreenManager {
 
     private HSChargingScreenManager(boolean showNativeAd, String chargingActivityAdsPlacementName, String chargingAlertAdsPlacementName) {
 
-        AcbNativeAdManager.sharedInstance();
+        AcbNativeAdManager.getInstance();
         this.chargingActivityAdsPlacementName = chargingActivityAdsPlacementName;
         this.chargingAlertAdsPlacementName = chargingAlertAdsPlacementName;
         this.showNativeAd = showNativeAd;
@@ -226,7 +226,7 @@ public class HSChargingScreenManager {
             case CHARGING_DEFAULT_ACTIVE:
                 if (!RemoveAdsManager.getInstance().isRemoveAdsPurchased()){
                     if (ChargingPrefsUtil.isChargingAlertEnabled()) {
-                        AcbNativeAdManager.sharedInstance().activePlacementInProcess(HSChargingScreenManager.getInstance().getChargingAlertAdsPlacementName());
+                        AcbNativeAdManager.getInstance().activePlacementInProcess(HSChargingScreenManager.getInstance().getChargingAlertAdsPlacementName());
                     }
                 }
                 HSChargingScreenManager.getInstance().start();

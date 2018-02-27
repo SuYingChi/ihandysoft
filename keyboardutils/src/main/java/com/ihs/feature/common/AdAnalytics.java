@@ -2,7 +2,7 @@ package com.ihs.feature.common;
 
 import com.kc.utils.KCAnalytics;
 
-import net.appcloudbox.ads.nativeads.AcbNativeAdAnalytics;
+import net.appcloudbox.ads.nativead.AcbNativeAdAnalytics;
 
 import java.util.HashMap;
 

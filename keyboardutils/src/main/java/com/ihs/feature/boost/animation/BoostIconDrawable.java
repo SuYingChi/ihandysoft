@@ -40,7 +40,8 @@ import com.ihs.keyboardutils.R;
 import com.ihs.keyboardutils.utils.CommonUtils;
 
 import net.appcloudbox.ads.base.AcbNativeAd;
-import net.appcloudbox.ads.nativeads.AcbNativeAdLoader;
+import net.appcloudbox.ads.nativead.AcbNativeAdLoader;
+import net.appcloudbox.ads.nativead.AcbNativeAdManager;
 import net.appcloudbox.common.utils.AcbError;
 
 import java.util.ArrayList;
@@ -324,7 +325,7 @@ public class BoostIconDrawable extends AnimatedIconDrawable implements RamUsageD
         if (!BoostTipUtils.mayShowChargingScreen(mResultType)
                 && !BoostTipUtils.mayShowBoostPlus()
                 && BoostTipUtils.shouldShowBoostAd()) {
-            AcbNativeAdLoader loader = new AcbNativeAdLoader(HSApplication.getContext(), AdPlacements.MOMENT_NATIVE_AD_PLACEMENT_HUB);
+            AcbNativeAdLoader loader = AcbNativeAdManager.createLoaderWithPlacement(HSApplication.getContext(), AdPlacements.MOMENT_NATIVE_AD_PLACEMENT_HUB);
             loader.load(1, new AcbNativeAdLoader.AcbNativeAdLoadListener() {
                 @Override
                 public void onAdReceived(AcbNativeAdLoader acbNativeAdLoader, List<AcbNativeAd> list) {

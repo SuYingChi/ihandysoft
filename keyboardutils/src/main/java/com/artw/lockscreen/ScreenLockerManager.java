@@ -23,7 +23,7 @@ import com.ihs.keyboardutils.R;
 import com.ihs.keyboardutils.iap.RemoveAdsManager;
 import com.kc.utils.KCAnalytics;
 
-import net.appcloudbox.ads.expressads.AcbExpressAdManager;
+import net.appcloudbox.ads.expressad.AcbExpressAdManager;
 
 
 /**

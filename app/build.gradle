@@ -40,10 +40,9 @@ dependencies {
     implementation (name: 'libKeyboardCommons/libKeyboardCommons', ext: 'aar')
 
     // App Framework
-    implementation "com.ihandy.appframework:libAppframework.gm:4.5.2.gm"
+    implementation "com.ihandy.appframework:libAppframework.gm:4.5.5.gm"
     // Ads
-    implementation 'net.appcloudbox.ads:libAcbAds.gm:1.2.3.gm'
-    implementation 'net.appcloudbox.common:libAcbCommonUtils.gm:1.1.5.gm'
+    implementation 'net.appcloudbox.ads:libAcbAds.gm:1.4.0.gm'
 
     // Native Ad Adapters
     //AdAvocarrot 编译不过，报找不到3.8.3sdk，估计是maven远端有问题，等一会再打开注释
@@ -68,7 +67,7 @@ dependencies {
     implementation 'net.appcloudbox.adadapter:libAdNexageBannerAdapter.gm:5.1.0.gm'
 
     //weather
-    implementation "net.appcloudbox.weather:acbWeatherPlugin.gm:4.1.0.gm"
+    implementation "net.appcloudbox.weather:acbWeatherPlugin.gm:4.1.2.gm"
     api project(':keyboardutils')
 
     implementation ('com.crashlytics.sdk.android:crashlytics:2.6.4@aar') {

@@ -50,7 +50,7 @@ import com.ihs.keyboardutils.utils.CommonUtils;
 import com.ihs.keyboardutils.utils.RippleDrawableUtils;
 import com.kc.commons.utils.KCCommonUtils;
 
-import net.appcloudbox.ads.expressads.AcbExpressAdView;
+import net.appcloudbox.ads.expressad.AcbExpressAdView;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
@@ -191,8 +191,8 @@ public class LockerMainFrame extends RelativeLayout implements INotificationObse
             removeAds = (ImageView) findViewById(R.id.remove_ads);
             removeAds.setVisibility(GONE);
             acbExpressAdView = new AcbExpressAdView(activity == null ? HSApplication.getContext() : activity, ScreenLockerManager.getLockerAdPlacement());
-            acbExpressAdView.setAutoSwitchAd(false);
-            acbExpressAdView.preloadAd();
+            acbExpressAdView.setAutoSwitchAd(AcbExpressAdView.AutoSwitchAd_None);
+            acbExpressAdView.prepareAd(null);
             acbExpressAdView.setGravity(Gravity.CENTER_HORIZONTAL | Gravity.BOTTOM);
             acbExpressAdView.setExpressAdViewListener(new AcbExpressAdView.AcbExpressAdViewListener() {
                 @Override

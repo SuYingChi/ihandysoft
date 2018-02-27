@@ -46,7 +46,7 @@ import com.launcher.locker.slidingdrawer.SlidingDrawerContent;
 import com.launcher.locker.slidingup.SlidingUpCallback;
 import com.launcher.locker.slidingup.SlidingUpTouchListener;
 
-import net.appcloudbox.ads.expressads.AcbExpressAdView;
+import net.appcloudbox.ads.expressad.AcbExpressAdView;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
@@ -217,7 +217,7 @@ public class LockerMainFrame extends RelativeLayout implements INotificationObse
     private void requestAds() {
         if (FloatWindowController.getInstance().isLockScreenShown()) {
             expressAdView = new AcbExpressAdView(getContext(), ScreenLockerManager.getLockerAdPlacement());
-            expressAdView.setAutoSwitchAd(false);
+            expressAdView.setAutoSwitchAd(AcbExpressAdView.AutoSwitchAd_None);
             expressAdView.switchAd();
             expressAdView.setExpressAdViewListener(new AcbExpressAdView.AcbExpressAdViewListener() {
                 @Override

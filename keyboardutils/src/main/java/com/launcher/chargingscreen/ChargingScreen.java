@@ -18,7 +18,6 @@ import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.AppCompatButton;
 import android.telephony.PhoneStateListener;
 import android.telephony.TelephonyManager;
-import android.text.TextUtils;
 import android.text.format.DateUtils;
 import android.util.DisplayMetrics;
 import android.util.TypedValue;
@@ -64,7 +63,7 @@ import com.launcher.chargingscreen.view.PopupView;
 import com.launcher.chargingscreen.view.RipplePopupView;
 import com.launcher.chargingscreen.view.SlidingFinishRelativeLayout;
 
-import net.appcloudbox.ads.expressads.AcbExpressAdView;
+import net.appcloudbox.ads.expressad.AcbExpressAdView;
 
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
@@ -385,7 +384,7 @@ public class ChargingScreen extends LockScreen implements INotificationObserver 
 
     private void requestAds() {
         expressAdView = new AcbExpressAdView(getContext(), HSChargingScreenManager.getInstance().getChargingActivityAdsPlacementName());
-        expressAdView.setAutoSwitchAd(false);
+        expressAdView.setAutoSwitchAd(AcbExpressAdView.AutoSwitchAd_None);
         expressAdView.switchAd();
         expressAdView.setExpressAdViewListener(new AcbExpressAdView.AcbExpressAdViewListener() {
             @Override

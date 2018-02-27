@@ -30,8 +30,8 @@ import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
 import com.nostra13.universalimageloader.core.assist.QueueProcessingType;
 import com.squareup.leakcanary.LeakCanary;
 
-import net.appcloudbox.ads.expressads.AcbExpressAdManager;
-import net.appcloudbox.ads.nativeads.AcbNativeAdManager;
+import net.appcloudbox.ads.expressad.AcbExpressAdManager;
+import net.appcloudbox.ads.nativead.AcbNativeAdManager;
 
 import io.fabric.sdk.android.Fabric;
 
@@ -97,9 +97,9 @@ public class MyApplication extends HSApplication {
         AppSuggestionManager.getInstance().init(false, getString(R.string.ad_placement_call_assist));
         LockerAppGuideManager.getInstance().init(true);
 
-        AcbNativeAdManager.sharedInstance().activePlacementInProcess(getString(R.string.ad_placement_result_page));
-        AcbNativeAdManager.sharedInstance().activePlacementInProcess(AppSuggestionManager.getInstance().getAdPlacementName());
-        AcbNativeAdManager.sharedInstance().activePlacementInProcess(getString(R.string.ad_placement_filter_download));
+        AcbNativeAdManager.getInstance().activePlacementInProcess(getString(R.string.ad_placement_result_page));
+        AcbNativeAdManager.getInstance().activePlacementInProcess(AppSuggestionManager.getInstance().getAdPlacementName());
+        AcbNativeAdManager.getInstance().activePlacementInProcess(getString(R.string.ad_placement_filter_download));
         FloatWindowCompat.initLockScreen(this);
     }
 

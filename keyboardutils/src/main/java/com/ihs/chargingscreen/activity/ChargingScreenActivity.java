@@ -70,7 +70,7 @@ import com.ihs.keyboardutils.iap.RemoveAdsManager;
 import com.ihs.keyboardutils.utils.RippleDrawableUtils;
 import com.kc.commons.utils.KCCommonUtils;
 
-import net.appcloudbox.ads.expressads.AcbExpressAdView;
+import net.appcloudbox.ads.expressad.AcbExpressAdView;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -374,8 +374,8 @@ public class ChargingScreenActivity extends Activity {
 
         if (!RemoveAdsManager.getInstance().isRemoveAdsPurchased()) {
             acbExpressAdView = new AcbExpressAdView(HSApplication.getContext(), HSChargingScreenManager.getInstance().getChargingActivityAdsPlacementName());
-            acbExpressAdView.setAutoSwitchAd(false);
-            acbExpressAdView.preloadAd();
+            acbExpressAdView.setAutoSwitchAd(AcbExpressAdView.AutoSwitchAd_None);
+            acbExpressAdView.prepareAd(null);
             adContainer.addView(acbExpressAdView);
 
             // 单次关闭广告或永久删除广告

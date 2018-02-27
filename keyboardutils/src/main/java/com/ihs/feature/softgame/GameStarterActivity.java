@@ -14,7 +14,7 @@ import com.ihs.keyboardutils.ads.KCInterstitialAd;
 import com.ihs.keyboardutils.iap.RemoveAdsManager;
 import com.kc.utils.KCAnalytics;
 
-import net.appcloudbox.ads.interstitialads.AcbInterstitialAdLoader;
+import net.appcloudbox.ads.interstitialad.AcbInterstitialAdLoader;
 
 /**
  * Created by Arthur on 17/12/6.

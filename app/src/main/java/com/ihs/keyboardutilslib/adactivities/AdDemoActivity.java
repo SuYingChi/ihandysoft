@@ -16,7 +16,7 @@ import com.ihs.keyboardutils.ads.KCInterstitialAd;
 import com.ihs.keyboardutils.nativeads.KCNativeAdView;
 import com.ihs.keyboardutilslib.R;
 
-import net.appcloudbox.ads.nativeads.AcbNativeAdManager;
+import net.appcloudbox.ads.nativead.AcbNativeAdManager;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -48,7 +48,7 @@ public class AdDemoActivity extends HSActivity {
 
         for (String adPlacement : getAdPlacementList()) {
             adPlacementList.add(adPlacement);
-            AcbNativeAdManager.sharedInstance().activePlacementInProcess(adPlacement);
+            AcbNativeAdManager.getInstance().activePlacementInProcess(adPlacement);
         }
 
         ArrayAdapter<String> arrayAdapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, adPlacementList);

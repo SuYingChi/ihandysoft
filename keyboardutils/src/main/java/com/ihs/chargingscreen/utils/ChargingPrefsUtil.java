@@ -8,8 +8,8 @@ import com.ihs.commons.utils.HSPreferenceHelper;
 import com.ihs.feature.common.PreferenceHelper;
 import com.ihs.keyboardutils.iap.RemoveAdsManager;
 
-import net.appcloudbox.ads.expressads.AcbExpressAdManager;
-import net.appcloudbox.ads.nativeads.AcbNativeAdManager;
+import net.appcloudbox.ads.expressad.AcbExpressAdManager;
+import net.appcloudbox.ads.nativead.AcbNativeAdManager;
 
 import static com.ihs.chargingscreen.utils.ChargingAnalytics.app_chargingLocker_enable;
 
@@ -137,7 +137,7 @@ public class ChargingPrefsUtil {
         if (isEnable) {
             if (!RemoveAdsManager.getInstance().isRemoveAdsPurchased()) {
                 if (ChargingPrefsUtil.isChargingAlertEnabled()) {
-                    AcbNativeAdManager.sharedInstance().activePlacementInProcess(HSChargingScreenManager.getInstance().getChargingAlertAdsPlacementName());
+                    AcbNativeAdManager.getInstance().activePlacementInProcess(HSChargingScreenManager.getInstance().getChargingAlertAdsPlacementName());
                 } else {
                     if (LockerChargingSpecialConfig.getInstance().shouldShowAd()) {
                         AcbExpressAdManager.getInstance().activePlacementInProcess(HSChargingScreenManager.getInstance().getChargingActivityAdsPlacementName());

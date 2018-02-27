@@ -10,7 +10,7 @@ import com.ihs.keyboardutils.iap.RemoveAdsManager;
 import com.ihs.keyboardutils.utils.PublisherUtils;
 import com.kc.utils.KCAnalytics;
 
-import net.appcloudbox.ads.expressads.AcbExpressAdManager;
+import net.appcloudbox.ads.expressad.AcbExpressAdManager;
 
 import static com.artw.lockscreen.LockerActivity.PREF_KEY_CURRENT_WALLPAPER_HD_URL;
 

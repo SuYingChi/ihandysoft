@@ -25,7 +25,8 @@ import net.appcloudbox.ads.base.AcbNativeAd;
 import net.appcloudbox.ads.base.ContainerView.AcbNativeAdContainerView;
 import net.appcloudbox.ads.base.ContainerView.AcbNativeAdIconView;
 import net.appcloudbox.ads.base.ContainerView.AcbNativeAdPrimaryView;
-import net.appcloudbox.ads.nativeads.AcbNativeAdLoader;
+import net.appcloudbox.ads.nativead.AcbNativeAdLoader;
+import net.appcloudbox.ads.nativead.AcbNativeAdManager;
 import net.appcloudbox.common.utils.AcbError;
 
 import java.util.ArrayList;
@@ -258,7 +259,7 @@ public class KCNativeAdView extends FrameLayout {
 
         AdUtils.logAdLoad(placement);
 
-        adLoader = new AcbNativeAdLoader(getContext().getApplicationContext(), placement);
+        adLoader = AcbNativeAdManager.createLoaderWithPlacement(getContext().getApplicationContext(), placement);
 
         adLoader.load(1, new AcbNativeAdLoader.AcbNativeAdLoadListener() {
 

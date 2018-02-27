@@ -34,7 +34,7 @@ import com.ihs.commons.utils.HSLog;
 import com.ihs.keyboardutils.R;
 import com.ihs.keyboardutils.iap.RemoveAdsManager;
 
-import net.appcloudbox.ads.expressads.AcbExpressAdView;
+import net.appcloudbox.ads.expressad.AcbExpressAdView;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -134,7 +134,7 @@ public class HeadsetActivity extends HSAppCompatActivity implements SeekBar.OnSe
     private void createAdView() {
         if (!RemoveAdsManager.getInstance().isRemoveAdsPurchased() & !TextUtils.isEmpty(KCHeadsetManager.getInstance().getHeadsetAdPlacement())) {
             acbExpressAdView = new AcbExpressAdView(this, KCHeadsetManager.getInstance().getHeadsetAdPlacement());
-            acbExpressAdView.setAutoSwitchAd(true);
+            acbExpressAdView.setAutoSwitchAd(AcbExpressAdView.AutoSwitchAd_All);
             acbExpressAdView.setGravity(Gravity.CENTER);
             acbExpressAdView.setExpressAdViewListener(new AcbExpressAdView.AcbExpressAdViewListener() {
                 @Override
