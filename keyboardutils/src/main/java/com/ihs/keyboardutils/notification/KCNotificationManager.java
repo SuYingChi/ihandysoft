@@ -243,22 +243,7 @@ public class KCNotificationManager {
             return;
         }
 
-        NotificationBean notificationToSend = null;
-
-        int minShowedCount = spHelper.getInt(configs.get(0).get("ActionType") + "|" + configs.get(0).get("Name") + SHOWED_COUNT, 0);
-
-        for (int i = 1; i < configs.size(); i++) {
-            int showedCount = spHelper.getInt(configs.get(i).get("ActionType") + "|" + configs.get(i).get("Name") + SHOWED_COUNT, 0);
-            minShowedCount = minShowedCount < showedCount ? minShowedCount : showedCount;
-        }
-
-        for (;notificationIndex < configs.size(); notificationIndex++) {
-            notificationToSend = getAvailableBean(configs, minShowedCount, notificationIndex);
-            if (notificationToSend != null) {
-                spHelper.putInt(PREFS_NOTIFICATION_INDEX_IN_PLIST, ++notificationIndex);
-                break;
-            }
-        }
+        NotificationBean notificationToSend = getAvailableBean(configs, false, 0);
 
         if (notificationToSend == null) {
             return;
@@ -462,26 +447,43 @@ public class KCNotificationManager {
         scheduleNextEventTime();
     }
 
-    public NotificationBean getAvailableBean(List<Map<String, ?>> configs, int minShowedCount, int notificationIndex) {
-        if (notificationIndex >= configs.size()) {
-            return null;
+    public NotificationBean getAvailableBean(List<Map<String, ?>> configs, boolean repeat, int notificationIndex) {
+        NotificationBean bean = null;
+
+        if (!repeat) {
+            int minShowedCount = Integer.MAX_VALUE;
+
+            for (int i = configs.size() - 1; i >= 0; i--) {
+                NotificationBean notificationBean = null;
+                try {
+                    Map<String, Object> value = (Map<String, Object>) configs.get(i);
+                    notificationBean = new NotificationBean(value);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+                if (notificationBean == null) {
+                    continue;
+                }
+                int showedCount = spHelper.getInt(notificationBean.getSPKey() + SHOWED_COUNT, 0);
+                if (minShowedCount >= showedCount && showedCount < notificationBean.getMaxRepeatCount()) {
+                    bean = notificationBean;
+                }
+                minShowedCount = minShowedCount < showedCount ? minShowedCount : showedCount;
+            }
+        } else {
+            if (notificationIndex >= configs.size()) {
+                return null;
+            }
+            try {
+                Map<String, Object> value = (Map<String, Object>) configs.get(notificationIndex);
+                bean = new NotificationBean(value);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
         }
 
-        NotificationBean bean = null;
-        try {
-            Map<String, Object> value = (Map<String, Object>) configs.get(notificationIndex);
-            bean = new NotificationBean(value);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
 
         if (bean == null) {
-            return null;
-        }
-
-        int repeatCount = spHelper.getInt(bean.getSPKey() + SHOWED_COUNT, 0);
-
-        if (minShowedCount < 0 || repeatCount > minShowedCount || repeatCount >= bean.getMaxRepeatCount()) {
             return null;
         }
 
