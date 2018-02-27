@@ -243,7 +243,21 @@ public class KCNotificationManager {
             return;
         }
 
-        NotificationBean notificationToSend = getAvailableBean(configs, false, 0);
+        NotificationBean notificationToSend = null;
+
+        int minShowedCount = Integer.MAX_VALUE;
+
+        for (int i = configs.size() - 1; i >= 0; i--) {
+            NotificationBean bean;
+            bean = getAvailableBean(configs, i);
+            if (bean != null && spHelper.getInt(bean.getSPKey() + SHOWED_COUNT, 0) < bean.getMaxRepeatCount()) {
+                int showedCount = spHelper.getInt(bean.getSPKey() + SHOWED_COUNT, 0);
+                if (minShowedCount >= showedCount && showedCount < bean.getMaxRepeatCount()) {
+                    notificationToSend = bean;
+                }
+                minShowedCount = minShowedCount < showedCount ? minShowedCount : showedCount;
+            }
+        }
 
         if (notificationToSend == null) {
             return;
@@ -447,41 +461,18 @@ public class KCNotificationManager {
         scheduleNextEventTime();
     }
 
-    public NotificationBean getAvailableBean(List<Map<String, ?>> configs, boolean repeat, int notificationIndex) {
-        NotificationBean bean = null;
-
-        if (!repeat) {
-            int minShowedCount = Integer.MAX_VALUE;
-
-            for (int i = configs.size() - 1; i >= 0; i--) {
-                NotificationBean notificationBean = null;
-                try {
-                    Map<String, Object> value = (Map<String, Object>) configs.get(i);
-                    notificationBean = new NotificationBean(value);
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
-                if (notificationBean == null) {
-                    continue;
-                }
-                int showedCount = spHelper.getInt(notificationBean.getSPKey() + SHOWED_COUNT, 0);
-                if (minShowedCount >= showedCount && showedCount < notificationBean.getMaxRepeatCount()) {
-                    bean = notificationBean;
-                }
-                minShowedCount = minShowedCount < showedCount ? minShowedCount : showedCount;
-            }
-        } else {
-            if (notificationIndex >= configs.size()) {
-                return null;
-            }
-            try {
-                Map<String, Object> value = (Map<String, Object>) configs.get(notificationIndex);
-                bean = new NotificationBean(value);
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
+    public NotificationBean getAvailableBean(List<Map<String, ?>> configs, int notificationIndex) {
+        if (notificationIndex >= configs.size()) {
+            return null;
         }
 
+        NotificationBean bean = null;
+        try {
+            Map<String, Object> value = (Map<String, Object>) configs.get(notificationIndex);
+            bean = new NotificationBean(value);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
 
         if (bean == null) {
             return null;
