@@ -57,15 +57,6 @@
 
     </FrameLayout>
 
-    <ImageView
-        android:id="@+id/ad_mark_view"
-        android:visibility="invisible"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignLeft="@id/result_image_container_ad"
-        android:layout_alignTop="@id/result_image_container_ad"
-        android:src="@mipmap/ad_engine_ad_mark"/>
-
     <net.appcloudbox.ads.base.ContainerView.AcbNativeAdIconView
         android:id="@+id/result_ad_icon"
         android:layout_width="24dp"

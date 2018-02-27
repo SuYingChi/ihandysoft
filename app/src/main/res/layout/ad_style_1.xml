@@ -73,12 +73,5 @@
 
         </RelativeLayout>
     </LinearLayout>
-
-    <ImageView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentTop="true"
-        android:layout_alignParentLeft="true"
-        android:src="@mipmap/ad_engine_ad_mark" />
 </RelativeLayout>
 
