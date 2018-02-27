@@ -226,6 +226,7 @@ public class KCNotificationManager {
             return;
         }
 
+        // 历史记录复用后移除
         List<String> finishedEvent = Arrays.asList(spHelper.getString(PREFS_FINISHED_EVENT, "").split(","));
         for (String event : finishedEvent) {
             String key = event + SHOWED_COUNT;
