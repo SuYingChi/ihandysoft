@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -11,7 +10,7 @@
     <View
         android:id="@+id/bg_view"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"/>
+        android:layout_height="match_parent" />
 
     <com.ihs.feature.common.CustomRootView
         android:id="@+id/view_container"
@@ -30,14 +29,15 @@
 
             <include
                 android:id="@+id/action_bar"
-                layout="@layout/white_toolbar"/>
+                layout="@layout/white_toolbar" />
+
 
             <FrameLayout
                 android:id="@+id/transition_view_container"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:clipChildren="false"
-                android:clipToPadding="false"/>
+                android:clipToPadding="false" />
 
             <RelativeLayout
                 android:id="@+id/result_view"
@@ -49,25 +49,42 @@
                 <View
                     android:id="@+id/result_header_tag_view"
                     android:layout_width="match_parent"
-                    android:layout_height="@dimen/result_page_header_height"/>
+                    android:layout_height="@dimen/result_page_header_height" />
 
                 <android.support.v7.widget.RecyclerView
                     android:id="@+id/result_card_recycler_view"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:layout_below="@+id/result_header_tag_view"
-                    android:layout_marginRight="@dimen/result_page_card_margin"
                     android:layout_marginLeft="@dimen/result_page_card_margin"
+                    android:layout_marginRight="@dimen/result_page_card_margin"
                     android:theme="@style/Theme.CustomOverScroll" />
 
                 <!-- Container for AD / charging screen only -->
                 <FrameLayout
-                    android:layout_below="@id/result_header_tag_view"
                     android:id="@+id/ad_or_charging_screen_view_container"
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"/>
+                    android:layout_height="match_parent"
+                    android:layout_below="@id/result_header_tag_view" />
+
+
             </RelativeLayout>
+
+
         </RelativeLayout>
 
     </com.ihs.feature.common.CustomRootView>
+
+
+    <ImageView
+        android:id="@+id/iv_close"
+        android:layout_width="36dp"
+        android:layout_height="36dp"
+        android:layout_gravity="end"
+        android:layout_marginEnd="20dp"
+        android:layout_marginRight="20dp"
+        android:layout_marginTop="35dp"
+        android:padding="4dp"
+        android:src="@drawable/ad_close_button" />
+
 </FrameLayout>

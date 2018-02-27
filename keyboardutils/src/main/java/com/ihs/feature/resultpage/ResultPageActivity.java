@@ -10,6 +10,7 @@ import android.support.annotation.Nullable;
 import android.support.v4.content.ContextCompat;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.ImageView;
 
 import com.ihs.app.framework.activity.HSAppCompatActivity;
 import com.ihs.chargingscreen.utils.ChargingPrefsUtil;
@@ -32,6 +33,7 @@ import com.ihs.feature.resultpage.data.CardData;
 import com.ihs.feature.resultpage.data.ResultConstants;
 import com.ihs.keyboardutils.R;
 import com.ihs.keyboardutils.utils.CommonUtils;
+import com.ihs.keyboardutils.utils.RippleDrawableUtils;
 import com.kc.utils.KCAnalytics;
 
 import net.appcloudbox.ads.base.AcbNativeAd;
@@ -83,6 +85,7 @@ public class ResultPageActivity extends HSAppCompatActivity
     private static BatteryActivity.RefreshListener sRefreshListener;
     private static boolean sAttached;
     private int mClearNotificationsCount;
+    private ImageView closeIv;
 
     public static void startForBoostPlus(Activity activity, int cleanedSizeMbs) {
         if (activity == null) {
@@ -200,13 +203,23 @@ public class ResultPageActivity extends HSAppCompatActivity
             finish();
         }
 
+        closeIv = findViewById(R.id.iv_close);
+        closeIv.setBackgroundDrawable(RippleDrawableUtils.getTransparentRippleBackground());
+        closeIv.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+            }
+        });
+
+
         // Set bg color early
         ViewUtils.findViewById(this, R.id.bg_view).setBackgroundColor(getBackgroundColor());
 
         ResultPageAdsManager.getInstance().setOnAdListener(new ResultPageAdsManager.OnAdListener() {
             @Override
             public void onAdReceive(AcbNativeAd mAd) {
-                if(mResultController!=null){
+                if (mResultController != null) {
                     mResultController.fillNativeAd(mAd);
                 }
             }
@@ -255,7 +268,8 @@ public class ResultPageActivity extends HSAppCompatActivity
         }
     }
 
-    private @ColorInt int getBackgroundColor() {
+    private @ColorInt
+    int getBackgroundColor() {
         switch (mResultType) {
             case ResultConstants.RESULT_TYPE_BOOST_PLUS:
                 return ContextCompat.getColor(this, R.color.boost_plus_clean_bg);
