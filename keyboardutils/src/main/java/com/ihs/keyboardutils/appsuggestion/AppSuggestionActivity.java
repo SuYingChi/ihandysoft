@@ -224,7 +224,7 @@ public class AppSuggestionActivity extends Activity {
 
         acbExpressAdView = new AcbExpressAdView(this, HSChargingScreenManager.getInstance().getChargingAlertAdsPlacementName());
         acbExpressAdView.setAutoSwitchAd(AcbExpressAdView.AutoSwitchAd_All);
-        acbExpressAdView.setGravity(Gravity.BOTTOM);
+        acbExpressAdView.setGravity(Gravity.CENTER);
         acbExpressAdView.setExpressAdViewListener(new AcbExpressAdView.AcbExpressAdViewListener() {
             @Override
             public void onAdShown(AcbExpressAdView acbExpressAdView) {
