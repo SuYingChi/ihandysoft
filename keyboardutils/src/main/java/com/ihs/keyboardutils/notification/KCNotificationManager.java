@@ -63,7 +63,6 @@ public class KCNotificationManager {
     private static final String PREFS_FINISHED_EVENT = "prefs_finished_event";
     private static final String PREFS_NEXT_EVENT_TIME = "prefs_next_event_time";
     private static final String PREFS_NOTIFICATION_ENABLE = HSApplication.getContext().getString(R.string.prefs_notification_enable);
-    private static final String PREFS_NOTIFICATION_INDEX_IN_PLIST = "next_notification_index";
     private static final String AUTOPILOT_TEST_FILTER_NAME = "redcolor";
     private static final String SHOWED_COUNT = "showed_count";
 
@@ -87,7 +86,6 @@ public class KCNotificationManager {
         @Override
         public void onReceive(String s, HSBundle hsBundle) {
             if (s.equals(HSNotificationConstant.HS_CONFIG_CHANGED)) {
-                spHelper.putInt(PREFS_NOTIFICATION_INDEX_IN_PLIST, 0);
                 scheduleNextEventTime();
             }
         }
@@ -243,13 +241,6 @@ public class KCNotificationManager {
         }
         if (configs == null) {
             HSLog.e("没有配置本地提醒");
-            return;
-        }
-
-        int notificationIndex = spHelper.getInt(PREFS_NOTIFICATION_INDEX_IN_PLIST, 0);
-
-        if (notificationIndex >= configs.size()) {
-            HSLog.e("通知循环完毕");
             return;
         }
 
