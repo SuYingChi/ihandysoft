@@ -24,6 +24,7 @@ import com.ihs.commons.utils.HSBundle;
 import com.ihs.commons.utils.HSLog;
 import com.ihs.commons.utils.HSPreferenceHelper;
 import com.ihs.inputmethod.api.HSFloatWindowManager;
+import com.ihs.inputmethod.api.HSUIInputMethodService;
 import com.ihs.inputmethod.api.framework.HSInputMethod;
 import com.ihs.inputmethod.api.theme.HSKeyboardThemeManager;
 import com.ihs.inputmethod.api.utils.HSDisplayUtils;
@@ -157,7 +158,7 @@ public class KeyboardPanelManager extends KeyboardPanelSwitcher implements BaseF
         HSGlobalNotificationCenter.addObserver(HSInputMethod.HS_NOTIFICATION_SHOW_INPUTMETHOD, notificationObserver);
         HSGlobalNotificationCenter.addObserver(HSInputMethod.HS_NOTIFICATION_FIRST_OPEN_KEYBOARD_TODAY, notificationObserver);
 
-
+        keyboardPanelSwitchContainer.getPanelViewGroup().getLayoutParams().height = HSResourceUtils.getDefaultKeyboardHeight(HSApplication.getContext().getResources());
         return keyboardPanelSwitchContainer;
     }
 
@@ -477,14 +478,12 @@ public class KeyboardPanelManager extends KeyboardPanelSwitcher implements BaseF
             ViewGroup.LayoutParams layoutParams = hsBackgroundVideoView.getLayoutParams();
             layoutParams.height = HSResourceUtils.getDefaultKeyboardHeight(HSApplication.getContext().getResources()) + HSResourceUtils.getDefaultSuggestionStripHeight(HSApplication.getContext().getResources());
 
-            //设置之后子View大小不变，只有PanelViewGroup大小变
-//            ViewGroup.LayoutParams layoutParams1 = keyboardPanelSwitchContainer.getPanelViewGroup().getLayoutParams();
-//            layoutParams1.height = layoutParams.height;
+            ViewGroup panelViewGroup = keyboardPanelSwitchContainer.getPanelViewGroup();
+            ViewGroup.LayoutParams layoutParams1 = panelViewGroup.getLayoutParams();
+            layoutParams1.height = HSResourceUtils.getDefaultKeyboardHeight(HSApplication.getContext().getResources());
+            panelViewGroup.requestLayout();
 
-            //调用该方法会调整子View位置，不会调整子View大小
-            keyboardPanelSwitchContainer.getPanelViewGroup().requestLayout();
-
-//            keyboardPanelSwitchContainer.requestLayout();
+            HSUIInputMethodService.getInstance().loadKeyboard();
         }
     }
 }
