@@ -10,6 +10,7 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Build;
 import android.support.v4.app.NotificationCompat;
+import android.support.v4.app.NotificationManagerCompat;
 import android.text.TextUtils;
 import android.view.View;
 import android.widget.RemoteViews;
@@ -507,6 +508,10 @@ public class KCNotificationManager {
     }
 
     private void tryToNotify(NotificationCompat.Builder mBuilder, NotificationBean notificationBean) {
+        if (!NotificationManagerCompat.from(context).areNotificationsEnabled()) {
+            KCAnalytics.logEvent("local_push_blocked");
+            return;
+        }
         HSLog.e("本次通知actionType" + notificationBean.getActionType() + " name " + notificationBean.getName());
         Intent intent = new Intent(context, eventReceiverClass);
         intent.setAction(Long.toString(System.currentTimeMillis()));
