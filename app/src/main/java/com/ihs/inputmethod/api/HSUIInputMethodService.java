@@ -577,6 +577,13 @@ public abstract class HSUIInputMethodService extends HSInputMethodService implem
     }
 
     @Override
+    public void onWindowHidden() {
+        super.onWindowHidden();
+
+        getKeyboardPanelMananger().hideAdjustKeyboardHeightView();
+    }
+
+    @Override
     protected void showStickerSuggestionByName(String stickerTag, ArrayList<String> stickerNameByString) {
         List<Sticker> stickerList = new ArrayList<>();
         if (!TextUtils.isEmpty(stickerTag) && Character.isLetter(stickerTag.codePointAt(stickerTag.length() - 1))) {

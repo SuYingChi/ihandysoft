@@ -64,6 +64,7 @@ import static android.view.View.VISIBLE;
 public class KeyboardPanelManager extends KeyboardPanelSwitcher implements BaseFunctionBar.OnFunctionBarItemClickListener {
 
     public static final String SHOW_EMOJI_PANEL = "show_emoji_panel";
+    private FrameLayout frameLayout;
 
     public KeyboardPanelManager() {
     }
@@ -89,11 +90,13 @@ public class KeyboardPanelManager extends KeyboardPanelSwitcher implements BaseF
             } else if (HSInputMethod.HS_NOTIFICATION_SHOW_INPUTMETHOD.equals(s)) {
                 showKeyboardWithMenu();
                 functionBar.showNewMarkIfNeed();
-            }else if(HSInputMethod.HS_NOTIFICATION_FIRST_OPEN_KEYBOARD_TODAY.equals(s)){
+//                updateKeyboardHeight();
+            } else if (HSInputMethod.HS_NOTIFICATION_FIRST_OPEN_KEYBOARD_TODAY.equals(s)) {
                 functionBar.checkNewGame();
             }
         }
     };
+
 
     private void addOrUpdateBackgroundView() {
         //set bar layout background
@@ -250,7 +253,7 @@ public class KeyboardPanelManager extends KeyboardPanelSwitcher implements BaseF
             KCAnalytics.logEvent("keyboard_cloth_button_click");
         }
 
-        if (view.getId() == R.id.func_facemoji_button){
+        if (view.getId() == R.id.func_facemoji_button) {
             HSEmoticonActionBar.saveLastPanelName(HSEmoticonActionBar.PANEL_FACEEMOJI);
             keyboardPanelSwitchContainer.showPanelAndKeepSelf(HSEmoticonPanel.class);
             keyboardPanelSwitchContainer.setBarVisibility(GONE);
@@ -449,7 +452,39 @@ public class KeyboardPanelManager extends KeyboardPanelSwitcher implements BaseF
         }
     }
 
-    public void showAdjustKeyboardHeight() {
+    public void showAdjustKeyboardHeightView() {
+        if (keyboardPanelSwitchContainer != null) {
+            View adjustKeyboardHeightView = View.inflate(HSApplication.getContext(), R.layout.item_panel_keyboard_height, null);
 
+            frameLayout = new FrameLayout(HSApplication.getContext());
+            frameLayout.addView(adjustKeyboardHeightView);
+
+            keyboardPanelSwitchContainer.addView(frameLayout, new FrameLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
+        }
+    }
+
+    public void hideAdjustKeyboardHeightView() {
+        if (keyboardPanelSwitchContainer != null) {
+            if (frameLayout != null) {
+                keyboardPanelSwitchContainer.removeView(frameLayout);
+                frameLayout = null;
+            }
+        }
+    }
+
+    public void updateKeyboardHeight() {
+        if (hsBackgroundVideoView != null) {
+            ViewGroup.LayoutParams layoutParams = hsBackgroundVideoView.getLayoutParams();
+            layoutParams.height = HSResourceUtils.getDefaultKeyboardHeight(HSApplication.getContext().getResources()) + HSResourceUtils.getDefaultSuggestionStripHeight(HSApplication.getContext().getResources());
+
+            //设置之后子View大小不变，只有PanelViewGroup大小变
+//            ViewGroup.LayoutParams layoutParams1 = keyboardPanelSwitchContainer.getPanelViewGroup().getLayoutParams();
+//            layoutParams1.height = layoutParams.height;
+
+            //调用该方法会调整子View位置，不会调整子View大小
+            keyboardPanelSwitchContainer.getPanelViewGroup().requestLayout();
+
+//            keyboardPanelSwitchContainer.requestLayout();
+        }
     }
 }

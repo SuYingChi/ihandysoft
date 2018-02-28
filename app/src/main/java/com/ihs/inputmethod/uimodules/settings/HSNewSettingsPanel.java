@@ -115,7 +115,7 @@ public class HSNewSettingsPanel extends BasePanel {
             public void onItemClick(ViewItem item) {
 //                getPanelActionListener().showChildPanel(HSAdjustHeightPanel.class, null);
 //                getKeyboardPanelMananger()
-                HSUIInputMethodService.getKeyboardPanelMananger().showAdjustKeyboardHeight();
+                HSUIInputMethodService.getKeyboardPanelMananger().showAdjustKeyboardHeightView();
             }
         }));
         if (selectorItem == null) {
