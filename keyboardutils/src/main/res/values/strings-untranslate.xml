@@ -65,4 +65,9 @@ Try More Lock Screen Themes</string>
     <string name="push_button_text">Check</string>
     <string name="headset_connected">Headphone Connected</string>
 
+    <string name="zodiac_of_the_day">Horoscope of The Day</string>
+    <string name="zodiac_how_your_day">How\'s your day</string>
+    <string name="zodiac_how_your_day_subTitle">Want to know more about your horoscope?</string>
+    <string name="zodiac_set_your_zodiac">Set Your Own Horoscope</string>
+
 </resources>

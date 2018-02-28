@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.percent.PercentRelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <com.ihs.feature.common.TypefacedTextView
+        android:id="@+id/zodiac_locker_of_the_day_tv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@drawable/push_game_head_background"
+        android:paddingBottom="2dp"
+        android:paddingLeft="6dp"
+        android:paddingRight="6dp"
+        android:paddingTop="2dp"
+        android:text="@string/zodiac_of_the_day"
+        app:typeface="@string/roboto_regular" />
+
+    <ImageView
+        android:id="@+id/zodiac_locker_select_preview_image"
+        android:layout_below="@+id/zodiac_locker_of_the_day_tv"
+        android:layout_marginTop="3dp"
+        android:src="@drawable/ic_zodiac_locker_preview"
+        app:layout_aspectRatio="100%"
+        app:layout_marginLeftPercent="7.7%"
+        app:layout_widthPercent="23.35%"
+        tools:ignore="ContentDescription" />
+
+    <com.ihs.feature.common.TypefacedTextView
+        android:id="@+id/zodiac_how_your_day"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignTop="@+id/zodiac_locker_select_preview_image"
+        android:layout_marginLeft="14dp"
+        android:layout_marginStart="14dp"
+        android:layout_toEndOf="@+id/zodiac_locker_select_preview_image"
+        android:layout_toRightOf="@+id/zodiac_locker_select_preview_image"
+        android:maxLines="1"
+        android:text="@string/zodiac_how_your_day"
+        android:textColor="@android:color/black"
+        android:textSize="26.7sp"
+        app:typeface="@string/roboto_medium" />
+
+    <com.ihs.feature.common.TypefacedTextView
+        android:id="@+id/zodiac_how_your_day_subTitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/zodiac_how_your_day"
+        android:layout_alignStart="@+id/zodiac_how_your_day"
+        android:layout_below="@+id/zodiac_how_your_day"
+        android:text="@string/zodiac_how_your_day_subTitle"
+        android:textColor="#80000000"
+        android:textSize="14sp" />
+
+    <com.ihs.feature.common.TypefacedTextView
+        android:id="@+id/zodiac_set_zodiac_button"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_marginBottom="10dp"
+        android:background="#2a7bff"
+        android:gravity="center"
+        android:paddingBottom="8dp"
+        android:paddingTop="8dp"
+        android:text="@string/zodiac_set_your_zodiac"
+        android:textColor="@android:color/white"
+        android:textSize="14sp"
+        app:layout_marginLeftPercent="7.7%"
+        app:layout_marginRightPercent="7.7%" />
+</android.support.percent.PercentRelativeLayout>
