@@ -26,18 +26,16 @@ import android.telephony.PhoneStateListener;
 import android.telephony.TelephonyManager;
 import android.text.TextUtils;
 import android.util.DisplayMetrics;
-import android.view.LayoutInflater;
+import android.view.Gravity;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.Window;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.artw.lockscreen.LockerUtils;
 import com.ihs.app.analytics.HSAnalytics;
-import com.ihs.app.framework.HSApplication;
 import com.ihs.app.framework.HSSessionMgr;
 import com.ihs.charging.HSChargingManager;
 import com.ihs.charging.HSChargingManager.HSChargingState;
@@ -52,15 +50,17 @@ import com.ihs.commons.notificationcenter.INotificationObserver;
 import com.ihs.commons.utils.HSBundle;
 import com.ihs.keyboardutils.R;
 import com.ihs.keyboardutils.iap.RemoveAdsManager;
-import com.ihs.keyboardutils.nativeads.KCNativeAdView;
 import com.ihs.keyboardutils.utils.RippleDrawableUtils;
 import com.kc.commons.utils.KCCommonUtils;
 import com.kc.utils.KCAnalytics;
+
+import net.appcloudbox.ads.expressad.AcbExpressAdView;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 
+import static android.view.ViewGroup.LayoutParams.MATCH_PARENT;
 import static android.view.WindowManager.LayoutParams.FLAG_DISMISS_KEYGUARD;
 import static com.ihs.chargingscreen.HSChargingScreenManager.getChargingState;
 import static com.ihs.keyboardutils.iap.RemoveAdsManager.NOTIFICATION_REMOVEADS_PURCHASED;
@@ -159,8 +159,8 @@ public class ChargingScreenAlertActivity extends Activity {
             }
         }
     };
-    private KCNativeAdView nativeAdView;
     private Dialog closeDialog;
+    private AcbExpressAdView acbExpressAdView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -290,18 +290,19 @@ public class ChargingScreenAlertActivity extends Activity {
         }
 
         if (!RemoveAdsManager.getInstance().isRemoveAdsPurchased()) {
-            View view = LayoutInflater.from(HSApplication.getContext()).inflate(R.layout.ad_style_charging_alert, null);
-            int width = (int) (DisplayUtils.getScreenWidthPixels() * 0.9);
-            View loadingView = new View(HSApplication.getContext());
-            LinearLayout.LayoutParams loadingLP = new LinearLayout.LayoutParams(width, (int) (width / 1.9f + HSApplication.getContext().getResources().getDimensionPixelOffset(R.dimen.ad_style_charging_alert_bottom_container_height)));
-            loadingView.setLayoutParams(loadingLP);
-            nativeAdView = new KCNativeAdView(HSApplication.getContext());
-            nativeAdView.setLoadingView(loadingView);
-            nativeAdView.setAdLayoutView(view);
-            nativeAdView.setPrimaryViewSize(width, (int) (width / 1.9f));
-            nativeAdView.load(HSChargingScreenManager.getInstance().getChargingAlertAdsPlacementName());
-            adContainer.addView(nativeAdView);
+            acbExpressAdView = new AcbExpressAdView(this, HSChargingScreenManager.getInstance().getChargingAlertAdsPlacementName());
+            acbExpressAdView.setAutoSwitchAd(AcbExpressAdView.AutoSwitchAd_All);
+            acbExpressAdView.setGravity(Gravity.BOTTOM);
+            acbExpressAdView.setExpressAdViewListener(new AcbExpressAdView.AcbExpressAdViewListener() {
+                @Override
+                public void onAdShown(AcbExpressAdView acbExpressAdView) {
+                }
 
+                @Override
+                public void onAdClicked(AcbExpressAdView acbExpressAdView) {
+                }
+            });
+            adContainer.addView(acbExpressAdView, new RelativeLayout.LayoutParams(MATCH_PARENT, DisplayUtils.dip2px(250)));
 
             // 单次关闭广告或永久删除广告
             removeAds = (ImageView) findViewById(R.id.remove_ads);
@@ -415,6 +416,11 @@ public class ChargingScreenAlertActivity extends Activity {
 
     @Override
     public void onDestroy() {
+        if (acbExpressAdView != null) {
+            acbExpressAdView.destroy();
+            acbExpressAdView = null;
+        }
+
         unregisterReceiver(broadcastReceiver);
 
         if (telephonyManager != null) {
@@ -629,7 +635,7 @@ public class ChargingScreenAlertActivity extends Activity {
             @Override
             public void onClick(View v) {
                 KCCommonUtils.dismissDialog(removeAdsDialog);
-                adContainer.removeView(nativeAdView);
+                adContainer.removeView(acbExpressAdView);
                 removeAds.setVisibility(View.GONE);
             }
         });
@@ -648,10 +654,10 @@ public class ChargingScreenAlertActivity extends Activity {
                         if (removeAds != null) {
                             removeAds.setVisibility(View.GONE);
                         }
-                        if (nativeAdView != null) {
-                            adContainer.removeView(nativeAdView);
-                            nativeAdView.release();
-                            nativeAdView = null;
+                        if (acbExpressAdView != null) {
+                            adContainer.removeView(acbExpressAdView);
+                            acbExpressAdView.destroy();
+                            acbExpressAdView = null;
                         }
                     }
                 });

@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <style name="ChargingScreenAlertActivityTheme" parent="DefaultCompatDialog">
+        <item name="android:backgroundDimEnabled">true</item>-->
+        <item name="android:backgroundDimAmount">0.72</item>
+        <item name="android:windowBackground">@android:color/transparent</item>
+        <item name="windowFixedWidthMajor">@dimen/dialog_major_width_compat</item>
+        <item name="windowFixedWidthMinor">@dimen/dialog_major_width_compat</item>
+        <item name="android:windowMinWidthMajor">@dimen/dialog_major_width_compat</item>
+        <item name="android:windowMinWidthMinor">@dimen/dialog_major_width_compat</item>
+    </style>
+</resources>

@@ -208,7 +208,7 @@ public class ResultPageActivity extends HSAppCompatActivity
         closeIv.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                finish();
+                finishAndNotify();
             }
         });
 
