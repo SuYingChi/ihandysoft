@@ -13,12 +13,14 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -27,19 +29,23 @@ import com.artw.lockscreen.PremiumSearchDialog;
 import com.artw.lockscreen.SearchIntentReceiver;
 import com.artw.lockscreen.WebContentSearchManager;
 import com.ihs.app.framework.HSApplication;
+import com.ihs.chargingscreen.HSChargingScreenManager;
 import com.ihs.chargingscreen.utils.DisplayUtils;
 import com.ihs.commons.config.HSConfig;
 import com.ihs.commons.notificationcenter.HSGlobalNotificationCenter;
 import com.ihs.commons.utils.HSLog;
 import com.ihs.keyboardutils.BuildConfig;
 import com.ihs.keyboardutils.R;
-import com.ihs.keyboardutils.nativeads.KCNativeAdView;
 import com.ihs.keyboardutils.utils.RippleDrawableUtils;
 import com.ihs.keyboardutils.utils.ToastUtils;
 import com.kc.commons.utils.KCCommonUtils;
 import com.kc.utils.KCAnalytics;
 
+import net.appcloudbox.ads.expressad.AcbExpressAdView;
+
 import java.util.ArrayList;
+
+import static android.view.ViewGroup.LayoutParams.MATCH_PARENT;
 
 /**
  * Created by Arthur on 17/12/9.
@@ -48,9 +54,9 @@ import java.util.ArrayList;
 public class AppSuggestionActivity extends Activity {
 
     private static final int RECENT_APP_SIZE = 5;
-    private KCNativeAdView nativeAdView;
     private PremiumSearchDialog searchDialog;
     private Dialog closeDialog;
+    private AcbExpressAdView acbExpressAdView;
 
     private class RecentAppAdapter extends RecyclerView.Adapter {
         private ArrayList<String> recentAppPackName;
@@ -215,12 +221,22 @@ public class AppSuggestionActivity extends Activity {
         });
 
 
-        nativeAdView = new KCNativeAdView(HSApplication.getContext());
-        nativeAdView.setAdLayoutView(View.inflate(this, R.layout.acb_suggestion_ad_layout, null));
-        nativeAdView.load(AppSuggestionManager.getInstance().getAdPlacementName());
+
+        acbExpressAdView = new AcbExpressAdView(this, HSChargingScreenManager.getInstance().getChargingAlertAdsPlacementName());
+        acbExpressAdView.setAutoSwitchAd(AcbExpressAdView.AutoSwitchAd_All);
+        acbExpressAdView.setGravity(Gravity.BOTTOM);
+        acbExpressAdView.setExpressAdViewListener(new AcbExpressAdView.AcbExpressAdViewListener() {
+            @Override
+            public void onAdShown(AcbExpressAdView acbExpressAdView) {
+            }
+
+            @Override
+            public void onAdClicked(AcbExpressAdView acbExpressAdView) {
+            }
+        });
 
         FrameLayout adContainer = findViewById(R.id.alert_ad_container);
-        adContainer.addView(nativeAdView);
+        adContainer.addView(acbExpressAdView, new RelativeLayout.LayoutParams(MATCH_PARENT, DisplayUtils.dip2px(250)));
     }
 
 
@@ -276,9 +292,9 @@ public class AppSuggestionActivity extends Activity {
 
     @Override
     protected void onDestroy() {
-        if (nativeAdView != null) {
-            nativeAdView.release();
-            nativeAdView = null;
+        if (acbExpressAdView != null) {
+            acbExpressAdView.destroy();
+            acbExpressAdView = null;
         }
 
         if (null != closeDialog) {

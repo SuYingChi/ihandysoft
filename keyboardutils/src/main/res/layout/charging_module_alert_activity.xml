@@ -48,11 +48,10 @@
                     android:layout_height="34dp"
                     android:layout_toLeftOf="@+id/close_btn"
                     android:layout_toStartOf="@+id/close_btn"
-                    android:padding="6dp"
                     android:alpha="0.6"
+                    android:padding="6dp"
                     android:tint="@color/white"
-                    app:srcCompat="@drawable/ic_more_vert_black_24dp"
-                    />
+                    app:srcCompat="@drawable/ic_more_vert_black_24dp" />
 
 
                 <ImageView
@@ -211,9 +210,6 @@
             <android.support.percent.PercentRelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="@dimen/ad_style_charging_alert_content_margin"
-                android:layout_marginLeft="@dimen/ad_style_charging_alert_content_margin"
-                android:layout_marginRight="@dimen/ad_style_charging_alert_content_margin"
                 android:clipChildren="false">
 
                 <ImageView
@@ -221,6 +217,8 @@
                     android:layout_width="16dp"
                     android:layout_height="16dp"
                     android:layout_alignParentRight="true"
+                    android:layout_marginLeft="9dp"
+                    android:layout_marginRight="9dp"
                     android:src="@drawable/ad_close_button"
                     android:visibility="gone" />
 

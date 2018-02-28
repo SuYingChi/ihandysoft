@@ -20,8 +20,8 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_centerInParent="true"
-        android:layout_marginLeft="16dp"
-        android:layout_marginRight="16dp"
+        android:layout_marginLeft="@dimen/alert_activity_margin_sides"
+        android:layout_marginRight="@dimen/alert_activity_margin_sides"
         android:background="@drawable/acb_alert_dialog_normal_bg"
         android:clipChildren="false">
 
@@ -182,7 +182,6 @@
                 android:id="@+id/alert_ad_container"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="10dp"
                 android:layout_marginTop="10dp"
                 android:clipChildren="false" />
 

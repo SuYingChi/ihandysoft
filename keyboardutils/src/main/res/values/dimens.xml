@@ -247,4 +247,7 @@
     <dimen name="ad_style_charging_alert_content_margin">9dp</dimen>
 
     <dimen name="phantom_notification_height">70dp</dimen>
+    <dimen name="alert_activity_margin_sides">16dp</dimen>
+
+    <item name="dialog_major_width_compat" type="dimen">98%</item>
 </resources>
