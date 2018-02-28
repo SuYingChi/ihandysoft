@@ -122,7 +122,6 @@ public class KCNativeAdView extends FrameLayout {
         this.nativeAdContainerView = new AcbNativeAdContainerView(getContext());
         this.nativeAdContainerView.addContentView(groupView);
 
-        this.nativeAdContainerView.hideAdCorner();
 
         int coverImgId = getResources().getIdentifier("ad_cover_img", "id", getContext().getPackageName());
         int choiceId = getResources().getIdentifier("ad_choice", "id", getContext().getPackageName());

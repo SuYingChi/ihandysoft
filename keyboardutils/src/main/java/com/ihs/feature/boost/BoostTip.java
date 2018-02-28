@@ -399,7 +399,6 @@ public class BoostTip extends FrameLayout implements View.OnClickListener, Float
             final View containerView = View.inflate(getContext(), R.layout.boost_tip_ad_hs, null);
             AcbNativeAdContainerView nativeAdContainerView = new AcbNativeAdContainerView(mContext);
             nativeAdContainerView.addContentView(containerView);
-            nativeAdContainerView.hideAdCorner();
 
             nativeAdContainerView.setAdPrimaryView((AcbNativeAdPrimaryView) containerView.findViewById(R.id.boost_ad_image_container));
             nativeAdContainerView.setAdChoiceView((ViewGroup) containerView.findViewById(R.id.boost_ad_choice));

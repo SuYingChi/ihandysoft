@@ -242,7 +242,6 @@ abstract class ResultController implements View.OnClickListener {
             case CARD_VIEW:
                 mAdImageContainer.setBackground(imageFrame);
                 AcbNativeAdContainerView adContainer = new AcbNativeAdContainerView(getContext());
-                adContainer.hideAdCorner();
                 adContainer.addContentView(resultView);
                 adContainer.setAdPrimaryView(mAdImageContainer);
                 mChargingScreenImageContainer.setVisibility(View.INVISIBLE);
