@@ -69,5 +69,10 @@ Try More Lock Screen Themes</string>
     <string name="zodiac_how_your_day">How\'s your day</string>
     <string name="zodiac_how_your_day_subTitle">Want to know more about your horoscope?</string>
     <string name="zodiac_set_your_zodiac">Set Your Own Horoscope</string>
+    <string name="zodiac_read_more">Read More</string>
+    <string name="zodiac_love">Love</string>
+    <string name="zodiac_career">Career</string>
+    <string name="zodiac_money">Money</string>
+    <string name="zodiac_health">Health</string>
 
 </resources>

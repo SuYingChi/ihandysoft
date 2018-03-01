@@ -10,4 +10,6 @@
     <string name="akrobat_light" translatable="false">Akrobat-Light-simple.ttf</string>
     <string name="proxima_nova_regular" translatable="false">ProximaNova-Regular.otf</string>
     <string name="proxima_nova_semibold" translatable="false">ProximaNova-Semibold.otf</string>
+    <string name="aleo_regular" translatable="false">Aleo-Regular.otf</string>
+    <string name="aleo_light" translatable="false">Aleo-Light.otf</string>
 </resources>
