@@ -158,7 +158,6 @@ public class KeyboardPanelManager extends KeyboardPanelSwitcher implements BaseF
         HSGlobalNotificationCenter.addObserver(HSInputMethod.HS_NOTIFICATION_SHOW_INPUTMETHOD, notificationObserver);
         HSGlobalNotificationCenter.addObserver(HSInputMethod.HS_NOTIFICATION_FIRST_OPEN_KEYBOARD_TODAY, notificationObserver);
 
-        keyboardPanelSwitchContainer.getPanelViewGroup().getLayoutParams().height = HSResourceUtils.getDefaultKeyboardHeight(HSApplication.getContext().getResources());
         return keyboardPanelSwitchContainer;
     }
 
@@ -478,12 +477,17 @@ public class KeyboardPanelManager extends KeyboardPanelSwitcher implements BaseF
             ViewGroup.LayoutParams layoutParams = hsBackgroundVideoView.getLayoutParams();
             layoutParams.height = HSResourceUtils.getDefaultKeyboardHeight(HSApplication.getContext().getResources()) + HSResourceUtils.getDefaultSuggestionStripHeight(HSApplication.getContext().getResources());
 
-            ViewGroup panelViewGroup = keyboardPanelSwitchContainer.getPanelViewGroup();
-            ViewGroup.LayoutParams layoutParams1 = panelViewGroup.getLayoutParams();
-            layoutParams1.height = HSResourceUtils.getDefaultKeyboardHeight(HSApplication.getContext().getResources());
-            panelViewGroup.requestLayout();
-
             HSUIInputMethodService.getInstance().loadKeyboard();
+            KeyboardSwitcher.getInstance().getMainKeyboardView().requestLayout();
+            ViewGroup panelViewGroup = keyboardPanelSwitchContainer.getPanelViewGroup();
+            for (int i = 0 ; i < panelViewGroup.getChildCount() ; i++) {
+                panelViewGroup.getChildAt(i).requestLayout();
+            }
+
+//            ViewGroup.LayoutParams layoutParams1 = panelViewGroup.getLayoutParams();
+//            layoutParams1.height = HSResourceUtils.getDefaultKeyboardHeight(HSApplication.getContext().getResources());
+//            panelViewGroup.forceLayout();
+//            panelViewGroup.requestLayout();
         }
     }
 }

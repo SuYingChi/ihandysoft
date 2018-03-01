@@ -17,39 +17,47 @@ import com.ihs.panelcontainer.KeyboardPanelSwitchContainer;
 
 public final class HSEmoticonView extends KeyboardPanelSwitchContainer {
 
-	final HSEmoticonActionBar actionBar;
+    final HSEmoticonActionBar actionBar;
 
-	public HSEmoticonView() {
-		super();
-		this.setBackgroundColor(HSKeyboardThemeManager.getCurrentTheme().getDominantColor());
-		setBarPosition(BAR_BOTTOM);
-		actionBar= (HSEmoticonActionBar) View.inflate(HSApplication.getContext(),R.layout.emoticon_action_bar,null);
-		setBarView(actionBar);
-		actionBar.setContainerListener(this);
-		final Resources res = getContext().getResources();
-		final int height = HSResourceUtils.getDefaultKeyboardHeight(res) +res.getDimensionPixelSize(R.dimen.config_suggestions_strip_height);
-		setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, height));
-	}
+    public HSEmoticonView() {
+        super();
+        this.setBackgroundColor(HSKeyboardThemeManager.getCurrentTheme().getDominantColor());
+        setBarPosition(BAR_BOTTOM);
+        actionBar = (HSEmoticonActionBar) View.inflate(HSApplication.getContext(), R.layout.emoticon_action_bar, null);
+        setBarView(actionBar);
+        actionBar.setContainerListener(this);
 
+        final Resources res = getContext().getResources();
+        final int height = HSResourceUtils.getDefaultKeyboardHeight(res) + res.getDimensionPixelSize(R.dimen.config_suggestions_strip_height);
+        setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, height));
+    }
 
-	@Override
-	public void showPanel(Class panelClass) {
-		super.showPanel(panelClass);
-		actionBar.selectPanelBtn(panelClass);
-	}
+    @Override
+    protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
+        super.onMeasure(widthMeasureSpec, heightMeasureSpec);
+        final Resources res = getContext().getResources();
+        final int height = HSResourceUtils.getDefaultKeyboardHeight(res) + res.getDimensionPixelSize(R.dimen.config_suggestions_strip_height);
+        setMeasuredDimension(HSApplication.getContext().getResources().getDisplayMetrics().widthPixels, height);
+    }
 
-	public void setKeyboardPanelActionListener(BasePanel.OnPanelActionListener panelActionListener) {
-		actionBar.setKeyboardPanelActionListener(panelActionListener);
-	}
+    @Override
+    public void showPanel(Class panelClass) {
+        super.showPanel(panelClass);
+        actionBar.selectPanelBtn(panelClass);
+    }
 
-	public void showLastPanel() {
-		Class<?> clazz=actionBar.getPanelClass(HSEmoticonActionBar.getLastPanelName());
-		showPanel(clazz);
-	}
+    public void setKeyboardPanelActionListener(BasePanel.OnPanelActionListener panelActionListener) {
+        actionBar.setKeyboardPanelActionListener(panelActionListener);
+    }
 
-	@Override
-	public void onDestroy() {
-		super.onDestroy();
-		actionBar.release();
-	}
+    public void showLastPanel() {
+        Class<?> clazz = actionBar.getPanelClass(HSEmoticonActionBar.getLastPanelName());
+        showPanel(clazz);
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        actionBar.release();
+    }
 }

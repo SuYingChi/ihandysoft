@@ -12,7 +12,6 @@ import android.util.AttributeSet;
 import android.util.Pair;
 import android.view.MotionEvent;
 import android.view.View;
-import android.view.ViewGroup;
 import android.view.ViewStub;
 import android.view.animation.AlphaAnimation;
 import android.view.animation.Animation;
@@ -22,7 +21,7 @@ import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 
-import com.kc.utils.KCAnalytics;
+import com.ihs.app.framework.HSApplication;
 import com.ihs.commons.utils.HSLog;
 import com.ihs.inputmethod.api.framework.HSEmojiSuggestionManager;
 import com.ihs.inputmethod.api.framework.HSInputMethod;
@@ -36,6 +35,7 @@ import com.ihs.inputmethod.uimodules.ui.common.adapter.HSEmojiViewAdapter;
 import com.ihs.inputmethod.uimodules.ui.common.model.Emoji;
 import com.ihs.inputmethod.uimodules.ui.emoji.Skin.HSEmojiSkinViewAdapter;
 import com.ihs.inputmethod.uimodules.ui.gif.common.control.UIController;
+import com.kc.utils.KCAnalytics;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -72,10 +72,21 @@ public class HSEmojiPanelView extends FrameLayout implements BaseTabViewAdapter.
         emojiCategory = new EmojiCategory(PreferenceManager.getDefaultSharedPreferences(context), res, this);
 
         this.setBackgroundColor(HSKeyboardThemeManager.getCurrentTheme().getDominantColor());
-        final int height = HSResourceUtils.getDefaultKeyboardHeight(res)
-                + res.getDimensionPixelSize(R.dimen.config_suggestions_strip_height)
-                - res.getDimensionPixelSize(R.dimen.emoticon_panel_actionbar_height);
-        setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, height));
+
+//        final int height = HSResourceUtils.getDefaultKeyboardHeight(res)
+//                + res.getDimensionPixelSize(R.dimen.config_suggestions_strip_height)
+//                - res.getDimensionPixelSize(R.dimen.emoticon_panel_actionbar_height);
+//        setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, height));
+    }
+
+    @Override
+    protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
+        super.onMeasure(widthMeasureSpec, heightMeasureSpec);
+
+        final int height = HSResourceUtils.getDefaultKeyboardHeight(getContext().getResources())
+                + getContext().getResources().getDimensionPixelSize(R.dimen.config_suggestions_strip_height)
+                - getContext().getResources().getDimensionPixelSize(R.dimen.emoticon_panel_actionbar_height);
+        setMeasuredDimension(HSApplication.getContext().getResources().getDisplayMetrics().widthPixels, height);
     }
 
     @Override
