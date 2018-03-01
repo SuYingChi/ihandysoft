@@ -29,7 +29,6 @@ import com.artw.lockscreen.PremiumSearchDialog;
 import com.artw.lockscreen.SearchIntentReceiver;
 import com.artw.lockscreen.WebContentSearchManager;
 import com.ihs.app.framework.HSApplication;
-import com.ihs.chargingscreen.HSChargingScreenManager;
 import com.ihs.chargingscreen.utils.DisplayUtils;
 import com.ihs.commons.config.HSConfig;
 import com.ihs.commons.notificationcenter.HSGlobalNotificationCenter;
@@ -222,9 +221,9 @@ public class AppSuggestionActivity extends Activity {
 
 
 
-        acbExpressAdView = new AcbExpressAdView(this, HSChargingScreenManager.getInstance().getChargingAlertAdsPlacementName());
+        acbExpressAdView = new AcbExpressAdView(this,AppSuggestionManager.getInstance().getAdPlacementName());
         acbExpressAdView.setAutoSwitchAd(AcbExpressAdView.AutoSwitchAd_All);
-        acbExpressAdView.setGravity(Gravity.CENTER);
+        acbExpressAdView.setGravity(Gravity.BOTTOM);
         acbExpressAdView.setExpressAdViewListener(new AcbExpressAdView.AcbExpressAdViewListener() {
             @Override
             public void onAdShown(AcbExpressAdView acbExpressAdView) {

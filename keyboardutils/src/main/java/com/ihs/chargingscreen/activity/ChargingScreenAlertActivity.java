@@ -49,7 +49,6 @@ import com.ihs.commons.notificationcenter.HSGlobalNotificationCenter;
 import com.ihs.commons.notificationcenter.INotificationObserver;
 import com.ihs.commons.utils.HSBundle;
 import com.ihs.keyboardutils.R;
-import com.ihs.keyboardutils.appsuggestion.AppSuggestionManager;
 import com.ihs.keyboardutils.iap.RemoveAdsManager;
 import com.ihs.keyboardutils.utils.RippleDrawableUtils;
 import com.kc.commons.utils.KCCommonUtils;
@@ -291,9 +290,9 @@ public class ChargingScreenAlertActivity extends Activity {
         }
 
         if (!RemoveAdsManager.getInstance().isRemoveAdsPurchased()) {
-            acbExpressAdView = new AcbExpressAdView(this, AppSuggestionManager.getInstance().getAdPlacementName());
+            acbExpressAdView = new AcbExpressAdView(this, HSChargingScreenManager.getInstance().getChargingAlertAdsPlacementName());
             acbExpressAdView.setAutoSwitchAd(AcbExpressAdView.AutoSwitchAd_All);
-            acbExpressAdView.setGravity(Gravity.CENTER);
+            acbExpressAdView.setGravity(Gravity.BOTTOM);
             acbExpressAdView.setExpressAdViewListener(new AcbExpressAdView.AcbExpressAdViewListener() {
                 @Override
                 public void onAdShown(AcbExpressAdView acbExpressAdView) {
