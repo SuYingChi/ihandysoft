@@ -31,8 +31,9 @@ final class ViewItemBuilder {
 
     private final static String SETTINGS_KEY_SELECTOR = "ic_selector";
 
+    private final static String SETTINGS_KEY_KEYBOARD_HEIGHT = "ic_setting_key_keyboard_height";
+
     private final static String SETTINGS_KEY_FONTS = "ic_settings_key_fonts";
-    private final static String SETTINGS_KEY_KEYBOARD_HEIGHT = "ic_settings_key_fonts";
 
     private final static String SETTINGS_KEY_SOUND_OFF = "ic_settings_key_sound_off";
     private final static String SETTINGS_KEY_SOUND_ON = "ic_settings_key_sound_on";

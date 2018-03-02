@@ -463,6 +463,10 @@ public class KeyboardPanelManager extends KeyboardPanelSwitcher implements BaseF
         }
     }
 
+    public boolean isAdjustKeyboardHeightViewShow() {
+        return keyboardPanelSwitchContainer != null;
+    }
+
     public void hideAdjustKeyboardHeightView() {
         if (keyboardPanelSwitchContainer != null) {
             if (frameLayout != null) {
@@ -480,7 +484,7 @@ public class KeyboardPanelManager extends KeyboardPanelSwitcher implements BaseF
             HSUIInputMethodService.getInstance().loadKeyboard();
             KeyboardSwitcher.getInstance().getMainKeyboardView().requestLayout();
             ViewGroup panelViewGroup = keyboardPanelSwitchContainer.getPanelViewGroup();
-            for (int i = 0 ; i < panelViewGroup.getChildCount() ; i++) {
+            for (int i = 0; i < panelViewGroup.getChildCount(); i++) {
                 panelViewGroup.getChildAt(i).requestLayout();
             }
 
