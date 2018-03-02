@@ -135,7 +135,7 @@ public class HSChargingScreenManager {
                 if (preChargingState == HSChargingState.STATE_DISCHARGING && curChargingState != HSChargingState.STATE_DISCHARGING && ChargingManagerUtil.isChargingEnabled()) {
                     //插电
                     ChargingManagerUtil.startChargingActivity();
-                } else if (preChargingState != HSChargingState.STATE_DISCHARGING && curChargingState == HSChargingState.STATE_DISCHARGING && ChargingPrefsUtil.isChargingAlertEnabled()) {
+                } else if (preChargingState != HSChargingState.STATE_DISCHARGING && preChargingState != HSChargingState.STATE_UNKNOWN && curChargingState == HSChargingState.STATE_DISCHARGING && ChargingPrefsUtil.isChargingAlertEnabled()) {
                     ChargingManagerUtil.startChargingAlertActivity("PlugOut");
                 }
 
