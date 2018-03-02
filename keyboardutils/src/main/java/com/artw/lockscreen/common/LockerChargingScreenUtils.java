@@ -38,7 +38,8 @@ public class LockerChargingScreenUtils {
 
     }
 
-    private static int lockerStyle = LOCKER_STYLE_DEFAULT;
+    //TODO:Revert this
+    private static int lockerStyle = LOCKER_STYLE_ACTIVITY_PREMIUM;
 
     public static boolean isFastDoubleClick() {
 
