@@ -34,6 +34,8 @@ import android.view.animation.Animation;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.PopupWindow;
+import android.widget.ProgressBar;
+import android.widget.RatingBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -70,6 +72,7 @@ import com.ihs.feature.junkclean.model.JunkInfo;
 import com.ihs.feature.softgame.GameStarterActivity;
 import com.ihs.feature.softgame.SoftGameDisplayActivity;
 import com.ihs.feature.weather.WeatherManager;
+import com.ihs.feature.zodiac.ZodiacUtils;
 import com.ihs.keyboardutils.R;
 import com.ihs.keyboardutils.alerts.LockerUpgradeAlert;
 import com.ihs.keyboardutils.appsuggestion.AppSuggestionManager;
@@ -82,6 +85,10 @@ import com.kc.commons.utils.KCCommonUtils;
 import com.kc.utils.KCAnalytics;
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.ImageLoader;
+
+import net.appcloudbox.internal.service.utils.AcbError;
+import net.appcloudbox.service.AcbHoroscopeData;
+import net.appcloudbox.service.AcbHoroscopeRequest;
 
 import org.json.JSONObject;
 
@@ -104,7 +111,7 @@ import static com.ihs.feature.weather.WeatherManager.BUNDLE_KEY_WEATHER_TEMPERAT
 
 public class PremiumLockerMainFrame extends PercentRelativeLayout implements INotificationObserver, SlidingDrawer.SlidingDrawerListener {
 
-
+    private static final String TAG = "PremiumLockerMainFrame";
     public static final String EVENT_SLIDING_DRAWER_OPENED = "EVENT_SLIDING_DRAWER_OPENED";
     public static final String EVENT_SLIDING_DRAWER_CLOSED = "EVENT_SLIDING_DRAWER_CLOSED";
 
@@ -134,6 +141,8 @@ public class PremiumLockerMainFrame extends PercentRelativeLayout implements INo
 
     private boolean mIsSlidingDrawerOpened = false;
     private boolean mIsBlackHoleShowing = false;
+
+    private AcbHoroscopeRequest horoscopeRequest;
 
     private DeviceManager deviceManager = DeviceManager.getInstance();
     private BatteryDataManager batteryDataManager = new BatteryDataManager(getContext());
@@ -471,6 +480,9 @@ public class PremiumLockerMainFrame extends PercentRelativeLayout implements INo
         if (mShimmer != null) {
             mShimmer.cancel();
         }
+        if (horoscopeRequest != null) {
+            horoscopeRequest.cancel();
+        }
         unregisterDataReceiver();
     }
 
@@ -618,12 +630,13 @@ public class PremiumLockerMainFrame extends PercentRelativeLayout implements INo
     }
 
     private boolean showPushFrameItem(int pushFrameItemIndex) {
+        HSLog.d(TAG, "pushFrameItemIndex: " + pushFrameItemIndex);
         findViewById(R.id.push_camera).setVisibility(GONE);
         findViewById(R.id.push_game).setVisibility(GONE);
         findViewById(R.id.push_boost_two).setVisibility(GONE);
         findViewById(R.id.push_boost_scan).setVisibility(GONE);
         findViewById(R.id.push_boost_one).setVisibility(GONE);
-        findViewById(R.id.push_zodiac_set).setVisibility(GONE);
+        findViewById(R.id.push_zodiac).setVisibility(GONE);
 
         switch (pushFrameItemIndex) {
             case MODE_JUNK:
@@ -880,22 +893,63 @@ public class PremiumLockerMainFrame extends PercentRelativeLayout implements INo
                 if (hasClickedZodiacToday()) {
                     return false;
                 }
-                findViewById(R.id.push_camera).setVisibility(GONE);
-                findViewById(R.id.push_game).setVisibility(GONE);
-                findViewById(R.id.push_boost_two).setVisibility(GONE);
-                findViewById(R.id.push_boost_scan).setVisibility(GONE);
-                findViewById(R.id.push_boost_one).setVisibility(GONE);
+                View zodiacRootView = findViewById(R.id.push_zodiac);
+                zodiacRootView.setVisibility(VISIBLE);
+                View zodiacSetView = zodiacRootView.findViewById(R.id.push_zodiac_set);
+                View zodiacShowView = zodiacRootView.findViewById(R.id.push_zodiac_show);
+                if (ZodiacUtils.hasSelectedZodiac()) {
+                    zodiacSetView.setVisibility(GONE);
+                    zodiacShowView.setVisibility(VISIBLE);
+                    AcbHoroscopeData.HoroscopeType horoscopeType = ZodiacUtils.getSelectZodiac();
+                    if (horoscopeRequest != null) {
+                        horoscopeRequest.cancel();
+                        horoscopeRequest = null;
+                    } else {
+                        horoscopeRequest = new AcbHoroscopeRequest(getContext(), horoscopeType, new Date(System.currentTimeMillis()), new AcbHoroscopeRequest.AcbHoroscopeListener() {
+                            @Override
+                            public void onSuccess(AcbHoroscopeData acbHoroscopeData) {
+                                HSLog.d(TAG, String.valueOf(acbHoroscopeData));
+                                ProgressBar progressBar = zodiacShowView.findViewById(R.id.zodiac_waiting_progress_bar);
+                                progressBar.setVisibility(GONE);
+                                View zodiacDetailView = zodiacShowView.findViewById(R.id.zodiac_detail_view);
+                                zodiacDetailView.setVisibility(VISIBLE);
+                                View zodiacRefreshView = zodiacShowView.findViewById(R.id.zodiac_refresh_view);
+                                zodiacRefreshView.setVisibility(GONE);
+                                RatingBar ratingBarLove = zodiacDetailView.findViewById(R.id.ratingBar_love);
+                                ratingBarLove.setRating(acbHoroscopeData.getLoveRatings());
+                                RatingBar ratingBarMoney = zodiacDetailView.findViewById(R.id.ratingBar_money);
+                                ratingBarMoney.setRating(acbHoroscopeData.getMoneyRatings());
+                                RatingBar ratingBarCareer = zodiacDetailView.findViewById(R.id.ratingBar_career);
+                                ratingBarCareer.setRating(acbHoroscopeData.getCareerRatings());
+                                RatingBar ratingBarHealth = zodiacDetailView.findViewById(R.id.ratingBar_health);
+                                ratingBarHealth.setRating(acbHoroscopeData.getHealthRatings());
+                                TextView textViewTipContent = zodiacDetailView.findViewById(R.id.zodiac_tip_content);
+                                textViewTipContent.setText(acbHoroscopeData.getTip());
+                            }
 
-                View setZodiacRootView = findViewById(R.id.push_zodiac_set);
-                setZodiacRootView.setVisibility(VISIBLE);
-                TextView setZodiacButton = setZodiacRootView.findViewById(R.id.zodiac_set_zodiac_button);
-                setZodiacButton.setOnClickListener(new OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        setClickZodiacToday();
-                        increasePushFrameItemIndex();
+                            @Override
+                            public void onFailure(AcbError acbError) {
+                                HSLog.e(TAG, acbError.getMessage());
+                            }
+                        });
+                        horoscopeRequest.start();
                     }
-                });
+                } else {
+                    zodiacSetView.setVisibility(VISIBLE);
+                    zodiacShowView.setVisibility(GONE);
+                    TextView setZodiacButton = zodiacSetView.findViewById(R.id.zodiac_set_zodiac_button);
+                    setZodiacButton.setBackgroundDrawable(RippleDrawableUtils.getCompatRippleDrawable(Color.BLACK, DisplayUtils.dip2px(20)));
+                    setZodiacButton.setOnClickListener(new OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            setClickZodiacToday();
+                            increasePushFrameItemIndex();
+                            //TODO:跳到相机去设置
+                            NavUtils.startCameraFromLockerScreen(getContext().getApplicationContext());
+                            HSGlobalNotificationCenter.sendNotification(PremiumLockerActivity.EVENT_FINISH_SELF);
+                        }
+                    });
+                }
                 break;
             case MODE_STORAGE:
                 int usage = deviceManager.getRamUsage();

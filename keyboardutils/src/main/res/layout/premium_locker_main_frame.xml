@@ -265,7 +265,7 @@
             android:visibility="gone" />
 
         <include
-            layout="@layout/push_frame_zodiac_set_layout"
+            layout="@layout/push_frame_zodiac_layout"
             android:visibility="gone" />
 
         <android.support.v7.widget.AppCompatImageView
