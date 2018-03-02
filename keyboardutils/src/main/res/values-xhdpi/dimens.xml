@@ -2,4 +2,5 @@
 
     <dimen name="charging_left_time_layout_margin_bottom">10dp</dimen>
     <dimen name="result_empty_view_top_margin">28dp</dimen>
+    <dimen name="alert_activity_margin_sides">9dp</dimen>
 </resources>
