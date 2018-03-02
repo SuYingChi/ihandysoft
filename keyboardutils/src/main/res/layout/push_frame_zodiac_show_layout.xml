@@ -4,8 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/push_zodiac_show"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="@color/boost_plus_red">
+    android:layout_height="match_parent">
 
     <com.ihs.feature.common.TypefacedTextView
         android:id="@+id/zodiac_today_zodiac_name_title"
