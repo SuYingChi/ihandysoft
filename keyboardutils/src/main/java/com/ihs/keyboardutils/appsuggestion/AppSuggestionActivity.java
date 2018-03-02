@@ -10,6 +10,7 @@ import android.content.pm.PackageManager;
 import android.graphics.Color;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -56,6 +57,8 @@ public class AppSuggestionActivity extends Activity {
     private PremiumSearchDialog searchDialog;
     private Dialog closeDialog;
     private AcbExpressAdView acbExpressAdView;
+
+    private Handler handler = new Handler();
 
     private class RecentAppAdapter extends RecyclerView.Adapter {
         private ArrayList<String> recentAppPackName;
@@ -220,9 +223,8 @@ public class AppSuggestionActivity extends Activity {
         });
 
 
-
-        acbExpressAdView = new AcbExpressAdView(this,AppSuggestionManager.getInstance().getAdPlacementName());
-        acbExpressAdView.setAutoSwitchAd(AcbExpressAdView.AutoSwitchAd_All);
+        acbExpressAdView = new AcbExpressAdView(this, AppSuggestionManager.getInstance().getAdPlacementName());
+        acbExpressAdView.setAutoSwitchAd(AcbExpressAdView.AutoSwitchAd_None);
         acbExpressAdView.setGravity(Gravity.BOTTOM);
         acbExpressAdView.setExpressAdViewListener(new AcbExpressAdView.AcbExpressAdViewListener() {
             @Override
@@ -234,8 +236,27 @@ public class AppSuggestionActivity extends Activity {
             }
         });
 
-        FrameLayout adContainer = findViewById(R.id.alert_ad_container);
-        adContainer.addView(acbExpressAdView, new RelativeLayout.LayoutParams(MATCH_PARENT, DisplayUtils.dip2px(250)));
+        FrameLayout adContainer;
+        adContainer = findViewById(R.id.alert_ad_container);
+        acbExpressAdView.prepareAd(new AcbExpressAdView.PrepareAdListener() {
+            @Override
+            public void onAdReady(AcbExpressAdView acbExpressAdView) {
+                adContainer.setVisibility(View.VISIBLE);
+                adContainer.addView(acbExpressAdView, new RelativeLayout.LayoutParams(MATCH_PARENT, DisplayUtils.dip2px(250)));
+                handler.postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        acbExpressAdView.switchAd();
+                    }
+                }, 50);
+            }
+
+            @Override
+            public void onPrepareAdFailed(AcbExpressAdView acbExpressAdView) {
+
+            }
+        });
+        adContainer.setVisibility(View.GONE);
     }
 
 

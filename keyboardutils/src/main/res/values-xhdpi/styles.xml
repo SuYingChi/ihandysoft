@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <style name="ChargingScreenAlertActivityTheme" parent="DefaultCompatDialog">
+        <item name="android:backgroundDimEnabled">true</item>-->
+        <item name="android:backgroundDimAmount">0.72</item>
+        <item name="android:windowBackground">@android:color/transparent</item>
+    </style>
+</resources>
