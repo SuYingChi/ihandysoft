@@ -109,9 +109,6 @@ public class HSChargingScreenManager {
                     KCAnalytics.logEvent("KC_Charging_Event", "Action", "PlugIn");
                 } else if (preChargingState != HSChargingState.STATE_DISCHARGING && curChargingState == HSChargingState.STATE_DISCHARGING) {
                     KCAnalytics.logEvent("KC_Charging_Event", "Action", "PlugOut");
-                    if (ChargingPrefsUtil.isChargingAlertEnabled()) {
-                        ChargingManagerUtil.startChargingAlertActivity("PlugOut");
-                    }
                 }
 
                 if (!HSChargingScreenManager.getInstance().isChargingModuleOpened() && !ChargingPrefsUtil.getInstance().getSpHelper().contains(USER_ENABLED_CHARGING)) {
@@ -138,6 +135,8 @@ public class HSChargingScreenManager {
                 if (preChargingState == HSChargingState.STATE_DISCHARGING && curChargingState != HSChargingState.STATE_DISCHARGING && ChargingManagerUtil.isChargingEnabled()) {
                     //插电
                     ChargingManagerUtil.startChargingActivity();
+                } else if (preChargingState != HSChargingState.STATE_DISCHARGING && curChargingState == HSChargingState.STATE_DISCHARGING && ChargingPrefsUtil.isChargingAlertEnabled()) {
+                    ChargingManagerUtil.startChargingAlertActivity("PlugOut");
                 }
 
             }
