@@ -72,11 +72,6 @@ public class HSEmojiPanelView extends FrameLayout implements BaseTabViewAdapter.
         emojiCategory = new EmojiCategory(PreferenceManager.getDefaultSharedPreferences(context), res, this);
 
         this.setBackgroundColor(HSKeyboardThemeManager.getCurrentTheme().getDominantColor());
-
-//        final int height = HSResourceUtils.getDefaultKeyboardHeight(res)
-//                + res.getDimensionPixelSize(R.dimen.config_suggestions_strip_height)
-//                - res.getDimensionPixelSize(R.dimen.emoticon_panel_actionbar_height);
-//        setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, height));
     }
 
     @Override

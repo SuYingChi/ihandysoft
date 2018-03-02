@@ -6,7 +6,6 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.support.annotation.NonNull;
 import android.view.View;
-import android.view.ViewGroup;
 import android.view.animation.AccelerateDecelerateInterpolator;
 import android.view.animation.Animation;
 import android.view.animation.TranslateAnimation;
@@ -162,14 +161,6 @@ public class HSNewSettingsPanel extends BasePanel {
         return items;
     }
 
-    public static void setViewHeight(View v, int height) {
-        if (v != null && v.getLayoutParams() != null) {
-            final ViewGroup.LayoutParams params = v.getLayoutParams();
-            params.height = height;
-            v.requestLayout();
-        }
-    }
-
     private INotificationObserver notificationObserver = new INotificationObserver() {
 
         @Override
@@ -215,9 +206,6 @@ public class HSNewSettingsPanel extends BasePanel {
 
     @NonNull
     private Animation showPanelAnimator(final boolean appear) {
-//        int defaultKeyboardHeight = HSResourceUtils.getDefaultKeyboardHeight(HSApplication.getContext().getResources());
-//        setViewHeight(settingPanelView, defaultKeyboardHeight);
-
         TranslateAnimation showOrDismissPanelAnimator = new TranslateAnimation(Animation.RELATIVE_TO_SELF, 0f, Animation.RELATIVE_TO_SELF, 0f,
                 Animation.RELATIVE_TO_SELF, appear ? -1 : 0, Animation.RELATIVE_TO_SELF, appear ? 0 : -1);
         showOrDismissPanelAnimator.setDuration(animDuration);

@@ -2,7 +2,6 @@ package com.ihs.inputmethod.uimodules.ui.emoticon;
 
 import android.content.res.Resources;
 import android.view.View;
-import android.view.ViewGroup;
 
 import com.ihs.app.framework.HSApplication;
 import com.ihs.inputmethod.api.theme.HSKeyboardThemeManager;
@@ -27,9 +26,9 @@ public final class HSEmoticonView extends KeyboardPanelSwitchContainer {
         setBarView(actionBar);
         actionBar.setContainerListener(this);
 
-        final Resources res = getContext().getResources();
-        final int height = HSResourceUtils.getDefaultKeyboardHeight(res) + res.getDimensionPixelSize(R.dimen.config_suggestions_strip_height);
-        setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, height));
+//        final Resources res = getContext().getResources();
+//        final int height = HSResourceUtils.getDefaultKeyboardHeight(res) + res.getDimensionPixelSize(R.dimen.config_suggestions_strip_height);
+//        setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, height));
     }
 
     @Override

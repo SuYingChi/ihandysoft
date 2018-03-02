@@ -29,12 +29,12 @@ import com.ihs.inputmethod.api.framework.HSEmojiSuggestionManager;
 import com.ihs.inputmethod.api.framework.HSInputMethod;
 import com.ihs.inputmethod.api.framework.HSInputMethodService;
 import com.ihs.inputmethod.api.specialcharacter.HSSpecialCharacterManager;
-import com.ihs.inputmethod.api.utils.HSResourceUtils;
 import com.ihs.inputmethod.constants.AdPlacements;
 import com.ihs.inputmethod.feature.apkupdate.ApkUtils;
 import com.ihs.inputmethod.feature.common.AdCaffeHelper;
 import com.ihs.inputmethod.suggestions.CustomSearchEditText;
 import com.ihs.inputmethod.uimodules.KeyboardPanelManager;
+import com.ihs.inputmethod.uimodules.ui.adjustheight.AdjustHeightView;
 import com.ihs.inputmethod.uimodules.ui.gif.riffsy.dao.base.LanguageDao;
 import com.ihs.inputmethod.uimodules.ui.sticker.Sticker;
 import com.ihs.inputmethod.uimodules.ui.sticker.StickerDataManager;
@@ -582,7 +582,7 @@ public abstract class HSUIInputMethodService extends HSInputMethodService implem
         super.onWindowHidden();
 
         if (getKeyboardPanelMananger().isAdjustKeyboardHeightViewShow()) {
-            KCAnalytics.logEvent("relative_height_value", "height_value", HSResourceUtils.getKeyboardHeightPercent() + "");
+            AdjustHeightView.logLastKeyboardHeight();
             getKeyboardPanelMananger().hideAdjustKeyboardHeightView();
         }
     }

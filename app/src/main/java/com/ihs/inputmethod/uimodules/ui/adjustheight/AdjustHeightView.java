@@ -73,8 +73,10 @@ public class AdjustHeightView extends RelativeLayout implements View.OnClickList
                     int newKeyboardHeight = layoutParams.bottomMargin - defaultSuggestionStripHeight + halfControllerHeight;
                     if (newKeyboardHeight > defaultKeyboardHeight * 1.2f) {
                         layoutParams.bottomMargin = (int) (defaultKeyboardHeight * 1.2f) + defaultSuggestionStripHeight - halfControllerHeight;
+                        newKeyboardHeight = layoutParams.bottomMargin - defaultSuggestionStripHeight + halfControllerHeight;
                     } else if (newKeyboardHeight < defaultKeyboardHeight * 0.8f) {
                         layoutParams.bottomMargin = (int) (defaultKeyboardHeight * 0.8f) + defaultSuggestionStripHeight - halfControllerHeight;
+                        newKeyboardHeight = layoutParams.bottomMargin - defaultSuggestionStripHeight + halfControllerHeight;
                     }
 
                     bottomContainer.getLayoutParams().height = newKeyboardHeight;
@@ -104,13 +106,18 @@ public class AdjustHeightView extends RelativeLayout implements View.OnClickList
                 bottomContainer.requestLayout();
 
                 HSResourceUtils.setKeyboardHeightPercent(1);
+                logLastKeyboardHeight();
                 HSUIInputMethodService.getKeyboardPanelMananger().updateKeyboardHeight();
                 HSUIInputMethodService.getKeyboardPanelMananger().hideAdjustKeyboardHeightView();
                 break;
             case R.id.btn_confirm:
-                KCAnalytics.logEvent("relative_height_value", "height_value", HSResourceUtils.getKeyboardHeightPercent() + "");
+                logLastKeyboardHeight();
                 HSUIInputMethodService.getKeyboardPanelMananger().hideAdjustKeyboardHeightView();
                 break;
         }
+    }
+
+    public static void logLastKeyboardHeight() {
+        KCAnalytics.logEvent("relative_height_value", "relative_value", (int) ((HSResourceUtils.getKeyboardHeightPercent() - 1) * 100) + "%-" + HSResourceUtils.getDefaultKeyboardHeight(HSApplication.getContext().getResources()));
     }
 }
