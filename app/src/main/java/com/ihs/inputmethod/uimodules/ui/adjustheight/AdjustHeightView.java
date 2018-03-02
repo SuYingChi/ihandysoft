@@ -9,7 +9,6 @@ import android.widget.ImageView;
 import android.widget.RelativeLayout;
 
 import com.ihs.app.framework.HSApplication;
-import com.ihs.commons.utils.HSLog;
 import com.ihs.inputmethod.api.HSUIInputMethodService;
 import com.ihs.inputmethod.api.utils.HSResourceUtils;
 import com.ihs.inputmethod.uimodules.R;
@@ -22,25 +21,25 @@ public class AdjustHeightView extends RelativeLayout implements View.OnClickList
 
     private RelativeLayout adjustHeightControllerContainer;
     private ImageView imageController;
+    private View bottomContainer;
 
     private int keyboardHeight = HSResourceUtils.getDefaultKeyboardHeight(HSApplication.getContext().getResources());
     private int defaultKeyboardHeight = (int) (keyboardHeight / HSResourceUtils.getKeyboardHeightPercent());
     private int defaultSuggestionStripHeight = HSResourceUtils.getDefaultSuggestionStripHeight(getResources());
-    private int controllerHalfHeight = getResources().getDimensionPixelSize(R.dimen.keyboard_adjust_height_controller_height) / 2;
 
+    private int controllerHalfHeight = getResources().getDimensionPixelSize(R.dimen.keyboard_adjust_height_controller_height) / 2;
     private float downY;
     private float diffY;
 
     public AdjustHeightView(Context context, @Nullable AttributeSet attrs) {
         super(context, attrs);
-        setClickable(true);
     }
 
     @Override
     protected void onFinishInflate() {
         super.onFinishInflate();
 
-        View bottomContainer = findViewById(R.id.bottom_container);
+        bottomContainer = findViewById(R.id.bottom_container);
         bottomContainer.getLayoutParams().height = keyboardHeight;
 
         imageController = findViewById(R.id.image_controller);
@@ -67,8 +66,6 @@ public class AdjustHeightView extends RelativeLayout implements View.OnClickList
                     diffY = downY - currentY;
                     downY = currentY;
 
-                    HSLog.w("cjx", "downY:" + downY + " , diffY :" + diffY);
-
                     LayoutParams layoutParams = (LayoutParams) adjustHeightControllerContainer.getLayoutParams();
                     layoutParams.bottomMargin += (int) (diffY);
 
@@ -78,6 +75,8 @@ public class AdjustHeightView extends RelativeLayout implements View.OnClickList
                     } else if (newKeyboardHeight < defaultKeyboardHeight * 0.8f) {
                         layoutParams.bottomMargin = (int) (defaultKeyboardHeight * 0.8f) + defaultSuggestionStripHeight - controllerHalfHeight;
                     }
+
+                    bottomContainer.getLayoutParams().height = newKeyboardHeight;
 
                     adjustHeightControllerContainer.setLayoutParams(layoutParams);
                     HSResourceUtils.setKeyboardHeightPercent(newKeyboardHeight * 1.0f / defaultKeyboardHeight);
@@ -96,6 +95,10 @@ public class AdjustHeightView extends RelativeLayout implements View.OnClickList
         switch (v.getId()) {
             case R.id.btn_reset:
                 HSResourceUtils.setKeyboardHeightPercent(1);
+                bottomContainer.getLayoutParams().height = defaultKeyboardHeight;
+                ((LayoutParams) adjustHeightControllerContainer.getLayoutParams()).bottomMargin = defaultKeyboardHeight + defaultSuggestionStripHeight - controllerHalfHeight;
+                bottomContainer.requestLayout();
+                HSUIInputMethodService.getKeyboardPanelMananger().updateKeyboardHeight();
                 HSUIInputMethodService.getKeyboardPanelMananger().hideAdjustKeyboardHeightView();
                 break;
             case R.id.btn_confirm:
