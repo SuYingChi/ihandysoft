@@ -21,6 +21,7 @@ import android.support.v7.widget.Toolbar;
 import android.text.SpannableString;
 import android.text.Spanned;
 import android.text.TextUtils;
+import android.text.format.DateUtils;
 import android.text.style.ForegroundColorSpan;
 import android.util.AttributeSet;
 import android.view.LayoutInflater;
@@ -88,9 +89,11 @@ import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
+import java.util.Set;
 
 import static com.artw.lockscreen.LockerSettings.recordLockerDisableOnce;
 import static com.artw.lockscreen.common.TimeTickReceiver.NOTIFICATION_CLOCK_TIME_CHANGED;
@@ -111,8 +114,10 @@ public class PremiumLockerMainFrame extends PercentRelativeLayout implements INo
     private static final int MODE_BATTERY = 3;
     private static final int MODE_CPU = 4;
     private static final int MODE_STORAGE = 5;
+    private static final int MODE_ZODIAC = 6;
     private static final int GAME_INFO_COUNT = 10;
-    private static final int MODE_COUNT = 6;
+    private static final int MODE_COUNT = 7;
+
     private static final String PUSH_FRAME_PREFERENCE = "push_frame";
     private static final String GAME_INFO_PREFERENCE = "gameInfo";
     private static final String PUSH_FRAME_INDEX = "index";
@@ -124,6 +129,8 @@ public class PremiumLockerMainFrame extends PercentRelativeLayout implements INo
     private static final String PUSH_GAME_URL = "link";
     private static final String PUSH_CAM_FINISHED_EVENT = "prefs_finished_event";
     private static final String PUSH_CAM_NOTIFICATION_INDEX = "next_notification_index";
+    private static final String PUSH_ZODIAC_CLICKED_DATE_SET = "pref_push_zodiac_clicked_date_key";
+    private static final String PUSH_ZODIAC_ADD_TO_FIRST_DATE_SET = "pref_push_zodiac_add_to_first_date_key";
 
     private boolean mIsSlidingDrawerOpened = false;
     private boolean mIsBlackHoleShowing = false;
@@ -493,10 +500,13 @@ public class PremiumLockerMainFrame extends PercentRelativeLayout implements INo
                     mShimmer.start(mUnlockText);
                 }
                 buttonUpgrade.setImageResource(R.raw.upgrade_icon);
-                int timeForUpdate = (int) (System.currentTimeMillis() - pushFramePreferences.getLong(PUSH_FRAME_TIME, 0)) / (60 * 1000);
-                if (timeForUpdate >= HSConfig.optInteger(5, "Application", "LockerPush", "IntervalTimeInMin")) {
-                    findViewById(R.id.push_frame).setVisibility(VISIBLE);
-                    increasePushFrameItemIndex();
+                if (!addZodiacToFirst()) {
+                    int timeForUpdate = (int) (System.currentTimeMillis() - pushFramePreferences.getLong(PUSH_FRAME_TIME, 0)) / (60 * 1000);
+                    //TODO: delete this
+                    if (true || timeForUpdate >= HSConfig.optInteger(5, "Application", "LockerPush", "IntervalTimeInMin")) {
+                        findViewById(R.id.push_frame).setVisibility(VISIBLE);
+                        increasePushFrameItemIndex();
+                    }
                 }
                 while (!showPushFrameItem(getPushFrameItemIndex())) {
                     increasePushFrameItemIndex();
@@ -512,7 +522,7 @@ public class PremiumLockerMainFrame extends PercentRelativeLayout implements INo
     }
 
     private void increasePushFrameItemIndex() {
-        int pushFrameItemIndex = pushFramePreferences.getInt(PUSH_FRAME_INDEX, 0);
+        int pushFrameItemIndex = getPushFrameItemIndex();
         if (pushFrameItemIndex == MODE_GAME) {
             int gameInfoPosition = pushGamePreferences.getInt(PUSH_GAME_POSITION, 0);
             gameInfoPosition++;
@@ -526,6 +536,50 @@ public class PremiumLockerMainFrame extends PercentRelativeLayout implements INo
         pushFrameItemIndex++;
         pushFrameItemIndex = pushFrameItemIndex % MODE_COUNT;
         pushFramePreferences.edit().putInt(PUSH_FRAME_INDEX, pushFrameItemIndex).putLong(PUSH_FRAME_TIME, System.currentTimeMillis()).apply();
+    }
+
+    private boolean addZodiacToFirst() {
+        //时间大于3点并且今天星座item未加塞到第一项并且当天未点击过星座
+        if (getHourOfDay() > 3 && !hasZodiacAddToFirstToday() && !hasClickedZodiacToday()) {
+            Set<String> zodiacAddToFirstDateSet = new HashSet<>(pushFramePreferences.getStringSet(PUSH_ZODIAC_ADD_TO_FIRST_DATE_SET, new HashSet<>()));
+            zodiacAddToFirstDateSet.add(getTodayString());
+
+            SharedPreferences.Editor editor = pushFramePreferences.edit();
+            editor.putStringSet(PUSH_ZODIAC_ADD_TO_FIRST_DATE_SET, zodiacAddToFirstDateSet);
+            editor.putInt(PUSH_FRAME_INDEX, MODE_ZODIAC);
+            editor.apply();
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    private boolean hasZodiacAddToFirstToday() {
+        String todayStr = getTodayString();
+        Set<String> zodiacDateSet = new HashSet<>(pushFramePreferences.getStringSet(PUSH_ZODIAC_ADD_TO_FIRST_DATE_SET, new HashSet<>()));
+        return zodiacDateSet.contains(todayStr);
+    }
+
+    private int getHourOfDay() {
+        Date date = new Date(System.currentTimeMillis());
+        Calendar.getInstance().setTime(date);
+        return Calendar.getInstance().get(Calendar.HOUR_OF_DAY);
+    }
+
+    private String getTodayString() {
+        return DateUtils.formatDateTime(getContext(), System.currentTimeMillis(), DateUtils.FORMAT_SHOW_YEAR);
+    }
+
+    private boolean hasClickedZodiacToday() {
+        String todayStr = getTodayString();
+        Set<String> zodiacDateSet = new HashSet<>(pushFramePreferences.getStringSet(PUSH_ZODIAC_CLICKED_DATE_SET, new HashSet<>()));
+        return zodiacDateSet.contains(todayStr);
+    }
+
+    private void setClickZodiacToday() {
+        Set<String> zodiacClickedDateSet = new HashSet<>(pushFramePreferences.getStringSet(PUSH_ZODIAC_CLICKED_DATE_SET, new HashSet<>()));
+        zodiacClickedDateSet.add(getTodayString());
+        pushFramePreferences.edit().putStringSet(PUSH_ZODIAC_CLICKED_DATE_SET, zodiacClickedDateSet).apply();
     }
 
     private void askForGameInfo(int position) {
@@ -564,6 +618,13 @@ public class PremiumLockerMainFrame extends PercentRelativeLayout implements INo
     }
 
     private boolean showPushFrameItem(int pushFrameItemIndex) {
+        findViewById(R.id.push_camera).setVisibility(GONE);
+        findViewById(R.id.push_game).setVisibility(GONE);
+        findViewById(R.id.push_boost_two).setVisibility(GONE);
+        findViewById(R.id.push_boost_scan).setVisibility(GONE);
+        findViewById(R.id.push_boost_one).setVisibility(GONE);
+        findViewById(R.id.push_zodiac_set).setVisibility(GONE);
+
         switch (pushFrameItemIndex) {
             case MODE_JUNK:
                 findViewById(R.id.push_camera).setVisibility(GONE);
@@ -813,6 +874,27 @@ public class PremiumLockerMainFrame extends PercentRelativeLayout implements INo
                     Intent cpuCoolerCleanIntent = new Intent(getContext(), CpuCoolDownActivity.class);
                     getContext().startActivity(cpuCoolerCleanIntent);
                     HSGlobalNotificationCenter.sendNotification(PremiumLockerActivity.EVENT_FINISH_SELF);
+                });
+                break;
+            case MODE_ZODIAC:
+                if (hasClickedZodiacToday()) {
+                    return false;
+                }
+                findViewById(R.id.push_camera).setVisibility(GONE);
+                findViewById(R.id.push_game).setVisibility(GONE);
+                findViewById(R.id.push_boost_two).setVisibility(GONE);
+                findViewById(R.id.push_boost_scan).setVisibility(GONE);
+                findViewById(R.id.push_boost_one).setVisibility(GONE);
+
+                View setZodiacRootView = findViewById(R.id.push_zodiac_set);
+                setZodiacRootView.setVisibility(VISIBLE);
+                TextView setZodiacButton = setZodiacRootView.findViewById(R.id.zodiac_set_zodiac_button);
+                setZodiacButton.setOnClickListener(new OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        setClickZodiacToday();
+                        increasePushFrameItemIndex();
+                    }
                 });
                 break;
             case MODE_STORAGE:
