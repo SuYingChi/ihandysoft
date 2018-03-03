@@ -136,8 +136,8 @@ public class PremiumLockerMainFrame extends PercentRelativeLayout implements INo
     private static final String PUSH_GAME_URL = "link";
     private static final String PUSH_CAM_FINISHED_EVENT = "prefs_finished_event";
     private static final String PUSH_CAM_NOTIFICATION_INDEX = "next_notification_index";
-    private static final String PUSH_ZODIAC_CLICKED_DATE_SET = "pref_push_zodiac_clicked_date_key";
-    private static final String PUSH_ZODIAC_ADD_TO_FIRST_DATE_SET = "pref_push_zodiac_add_to_first_date_key";
+    private static final String PUSH_ZODIAC_CLICKED_TIME = "pref_push_zodiac_clicked_date_key";
+    private static final String PUSH_ZODIAC_ADD_TO_FIRST_TIME = "pref_push_zodiac_add_to_first_date_key";
 
     private boolean mIsSlidingDrawerOpened = false;
     private boolean mIsBlackHoleShowing = false;
@@ -553,11 +553,8 @@ public class PremiumLockerMainFrame extends PercentRelativeLayout implements INo
     private boolean addZodiacToFirst() {
         //时间大于3点并且今天星座item未加塞到第一项并且当天未点击过星座
         if (getHourOfDay() > 3 && !hasZodiacAddToFirstToday() && !hasClickedZodiacToday()) {
-            Set<String> zodiacAddToFirstDateSet = new HashSet<>(pushFramePreferences.getStringSet(PUSH_ZODIAC_ADD_TO_FIRST_DATE_SET, new HashSet<>()));
-            zodiacAddToFirstDateSet.add(getTodayString());
-
             SharedPreferences.Editor editor = pushFramePreferences.edit();
-            editor.putStringSet(PUSH_ZODIAC_ADD_TO_FIRST_DATE_SET, zodiacAddToFirstDateSet);
+            editor.putLong(PUSH_ZODIAC_ADD_TO_FIRST_TIME, System.currentTimeMillis());
             editor.putInt(PUSH_FRAME_INDEX, MODE_ZODIAC);
             editor.apply();
             return true;
@@ -567,9 +564,8 @@ public class PremiumLockerMainFrame extends PercentRelativeLayout implements INo
     }
 
     private boolean hasZodiacAddToFirstToday() {
-        String todayStr = getTodayString();
-        Set<String> zodiacDateSet = new HashSet<>(pushFramePreferences.getStringSet(PUSH_ZODIAC_ADD_TO_FIRST_DATE_SET, new HashSet<>()));
-        return zodiacDateSet.contains(todayStr);
+        long lastZodiacAddedToFirstTime = pushFramePreferences.getLong(PUSH_ZODIAC_ADD_TO_FIRST_TIME, 0);
+        return DateUtils.isToday(lastZodiacAddedToFirstTime);
     }
 
     private int getHourOfDay() {
@@ -583,15 +579,12 @@ public class PremiumLockerMainFrame extends PercentRelativeLayout implements INo
     }
 
     private boolean hasClickedZodiacToday() {
-        String todayStr = getTodayString();
-        Set<String> zodiacDateSet = new HashSet<>(pushFramePreferences.getStringSet(PUSH_ZODIAC_CLICKED_DATE_SET, new HashSet<>()));
-        return zodiacDateSet.contains(todayStr);
+        long lastZodiacClickedTime = pushFramePreferences.getLong(PUSH_ZODIAC_CLICKED_TIME, 0);
+        return DateUtils.isToday(lastZodiacClickedTime);
     }
 
     private void setClickZodiacToday() {
-        Set<String> zodiacClickedDateSet = new HashSet<>(pushFramePreferences.getStringSet(PUSH_ZODIAC_CLICKED_DATE_SET, new HashSet<>()));
-        zodiacClickedDateSet.add(getTodayString());
-        pushFramePreferences.edit().putStringSet(PUSH_ZODIAC_CLICKED_DATE_SET, zodiacClickedDateSet).apply();
+        pushFramePreferences.edit().putLong(PUSH_ZODIAC_CLICKED_TIME, System.currentTimeMillis()).apply();
     }
 
     private void askForGameInfo(int position) {
