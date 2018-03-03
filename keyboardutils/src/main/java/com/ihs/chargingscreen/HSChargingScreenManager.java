@@ -59,9 +59,9 @@ public class HSChargingScreenManager {
         return instance;
     }
 
-    public synchronized static void init(boolean showNativeAd, String chargingActivityAdsPlacementName , String chargingAlertAdsPlacementName) {
+    public synchronized static void init(boolean showNativeAd, String chargingActivityAdsPlacementName, String chargingAlertAdsPlacementName) {
         if (instance == null) {
-            instance = new HSChargingScreenManager(showNativeAd, chargingActivityAdsPlacementName,chargingAlertAdsPlacementName);
+            instance = new HSChargingScreenManager(showNativeAd, chargingActivityAdsPlacementName, chargingAlertAdsPlacementName);
 
             registerChargingService();
 
@@ -105,9 +105,12 @@ public class HSChargingScreenManager {
             public void onChargingStateChanged(HSChargingState preChargingState, HSChargingState curChargingState) {
                 HSLog.e(preChargingState.toString() + " -- " + curChargingState.toString() + " -- " + HSChargingScreenManager.getInstance().isChargingModuleOpened());
 
-                if (preChargingState == HSChargingState.STATE_DISCHARGING && curChargingState != HSChargingState.STATE_DISCHARGING) {
+                boolean isChargingNow = preChargingState == HSChargingState.STATE_DISCHARGING && curChargingState != HSChargingState.STATE_DISCHARGING && curChargingState != HSChargingState.STATE_UNKNOWN;
+                boolean isDischargingNow = preChargingState != HSChargingState.STATE_DISCHARGING && preChargingState != HSChargingState.STATE_UNKNOWN && curChargingState == HSChargingState.STATE_DISCHARGING;
+
+                if (isChargingNow) {
                     KCAnalytics.logEvent("KC_Charging_Event", "Action", "PlugIn");
-                } else if (preChargingState != HSChargingState.STATE_DISCHARGING && curChargingState == HSChargingState.STATE_DISCHARGING) {
+                } else if (isDischargingNow) {
                     KCAnalytics.logEvent("KC_Charging_Event", "Action", "PlugOut");
                 }
 
@@ -132,13 +135,15 @@ public class HSChargingScreenManager {
                     return;
                 }
 
-                if (preChargingState == HSChargingState.STATE_DISCHARGING && curChargingState != HSChargingState.STATE_DISCHARGING && ChargingManagerUtil.isChargingEnabled()) {
-                    //插电
-                    ChargingManagerUtil.startChargingActivity();
-                } else if (preChargingState != HSChargingState.STATE_DISCHARGING && preChargingState != HSChargingState.STATE_UNKNOWN && curChargingState == HSChargingState.STATE_DISCHARGING && ChargingPrefsUtil.isChargingAlertEnabled()) {
-                    ChargingManagerUtil.startChargingAlertActivity("PlugOut");
+                if (ChargingManagerUtil.isChargingEnabled()) {
+                    if (isChargingNow) {
+                        //插电
+                        ChargingManagerUtil.startChargingActivity();
+                    } else if (isDischargingNow) {
+                        //拔电
+                        ChargingManagerUtil.startChargingAlertActivity("PlugOut");
+                    }
                 }
-
             }
 
             private boolean canShowFullChargNotification(HSChargingState preChargingState, HSChargingState curChargingState) {
@@ -223,7 +228,7 @@ public class HSChargingScreenManager {
                 HSChargingScreenManager.getInstance().stop();
                 break;
             case CHARGING_DEFAULT_ACTIVE:
-                if (!RemoveAdsManager.getInstance().isRemoveAdsPurchased()){
+                if (!RemoveAdsManager.getInstance().isRemoveAdsPurchased()) {
                     if (ChargingPrefsUtil.isChargingAlertEnabled()) {
                         AcbNativeAdManager.getInstance().activePlacementInProcess(HSChargingScreenManager.getInstance().getChargingAlertAdsPlacementName());
                     }
