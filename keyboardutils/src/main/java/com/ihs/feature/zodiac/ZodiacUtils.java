@@ -2,6 +2,7 @@ package com.ihs.feature.zodiac;
 
 
 import android.support.annotation.NonNull;
+import android.text.format.DateUtils;
 
 import com.ihs.app.framework.HSApplication;
 import com.ihs.commons.utils.HSPreferenceHelper;
@@ -21,6 +22,7 @@ public class ZodiacUtils {
     private static final String ZODIAC_PREFERENCES_NAME = "zodiac_preferences";
     private static HSPreferenceHelper preferences = HSPreferenceHelper.create(HSApplication.getContext(), ZODIAC_PREFERENCES_NAME);
     private static final String PREFERENCE_KEY_ZODIAC_INDEX_NUMBER = "zodiac_index_number";
+    private static final String PUSH_ZODIAC_CLICKED_TIME = "pref_push_zodiac_clicked_date_key";
     public static final int ZODIAC_NONE = -1;
 
     /**
@@ -41,6 +43,15 @@ public class ZodiacUtils {
 
     public static boolean hasSelectedZodiac() {
         return preferences.contains(PREFERENCE_KEY_ZODIAC_INDEX_NUMBER);
+    }
+
+    public static boolean hasClickedZodiacToday() {
+        long lastZodiacClickedTime = preferences.getLong(PUSH_ZODIAC_CLICKED_TIME, 0);
+        return DateUtils.isToday(lastZodiacClickedTime);
+    }
+
+    public static void setClickZodiacToday() {
+        preferences.putLong(PUSH_ZODIAC_CLICKED_TIME, System.currentTimeMillis());
     }
 
     public static String getZodiacName(@NonNull AcbHoroscopeData.HoroscopeType zodiac) {

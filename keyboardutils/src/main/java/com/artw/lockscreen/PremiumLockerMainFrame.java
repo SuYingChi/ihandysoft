@@ -96,11 +96,9 @@ import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
-import java.util.HashSet;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
-import java.util.Set;
 
 import static com.artw.lockscreen.LockerSettings.recordLockerDisableOnce;
 import static com.artw.lockscreen.common.TimeTickReceiver.NOTIFICATION_CLOCK_TIME_CHANGED;
@@ -136,7 +134,6 @@ public class PremiumLockerMainFrame extends PercentRelativeLayout implements INo
     private static final String PUSH_GAME_URL = "link";
     private static final String PUSH_CAM_FINISHED_EVENT = "prefs_finished_event";
     private static final String PUSH_CAM_NOTIFICATION_INDEX = "next_notification_index";
-    private static final String PUSH_ZODIAC_CLICKED_TIME = "pref_push_zodiac_clicked_date_key";
     private static final String PUSH_ZODIAC_ADD_TO_FIRST_TIME = "pref_push_zodiac_add_to_first_date_key";
 
     private boolean mIsSlidingDrawerOpened = false;
@@ -552,7 +549,7 @@ public class PremiumLockerMainFrame extends PercentRelativeLayout implements INo
 
     private boolean addZodiacToFirst() {
         //时间大于3点并且今天星座item未加塞到第一项并且当天未点击过星座
-        if (getHourOfDay() > 3 && !hasZodiacAddToFirstToday() && !hasClickedZodiacToday()) {
+        if (getHourOfDay() > 3 && !hasZodiacAddToFirstToday() && !ZodiacUtils.hasClickedZodiacToday()) {
             SharedPreferences.Editor editor = pushFramePreferences.edit();
             editor.putLong(PUSH_ZODIAC_ADD_TO_FIRST_TIME, System.currentTimeMillis());
             editor.putInt(PUSH_FRAME_INDEX, MODE_ZODIAC);
@@ -572,19 +569,6 @@ public class PremiumLockerMainFrame extends PercentRelativeLayout implements INo
         Date date = new Date(System.currentTimeMillis());
         Calendar.getInstance().setTime(date);
         return Calendar.getInstance().get(Calendar.HOUR_OF_DAY);
-    }
-
-    private String getTodayString() {
-        return DateUtils.formatDateTime(getContext(), System.currentTimeMillis(), DateUtils.FORMAT_SHOW_YEAR);
-    }
-
-    private boolean hasClickedZodiacToday() {
-        long lastZodiacClickedTime = pushFramePreferences.getLong(PUSH_ZODIAC_CLICKED_TIME, 0);
-        return DateUtils.isToday(lastZodiacClickedTime);
-    }
-
-    private void setClickZodiacToday() {
-        pushFramePreferences.edit().putLong(PUSH_ZODIAC_CLICKED_TIME, System.currentTimeMillis()).apply();
     }
 
     private void askForGameInfo(int position) {
@@ -883,7 +867,7 @@ public class PremiumLockerMainFrame extends PercentRelativeLayout implements INo
                 });
                 break;
             case MODE_ZODIAC:
-                if (hasClickedZodiacToday()) {
+                if (ZodiacUtils.hasClickedZodiacToday()) {
                     return false;
                 }
                 View zodiacRootView = findViewById(R.id.push_zodiac);
@@ -905,7 +889,7 @@ public class PremiumLockerMainFrame extends PercentRelativeLayout implements INo
                     setZodiacButton.setOnClickListener(new OnClickListener() {
                         @Override
                         public void onClick(View v) {
-                            setClickZodiacToday();
+                            ZodiacUtils.setClickZodiacToday();
                             increasePushFrameItemIndex();
                             NavUtils.startCameraFromLockerScreenWithZodiacInfo(getContext().getApplicationContext(), null);
                             HSGlobalNotificationCenter.sendNotification(PremiumLockerActivity.EVENT_FINISH_SELF);
@@ -990,6 +974,7 @@ public class PremiumLockerMainFrame extends PercentRelativeLayout implements INo
                 zodiacDetailView.setOnClickListener(new OnClickListener() {
                     @Override
                     public void onClick(View v) {
+                        ZodiacUtils.setClickZodiacToday();
                         NavUtils.startCameraFromLockerScreenWithZodiacInfo(getContext().getApplicationContext(), horoscopeType);
                         HSGlobalNotificationCenter.sendNotification(PremiumLockerActivity.EVENT_FINISH_SELF);
                     }
