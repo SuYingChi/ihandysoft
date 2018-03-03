@@ -24,10 +24,10 @@ public class ZodiacUtils {
     public static final int ZODIAC_NONE = -1;
 
     /**
-     * @param zodiacIndex should between [0, AcbHoroscopeData.HoroscopeType.values().length -1]
+     * @param zodiac 对应星座
      */
-    public static void setZodiacIndex(int zodiacIndex) {
-        preferences.putInt(PREFERENCE_KEY_ZODIAC_INDEX_NUMBER, zodiacIndex);
+    public static void setZodiacIndex(@NonNull AcbHoroscopeData.HoroscopeType zodiac) {
+        preferences.putInt(PREFERENCE_KEY_ZODIAC_INDEX_NUMBER, zodiac.getIndex());
     }
 
     public static int getCurrentSelectZodiacIndex() {

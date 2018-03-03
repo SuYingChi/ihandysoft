@@ -908,7 +908,7 @@ public class PremiumLockerMainFrame extends PercentRelativeLayout implements INo
                     zodiacSetView.setVisibility(VISIBLE);
                     zodiacShowView.setVisibility(GONE);
                     TextView setZodiacButton = zodiacSetView.findViewById(R.id.zodiac_set_zodiac_button);
-                    setZodiacButton.setBackgroundDrawable(RippleDrawableUtils.getCompatRippleDrawable(Color.BLACK, DisplayUtils.dip2px(20)));
+                    setZodiacButton.setBackgroundDrawable(RippleDrawableUtils.getCompatRippleDrawable(getContext().getResources().getColor(R.color.zodiac_set_button_bg), DisplayUtils.dip2px(20)));
                     setZodiacButton.setOnClickListener(new OnClickListener() {
                         @Override
                         public void onClick(View v) {

@@ -181,6 +181,8 @@
     <color name="search_divider">#33ffffff</color>
     <color name="search_bg">#33FFFFFF</color>
 
+    <color name="zodiac_set_button_bg">#2a7bff</color>
+
     <color name="notification_btn_yellow">#fff333</color>
     <color name="notification_btn_yellow_pressed">#ffd000</color>
     <color name="headset_popwindow_button_interval_color">#30000000</color>
