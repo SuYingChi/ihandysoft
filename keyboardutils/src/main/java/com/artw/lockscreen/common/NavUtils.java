@@ -13,14 +13,19 @@ import android.os.Handler;
 import android.os.Looper;
 import android.provider.MediaStore;
 import android.provider.Settings;
+import android.support.annotation.Nullable;
 import android.text.TextUtils;
+import android.widget.Toast;
 
 import com.ihs.app.framework.HSApplication;
 import com.ihs.app.utils.HSMarketUtils;
 import com.ihs.commons.utils.HSLog;
+import com.ihs.feature.zodiac.ZodiacUtils;
 import com.ihs.keyboardutils.R;
 import com.ihs.keyboardutils.utils.CommonUtils;
 import com.kc.utils.KCAnalytics;
+
+import net.appcloudbox.service.AcbHoroscopeData;
 
 import java.util.List;
 import java.util.NoSuchElementException;
@@ -206,6 +211,27 @@ public class NavUtils {
 //                LockToast.makeText(HSApplication.getContext(), R.string.lock_camera_no_access, Toast.LENGTH_SHORT).show();
                 }
             }
+        }
+        return false;
+    }
+
+    public static boolean startCameraFromLockerScreenWithZodiacInfo(Context context, @Nullable AcbHoroscopeData.HoroscopeType horoscopeType) {
+        Intent launchIntent = new Intent("com.keyboard.colorcam.locker");
+        launchIntent.setPackage(context.getPackageName());
+        launchIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+        launchIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
+        launchIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        launchIntent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
+        if (horoscopeType != null) {
+            launchIntent.putExtra(ZodiacUtils.EXTRA_ZODIAC_INDEX_NUMBER, horoscopeType.getIndex());
+        } else {
+            launchIntent.putExtra(ZodiacUtils.EXTRA_ZODIAC_INDEX_NUMBER, ZodiacUtils.ZODIAC_NONE);
+        }
+        try {
+            context.startActivity(launchIntent);//null pointer check in case package name was not found
+            return true;
+        } catch (Exception e) {
+            Toast.makeText(context, "Please install our app!", Toast.LENGTH_SHORT).show();
         }
         return false;
     }

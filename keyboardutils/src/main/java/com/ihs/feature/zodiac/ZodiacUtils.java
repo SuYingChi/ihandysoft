@@ -16,6 +16,8 @@ import net.appcloudbox.service.AcbHoroscopeData;
 @SuppressWarnings("WeakerAccess")
 public class ZodiacUtils {
 
+    public static final String EXTRA_ZODIAC_INDEX_NUMBER = "zodiac_index_number";
+
     private static final String ZODIAC_PREFERENCES_NAME = "zodiac_preferences";
     private static HSPreferenceHelper preferences = HSPreferenceHelper.create(HSApplication.getContext(), ZODIAC_PREFERENCES_NAME);
     private static final String PREFERENCE_KEY_ZODIAC_INDEX_NUMBER = "zodiac_index_number";
@@ -33,7 +35,7 @@ public class ZodiacUtils {
     }
 
     public static AcbHoroscopeData.HoroscopeType getSelectZodiac() {
-        int i = preferences.getInt(PREFERENCE_KEY_ZODIAC_INDEX_NUMBER, ZODIAC_NONE);
+        int i = preferences.getInt(PREFERENCE_KEY_ZODIAC_INDEX_NUMBER, 0);
         return AcbHoroscopeData.HoroscopeType.valueOf(i);
     }
 

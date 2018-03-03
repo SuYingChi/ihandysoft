@@ -914,8 +914,7 @@ public class PremiumLockerMainFrame extends PercentRelativeLayout implements INo
                         public void onClick(View v) {
                             setClickZodiacToday();
                             increasePushFrameItemIndex();
-                            //TODO:跳到相机去设置
-                            NavUtils.startCameraFromLockerScreen(getContext().getApplicationContext());
+                            NavUtils.startCameraFromLockerScreenWithZodiacInfo(getContext().getApplicationContext(), null);
                             HSGlobalNotificationCenter.sendNotification(PremiumLockerActivity.EVENT_FINISH_SELF);
                         }
                     });
@@ -993,6 +992,15 @@ public class PremiumLockerMainFrame extends PercentRelativeLayout implements INo
                 ratingBarHealth.setRating(acbHoroscopeData.getHealthRatings());
                 TextView textViewTipContent = zodiacDetailView.findViewById(R.id.zodiac_tip_content);
                 textViewTipContent.setText(acbHoroscopeData.getTip());
+                TextView readMore = zodiacDetailView.findViewById(R.id.zodiac_read_more);
+                readMore.setBackgroundDrawable(RippleDrawableUtils.getCompatRippleDrawable(Color.YELLOW, DisplayUtils.dip2px(20)));
+                zodiacDetailView.setOnClickListener(new OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        NavUtils.startCameraFromLockerScreenWithZodiacInfo(getContext().getApplicationContext(), horoscopeType);
+                        HSGlobalNotificationCenter.sendNotification(PremiumLockerActivity.EVENT_FINISH_SELF);
+                    }
+                });
             }
 
             @Override
