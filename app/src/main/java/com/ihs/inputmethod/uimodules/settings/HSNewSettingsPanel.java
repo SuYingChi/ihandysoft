@@ -45,6 +45,7 @@ public class HSNewSettingsPanel extends BasePanel {
     private ViewItem selectorItem;
     private List<ViewItem> items;
     private SettingsViewPager settingsViewPager;
+    private boolean doDismissAnim = true;
 
     public HSNewSettingsPanel() {
         mContext = HSApplication.getContext();
@@ -112,6 +113,9 @@ public class HSNewSettingsPanel extends BasePanel {
             @Override
             public void onItemClick(ViewItem item) {
                 KCAnalytics.logEvent("keyboard_height_clicked");
+                doDismissAnim = false;
+                getPanelActionListener().backToParentPanel(false);
+                doDismissAnim = true;
                 HSUIInputMethodService.getKeyboardPanelMananger().showAdjustKeyboardHeightView();
             }
         }));
@@ -201,7 +205,10 @@ public class HSNewSettingsPanel extends BasePanel {
 
     @Override
     public Animation getDismissAnimator() {
-        return showPanelAnimator(false);
+        if (doDismissAnim) {
+            return showPanelAnimator(false);
+        }
+        return null;
     }
 
     @NonNull
