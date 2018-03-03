@@ -900,6 +900,9 @@ public class PremiumLockerMainFrame extends PercentRelativeLayout implements INo
                 if (ZodiacUtils.hasSelectedZodiac()) {
                     zodiacSetView.setVisibility(GONE);
                     zodiacShowView.setVisibility(VISIBLE);
+                    TextView zodiacTodayTipTitle = findViewById(R.id.zodiac_today_zodiac_name_title);
+                    String str = String.format(getContext().getResources().getString(R.string.zodiac_today_title), ZodiacUtils.getZodiacName(ZodiacUtils.getSelectZodiac()));
+                    zodiacTodayTipTitle.setText(str);
                     loadZodiacDataAndShow(zodiacShowView);
                 } else {
                     zodiacSetView.setVisibility(VISIBLE);

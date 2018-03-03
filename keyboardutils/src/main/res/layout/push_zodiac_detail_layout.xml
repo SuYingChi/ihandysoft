@@ -8,8 +8,9 @@
 
     <GridLayout
         android:id="@+id/zodiac_star_grid_view"
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
         android:layout_marginTop="4dp"
         android:alignmentMode="alignBounds"
         android:numColumns="4"
