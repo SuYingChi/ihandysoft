@@ -98,7 +98,7 @@ public class MyApplication extends HSApplication {
         LockerAppGuideManager.getInstance().init(true);
 
         AcbNativeAdManager.getInstance().activePlacementInProcess(getString(R.string.ad_placement_result_page));
-        AcbNativeAdManager.getInstance().activePlacementInProcess(AppSuggestionManager.getInstance().getAdPlacementName());
+        AcbExpressAdManager.getInstance().activePlacementInProcess(AppSuggestionManager.getInstance().getAdPlacementName());
         AcbNativeAdManager.getInstance().activePlacementInProcess(getString(R.string.ad_placement_filter_download));
         FloatWindowCompat.initLockScreen(this);
     }
