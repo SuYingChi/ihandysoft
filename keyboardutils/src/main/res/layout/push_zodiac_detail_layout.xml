@@ -35,13 +35,14 @@
             android:id="@+id/ratingBar_love"
             style="@style/ZodiacRatingStyle"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            app:layout_marginLeftPercent="2%" />
+            android:layout_height="wrap_content" />
 
         <com.ihs.feature.common.TypefacedTextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center_vertical"
+            android:layout_marginLeft="6dp"
+            android:layout_marginStart="6dp"
             android:text="@string/zodiac_money"
             android:textColor="@color/white"
             android:textSize="12sp"
@@ -51,8 +52,7 @@
             android:id="@+id/ratingBar_money"
             style="@style/ZodiacRatingStyle"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            app:layout_marginLeftPercent="2%" />
+            android:layout_height="wrap_content" />
 
         <com.ihs.feature.common.TypefacedTextView
             android:layout_width="wrap_content"
