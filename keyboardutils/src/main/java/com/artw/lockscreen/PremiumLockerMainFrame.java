@@ -900,40 +900,7 @@ public class PremiumLockerMainFrame extends PercentRelativeLayout implements INo
                 if (ZodiacUtils.hasSelectedZodiac()) {
                     zodiacSetView.setVisibility(GONE);
                     zodiacShowView.setVisibility(VISIBLE);
-                    AcbHoroscopeData.HoroscopeType horoscopeType = ZodiacUtils.getSelectZodiac();
-                    if (horoscopeRequest != null) {
-                        horoscopeRequest.cancel();
-                        horoscopeRequest = null;
-                    } else {
-                        horoscopeRequest = new AcbHoroscopeRequest(getContext(), horoscopeType, new Date(System.currentTimeMillis()), new AcbHoroscopeRequest.AcbHoroscopeListener() {
-                            @Override
-                            public void onSuccess(AcbHoroscopeData acbHoroscopeData) {
-                                HSLog.d(TAG, String.valueOf(acbHoroscopeData));
-                                ProgressBar progressBar = zodiacShowView.findViewById(R.id.zodiac_waiting_progress_bar);
-                                progressBar.setVisibility(GONE);
-                                View zodiacDetailView = zodiacShowView.findViewById(R.id.zodiac_detail_view);
-                                zodiacDetailView.setVisibility(VISIBLE);
-                                View zodiacRefreshView = zodiacShowView.findViewById(R.id.zodiac_refresh_view);
-                                zodiacRefreshView.setVisibility(GONE);
-                                RatingBar ratingBarLove = zodiacDetailView.findViewById(R.id.ratingBar_love);
-                                ratingBarLove.setRating(acbHoroscopeData.getLoveRatings());
-                                RatingBar ratingBarMoney = zodiacDetailView.findViewById(R.id.ratingBar_money);
-                                ratingBarMoney.setRating(acbHoroscopeData.getMoneyRatings());
-                                RatingBar ratingBarCareer = zodiacDetailView.findViewById(R.id.ratingBar_career);
-                                ratingBarCareer.setRating(acbHoroscopeData.getCareerRatings());
-                                RatingBar ratingBarHealth = zodiacDetailView.findViewById(R.id.ratingBar_health);
-                                ratingBarHealth.setRating(acbHoroscopeData.getHealthRatings());
-                                TextView textViewTipContent = zodiacDetailView.findViewById(R.id.zodiac_tip_content);
-                                textViewTipContent.setText(acbHoroscopeData.getTip());
-                            }
-
-                            @Override
-                            public void onFailure(AcbError acbError) {
-                                HSLog.e(TAG, acbError.getMessage());
-                            }
-                        });
-                        horoscopeRequest.start();
-                    }
+                    loadZodiacDataAndShow(zodiacShowView);
                 } else {
                     zodiacSetView.setVisibility(VISIBLE);
                     zodiacShowView.setVisibility(GONE);
@@ -993,6 +960,53 @@ public class PremiumLockerMainFrame extends PercentRelativeLayout implements INo
         mTvTime.setText(String.format(Locale.getDefault(), "%02d:%02d", hour, minute));
         DateFormat format = new SimpleDateFormat("EEE\nMMMM, dd", Locale.getDefault());
         mTvDate.setText(format.format(new Date()));
+    }
+
+    private void loadZodiacDataAndShow(View zodiacShowView) {
+        ProgressBar progressBar = zodiacShowView.findViewById(R.id.zodiac_waiting_progress_bar);
+        progressBar.setVisibility(VISIBLE);
+        View zodiacDetailView = zodiacShowView.findViewById(R.id.zodiac_detail_view);
+        zodiacDetailView.setVisibility(GONE);
+        View zodiacRefreshView = zodiacShowView.findViewById(R.id.zodiac_refresh_view);
+        zodiacRefreshView.setVisibility(GONE);
+        AcbHoroscopeData.HoroscopeType horoscopeType = ZodiacUtils.getSelectZodiac();
+        if (horoscopeRequest != null) {
+            horoscopeRequest.cancel();
+        }
+        horoscopeRequest = new AcbHoroscopeRequest(getContext(), horoscopeType, new Date(System.currentTimeMillis()), new AcbHoroscopeRequest.AcbHoroscopeListener() {
+            @Override
+            public void onSuccess(AcbHoroscopeData acbHoroscopeData) {
+                HSLog.d(TAG, String.valueOf(acbHoroscopeData));
+                progressBar.setVisibility(GONE);
+                zodiacDetailView.setVisibility(VISIBLE);
+                zodiacRefreshView.setVisibility(GONE);
+                RatingBar ratingBarLove = zodiacDetailView.findViewById(R.id.ratingBar_love);
+                ratingBarLove.setRating(acbHoroscopeData.getLoveRatings());
+                RatingBar ratingBarMoney = zodiacDetailView.findViewById(R.id.ratingBar_money);
+                ratingBarMoney.setRating(acbHoroscopeData.getMoneyRatings());
+                RatingBar ratingBarCareer = zodiacDetailView.findViewById(R.id.ratingBar_career);
+                ratingBarCareer.setRating(acbHoroscopeData.getCareerRatings());
+                RatingBar ratingBarHealth = zodiacDetailView.findViewById(R.id.ratingBar_health);
+                ratingBarHealth.setRating(acbHoroscopeData.getHealthRatings());
+                TextView textViewTipContent = zodiacDetailView.findViewById(R.id.zodiac_tip_content);
+                textViewTipContent.setText(acbHoroscopeData.getTip());
+            }
+
+            @Override
+            public void onFailure(AcbError acbError) {
+                HSLog.e(TAG, acbError.getMessage());
+                progressBar.setVisibility(GONE);
+                zodiacDetailView.setVisibility(GONE);
+                zodiacRefreshView.setVisibility(VISIBLE);
+                zodiacRefreshView.setOnClickListener(new OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        loadZodiacDataAndShow(zodiacShowView);
+                    }
+                });
+            }
+        });
+        horoscopeRequest.start();
     }
 
     @Override
