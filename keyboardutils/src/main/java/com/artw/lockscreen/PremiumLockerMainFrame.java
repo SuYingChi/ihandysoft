@@ -629,6 +629,7 @@ public class PremiumLockerMainFrame extends PercentRelativeLayout implements INo
                 findViewById(R.id.push_boost_scan).setVisibility(VISIBLE);
                 ((TextView) findViewById(R.id.push_boost_scan_button)).setText(getResources().getString(R.string.push_junk_button));
                 findViewById(R.id.push_boost_scan_button).setOnClickListener(view -> {
+                    KCAnalytics.logEvent("new_screenLocker_feature_clicked", "entry", "push");
                     increasePushFrameItemIndex();
                     Intent junkCleanIntent = new Intent(getContext(), JunkCleanActivity.class);
                     getContext().startActivity(junkCleanIntent);
@@ -674,6 +675,7 @@ public class PremiumLockerMainFrame extends PercentRelativeLayout implements INo
                             ((ImageView) junkRootView.findViewById(R.id.icon)).setImageDrawable(getResources().getDrawable(R.drawable.new_locker_junk));
                             junkRootView.findViewById(R.id.push_boost_button).setOnClickListener(view -> {
                                 KCAnalytics.logEvent("Screenlocker_push_clicked", "type", "junk");
+                                KCAnalytics.logEvent("new_screenLocker_feature_clicked", "entry", "push");
                                 increasePushFrameItemIndex();
                                 Intent junkCleanIntent = new Intent(getContext(), JunkCleanActivity.class);
                                 getContext().startActivity(junkCleanIntent);
@@ -706,6 +708,7 @@ public class PremiumLockerMainFrame extends PercentRelativeLayout implements INo
                 ((Button) gameRootView.findViewById(R.id.push_game_button)).setText(getResources().getString(R.string.push_game_button));
                 gameRootView.findViewById(R.id.push_game_button).setOnClickListener(view -> {
                     KCAnalytics.logEvent("Screenlocker_push_clicked", "type", "game");
+                    KCAnalytics.logEvent("new_screenLocker_feature_clicked", "entry", "push");
                     Intent intent = new Intent(getContext(), SoftGameDisplayActivity.class);
                     intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                     getContext().startActivity(intent);
@@ -757,6 +760,7 @@ public class PremiumLockerMainFrame extends PercentRelativeLayout implements INo
                 ((Button) findViewById(R.id.push_camera_button)).setText(bean.getButtonText());
                 findViewById(R.id.push_camera_button).setOnClickListener(view -> {
                     KCAnalytics.logEvent("Screenlocker_push_clicked", "type", "camera");
+                    KCAnalytics.logEvent("new_screenLocker_feature_clicked", "entry", "push");
                     increasePushFrameItemIndex();
                     Intent cameraIntent = new Intent("push.camera.store");
                     switch (pushCameraActionType) {
@@ -809,6 +813,7 @@ public class PremiumLockerMainFrame extends PercentRelativeLayout implements INo
                     ((Button) batteryOneRootView.findViewById(R.id.push_boost_button)).setText(getResources().getString(R.string.push_battery_button));
                     batteryOneRootView.findViewById(R.id.push_boost_button).setOnClickListener(view -> {
                         KCAnalytics.logEvent("Screenlocker_push_clicked", "type", "battery");
+                        KCAnalytics.logEvent("new_screenLocker_feature_clicked", "entry", "push");
                         increasePushFrameItemIndex();
                         Intent batteryIntent = new Intent(getContext(), BatteryActivity.class);
                         getContext().startActivity(batteryIntent);
@@ -829,6 +834,7 @@ public class PremiumLockerMainFrame extends PercentRelativeLayout implements INo
                     ((Button) batteryTwoRootView.findViewById(R.id.push_boost_button)).setText(getResources().getString(R.string.push_battery_button));
                     batteryTwoRootView.findViewById(R.id.push_boost_button).setOnClickListener(view -> {
                         KCAnalytics.logEvent("Screenlocker_push_clicked", "type", "battery");
+                        KCAnalytics.logEvent("new_screenLocker_feature_clicked", "entry", "push");
                         increasePushFrameItemIndex();
                         Intent batteryIntent = new Intent(getContext(), BatteryActivity.class);
                         getContext().startActivity(batteryIntent);
@@ -862,6 +868,7 @@ public class PremiumLockerMainFrame extends PercentRelativeLayout implements INo
                 ((Button) cpuRootView.findViewById(R.id.push_boost_button)).setText(getResources().getString(R.string.push_cpu_button));
                 cpuRootView.findViewById(R.id.push_boost_button).setOnClickListener(view -> {
                     KCAnalytics.logEvent("Screenlocker_push_clicked", "type", "CPU");
+                    KCAnalytics.logEvent("new_screenLocker_feature_clicked", "entry", "push");
                     increasePushFrameItemIndex();
                     Intent cpuCoolerCleanIntent = new Intent(getContext(), CpuCoolDownActivity.class);
                     getContext().startActivity(cpuCoolerCleanIntent);
@@ -893,6 +900,7 @@ public class PremiumLockerMainFrame extends PercentRelativeLayout implements INo
                         public void onClick(View v) {
                             KCAnalytics.logEvent("Screenlocker_push_clicked", "type", "horoscope");
                             KCAnalytics.logEvent("Screenlocker_horoscope_push_clicked_time", "time", String.valueOf(getHourOfDay()));
+                            KCAnalytics.logEvent("new_screenLocker_feature_clicked", "entry", "push");
                             increasePushFrameItemIndex();
                             NavUtils.startCameraFromLockerScreenWithZodiacInfo(getContext().getApplicationContext(), null);
                             HSGlobalNotificationCenter.sendNotification(PremiumLockerActivity.EVENT_FINISH_SELF);
@@ -920,6 +928,7 @@ public class PremiumLockerMainFrame extends PercentRelativeLayout implements INo
                 ((Button) findViewById(R.id.push_boost_button)).setText(getResources().getString(R.string.push_memory_button));
                 findViewById(R.id.push_boost_button).setOnClickListener(view -> {
                     KCAnalytics.logEvent("Screenlocker_push_clicked", "type", "memory");
+                    KCAnalytics.logEvent("new_screenLocker_feature_clicked", "entry", "push");
                     increasePushFrameItemIndex();
                     Intent boostIntent = new Intent(getContext(), BoostPlusActivity.class);
                     getContext().startActivity(boostIntent);
@@ -976,6 +985,7 @@ public class PremiumLockerMainFrame extends PercentRelativeLayout implements INo
                 readMore.setBackgroundDrawable(RippleDrawableUtils.getCompatRippleDrawable(getContext().getResources().getColor(R.color.zodiac_read_more_button_bg), DisplayUtils.dip2px(20)));
                 zodiacDetailView.setOnClickListener(v -> {
                     KCAnalytics.logEvent("Screenlocker_push_clicked", "type", "horoscope");
+                    KCAnalytics.logEvent("new_screenLocker_feature_clicked", "entry", "push");
                     KCAnalytics.logEvent("Screenlocker_horoscope_push_clicked_time", "time", String.valueOf(getHourOfDay()));
                     increasePushFrameItemIndex();
                     NavUtils.startCameraFromLockerScreenWithZodiacInfo(getContext().getApplicationContext(), horoscopeType);
