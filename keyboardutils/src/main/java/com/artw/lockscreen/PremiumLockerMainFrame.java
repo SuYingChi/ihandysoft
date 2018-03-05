@@ -309,7 +309,10 @@ public class PremiumLockerMainFrame extends PercentRelativeLayout implements INo
         buttonWeather = findViewById(R.id.button_weather);
         buttonWeather.setOnClickListener(clickListener);
         buttonWeather.setBackgroundDrawable(RippleDrawableUtils.getCompatRippleDrawable(backgroundColor, backgroundPressColor, DisplayUtils.dip2px(4)));
-        findViewById(R.id.push_close_icon).setOnClickListener(view -> findViewById(R.id.push_frame).setVisibility(INVISIBLE));
+        findViewById(R.id.push_close_icon).setOnClickListener(v -> {
+            findViewById(R.id.push_frame).setVisibility(INVISIBLE);
+            KCAnalytics.logEvent("Screenlocker_push_cancel_clicked");
+        });
 
         if (!shouldShowButtonUpgrade) {
             buttonUpgrade.setVisibility(View.INVISIBLE);
@@ -888,6 +891,8 @@ public class PremiumLockerMainFrame extends PercentRelativeLayout implements INo
                     setZodiacButton.setOnClickListener(new OnClickListener() {
                         @Override
                         public void onClick(View v) {
+                            KCAnalytics.logEvent("Screenlocker_push_clicked", "type", "horoscope");
+                            KCAnalytics.logEvent("Screenlocker_horoscope_push_clicked_time", "time", String.valueOf(getHourOfDay()));
                             increasePushFrameItemIndex();
                             NavUtils.startCameraFromLockerScreenWithZodiacInfo(getContext().getApplicationContext(), null);
                             HSGlobalNotificationCenter.sendNotification(PremiumLockerActivity.EVENT_FINISH_SELF);
@@ -970,6 +975,8 @@ public class PremiumLockerMainFrame extends PercentRelativeLayout implements INo
                 TextView readMore = zodiacDetailView.findViewById(R.id.zodiac_read_more);
                 readMore.setBackgroundDrawable(RippleDrawableUtils.getCompatRippleDrawable(Color.YELLOW, DisplayUtils.dip2px(20)));
                 zodiacDetailView.setOnClickListener(v -> {
+                    KCAnalytics.logEvent("Screenlocker_push_clicked", "type", "horoscope");
+                    KCAnalytics.logEvent("Screenlocker_horoscope_push_clicked_time", "time", String.valueOf(getHourOfDay()));
                     increasePushFrameItemIndex();
                     NavUtils.startCameraFromLockerScreenWithZodiacInfo(getContext().getApplicationContext(), horoscopeType);
                     HSGlobalNotificationCenter.sendNotification(PremiumLockerActivity.EVENT_FINISH_SELF);
