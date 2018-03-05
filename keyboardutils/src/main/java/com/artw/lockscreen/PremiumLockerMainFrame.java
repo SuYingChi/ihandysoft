@@ -511,8 +511,7 @@ public class PremiumLockerMainFrame extends PercentRelativeLayout implements INo
                 buttonUpgrade.setImageResource(R.raw.upgrade_icon);
                 if (!addZodiacToFirst()) {
                     int timeForUpdate = (int) (System.currentTimeMillis() - pushFramePreferences.getLong(PUSH_FRAME_TIME, 0)) / (60 * 1000);
-                    //TODO: delete this
-                    if (true || timeForUpdate >= HSConfig.optInteger(5, "Application", "LockerPush", "IntervalTimeInMin")) {
+                    if (timeForUpdate >= HSConfig.optInteger(5, "Application", "LockerPush", "IntervalTimeInMin")) {
                         findViewById(R.id.push_frame).setVisibility(VISIBLE);
                         increasePushFrameItemIndex();
                     }
