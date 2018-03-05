@@ -74,8 +74,7 @@ public class MyApplication extends HSApplication {
         KCPhantomNotificationManager.with(this, getString(R.string.ad_placement_result_page));
 
         LeakCanary.install(this);
-        //TODO:Revert this
-        //AcbWeatherManager.getInstance().init(this, R.mipmap.ic_launcher);
+        AcbWeatherManager.getInstance().init(this, R.mipmap.ic_launcher);
         AcbExpressAdManager.getInstance().init(this);
         HSChargingScreenManager.init(true, "Master_A(NativeAds)Charging", getString(R.string.ad_placement_filter_download));
 
