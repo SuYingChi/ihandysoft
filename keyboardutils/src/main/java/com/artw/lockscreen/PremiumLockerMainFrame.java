@@ -973,7 +973,7 @@ public class PremiumLockerMainFrame extends PercentRelativeLayout implements INo
                 TextView textViewTipContent = zodiacDetailView.findViewById(R.id.zodiac_tip_content);
                 textViewTipContent.setText(acbHoroscopeData.getTip());
                 TextView readMore = zodiacDetailView.findViewById(R.id.zodiac_read_more);
-                readMore.setBackgroundDrawable(RippleDrawableUtils.getCompatRippleDrawable(Color.YELLOW, DisplayUtils.dip2px(20)));
+                readMore.setBackgroundDrawable(RippleDrawableUtils.getCompatRippleDrawable(getContext().getResources().getColor(R.color.zodiac_read_more_button_bg), DisplayUtils.dip2px(20)));
                 zodiacDetailView.setOnClickListener(v -> {
                     KCAnalytics.logEvent("Screenlocker_push_clicked", "type", "horoscope");
                     KCAnalytics.logEvent("Screenlocker_horoscope_push_clicked_time", "time", String.valueOf(getHourOfDay()));
