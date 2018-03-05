@@ -45,12 +45,12 @@ public class ZodiacUtils {
         return preferences.contains(PREFERENCE_KEY_ZODIAC_INDEX_NUMBER);
     }
 
-    public static boolean hasClickedZodiacLockerPushToday() {
+    public static boolean hasZodiacPageShowedToday() {
         long lastZodiacClickedTime = preferences.getLong(PUSH_ZODIAC_CLICKED_TIME, 0);
         return DateUtils.isToday(lastZodiacClickedTime);
     }
 
-    public static void setClickZodiacToday() {
+    public static void setZodiacPageShowedThisTime() {
         preferences.putLong(PUSH_ZODIAC_CLICKED_TIME, System.currentTimeMillis());
     }
 

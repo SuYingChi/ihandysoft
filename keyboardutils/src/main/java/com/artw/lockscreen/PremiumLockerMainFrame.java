@@ -548,7 +548,7 @@ public class PremiumLockerMainFrame extends PercentRelativeLayout implements INo
 
     private boolean addZodiacToFirst() {
         //时间大于3点并且今天星座item未加塞到第一项并且当天未点击过星座
-        if (getHourOfDay() > 3 && !hasZodiacAddToFirstToday() && !ZodiacUtils.hasClickedZodiacLockerPushToday()) {
+        if (getHourOfDay() > 3 && !hasZodiacAddToFirstToday() && !ZodiacUtils.hasZodiacPageShowedToday()) {
             SharedPreferences.Editor editor = pushFramePreferences.edit();
             editor.putLong(PUSH_ZODIAC_ADD_TO_FIRST_TIME, System.currentTimeMillis());
             editor.putInt(PUSH_FRAME_INDEX, MODE_ZODIAC);
@@ -866,7 +866,7 @@ public class PremiumLockerMainFrame extends PercentRelativeLayout implements INo
                 });
                 break;
             case MODE_ZODIAC:
-                if (ZodiacUtils.hasClickedZodiacLockerPushToday()) {
+                if (ZodiacUtils.hasZodiacPageShowedToday()) {
                     return false;
                 }
                 View zodiacRootView = findViewById(R.id.push_zodiac);
@@ -888,7 +888,6 @@ public class PremiumLockerMainFrame extends PercentRelativeLayout implements INo
                     setZodiacButton.setOnClickListener(new OnClickListener() {
                         @Override
                         public void onClick(View v) {
-                            ZodiacUtils.setClickZodiacToday();
                             increasePushFrameItemIndex();
                             NavUtils.startCameraFromLockerScreenWithZodiacInfo(getContext().getApplicationContext(), null);
                             HSGlobalNotificationCenter.sendNotification(PremiumLockerActivity.EVENT_FINISH_SELF);
@@ -971,7 +970,6 @@ public class PremiumLockerMainFrame extends PercentRelativeLayout implements INo
                 TextView readMore = zodiacDetailView.findViewById(R.id.zodiac_read_more);
                 readMore.setBackgroundDrawable(RippleDrawableUtils.getCompatRippleDrawable(Color.YELLOW, DisplayUtils.dip2px(20)));
                 zodiacDetailView.setOnClickListener(v -> {
-                    ZodiacUtils.setClickZodiacToday();
                     increasePushFrameItemIndex();
                     NavUtils.startCameraFromLockerScreenWithZodiacInfo(getContext().getApplicationContext(), horoscopeType);
                     HSGlobalNotificationCenter.sendNotification(PremiumLockerActivity.EVENT_FINISH_SELF);
