@@ -79,10 +79,10 @@ Try More Lock Screen Themes</string>
     <string name="zodiac_name_capricorn">CAPRICORN</string>
 
     <string name="zodiac_of_the_day">Horoscope of The Day</string>
-    <string name="zodiac_how_your_day">How\'s your day</string>
-    <string name="zodiac_how_your_day_subTitle">Want to know more about your horoscope?</string>
+    <string name="zodiac_settings_title">How\'s your day</string>
+    <string name="zodiac_settings_subTitle">Knowing yourself is knowing power.</string>
     <string name="zodiac_today_title">TODAY\'S %1$s</string>
-    <string name="zodiac_set_your_zodiac">Set Your Own Horoscope</string>
+    <string name="zodiac_settings_button">Follow the signs</string>
     <string name="zodiac_tap_to_refresh">Tap to refresh</string>
     <string name="zodiac_read_more">Read More</string>
     <string name="zodiac_love">Love</string>
