@@ -227,6 +227,7 @@ public class NavUtils {
         } else {
             launchIntent.putExtra(ZodiacUtils.EXTRA_ZODIAC_INDEX_NUMBER, ZodiacUtils.ZODIAC_NONE);
         }
+        launchIntent.putExtra("intent_extra_show_home", true);// 与MainActivity的变量保持一致
         try {
             context.startActivity(launchIntent);//null pointer check in case package name was not found
             return true;

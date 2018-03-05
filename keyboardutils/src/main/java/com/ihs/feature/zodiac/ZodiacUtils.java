@@ -45,7 +45,7 @@ public class ZodiacUtils {
         return preferences.contains(PREFERENCE_KEY_ZODIAC_INDEX_NUMBER);
     }
 
-    public static boolean hasClickedZodiacToday() {
+    public static boolean hasClickedZodiacLockerPushToday() {
         long lastZodiacClickedTime = preferences.getLong(PUSH_ZODIAC_CLICKED_TIME, 0);
         return DateUtils.isToday(lastZodiacClickedTime);
     }
