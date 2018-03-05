@@ -974,6 +974,7 @@ public class PremiumLockerMainFrame extends PercentRelativeLayout implements INo
                     @Override
                     public void onClick(View v) {
                         ZodiacUtils.setClickZodiacToday();
+                        increasePushFrameItemIndex();
                         NavUtils.startCameraFromLockerScreenWithZodiacInfo(getContext().getApplicationContext(), horoscopeType);
                         HSGlobalNotificationCenter.sendNotification(PremiumLockerActivity.EVENT_FINISH_SELF);
                     }
