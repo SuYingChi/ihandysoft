@@ -208,7 +208,14 @@ public class HSNewSettingsPanel extends BasePanel {
         if (doDismissAnim) {
             return showPanelAnimator(false);
         }
+        updateFunctionBarStatus(false);
         return null;
+    }
+
+    private void updateFunctionBarStatus(boolean appear) {
+        BaseFunctionBar functionBar = (BaseFunctionBar) panelActionListener.getBarView();
+        functionBar.setSettingButtonType(appear ? SettingsButton.SettingButtonType.SETTING : SettingsButton.SettingButtonType.MENU);
+        functionBar.setFunctionEnable(true);
     }
 
     @NonNull
@@ -230,9 +237,7 @@ public class HSNewSettingsPanel extends BasePanel {
 
             @Override
             public void onAnimationEnd(Animation animation) {
-                BaseFunctionBar functionBar = (BaseFunctionBar) panelActionListener.getBarView();
-                functionBar.setSettingButtonType(appear ? SettingsButton.SettingButtonType.SETTING : SettingsButton.SettingButtonType.MENU);
-                functionBar.setFunctionEnable(true);
+                updateFunctionBarStatus(appear);
                 if (onAnimationListener != null) {
                     onAnimationListener.onAnimationEnd(animation);
                 }
