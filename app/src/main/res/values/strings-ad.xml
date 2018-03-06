@@ -2,7 +2,7 @@
 <resources>
     <string name="ad_placement_call_assist" translatable="false">ColorCam_A(NativeAds)FilterDownload</string>
     <string name="ad_placement_filter_download" translatable="false">ColorCam_A(NativeAds)FilterDownload</string>
-    <string name="ad_placement_result_page" translatable="false">Colorkey_A(NativeAds)ThemeTryAd</string>
+    <string name="ad_placement_result_page" translatable="false">CableReportExpress</string>
     <string name="ad_placement_locker">Colorkey_A(NativeAds)Fuse</string>
     <string name="ad_placement_themetryad" translatable="false">Master_A(NativeAds)ThemeTryAd</string>
     <string name="ad_placement_boost_tip" translatable="false">500_A(NativeAds)SevenInOne</string>
