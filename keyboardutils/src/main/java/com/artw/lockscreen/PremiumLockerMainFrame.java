@@ -895,7 +895,7 @@ public class PremiumLockerMainFrame extends PercentRelativeLayout implements INo
                     zodiacShowView.setVisibility(GONE);
                     TextView setZodiacButton = zodiacSetView.findViewById(R.id.zodiac_set_zodiac_button);
                     setZodiacButton.setBackgroundDrawable(RippleDrawableUtils.getCompatRippleDrawable(getContext().getResources().getColor(R.color.zodiac_set_button_bg), DisplayUtils.dip2px(20)));
-                    setZodiacButton.setOnClickListener(new OnClickListener() {
+                    zodiacSetView.setOnClickListener(new OnClickListener() {
                         @Override
                         public void onClick(View v) {
                             KCAnalytics.logEvent("Screenlocker_push_clicked", "type", "horoscope");
