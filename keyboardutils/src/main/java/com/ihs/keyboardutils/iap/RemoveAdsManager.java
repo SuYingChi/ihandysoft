@@ -6,12 +6,12 @@ import com.ihs.commons.notificationcenter.INotificationObserver;
 import com.ihs.commons.utils.HSBundle;
 import com.ihs.commons.utils.HSLog;
 import com.ihs.iap.HSIAPManager;
+import com.ihs.iap.HSPurchase;
 
 import org.json.JSONObject;
 
 /**
  * Created by liuzhongtao on 17/6/6.
- *
  */
 
 public class RemoveAdsManager {
@@ -27,14 +27,14 @@ public class RemoveAdsManager {
     private String removeAdsIapId;
 
     public static RemoveAdsManager getInstance() {
-		if(instance == null) {
-			synchronized(RemoveAdsManager.class) {
-				if (instance == null) {
-					instance = new RemoveAdsManager();
-				}
-			}
-		}
-		return instance;
+        if (instance == null) {
+            synchronized (RemoveAdsManager.class) {
+                if (instance == null) {
+                    instance = new RemoveAdsManager();
+                }
+            }
+        }
+        return instance;
     }
 
     private RemoveAdsManager() {
@@ -49,6 +49,7 @@ public class RemoveAdsManager {
 
     /**
      * 设置去广告购买是否需要服务器验证， 默认不需要
+     *
      * @param needsServerVerification bool
      */
     public void setNeedsServerVerification(boolean needsServerVerification) {
@@ -72,8 +73,8 @@ public class RemoveAdsManager {
 
         HSIAPManager.getInstance().purchase(needsServerVerification ? HSIAPManager.VERIFICATION_ON_SERVER : HSIAPManager.VERIFICATION_ON_DEVICE, removeAdsIapId, new HSIAPManager.HSPurchaseListener() {
             @Override
-            public void onPurchaseSucceeded(String s) {
-                HSLog.d("onPurchaseSucceeded: " + s);
+            public void onPurchaseSucceeded(HSPurchase hsPurchase) {
+                HSLog.d("onPurchaseSucceeded: ");
             }
 
             @Override
@@ -83,16 +84,16 @@ public class RemoveAdsManager {
             }
 
             @Override
-            public void onVerifySucceeded(String s, JSONObject jsonObject) {
-                HSLog.d(TAG, "onVerifySucceeded: " + s + "json: " + jsonObject.toString());
+            public void onVerifySucceeded(HSPurchase hsPurchase, JSONObject jsonObject) {
+                HSLog.d(TAG, "onVerifySucceeded: " + "json: " + jsonObject.toString());
 
                 HSGlobalNotificationCenter.sendNotification(NOTIFICATION_REMOVEADS_PURCHASED);
                 isPurchasingRemoveAds = false;
             }
 
             @Override
-            public void onVerifyFailed(String s, int i, String s1) {
-                HSLog.d(TAG, "onVerifyFailed: " + s + " Error: " + s1 + " (" + i + ")");
+            public void onVerifyFailed(HSPurchase hsPurchase, int i, String s) {
+                HSLog.d(TAG, "onVerifyFailed: " + s + " Error: " + s + " (" + i + ")");
 
                 isPurchasingRemoveAds = false;
             }

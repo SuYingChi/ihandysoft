@@ -293,7 +293,7 @@ abstract class ResultController implements View.OnClickListener {
     }
 
     void fillNativeAd(AcbNativeAd ad) {
-        if (mAdContainer != null) {
+        if (mAdContainer != null && ad != null) {
             mAdContainer.fillNativeAd(ad);
         }
     }
