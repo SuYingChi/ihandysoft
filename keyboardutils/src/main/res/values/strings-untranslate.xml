@@ -84,6 +84,7 @@ Try More Lock Screen Themes</string>
     <string name="zodiac_today_title">TODAY\'S %1$s</string>
     <string name="zodiac_settings_button">Follow the signs</string>
     <string name="zodiac_tap_to_refresh">Tap to refresh</string>
+    <string name="zodiac_load_failed_toast">Please check your network!</string>
     <string name="zodiac_read_more">Read More</string>
     <string name="zodiac_love">Love</string>
     <string name="zodiac_career">Career</string>

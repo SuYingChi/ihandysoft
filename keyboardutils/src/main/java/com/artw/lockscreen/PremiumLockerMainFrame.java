@@ -996,6 +996,7 @@ public class PremiumLockerMainFrame extends PercentRelativeLayout implements INo
             @Override
             public void onFailure(AcbError acbError) {
                 HSLog.e(TAG, acbError.getMessage());
+                Toast.makeText(getContext(), getContext().getString(R.string.zodiac_load_failed_toast), Toast.LENGTH_SHORT).show();
                 progressBar.setVisibility(GONE);
                 zodiacDetailView.setVisibility(GONE);
                 zodiacRefreshView.setVisibility(VISIBLE);
