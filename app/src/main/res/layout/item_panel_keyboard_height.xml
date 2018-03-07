@@ -1,9 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <com.ihs.inputmethod.uimodules.ui.adjustheight.AdjustHeightView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/root_view"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:clickable="true"
-    android:background="#a6201f20">
+    android:background="#a6201f20"
+    android:clickable="true">
 
     <LinearLayout
         android:id="@+id/bottom_container"
@@ -54,10 +55,9 @@
 
         <ImageView
             android:id="@+id/image_controller"
-            android:layout_width="60dp"
-            android:layout_height="60dp"
+            android:layout_width="@dimen/keyboard_adjust_height_controller_height"
+            android:layout_height="@dimen/keyboard_adjust_height_controller_height"
             android:layout_centerHorizontal="true"
-            android:padding="10dp"
             android:scaleType="centerCrop"
             android:src="@drawable/ic_adjust_keyboard_height_adjuster" />
 

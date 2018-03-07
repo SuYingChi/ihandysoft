@@ -461,7 +461,7 @@ public class KeyboardPanelManager extends KeyboardPanelSwitcher implements BaseF
     }
 
     public boolean isAdjustKeyboardHeightViewShow() {
-        return keyboardPanelSwitchContainer != null;
+        return adjustKeyboardHeightContainer != null;
     }
 
     public void hideAdjustKeyboardHeightView() {

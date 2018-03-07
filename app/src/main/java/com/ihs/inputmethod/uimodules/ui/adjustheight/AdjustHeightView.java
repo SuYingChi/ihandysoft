@@ -9,6 +9,7 @@ import android.widget.RelativeLayout;
 
 import com.ihs.app.framework.HSApplication;
 import com.ihs.inputmethod.api.HSUIInputMethodService;
+import com.ihs.inputmethod.api.utils.HSDisplayUtils;
 import com.ihs.inputmethod.api.utils.HSResourceUtils;
 import com.ihs.inputmethod.uimodules.R;
 import com.kc.utils.KCAnalytics;
@@ -30,6 +31,8 @@ public class AdjustHeightView extends RelativeLayout implements View.OnClickList
 
     private float downY;
     private float diffY;
+    private float imageControllerExternalTouchSize = HSDisplayUtils.dip2px(30);
+    private boolean canAdjust = false;
 
     public AdjustHeightView(Context context, @Nullable AttributeSet attrs) {
         super(context, attrs);
@@ -52,6 +55,7 @@ public class AdjustHeightView extends RelativeLayout implements View.OnClickList
 
         findViewById(R.id.btn_reset).setOnClickListener(this);
         findViewById(R.id.btn_confirm).setOnClickListener(this);
+        findViewById(R.id.root_view).setOnTouchListener(touchListener);
     }
 
     private OnTouchListener touchListener = new OnTouchListener() {
@@ -60,33 +64,53 @@ public class AdjustHeightView extends RelativeLayout implements View.OnClickList
             switch (event.getAction()) {
                 case MotionEvent.ACTION_DOWN:
                     downY = event.getRawY();
-                    break;
+                    int[] loc = new int[2];
+                    imageController.getLocationOnScreen(loc);
 
-                case MotionEvent.ACTION_MOVE:
-                    float currentY = event.getRawY();
-                    diffY = downY - currentY;
-                    downY = currentY;
+                    int controllerCenterX = loc[0] + imageController.getWidth() / 2;
+                    int controllerCenterY = loc[1] + imageController.getHeight() / 2;
 
-                    LayoutParams layoutParams = (LayoutParams) adjustHeightControllerContainer.getLayoutParams();
-                    layoutParams.bottomMargin += (int) (diffY);
+                    float slotX = Math.abs(controllerCenterX - event.getRawX());
+                    float slotY = Math.abs(controllerCenterY - downY);
 
-                    int newKeyboardHeight = layoutParams.bottomMargin - defaultSuggestionStripHeight + halfControllerHeight;
-                    if (newKeyboardHeight > defaultKeyboardHeight * 1.2f) {
-                        layoutParams.bottomMargin = (int) (defaultKeyboardHeight * 1.2f) + defaultSuggestionStripHeight - halfControllerHeight;
-                        newKeyboardHeight = layoutParams.bottomMargin - defaultSuggestionStripHeight + halfControllerHeight;
-                    } else if (newKeyboardHeight < defaultKeyboardHeight * 0.8f) {
-                        layoutParams.bottomMargin = (int) (defaultKeyboardHeight * 0.8f) + defaultSuggestionStripHeight - halfControllerHeight;
-                        newKeyboardHeight = layoutParams.bottomMargin - defaultSuggestionStripHeight + halfControllerHeight;
+                    if (slotX < imageController.getWidth() / 2 + imageControllerExternalTouchSize && slotY < imageController.getHeight() / 2 + imageControllerExternalTouchSize) {
+                        canAdjust = true;
                     }
-
-                    bottomContainer.getLayoutParams().height = newKeyboardHeight;
-                    adjustHeightControllerContainer.setLayoutParams(layoutParams);
-
-                    HSResourceUtils.setKeyboardHeightPercent(newKeyboardHeight * 1.0f / defaultKeyboardHeight);
                     break;
+                case MotionEvent.ACTION_MOVE:
+                    if (canAdjust) {
+                        float currentY = event.getRawY();
+                        diffY = downY - currentY;
+                        downY = currentY;
 
+                        LayoutParams layoutParams = (LayoutParams) adjustHeightControllerContainer.getLayoutParams();
+                        layoutParams.bottomMargin += (int) (diffY);
+
+                        int newKeyboardHeight = layoutParams.bottomMargin - defaultSuggestionStripHeight + halfControllerHeight;
+                        if (newKeyboardHeight > defaultKeyboardHeight * 1.2f) {
+                            layoutParams.bottomMargin = (int) (defaultKeyboardHeight * 1.2f) + defaultSuggestionStripHeight - halfControllerHeight;
+                        } else if (newKeyboardHeight < defaultKeyboardHeight * 0.8f) {
+                            layoutParams.bottomMargin = (int) (defaultKeyboardHeight * 0.8f) + defaultSuggestionStripHeight - halfControllerHeight;
+                        }
+                        adjustHeightControllerContainer.setLayoutParams(layoutParams);
+
+                        newKeyboardHeight = layoutParams.bottomMargin - halfControllerHeight;
+                        bottomContainer.getLayoutParams().height = newKeyboardHeight;
+                        
+                        HSResourceUtils.setKeyboardHeightPercent(newKeyboardHeight * 1.0f / defaultKeyboardHeight);
+                    }
+                    break;
                 case MotionEvent.ACTION_UP:
-                    HSUIInputMethodService.getKeyboardPanelMananger().updateKeyboardHeight();
+                    if (canAdjust) {
+                        canAdjust = false;
+                        HSUIInputMethodService.getKeyboardPanelMananger().updateKeyboardHeight();
+                    } else {
+                        int[] location = new int[2];
+                        imageController.getLocationOnScreen(location);
+                        if (downY < location[1] + imageController.getHeight() / 2) {
+                            HSUIInputMethodService.getKeyboardPanelMananger().hideAdjustKeyboardHeightView();
+                        }
+                    }
                     break;
             }
             return true;
