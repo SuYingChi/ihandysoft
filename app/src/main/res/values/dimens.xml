@@ -115,6 +115,7 @@
 
     <dimen name="setting_panel_item_margin_top">5dp</dimen>
     <dimen name="setting_panel_item_text_margin_top">3dp</dimen>
+    <dimen name="setting_panel_indicator_view_height">10dp</dimen>
 
     <dimen name="sticker_image_width">60dp</dimen>
 

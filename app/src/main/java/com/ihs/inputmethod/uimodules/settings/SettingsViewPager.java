@@ -21,8 +21,8 @@ import java.util.List;
  */
 
 public class SettingsViewPager extends ViewPager {
-    int rowCount = 2;
-    int colCount = 4;
+    public static int rowCount = 2;
+    public static int colCount = 4;
     List<View> pageViews = new ArrayList<>();
 
     List<ViewItem> items;
@@ -51,7 +51,7 @@ public class SettingsViewPager extends ViewPager {
             for (int rowIndex = 0; rowIndex < rowCount; rowIndex++) {
                 LinearLayout innerLayout = new LinearLayout(context);
                 innerLayout.setOrientation(LinearLayout.HORIZONTAL);
-                LinearLayout.LayoutParams innerLayoutParams = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, 0, 15);
+                LinearLayout.LayoutParams innerLayoutParams = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
                 innerLayoutParams.gravity = Gravity.CENTER;
                 innerLayout.setLayoutParams(innerLayoutParams);
 
@@ -67,7 +67,6 @@ public class SettingsViewPager extends ViewPager {
 
                     LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT);
                     params.weight = 1;
-//                    params.topMargin = HSYamlUtils.dp2px(10);
                     params.gravity = Gravity.TOP;
                     view.setLayoutParams(params);
                     innerLayout.addView(view);
@@ -77,7 +76,7 @@ public class SettingsViewPager extends ViewPager {
                 outerLayout.addView(innerLayout);
                 if (rowIndex % 2 == 0) { //中间插入一个空白的View
                     View blankView = new View(HSApplication.getContext());
-                    outerLayout.addView(blankView, new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, 0, 1));
+                    outerLayout.addView(blankView, new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT, 1));
                 }
             }
             views.add(outerLayout);
