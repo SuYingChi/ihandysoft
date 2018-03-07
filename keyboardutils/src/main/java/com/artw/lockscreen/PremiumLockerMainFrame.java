@@ -86,9 +86,9 @@ import com.kc.utils.KCAnalytics;
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.ImageLoader;
 
-import net.appcloudbox.internal.service.utils.AcbError;
 import net.appcloudbox.service.AcbHoroscopeData;
 import net.appcloudbox.service.AcbHoroscopeRequest;
+import net.appcloudbox.service.utils.AcbError;
 
 import org.json.JSONObject;
 
@@ -964,7 +964,7 @@ public class PremiumLockerMainFrame extends PercentRelativeLayout implements INo
         if (horoscopeRequest != null) {
             horoscopeRequest.cancel();
         }
-        horoscopeRequest = new AcbHoroscopeRequest(getContext(), horoscopeType, new Date(System.currentTimeMillis()), new AcbHoroscopeRequest.AcbHoroscopeListener() {
+        horoscopeRequest = new AcbHoroscopeRequest(horoscopeType, new Date(System.currentTimeMillis()), new AcbHoroscopeRequest.AcbHoroscopeListener() {
             @Override
             public void onSuccess(AcbHoroscopeData acbHoroscopeData) {
                 HSLog.d(TAG, String.valueOf(acbHoroscopeData));

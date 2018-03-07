@@ -32,6 +32,7 @@ import com.squareup.leakcanary.LeakCanary;
 
 import net.appcloudbox.ads.expressad.AcbExpressAdManager;
 import net.appcloudbox.ads.nativead.AcbNativeAdManager;
+import net.appcloudbox.service.AcbService;
 
 import io.fabric.sdk.android.Fabric;
 
@@ -76,6 +77,7 @@ public class MyApplication extends HSApplication {
         LeakCanary.install(this);
         AcbWeatherManager.getInstance().init(this, R.mipmap.ic_launcher);
         AcbExpressAdManager.getInstance().init(this);
+        AcbService.initialize(this);
         HSChargingScreenManager.init(true, "Master_A(NativeAds)Charging", getString(R.string.ad_placement_filter_download));
 
         HSGlobalNotificationCenter.addObserver(HSNotificationConstant.HS_SESSION_START, sessionEventObserver);
