@@ -18,6 +18,7 @@ public class SoftGameDisplayActivity extends FragmentActivity implements ViewPag
     public static final String TOP_50_GAME = "http://api.famobi.com/feed?a=A-KCVWU&n=50&sort=top_games";
     public static final String TOP_NEW_GAME = "http://api.famobi.com/feed?a=A-KCVWU&n=50";
     private ViewPager mViewPager;
+    private long startTime = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -44,8 +45,16 @@ public class SoftGameDisplayActivity extends FragmentActivity implements ViewPag
         mViewPager.addOnPageChangeListener(this);
 
         mTabLayout.setupWithViewPager(mViewPager);//将TabLayout和ViewPager关联起来。
+
+        startTime = System.currentTimeMillis();
     }
 
+    @Override
+    protected void onDestroy() {
+        int totalDisplayTime = (int) ((System.currentTimeMillis() - startTime) / 1000);
+        KCAnalytics.logEvent("game_play_duration_all", "Duration", String.valueOf(totalDisplayTime));
+        super.onDestroy();
+    }
 
     @Override
     public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
