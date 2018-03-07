@@ -9,9 +9,11 @@ import android.webkit.WebView;
 import android.webkit.WebViewClient;
 
 import com.ihs.keyboardutils.R;
+import com.kc.utils.KCAnalytics;
 
 
 public class GameActivity extends AppCompatActivity {
+    private long startTime = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -39,6 +41,7 @@ public class GameActivity extends AppCompatActivity {
             }
         });
         webView.loadUrl(url);
+        startTime = System.currentTimeMillis();
     }
 
     @Override
@@ -47,4 +50,10 @@ public class GameActivity extends AppCompatActivity {
         super.onBackPressed();
     }
 
+    @Override
+    protected void onDestroy() {
+        int totalDisplayTime = (int) ((System.currentTimeMillis() - startTime) / 1000);
+        KCAnalytics.logEvent("game_play_duration", "Duration", String.valueOf(totalDisplayTime));
+        super.onDestroy();
+    }
 }
