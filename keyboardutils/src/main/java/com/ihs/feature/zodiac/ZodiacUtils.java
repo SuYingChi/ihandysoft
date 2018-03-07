@@ -54,6 +54,10 @@ public class ZodiacUtils {
         preferences.putLong(PUSH_ZODIAC_CLICKED_TIME, System.currentTimeMillis());
     }
 
+    public static void removeZodiacIndex() {
+        preferences.remove(PREFERENCE_KEY_ZODIAC_INDEX_NUMBER);
+    }
+
     public static String getZodiacName(@NonNull AcbHoroscopeData.HoroscopeType zodiac) {
         String zodiacName;
         switch (zodiac) {
