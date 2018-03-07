@@ -3,7 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     package="com.ihs.keyboardutils">
 
-    <uses-sdk tools:overrideLibrary="com.google.android.gms,com.facebook,com.facebook.shimmer" />
+    <uses-sdk tools:overrideLibrary="com.google.android.gms,com.facebook,com.facebook.shimmer, net.appcloudbox.service" />
 
     <uses-permission android:name="android.permission.CALL_PHONE" />
     <uses-permission android:name="android.permission.DISABLE_KEYGUARD" />

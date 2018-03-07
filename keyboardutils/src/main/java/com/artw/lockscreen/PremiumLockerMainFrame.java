@@ -21,6 +21,7 @@ import android.support.v7.widget.Toolbar;
 import android.text.SpannableString;
 import android.text.Spanned;
 import android.text.TextUtils;
+import android.text.format.DateUtils;
 import android.text.style.ForegroundColorSpan;
 import android.util.AttributeSet;
 import android.view.LayoutInflater;
@@ -33,6 +34,8 @@ import android.view.animation.Animation;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.PopupWindow;
+import android.widget.ProgressBar;
+import android.widget.RatingBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -69,6 +72,7 @@ import com.ihs.feature.junkclean.model.JunkInfo;
 import com.ihs.feature.softgame.GameStarterActivity;
 import com.ihs.feature.softgame.SoftGameDisplayActivity;
 import com.ihs.feature.weather.WeatherManager;
+import com.ihs.feature.zodiac.ZodiacUtils;
 import com.ihs.keyboardutils.R;
 import com.ihs.keyboardutils.alerts.LockerUpgradeAlert;
 import com.ihs.keyboardutils.appsuggestion.AppSuggestionManager;
@@ -81,6 +85,10 @@ import com.kc.commons.utils.KCCommonUtils;
 import com.kc.utils.KCAnalytics;
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.ImageLoader;
+
+import net.appcloudbox.service.AcbHoroscopeData;
+import net.appcloudbox.service.AcbHoroscopeRequest;
+import net.appcloudbox.service.utils.AcbError;
 
 import org.json.JSONObject;
 
@@ -101,7 +109,7 @@ import static com.ihs.feature.weather.WeatherManager.BUNDLE_KEY_WEATHER_TEMPERAT
 
 public class PremiumLockerMainFrame extends PercentRelativeLayout implements INotificationObserver, SlidingDrawer.SlidingDrawerListener {
 
-
+    private static final String TAG = "PremiumLockerMainFrame";
     public static final String EVENT_SLIDING_DRAWER_OPENED = "EVENT_SLIDING_DRAWER_OPENED";
     public static final String EVENT_SLIDING_DRAWER_CLOSED = "EVENT_SLIDING_DRAWER_CLOSED";
 
@@ -111,8 +119,10 @@ public class PremiumLockerMainFrame extends PercentRelativeLayout implements INo
     private static final int MODE_BATTERY = 3;
     private static final int MODE_CPU = 4;
     private static final int MODE_STORAGE = 5;
+    private static final int MODE_ZODIAC = 6;
     private static final int GAME_INFO_COUNT = 10;
-    private static final int MODE_COUNT = 6;
+    private static final int MODE_COUNT = 7;
+
     private static final String PUSH_FRAME_PREFERENCE = "push_frame";
     private static final String GAME_INFO_PREFERENCE = "gameInfo";
     private static final String PUSH_FRAME_INDEX = "index";
@@ -124,9 +134,12 @@ public class PremiumLockerMainFrame extends PercentRelativeLayout implements INo
     private static final String PUSH_GAME_URL = "link";
     private static final String PUSH_CAM_FINISHED_EVENT = "prefs_finished_event";
     private static final String PUSH_CAM_NOTIFICATION_INDEX = "next_notification_index";
+    private static final String PUSH_ZODIAC_ADD_TO_FIRST_TIME = "pref_push_zodiac_add_to_first_date_key";
 
     private boolean mIsSlidingDrawerOpened = false;
     private boolean mIsBlackHoleShowing = false;
+
+    private AcbHoroscopeRequest horoscopeRequest;
 
     private DeviceManager deviceManager = DeviceManager.getInstance();
     private BatteryDataManager batteryDataManager = new BatteryDataManager(getContext());
@@ -296,7 +309,10 @@ public class PremiumLockerMainFrame extends PercentRelativeLayout implements INo
         buttonWeather = findViewById(R.id.button_weather);
         buttonWeather.setOnClickListener(clickListener);
         buttonWeather.setBackgroundDrawable(RippleDrawableUtils.getCompatRippleDrawable(backgroundColor, backgroundPressColor, DisplayUtils.dip2px(4)));
-        findViewById(R.id.push_close_icon).setOnClickListener(view -> findViewById(R.id.push_frame).setVisibility(INVISIBLE));
+        findViewById(R.id.push_close_icon).setOnClickListener(v -> {
+            findViewById(R.id.push_frame).setVisibility(INVISIBLE);
+            KCAnalytics.logEvent("Screenlocker_push_cancel_clicked");
+        });
 
         if (!shouldShowButtonUpgrade) {
             buttonUpgrade.setVisibility(View.INVISIBLE);
@@ -464,6 +480,9 @@ public class PremiumLockerMainFrame extends PercentRelativeLayout implements INo
         if (mShimmer != null) {
             mShimmer.cancel();
         }
+        if (horoscopeRequest != null) {
+            horoscopeRequest.cancel();
+        }
         unregisterDataReceiver();
     }
 
@@ -493,10 +512,12 @@ public class PremiumLockerMainFrame extends PercentRelativeLayout implements INo
                     mShimmer.start(mUnlockText);
                 }
                 buttonUpgrade.setImageResource(R.raw.upgrade_icon);
-                int timeForUpdate = (int) (System.currentTimeMillis() - pushFramePreferences.getLong(PUSH_FRAME_TIME, 0)) / (60 * 1000);
-                if (timeForUpdate >= HSConfig.optInteger(5, "Application", "LockerPush", "IntervalTimeInMin")) {
-                    findViewById(R.id.push_frame).setVisibility(VISIBLE);
-                    increasePushFrameItemIndex();
+                if (!addZodiacToFirst()) {
+                    int timeForUpdate = (int) (System.currentTimeMillis() - pushFramePreferences.getLong(PUSH_FRAME_TIME, 0)) / (60 * 1000);
+                    if (timeForUpdate >= HSConfig.optInteger(5, "Application", "LockerPush", "IntervalTimeInMin")) {
+                        findViewById(R.id.push_frame).setVisibility(VISIBLE);
+                        increasePushFrameItemIndex();
+                    }
                 }
                 while (!showPushFrameItem(getPushFrameItemIndex())) {
                     increasePushFrameItemIndex();
@@ -512,7 +533,7 @@ public class PremiumLockerMainFrame extends PercentRelativeLayout implements INo
     }
 
     private void increasePushFrameItemIndex() {
-        int pushFrameItemIndex = pushFramePreferences.getInt(PUSH_FRAME_INDEX, 0);
+        int pushFrameItemIndex = getPushFrameItemIndex();
         if (pushFrameItemIndex == MODE_GAME) {
             int gameInfoPosition = pushGamePreferences.getInt(PUSH_GAME_POSITION, 0);
             gameInfoPosition++;
@@ -526,6 +547,30 @@ public class PremiumLockerMainFrame extends PercentRelativeLayout implements INo
         pushFrameItemIndex++;
         pushFrameItemIndex = pushFrameItemIndex % MODE_COUNT;
         pushFramePreferences.edit().putInt(PUSH_FRAME_INDEX, pushFrameItemIndex).putLong(PUSH_FRAME_TIME, System.currentTimeMillis()).apply();
+    }
+
+    private boolean addZodiacToFirst() {
+        //时间大于3点并且今天星座item未加塞到第一项并且当天未点击过星座
+        if (getHourOfDay() > 3 && !hasZodiacAddToFirstToday() && !ZodiacUtils.hasZodiacPageShowedToday()) {
+            SharedPreferences.Editor editor = pushFramePreferences.edit();
+            editor.putLong(PUSH_ZODIAC_ADD_TO_FIRST_TIME, System.currentTimeMillis());
+            editor.putInt(PUSH_FRAME_INDEX, MODE_ZODIAC);
+            editor.apply();
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    private boolean hasZodiacAddToFirstToday() {
+        long lastZodiacAddedToFirstTime = pushFramePreferences.getLong(PUSH_ZODIAC_ADD_TO_FIRST_TIME, 0);
+        return DateUtils.isToday(lastZodiacAddedToFirstTime);
+    }
+
+    private int getHourOfDay() {
+        Date date = new Date(System.currentTimeMillis());
+        Calendar.getInstance().setTime(date);
+        return Calendar.getInstance().get(Calendar.HOUR_OF_DAY);
     }
 
     private void askForGameInfo(int position) {
@@ -564,6 +609,14 @@ public class PremiumLockerMainFrame extends PercentRelativeLayout implements INo
     }
 
     private boolean showPushFrameItem(int pushFrameItemIndex) {
+        HSLog.d(TAG, "pushFrameItemIndex: " + pushFrameItemIndex);
+        findViewById(R.id.push_camera).setVisibility(GONE);
+        findViewById(R.id.push_game).setVisibility(GONE);
+        findViewById(R.id.push_boost_two).setVisibility(GONE);
+        findViewById(R.id.push_boost_scan).setVisibility(GONE);
+        findViewById(R.id.push_boost_one).setVisibility(GONE);
+        findViewById(R.id.push_zodiac).setVisibility(GONE);
+
         switch (pushFrameItemIndex) {
             case MODE_JUNK:
                 findViewById(R.id.push_camera).setVisibility(GONE);
@@ -576,6 +629,7 @@ public class PremiumLockerMainFrame extends PercentRelativeLayout implements INo
                 findViewById(R.id.push_boost_scan).setVisibility(VISIBLE);
                 ((TextView) findViewById(R.id.push_boost_scan_button)).setText(getResources().getString(R.string.push_junk_button));
                 findViewById(R.id.push_boost_scan_button).setOnClickListener(view -> {
+                    KCAnalytics.logEvent("new_screenLocker_feature_clicked", "entry", "push");
                     increasePushFrameItemIndex();
                     Intent junkCleanIntent = new Intent(getContext(), JunkCleanActivity.class);
                     getContext().startActivity(junkCleanIntent);
@@ -621,6 +675,7 @@ public class PremiumLockerMainFrame extends PercentRelativeLayout implements INo
                             ((ImageView) junkRootView.findViewById(R.id.icon)).setImageDrawable(getResources().getDrawable(R.drawable.new_locker_junk));
                             junkRootView.findViewById(R.id.push_boost_button).setOnClickListener(view -> {
                                 KCAnalytics.logEvent("Screenlocker_push_clicked", "type", "junk");
+                                KCAnalytics.logEvent("new_screenLocker_feature_clicked", "entry", "push");
                                 increasePushFrameItemIndex();
                                 Intent junkCleanIntent = new Intent(getContext(), JunkCleanActivity.class);
                                 getContext().startActivity(junkCleanIntent);
@@ -653,6 +708,7 @@ public class PremiumLockerMainFrame extends PercentRelativeLayout implements INo
                 ((Button) gameRootView.findViewById(R.id.push_game_button)).setText(getResources().getString(R.string.push_game_button));
                 gameRootView.findViewById(R.id.push_game_button).setOnClickListener(view -> {
                     KCAnalytics.logEvent("Screenlocker_push_clicked", "type", "game");
+                    KCAnalytics.logEvent("new_screenLocker_feature_clicked", "entry", "push");
                     Intent intent = new Intent(getContext(), SoftGameDisplayActivity.class);
                     intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                     getContext().startActivity(intent);
@@ -704,6 +760,7 @@ public class PremiumLockerMainFrame extends PercentRelativeLayout implements INo
                 ((Button) findViewById(R.id.push_camera_button)).setText(bean.getButtonText());
                 findViewById(R.id.push_camera_button).setOnClickListener(view -> {
                     KCAnalytics.logEvent("Screenlocker_push_clicked", "type", "camera");
+                    KCAnalytics.logEvent("new_screenLocker_feature_clicked", "entry", "push");
                     increasePushFrameItemIndex();
                     Intent cameraIntent = new Intent("push.camera.store");
                     switch (pushCameraActionType) {
@@ -756,6 +813,7 @@ public class PremiumLockerMainFrame extends PercentRelativeLayout implements INo
                     ((Button) batteryOneRootView.findViewById(R.id.push_boost_button)).setText(getResources().getString(R.string.push_battery_button));
                     batteryOneRootView.findViewById(R.id.push_boost_button).setOnClickListener(view -> {
                         KCAnalytics.logEvent("Screenlocker_push_clicked", "type", "battery");
+                        KCAnalytics.logEvent("new_screenLocker_feature_clicked", "entry", "push");
                         increasePushFrameItemIndex();
                         Intent batteryIntent = new Intent(getContext(), BatteryActivity.class);
                         getContext().startActivity(batteryIntent);
@@ -776,6 +834,7 @@ public class PremiumLockerMainFrame extends PercentRelativeLayout implements INo
                     ((Button) batteryTwoRootView.findViewById(R.id.push_boost_button)).setText(getResources().getString(R.string.push_battery_button));
                     batteryTwoRootView.findViewById(R.id.push_boost_button).setOnClickListener(view -> {
                         KCAnalytics.logEvent("Screenlocker_push_clicked", "type", "battery");
+                        KCAnalytics.logEvent("new_screenLocker_feature_clicked", "entry", "push");
                         increasePushFrameItemIndex();
                         Intent batteryIntent = new Intent(getContext(), BatteryActivity.class);
                         getContext().startActivity(batteryIntent);
@@ -809,11 +868,45 @@ public class PremiumLockerMainFrame extends PercentRelativeLayout implements INo
                 ((Button) cpuRootView.findViewById(R.id.push_boost_button)).setText(getResources().getString(R.string.push_cpu_button));
                 cpuRootView.findViewById(R.id.push_boost_button).setOnClickListener(view -> {
                     KCAnalytics.logEvent("Screenlocker_push_clicked", "type", "CPU");
+                    KCAnalytics.logEvent("new_screenLocker_feature_clicked", "entry", "push");
                     increasePushFrameItemIndex();
                     Intent cpuCoolerCleanIntent = new Intent(getContext(), CpuCoolDownActivity.class);
                     getContext().startActivity(cpuCoolerCleanIntent);
                     HSGlobalNotificationCenter.sendNotification(PremiumLockerActivity.EVENT_FINISH_SELF);
                 });
+                break;
+            case MODE_ZODIAC:
+                if (ZodiacUtils.hasZodiacPageShowedToday()) {
+                    return false;
+                }
+                View zodiacRootView = findViewById(R.id.push_zodiac);
+                zodiacRootView.setVisibility(VISIBLE);
+                View zodiacSetView = zodiacRootView.findViewById(R.id.push_zodiac_set);
+                View zodiacShowView = zodiacRootView.findViewById(R.id.push_zodiac_show);
+                if (ZodiacUtils.hasSelectedZodiac()) {
+                    zodiacSetView.setVisibility(GONE);
+                    zodiacShowView.setVisibility(VISIBLE);
+                    TextView zodiacTodayTipTitle = findViewById(R.id.zodiac_today_zodiac_name_title);
+                    String str = String.format(getContext().getResources().getString(R.string.zodiac_today_title), ZodiacUtils.getZodiacName(ZodiacUtils.getSelectZodiac()));
+                    zodiacTodayTipTitle.setText(str);
+                    loadZodiacDataAndShow(zodiacShowView);
+                } else {
+                    zodiacSetView.setVisibility(VISIBLE);
+                    zodiacShowView.setVisibility(GONE);
+                    TextView setZodiacButton = zodiacSetView.findViewById(R.id.zodiac_set_zodiac_button);
+                    setZodiacButton.setBackgroundDrawable(RippleDrawableUtils.getCompatRippleDrawable(getContext().getResources().getColor(R.color.zodiac_set_button_bg), DisplayUtils.dip2px(20)));
+                    zodiacSetView.setOnClickListener(new OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            KCAnalytics.logEvent("Screenlocker_push_clicked", "type", "horoscope");
+                            KCAnalytics.logEvent("Screenlocker_horoscope_push_clicked_time", "time", String.valueOf(getHourOfDay()));
+                            KCAnalytics.logEvent("new_screenLocker_feature_clicked", "entry", "push");
+                            increasePushFrameItemIndex();
+                            NavUtils.startCameraFromLockerScreenWithZodiacInfo(getContext().getApplicationContext(), null);
+                            HSGlobalNotificationCenter.sendNotification(PremiumLockerActivity.EVENT_FINISH_SELF);
+                        }
+                    });
+                }
                 break;
             case MODE_STORAGE:
                 int usage = deviceManager.getRamUsage();
@@ -835,6 +928,7 @@ public class PremiumLockerMainFrame extends PercentRelativeLayout implements INo
                 ((Button) findViewById(R.id.push_boost_button)).setText(getResources().getString(R.string.push_memory_button));
                 findViewById(R.id.push_boost_button).setOnClickListener(view -> {
                     KCAnalytics.logEvent("Screenlocker_push_clicked", "type", "memory");
+                    KCAnalytics.logEvent("new_screenLocker_feature_clicked", "entry", "push");
                     increasePushFrameItemIndex();
                     Intent boostIntent = new Intent(getContext(), BoostPlusActivity.class);
                     getContext().startActivity(boostIntent);
@@ -857,6 +951,59 @@ public class PremiumLockerMainFrame extends PercentRelativeLayout implements INo
         mTvTime.setText(String.format(Locale.getDefault(), "%02d:%02d", hour, minute));
         DateFormat format = new SimpleDateFormat("EEE\nMMMM, dd", Locale.getDefault());
         mTvDate.setText(format.format(new Date()));
+    }
+
+    private void loadZodiacDataAndShow(View zodiacShowView) {
+        ProgressBar progressBar = zodiacShowView.findViewById(R.id.zodiac_waiting_progress_bar);
+        progressBar.setVisibility(VISIBLE);
+        View zodiacDetailView = zodiacShowView.findViewById(R.id.zodiac_detail_view);
+        zodiacDetailView.setVisibility(GONE);
+        View zodiacRefreshView = zodiacShowView.findViewById(R.id.zodiac_refresh_view);
+        zodiacRefreshView.setVisibility(GONE);
+        AcbHoroscopeData.HoroscopeType horoscopeType = ZodiacUtils.getSelectZodiac();
+        if (horoscopeRequest != null) {
+            horoscopeRequest.cancel();
+        }
+        horoscopeRequest = new AcbHoroscopeRequest(horoscopeType, new Date(System.currentTimeMillis()), new AcbHoroscopeRequest.AcbHoroscopeListener() {
+            @Override
+            public void onSuccess(AcbHoroscopeData acbHoroscopeData) {
+                HSLog.d(TAG, String.valueOf(acbHoroscopeData));
+                progressBar.setVisibility(GONE);
+                zodiacDetailView.setVisibility(VISIBLE);
+                zodiacRefreshView.setVisibility(GONE);
+                RatingBar ratingBarLove = zodiacDetailView.findViewById(R.id.ratingBar_love);
+                ratingBarLove.setRating(acbHoroscopeData.getLoveRatings());
+                RatingBar ratingBarMoney = zodiacDetailView.findViewById(R.id.ratingBar_money);
+                ratingBarMoney.setRating(acbHoroscopeData.getMoneyRatings());
+                RatingBar ratingBarCareer = zodiacDetailView.findViewById(R.id.ratingBar_career);
+                ratingBarCareer.setRating(acbHoroscopeData.getCareerRatings());
+                RatingBar ratingBarHealth = zodiacDetailView.findViewById(R.id.ratingBar_health);
+                ratingBarHealth.setRating(acbHoroscopeData.getHealthRatings());
+                TextView textViewTipContent = zodiacDetailView.findViewById(R.id.zodiac_tip_content);
+                textViewTipContent.setText(acbHoroscopeData.getTip());
+                TextView readMore = zodiacDetailView.findViewById(R.id.zodiac_read_more);
+                readMore.setBackgroundDrawable(RippleDrawableUtils.getCompatRippleDrawable(getContext().getResources().getColor(R.color.zodiac_read_more_button_bg), DisplayUtils.dip2px(20)));
+                zodiacDetailView.setOnClickListener(v -> {
+                    KCAnalytics.logEvent("Screenlocker_push_clicked", "type", "horoscope");
+                    KCAnalytics.logEvent("new_screenLocker_feature_clicked", "entry", "push");
+                    KCAnalytics.logEvent("Screenlocker_horoscope_push_clicked_time", "time", String.valueOf(getHourOfDay()));
+                    increasePushFrameItemIndex();
+                    NavUtils.startCameraFromLockerScreenWithZodiacInfo(getContext().getApplicationContext(), horoscopeType);
+                    HSGlobalNotificationCenter.sendNotification(PremiumLockerActivity.EVENT_FINISH_SELF);
+                });
+            }
+
+            @Override
+            public void onFailure(AcbError acbError) {
+                HSLog.e(TAG, acbError.getMessage());
+                Toast.makeText(getContext(), getContext().getString(R.string.zodiac_load_failed_toast), Toast.LENGTH_SHORT).show();
+                progressBar.setVisibility(GONE);
+                zodiacDetailView.setVisibility(GONE);
+                zodiacRefreshView.setVisibility(VISIBLE);
+                zodiacRefreshView.setOnClickListener(v -> loadZodiacDataAndShow(zodiacShowView));
+            }
+        });
+        horoscopeRequest.start();
     }
 
     @Override

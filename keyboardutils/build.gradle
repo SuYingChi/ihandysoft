@@ -37,6 +37,7 @@ dependencies {
     implementation (name: 'libKeyboardCommons/libKeyboardCommons', ext: 'aar')
 
     implementation 'net.appcloudbox.ads:libAcbAds.gm:1.4.0.gm'
+    implementation "net.appcloudbox.service:libAcbService.beta:1.0.0.beta04"//星座服务
     implementation "com.ihandy.iap:iap.gm:4.0.+"
 
     implementation "com.ihandy.device:device-clean-memory$LIB_DEVICE_VERSION"

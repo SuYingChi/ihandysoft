@@ -35,7 +35,8 @@ public class MainActivity extends HSActivity {
             "Camera Intents",
             "Country Code Parser",
             "Send Boost Notifications",
-            "Boost Activities"
+            "Boost Activities",
+            "Select Zodiac"
     };
 
     Class[] activityClassArray = {
@@ -49,7 +50,8 @@ public class MainActivity extends HSActivity {
             CameraUtilActivity.class,
             CountryCodeUtil.class,
             null,
-            DemoShowBoostActivity.class
+            DemoShowBoostActivity.class,
+            ZodiacSelectActivity.class
     };
 
     @Override

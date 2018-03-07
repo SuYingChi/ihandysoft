@@ -65,4 +65,30 @@ Try More Lock Screen Themes</string>
     <string name="push_button_text">Check</string>
     <string name="headset_connected">Headphone Connected</string>
 
+    <string name="zodiac_name_aquarius">AQUARIUS</string>
+    <string name="zodiac_name_pisces">PISCES</string>
+    <string name="zodiac_name_aries">ARIES</string>
+    <string name="zodiac_name_taurus">TAURUS</string>
+    <string name="zodiac_name_gemini">GEMINI</string>
+    <string name="zodiac_name_cancer">CANCER</string>
+    <string name="zodiac_name_leo">LEO</string>
+    <string name="zodiac_name_virgo">VIRGO</string>
+    <string name="zodiac_name_libra">LIBRA</string>
+    <string name="zodiac_name_scorpio">SCORPIO</string>
+    <string name="zodiac_name_sagittarius">SAGITTARIUS</string>
+    <string name="zodiac_name_capricorn">CAPRICORN</string>
+
+    <string name="zodiac_of_the_day">Horoscope of The Day</string>
+    <string name="zodiac_settings_title">How\'s your day</string>
+    <string name="zodiac_settings_subTitle">Knowing yourself is knowing power.</string>
+    <string name="zodiac_today_title">TODAY\'S %1$s</string>
+    <string name="zodiac_settings_button">Follow the signs</string>
+    <string name="zodiac_tap_to_refresh">Tap to refresh</string>
+    <string name="zodiac_load_failed_toast">Please check your network!</string>
+    <string name="zodiac_read_more">Read More</string>
+    <string name="zodiac_love">Love</string>
+    <string name="zodiac_career">Career</string>
+    <string name="zodiac_money">Money</string>
+    <string name="zodiac_health">Health</string>
+
 </resources>

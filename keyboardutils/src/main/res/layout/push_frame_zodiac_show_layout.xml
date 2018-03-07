@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/push_zodiac_show"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/zodiac_locker_bg">
+
+    <com.ihs.feature.common.TypefacedTextView
+        android:id="@+id/zodiac_today_zodiac_name_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="10dp"
+        android:text="Today's Zodiac Name"
+        android:textColor="@android:color/white"
+        android:textSize="20sp"
+        app:typeface="@string/roboto_medium"
+        tools:ignore="HardcodedText" />
+
+    <ProgressBar
+        android:id="@+id/zodiac_waiting_progress_bar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true" />
+
+    <include
+        android:id="@+id/zodiac_detail_view"
+        layout="@layout/push_zodiac_detail_layout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@+id/zodiac_today_zodiac_name_title"
+        android:layout_marginTop="4dp"
+        android:visibility="gone" />
+
+    <include
+        android:id="@+id/zodiac_refresh_view"
+        layout="@layout/push_zodiac_refresh_layout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@+id/zodiac_today_zodiac_name_title"
+        android:layout_marginTop="4dp"
+        android:visibility="gone" />
+</RelativeLayout>

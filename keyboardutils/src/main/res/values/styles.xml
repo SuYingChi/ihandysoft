@@ -294,6 +294,17 @@
         <item name="android:ellipsize">end</item>
     </style>
 
+    <style name="ZodiacRatingStyle" parent="android:Widget.RatingBar">
+        <item name="android:isIndicator">true</item>
+        <item name="android:numStars">5</item>
+        <item name="android:maxHeight">18dp</item>
+        <item name="android:minHeight">18dp</item>
+        <item name="android:rating">4</item>
+        <item name="android:thumb">@null</item>
+        <item name="android:progressDrawable">@drawable/zodiac_rating_star</item>
+        <item name="android:indeterminateDrawable">@drawable/zodiac_rating_star</item>
+    </style>
+
     <!-- Boost+ -->
     <style name="BoostPlusTheme" parent="AppCompatTheme">
         <item name="colorAccent">@color/blue</item>

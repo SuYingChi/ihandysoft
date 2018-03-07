@@ -43,6 +43,7 @@ dependencies {
     implementation "com.ihandy.appframework:libAppframework.gm:4.5.5.gm"
     // Ads
     implementation 'net.appcloudbox.ads:libAcbAds.gm:1.4.0.gm'
+    implementation "net.appcloudbox.service:libAcbService.beta:1.0.0.beta04"//星座服务
 
     // Native Ad Adapters
     //AdAvocarrot 编译不过，报找不到3.8.3sdk，估计是maven远端有问题，等一会再打开注释
