@@ -88,16 +88,19 @@ public class AdjustHeightView extends RelativeLayout implements View.OnClickList
 
                         int newKeyboardHeight = layoutParams.bottomMargin - defaultSuggestionStripHeight + halfControllerHeight;
                         if (newKeyboardHeight > defaultKeyboardHeight * 1.2f) {
-                            layoutParams.bottomMargin = (int) (defaultKeyboardHeight * 1.2f) + defaultSuggestionStripHeight - halfControllerHeight;
+                            newKeyboardHeight = (int) (defaultKeyboardHeight * 1.2f);
                         } else if (newKeyboardHeight < defaultKeyboardHeight * 0.8f) {
-                            layoutParams.bottomMargin = (int) (defaultKeyboardHeight * 0.8f) + defaultSuggestionStripHeight - halfControllerHeight;
+                            newKeyboardHeight = (int) (defaultKeyboardHeight * 0.8f);
                         }
-                        adjustHeightControllerContainer.setLayoutParams(layoutParams);
+                        float keyboardHeightPercent = newKeyboardHeight * 1.0f / defaultKeyboardHeight;
+                        HSResourceUtils.setKeyboardHeightPercent(keyboardHeightPercent);
 
-                        newKeyboardHeight = layoutParams.bottomMargin - halfControllerHeight;
+                        newKeyboardHeight = HSResourceUtils.getDefaultKeyboardHeight(HSApplication.getContext().getResources());
+
+                        layoutParams.bottomMargin = newKeyboardHeight + defaultSuggestionStripHeight - halfControllerHeight;
+                        adjustHeightControllerContainer.setLayoutParams(layoutParams);
                         bottomContainer.getLayoutParams().height = newKeyboardHeight;
-                        
-                        HSResourceUtils.setKeyboardHeightPercent(newKeyboardHeight * 1.0f / defaultKeyboardHeight);
+
                     }
                     break;
                 case MotionEvent.ACTION_UP:
