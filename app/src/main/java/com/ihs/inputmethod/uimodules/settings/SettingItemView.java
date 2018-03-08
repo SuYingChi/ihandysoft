@@ -1,6 +1,7 @@
 package com.ihs.inputmethod.uimodules.settings;
 
 import android.content.Context;
+import android.content.res.Configuration;
 import android.content.res.Resources;
 import android.support.percent.PercentFrameLayout;
 import android.util.AttributeSet;
@@ -18,6 +19,7 @@ import com.ihs.inputmethod.uimodules.R;
 public class SettingItemView extends PercentFrameLayout {
     private ImageView imageView;
     private TextView textView;
+    private String itemName;
 
     public SettingItemView(Context context, AttributeSet attrs) {
         super(context, attrs);
@@ -43,6 +45,25 @@ public class SettingItemView extends PercentFrameLayout {
 
         imageView.getLayoutParams().width = imageView.getLayoutParams().height = imageSize;
         textView.getLayoutParams().height = textHeight;
+
+        if (HSApplication.getContext().getResources().getConfiguration().orientation == Configuration.ORIENTATION_PORTRAIT) {
+            int padding_portrait = imageSize / 4;
+            if (itemName.equals(HSApplication.getContext().getResources().getString(R.string.lucky_game_title))) {
+                padding_portrait = imageSize / 12;
+            }
+            imageView.setPadding(padding_portrait, padding_portrait, padding_portrait, padding_portrait);
+        } else {
+            int padding_land = imageSize / 6;
+            if (itemName.equals(HSApplication.getContext().getResources().getString(R.string.lucky_game_title))) {
+                padding_land = imageSize / 24;
+            }
+            imageView.setPadding(padding_land, padding_land, padding_land, padding_land);
+        }
+
         super.onMeasure(widthMeasureSpec, heightMeasureSpec);
+    }
+
+    public void setItemName(String itemName) {
+        this.itemName = itemName;
     }
 }
