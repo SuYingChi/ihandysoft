@@ -327,6 +327,7 @@ public class HSUIApplication extends HSInputMethodApplication {
         // Express广告
         AcbExpressAdManager.getInstance().activePlacementInProcess(AdPlacements.EXPRESS_LUMEN);
         AcbExpressAdManager.getInstance().activePlacementInProcess(AdPlacements.EXPRESS_CABLE_REPORT);
+        AcbExpressAdManager.getInstance().activePlacementInProcess(AdPlacements.EXPRESS_CABLE);
     }
 
     private void registerNotificationEvent() {
