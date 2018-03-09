@@ -591,10 +591,9 @@ public abstract class HSUIInputMethodService extends HSInputMethodService implem
     @Override
     public void onWindowHidden() {
         super.onWindowHidden();
-
         if (getKeyboardPanelMananger().isAdjustKeyboardHeightViewShow()) {
-            AdjustHeightView.logLastKeyboardHeight();
             getKeyboardPanelMananger().hideAdjustKeyboardHeightView();
+            AdjustHeightView.logLastKeyboardHeight();
         }
     }
 

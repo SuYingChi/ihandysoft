@@ -125,6 +125,8 @@ public class AdjustHeightView extends RelativeLayout implements View.OnClickList
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.btn_reset:
+                logLastKeyboardHeight();
+
                 LayoutParams layoutParams = (LayoutParams) adjustHeightControllerContainer.getLayoutParams();
                 layoutParams.bottomMargin = defaultKeyboardHeight + defaultSuggestionStripHeight - halfControllerHeight;
 
@@ -133,7 +135,6 @@ public class AdjustHeightView extends RelativeLayout implements View.OnClickList
                 bottomContainer.requestLayout();
 
                 HSResourceUtils.setKeyboardHeightPercent(1);
-                logLastKeyboardHeight();
                 HSUIInputMethodService.getKeyboardPanelMananger().updateKeyboardHeight();
                 HSUIInputMethodService.getKeyboardPanelMananger().hideAdjustKeyboardHeightView();
                 break;
