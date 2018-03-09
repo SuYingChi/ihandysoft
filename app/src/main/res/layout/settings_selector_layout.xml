@@ -31,8 +31,8 @@
                     android:id="@+id/selector_direction_left_container"
                     android:layout_centerVertical="true"
                     android:padding="4dp"
-                    app:layout_aspectRatio="36.6%"
-                    app:layout_widthPercent="16%">
+                    app:layout_aspectRatio="57.7%"
+                    app:layout_widthPercent="17%">
 
                     <ImageView
                         android:id="@+id/selector_direction_left"
@@ -48,8 +48,8 @@
                     android:layout_alignParentRight="true"
                     android:layout_centerVertical="true"
                     android:padding="4dp"
-                    app:layout_aspectRatio="36.6%"
-                    app:layout_widthPercent="16%">
+                    app:layout_aspectRatio="57.7%"
+                    app:layout_widthPercent="17%">
 
                     <ImageView
                         android:id="@+id/selector_direction_right"
@@ -63,8 +63,8 @@
                     android:id="@+id/selector_direction_up"
                     android:layout_centerHorizontal="true"
                     android:padding="4dp"
-                    app:layout_aspectRatio="273.2%"
-                    app:layout_heightPercent="16%"
+                    app:layout_aspectRatio="173.2%"
+                    app:layout_heightPercent="17%"
                     app:srcCompat="@drawable/ic_selector_arrow_top" />
 
                 <ImageView
@@ -73,8 +73,8 @@
                     android:layout_centerHorizontal="true"
                     android:padding="4dp"
                     android:rotation="180"
-                    app:layout_aspectRatio="273.2%"
-                    app:layout_heightPercent="16%"
+                    app:layout_aspectRatio="173.2%"
+                    app:layout_heightPercent="17%"
                     app:srcCompat="@drawable/ic_selector_arrow_top" />
 
             </android.support.percent.PercentRelativeLayout>

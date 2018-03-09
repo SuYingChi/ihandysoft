@@ -21,6 +21,5 @@ public class HSSelectorPanelView extends PercentRelativeLayout {
     protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
         setLayoutParams(new FrameLayout.LayoutParams(HSApplication.getContext().getResources().getDisplayMetrics().widthPixels, HSResourceUtils.getDefaultKeyboardHeight(getResources())));
         super.onMeasure(widthMeasureSpec, heightMeasureSpec);
-        setMeasuredDimension(HSApplication.getContext().getResources().getDisplayMetrics().widthPixels, HSResourceUtils.getDefaultKeyboardHeight(getResources()));
     }
 }
