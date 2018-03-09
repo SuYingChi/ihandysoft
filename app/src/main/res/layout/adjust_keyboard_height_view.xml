@@ -43,7 +43,7 @@
     <RelativeLayout
         android:id="@+id/adjust_height_controller_container"
         android:layout_width="match_parent"
-        android:layout_height="@dimen/keyboard_adjust_height_controller_height"
+        android:layout_height="wrap_content"
         android:layout_alignParentBottom="true">
 
         <View
