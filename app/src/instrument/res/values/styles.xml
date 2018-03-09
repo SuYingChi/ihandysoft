@@ -1,5 +1,7 @@
 <resources>
 
+    <style name="CustomThemeActivityStyle" parent="AppTheme.NoActionBar"/>
+
     <style name="CustomSettingCategoryStyle">
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">wrap_content</item>

@@ -126,7 +126,7 @@
             android:configChanges="keyboard|keyboardHidden|orientation|screenLayout|uiMode|screenSize|smallestScreenSize"
             android:launchMode="singleTop"
             android:screenOrientation="portrait"
-            android:theme="@style/AppTheme.NoActionBar" />
+            android:theme="@style/CustomThemeActivityStyle" />
         <activity
             android:name=".ui.theme.ui.customtheme.CustomThemeBackgroundCropperActivity"
             android:configChanges="keyboard|keyboardHidden|navigation|orientation|screenSize"
