@@ -16,6 +16,7 @@ import com.artw.lockscreen.PremiumLockerActivity;
 import com.ihs.app.framework.HSApplication;
 import com.ihs.app.framework.activity.HSActivity;
 import com.ihs.feature.notification.NotificationManager;
+import com.ihs.feature.softgame.SoftGameDisplayActivity;
 import com.ihs.keyboardutils.utils.CustomShareUtils;
 import com.ihs.keyboardutilslib.adactivities.AdDemoActivity;
 import com.ihs.keyboardutilslib.alerts.CustomDesignAlertActivity;
@@ -35,7 +36,8 @@ public class MainActivity extends HSActivity {
             "Camera Intents",
             "Country Code Parser",
             "Send Boost Notifications",
-            "Boost Activities"
+            "Boost Activities",
+            "Game Test"
     };
 
     Class[] activityClassArray = {
@@ -49,7 +51,8 @@ public class MainActivity extends HSActivity {
             CameraUtilActivity.class,
             CountryCodeUtil.class,
             null,
-            DemoShowBoostActivity.class
+            DemoShowBoostActivity.class,
+            SoftGameDisplayActivity.class
     };
 
     @Override
