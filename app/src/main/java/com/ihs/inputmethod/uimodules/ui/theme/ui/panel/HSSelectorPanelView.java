@@ -1,4 +1,4 @@
-package com.ihs.inputmethod.uimodules.settings;
+package com.ihs.inputmethod.uimodules.ui.theme.ui.panel;
 
 import android.content.Context;
 import android.support.percent.PercentRelativeLayout;
@@ -9,15 +9,13 @@ import com.ihs.app.framework.HSApplication;
 import com.ihs.inputmethod.api.utils.HSResourceUtils;
 
 /**
- * Created by jixiang on 18/3/1.
+ * Created by jixiang on 18/3/8.
  */
 
-public class SettingPanelView extends PercentRelativeLayout {
-
-    public SettingPanelView(Context context, AttributeSet attrs) {
+public class HSSelectorPanelView extends PercentRelativeLayout {
+    public HSSelectorPanelView(Context context, AttributeSet attrs) {
         super(context, attrs);
     }
-
 
     @Override
     protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
