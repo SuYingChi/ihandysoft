@@ -453,7 +453,7 @@ public class KeyboardPanelManager extends KeyboardPanelSwitcher implements BaseF
 
     public void showAdjustKeyboardHeightView() {
         if (keyboardPanelSwitchContainer != null) {
-            View adjustKeyboardHeightView = View.inflate(HSApplication.getContext(), R.layout.item_panel_keyboard_height, null);
+            View adjustKeyboardHeightView = View.inflate(HSApplication.getContext(), R.layout.adjust_keyboard_height_view, null);
             adjustKeyboardHeightContainer = new FrameLayout(HSApplication.getContext());
             adjustKeyboardHeightContainer.addView(adjustKeyboardHeightView);
             keyboardPanelSwitchContainer.addView(adjustKeyboardHeightContainer, new FrameLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
