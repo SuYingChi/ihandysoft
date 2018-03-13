@@ -404,15 +404,6 @@ public abstract class HSUIInputMethodService extends HSInputMethodService implem
 
     }
 
-
-    @Override
-    public void onComputeInsets(Insets outInsets) {
-        super.onComputeInsets(outInsets);
-        if (getKeyboardPanelMananger().isAdjustKeyboardHeightViewShow()) {
-            outInsets.touchableInsets = Insets.TOUCHABLE_INSETS_FRAME;
-        }
-    }
-
     @Override
     public void onFinishInputView(final boolean finishingInput) {
         isInputViewShowing = false;

@@ -12,7 +12,10 @@ import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.ViewParent;
+import android.view.Window;
 import android.widget.FrameLayout;
+import android.widget.PopupWindow;
 
 import com.acb.adcaffe.nativead.AdCaffeNativeAd;
 import com.ihs.app.framework.HSApplication;
@@ -26,6 +29,7 @@ import com.ihs.commons.utils.HSPreferenceHelper;
 import com.ihs.inputmethod.api.HSFloatWindowManager;
 import com.ihs.inputmethod.api.HSUIInputMethodService;
 import com.ihs.inputmethod.api.framework.HSInputMethod;
+import com.ihs.inputmethod.api.framework.HSInputMethodService;
 import com.ihs.inputmethod.api.theme.HSKeyboardThemeManager;
 import com.ihs.inputmethod.api.utils.HSDisplayUtils;
 import com.ihs.inputmethod.api.utils.HSResourceUtils;
@@ -65,6 +69,7 @@ import static android.view.View.VISIBLE;
 public class KeyboardPanelManager extends KeyboardPanelSwitcher implements BaseFunctionBar.OnFunctionBarItemClickListener {
 
     public static final String SHOW_EMOJI_PANEL = "show_emoji_panel";
+    private PopupWindow adjustHeightPopupWindow;
 
     public KeyboardPanelManager() {
     }
@@ -74,7 +79,6 @@ public class KeyboardPanelManager extends KeyboardPanelSwitcher implements BaseF
     private BaseFunctionBar functionBar;
     private AlertDialog loadingDialog;
     private HSMediaView hsBackgroundVideoView;
-    private FrameLayout adjustKeyboardHeightContainer;
     private CustomBarSearchAdAdapter searchAdAdapter;
     private RecyclerView searchAdRecyclerView;
     private List<Integer> bannerAdSessionList;
@@ -201,6 +205,7 @@ public class KeyboardPanelManager extends KeyboardPanelSwitcher implements BaseF
             functionBar = null;
         }
 
+        hideAdjustKeyboardHeightView();
 
         HSGlobalNotificationCenter.removeObserver(notificationObserver);
     }
@@ -454,22 +459,23 @@ public class KeyboardPanelManager extends KeyboardPanelSwitcher implements BaseF
     public void showAdjustKeyboardHeightView() {
         if (keyboardPanelSwitchContainer != null) {
             View adjustKeyboardHeightView = View.inflate(HSApplication.getContext(), R.layout.adjust_keyboard_height_view, null);
-            adjustKeyboardHeightContainer = new FrameLayout(HSApplication.getContext());
-            adjustKeyboardHeightContainer.addView(adjustKeyboardHeightView);
-            keyboardPanelSwitchContainer.addView(adjustKeyboardHeightContainer, new FrameLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
+            final Window window = HSInputMethodService.getInstance().getWindow().getWindow();
+            final View inputArea = window.findViewById(android.R.id.inputArea);
+            ViewParent parent = inputArea.getParent();
+            if (parent != null) {
+                adjustHeightPopupWindow = new PopupWindow(adjustKeyboardHeightView, -1, -1);
+                adjustHeightPopupWindow.showAtLocation((View) parent, Gravity.NO_GRAVITY, -1, -1);
+            }
         }
     }
 
     public boolean isAdjustKeyboardHeightViewShow() {
-        return adjustKeyboardHeightContainer != null;
+        return adjustHeightPopupWindow != null && adjustHeightPopupWindow.isShowing();
     }
 
     public void hideAdjustKeyboardHeightView() {
-        if (keyboardPanelSwitchContainer != null) {
-            if (adjustKeyboardHeightContainer != null) {
-                keyboardPanelSwitchContainer.removeView(adjustKeyboardHeightContainer);
-                adjustKeyboardHeightContainer = null;
-            }
+        if (isAdjustKeyboardHeightViewShow()) {
+            adjustHeightPopupWindow.dismiss();
         }
     }
 
