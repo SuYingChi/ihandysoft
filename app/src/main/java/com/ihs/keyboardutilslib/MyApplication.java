@@ -30,7 +30,6 @@ import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
 import com.nostra13.universalimageloader.core.assist.QueueProcessingType;
 import com.squareup.leakcanary.LeakCanary;
 
-import net.appcloudbox.AcbAds;
 import net.appcloudbox.ads.expressad.AcbExpressAdManager;
 import net.appcloudbox.ads.nativead.AcbNativeAdManager;
 
@@ -72,7 +71,8 @@ public class MyApplication extends HSApplication {
             return;
         }
 
-        AcbAds.getInstance().initializeFromConfig(this);
+//        AcbAds.getInstance().initializeFromConfig(this);
+//        AcbAds.getInstance().initializeFromGoldenEye(this);
 
         KCPhantomNotificationManager.with(this, getString(R.string.ad_placement_result_page));
 

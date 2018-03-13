@@ -2,8 +2,8 @@ apply plugin: 'com.android.application'
 apply from: 'tasks.gradle'
 
 android {
-    compileSdkVersion 26
-    buildToolsVersion "26.0.2"
+    compileSdkVersion 27
+    buildToolsVersion "27.0.3"
     defaultConfig {
         applicationId "com.kc.utils"
         minSdkVersion 14
@@ -29,7 +29,7 @@ android {
     }
 }
 
-final LIB_ADAPTER_VERSION = '.beta:5.6.0.beta01'
+final LIB_ADAPTER_VERSION = '.gm:5.6.0.gm'
 
 dependencies {
 
@@ -44,7 +44,7 @@ dependencies {
     // App Framework
     implementation "com.ihandy.appframework:libAppframework.gm:4.6.1.gm"
     // Ads
-    implementation 'net.appcloudbox.ads:libAcbAds.beta:1.6.0.beta09'
+    implementation 'net.appcloudbox.ads:libAcbAds.gm:1.6.0.gm'
 
     // Native Ad Adapters
     //AdAvocarrot 编译不过，报找不到3.8.3sdk，估计是maven远端有问题，等一会再打开注释
@@ -54,7 +54,7 @@ dependencies {
     implementation "net.appcloudbox.adadapter:libAdMopubNativeAdapter$LIB_ADAPTER_VERSION"
     implementation "net.appcloudbox.adadapter:libAdAdmobNativeAdapter$LIB_ADAPTER_VERSION"
     implementation "net.appcloudbox.adadapter:libAdAdxNativeAdapter$LIB_ADAPTER_VERSION"
-    implementation "net.appcloudbox.adadapter:libAdFlurryNativeAdapter$LIB_ADAPTER_VERSION"
+//    implementation "net.appcloudbox.adadapter:libAdFlurryNativeAdapter$LIB_ADAPTER_VERSION"
 //    implementation "net.appcloudbox.adadapter:libAdBaiduNativeAdapter$LIB_ADAPTER_VERSION"
 
     // Interstitial Ad Adapters
@@ -66,7 +66,7 @@ dependencies {
     implementation "net.appcloudbox.adadapter:libAdMopubBannerAdapter$LIB_ADAPTER_VERSION"
     implementation "net.appcloudbox.adadapter:libAdAdxBannerAdapter$LIB_ADAPTER_VERSION"
     implementation "net.appcloudbox.adadapter:libAdAdmobBannerAdapter$LIB_ADAPTER_VERSION"
-    implementation "net.appcloudbox.adadapter:libAdNexageBannerAdapter$LIB_ADAPTER_VERSION"
+//    implementation "net.appcloudbox.adadapter:libAdNexageBannerAdapter$LIB_ADAPTER_VERSION"
 
     //weather
     implementation "net.appcloudbox.weather:acbWeatherPlugin.gm:4.1.2.gm"
