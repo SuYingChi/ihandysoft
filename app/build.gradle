@@ -286,7 +286,7 @@ dependencies {
     compile(name: 'libColorPhone/libNotificationService', ext: 'aar')
     compile 'com.android.support.constraint:constraint-layout:1.0.2'
     //----
-
+    implementation 'com.alipay.euler:andfix:0.5.0@aar'
     //keep alive
     compile "com.ihandy.device:device-permanent$LIB_DEVICE_VERSION"
 
