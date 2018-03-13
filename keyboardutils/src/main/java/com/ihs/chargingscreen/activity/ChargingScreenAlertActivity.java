@@ -292,7 +292,7 @@ public class ChargingScreenAlertActivity extends Activity {
         if (!RemoveAdsManager.getInstance().isRemoveAdsPurchased()) {
             acbExpressAdView = new AcbExpressAdView(this, HSChargingScreenManager.getInstance().getChargingAlertAdsPlacementName());
             acbExpressAdView.setAutoSwitchAd(AcbExpressAdView.AutoSwitchAd_All);
-            acbExpressAdView.setGravity(Gravity.BOTTOM);
+            acbExpressAdView.setGravity(Gravity.BOTTOM | Gravity.CENTER_HORIZONTAL);
             acbExpressAdView.setExpressAdViewListener(new AcbExpressAdView.AcbExpressAdViewListener() {
                 @Override
                 public void onAdShown(AcbExpressAdView acbExpressAdView) {

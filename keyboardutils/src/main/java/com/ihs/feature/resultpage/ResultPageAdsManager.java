@@ -4,17 +4,14 @@ package com.ihs.feature.resultpage;
 import android.text.TextUtils;
 
 import com.artw.lockscreen.ScreenLockerManager;
-import com.ihs.app.framework.HSApplication;
 import com.ihs.commons.utils.HSLog;
-import com.ihs.feature.common.AdAnalytics;
-import com.ihs.feature.common.AdPlacements;
 import com.ihs.keyboardutils.BuildConfig;
 import com.ihs.keyboardutils.utils.ToastUtils;
 
 import net.appcloudbox.ads.base.AcbNativeAd;
+import net.appcloudbox.ads.common.utils.AcbError;
 import net.appcloudbox.ads.nativead.AcbNativeAdLoader;
 import net.appcloudbox.ads.nativead.AcbNativeAdManager;
-import net.appcloudbox.common.utils.AcbError;
 
 import java.util.List;
 
@@ -57,13 +54,12 @@ public class ResultPageAdsManager {
             return;
         }
 
-        AcbNativeAdLoader loader = AcbNativeAdManager.createLoaderWithPlacement(HSApplication.getContext(), adPlacement);
+        AcbNativeAdLoader loader = AcbNativeAdManager.createLoaderWithPlacement(adPlacement);
         loader.load(1, new AcbNativeAdLoader.AcbNativeAdLoadListener() {
             @Override
             public void onAdReceived(AcbNativeAdLoader acbNativeAdLoader, List<AcbNativeAd> list) {
                 mAd = list.isEmpty() ? null : list.get(0);
                 if (mAd != null) {
-                    AdAnalytics.logAppViewEvent(AdPlacements.SHARED_POOL_NATIVE_AD_FLURRY_KEY_VIEW_IN_APP_RESULT_PAGE, true);
                     if (BuildConfig.DEBUG) {
                         ToastUtils.showToast("ad received");
                     }
@@ -76,7 +72,6 @@ public class ResultPageAdsManager {
             @Override
             public void onAdFinished(AcbNativeAdLoader acbNativeAdLoader, AcbError hsError) {
                 if (hsError != null) {
-                    AdAnalytics.logAppViewEvent(AdPlacements.SHARED_POOL_NATIVE_AD_FLURRY_KEY_VIEW_IN_APP_RESULT_PAGE, false);
                     HSLog.d(TAG, "result page load ad failed, error = " + hsError);
                 }
             }

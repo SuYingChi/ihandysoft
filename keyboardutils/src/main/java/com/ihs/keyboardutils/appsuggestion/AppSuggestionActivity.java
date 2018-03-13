@@ -224,8 +224,8 @@ public class AppSuggestionActivity extends Activity {
 
 
         acbExpressAdView = new AcbExpressAdView(this, AppSuggestionManager.getInstance().getAdPlacementName());
-        acbExpressAdView.setAutoSwitchAd(AcbExpressAdView.AutoSwitchAd_None);
-        acbExpressAdView.setGravity(Gravity.BOTTOM);
+        acbExpressAdView.setAutoSwitchAd(AcbExpressAdView.AutoSwitchAd_All);
+        acbExpressAdView.setGravity(Gravity.BOTTOM | Gravity.CENTER_HORIZONTAL);
         acbExpressAdView.setExpressAdViewListener(new AcbExpressAdView.AcbExpressAdViewListener() {
             @Override
             public void onAdShown(AcbExpressAdView acbExpressAdView) {
@@ -243,17 +243,10 @@ public class AppSuggestionActivity extends Activity {
             public void onAdReady(AcbExpressAdView acbExpressAdView) {
                 adContainer.setVisibility(View.VISIBLE);
                 adContainer.addView(acbExpressAdView, new RelativeLayout.LayoutParams(MATCH_PARENT, DisplayUtils.dip2px(250)));
-                handler.postDelayed(new Runnable() {
-                    @Override
-                    public void run() {
-                        acbExpressAdView.switchAd();
-                    }
-                }, 50);
             }
 
             @Override
             public void onPrepareAdFailed(AcbExpressAdView acbExpressAdView) {
-
             }
         });
         adContainer.setVisibility(View.GONE);

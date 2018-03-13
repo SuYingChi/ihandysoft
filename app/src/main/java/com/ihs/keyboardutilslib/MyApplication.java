@@ -17,12 +17,12 @@ import com.ihs.commons.notificationcenter.HSGlobalNotificationCenter;
 import com.ihs.commons.notificationcenter.INotificationObserver;
 import com.ihs.commons.utils.HSBundle;
 import com.ihs.commons.utils.HSLog;
+import com.ihs.feature.headset.KCHeadsetManager;
 import com.ihs.feature.notification.NotificationManager;
 import com.ihs.feature.softgame.SoftGameManager;
 import com.ihs.keyboardutils.appsuggestion.AppSuggestionManager;
 import com.ihs.keyboardutils.notification.KCNotificationManager;
 import com.ihs.keyboardutils.notification.NotificationBean;
-import com.ihs.feature.headset.KCHeadsetManager;
 import com.kc.utils.phantom.KCPhantomNotificationManager;
 import com.launcher.FloatWindowCompat;
 import com.nostra13.universalimageloader.core.ImageLoader;
@@ -71,6 +71,9 @@ public class MyApplication extends HSApplication {
             // You should not init your app in this process.
             return;
         }
+
+//        AcbAds.getInstance().initializeFromConfig(this);
+//        AcbAds.getInstance().initializeFromGoldenEye(this);
 
         KCPhantomNotificationManager.with(this, getString(R.string.ad_placement_result_page));
 

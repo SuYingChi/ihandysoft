@@ -2,8 +2,8 @@ apply plugin: 'com.android.application'
 apply from: 'tasks.gradle'
 
 android {
-    compileSdkVersion 26
-    buildToolsVersion "26.0.2"
+    compileSdkVersion 27
+    buildToolsVersion "27.0.3"
     defaultConfig {
         applicationId "com.kc.utils"
         minSdkVersion 14
@@ -29,6 +29,8 @@ android {
     }
 }
 
+final LIB_ADAPTER_VERSION = '.gm:5.6.0.gm'
+
 dependencies {
 
     implementation "com.android.support:appcompat-v7:$android_support_version"
@@ -40,32 +42,32 @@ dependencies {
     implementation (name: 'libKeyboardCommons/libKeyboardCommons', ext: 'aar')
 
     // App Framework
-    implementation "com.ihandy.appframework:libAppframework.gm:4.5.5.gm"
+    implementation "com.ihandy.appframework:libAppframework.gm:4.6.1.gm"
     // Ads
-    implementation 'net.appcloudbox.ads:libAcbAds.gm:1.4.0.gm'
     implementation "net.appcloudbox.service:libAcbService.beta:1.0.0.beta04"//星座服务
+    implementation 'net.appcloudbox.ads:libAcbAds.gm:1.6.0.gm'
 
     // Native Ad Adapters
     //AdAvocarrot 编译不过，报找不到3.8.3sdk，估计是maven远端有问题，等一会再打开注释
 //    implementation 'net.appcloudbox.adadapter:libAdAvocarrotNativeAdapter.gm:5.0.0.gm'
-    implementation 'net.appcloudbox.adadapter:libAdFBNativeAdapter.gm:5.0.0.gm'
-    implementation 'net.appcloudbox.adadapter:libAdYeahmobiNativeAdapter.gm:5.1.0.gm'
-    implementation 'net.appcloudbox.adadapter:libAdMopubNativeAdapter.gm:5.0.0.gm'
-    implementation 'net.appcloudbox.adadapter:libAdAdmobNativeAdapter.gm:5.1.0.gm'
-    implementation 'net.appcloudbox.adadapter:libAdAdxNativeAdapter.gm:5.1.0.gm'
-    implementation 'net.appcloudbox.adadapter:libAdFlurryNativeAdapter.gm:5.1.1.gm'
-    implementation 'net.appcloudbox.adadapter:libAdBaiduNativeAdapter.gm:5.0.0.gm'
+    implementation "net.appcloudbox.adadapter:libAdFBNativeAdapter$LIB_ADAPTER_VERSION"
+//    implementation "net.appcloudbox.adadapter:libAdYeahmobiNativeAdapter$LIB_ADAPTER_VERSION"
+    implementation "net.appcloudbox.adadapter:libAdMopubNativeAdapter$LIB_ADAPTER_VERSION"
+    implementation "net.appcloudbox.adadapter:libAdAdmobNativeAdapter$LIB_ADAPTER_VERSION"
+    implementation "net.appcloudbox.adadapter:libAdAdxNativeAdapter$LIB_ADAPTER_VERSION"
+//    implementation "net.appcloudbox.adadapter:libAdFlurryNativeAdapter$LIB_ADAPTER_VERSION"
+//    implementation "net.appcloudbox.adadapter:libAdBaiduNativeAdapter$LIB_ADAPTER_VERSION"
 
     // Interstitial Ad Adapters
-    implementation 'net.appcloudbox.adadapter:libAdAdmobInterstitialAdapter.gm:5.1.0.gm'
-    implementation 'net.appcloudbox.adadapter:libAdAdxInterstitialAdapter.gm:5.1.0.gm'
-    implementation 'net.appcloudbox.adadapter:libAdFBInterstitialAdapter.gm:5.0.0.gm'
+    implementation "net.appcloudbox.adadapter:libAdAdmobInterstitialAdapter$LIB_ADAPTER_VERSION"
+    implementation "net.appcloudbox.adadapter:libAdAdxInterstitialAdapter$LIB_ADAPTER_VERSION"
+    implementation "net.appcloudbox.adadapter:libAdFBInterstitialAdapter$LIB_ADAPTER_VERSION"
 
     // Express Ad Adapters
-    implementation 'net.appcloudbox.adadapter:libAdMopubBannerAdapter.gm:5.0.1.gm'
-    implementation 'net.appcloudbox.adadapter:libAdAdxBannerAdapter.gm:5.1.0.gm'
-    implementation 'net.appcloudbox.adadapter:libAdAdmobBannerAdapter.gm:5.1.0.gm'
-    implementation 'net.appcloudbox.adadapter:libAdNexageBannerAdapter.gm:5.1.0.gm'
+    implementation "net.appcloudbox.adadapter:libAdMopubBannerAdapter$LIB_ADAPTER_VERSION"
+    implementation "net.appcloudbox.adadapter:libAdAdxBannerAdapter$LIB_ADAPTER_VERSION"
+    implementation "net.appcloudbox.adadapter:libAdAdmobBannerAdapter$LIB_ADAPTER_VERSION"
+//    implementation "net.appcloudbox.adadapter:libAdNexageBannerAdapter$LIB_ADAPTER_VERSION"
 
     //weather
     implementation "net.appcloudbox.weather:acbWeatherPlugin.gm:4.1.2.gm"

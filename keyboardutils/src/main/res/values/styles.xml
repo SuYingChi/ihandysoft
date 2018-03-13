@@ -340,4 +340,8 @@
         <item name="android:windowIsTranslucent">true</item>
     </style>
 
+    <style name="TextAppearance.AppCompat.Notification" parent="TextAppearance.Compat.Notification"/>
+    <style name="TextAppearance.AppCompat.Notification.Title" parent="TextAppearance.Compat.Notification.Title"/>
+    <style name="TextAppearance.AppCompat.Notification.Line2" parent="TextAppearance.Compat.Notification.Line2"/>
+
 </resources>

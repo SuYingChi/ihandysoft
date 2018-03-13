@@ -12,7 +12,7 @@ import com.ihs.keyboardutils.iap.RemoveAdsManager;
 import net.appcloudbox.ads.base.AcbInterstitialAd;
 import net.appcloudbox.ads.interstitialad.AcbInterstitialAdLoader;
 import net.appcloudbox.ads.interstitialad.AcbInterstitialAdManager;
-import net.appcloudbox.common.utils.AcbError;
+import net.appcloudbox.ads.common.utils.AcbError;
 
 import java.util.List;
 
@@ -31,7 +31,7 @@ public class KCInterstitialAd {
             return;
         }
         AdUtils.logAdLoad(placement);
-        AcbInterstitialAdManager.preload(HSApplication.getContext(), 1, placement);
+        AcbInterstitialAdManager.preload(1, placement);
     }
 
     public static AcbInterstitialAdLoader loadAndShow(final String placement, final String title, final String subTitle, final OnAdShowListener onAdShowListener, final OnAdCloseListener onAdCloseListener) {
@@ -51,7 +51,7 @@ public class KCInterstitialAd {
         }
 
         AdUtils.logAdLoad(placement);
-        AcbInterstitialAdLoader loader = AcbInterstitialAdManager.createLoaderWithPlacement(HSApplication.getContext(), placement);
+        AcbInterstitialAdLoader loader = AcbInterstitialAdManager.createLoaderWithPlacement(placement);
         loader.load(1, new AcbInterstitialAdLoader.AcbInterstitialAdLoadListener() {
             OnAdShowListener listener = onAdShowListener;
 
@@ -98,7 +98,7 @@ public class KCInterstitialAd {
             return false;
         }
 
-        List<AcbInterstitialAd> interstitialAds = AcbInterstitialAdManager.fetch(HSApplication.getContext(), placement, 1);
+        List<AcbInterstitialAd> interstitialAds = AcbInterstitialAdManager.fetch(placement, 1);
         if (interstitialAds.size() <= 0) {
             return false;
         }

@@ -16,6 +16,7 @@ import com.artw.lockscreen.PremiumLockerActivity;
 import com.ihs.app.framework.HSApplication;
 import com.ihs.app.framework.activity.HSActivity;
 import com.ihs.feature.notification.NotificationManager;
+import com.ihs.feature.softgame.SoftGameDisplayActivity;
 import com.ihs.keyboardutils.utils.CustomShareUtils;
 import com.ihs.keyboardutilslib.adactivities.AdDemoActivity;
 import com.ihs.keyboardutilslib.alerts.CustomDesignAlertActivity;
@@ -36,7 +37,8 @@ public class MainActivity extends HSActivity {
             "Country Code Parser",
             "Send Boost Notifications",
             "Boost Activities",
-            "Select Zodiac"
+            "Select Zodiac",
+            "Game Test"
     };
 
     Class[] activityClassArray = {
@@ -51,7 +53,8 @@ public class MainActivity extends HSActivity {
             CountryCodeUtil.class,
             null,
             DemoShowBoostActivity.class,
-            ZodiacSelectActivity.class
+            ZodiacSelectActivity.class,
+            SoftGameDisplayActivity.class
     };
 
     @Override
